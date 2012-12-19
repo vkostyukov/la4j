@@ -1,5 +1,6 @@
-la4j (Linear Algebra for Java)
+la4j (Linear Algebra for Java)  [![Build Status](https://travis-ci.org/vkostyukov/la4j.png?branch=master)](https://travis-ci.org/vkostyukov/la4j)
 =============================
+
 [la4j](http://la4j.org) - is open source and 100% Java library that provides Linear Algebra primitives and algorithms. 
 There are the key features of la4j listed bellow:
 
