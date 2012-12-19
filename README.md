@@ -1,18 +1,19 @@
-                           L  A  4  J
-                    (Linear Algebra for Java)
-                        http://la4j.org
+la4j (Linear Algebra for Java)
+=============================
+[la4j](http://la4j.org) - is open source and 100% Java library that provides Linear Algebra primitives and algorithms. 
+There are the key features of la4j listed bellow:
 
- Summary
- -------
+- no dependencies and tiny size (~80kb jar)
+- minimalistic and full object-oriented API
+- sparse (CRS, CCS) and dense (1d/2d arrays) matrices
+- linear systems solving (Gaussian, Jacobi, Zeidel, Square Root, Sweep and other)
+- matrices decomposition (Eigenvalues, SVD, QR, LU, Cholesky and other)
+- MatrixMarket/CSV IO formats support for matrices and vectors
+
+Changelog
+---------
  
- La4j (Linear Algebra for Java) - is Open Source and 100% Java sparse/dense 
- matrix library. 
- 
- 
- Changelog
- ---------
- 
- la4j-0.3.0 (Dec 2012)
+la4j-0.3.0 <code>Dec 2012</code>
  * la4j got new API and new package naming (starting with "org.la4j.*")
  * la4j has been moved from Google Code to GitHub;
  * la4j uses Travis-CI;
@@ -25,7 +26,7 @@
  * support of unsafe accessors;
  * fixed several major bugs;
  
- la4j-0.2.0 (Nov 2011)
+la4j-0.2.0 <code>Nov 2011</code>
  * new package la4j.io for reading/writing matrices in MatrixMarket format;
  * matrices decomposition (LU, QR, Cholesky, SVD, Eigenvalues) support;
  * matrix inversion support;
@@ -33,54 +34,39 @@
  * matrices and vectors can be serialized;
  * la4j uses Maven and jUnit now;
  
- la4j-0.1.0 (Jan 2011)
+la4j-0.1.0 <code>Jan 2011</code>
  * eigenvalues decomposition;
  * fast matrix multiply algorithm implementation;
  
- la4j-0.0.7 (Mar 2010)
+la4j-0.0.7 <code>Mar 2010</code>
  * solving linear systems;
  * matrices transposing;
  * finding of inverted matrix;
  
- la4j 0.0.0 (Jan 2010)
+la4j 0.0.0 <code>Jan 2010</code>
  * support real matrices and vectors;
  
  
- Download
- --------
+Download
+--------
  
  Details of the latest version of la4j can be found on the la4j
  project web site <http://la4j.org>.
  
  
- Licensing
- ---------
+Licensing
+---------
  
  This software is licensed under the terms you may find in the file 
  named "LICENSE" in this directory.
  
  
- Contacts
- --------
- 
- La4j project has been originally created and maintained by 
- Vladimir Kostyukov (vladimir.kostukov@gmail.com, http://vkostyukov.ru)
- Please, feel free to touch the author with any "la4j-related" issues.
+Contributors
+------------
 
+La4j wouldn't be the library it is today without the source contributions made by the authors:
+- Wajdy Essam
+- Evgenia Krivova
 
- Contributors
- ------------
-
- La4j wouldn't be the library it is today without the source contributions 
- made by the authors:
-
- - Wajdy Essam
- - Evgenia Krivova
-
-
- P.S.
- ----
- 
- If you are using la4j in one of your projects, please, drop author a note!
- Remember: Author need to be motivated! You are his motivation.
- 
+----
+by [Vladimir Kostyukov](http://vkostyukov.ru), 2012
