@@ -27,6 +27,7 @@ import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInvertor;
 import org.la4j.matrix.functor.MatrixFunction;
+import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.vector.Vector;
 
@@ -555,4 +556,11 @@ public interface Matrix extends Externalizable {
      * @param function
      */
     void transform(MatrixFunction function);
+
+    /**
+     * 
+     * @param predidate
+     * @return
+     */
+    boolean is(MatrixPredicate predidate);
 }

@@ -25,6 +25,7 @@ import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInvertor;
 import org.la4j.matrix.functor.MatrixFunction;
+import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.vector.Vector;
 
@@ -581,6 +582,20 @@ public abstract class AbstractMatrix implements Matrix {
                 unsafe_set(i, j, function.evaluate(i, j, unsafe_get(i, j)));
             }
         }
+    }
+
+    @Override
+    public boolean is(MatrixPredicate predidate) {
+
+        boolean result = true;
+
+        for (int i = 0; result && i < rows; i++) {
+            for (int j = 0; result && j < columns; j++) {
+                result &= predidate.test(i, j, unsafe_get(i, j));
+            }
+        }
+
+        return result;
     }
 
     @Override
