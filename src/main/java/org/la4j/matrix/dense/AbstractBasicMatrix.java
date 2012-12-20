@@ -43,13 +43,13 @@ public abstract class AbstractBasicMatrix extends AbstractMatrix
                 && (columns % 64 == 0) 
                 && (matrix.columns() % 64 == 0)) {
 
-            return unsafe_multiplyBlocks64(matrix, factory);
+            return unsafe_multiplyBlockedWith64(matrix, factory);
         }
 
         return super.unsafe_multiply(matrix, factory);
     }
 
-    private Matrix unsafe_multiplyBlocks64(Matrix matrix, Factory factory) {
+    private Matrix unsafe_multiplyBlockedWith64(Matrix matrix, Factory factory) {
 
         final int blocksize = 64;
 
