@@ -45,8 +45,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     private int columnIndices[];
     private int rowPointers[];
 
-    private int cardinality;
-
     public CRSMatrix() {
         this(0, 0);
     }
