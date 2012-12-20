@@ -21,20 +21,29 @@
 
 package org.la4j.matrix.sparse;
 
-import org.la4j.matrix.Matrix;
+import org.la4j.factory.Factory;
+import org.la4j.matrix.AbstractMatrix;
 
-public interface SparseMatrix extends Matrix {
+public abstract class AbstractCompressedMatrix extends AbstractMatrix 
+    implements SparseMatrix {
 
-    /**
-     * Returns the number of non-zero elements of this matrix.
-     * 
-     * @return the number of non-zero elements of this matrix
-     */
-    public int cardinality();
+    protected int cardinality;
 
-    /**
-     * 
-     * @return
-     */
-    public double density();
+    public AbstractCompressedMatrix(Factory factory) {
+        super(factory);
+    }
+
+    public AbstractCompressedMatrix(Factory factory, int rows, int columns) {
+        super(factory, rows, columns);
+    }
+
+    @Override
+    public int cardinality() {
+        return cardinality;
+    }
+
+    @Override
+    public double density() {
+        return cardinality / (rows * columns);
+    }
 }

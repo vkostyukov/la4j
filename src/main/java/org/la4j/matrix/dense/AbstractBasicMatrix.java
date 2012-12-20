@@ -30,11 +30,11 @@ public abstract class AbstractBasicMatrix extends AbstractMatrix
 
     private static final int BLOCKSIZE = 64;
 
-    protected AbstractBasicMatrix(Factory factory) {
+    public AbstractBasicMatrix(Factory factory) {
         super(factory);
     }
 
-    protected AbstractBasicMatrix(Factory factory, int rows, int columns) {
+    public AbstractBasicMatrix(Factory factory, int rows, int columns) {
         super(factory, rows, columns);
     }
 

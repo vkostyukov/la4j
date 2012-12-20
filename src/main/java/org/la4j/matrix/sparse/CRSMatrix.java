@@ -27,7 +27,6 @@ import java.io.ObjectOutput;
 
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
-import org.la4j.matrix.AbstractMatrix;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.source.Array2DMatrixSource;
@@ -36,7 +35,7 @@ import org.la4j.matrix.source.UnsafeMatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.sparse.CompressedVector;
 
-public class CRSMatrix extends AbstractMatrix implements SparseMatrix {
+public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix {
 
     private static final long serialVersionUID = 4071505L;
 
@@ -201,11 +200,6 @@ public class CRSMatrix extends AbstractMatrix implements SparseMatrix {
 
         this.rows = rows;
         this.columns = columns;
-    }
-
-    @Override
-    public int cardinality() {
-        return cardinality;
     }
 
     @Override
