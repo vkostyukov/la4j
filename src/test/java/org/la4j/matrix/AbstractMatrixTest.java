@@ -598,44 +598,38 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertTrue(Math.abs(a.determinant() - 45.0) < Matrix.EPS);
     }
 
-    public void testRowAccess() {
+    public void testRowAccess_3x3() {
 
-        double arrayA[][] = new double[][] {
+        Matrix a = factory().createMatrix(new double[][] {
                 { 1.0, 0.0, 0.0 },
                 { 0.0, 5.0, 0.0 },
                 { 0.0, 0.0, 9.0 }
-        };
+        });
 
-        double arrayB[][] = new double[][] {
-                { 1.0, 0.0, 0.0 },
-                { 0.0, 5.0, 0.0 },
-                { 1.0, 0.0, 0.0 }
-        };
-
-        Matrix a = factory().createMatrix(arrayA);
-        Matrix b = factory().createMatrix(arrayB);
+        Matrix b = factory().createMatrix(new double[][] {
+                 { 1.0, 0.0, 0.0 },
+                 { 0.0, 5.0, 0.0 },
+                 { 1.0, 0.0, 0.0 }	
+        });
 
         a.setRow(2, a.getRow(0));
 
         assertEquals(b, a);
     }
 
-    public void testColumnAccess() {
+    public void testColumnAccess_3x3() {
 
-        double arrayA[][] = new double[][] {
+        Matrix a = factory().createMatrix(new double[][] {
                 { 1.0, 0.0, 0.0 },
                 { 0.0, 5.0, 0.0 },
                 { 0.0, 0.0, 9.0 }
-        };
+        });
 
-        double arrayB[][] = new double[][] { 
+        Matrix b = factory().createMatrix(new double[][] { 
                 { 1.0, 0.0, 1.0 },
                 { 0.0, 5.0, 0.0 }, 
                 { 0.0, 0.0, 0.0 } 
-        };
-
-        Matrix a = factory().createMatrix(arrayA);
-        Matrix b = factory().createMatrix(arrayB);
+        });
 
         a.setColumn(2, a.getColumn(0));
 

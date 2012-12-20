@@ -92,7 +92,7 @@ public class CCSMatrix extends AbstractMatrix implements SparseMatrix {
 
         int alignedSize = align(rows, columns, cardinality);
 
-        this.cardinality = cardinality;
+        this.cardinality = 0;
         this.values = new double[alignedSize];
         this.rowIndices = new int[alignedSize];
 

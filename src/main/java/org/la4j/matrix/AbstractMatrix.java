@@ -251,7 +251,18 @@ public abstract class AbstractMatrix implements Matrix {
                                                 + vector.length());
         }
 
-        Vector result = factory.createVector(columns);
+       return unsafe_multiply(vector, factory);
+    }
+
+    @Override
+    public Vector unsafe_multiply(Vector vector) {
+        return unsafe_multiply(vector, factory);
+    }
+
+    @Override
+    public Vector unsafe_multiply(Vector vector, Factory factory) {
+
+    	Vector result = factory.createVector(columns);
 
         for (int i = 0; i < rows; i++) {
             double summand = 0;
@@ -264,7 +275,7 @@ public abstract class AbstractMatrix implements Matrix {
         return result;
     }
 
-    @Override
+	@Override
     public Matrix multiply(Matrix matrix) {
         return multiply(matrix, factory);
     }
@@ -282,6 +293,17 @@ public abstract class AbstractMatrix implements Matrix {
                                                + matrix.rows() + "x" 
                                                + matrix.columns());
         }
+
+        return unsafe_multiply(matrix, factory);
+    }
+
+    @Override
+    public Matrix unsafe_multiply(Matrix matrix) {
+        return unsafe_multiply(matrix, factory);
+    }
+
+    @Override
+    public Matrix unsafe_multiply(Matrix matrix, Factory factory) {
 
         Matrix result = factory.createMatrix(rows, matrix.columns());
 
@@ -326,6 +348,16 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public Matrix unsafe_subtract(Matrix matrix) {
+        return unsafe_subtract(matrix, factory);
+    }
+
+    @Override
+    public Matrix unsafe_subtract(Matrix matrix, Factory factory) {
+        return unsafe_add(matrix.multiply(-1.0), factory);
+    }
+
+    @Override
     public Matrix add(double value) {
         return add(value, factory);
     }
@@ -363,6 +395,17 @@ public abstract class AbstractMatrix implements Matrix {
                                                + matrix.rows() + "x" 
                                                + matrix.columns());
         }
+
+        return unsafe_add(matrix, factory); 
+    }
+
+    @Override
+    public Matrix unsafe_add(Matrix matrix) {
+        return unsafe_add(matrix, factory);
+    }
+
+    @Override
+    public Matrix unsafe_add(Matrix matrix, Factory factory) {
 
         Matrix result = factory.createMatrix(rows, columns);
 

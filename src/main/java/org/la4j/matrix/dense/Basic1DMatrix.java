@@ -26,14 +26,13 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import org.la4j.factory.Basic1DFactory;
-import org.la4j.matrix.AbstractMatrix;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.source.UnsafeMatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.BasicVector;
 
-public class Basic1DMatrix extends AbstractMatrix implements DenseMatrix {
+public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
 
     private static final long serialVersionUID = 4071505L;
 

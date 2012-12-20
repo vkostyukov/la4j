@@ -64,14 +64,9 @@ public class CRSFactory extends CompressedFactory implements Factory {
 
         int cardinality = (rows * columns) / DENSITY;
 
-        double values[] = new double[cardinality];
-        int columnIndices[] = new int[cardinality];
-        int rowPointers[] = new int[rows + 1];
-
         Random random = new Random();
 
-        Matrix matrix = new CRSMatrix(rows, columns, cardinality, values, 
-                columnIndices, rowPointers);
+        Matrix matrix = new CRSMatrix(rows, columns, cardinality);
 
         for (int k = 0; k < cardinality; k++) {
             int i = random.nextInt(rows);
@@ -91,14 +86,9 @@ public class CRSFactory extends CompressedFactory implements Factory {
 
         int cardinality = (size * size) / DENSITY;
 
-        double values[] = new double[cardinality];
-        int columnIndices[] = new int[cardinality];
-        int rowPointers[] = new int[size + 1];
-
         Random random = new Random();
 
-        Matrix matrix = new CRSMatrix(size, size, cardinality, values, 
-                                      columnIndices, rowPointers);
+        Matrix matrix = new CRSMatrix(size, size, cardinality);
 
         for (int k = 0; k < cardinality / 2; k++) {
             int i = random.nextInt(size);

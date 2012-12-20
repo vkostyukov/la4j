@@ -91,7 +91,7 @@ public class CRSMatrix extends AbstractMatrix implements SparseMatrix {
 
         int alignedSize = align(rows, columns, cardinality);
 
-        this.cardinality = cardinality;
+        this.cardinality = 0;
         this.values = new double[alignedSize];
         this.columnIndices = new int[alignedSize];
         this.rowPointers = new int[rows + 1];
