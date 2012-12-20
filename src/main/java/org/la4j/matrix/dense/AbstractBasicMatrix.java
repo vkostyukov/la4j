@@ -39,7 +39,7 @@ public abstract class AbstractBasicMatrix extends AbstractMatrix
     @Override
     public Matrix unsafe_multiply(Matrix matrix, Factory factory) {
 
-        if ((rows % 64 == 0) 
+        if (matrix instanceof DenseMatrix && (rows % 64 == 0) 
                 && (columns % 64 == 0) 
                 && (matrix.columns() % 64 == 0)) {
 
