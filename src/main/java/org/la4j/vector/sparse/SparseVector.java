@@ -30,6 +30,11 @@ public interface SparseVector extends Vector {
      * 
      * @return the number of non-zero elements of this vector
      */
-    public int cardinality();
+    int cardinality();
 
+    /**
+     * 
+     * @return
+     */
+    double density();
 }

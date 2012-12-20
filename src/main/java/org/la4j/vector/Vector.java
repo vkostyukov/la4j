@@ -25,6 +25,7 @@ import java.io.Externalizable;
 
 import org.la4j.factory.Factory;
 import org.la4j.vector.functor.VectorFunction;
+import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
 
 public interface Vector extends Externalizable {
@@ -115,6 +116,21 @@ public interface Vector extends Externalizable {
 
     /**
      * 
+     * @param v
+     * @return
+     */
+    Vector unsafe_add(Vector vector);
+
+    /**
+     * 
+     * @param vector
+     * @param factory
+     * @return
+     */
+    Vector unsafe_add(Vector vector, Factory factory);
+
+    /**
+     * 
      * @param d
      * @return
      */
@@ -145,6 +161,21 @@ public interface Vector extends Externalizable {
 
     /**
      * 
+     * @param v
+     * @return
+     */
+    Vector unsafe_multiply(Vector vector);
+
+    /**
+     * 
+     * @param vector
+     * @param factory
+     * @return
+     */
+    Vector unsafe_multiply(Vector vector, Factory factory);
+
+    /**
+     * 
      * @param d
      * @return
      */
@@ -172,6 +203,21 @@ public interface Vector extends Externalizable {
      * @return
      */
     Vector subtract(Vector vector, Factory factory);
+
+    /**
+     * 
+     * @param v
+     * @return
+     */
+    Vector unsafe_subtract(Vector vector);
+
+    /**
+     * 
+     * @param vector
+     * @param factory
+     * @return
+     */
+    Vector unsafe_subtract(Vector vector, Factory factory);
 
     /**
      * 
@@ -264,4 +310,11 @@ public interface Vector extends Externalizable {
      * @param function
      */
     void transform(VectorFunction function);
+
+    /**
+     * 
+     * @param predicate
+     * @return
+     */
+    boolean is(VectorPredicate predicate);
 }

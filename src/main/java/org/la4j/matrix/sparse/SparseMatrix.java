@@ -30,11 +30,11 @@ public interface SparseMatrix extends Matrix {
      * 
      * @return the number of non-zero elements of this matrix
      */
-    public int cardinality();
+    int cardinality();
 
     /**
      * 
      * @return
      */
-    public double density();
+    double density();
 }

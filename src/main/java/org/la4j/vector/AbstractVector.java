@@ -23,6 +23,7 @@ package org.la4j.vector;
 
 import org.la4j.factory.Factory;
 import org.la4j.vector.functor.VectorFunction;
+import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
 
 public abstract class AbstractVector implements Vector {
@@ -103,6 +104,17 @@ public abstract class AbstractVector implements Vector {
                                                + vector.length());
         }
 
+        return unsafe_add(vector, factory);
+    }
+
+    @Override
+    public Vector unsafe_add(Vector vector) {
+        return unsafe_add(vector, factory);
+    }
+
+    @Override
+    public Vector unsafe_add(Vector vector, Factory factory) {
+
         Vector result = factory.createVector(length);
 
         for (int i = 0; i < length; i++) {
@@ -148,6 +160,17 @@ public abstract class AbstractVector implements Vector {
                                                + vector.length());
         }
 
+        return unsafe_multiply(vector, factory);
+    }
+
+    @Override
+    public Vector unsafe_multiply(Vector vector) {
+        return unsafe_multiply(vector, factory);
+    }
+
+    @Override
+    public Vector unsafe_multiply(Vector vector, Factory factory) {
+
         Vector result = factory.createVector(length);
 
         for (int i = 0; i < length; i++) {
@@ -175,6 +198,16 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector subtract(Vector vector, Factory factory) {
         return add(vector.multiply(-1.0), factory);
+    }
+
+    @Override
+    public Vector unsafe_subtract(Vector vector) {
+        return unsafe_subtract(vector, factory);
+    }
+
+    @Override
+    public Vector unsafe_subtract(Vector vector, Factory factory) {
+        return unsafe_add(vector.multiply(-1.0), factory);
     }
 
     @Override
@@ -258,6 +291,18 @@ public abstract class AbstractVector implements Vector {
         for (int i = 0; i < length; i++) {
             unsafe_set(i, function.evaluate(i, unsafe_get(i)));
         }
+    }
+
+    @Override
+    public boolean is(VectorPredicate predicate) {
+
+        boolean result = true;
+
+        for (int i = 0; i < length; i++) {
+            result = result && predicate.test(i, unsafe_get(i)); 
+        }
+
+        return result;
     }
 
     @Override

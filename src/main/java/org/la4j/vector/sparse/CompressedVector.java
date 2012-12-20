@@ -142,6 +142,11 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     @Override
+    public double density() {
+        return cardinality / length;
+    }
+
+    @Override
     public void resize(int length) {
 
         if (length < 0) {

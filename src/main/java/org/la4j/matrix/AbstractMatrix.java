@@ -591,7 +591,7 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; result && i < rows; i++) {
             for (int j = 0; result && j < columns; j++) {
-                result &= predidate.test(i, j, unsafe_get(i, j));
+                result = result && predidate.test(i, j, unsafe_get(i, j));
             }
         }
 
