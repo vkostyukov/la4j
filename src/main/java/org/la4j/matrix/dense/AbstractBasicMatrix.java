@@ -28,6 +28,8 @@ import org.la4j.matrix.Matrix;
 public abstract class AbstractBasicMatrix extends AbstractMatrix 
     implements DenseMatrix {
 
+    private static final int BLOCKSIZE = 64;
+
     protected AbstractBasicMatrix(Factory factory) {
         super(factory);
     }
@@ -39,9 +41,9 @@ public abstract class AbstractBasicMatrix extends AbstractMatrix
     @Override
     public Matrix unsafe_multiply(Matrix matrix, Factory factory) {
 
-        if (matrix instanceof DenseMatrix && (rows % 64 == 0) 
-                && (columns % 64 == 0) 
-                && (matrix.columns() % 64 == 0)) {
+        if (matrix instanceof DenseMatrix && (rows % BLOCKSIZE == 0) 
+                && (columns % BLOCKSIZE == 0) 
+                && (matrix.columns() % BLOCKSIZE == 0)) {
 
             return unsafe_multiplyBlockedWith64(matrix, factory);
         }
@@ -51,16 +53,14 @@ public abstract class AbstractBasicMatrix extends AbstractMatrix
 
     private Matrix unsafe_multiplyBlockedWith64(Matrix matrix, Factory factory) {
 
-        final int blocksize = 64;
-
         Matrix result = factory.createMatrix(rows, matrix.columns());
 
-        for (int i = 0; i < rows; i += blocksize) {
-            for (int k = 0; k < columns; k += blocksize) {
-                for (int j = 0; j < matrix.columns(); j += blocksize) {
-                    for(int u = 0; u < blocksize; u++) {
-                        for(int w = 0; w < blocksize; w++) {
-                            for(int v = 0; v < blocksize; v++) {
+        for (int i = 0; i < rows; i += BLOCKSIZE) {
+            for (int k = 0; k < columns; k += BLOCKSIZE) {
+                for (int j = 0; j < matrix.columns(); j += BLOCKSIZE) {
+                    for(int u = 0; u < BLOCKSIZE; u++) {
+                        for(int w = 0; w < BLOCKSIZE; w++) {
+                            for(int v = 0; v < BLOCKSIZE; v++) {
                                 result.unsafe_set(i + u, j + v, 
                                    result.unsafe_get(i + u, j + v) 
                                    + (unsafe_get(i + u, k + w)) 
