@@ -22,6 +22,7 @@
 package org.la4j.linear;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
@@ -90,21 +91,7 @@ public class SweepSolver implements LinearSystemSolver {
 
     @Override
     public boolean suitableFor(LinearSystem linearSystem) {
-        Matrix a = linearSystem.coefficientsMatrix();
-
-        if (a.rows() < 2 || a.columns() < 2) {
-            return false;
-        }
-
-        for (int i = 0; i < a.rows(); i++) {
-            for (int j = 0; j < a.columns(); j++) {
-                if (Math.abs(i - j) > 1 
-                        && Math.abs(a.unsafe_get(i, j)) > Matrix.EPS) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+        return linearSystem.coefficientsMatrix()
+                .is(Matrices.TRIDIAGONAL_MATRIX);
     }
 }

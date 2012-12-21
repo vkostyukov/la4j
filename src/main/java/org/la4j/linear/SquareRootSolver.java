@@ -22,6 +22,7 @@
 package org.la4j.linear;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
@@ -103,6 +104,6 @@ public class SquareRootSolver implements LinearSystemSolver {
 
     @Override
     public boolean suitableFor(LinearSystem linearSystem) {
-        return linearSystem.coefficientsMatrix().isSymmetric();
+        return linearSystem.coefficientsMatrix().is(Matrices.SYMMETRIC_MATRIX);
     }
 }

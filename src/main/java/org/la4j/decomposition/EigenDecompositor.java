@@ -22,6 +22,7 @@
 package org.la4j.decomposition;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
@@ -34,7 +35,7 @@ public class EigenDecompositor implements MatrixDecompositor {
 
         // TODO: improve this code
 
-        if (!matrix.isSymmetric()) {
+        if (!matrix.is(Matrices.SYMMETRIC_MATRIX)) {
             throw new IllegalArgumentException("Matrix isn't symmetric.");
         }
 

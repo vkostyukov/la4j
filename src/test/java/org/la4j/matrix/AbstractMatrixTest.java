@@ -636,49 +636,31 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(b, a);
     }
 
-    public void testSymmetric() {
-
-        double arrayA[][] = new double[][] { 
-                { 1.0, 0.0, 0.0 },
-                { 4.0, 0.0, 6.0 }, 
-                { 0.0, 0.0, 9.0 } 
-        };
-
-        double arrayB[][] = new double[][] { 
-                { 1.0, 0.0, 3.0 },
-                { 0.0, 5.0, 0.0 }, 
-                { 3.0, 0.0, 9.0 } 
-        };
-
-        Matrix a = factory().createMatrix(arrayA);
-        Matrix b = factory().createMatrix(arrayB);
-
-        assertFalse(a.isSymmetric());
-        assertTrue(b.isSymmetric());
-    }
-
     public void testTriangle() {
 
-        double arrayA[][] = new double[][] { 
+        Matrix a = factory().createMatrix(new double[][] { 
                 { 1.0, 0.0, 0.0 },
-                { 4.0, 0.0, 6.0 }, 
+                { 4.0, 3.0, 6.0 }, 
                 { 0.0, 0.0, 9.0 } 
-        };
+        });
 
-        double arrayB[][] = new double[][] { 
+        Matrix b = factory().createMatrix(new double[][] {
                 { 1.0, 0.0, 3.0 },
                 { 0.0, 5.0, 0.0 }, 
                 { 0.0, 0.0, 9.0 }
-        };
-
-        Matrix a = factory().createMatrix(arrayA);
-        Matrix b = factory().createMatrix(arrayB);
-
-        assertFalse(a.isTriangle());
-        assertTrue(b.isTriangle());
+        });
 
         Matrix c = a.triangularize();
-        assertTrue(c.isTriangle());
+        Matrix d = b.triangularize();
+
+        Matrix e = factory().createMatrix(new double[][] {
+                { 0.0, 0.0, 0.0 },
+                { 0.0, 3.0, 6.0 },
+                { 0.0, 0.0, 9.0 }
+        });
+
+        assertEquals(e, c);
+        assertEquals(b, d);
     }
 
     public void testCopy() {

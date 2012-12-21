@@ -24,6 +24,7 @@ package org.la4j.matrix;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInvertor;
+import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
@@ -455,38 +456,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public boolean isSymmetric() {
-
-        if (rows != columns || rows + columns == 0) {
-            return false;
-        }
-
-        boolean result = true;
-        for (int i = 0; i < rows; i++) {
-            for (int j = i + 1; j < columns; j++) {
-                result = result && (Math.abs(unsafe_get(i, j) 
-                                             - unsafe_get(j, i)) < EPS);
-            }
-        }
-
-        return result && rows > 0 && columns > 0;
-    }
-
-    @Override
-    public boolean isTriangle() {
-
-        boolean result = true;
-
-        for (int i = 1; i < rows; i++) {
-            for (int j = 0; j < i; j++) {
-                result = result && (Math.abs(unsafe_get(i, j)) < EPS);
-            }
-        }
-
-        return result && rows > 0 && columns > 0;
-    }
-
-    @Override
     public Matrix triangularize() {
         return triangularize(factory);
     }
@@ -495,8 +464,10 @@ public abstract class AbstractMatrix implements Matrix {
     public Matrix triangularize(Factory factory) {
         ensureFactoryIsNotNull(factory);
 
-        if (isTriangle()) {
-            return this;
+        if (is(Matrices.UPPER_TRIANGULAR_MATRIX) 
+                || is(Matrices.LOWER_TRIANGULAR_MARTIX)) {
+
+            return copy(factory);
         }
 
         Matrix result = factory.createMatrix(rows, columns);
@@ -585,13 +556,15 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public boolean is(MatrixPredicate predidate) {
+    public boolean is(MatrixPredicate predicate) {
 
-        boolean result = true;
+        boolean result = (predicate instanceof AdvancedMatrixPredicate) 
+                ? ((AdvancedMatrixPredicate) predicate).test(rows, columns)
+                : rows > 0 && columns > 0;
 
         for (int i = 0; result && i < rows; i++) {
             for (int j = 0; result && j < columns; j++) {
-                result = result && predidate.test(i, j, unsafe_get(i, j));
+                result = result && predicate.test(i, j, unsafe_get(i, j));
             }
         }
 

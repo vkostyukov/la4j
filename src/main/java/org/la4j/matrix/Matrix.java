@@ -453,20 +453,6 @@ public interface Matrix extends Externalizable {
     void setColumn(int i, Vector column);
 
     /**
-     * Check the matrix symmetries;
-     * 
-     * @return
-     */
-    boolean isSymmetric();
-
-    /**
-     * Check the matrix triangles;
-     * 
-     * @return
-     */
-    boolean isTriangle();
-
-    /**
      * Convert matrix to triangle;
      * 
      * @return
