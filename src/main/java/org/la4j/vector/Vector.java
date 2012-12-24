@@ -309,7 +309,13 @@ public interface Vector extends Externalizable {
      * 
      * @param function
      */
-    void transform(VectorFunction function);
+    Vector transform(VectorFunction function);
+
+    /**
+     * 
+     * @param function
+     */
+    Vector transform(VectorFunction function, Factory factory);
 
     /**
      * 
