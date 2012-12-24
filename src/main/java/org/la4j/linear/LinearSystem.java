@@ -117,6 +117,7 @@ public class LinearSystem implements Externalizable {
         if (vector == null) {
             return false;
         }
+
         if (vector.length() != variables) {
             return false;
         }
@@ -125,11 +126,10 @@ public class LinearSystem implements Externalizable {
 
         boolean result = true;
         for (int i = 0; i < r.length(); i++) {
-            result = result && (Math.abs(r.get(i)) < Matrix.EPS);
+            result = result && (Math.abs(r.unsafe_get(i)) < Matrix.EPS);
         }
 
         return result;
-
     }
 
     private Vector innacary(Vector vector) {

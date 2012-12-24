@@ -51,19 +51,20 @@ public class SquareRootSolver implements LinearSystemSolver {
 
             double dSumand = 0;
             for (int l = 0; l < i; l++) {
-                dSumand += Math.pow(s.get(l, i), 2) * d.get(l, l);
+                dSumand += Math.pow(s.unsafe_get(l, i), 2) * d.unsafe_get(l, l);
             }
 
-            d.set(i, i, Math.signum(a.get(i, i) - dSumand));
+            d.unsafe_set(i, i, Math.signum(a.unsafe_get(i, i) - dSumand));
 
             double sSummand = 0;
             for (int l = 0; l < i; l++) {
-                sSummand += s.get(l, i) * s.get(l, i) * d.get(l, l);
+                sSummand += s.unsafe_get(l, i) * s.unsafe_get(l, i) 
+                            * d.unsafe_get(l, l);
             }
 
-            s.set(i, i, Math.sqrt(Math.abs(a.get(i, i) - sSummand)));
+            s.unsafe_set(i, i, Math.sqrt(Math.abs(a.unsafe_get(i, i) - sSummand)));
 
-            if (Math.abs(s.get(i, i)) < Matrix.EPS) {
+            if (Math.abs(s.unsafe_get(i, i)) < Matrix.EPS) {
                 throw new IllegalArgumentException(
                         "matrix s contains '0' at main diagonal");
             }
@@ -72,31 +73,33 @@ public class SquareRootSolver implements LinearSystemSolver {
 
                 double summand = 0;
                 for (int l = 0; l < i; l++) {
-                    summand += s.get(l, i) * s.get(l, i) * d.get(l, l);
+                    summand += s.unsafe_get(l, i) * s.unsafe_get(l, i) 
+                               * d.unsafe_get(l, l);
                 }
 
-                s.set(i, j,
-                        (a.get(i, j) - summand) / (s.get(i, i) * d.get(i, i)));
+                s.unsafe_set(i, j,
+                        (a.unsafe_get(i, j) - summand) / (s.unsafe_get(i, i) 
+                         * d.unsafe_get(i, i)));
             }
 
             double zSummand = 0;
             for (int l = 0; l < i; l++) {
-                zSummand += z.get(l) * s.get(l, i);
+                zSummand += z.unsafe_get(l) * s.unsafe_get(l, i);
             }
 
-            z.set(i, (b.get(i) - zSummand) / s.get(i, i));
+            z.unsafe_set(i, (b.unsafe_get(i) - zSummand) / s.unsafe_get(i, i));
 
-            y.set(i, z.get(i) / d.get(i, i));
+            y.unsafe_set(i, z.unsafe_get(i) / d.unsafe_get(i, i));
         }
 
         for (int i = a.rows() - 1; i >= 0; i--) {
 
             double summand = 0;
             for (int l = i + 1; l < a.columns(); l++) {
-                summand += x.get(l) * s.get(i, l);
+                summand += x.unsafe_get(l) * s.unsafe_get(i, l);
             }
 
-            x.set(i, (y.get(i) - summand) / s.get(i, i));
+            x.unsafe_set(i, (y.unsafe_get(i) - summand) / s.unsafe_get(i, i));
         }
 
         return x;

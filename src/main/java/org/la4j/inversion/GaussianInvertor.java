@@ -22,9 +22,8 @@
 package org.la4j.inversion;
 
 import org.la4j.factory.Factory;
-import org.la4j.linear.GaussianSolver;
 import org.la4j.linear.LinearSystem;
-import org.la4j.linear.LinearSystemSolver;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
@@ -39,16 +38,15 @@ public class GaussianInvertor implements MatrixInvertor {
         }
 
         Matrix result = factory.createMatrix(matrix.rows(), matrix.columns());
-        LinearSystemSolver solver = new GaussianSolver();
 
         for (int i = 0; i < matrix.rows(); i++) {
-    
+
             Vector b = factory.createVector(matrix.rows());
-            b.set(i, 1.0);
-    
-            LinearSystem system = new LinearSystem(matrix, b);
-            Vector x = system.solve(solver, factory);
-    
+            b.unsafe_set(i, 1.0);
+
+            LinearSystem system = factory.createLinearSystem(matrix, b);
+            Vector x = system.solve(Matrices.GAUSSIAN_SOLVER);
+
             result.setColumn(i, x);
         }
 

@@ -44,11 +44,12 @@ public class JacobiSolver implements LinearSystemSolver {
         for (int i = 0; i < a.rows(); i++) {
             for (int j = 0; j < a.columns(); j++) {
                 if (i != j)
-                    a.set(i, j, a.get(i, j) / a.get(i, i));
+                    a.unsafe_set(i, j, a.unsafe_get(i, j) / a.unsafe_get(i, i));
             }
         }
 
         int iteration = 0;
+
         Vector current = factory.createVector(linearSystem.variables());
 
         while (iteration < MAX_ITERATIONS && !linearSystem.isSolution(current)) {
@@ -57,13 +58,14 @@ public class JacobiSolver implements LinearSystemSolver {
 
             for (int i = 0; i < a.rows(); i++) {
 
-                double sum = b.get(i) / a.get(i, i);
+                double sum = b.unsafe_get(i) / a.unsafe_get(i, i);
                 for (int j = 0; j < a.columns(); j++) {
-                    if (i != j)
-                        sum -= a.get(i, i) * current.get(j);
+                    if (i != j) {
+                        sum -= a.unsafe_get(i, i) * current.unsafe_get(j);
+                    }
                 }
 
-                next.set(i, sum);
+                next.unsafe_set(i, sum);
             }
 
             current = next;

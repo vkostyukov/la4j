@@ -31,6 +31,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
         // AHTIUNG: this code derived from Jama
         // TODO: refactor (switch)
+        // TODO: change set/get to unsafe calls
 
         if (matrix.rows() < matrix.columns()) {
             throw new IllegalArgumentException("Wrong matrix size: " 

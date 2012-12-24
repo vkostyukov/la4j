@@ -44,7 +44,7 @@ public class SeidelSolver implements LinearSystemSolver {
         for (int i = 0; i < a.rows(); i++) {
             for (int j = 0; j < a.columns(); j++) {
                 if (i != j)
-                    a.set(i, j, a.get(i, j) / a.get(i, i));
+                    a.unsafe_set(i, j, a.unsafe_get(i, j) / a.unsafe_get(i, i));
             }
         }
 
@@ -55,13 +55,14 @@ public class SeidelSolver implements LinearSystemSolver {
 
             for (int i = 0; i < a.rows(); i++) {
 
-                double summand = b.get(i) / a.get(i, i);
+                double summand = b.unsafe_get(i) / a.unsafe_get(i, i);
                 for (int j = 0; j < a.columns(); j++) {
-                    if (i != j)
-                        summand -= a.get(i, j) * current.get(j);
+                    if (i != j) {
+                        summand -= a.unsafe_get(i, j) * current.unsafe_get(j);
+                    }
                 }
 
-                current.set(i, summand);
+                current.unsafe_set(i, summand);
             }
 
             iteration++;
@@ -83,12 +84,14 @@ public class SeidelSolver implements LinearSystemSolver {
 
             double sum = 0;
             for (int j = 0; j < a.columns(); j++) {
-                if (i != j)
+                if (i != j) {
                     sum += Math.abs(a.unsafe_get(i, j));
+                }
             }
 
-            if (sum > Math.abs(a.unsafe_get(i, i)) - Matrix.EPS)
+            if (sum > Math.abs(a.unsafe_get(i, i)) - Matrix.EPS) {
                 return false;
+            }
         }
 
         return true;

@@ -34,9 +34,9 @@ public class CholeskyDecompositorTest extends AbstarctDecompositorTest {
     @Override
     public double[][] input() {
         return new double[][] {
-                { 4.0, 0.0, 2.0 }, 
-                { 0.0, 4.0, 6.0 }, 
-                { 0.0, 0.0, 4.0 } 
+                { 1.0, -2.0, 0.0 }, 
+                { -2.0, 5.0, 2.0 }, 
+                { 0.0, 2.0, 5.0 } 
         };
     }
 
@@ -44,9 +44,9 @@ public class CholeskyDecompositorTest extends AbstarctDecompositorTest {
     public double[][][] output() {
         return new double[][][] { 
                 { 
-                    { 2.0, 0.0, 0.0 }, 
-                    { 0.0, 2.0, 0.0 },
-                    { 0.0, 0.0, 2.0 } 
+                    { 1.0, 0.0, 0.0 }, 
+                    { -2.0, 1.0, 0.0 },
+                    { 0.0, 2.0, 1.0 } 
                 } 
         };
     }

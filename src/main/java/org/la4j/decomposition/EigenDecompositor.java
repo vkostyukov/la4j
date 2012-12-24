@@ -33,8 +33,6 @@ public class EigenDecompositor implements MatrixDecompositor {
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 
-        // TODO: improve this code
-
         if (!matrix.is(Matrices.SYMMETRIC_MATRIX)) {
             throw new IllegalArgumentException("Matrix isn't symmetric.");
         }
@@ -53,12 +51,12 @@ public class EigenDecompositor implements MatrixDecompositor {
 
             Matrix u = generateU(d, factory, k, l);
 
-            v = v.multiply(u);
-            d = u.transpose().multiply(d.multiply(u));
+            v = v.unsafe_multiply(u);
+            d = u.transpose().unsafe_multiply(d.unsafe_multiply(u));
 
-            r.set(k, generateRi(d.getRow(k), k));
+            r.unsafe_set(k, generateRi(d.getRow(k), k));
 
-            r.set(l, generateRi(d.getRow(l), l));
+            r.unsafe_set(l, generateRi(d.getRow(l), l));
 
             iteration++;
 
@@ -76,7 +74,8 @@ public class EigenDecompositor implements MatrixDecompositor {
         int result = exl == 0 ? 1 : 0;
         for (int i = 0; i < vector.length(); i++) {
             if (i != exl
-                    && Math.abs(vector.get(result)) < Math.abs(vector.get(i)))
+                    && Math.abs(vector.unsafe_get(result)) 
+                        < Math.abs(vector.unsafe_get(i)))
                 result = i;
         }
 
@@ -88,7 +87,7 @@ public class EigenDecompositor implements MatrixDecompositor {
         Vector result = factory.createVector(matrix.rows());
 
         for (int i = 0; i < matrix.rows(); i++) {
-            result.set(i, generateRi(matrix.getRow(i), i));
+            result.unsafe_set(i, generateRi(matrix.getRow(i), i));
         }
 
         return result;
@@ -99,7 +98,7 @@ public class EigenDecompositor implements MatrixDecompositor {
         double summand = 0;
         for (int i = 0; i < vector.length(); i++) {
             if (i != position)
-                summand += vector.get(i) * vector.get(i);
+                summand += vector.unsafe_get(i) * vector.unsafe_get(i);
         }
 
         return summand;
@@ -111,20 +110,20 @@ public class EigenDecompositor implements MatrixDecompositor {
 
         double alpha = 0.0, beta = 0.0;
 
-        if ((matrix.get(k, k) - matrix.get(l, l)) < Matrix.EPS) {
+        if ((matrix.unsafe_get(k, k) - matrix.unsafe_get(l, l)) < Matrix.EPS) {
             alpha = beta = Math.sqrt(0.5);
         } else {
-            double mu = 2 * matrix.get(k, l)
-                    / (matrix.get(k, k) - matrix.get(l, l));
+            double mu = 2 * matrix.unsafe_get(k, l)
+                    / (matrix.unsafe_get(k, k) - matrix.unsafe_get(l, l));
             mu = 1 / Math.sqrt(1 + mu * mu);
             alpha = Math.sqrt(0.5 * (1 + mu));
             beta = Math.signum(mu) * Math.sqrt(0.5 * (1 - mu));
         }
 
-        result.set(k, k, alpha);
-        result.set(l, l, alpha);
-        result.set(k, l, -beta);
-        result.set(l, k, beta);
+        result.unsafe_set(k, k, alpha);
+        result.unsafe_set(l, l, alpha);
+        result.unsafe_set(k, l, -beta);
+        result.unsafe_set(l, k, beta);
 
         return result;
     }
