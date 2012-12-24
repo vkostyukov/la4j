@@ -541,7 +541,13 @@ public interface Matrix extends Externalizable {
      * 
      * @param function
      */
-    void transform(MatrixFunction function);
+    Matrix transform(MatrixFunction function);
+
+    /**
+     * 
+     * @param function
+     */
+    Matrix transform(MatrixFunction function, Factory factory);
 
     /**
      * 

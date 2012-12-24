@@ -199,7 +199,7 @@ public abstract class AbstractMatrix implements Matrix {
     public Matrix transpose(Factory factory) {
         ensureFactoryIsNotNull(factory);
 
-        Matrix result = factory.createMatrix(columns, rows);
+        Matrix result = blank(factory);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -224,7 +224,7 @@ public abstract class AbstractMatrix implements Matrix {
     public Matrix multiply(double value, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
-        Matrix result = factory.createMatrix(rows, columns);
+        Matrix result = blank(factory);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -368,7 +368,7 @@ public abstract class AbstractMatrix implements Matrix {
     public Matrix add(double value, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
-        Matrix result = factory.createMatrix(rows, columns);
+        Matrix result = blank(factory);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -409,7 +409,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix unsafe_add(Matrix matrix, Factory factory) {
 
-        Matrix result = factory.createMatrix(rows, columns);
+        Matrix result = blank(factory);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -547,12 +547,22 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public void transform(MatrixFunction function) {
+    public Matrix transform(MatrixFunction function) {
+        return transform(function, factory);
+    }
+
+    @Override
+    public Matrix transform(MatrixFunction function, Factory factory) {
+
+        Matrix result = blank(factory);
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                unsafe_set(i, j, function.evaluate(i, j, unsafe_get(i, j)));
+                result.unsafe_set(i, j, function.evaluate(i, j, unsafe_get(i, j)));
             }
         }
+
+        return result;
     }
 
     @Override
