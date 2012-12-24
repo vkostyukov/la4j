@@ -24,6 +24,7 @@ package org.la4j.vector;
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
+import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 
 public final class Vectors {
@@ -49,6 +50,20 @@ public final class Vectors {
         }
     }
 
+    private static class IncVecorFunction implements VectorFunction {
+        @Override
+        public double evaluate(int i, double value) {
+            return value + 1.0;
+        }
+    }
+
+    private static class DecVectorFunction implements VectorFunction {
+        @Override
+        public double evaluate(int i, double value) {
+            return value - 1.0;
+        }
+    }
+
     public static final VectorPredicate ZERO_VECTOR =
             new ZeroVectorPredicate();
 
@@ -63,6 +78,10 @@ public final class Vectors {
     public static final Factory COMPRESSED_FACTORY = new CRSFactory();
 
     public static final Factory DEFAULT_FACTORY = BASIC_FACTORY;
+
+    public static final VectorFunction INC_VECTOR = new IncVecorFunction();
+
+    public static final VectorFunction DEC_VECTOR = new DecVectorFunction();
 
     public static Vector asSingletonVector(double value) {
         return DEFAULT_FACTORY.createVector(new double[] { value });
