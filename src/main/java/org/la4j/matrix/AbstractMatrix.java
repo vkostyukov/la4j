@@ -199,7 +199,7 @@ public abstract class AbstractMatrix implements Matrix {
     public Matrix transpose(Factory factory) {
         ensureFactoryIsNotNull(factory);
 
-        Matrix result = blank(factory);
+        Matrix result = factory.createMatrix(columns, rows);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
