@@ -23,6 +23,11 @@ package org.la4j.matrix;
 
 import java.util.Arrays;
 
+import org.la4j.factory.Basic1DFactory;
+import org.la4j.factory.Basic2DFactory;
+import org.la4j.factory.CCSFactory;
+import org.la4j.factory.CRSFactory;
+import org.la4j.factory.Factory;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixPredicate;
 
@@ -183,4 +188,22 @@ public final class Matrices {
 
     public final static MatrixPredicate SYMMETRIC_MATRIX = 
             new SymmetricMatrixPredicate();
+
+    public final static Factory BASIC1D_FACTORY = new Basic1DFactory();
+
+    public final static Factory BASIC2D_FACTORY = new Basic2DFactory();
+
+    public final static Factory CRS_FACTORY = new CRSFactory();
+
+    public final static Factory CCS_FACTORY = new CCSFactory();
+
+    public final static Factory DEFAULT_DENSE_FACTORY = BASIC2D_FACTORY;
+
+    public final static Factory DEFAULT_SPARSE_FACTORY = CRS_FACTORY;
+
+    public final static Factory DEFAULT_FACTORY = BASIC2D_FACTORY;
+
+    public static Matrix asSingletonMatrix(double value) {
+        return DEFAULT_FACTORY.createMatrix(new double[][]{{ value }});
+    }
 }

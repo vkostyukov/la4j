@@ -21,6 +21,9 @@
 
 package org.la4j.vector;
 
+import org.la4j.factory.Basic1DFactory;
+import org.la4j.factory.CRSFactory;
+import org.la4j.factory.Factory;
 import org.la4j.vector.functor.VectorPredicate;
 
 public final class Vectors {
@@ -54,4 +57,14 @@ public final class Vectors {
 
     public static final VectorPredicate NEGATIVE_VECTOR = 
             new NegativeVectorPredicate();
+
+    public static final Factory BASIC_FACTORY = new Basic1DFactory();
+
+    public static final Factory COMPRESSED_FACTORY = new CRSFactory();
+
+    public static final Factory DEFAULT_FACTORY = BASIC_FACTORY;
+
+    public static Vector asSingletonVector(double value) {
+        return DEFAULT_FACTORY.createVector(new double[] { value });
+    }
 }
