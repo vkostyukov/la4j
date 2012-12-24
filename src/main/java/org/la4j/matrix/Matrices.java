@@ -23,13 +23,30 @@ package org.la4j.matrix;
 
 import java.util.Arrays;
 
+import org.la4j.decomposition.CholeskyDecompositor;
+import org.la4j.decomposition.EigenDecompositor;
+import org.la4j.decomposition.LUDecompositor;
+import org.la4j.decomposition.MatrixDecompositor;
+import org.la4j.decomposition.QRDecompositor;
+import org.la4j.decomposition.SingularValueDecompositor;
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.CCSFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
+import org.la4j.inversion.GaussianInvertor;
+import org.la4j.inversion.MatrixInvertor;
+import org.la4j.linear.GaussianSolver;
+import org.la4j.linear.JacobiSolver;
+import org.la4j.linear.LinearSystem;
+import org.la4j.linear.LinearSystemSolver;
+import org.la4j.linear.SeidelSolver;
+import org.la4j.linear.SquareRootSolver;
+import org.la4j.linear.SweepSolver;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
+import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
+import org.la4j.vector.Vector;
 
 public final class Matrices {
 
@@ -156,6 +173,22 @@ public final class Matrices {
         }
     }
 
+    private static class IncMatrixFunction 
+            implements MatrixFunction {
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return value + 1.0;
+        }
+    }
+
+    private static class DecMatrixFunction 
+            implements MatrixFunction {
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return value + 1.0;
+        }
+    }
+
     public final static MatrixPredicate DIAGONAL_MATRIX = 
             new DiagonalMatrixPredicate();
 
@@ -189,6 +222,12 @@ public final class Matrices {
     public final static MatrixPredicate SYMMETRIC_MATRIX = 
             new SymmetricMatrixPredicate();
 
+    public final static MatrixFunction INC_MATRIX = 
+            new IncMatrixFunction();
+
+    public final static MatrixFunction DEC_MATRIX = 
+            new DecMatrixFunction();
+
     public final static Factory BASIC1D_FACTORY = new Basic1DFactory();
 
     public final static Factory BASIC2D_FACTORY = new Basic2DFactory();
@@ -203,7 +242,48 @@ public final class Matrices {
 
     public final static Factory DEFAULT_FACTORY = BASIC2D_FACTORY;
 
+    public final static MatrixDecompositor CHOLESKY_DECOMPOSITOR = 
+            new CholeskyDecompositor();
+
+    public final static MatrixDecompositor EIGEN_DECOMPOSITOR = 
+            new EigenDecompositor();
+
+    public final static MatrixDecompositor LU_DECOMPOSITOR = 
+            new LUDecompositor();
+
+    public final static MatrixDecompositor QR_DECOMPOSITOR = 
+            new QRDecompositor();
+
+    public final static MatrixDecompositor SINGULAR_VALUE_DECOMPOSITOR = 
+            new SingularValueDecompositor();
+
+    public final static MatrixInvertor GAUSSIAN_INVERTOR =
+            new GaussianInvertor();
+
+    public final static MatrixInvertor DEFAILT_INVERTOR = GAUSSIAN_INVERTOR;
+
+    public final static LinearSystemSolver GAUSSIAN_SOLVER = 
+            new GaussianSolver();
+
+    public final static LinearSystemSolver JACOBI_SOLVER = 
+            new JacobiSolver();
+
+    public final static LinearSystemSolver SEIDEL_SOLVER = 
+            new SeidelSolver();
+
+    public final static LinearSystemSolver SQUARE_ROOT_SOLVER = 
+            new SquareRootSolver();
+
+    public final static LinearSystemSolver SWEEP_SOLVER = 
+            new SweepSolver();
+
+    public final static LinearSystemSolver DEFAULT_SOLVER = GAUSSIAN_SOLVER;
+
     public static Matrix asSingletonMatrix(double value) {
         return DEFAULT_FACTORY.createMatrix(new double[][]{{ value }});
+    }
+
+    public static LinearSystem asLinearSystem(Matrix a, Vector b) {
+        return DEFAULT_FACTORY.createLinearSystem(a, b);
     }
 }
