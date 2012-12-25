@@ -43,7 +43,7 @@ public abstract class AbstractInvertorTest extends TestCase {
         };
     }
 
-    public void xtestInverse_4x4() {
+    public void testInverse_4x4() {
 
         for (Factory factory : factories()) {
 
@@ -53,36 +53,6 @@ public abstract class AbstractInvertorTest extends TestCase {
                     { 7.0, 0.0, 2.0, 2.0 }, 
                     { 0.0, 3.0, 4.0, 0.0 }
             });
-
-            Matrix b = a.inverse(invertor(), factory);
-            assertEquals(factory.createIdentityMatrix(a.rows()), a.multiply(b));
-        }
-    }
-
-    public void xtestInverse_7x7() {
-
-        for (Factory factory : factories()) {
-
-            Matrix a = factory.createMatrix(new double[][] {
-                    { 9.0, 3.0, 4.0, 5.0, 11.0, 7.0, 17.0 }, 
-                    { 1.0, 2.0, 3.0, 6.0, 14.0, 21.0, 54.0 },
-                    { 7.0, 0.0, 2.0, 2.0, 54.0, 22.0, 16.0 }, 
-                    { 0.0, 3.0, 4.0, 11.0, 12.0, 43.0, 21.0},
-                    { 43.0, 33.0, 3.0, 3.0, 73.0, 11.0, 15.0},
-                    { 19.0, 53.0, 9.0, 0.0, 47.0, 52.0, 75.0},
-                    { 84.0, 85.0, 99.0, 2.0, 17.0, 13.0, 29.0},
-            });
-
-            Matrix b = a.inverse(invertor(), factory);
-            assertEquals(factory.createIdentityMatrix(a.rows()), a.multiply(b));
-        }
-    }
-
-    public void testInverse_64x64_random() {
-
-        for (Factory factory : factories()) {
-
-            Matrix a = factory.createRandomMatrix(56, 56);
 
             Matrix b = a.inverse(invertor(), factory);
             assertEquals(factory.createIdentityMatrix(a.rows()), a.multiply(b));

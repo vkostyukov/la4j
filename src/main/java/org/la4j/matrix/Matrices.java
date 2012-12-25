@@ -53,13 +53,13 @@ public final class Matrices {
     public static final double EPS;
 
     // Determine the machine epsilon
-    // Error is 1e3
+    // Tolerance is 10e1
     static {
         double eps = 1.0;
         while (1 + eps > 1) {
             eps = eps / 2;
         }
-        EPS = eps * 1e3;
+        EPS = eps * 10e1;
     }
 
     private static class DiagonalMatrixPredicate implements MatrixPredicate {

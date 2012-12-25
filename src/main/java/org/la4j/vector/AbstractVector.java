@@ -22,6 +22,7 @@
 package org.la4j.vector;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
@@ -350,10 +351,18 @@ public abstract class AbstractVector implements Vector {
         }
 
         boolean result = true;
+
         for (int i = 0; result && i < length; i++) {
-            result = result & (Math.abs(unsafe_get(i) - vector.unsafe_get(i)) 
-                               < Vectors.EPS);
+            double a = unsafe_get(i);
+            double b = vector.unsafe_get(i);
+
+            double diff = Math.abs(a - b);
+
+            result = result && (a == b) ? true : 
+                     diff < Matrices.EPS ? true :
+                     diff / Math.max(Math.abs(a), Math.abs(b)) < Vectors.EPS;
         }
+
         return result;
     }
 

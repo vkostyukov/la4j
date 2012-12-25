@@ -620,7 +620,13 @@ public abstract class AbstractMatrix implements Matrix {
             for (int j = 0; result && j < columns; j++) {
                 double a = unsafe_get(i, j);
                 double b = matrix.unsafe_get(i, j);
-                result = result && (Math.abs(a - b) < Matrices.EPS);
+
+                double diff = Math.abs(a - b);
+
+                result = result && (a == b) ? true : 
+                         diff < Matrices.EPS ? true :
+                         diff / Math.max(Math.abs(a), Math.abs(b)) 
+                         < Matrices.EPS;
             }
         }
 
