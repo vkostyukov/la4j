@@ -217,7 +217,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         System.arraycopy(rowIndices, columnPointers[i], columnIndices, 0, 
                          columnCardinality);
 
-        return new CompressedVector(columns, columnCardinality, columnValues, 
+        return new CompressedVector(rows, columnCardinality, columnValues, 
                                     columnIndices);
     }
 
@@ -227,7 +227,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         ensureFactoryIsNotNull(factory);
         ensureIndexInColumns(i);
 
-        Vector result = factory.createVector(columns);
+        Vector result = factory.createVector(rows);
 
         for (int jj = columnPointers[i]; jj < columnPointers[i + 1]; jj++) {
             result.unsafe_set(rowIndices[jj], values[jj]);
