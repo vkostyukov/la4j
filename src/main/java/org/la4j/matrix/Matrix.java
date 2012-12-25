@@ -33,8 +33,6 @@ import org.la4j.vector.Vector;
 
 public interface Matrix extends Externalizable {
 
-    public static final int PRECISION = 3;
-
     /**
      * Returns the (<code>i, j</code>) element of this matrix.
      * 

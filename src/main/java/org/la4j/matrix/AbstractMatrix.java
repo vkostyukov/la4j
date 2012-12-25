@@ -636,22 +636,24 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public String toString() {
 
+        final int precision = 3; 
+
         int formats[] = new int[columns];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                long value = (long) unsafe_get(i, j);
+                int size = Long.toString(value).length() + precision + 2;
+                formats[j] = size > formats[j] ? size : formats[j];
+            }
+        }
 
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                long value = (long) unsafe_get(i, j);
-                int size = Long.toString(value).length() + PRECISION + 2;
-                formats[j] = size > formats[j] ? size : formats[j];
-            }
-        }
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
                 sb.append(String.format("%" + Integer.toString(formats[j])
-                        + "." + PRECISION + "f", unsafe_get(i, j)));
+                        + "." + precision + "f", unsafe_get(i, j)));
             }
             sb.append("\n");
         }
