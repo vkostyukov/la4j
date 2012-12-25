@@ -30,7 +30,7 @@ import org.la4j.vector.functor.VectorProcedure;
 
 public interface Vector extends Externalizable {
 
-    public static final double EPS = 10e-7;
+    public static final double EPS = 10e-9;
 
     /**
      * Get i-th element of vector;

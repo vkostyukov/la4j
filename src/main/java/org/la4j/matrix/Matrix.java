@@ -33,7 +33,7 @@ import org.la4j.vector.Vector;
 
 public interface Matrix extends Externalizable {
 
-    public static final double EPS = 10e-7;
+    public static final double EPS = 10e-9;
     public static final int PRECISION = 3;
 
     /**

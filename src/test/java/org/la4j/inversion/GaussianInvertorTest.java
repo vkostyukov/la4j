@@ -31,16 +31,6 @@ public class GaussianInvertorTest extends AbstractInvertorTest {
         return new GaussianInvertor();
     }
 
-    @Override
-    public double[][] data() {
-        return new double[][] {
-                { 9.0, 3.0, 4.0, 5.0 }, 
-                { 1.0, 2.0, 3.0, 6.0 },
-                { 7.0, 0.0, 2.0, 2.0 }, 
-                { 0.0, 3.0, 4.0, 0.0 }
-        };
-    }
-
     public static Test suite() {
         return new TestSuite(GaussianInvertorTest.class);
     }

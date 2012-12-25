@@ -294,11 +294,11 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
             if (Math.abs(value) > EPS) {
 
-                if (columnIndices[position] != i) {
+                if (values.length < cardinality + 1) {
+                    growup();
+                }
 
-                    if (values.length < cardinality + 1) {
-                        growup();
-                    }
+                if (columnIndices[position] != i) {
 
                     for (int k = cardinality; k > position; k--) {
                         values[k] = values[k - 1];
