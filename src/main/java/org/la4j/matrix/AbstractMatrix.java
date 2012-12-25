@@ -618,9 +618,9 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; result && i < rows; i++) {
             for (int j = 0; result && j < columns; j++) {
-                result = result
-                        & (Math.abs(unsafe_get(i, j) 
-                                    - matrix.unsafe_get(i, j)) < EPS);
+                double a = unsafe_get(i, j);
+                double b = matrix.unsafe_get(i, j);
+                result = result && (Math.abs(a - b) < Matrices.EPS);
             }
         }
 

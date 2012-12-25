@@ -24,15 +24,18 @@ package org.la4j.vector;
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 
 public final class Vectors {
 
+    public static final double EPS = Matrices.EPS;
+
     private static class ZeroVectorPredicate implements VectorPredicate {
         @Override
         public boolean test(int i, double value) {
-            return Math.abs(value) < Vector.EPS;
+            return Math.abs(value) < EPS;
         }
     }
 

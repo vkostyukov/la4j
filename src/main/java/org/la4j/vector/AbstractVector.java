@@ -352,7 +352,7 @@ public abstract class AbstractVector implements Vector {
         boolean result = true;
         for (int i = 0; result && i < length; i++) {
             result = result & (Math.abs(unsafe_get(i) - vector.unsafe_get(i)) 
-                               < EPS);
+                               < Vectors.EPS);
         }
         return result;
     }

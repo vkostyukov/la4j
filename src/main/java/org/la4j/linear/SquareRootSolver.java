@@ -64,7 +64,7 @@ public class SquareRootSolver implements LinearSystemSolver {
 
             s.unsafe_set(i, i, Math.sqrt(Math.abs(a.unsafe_get(i, i) - sSummand)));
 
-            if (Math.abs(s.unsafe_get(i, i)) < Matrix.EPS) {
+            if (Math.abs(s.unsafe_get(i, i)) < Matrices.EPS) {
                 throw new IllegalArgumentException(
                         "matrix s contains '0' at main diagonal");
             }

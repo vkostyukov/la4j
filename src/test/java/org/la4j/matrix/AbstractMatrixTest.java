@@ -569,7 +569,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 
         Matrix a = factory().createMatrix(array);
 
-        assertTrue(Math.abs(a.trace() - 15.0) < Matrix.EPS);
+        assertTrue(Math.abs(a.trace() - 15.0) < Matrices.EPS);
     }
 
     public void testProduct() {
@@ -582,7 +582,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 
         Matrix a = factory().createMatrix(array);
 
-        assertTrue(Math.abs(a.product() - 45.0) < Matrix.EPS);
+        assertTrue(Math.abs(a.product() - 45.0) < Matrices.EPS);
     }
 
     public void testDeterminant() {
@@ -595,7 +595,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 
         Matrix a = factory().createMatrix(array);
 
-        assertTrue(Math.abs(a.determinant() - 45.0) < Matrix.EPS);
+        assertTrue(Math.abs(a.determinant() - 45.0) < Matrices.EPS);
     }
 
     public void testRowAccess_3x3() {

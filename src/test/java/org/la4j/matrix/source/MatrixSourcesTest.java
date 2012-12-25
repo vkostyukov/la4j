@@ -30,6 +30,7 @@ import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.CCSFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 
 public class MatrixSourcesTest extends TestCase {
@@ -52,7 +53,8 @@ public class MatrixSourcesTest extends TestCase {
 
             for (int i = 0; i < a.rows(); i++) {
                 for (int j = i + 1; j < a.columns(); j++) {
-                    assertTrue(Math.abs(a.get(i, j) - a.get(j, i)) < Matrix.EPS);
+                    assertTrue(Math.abs(a.get(i, j) - a.get(j, i)) 
+                               < Matrices.EPS);
                 }
             }
         }

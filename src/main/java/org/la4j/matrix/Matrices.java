@@ -50,32 +50,44 @@ import org.la4j.vector.Vector;
 
 public final class Matrices {
 
+    public static final double EPS;
+
+    // Determine the machine epsilon
+    // Error is 1e3
+    static {
+        double eps = 1.0;
+        while (1 + eps > 1) {
+            eps = eps / 2;
+        }
+        EPS = eps * 1e3;
+    }
+
     private static class DiagonalMatrixPredicate implements MatrixPredicate {
         @Override
         public boolean test(int i, int j, double value) {
-            return (i != j) ? Math.abs(value) < Matrix.EPS : true;
+            return (i != j) ? Math.abs(value) < EPS : true;
         }
     }
 
     private static class IdentityMatrixPredicate implements MatrixPredicate {
         @Override
         public boolean test(int i, int j, double value) {
-            return (i == j) ? Math.abs(1.0 - value) < Matrix.EPS 
-                            : Math.abs(value) < Matrix.EPS; 
+            return (i == j) ? Math.abs(1.0 - value) < EPS 
+                            : Math.abs(value) < EPS; 
         }
     }
 
     private static class ZeroMatrixPredicate implements MatrixPredicate {
         @Override
         public boolean test(int i, int j, double value) {
-            return Math.abs(value) < Matrix.EPS;
+            return Math.abs(value) < EPS;
         }
     }
 
     private static class TridiagonalMatrixPredicate implements MatrixPredicate {
         @Override
         public boolean test(int i, int j, double value) {
-            return Math.abs(i - j) > 1 ?  Math.abs(value) < Matrix.EPS : true; 
+            return Math.abs(i - j) > 1 ?  Math.abs(value) < EPS : true; 
         }
     }
 
@@ -98,7 +110,7 @@ public final class Matrices {
         @Override
         public boolean test(int i, int j, double value) {
             return (i == j) || (i == j + 1) 
-                    ? Math.abs(value) < Matrix.EPS
+                    ? Math.abs(value) < EPS
                     : true;
         }
     }
@@ -108,8 +120,7 @@ public final class Matrices {
         @Override
         public boolean test(int i, int j, double value) {
             return (i == j) || (i == j - 1) 
-                    ? Math.abs(value) < Matrix.EPS
-                            : true;
+                    ? Math.abs(value) < EPS : true;
         }
     }
 
@@ -117,7 +128,7 @@ public final class Matrices {
             implements MatrixPredicate {
         @Override
         public boolean test(int i, int j, double value) {
-            return (i > j) ? Math.abs(value) < Matrix.EPS : true;
+            return (i > j) ? Math.abs(value) < EPS : true;
         }
     }
 
@@ -125,7 +136,7 @@ public final class Matrices {
             implements MatrixPredicate {
         @Override
         public boolean test(int i, int j, double value) {
-            return (i < j) ? Math.abs(value) < Matrix.EPS : true;
+            return (i < j) ? Math.abs(value) < EPS : true;
         }
     }
 
@@ -168,7 +179,7 @@ public final class Matrices {
 
                 return true;
             } else {
-                return Math.abs(value - values[offset]) < Matrix.EPS;
+                return Math.abs(value - values[offset]) < EPS;
             }
         }
     }

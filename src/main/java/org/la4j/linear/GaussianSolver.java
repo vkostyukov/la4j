@@ -22,6 +22,7 @@
 package org.la4j.linear;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
@@ -63,7 +64,7 @@ public class GaussianSolver implements LinearSystemSolver {
                 }
             }
 
-            if (Math.abs(maxItem) < Matrix.EPS) {
+            if (Math.abs(maxItem) < Matrices.EPS) {
                 throw new IllegalArgumentException("This system can't be solved.");
             }
 
@@ -88,7 +89,7 @@ public class GaussianSolver implements LinearSystemSolver {
 
     private Vector retraceGaus(Matrix matrix, Factory factory) {
 
-        if (Math.abs(matrix.product()) < Matrix.EPS) {
+        if (Math.abs(matrix.product()) < Matrices.EPS) {
             throw new IllegalArgumentException("This system hasn't solution.");
         }
 

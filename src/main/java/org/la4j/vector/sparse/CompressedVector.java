@@ -28,6 +28,7 @@ import java.io.ObjectOutput;
 import org.la4j.factory.CRSFactory;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.source.ArrayVectorSource;
 import org.la4j.vector.source.UnsafeVectorSource;
@@ -64,7 +65,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         this(source.length(), 0);
 
         for (int i = 0; i < length; i++) {
-            if (Math.abs(source.get(i)) > EPS) {
+            if (Math.abs(source.get(i)) > Vectors.EPS) {
 
                 if (values.length <= cardinality) {
                     growup();
@@ -110,7 +111,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
         for (int k = 0; k < cardinality; k++) {
             if (indices[k] == i) {
-                if (Math.abs(value) > EPS) {
+                if (Math.abs(value) > Vectors.EPS) {
                     values[k] = value;
                     return;
                 } else {
@@ -123,7 +124,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
             }
         }
 
-        if (Math.abs(value) < EPS) {
+        if (Math.abs(value) < Vectors.EPS) {
             return;
         }
 

@@ -27,6 +27,7 @@ import java.io.ObjectOutput;
 
 import org.la4j.factory.CCSFactory;
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.source.Array2DMatrixSource;
@@ -67,7 +68,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         for (int j = 0; j < columns; j++) {
             columnPointers[j] = cardinality;
             for (int i = 0; i < rows; i++) {
-                if (Math.abs(source.get(i, j)) > EPS) {
+                if (Math.abs(source.get(i, j)) > Matrices.EPS) {
 
                     if (values.length < cardinality + 1) {
                         growup();
@@ -133,7 +134,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             }
         }
 
-        if (Math.abs(value) < EPS) {
+        if (Math.abs(value) < Matrices.EPS) {
             return;
         }
 

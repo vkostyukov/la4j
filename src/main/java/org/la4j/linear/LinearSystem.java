@@ -28,6 +28,7 @@ import java.io.ObjectOutput;
 
 import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
@@ -126,7 +127,7 @@ public class LinearSystem implements Externalizable {
 
         boolean result = true;
         for (int i = 0; i < r.length(); i++) {
-            result = result && (Math.abs(r.unsafe_get(i)) < Matrix.EPS);
+            result = result && (Math.abs(r.unsafe_get(i)) < Matrices.EPS);
         }
 
         return result;

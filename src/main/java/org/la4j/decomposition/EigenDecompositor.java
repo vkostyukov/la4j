@@ -60,7 +60,7 @@ public class EigenDecompositor implements MatrixDecompositor {
 
             iteration++;
 
-        } while (r.norm() > Matrix.EPS && iteration < MAX_ITERATIONS);
+        } while (r.norm() > Matrices.EPS && iteration < MAX_ITERATIONS);
 
         if (iteration > MAX_ITERATIONS) {
             throw new IllegalArgumentException("Can't decompose this matrix.");
@@ -110,7 +110,7 @@ public class EigenDecompositor implements MatrixDecompositor {
 
         double alpha = 0.0, beta = 0.0;
 
-        if ((matrix.unsafe_get(k, k) - matrix.unsafe_get(l, l)) < Matrix.EPS) {
+        if ((matrix.unsafe_get(k, k) - matrix.unsafe_get(l, l)) < Matrices.EPS) {
             alpha = beta = Math.sqrt(0.5);
         } else {
             double mu = 2 * matrix.unsafe_get(k, l)

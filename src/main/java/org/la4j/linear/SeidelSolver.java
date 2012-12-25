@@ -22,6 +22,7 @@
 package org.la4j.linear;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
@@ -89,7 +90,7 @@ public class SeidelSolver implements LinearSystemSolver {
                 }
             }
 
-            if (sum > Math.abs(a.unsafe_get(i, i)) - Matrix.EPS) {
+            if (sum > Math.abs(a.unsafe_get(i, i)) - Matrices.EPS) {
                 return false;
             }
         }

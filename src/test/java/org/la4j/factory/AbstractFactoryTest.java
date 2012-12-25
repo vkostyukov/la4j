@@ -23,6 +23,7 @@ package org.la4j.factory;
 
 import junit.framework.TestCase;
 
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
@@ -78,7 +79,7 @@ public abstract class AbstractFactoryTest extends TestCase {
 
         for (int i = 0; i < a.rows(); i++) {
             for (int j = i; j < a.columns(); j++) {
-                assertTrue(Math.abs(a.get(i, j) - a.get(j, i)) < Matrix.EPS);
+                assertTrue(Math.abs(a.get(i, j) - a.get(j, i)) < Matrices.EPS);
             }
         }
     }

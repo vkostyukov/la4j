@@ -22,6 +22,7 @@
 package org.la4j.decomposition;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 
 public class SingularValueDecompositor implements MatrixDecompositor {
@@ -60,7 +61,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     s.set(k, k, hypot(s.get(k, k), a.get(i, k)));
                 }
 
-                if (Math.abs(s.get(k, k)) > Matrix.EPS) {
+                if (Math.abs(s.get(k, k)) > Matrices.EPS) {
 
                     if (a.get(k, k) < 0.0) {
                         s.set(k, k, -s.get(k, k));
@@ -78,7 +79,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
             for (int j = k + 1; j < a.columns(); j++) {
 
-                if ((k < nct) & (Math.abs(s.get(k, k)) > Matrix.EPS)) {
+                if ((k < nct) & (Math.abs(s.get(k, k)) > Matrices.EPS)) {
 
                     double t = 0;
 
@@ -112,7 +113,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     e[k] = hypot(e[k], e[i]);
                 }
 
-                if (Math.abs(e[k]) > Matrix.EPS) {
+                if (Math.abs(e[k]) > Matrices.EPS) {
 
                     if (e[k + 1] < 0.0) {
 
@@ -129,7 +130,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
                 e[k] = -e[k];
 
-                if ((k + 1 < a.rows()) & (Math.abs(e[k]) > Matrix.EPS)) {
+                if ((k + 1 < a.rows()) & (Math.abs(e[k]) > Matrices.EPS)) {
 
                     for (int j = k + 1; j < a.columns(); j++) {
                         for (int i = k + 1; i < a.rows(); i++) {
@@ -180,7 +181,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
         for (int k = nct - 1; k >= 0; k--) {
 
-            if (Math.abs(s.get(k, k)) > Matrix.EPS) {
+            if (Math.abs(s.get(k, k)) > Matrices.EPS) {
 
                 for (int j = k + 1; j < n; j++) {
 
@@ -218,7 +219,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
         for (int k = n - 1; k >= 0; k--) {
 
-            if ((k < nrt) & (Math.abs(e[k]) > Matrix.EPS)) {
+            if ((k < nrt) & (Math.abs(e[k]) > Matrices.EPS)) {
 
                 for (int j = k + 1; j < n; j++) {
 
