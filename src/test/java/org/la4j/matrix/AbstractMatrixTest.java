@@ -195,35 +195,88 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(c, a);
     }
 
-    public void testSwap() {
+    public void testSwap_3x3() {
 
-        double arrayA[][] = new double[][] { 
+        Matrix a = factory().createMatrix(new double[][] { 
                 { 1.0, 0.0, 0.0 },
                 { 0.0, 5.0, 0.0 }, 
                 { 0.0, 0.0, 9.0 } 
-        };
+        });
 
-        double arrayB[][] = new double[][] { 
+        Matrix b = factory().createMatrix(new double[][] { 
                 { 0.0, 0.0, 9.0 },
                 { 0.0, 5.0, 0.0 }, 
                 { 1.0, 0.0, 0.0 } 
-        };
+        });
 
-        double arrayC[][] = new double[][] { 
-                { 0.0, 0.0, 9.0 },
-                { 5.0, 0.0, 0.0 }, 
-                { 0.0, 1.0, 0.0 } 
-        };
-
-        Matrix a = factory().createMatrix(arrayA);
-        Matrix b = factory().createMatrix(arrayB);
-        Matrix c = factory().createMatrix(arrayC);
+        Matrix c = factory().createMatrix(new double[][] { 
+                { 9.0, 0.0, 0.0 },
+                { 0.0, 5.0, 0.0 }, 
+                { 0.0, 0.0, 1.0 } 
+        });
 
         a.swapRows(0, 2);
         assertEquals(b, a);
 
-        a.swapColumns(0, 1);
-        assertEquals(c, a);
+        b.swapColumns(0, 2);
+        assertEquals(c, b);
+    }
+
+    public void testSwap_2x4() {
+
+        Matrix a = factory().createMatrix(new double[][] { 
+                { 1.0, 0.0, 0.0, 3.0 },
+                { 0.0, 5.0, 4.0, 0.0 } 
+        });
+
+        Matrix b = factory().createMatrix(new double[][] { 
+                { 0.0, 5.0, 4.0, 0.0 },
+                { 1.0, 0.0, 0.0, 3.0 } 
+        });
+
+        Matrix c = factory().createMatrix(new double[][] { 
+                { 0.0, 4.0, 5.0, 0.0 },
+                { 1.0, 0.0, 0.0, 3.0 } 
+        });
+
+        a.swapRows(0, 1);
+        assertEquals(b, a);
+
+        b.swapColumns(1, 2);
+        assertEquals(c, b);
+    }
+
+    public void testSwap_5x3() {
+
+        Matrix a = factory().createMatrix(new double[][] { 
+                { 1.0, 0.0, 0.0 },
+                { 0.0, 5.0, 4.0 },
+                { 7.0, 0.0, 2.0 },
+                { 0.0, 8.0, 0.0 },
+                { 5.0, 0.0, 6.0 }
+        });
+
+        Matrix b = factory().createMatrix(new double[][] { 
+                { 1.0, 0.0, 0.0 },
+                { 0.0, 5.0, 4.0 },
+                { 0.0, 8.0, 0.0 },
+                { 7.0, 0.0, 2.0 },
+                { 5.0, 0.0, 6.0 } 
+        });
+
+        Matrix c = factory().createMatrix(new double[][] { 
+                { 1.0, 0.0, 0.0 },
+                { 0.0, 4.0, 5.0 },
+                { 0.0, 0.0, 8.0 },
+                { 7.0, 2.0, 0.0 },
+                { 5.0, 6.0, 0.0 } 
+        });
+
+        a.swapRows(2, 3);
+        assertEquals(b, a);
+
+        b.swapColumns(1, 2);
+        assertEquals(c, b);
     }
 
     public void testTranspose_4x4() {
