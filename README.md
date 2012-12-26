@@ -1,3 +1,4 @@
+Latest release (Dec 2012): <code>[la4j-0.3.0.zip](http://la4j.googlecode.com/files/la4j-0.3.0.zip)</code>
 la4j (Linear Algebra for Java)  [![Build Status](https://travis-ci.org/vkostyukov/la4j.png?branch=master)](https://travis-ci.org/vkostyukov/la4j)
 =============================
 
