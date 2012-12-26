@@ -169,9 +169,11 @@ public final class Matrices {
             int offset = -1;
 
             if (i < j) {
-                offset = j - (i + 1) + (((size  - 1) + (size - i)) / 2) * i;
+                offset = j - (i + 1) + (int)((((size - 1) + (size - i)) / 2.0) 
+                         * i);
             } else if (i > j) {
-                offset = i - (j + 1) + (((size - 1) + (size - j)) / 2) * j;
+                offset = i - (j + 1) + (int)((((size - 1) + (size - j)) / 2.0) 
+                         * j);
             } else return true;
 
             if (Double.isNaN(values[offset])) {
@@ -179,7 +181,12 @@ public final class Matrices {
 
                 return true;
             } else {
-                return Math.abs(value - values[offset]) < EPS;
+                double diff = Math.abs(value - values[offset]);
+
+                return (value == values[offset]) ? true :
+                       diff < EPS ? true :
+                       diff / Math.max(Math.abs(value), Math.abs(values[offset])) 
+                       < EPS;
             }
         }
     }

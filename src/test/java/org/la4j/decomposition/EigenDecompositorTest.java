@@ -36,7 +36,7 @@ public class EigenDecompositorTest extends AbstarctDecompositorTest {
         return new double[][] {
                 { 1.0, 0.0, 0.0 }, 
                 { 0.0, 2.0, 0.0 }, 
-                { 0.0, 0.0, 4.0 } 
+                { 0.0, 0.0, 4.0 }
         };
     }
 

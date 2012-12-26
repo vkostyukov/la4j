@@ -28,7 +28,7 @@ import org.la4j.vector.Vector;
 
 public class EigenDecompositor implements MatrixDecompositor {
 
-    public static final int MAX_ITERATIONS = 1000000;
+    public static final int MAX_ITERATIONS = 10000000;
 
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {

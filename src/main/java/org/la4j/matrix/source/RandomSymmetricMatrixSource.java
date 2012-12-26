@@ -50,9 +50,11 @@ public class RandomSymmetricMatrixSource implements MatrixSource {
             // http://en.wikipedia.org/wiki/Arithmetic_progression
 
             if (i < j) {
-                offset = j - (i + 1) + (((size  - 1) + (size - i)) / 2) * i;
+                offset = j - (i + 1) + (int)((((size - 1) + (size - i)) / 2.0) 
+                         * i);
             } else {
-                offset = i - (j + 1) + (((size - 1) + (size - j)) / 2) * j;
+                offset = i - (j + 1) + (int)((((size - 1) + (size - j)) / 2.0) 
+                         * j);
             }
 
             if (Double.isNaN(values[offset])) {
