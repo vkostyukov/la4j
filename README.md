@@ -76,6 +76,7 @@ La4j wouldn't be the library it is today without the source contributions
 made by the authors:
 - Wajdy Essam
 - Evgenia Krivova
+- Julia Kostyukova
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2012
