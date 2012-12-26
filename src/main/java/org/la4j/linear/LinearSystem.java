@@ -36,8 +36,8 @@ public class LinearSystem implements Externalizable {
 
     private static final LinearSystemSolver SOLVERS[] = {
         new SweepSolver(),
-        new SeidelSolver(),
         new JacobiSolver(),
+        new SeidelSolver(),
         new SquareRootSolver(),
         new GaussianSolver()
     };
@@ -144,7 +144,7 @@ public class LinearSystem implements Externalizable {
             }
         }
 
-        return SOLVERS[SOLVERS.length - 1];
+        return Matrices.DEFAULT_SOLVER;
     }
 
     @Override

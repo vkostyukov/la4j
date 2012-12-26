@@ -30,7 +30,7 @@ public class SeidelSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 
-    private final static int MAX_ITERATIONS = 100000;
+    private final static int MAX_ITERATIONS = 1000000;
 
     @Override
     public Vector solve(LinearSystem linearSystem, Factory factory) {
