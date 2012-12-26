@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Contributor(s): -
+ * Contributor(s): Julia Kostyukova
  * 
  */
 
@@ -31,8 +31,6 @@ public class SingularValueDecompositor implements MatrixDecompositor {
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 
         // AHTIUNG: this code derived from Jama
-        // TODO: refactor (switch)
-        // TODO: change set/get to unsafe calls
 
         if (matrix.rows() < matrix.columns()) {
             throw new IllegalArgumentException("Wrong matrix size: " 
@@ -58,49 +56,52 @@ public class SingularValueDecompositor implements MatrixDecompositor {
             if (k < nct) {
 
                 for (int i = k; i < a.rows(); i++) {
-                    s.set(k, k, hypot(s.get(k, k), a.get(i, k)));
+                    s.unsafe_set(k, k, hypot(s.unsafe_get(k, k), 
+                    		a.unsafe_get(i, k)));
                 }
 
-                if (Math.abs(s.get(k, k)) > Matrices.EPS) {
+                if (Math.abs(s.unsafe_get(k, k)) > Matrices.EPS) {
 
-                    if (a.get(k, k) < 0.0) {
-                        s.set(k, k, -s.get(k, k));
+                    if (a.unsafe_get(k, k) < 0.0) {
+                        s.unsafe_set(k, k, -s.unsafe_get(k, k));
                     }
 
                     for (int i = k; i < a.rows(); i++) {
-                        a.set(i, k, a.get(i, k) / s.get(k, k));
+                        a.unsafe_set(i, k, a.unsafe_get(i, k) 
+                        		/ s.unsafe_get(k, k));
                     }
 
-                    a.set(k, k, a.get(k, k) + 1.0);
+                    a.unsafe_set(k, k, a.unsafe_get(k, k) + 1.0);
                 }
 
-                s.set(k, k, -s.get(k, k));
+                s.unsafe_set(k, k, -s.unsafe_get(k, k));
             }
 
             for (int j = k + 1; j < a.columns(); j++) {
 
-                if ((k < nct) & (Math.abs(s.get(k, k)) > Matrices.EPS)) {
+                if ((k < nct) & (Math.abs(s.unsafe_get(k, k)) > Matrices.EPS)) {
 
                     double t = 0;
 
                     for (int i = k; i < a.rows(); i++) {
-                        t += a.get(i, k) * a.get(i, j);
+                        t += a.unsafe_get(i, k) * a.unsafe_get(i, j);
                     }
 
-                    t = -t / a.get(k, k);
+                    t = -t / a.unsafe_get(k, k);
 
                     for (int i = k; i < a.rows(); i++) {
-                        a.set(i, j, a.get(i, j) + (t * a.get(i, k)));
+                        a.unsafe_set(i, j, a.unsafe_get(i, j) 
+                        		+ (t * a.unsafe_get(i, k)));
                     }
                 }
 
-                e[j] = a.get(k, j);
+                e[j] = a.unsafe_get(k, j);
             }
 
             if (k < nct) {
 
                 for (int i = k; i < a.rows(); i++) {
-                    u.set(i, k, a.get(i, k));
+                    u.unsafe_set(i, k, a.unsafe_get(i, k));
                 }
 
             }
@@ -134,7 +135,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
                     for (int j = k + 1; j < a.columns(); j++) {
                         for (int i = k + 1; i < a.rows(); i++) {
-                            work[i] += e[j] * a.get(i, j);
+                            work[i] += e[j] * a.unsafe_get(i, j);
                         }
                     }
 
@@ -143,13 +144,14 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                         double t = -e[j] / e[k + 1];
 
                         for (int i = k + 1; i < a.rows(); i++) {
-                            a.set(i, j, a.get(i, j) + (t * work[i]));
+                            a.unsafe_set(i, j, a.unsafe_get(i, j) 
+                            		+ (t * work[i]));
                         }
                     }
                 }
 
                 for (int i = k + 1; i < a.columns(); i++) {
-                    v.set(i, k, e[i]);
+                    v.unsafe_set(i, k, e[i]);
                 }
             }
         }
@@ -157,15 +159,15 @@ public class SingularValueDecompositor implements MatrixDecompositor {
         int p = Math.min(a.columns(), a.rows() + 1);
 
         if (nct < a.columns()) {
-            s.set(nct, nct, a.get(nct, nct));
+            s.unsafe_set(nct, nct, a.unsafe_get(nct, nct));
         }
 
         if (a.rows() < p) {
-            s.set(p - 1, p - 1, 0.0);
+            s.unsafe_set(p - 1, p - 1, 0.0);
         }
 
         if (nrt + 1 < p) {
-            e[nrt] = a.get(nrt, p - 1);
+            e[nrt] = a.unsafe_get(nrt, p - 1);
         }
 
         e[p - 1] = 0.0;
@@ -173,47 +175,48 @@ public class SingularValueDecompositor implements MatrixDecompositor {
         for (int j = nct; j < n; j++) {
 
             for (int i = 0; i < a.rows(); i++) {
-                u.set(i, j, 0.0);
+                u.unsafe_set(i, j, 0.0);
             }
 
-            u.set(j, j, 1.0);
+            u.unsafe_set(j, j, 1.0);
         }
 
         for (int k = nct - 1; k >= 0; k--) {
 
-            if (Math.abs(s.get(k, k)) > Matrices.EPS) {
+            if (Math.abs(s.unsafe_get(k, k)) > Matrices.EPS) {
 
                 for (int j = k + 1; j < n; j++) {
 
                     double t = 0;
                     for (int i = k; i < a.rows(); i++) {
-                        t += u.get(i, k) * u.get(i, j);
+                        t += u.unsafe_get(i, k) * u.unsafe_get(i, j);
                     }
 
-                    t = -t / u.get(k, k);
+                    t = -t / u.unsafe_get(k, k);
 
                     for (int i = k; i < a.rows(); i++) {
-                        u.set(i, j, u.get(i, j) + (t * u.get(i, k)));
+                        u.unsafe_set(i, j, u.unsafe_get(i, j) 
+                        		+ (t * u.unsafe_get(i, k)));
                     }
                 }
 
                 for (int i = k; i < a.rows(); i++) {
-                    u.set(i, k, -u.get(i, k));
+                    u.unsafe_set(i, k, -u.unsafe_get(i, k));
                 }
 
-                u.set(k, k, u.get(k, k) + 1.0);
+                u.unsafe_set(k, k, u.unsafe_get(k, k) + 1.0);
 
                 for (int i = 0; i < k - 1; i++) {
-                    u.set(i, k, 0.0);
+                    u.unsafe_set(i, k, 0.0);
                 }
 
             } else {
 
                 for (int i = 0; i < a.rows(); i++) {
-                    u.set(i, k, 0.0);
+                    u.unsafe_set(i, k, 0.0);
                 }
 
-                u.set(k, k, 1.0);
+                u.unsafe_set(k, k, 1.0);
             }
         }
 
@@ -226,22 +229,23 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     double t = 0;
 
                     for (int i = k + 1; i < a.columns(); i++) {
-                        t += v.get(i, k) * v.get(i, j);
+                        t += v.unsafe_get(i, k) * v.unsafe_get(i, j);
                     }
 
-                    t = -t / v.get(k + 1, k);
+                    t = -t / v.unsafe_get(k + 1, k);
 
                     for (int i = k + 1; i < a.columns(); i++) {
-                        v.set(i, j, v.get(i, j) + (t * v.get(i, k)));
+                        v.unsafe_set(i, j, v.unsafe_get(i, j) 
+                        		+ (t * v.unsafe_get(i, k)));
                     }
                 }
             }
 
             for (int i = 0; i < a.columns(); i++) {
-                v.set(i, k, 0.0);
+                v.unsafe_set(i, k, 0.0);
             }
 
-            v.set(k, k, 1.0);
+            v.unsafe_set(k, k, 1.0);
         }
 
         int pp = p - 1;
@@ -259,8 +263,8 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
                 if (Math.abs(e[k]) <= tiny
                         + eps
-                        * (Math.abs(s.get(k, k)) + Math
-                                .abs(s.get(k + 1, k + 1)))) {
+                        * (Math.abs(s.unsafe_get(k, k)) + Math
+                                .abs(s.unsafe_get(k + 1, k + 1)))) {
                     e[k] = 0.0;
                     break;
                 }
@@ -282,8 +286,8 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     double t = (ks != p ? Math.abs(e[ks]) : 0.)
                             + (ks != k + 1 ? Math.abs(e[ks - 1]) : 0.);
 
-                    if (Math.abs(s.get(ks, ks)) <= tiny + eps * t) {
-                        s.set(ks, ks, 0.0);
+                    if (Math.abs(s.unsafe_get(ks, ks)) <= tiny + eps * t) {
+                        s.unsafe_set(ks, ks, 0.0);
                         break;
                     }
                 }
@@ -308,11 +312,11 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
                 for (int j = p - 2; j >= k; j--) {
 
-                    double t = hypot(s.get(j, j), f);
-                    double cs = s.get(j, j) / t;
+                    double t = hypot(s.unsafe_get(j, j), f);
+                    double cs = s.unsafe_get(j, j) / t;
                     double sn = f / t;
 
-                    s.set(j, j, t);
+                    s.unsafe_set(j, j, t);
 
                     if (j != k) {
                         f = -sn * e[j - 1];
@@ -320,10 +324,12 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     }
 
                     for (int i = 0; i < a.columns(); i++) {
-                        t = cs * v.get(i, j) + sn * v.get(i, p - 1);
-                        v.set(i, p - 1,
-                                -sn * v.get(i, j) + cs * v.get(i, p - 1));
-                        v.set(i, j, t);
+                        t = cs * v.unsafe_get(i, j) + sn 
+                        		* v.unsafe_get(i, p - 1);
+                        v.unsafe_set(i, p - 1,
+                                -sn * v.unsafe_get(i, j) 
+                                + cs * v.unsafe_get(i, p - 1));
+                        v.unsafe_set(i, j, t);
                     }
                 }
             }
@@ -335,19 +341,21 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
                 for (int j = k; j < p; j++) {
 
-                    double t = hypot(s.get(j, j), f);
-                    double cs = s.get(j, j) / t;
+                    double t = hypot(s.unsafe_get(j, j), f);
+                    double cs = s.unsafe_get(j, j) / t;
                     double sn = f / t;
 
-                    s.set(j, j, t);
+                    s.unsafe_set(j, j, t);
                     f = -sn * e[j];
                     e[j] = cs * e[j];
 
                     for (int i = 0; i < a.rows(); i++) {
-                        t = cs * u.get(i, j) + sn * u.get(i, k - 1);
-                        u.set(i, k - 1,
-                                -sn * u.get(i, j) + cs * u.get(i, k - 1));
-                        u.set(i, j, t);
+                        t = cs * u.unsafe_get(i, j) 
+                        		+ sn * u.unsafe_get(i, k - 1);
+                        u.unsafe_set(i, k - 1,
+                                -sn * u.unsafe_get(i, j) 
+                                + cs * u.unsafe_get(i, k - 1));
+                        u.unsafe_set(i, j, t);
                     }
                 }
             }
@@ -357,15 +365,16 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
                 double scale = Math.max(
                         Math.max(Math.max(
-                                Math.max(Math.abs(s.get(p - 1, p - 1)),
-                                        Math.abs(s.get(p - 2, p - 2))),
-                                Math.abs(e[p - 2])), Math.abs(s.get(k, k))),
+                                Math.max(Math.abs(s.unsafe_get(p - 1, p - 1)),
+                                        Math.abs(s.unsafe_get(p - 2, p - 2))),
+                                    Math.abs(e[p - 2])), 
+                                Math.abs(s.unsafe_get(k, k))),
                         Math.abs(e[k]));
 
-                double sp = s.get(p - 1, p - 1) / scale;
-                double spm1 = s.get(p - 2, p - 2) / scale;
+                double sp = s.unsafe_get(p - 1, p - 1) / scale;
+                double spm1 = s.unsafe_get(p - 2, p - 2) / scale;
                 double epm1 = e[p - 2] / scale;
-                double sk = s.get(k, k) / scale;
+                double sk = s.unsafe_get(k, k) / scale;
                 double ek = e[k] / scale;
                 double b = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / 2.0;
                 double c = (sp * epm1) * (sp * epm1);
@@ -391,33 +400,39 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                         e[j - 1] = t;
                     }
 
-                    f = cs * s.get(j, j) + sn * e[j];
-                    e[j] = cs * e[j] - sn * s.get(j, j);
-                    g = sn * s.get(j + 1, j + 1);
-                    s.set(j + 1, j + 1, cs * s.get(j + 1, j + 1));
+                    f = cs * s.unsafe_get(j, j) + sn * e[j];
+                    e[j] = cs * e[j] - sn * s.unsafe_get(j, j);
+                    g = sn * s.unsafe_get(j + 1, j + 1);
+                    s.unsafe_set(j + 1, j + 1, 
+                    		cs * s.unsafe_get(j + 1, j + 1));
 
                     for (int i = 0; i < a.columns(); i++) {
-                        t = cs * v.get(i, j) + sn * v.get(i, j + 1);
-                        v.set(i, j + 1,
-                                -sn * v.get(i, j) + cs * v.get(i, j + 1));
-                        v.set(i, j, t);
+                        t = cs * v.unsafe_get(i, j) 
+                        		+ sn * v.unsafe_get(i, j + 1);
+                        v.unsafe_set(i, j + 1,
+                                -sn * v.unsafe_get(i, j) 
+                                + cs * v.unsafe_get(i, j + 1));
+                        v.unsafe_set(i, j, t);
                     }
 
                     t = hypot(f, g);
                     cs = f / t;
                     sn = g / t;
-                    s.set(j, j, t);
-                    f = cs * e[j] + sn * s.get(j + 1, j + 1);
-                    s.set(j + 1, j + 1, -sn * e[j] + cs * s.get(j + 1, j + 1));
+                    s.unsafe_set(j, j, t);
+                    f = cs * e[j] + sn * s.unsafe_get(j + 1, j + 1);
+                    s.unsafe_set(j + 1, j + 1, 
+                    		-sn * e[j] + cs * s.unsafe_get(j + 1, j + 1));
                     g = sn * e[j + 1];
                     e[j + 1] = cs * e[j + 1];
 
                     if (j < a.rows() - 1) {
                         for (int i = 0; i < a.rows(); i++) {
-                            t = cs * u.get(i, j) + sn * u.get(i, j + 1);
-                            u.set(i, j + 1,
-                                    -sn * u.get(i, j) + cs * u.get(i, j + 1));
-                            u.set(i, j, t);
+                            t = cs * u.unsafe_get(i, j) 
+                            		+ sn * u.unsafe_get(i, j + 1);
+                            u.unsafe_set(i, j + 1,
+                                    -sn * u.unsafe_get(i, j) 
+                                    + cs * u.unsafe_get(i, j + 1));
+                            u.unsafe_set(i, j, t);
                         }
                     }
                 }
@@ -429,36 +444,38 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
             case 4: {
 
-                if (s.get(k, k) <= 0.0) {
-                    s.set(k, k, (s.get(k, k) < 0.0 ? -s.get(k, k) : 0.0));
+                if (s.unsafe_get(k, k) <= 0.0) {
+                    s.unsafe_set(k, k, 
+                    		(s.unsafe_get(k, k) < 0.0 ? -s.unsafe_get(k, k) 
+                    								  : 0.0));
                     for (int i = 0; i <= pp; i++) {
-                        v.set(i, k, -v.get(i, k));
+                        v.unsafe_set(i, k, -v.unsafe_get(i, k));
                     }
                 }
 
                 while (k < pp) {
 
-                    if (s.get(k, k) >= s.get(k + 1, k + 1)) {
+                    if (s.unsafe_get(k, k) >= s.unsafe_get(k + 1, k + 1)) {
                         break;
                     }
 
-                    double t = s.get(k, k);
-                    s.set(k, k, s.get(k + 1, k + 1));
-                    s.set(k + 1, k + 1, t);
+                    double t = s.unsafe_get(k, k);
+                    s.unsafe_set(k, k, s.unsafe_get(k + 1, k + 1));
+                    s.unsafe_set(k + 1, k + 1, t);
 
                     if (k < a.columns() - 1) {
                         for (int i = 0; i < a.columns(); i++) {
-                            t = v.get(i, k + 1);
-                            v.set(i, k + 1, v.get(i, k));
-                            v.set(i, k, t);
+                            t = v.unsafe_get(i, k + 1);
+                            v.unsafe_set(i, k + 1, v.unsafe_get(i, k));
+                            v.unsafe_set(i, k, t);
                         }
                     }
 
                     if (k < a.rows() - 1) {
                         for (int i = 0; i < a.rows(); i++) {
-                            t = u.get(i, k + 1);
-                            u.set(i, k + 1, u.get(i, k));
-                            u.set(i, k, t);
+                            t = u.unsafe_get(i, k + 1);
+                            u.unsafe_set(i, k + 1, u.unsafe_get(i, k));
+                            u.unsafe_set(i, k, t);
                         }
                     }
 
