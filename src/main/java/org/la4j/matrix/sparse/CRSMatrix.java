@@ -299,21 +299,23 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                     growup();
                 }
 
-                if (columnIndices[position] != i) {
+                if (columnIndices[position] != i || position == limit) {
 
                     for (int k = cardinality; k > position; k--) {
                         values[k] = values[k - 1];
                         columnIndices[k] = columnIndices[k - 1];
                     }
-                }
 
-                for (int k = ii + 1; k < rows + 1; k++) {
-                    rowPointers[k]++;
+                    for (int k = ii + 1; k < rows + 1; k++) {
+                        rowPointers[k]++;
+                    }
+
+                    columnIndices[position] = i;
+
+                    cardinality++;
                 }
 
                 values[position] = value;
-                columnIndices[position] = i;
-                cardinality++;
 
             } else if (columnIndices[position] == i && position < limit) {
 

@@ -373,7 +373,7 @@ public abstract class AbstractVector implements Vector {
         sb.append("[");
         for (int i = 0; i < length; i++) {
             sb.append(String.format("%6.3f", unsafe_get(i)));
-            sb.append((i < length - 1 ? ", " : ""));
+            sb.append((i < length - 1 ? ", " : " "));
         }
         sb.append("]");
 
