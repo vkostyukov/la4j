@@ -24,6 +24,7 @@ package org.la4j.decomposition;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.vector.Vector;
 
 public class SingularValueDecompositor implements MatrixDecompositor {
 
@@ -45,8 +46,8 @@ public class SingularValueDecompositor implements MatrixDecompositor {
         Matrix s = factory.createMatrix(a.columns(), a.columns());
         Matrix v = factory.createMatrix(a.columns(), a.columns());
 
-        double[] e = new double[a.columns()];
-        double[] work = new double[a.rows()];
+        Vector e = factory.createVector(a.columns());
+        Vector work = factory.createVector(a.rows());
 
         int nct = Math.min(a.rows() - 1, a.columns());
         int nrt = Math.max(0, Math.min(a.columns() - 2, a.rows()));
@@ -79,7 +80,8 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
             for (int j = k + 1; j < a.columns(); j++) {
 
-                if ((k < nct) & (Math.abs(s.unsafe_get(k, k)) > Matrices.EPS)) {
+                if ((k < nct) 
+                		& (Math.abs(s.unsafe_get(k, k)) > Matrices.EPS)) {
 
                     double t = 0;
 
@@ -95,7 +97,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     }
                 }
 
-                e[j] = a.unsafe_get(k, j);
+                e.unsafe_set(j, a.unsafe_get(k, j));
             }
 
             if (k < nct) {
@@ -108,50 +110,53 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
             if (k < nrt) {
 
-                e[k] = 0;
+                e.unsafe_set(k, 0);
 
                 for (int i = k + 1; i < a.columns(); i++) {
-                    e[k] = hypot(e[k], e[i]);
+                    e.unsafe_set(k, hypot(e.unsafe_get(k), e.unsafe_get(i)));
                 }
 
-                if (Math.abs(e[k]) > Matrices.EPS) {
+                if (Math.abs(e.unsafe_get(k)) > Matrices.EPS) {
 
-                    if (e[k + 1] < 0.0) {
+                    if (e.unsafe_get(k + 1) < 0.0) {
 
-                        e[k] = -e[k];
+                        e.unsafe_set(k, -e.unsafe_get(k));
                     }
 
                     for (int i = k + 1; i < a.columns(); i++) {
 
-                        e[i] /= e[k];
+                        e.unsafe_set(i, e.unsafe_get(i) / e.unsafe_get(k));
                     }
 
-                    e[k + 1] += 1.0;
+                    e.unsafe_set(k + 1, e.unsafe_get(k + 1) + 1.0);
                 }
 
-                e[k] = -e[k];
+                e.unsafe_set(k, -e.unsafe_get(k));
 
-                if ((k + 1 < a.rows()) & (Math.abs(e[k]) > Matrices.EPS)) {
+                if ((k + 1 < a.rows()) 
+                		& (Math.abs(e.unsafe_get(k)) > Matrices.EPS)) {
 
                     for (int j = k + 1; j < a.columns(); j++) {
                         for (int i = k + 1; i < a.rows(); i++) {
-                            work[i] += e[j] * a.unsafe_get(i, j);
+                            work.unsafe_set(i, 
+                            		work.unsafe_get(i) 
+                            		+ e.unsafe_get(j) * a.unsafe_get(i, j));
                         }
                     }
 
                     for (int j = k + 1; j < a.columns(); j++) {
 
-                        double t = -e[j] / e[k + 1];
+                        double t = -e.unsafe_get(j) / e.unsafe_get(k + 1);
 
                         for (int i = k + 1; i < a.rows(); i++) {
                             a.unsafe_set(i, j, a.unsafe_get(i, j) 
-                            		+ (t * work[i]));
+                            		+ (t * work.unsafe_get(i)));
                         }
                     }
                 }
 
                 for (int i = k + 1; i < a.columns(); i++) {
-                    v.unsafe_set(i, k, e[i]);
+                    v.unsafe_set(i, k, e.unsafe_get(i));
                 }
             }
         }
@@ -167,10 +172,10 @@ public class SingularValueDecompositor implements MatrixDecompositor {
         }
 
         if (nrt + 1 < p) {
-            e[nrt] = a.unsafe_get(nrt, p - 1);
+            e.unsafe_set(nrt, a.unsafe_get(nrt, p - 1));
         }
 
-        e[p - 1] = 0.0;
+        e.unsafe_set(p - 1, 0.0);
 
         for (int j = nct; j < n; j++) {
 
@@ -222,7 +227,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
         for (int k = n - 1; k >= 0; k--) {
 
-            if ((k < nrt) & (Math.abs(e[k]) > Matrices.EPS)) {
+            if ((k < nrt) & (Math.abs(e.unsafe_get(k)) > Matrices.EPS)) {
 
                 for (int j = k + 1; j < n; j++) {
 
@@ -261,11 +266,11 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                 if (k == -1)
                     break;
 
-                if (Math.abs(e[k]) <= tiny
+                if (Math.abs(e.unsafe_get(k)) <= tiny
                         + eps
                         * (Math.abs(s.unsafe_get(k, k)) + Math
                                 .abs(s.unsafe_get(k + 1, k + 1)))) {
-                    e[k] = 0.0;
+                    e.unsafe_set(k, 0.0);
                     break;
                 }
             }
@@ -283,8 +288,9 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     if (ks == k)
                         break;
 
-                    double t = (ks != p ? Math.abs(e[ks]) : 0.)
-                            + (ks != k + 1 ? Math.abs(e[ks - 1]) : 0.);
+                    double t = (ks != p ? Math.abs(e.unsafe_get(ks)) : 0.)
+                            + (ks != k + 1 ? Math.abs(e.unsafe_get(ks - 1)) 
+                            			   : 0.);
 
                     if (Math.abs(s.unsafe_get(ks, ks)) <= tiny + eps * t) {
                         s.unsafe_set(ks, ks, 0.0);
@@ -307,8 +313,8 @@ public class SingularValueDecompositor implements MatrixDecompositor {
             switch (kase) {
 
             case 1: {
-                double f = e[p - 2];
-                e[p - 2] = 0.0;
+                double f = e.unsafe_get(p - 2);
+                e.unsafe_set(p - 2, 0.0);
 
                 for (int j = p - 2; j >= k; j--) {
 
@@ -319,8 +325,8 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     s.unsafe_set(j, j, t);
 
                     if (j != k) {
-                        f = -sn * e[j - 1];
-                        e[j - 1] = cs * e[j - 1];
+                        f = -sn * e.unsafe_get(j - 1);
+                        e.unsafe_set(j - 1, cs * e.unsafe_get(j - 1));
                     }
 
                     for (int i = 0; i < a.columns(); i++) {
@@ -336,8 +342,8 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                 break;
 
             case 2: {
-                double f = e[k - 1];
-                e[k - 1] = 0.0;
+                double f = e.unsafe_get(k - 1);
+                e.unsafe_set(k - 1, 0.0);
 
                 for (int j = k; j < p; j++) {
 
@@ -346,8 +352,8 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     double sn = f / t;
 
                     s.unsafe_set(j, j, t);
-                    f = -sn * e[j];
-                    e[j] = cs * e[j];
+                    f = -sn * e.unsafe_get(j);
+                    e.unsafe_set(j, cs * e.unsafe_get(j));
 
                     for (int i = 0; i < a.rows(); i++) {
                         t = cs * u.unsafe_get(i, j) 
@@ -367,15 +373,15 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                         Math.max(Math.max(
                                 Math.max(Math.abs(s.unsafe_get(p - 1, p - 1)),
                                         Math.abs(s.unsafe_get(p - 2, p - 2))),
-                                    Math.abs(e[p - 2])), 
+                                    Math.abs(e.unsafe_get(p - 2))), 
                                 Math.abs(s.unsafe_get(k, k))),
-                        Math.abs(e[k]));
+                        Math.abs(e.unsafe_get(k)));
 
                 double sp = s.unsafe_get(p - 1, p - 1) / scale;
                 double spm1 = s.unsafe_get(p - 2, p - 2) / scale;
-                double epm1 = e[p - 2] / scale;
+                double epm1 = e.unsafe_get(p - 2) / scale;
                 double sk = s.unsafe_get(k, k) / scale;
-                double ek = e[k] / scale;
+                double ek = e.unsafe_get(k) / scale;
                 double b = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / 2.0;
                 double c = (sp * epm1) * (sp * epm1);
                 double shift = 0.0;
@@ -397,11 +403,12 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     double sn = g / t;
 
                     if (j != k) {
-                        e[j - 1] = t;
+                        e.unsafe_set(j - 1, t);
                     }
 
-                    f = cs * s.unsafe_get(j, j) + sn * e[j];
-                    e[j] = cs * e[j] - sn * s.unsafe_get(j, j);
+                    f = cs * s.unsafe_get(j, j) + sn * e.unsafe_get(j);
+                    e.unsafe_set(j, 
+                    		cs * e.unsafe_get(j) - sn * s.unsafe_get(j, j));
                     g = sn * s.unsafe_get(j + 1, j + 1);
                     s.unsafe_set(j + 1, j + 1, 
                     		cs * s.unsafe_get(j + 1, j + 1));
@@ -419,11 +426,12 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     cs = f / t;
                     sn = g / t;
                     s.unsafe_set(j, j, t);
-                    f = cs * e[j] + sn * s.unsafe_get(j + 1, j + 1);
+                    f = cs * e.unsafe_get(j) + sn * s.unsafe_get(j + 1, j + 1);
                     s.unsafe_set(j + 1, j + 1, 
-                    		-sn * e[j] + cs * s.unsafe_get(j + 1, j + 1));
-                    g = sn * e[j + 1];
-                    e[j + 1] = cs * e[j + 1];
+                    		-sn * e.unsafe_get(j) 
+                    		+ cs * s.unsafe_get(j + 1, j + 1));
+                    g = sn * e.unsafe_get(j + 1);
+                    e.unsafe_set(j + 1, cs * e.unsafe_get(j + 1));
 
                     if (j < a.rows() - 1) {
                         for (int i = 0; i < a.rows(); i++) {
@@ -437,7 +445,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     }
                 }
 
-                e[p - 2] = f;
+                e.unsafe_set(p - 2, f);
                 iter = iter + 1;
             }
                 break;
