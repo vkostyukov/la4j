@@ -1,6 +1,8 @@
 la4j (Linear Algebra for Java)  [![Build Status](https://travis-ci.org/vkostyukov/la4j.png?branch=master)](https://travis-ci.org/vkostyukov/la4j)
 =============================
 
+![la4j logo](https://raw.github.com/vkostyukov/la4j/master/la4j-logo.png) 
+
 [la4j](http://la4j.org) - is open source and 100% Java library 
 that provides Linear Algebra primitives and algorithms. There are the 
 key features of la4j listed bellow:
@@ -72,7 +74,7 @@ Licensing
 Contributors
 ------------
 
-La4j wouldn't be the library it is today without the source contributions 
+la4j wouldn't be the library it is today without the source contributions 
 made by the authors:
 - Wajdy Essam
 - Evgenia Krivova
