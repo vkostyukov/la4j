@@ -1,15 +1,18 @@
 la4j (Linear Algebra for Java)  [![Build Status](https://travis-ci.org/vkostyukov/la4j.png?branch=master)](https://travis-ci.org/vkostyukov/la4j)
 =============================
 
-[la4j](http://la4j.org) - is open source and 100% Java library that provides Linear Algebra primitives and algorithms. 
-There are the key features of la4j listed bellow:
+[la4j](http://la4j.org) - is open source and 100% Java library 
+that provides Linear Algebra primitives and algorithms. There are the 
+key features of la4j listed bellow:
 
-- no dependencies and tiny size (~80kb jar)
+- no dependencies and tiny size (~100kb jar)
 - minimalistic and full object-oriented API
-- sparse (CRS, CCS) and dense (1d/2d arrays) matrices
+- sparse (CRS, CCS) and dense (1D/2D arrays) matrices
 - linear systems solving (Gaussian, Jacobi, Zeidel, Square Root, Sweep and other)
 - matrices decomposition (Eigenvalues, SVD, QR, LU, Cholesky and other)
-- MatrixMarket/CSV IO formats support for matrices and vectors
+- functors support: predicates, functions and procedures
+- MatrixMarket/CSV IO formats support
+
 
 Changelog
 ---------
@@ -24,9 +27,12 @@ la4j-0.3.0 <code>Dec 2012</code>
  * new la4j entities: matrix/vector sources, matrix/vector functors;
  * la4j uses default unchecked exceptions from java.lang.* now;
  * the code has been formated according to JavaCodeConv;
- * support of unsafe accessors;
- * fixed several major bugs;
- 
+ * support of unsafe accessors and arithmetic methods;
+ * support Eigenvalues decomposition for non-symmetric matrix;
+ * new fast matrix-to-matrix multiply algorithm with blocks;
+ * new algorithm for runtime-based machine epsilon initialization;
+ * fixed several major/critical bugs;
+  
 la4j-0.2.0 <code>Nov 2011</code>
  * new package la4j.io for reading/writing matrices in MatrixMarket format;
  * matrices decomposition (LU, QR, Cholesky, SVD, Eigenvalues) support;
@@ -52,7 +58,8 @@ Download
 --------
  
  Details of the latest version of la4j can be found on the la4j
- project web site <http://la4j.org>.
+ project web site <http://la4j.org> or GitHub page 
+ <https://github.com/vkostykov/la4j>.
  
  
 Licensing
@@ -65,7 +72,8 @@ Licensing
 Contributors
 ------------
 
-La4j wouldn't be the library it is today without the source contributions made by the authors:
+La4j wouldn't be the library it is today without the source contributions 
+made by the authors:
 - Wajdy Essam
 - Evgenia Krivova
 
