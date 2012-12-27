@@ -278,7 +278,7 @@ public final class Matrices {
     public final static MatrixInvertor GAUSSIAN_INVERTOR =
             new GaussianInvertor();
 
-    public final static MatrixInvertor DEFAILT_INVERTOR = GAUSSIAN_INVERTOR;
+    public final static MatrixInvertor DEFAULT_INVERTOR = GAUSSIAN_INVERTOR;
 
     public final static LinearSystemSolver GAUSSIAN_SOLVER = 
             new GaussianSolver();
