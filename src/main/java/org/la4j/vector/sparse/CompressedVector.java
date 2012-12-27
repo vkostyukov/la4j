@@ -65,13 +65,14 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         this(source.length(), 0);
 
         for (int i = 0; i < length; i++) {
-            if (Math.abs(source.get(i)) > Vectors.EPS) {
+            double value = source.get(i);
+            if (Math.abs(value) > Vectors.EPS) {
 
                 if (values.length <= cardinality) {
                     growup();
                 }
 
-                values[cardinality] = source.get(i);
+                values[cardinality] = value;
                 indices[cardinality] = i;
                 cardinality++;
             }
