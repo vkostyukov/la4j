@@ -68,13 +68,14 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         for (int i = 0; i < rows; i++) {
             rowPointers[i] = cardinality;
             for (int j = 0; j < columns; j++) {
-                if (Math.abs(source.get(i, j)) > Matrices.EPS) {
+                double value = source.get(i, j);
+                if (Math.abs(value) > Matrices.EPS) {
 
                     if (values.length < cardinality + 1) {
                         growup();
                     }
 
-                    values[cardinality] = source.get(i, j);
+                    values[cardinality] = value;
                     columnIndices[cardinality] = j;
                     cardinality++;
                 }
