@@ -402,6 +402,18 @@ public interface Matrix extends Externalizable {
      *            row
      * @return the i-th row
      */
+    
+    int rank();
+    
+    /**
+     * Returns the "rank" of this matrix.
+     * <p>
+     * See <a href="http://mathworld.wolfram.com/MatrixRank.html">
+     * http://mathworld.wolfram.com/MatrixRank.html</a> for more details.
+     * </p>
+     * @ return the "rank" of this matrix
+     */
+    
     Vector getRow(int i);
 
     /**
