@@ -651,6 +651,95 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertTrue(Math.abs(a.determinant() - 45.0) < Matrices.EPS);
     }
 
+    public void testRank_3x3() {
+
+        double array[][] = new double[][] {
+                { 1.0, 0.0, 0.0 },
+                { 0.0, 5.0, 0.0 },
+                { 0.0, 0.0, 9.0 } 
+        };
+
+        Matrix a = factory().createMatrix(array);
+
+        assertEquals(3, a.rank());
+    }
+    
+    public void testRank_4x4() {
+
+        double array[][] = new double[][] {
+                { 1.0, 0.0, 0.0, 3.5 },
+                { 0.0, 0.0, 0.0, 2.0 },
+                { 0.0, 0.0, 9.0, 0.0 },
+                { 1.0, 0.0, 0.0, 0.0 }
+        };
+
+        Matrix a = factory().createMatrix(array);
+
+        assertEquals(3, a.rank());
+    }
+
+    public void testRank_2x4() {
+
+        double array[][] = new double[][] {
+                { 1.0, 0.0, 0.0, 3.5 },
+                { 0.0, 1.3, 0.0, 2.0 }
+        };
+
+        Matrix a = factory().createMatrix(array);
+
+        assertEquals(2, a.rank());
+    }
+    
+    public void testRank_5x3() {
+
+        double array[][] = new double[][] {
+                { 1.0, 0.0, 0.0 },
+                { 0.0, 0.0, 0.0 },
+                { 1.0, 0.0, 9.0 },
+                { 1.0, 0.0, 0.0 },
+                { 1.0, 0.0, 0.0 }
+        };
+
+        Matrix a = factory().createMatrix(array);
+
+        assertEquals(2, a.rank());
+    }
+    
+    public void testRank_1x4() {
+
+        double array[][] = new double[][] {
+                { 0.0, 1.0, 0.0, 0.0 }
+        };
+
+        Matrix a = factory().createMatrix(array);
+
+        assertEquals(1, a.rank());
+    }
+    
+    public void testRank_nullMatrix() {
+
+        double array[][] = new double[][] {
+                { 0.0, 0.0, 0.0 },
+                { 0.0, 0.0, 0.0 },
+                { 0.0, 0.0, 0.0 } 
+        };
+
+        Matrix a = factory().createMatrix(array);
+
+        assertEquals(0, a.rank());
+    }
+    
+    public void testRank_emptyMatrix() {
+
+        double array[][] = new double[][] {
+                { }
+        };
+
+        Matrix a = factory().createMatrix(array);
+
+        assertEquals(0, a.rank());
+    }
+    
     public void testRowAccess_3x3() {
 
         Matrix a = factory().createMatrix(new double[][] {
