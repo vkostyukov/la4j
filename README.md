@@ -62,7 +62,7 @@ Download
  
  Details of the latest version of la4j can be found on the la4j
  project web site <http://la4j.org> or GitHub page 
- <https://github.com/vkostykov/la4j>.
+ <https://github.com/vkostyukov/la4j>.
  
  
 Licensing
