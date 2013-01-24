@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Contributor(s): -
+ * Contributor(s): Evgenia Krivova
  * 
  */
 
@@ -217,49 +217,60 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public int rank() {
-        if ((columns == 0) || (rows == 0)) return 0;
-        Matrix m = this;        
-        int i;
-        int x, y;
-        x = 0;
-        y = 0;
+        if ((columns == 0) || (rows == 0)) {
+            return 0;
+        }     
+        int x = 0; 
+        int y = 0;
         int endi = (columns > rows)? rows : columns;
-        for(i = 0; i < endi; i++) {
-            if (m.get(i, i)== 0) {
+        for(int i = 0; i < endi; i++) {
+            if (Math.abs(unsafe_get(i, i)) <= Matrices.EPS) {
                 boolean c = false;
                 for (int k = i; k < rows; k++){
                     for (int l = i; l < columns; l++){
-                        if (m.get(k, l) != 0){
+                        if (Math.abs(unsafe_get(k, l)) > Matrices.EPS){
                             y = k;
                             x = l;
                             c = true;
                             break;
                         }         
                     }
-                    if (c) break;
+                    if (c) {
+                        break;
+                    }
                 }
-            if (!c) break;
-            if (i != y) m.swapRows(i, y);
-            if (i != x) m.swapColumns(i, x);
+                if (!c) {
+                    break;
+                }
+                if (i != y) {
+                    swapRows(i, y);
+                }
+                if (i != x) {
+                    swapColumns(i, x);
+                }
             }
 
             for (x = i; x < columns; x++) {
-                m.set(i, x, m.get(i, x) / m.get(i, i) );
+                unsafe_set(i, x, unsafe_get(i, x) / unsafe_get(i, i));
             }
             for (y = i + 1; y < rows; y++) {
                 for (x = i; x < columns; x++)
-                    m.set(y, x, m.get(y, x) - m.get(i, x) * m.get(y, i));
+                    unsafe_set(y, x, unsafe_get(y, x) - unsafe_get(i, x) * unsafe_get(y, i));
             }
             for (x = i + 1; x < columns; x++) {
                 for (y = i; y < rows; y++)
-                    m.set(y, x, m.get(y, x) - m.get(y, i) * m.get(i, x));
+                    unsafe_set(y, x, unsafe_get(y, x) - unsafe_get(y, i) * unsafe_get(i, x));
             }
         }
-        int cnt = 0;
-        for (i = 0; i < endi; i++)
-            if (m.get(i, i) == 0) break;
-            else cnt++;  
-        return cnt;
+        int result = 0;
+        for (int i = 0; i < endi; i++)
+            if (Math.abs(unsafe_get(i, i)) <= Matrices.EPS) {
+                break;
+            }
+            else {
+                result++;
+            }  
+        return result;
     }
     
     @Override
