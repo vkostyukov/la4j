@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Contributor(s): -
+ * Contributor(s): Evgenia Krivova
  * 
  */
 
@@ -396,12 +396,24 @@ public interface Matrix extends Externalizable {
     double determinant();
 
     /**
+     * Returns the "rank" of this matrix.
+     * <p>
+     * See <a href="http://mathworld.wolfram.com/MatrixRank.html">
+     * http://mathworld.wolfram.com/MatrixRank.html</a> for more details.
+     * </p>
+     * @ return the "rank" of this matrix
+     */
+    
+    int rank();
+    
+    /**
      * Get the i-th row of matrix;
      * 
      * @param i
      *            row
      * @return the i-th row
      */
+    
     Vector getRow(int i);
 
     /**
