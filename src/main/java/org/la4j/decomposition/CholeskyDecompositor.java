@@ -79,7 +79,7 @@ public class CholeskyDecompositor implements MatrixDecompositor {
     private boolean isPositiveDefinite(Matrix matrix) {
 
         //
-        // TODO: create a MatrixPredicate for it
+        // TODO: Issue 12
         //
 
         int n = matrix.rows();

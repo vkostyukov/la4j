@@ -141,7 +141,7 @@ public final class Matrices {
     }
 
     //
-    // TODO:
+    // TODO: Issue 5
     //
     // Please, send me a pull-request, if you know how to write it better
     // 
@@ -203,7 +203,7 @@ public final class Matrices {
             implements MatrixFunction {
         @Override
         public double evaluate(int i, int j, double value) {
-            return value + 1.0;
+            return value - 1.0;
         }
     }
 

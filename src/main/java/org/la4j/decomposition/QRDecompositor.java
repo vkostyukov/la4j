@@ -58,7 +58,8 @@ public class QRDecompositor implements MatrixDecompositor {
                     qr.unsafe_set(i, k, qr.unsafe_get(i, k) / norm);
                 }
 
-                // TODO: create a matrix method for that operation 
+                // TODO: Issue 2 
+
                 qr.unsafe_set(k, k, qr.unsafe_get(k, k) + 1.0);
 
                 for (int j = k + 1; j < qr.columns(); j++) {
@@ -119,7 +120,7 @@ public class QRDecompositor implements MatrixDecompositor {
             }
         }
 
-        // TODO: fix it
+        // TODO: Issue 13
 
         return new Matrix[] { q.multiply(-1), r };
     }

@@ -59,8 +59,7 @@ public class CRSFactory extends CompressedFactory implements Factory {
     @Override
     public Matrix createRandomMatrix(int rows, int columns) {
 
-        // TODO: improve performance of this code
-        //       use raw structure
+        // TODO: Issue 15
 
         int cardinality = (rows * columns) / DENSITY;
 
@@ -81,8 +80,7 @@ public class CRSFactory extends CompressedFactory implements Factory {
     @Override
     public Matrix createRandomSymmetricMatrix(int size) {
 
-        // TODO: improve performance of this code
-        //       use raw structure
+        // TODO: Issue 13
 
         int cardinality = (size * size) / DENSITY;
 

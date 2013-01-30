@@ -212,39 +212,68 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public double determinant() {
+        if (rows != columns) {
+            throw new IllegalStateException("Can't compute determinant for " +
+                                            "non-square matrix.");
+        }
+
+        if (rows == 0) {
+            return 0.0;
+        } else if (rows == 1) {
+            return unsafe_get(0, 0);
+        } else if (rows == 2) {
+            return unsafe_get(0, 0) * unsafe_get(1, 1) -
+                   unsafe_get(0, 1) * unsafe_get(1, 0);
+        } else if (rows == 3) {
+            return unsafe_get(0, 0) * unsafe_get(1, 1) * unsafe_get(2, 2) +
+                   unsafe_get(0, 1) * unsafe_get(1, 2) * unsafe_get(2, 0) +
+                   unsafe_get(0, 2) * unsafe_get(1, 0) * unsafe_get(2, 1) -
+                   unsafe_get(0, 2) * unsafe_get(1, 1) * unsafe_get(2, 0) -
+                   unsafe_get(0, 1) * unsafe_get(1, 0) * unsafe_get(2, 2) -
+                   unsafe_get(0, 0) * unsafe_get(1, 2) * unsafe_get(2, 1);
+        }
+
         return triangularize().product();
     }
 
     @Override
     public int rank() {
+
         if ((columns == 0) || (rows == 0)) {
             return 0;
-        }     
+        }
+
         int x = 0; 
         int y = 0;
+
         int endi = (columns > rows)? rows : columns;
+
         for(int i = 0; i < endi; i++) {
             if (Math.abs(unsafe_get(i, i)) <= Matrices.EPS) {
                 boolean c = false;
-                for (int k = i; k < rows; k++){
-                    for (int l = i; l < columns; l++){
-                        if (Math.abs(unsafe_get(k, l)) > Matrices.EPS){
+                for (int k = i; k < rows; k++) {
+                    for (int l = i; l < columns; l++) {
+                        if (Math.abs(unsafe_get(k, l)) > Matrices.EPS) {
                             y = k;
                             x = l;
                             c = true;
                             break;
                         }         
                     }
+
                     if (c) {
                         break;
                     }
                 }
+
                 if (!c) {
                     break;
                 }
+
                 if (i != y) {
                     swapRows(i, y);
                 }
+
                 if (i != x) {
                     swapColumns(i, x);
                 }
@@ -253,23 +282,32 @@ public abstract class AbstractMatrix implements Matrix {
             for (x = i; x < columns; x++) {
                 unsafe_set(i, x, unsafe_get(i, x) / unsafe_get(i, i));
             }
+
             for (y = i + 1; y < rows; y++) {
-                for (x = i; x < columns; x++)
-                    unsafe_set(y, x, unsafe_get(y, x) - unsafe_get(i, x) * unsafe_get(y, i));
+                for (x = i; x < columns; x++) {
+                    unsafe_set(y, x, unsafe_get(y, x) - unsafe_get(i, x) 
+                                     * unsafe_get(y, i));
+                }
             }
+
             for (x = i + 1; x < columns; x++) {
-                for (y = i; y < rows; y++)
-                    unsafe_set(y, x, unsafe_get(y, x) - unsafe_get(y, i) * unsafe_get(i, x));
+                for (y = i; y < rows; y++) {
+                    unsafe_set(y, x, unsafe_get(y, x) - unsafe_get(y, i) 
+                                     * unsafe_get(i, x));
+                }
             }
         }
+
         int result = 0;
-        for (int i = 0; i < endi; i++)
+
+        for (int i = 0; i < endi; i++) {
             if (Math.abs(unsafe_get(i, i)) <= Matrices.EPS) {
                 break;
             }
-            else {
-                result++;
-            }  
+
+            result++;
+        }
+
         return result;
     }
     

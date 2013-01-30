@@ -126,8 +126,8 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         for (int ii = rowPointers[i]; ii < rowPointers[i + 1]; ii++) {
             if (columnIndices[ii] == j) {
 
-                // TODO: if value is zero:
-                // clear the value cell
+                // TODO: Issue 14
+                // clear the value cell if the value is 0
 
                 values[ii] = value;
                 return;

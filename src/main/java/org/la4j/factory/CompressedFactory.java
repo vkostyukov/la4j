@@ -32,9 +32,6 @@ public abstract class CompressedFactory extends AbstractFactory implements Facto
 
     private static final long serialVersionUID = 4071505L;
 
-    // TODO: use method 
-    // densety(int rows, int columns) insted of it
-
     public static final int DENSITY = 4;
 
     @Override

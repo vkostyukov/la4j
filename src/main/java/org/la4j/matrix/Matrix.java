@@ -95,7 +95,7 @@ public interface Matrix extends Externalizable {
     void resize(int rows, int columns);
 
     /**
-     * Swaps i and j rows of this matrix. TODO: here
+     * Swaps i and j rows of this matrix.
      * 
      * @param i
      *            row

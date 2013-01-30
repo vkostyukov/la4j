@@ -127,8 +127,8 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         for (int jj = columnPointers[j]; jj < columnPointers[j + 1]; jj++) {
             if (rowIndices[jj] == i) {
 
-                // TODO: if value is zero:
-                // clear the value cell
+                // TODO: Issue 14
+                // clear the value cell if the value is 0
 
                 values[jj] = value;
                 return;
