@@ -226,7 +226,8 @@ public class MatrixMarketStream extends AbstractStream
         Vector vector = factory.createVector(length);
 
         for (int k = 0; k < cardinality; k++) {
-            int i = Integer.valueOf(nextToken());
+            // In Matrix Market specification indices are 1-based
+            int i = Integer.valueOf(nextToken()) - 1;
             double value = Double.valueOf(nextToken());
 
             vector.unsafe_set(i, value);
