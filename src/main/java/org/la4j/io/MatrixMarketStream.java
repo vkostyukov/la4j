@@ -52,7 +52,8 @@ public class MatrixMarketStream extends AbstractStream
         @Override
         public void apply(int i, double value) {
             try {
-                writer.write(i + " " + String.format(Locale.US, "%.12f", value));
+                // In Matrix Market specification indices are 1-based
+                writer.write((i + 1) + " " + String.format(Locale.US, "%.12f", value));
                 writer.newLine();
             } catch (IOException expected) {
                 throw new IllegalArgumentException("Can't write with writer.");
@@ -71,7 +72,7 @@ public class MatrixMarketStream extends AbstractStream
         @Override
         public void apply(int i, int j, double value) {
             try {
-                writer.write(i + " " + j + " " 
+                writer.write((i + 1) + " " + (j + 1) + " "
                         + String.format(Locale.US, "%.12f", value));
                 writer.newLine();
             } catch (IOException expected) {
@@ -276,8 +277,9 @@ public class MatrixMarketStream extends AbstractStream
         Matrix matrix = factory.createMatrix(rows, columns);
 
         for (int k = 0; k < cardinality; k++) {
-            int i = Integer.valueOf(nextToken());
-            int j = Integer.valueOf(nextToken());
+            // In Matrix Market specification indices are 1-based, but we need a 0-based index
+            int i = Integer.valueOf(nextToken()) - 1;
+            int j = Integer.valueOf(nextToken()) - 1;
             double value = Double.valueOf(nextToken());
 
             matrix.unsafe_set(i, j, value);
