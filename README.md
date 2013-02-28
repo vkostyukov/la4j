@@ -24,7 +24,7 @@ la4j-0.3.5 <code>DEV</code>
  * added ```rank()``` method (contributed by Evgenia Krivova)
  * fixed bug in ```MatrixDecFunction```
  * added fast implementation of ```determinant()``` method
- * fixed bug in MatrixMatketStream (contributed by Alessio Placitelli)
+ * fixed bug in ```MatrixMatketStream``` (contributed by Alessio Placitelli)
 
 la4j-0.3.0 <code>Dec 2012</code>
  * la4j got new API and new package naming (starting with "org.la4j.*")
