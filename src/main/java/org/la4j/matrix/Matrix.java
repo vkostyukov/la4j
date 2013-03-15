@@ -560,6 +560,67 @@ public interface Matrix extends Externalizable {
 
     /**
      * 
+     * @param i
+     * @param j
+     * @param function
+     * @return
+     */
+    Matrix transform(int i, int j, MatrixFunction function);
+
+    /**
+     * 
+     * @param i
+     * @param j
+     * @param function
+     * @param factory
+     * @return
+     */
+    Matrix transform(int i, int j, MatrixFunction function, Factory factory);
+
+    /**
+     * 
+     * @param i
+     * @param j
+     * @param function
+     * @return
+     */
+    Matrix unsafe_transform(int i, int j, MatrixFunction function);
+
+    /**
+     * 
+     * @param i
+     * @param j
+     * @param function
+     * @param factory
+     * @return
+     */
+    Matrix unsafe_transform(int i, int j, MatrixFunction function, 
+                            Factory factory);
+
+    /**
+     * 
+     * @param function
+     */
+    void update(MatrixFunction function);
+
+    /**
+     * 
+     * @param i
+     * @param j
+     * @param function
+     */
+    void update(int i, int j, MatrixFunction function);
+
+    /**
+     * 
+     * @param i
+     * @param j
+     * @param function
+     */
+    void unsafe_update(int i, int j, MatrixFunction function);
+
+    /**
+     * 
      * @param predidate
      * @return
      */

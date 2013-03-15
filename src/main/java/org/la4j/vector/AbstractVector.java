@@ -306,6 +306,53 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public Vector transform(int i, VectorFunction function) {
+        return transform(i, function, factory);
+    }
+
+    @Override
+    public Vector transform(int i, VectorFunction function, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        ensureIndexInLength(i);
+
+        return unsafe_transform(i, function, factory);
+    }
+
+    @Override
+    public Vector unsafe_transform(int i, VectorFunction function) {
+        return unsafe_transform(i, function, factory);
+    }
+
+    @Override
+    public Vector unsafe_transform(int i, VectorFunction function,
+            Factory factory) {
+
+        Vector result = copy(factory);
+        result.unsafe_set(i, function.evaluate(i, unsafe_get(i)));
+
+        return result;
+    }
+
+    @Override
+    public void update(VectorFunction function) {
+        for (int i = 0; i < length; i++) {
+            unsafe_set(i, function.evaluate(i, unsafe_get(i)));
+        }
+    }
+
+    @Override
+    public void update(int i, VectorFunction function) {
+        ensureIndexInLength(i);
+
+        unsafe_update(i, function);
+    }
+
+    @Override
+    public void unsafe_update(int i, VectorFunction function) {
+        unsafe_set(i, function.evaluate(i, unsafe_get(i)));
+    }
+
+    @Override
     public boolean is(VectorPredicate predicate) {
 
         boolean result = true;

@@ -317,6 +317,60 @@ public interface Vector extends Externalizable {
 
     /**
      * 
+     * @param i
+     * @param function
+     * @return
+     */
+    Vector transform(int i, VectorFunction function);
+
+    /**
+     * 
+     * @param i
+     * @param function
+     * @param factory
+     * @return
+     */
+    Vector transform(int i, VectorFunction function, Factory factory);
+
+    /**
+     * 
+     * @param i
+     * @param function
+     * @return
+     */
+    Vector unsafe_transform(int i, VectorFunction function);
+
+    /**
+     * 
+     * @param i
+     * @param function
+     * @param factory
+     * @return
+     */
+    Vector unsafe_transform(int i, VectorFunction function, Factory factory);
+
+    /**
+     * 
+     * @param function
+     */
+    void update(VectorFunction function); 
+
+    /**
+     * 
+     * @param i
+     * @param function
+     */
+    void update(int i, VectorFunction function);
+
+    /**
+     * 
+     * @param i
+     * @param function
+     */
+    void unsafe_update(int i, VectorFunction function);
+
+    /**
+     * 
      * @param predicate
      * @return
      */

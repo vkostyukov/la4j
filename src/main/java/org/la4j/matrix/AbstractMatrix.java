@@ -649,6 +649,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix transform(MatrixFunction function, Factory factory) {
+        ensureFactoryIsNotNull(factory);
 
         Matrix result = blank(factory);
 
@@ -659,6 +660,62 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix transform(int i, int j, MatrixFunction function) {
+        return transform(i, j, function, factory);
+    }
+
+    @Override
+    public Matrix transform(int i, int j, MatrixFunction function,
+            Factory factory) {
+
+        ensureIndexInRows(i);
+        ensureIndexInColumns(j);
+
+        ensureFactoryIsNotNull(factory);
+
+        return unsafe_transform(i, j, function, factory);
+    }
+
+
+    @Override
+    public Matrix unsafe_transform(int i, int j, MatrixFunction function) {
+        return unsafe_transform(i, j, function, factory);
+    }
+
+    @Override
+    public Matrix unsafe_transform(int i, int j, MatrixFunction function,
+            Factory factory) {
+
+        Matrix result = copy(factory);
+        result.unsafe_set(i, j, function.evaluate(i, j, 
+                          result.unsafe_get(i, j)));
+
+        return result;
+    }
+
+    @Override
+    public void update(MatrixFunction function) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                unsafe_set(i, j, function.evaluate(i, j, unsafe_get(i, j)));
+            }
+        }
+    }
+
+    @Override
+    public void update(int i, int j, MatrixFunction function) {
+        ensureIndexInRows(i);
+        ensureIndexInColumns(j);
+
+        unsafe_update(i, j, function);
+    }
+
+    @Override
+    public void unsafe_update(int i, int j, MatrixFunction function) {
+        unsafe_set(i, j, function.evaluate(i, j, unsafe_get(i, j)));
     }
 
     @Override

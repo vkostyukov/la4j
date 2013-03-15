@@ -207,6 +207,82 @@ public final class Matrices {
         }
     }
 
+    private static class PlusMatrixFunction 
+            implements MatrixFunction {
+
+        private double arg;
+
+        public PlusMatrixFunction(double arg) {
+            this.arg = arg;
+        }
+
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return value + arg; 
+        }
+    }
+
+    private static class MinusMatrixFunction 
+            implements MatrixFunction {
+
+        private double arg;
+
+        public MinusMatrixFunction(double arg) {
+            this.arg = arg;
+        }
+
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return value - arg; 
+        }
+    }
+
+    private static class MulMatrixFunction 
+            implements MatrixFunction {
+
+        private double arg;
+
+        public MulMatrixFunction(double arg) {
+            this.arg = arg;
+        }
+
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return value * arg; 
+        }
+    }
+
+    private static class DivMatrixFunction 
+            implements MatrixFunction {
+
+        private double arg;
+
+        public DivMatrixFunction(double arg) {
+            this.arg = arg;
+        }
+
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return value / arg; 
+        }
+    }
+
+    public static MatrixFunction asPlusFunction(double value) {
+        return new PlusMatrixFunction(value);
+    }
+
+    public static MatrixFunction asMinusFunction(double value) {
+        return new MinusMatrixFunction(value);
+    }
+
+    public static MatrixFunction asMulFunction(double value) {
+        return new MulMatrixFunction(value);
+    }
+
+    public static MatrixFunction asDivFunction(double value) {
+        return new DivMatrixFunction(value);
+    }
+
     public final static MatrixPredicate DIAGONAL_MATRIX = 
             new DiagonalMatrixPredicate();
 

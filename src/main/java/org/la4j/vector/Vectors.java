@@ -67,6 +67,78 @@ public final class Vectors {
         }
     }
 
+    private static class PlusFunction implements VectorFunction {
+
+        private double arg;
+
+        public PlusFunction(double arg) {
+            this.arg = arg;
+        }
+
+        @Override
+        public double evaluate(int i, double value) {
+            return value + arg;
+        }
+    }
+
+    private static class MinusFunction implements VectorFunction {
+
+        private double arg;
+
+        public MinusFunction(double arg) {
+            this.arg = arg;
+        }
+
+        @Override
+        public double evaluate(int i, double value) {
+            return value - arg;
+        }
+    }
+
+    private static class MulFunction implements VectorFunction {
+
+        private double arg;
+
+        public MulFunction(double arg) {
+            this.arg = arg;
+        }
+
+        @Override
+        public double evaluate(int i, double value) {
+            return value * arg;
+        }
+    }
+
+    private static class DivFunction implements VectorFunction {
+
+        private double arg;
+
+        public DivFunction(double arg) {
+            this.arg = arg;
+        }
+
+        @Override
+        public double evaluate(int i, double value) {
+            return value / arg;
+        }
+    }
+
+    public static VectorFunction asPlusFunction(double value) {
+        return new PlusFunction(value);
+    }
+
+    public static VectorFunction asMinusFunction(double value) {
+        return new MinusFunction(value);
+    }
+
+    public static VectorFunction asMulFunction(double value) {
+        return new MulFunction(value);
+    }
+
+    public static VectorFunction asDivFunction(double value) {
+        return new DivFunction(value);
+    }
+
     public static final VectorPredicate ZERO_VECTOR =
             new ZeroVectorPredicate();
 
