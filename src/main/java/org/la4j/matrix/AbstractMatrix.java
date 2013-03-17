@@ -649,8 +649,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix transform(MatrixFunction function, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
         Matrix result = blank(factory);
 
         for (int i = 0; i < rows; i++) {
@@ -673,8 +671,6 @@ public abstract class AbstractMatrix implements Matrix {
 
         ensureIndexInRows(i);
         ensureIndexInColumns(j);
-
-        ensureFactoryIsNotNull(factory);
 
         return unsafe_transform(i, j, function, factory);
     }
