@@ -77,12 +77,12 @@ public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
     }
 
     @Override
-    public double unsafe_get(int i, int j) {
+    public double get(int i, int j) {
         return self[i * columns + j];
     }
 
     @Override
-    public void unsafe_set(int i, int j, double value) {
+    public void set(int i, int j, double value) {
         self[i * columns + j] = value;
     }
 
@@ -124,9 +124,6 @@ public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
 
     @Override
     public void swapRows(int i, int j) {
-        ensureIndexInRows(i);
-        ensureIndexInRows(j);
-
         if (i != j) {
             for (int k = 0; k < columns; k++) {
                 double tmp = self[i * columns + k];
@@ -138,9 +135,6 @@ public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
 
     @Override
     public void swapColumns(int i, int j) {
-        ensureIndexInColumns(i);
-        ensureIndexInColumns(j);
-
         if (i != j) {
             for (int k = 0; k < rows; k++) {
                 double tmp  = self[k * columns + i];
@@ -152,8 +146,6 @@ public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
 
     @Override
     public Vector getRow(int i) {
-        ensureIndexInRows(i);
-
         double result[] = new double[columns];
         System.arraycopy(self, i * columns , result, 0, columns);
 

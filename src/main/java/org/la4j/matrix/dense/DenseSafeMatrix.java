@@ -19,30 +19,21 @@
  * 
  */
 
-package org.la4j.matrix.source;
+package org.la4j.matrix.dense;
 
-import org.la4j.matrix.Matrix;
+import org.la4j.matrix.AbstractSafeMatrix;
 
-public class UnsafeMatrixSource implements MatrixSource {
+public class DenseSafeMatrix extends AbstractSafeMatrix implements DenseMatrix {
 
-    private Matrix matrix;
+    private DenseMatrix dense;
 
-    public UnsafeMatrixSource(Matrix matrix) {
-        this.matrix = matrix;
+    public DenseSafeMatrix(DenseMatrix self) {
+        super(self);
+        this.dense = self;
     }
 
     @Override
-    public double get(int i, int j) {
-        return matrix.get(i, j);
-    }
-
-    @Override
-    public int columns() {
-        return matrix.columns();
-    }
-
-    @Override
-    public int rows() {
-        return matrix.rows();
+    public double[][] toArray() {
+        return dense.toArray();
     }
 }

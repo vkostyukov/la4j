@@ -47,21 +47,6 @@ public interface Vector extends Externalizable {
     void set(int i, double value);
 
     /**
-     * 
-     * @param i
-     * @return
-     */
-    double unsafe_get(int i);
-
-    /**
-     * 
-     * @param i
-     * @param j
-     * @param value
-     */
-    void unsafe_set(int i, double value);
-
-    /**
      * Assigns all elements to specified <code>value</code>.
      * 
      * @param value
@@ -114,21 +99,6 @@ public interface Vector extends Externalizable {
 
     /**
      * 
-     * @param v
-     * @return
-     */
-    Vector unsafe_add(Vector vector);
-
-    /**
-     * 
-     * @param vector
-     * @param factory
-     * @return
-     */
-    Vector unsafe_add(Vector vector, Factory factory);
-
-    /**
-     * 
      * @param d
      * @return
      */
@@ -159,21 +129,6 @@ public interface Vector extends Externalizable {
 
     /**
      * 
-     * @param v
-     * @return
-     */
-    Vector unsafe_multiply(Vector vector);
-
-    /**
-     * 
-     * @param vector
-     * @param factory
-     * @return
-     */
-    Vector unsafe_multiply(Vector vector, Factory factory);
-
-    /**
-     * 
      * @param d
      * @return
      */
@@ -201,21 +156,6 @@ public interface Vector extends Externalizable {
      * @return
      */
     Vector subtract(Vector vector, Factory factory);
-
-    /**
-     * 
-     * @param v
-     * @return
-     */
-    Vector unsafe_subtract(Vector vector);
-
-    /**
-     * 
-     * @param vector
-     * @param factory
-     * @return
-     */
-    Vector unsafe_subtract(Vector vector, Factory factory);
 
     /**
      * 
@@ -299,6 +239,12 @@ public interface Vector extends Externalizable {
 
     /**
      * 
+     * @return
+     */
+    Factory factory();
+
+    /**
+     * 
      * @param procedure
      */
     void each(VectorProcedure procedure);
@@ -334,23 +280,6 @@ public interface Vector extends Externalizable {
 
     /**
      * 
-     * @param i
-     * @param function
-     * @return
-     */
-    Vector unsafe_transform(int i, VectorFunction function);
-
-    /**
-     * 
-     * @param i
-     * @param function
-     * @param factory
-     * @return
-     */
-    Vector unsafe_transform(int i, VectorFunction function, Factory factory);
-
-    /**
-     * 
      * @param function
      */
     void update(VectorFunction function); 
@@ -364,15 +293,20 @@ public interface Vector extends Externalizable {
 
     /**
      * 
-     * @param i
-     * @param function
-     */
-    void unsafe_update(int i, VectorFunction function);
-
-    /**
-     * 
      * @param predicate
      * @return
      */
     boolean is(VectorPredicate predicate);
+
+    /**
+     * 
+     * @return
+     */
+    Vector safe();
+
+    /**
+     * 
+     * @return
+     */
+    Vector unsafe();
 }

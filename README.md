@@ -19,15 +19,13 @@ key features of la4j listed bellow:
 
 Changelog
 ---------
-la4j-0.4.0 <code>LONG-TERM-ROADMAP</code>
- * safe and unsafe matrices are different classes now
-
-la4j-0.3.5 <code>DEV</code>
- * added ```rank()``` method (contributed by Evgenia Krivova)
- * fixed bug in ```MatrixDecFunction```
- * added fast implementation of ```determinant()``` method
- * fixed bug in ```MatrixMatketStream``` (contributed by Alessio Placitelli)
- * added ```update()``` method (as compound operator replacement)
+la4j-0.4.0 ```DEV. Planing to release at: Jun 2013```
+ * added ```rank()``` method (contributed by Evgenia Krivova);
+ * fixed bug in ```MatrixDecFunction```;
+ * added fast implementation of ```determinant()``` method;
+ * fixed bug in ```MatrixMatketStream``` (contributed by Alessio Placitelli);
+ * added ```update()``` method (as compound operator replacement);
+ * matrices are unsafe by default (new method pair - ```safe()/unsafe()```);
 
 la4j-0.3.0 <code>Dec 2012</code>
  * la4j got new API and new package naming (starting with "org.la4j.*")
@@ -45,7 +43,7 @@ la4j-0.3.0 <code>Dec 2012</code>
  * new algorithm for runtime-based machine epsilon initialization;
  * fixed several major/critical bugs;
   
-la4j-0.2.0 <code>Nov 2011</code>
+la4j-0.2.0 ```Nov 2011```
  * new package la4j.io for reading/writing matrices in MatrixMarket format;
  * matrices decomposition (LU, QR, Cholesky, SVD, Eigenvalues) support;
  * matrix inversion support;
@@ -53,16 +51,16 @@ la4j-0.2.0 <code>Nov 2011</code>
  * matrices and vectors can be serialized;
  * la4j uses Maven and jUnit now;
  
-la4j-0.1.0 <code>Jan 2011</code>
+la4j-0.1.0 ```Jan 2011```
  * eigenvalues decomposition;
  * fast matrix multiply algorithm implementation;
  
-la4j-0.0.7 <code>Mar 2010</code>
+la4j-0.0.7 ```Mar 2010```
  * solving linear systems;
  * matrices transposing;
  * finding of inverted matrix;
  
-la4j 0.0.0 <code>Jan 2010</code>
+la4j 0.0.0 ```Jan 2010```
  * support real matrices and vectors;
  
  

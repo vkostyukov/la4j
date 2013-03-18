@@ -46,20 +46,6 @@ public abstract class AbstractVectorTest extends TestCase {
         assertEquals(13.0, a.get(0));
     }
 
-    public void testAccess_1_wrongarg() {
-
-        Vector a = factory().createVector(
-                new double[] { 1.0 });
-
-        try {
-            a.set(0, a.get(1) + 10);
-        } catch (IllegalArgumentException expected) {
-        } catch (Exception unexpected) {
-            fail("Unexpected exception: " + unexpected.getMessage());
-        }
-    }
-
-
     public void testResize() {
 
         Vector a = factory().createVector(new double[] { 0.0, 0.0, 1.0 });

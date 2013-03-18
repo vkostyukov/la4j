@@ -109,7 +109,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     @Override
-    public double unsafe_get(int i, int j) {
+    public double get(int i, int j) {
 
         for (int ii = rowPointers[i]; ii < rowPointers[i + 1]; ii++) {
             if (columnIndices[ii] == j) {
@@ -121,7 +121,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     @Override
-    public void unsafe_set(int i, int j, double value) {
+    public void set(int i, int j, double value) {
 
         for (int ii = rowPointers[i]; ii < rowPointers[i + 1]; ii++) {
             if (columnIndices[ii] == j) {
@@ -211,7 +211,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         int k = 0, i = 0;
         while (k < cardinality) {
             for (int j = rowPointers[i]; j < rowPointers[i + 1]; j++, k++) {
-                result.unsafe_set(columnIndices[j], i, values[j]);
+                result.set(columnIndices[j], i, values[j]);
             }
             i++;
         }
@@ -221,7 +221,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public Vector getRow(int i) {
-        ensureIndexInRows(i);
 
         int rowCardinality = rowPointers[i + 1] - rowPointers[i]; 
 
@@ -239,12 +238,11 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     @Override
     public Vector getRow(int i, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureIndexInRows(i);
 
         Vector result = factory.createVector(columns);
 
         for (int ii = rowPointers[i]; ii < rowPointers[i + 1]; ii++) {
-            result.unsafe_set(columnIndices[ii], values[ii]);
+            result.set(columnIndices[ii], values[ii]);
         }
 
         return result;
@@ -253,7 +251,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     @Override
     public Vector getColumn(int i, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureIndexInColumns(i);
 
         Vector result = factory.createVector(rows);
 
@@ -263,7 +260,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                  jj++, k++) {
 
                 if (columnIndices[jj] == i) {
-                    result.unsafe_set(ii, values[jj]);
+                    result.set(ii, values[jj]);
                 }
             }
             ii++;
@@ -274,7 +271,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public void setColumn(int i, Vector column) {
-        ensureIndexInColumns(i);
 
         if (column == null) {
             throw new IllegalArgumentException("Column can't be null.");
@@ -292,7 +288,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                 position++;
             }
 
-            double value = column.unsafe_get(ii); 
+            double value = column.get(ii); 
 
             if (Math.abs(value) > Matrices.EPS) {
 
@@ -336,7 +332,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public void setRow(int i, Vector row) {
-        ensureIndexInRows(i);
 
         if (row == null) {
             throw new IllegalArgumentException("Row can't be null.");
@@ -353,7 +348,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
         for (int ii = 0; ii < row.length(); ii++) {
 
-            double value = row.unsafe_get(ii);
+            double value = row.get(ii);
 
             if (Math.abs(value) > Matrices.EPS) {
 

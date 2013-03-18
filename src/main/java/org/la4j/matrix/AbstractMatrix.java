@@ -57,25 +57,9 @@ public abstract class AbstractMatrix implements Matrix {
     public void assign(double value) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                unsafe_set(i, j, value);
+                set(i, j, value);
             }
         }
-    }
-
-    @Override
-    public double get(int i, int j) {
-        ensureIndexInRows(i);
-        ensureIndexInColumns(j);
-
-        return unsafe_get(i, j);
-    }
-
-    @Override
-    public void set(int i, int j, double value) {
-        ensureIndexInRows(i);
-        ensureIndexInColumns(j);
-
-        unsafe_set(i, j, value);
     }
 
     @Override
@@ -96,12 +80,11 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Vector getRow(int i, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureIndexInRows(i);
-
+    
         Vector result = factory.createVector(columns);
 
         for (int j = 0; j < columns; j++) {
-            result.unsafe_set(j, unsafe_get(i, j));
+            result.set(j, get(i, j));
         }
 
         return result;
@@ -115,12 +98,11 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Vector getColumn(int i, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureIndexInColumns(i);
 
         Vector result = factory.createVector(rows);
 
         for (int j = 0; j < rows; j++) {
-            result.unsafe_set(j, unsafe_get(j, i));
+            result.set(j, get(j, i));
         }
 
         return result;
@@ -128,7 +110,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public void setRow(int i, Vector row) {
-        ensureIndexInRows(i);
 
         if (row == null) {
             throw new IllegalArgumentException("Row can't be null.");
@@ -140,13 +121,12 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         for (int j = 0; j < row.length(); j++) {
-            unsafe_set(i, j, row.unsafe_get(j));
+            set(i, j, row.get(j));
         }
     }
 
     @Override
     public void setColumn(int i, Vector column) {
-        ensureIndexInColumns(i);
 
         if (column == null) {
             throw new IllegalArgumentException("Column can't be null.");
@@ -158,15 +138,12 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         for (int j = 0; j < column.length(); j++) {
-            unsafe_set(j, i, column.unsafe_get(j));
+            set(j, i, column.get(j));
         }
     }
 
     @Override
     public void swapRows(int i, int j) {
-        ensureIndexInRows(i);
-        ensureIndexInRows(j);
-
         if (i != j) {
             Vector ii = getRow(i);
             Vector jj = getRow(j);
@@ -178,9 +155,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public void swapColumns(int i, int j) {
-        ensureIndexInColumns(i);
-        ensureIndexInColumns(j);
-
         if (i != j) {
             Vector ii = getColumn(i);
             Vector jj = getColumn(j);
@@ -203,7 +177,7 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                result.unsafe_set(j, i, unsafe_get(i, j));
+                result.set(j, i, get(i, j));
             }
         }
 
@@ -220,17 +194,17 @@ public abstract class AbstractMatrix implements Matrix {
         if (rows == 0) {
             return 0.0;
         } else if (rows == 1) {
-            return unsafe_get(0, 0);
+            return get(0, 0);
         } else if (rows == 2) {
-            return unsafe_get(0, 0) * unsafe_get(1, 1) -
-                   unsafe_get(0, 1) * unsafe_get(1, 0);
+            return get(0, 0) * get(1, 1) -
+                   get(0, 1) * get(1, 0);
         } else if (rows == 3) {
-            return unsafe_get(0, 0) * unsafe_get(1, 1) * unsafe_get(2, 2) +
-                   unsafe_get(0, 1) * unsafe_get(1, 2) * unsafe_get(2, 0) +
-                   unsafe_get(0, 2) * unsafe_get(1, 0) * unsafe_get(2, 1) -
-                   unsafe_get(0, 2) * unsafe_get(1, 1) * unsafe_get(2, 0) -
-                   unsafe_get(0, 1) * unsafe_get(1, 0) * unsafe_get(2, 2) -
-                   unsafe_get(0, 0) * unsafe_get(1, 2) * unsafe_get(2, 1);
+            return get(0, 0) * get(1, 1) * get(2, 2) +
+                   get(0, 1) * get(1, 2) * get(2, 0) +
+                   get(0, 2) * get(1, 0) * get(2, 1) -
+                   get(0, 2) * get(1, 1) * get(2, 0) -
+                   get(0, 1) * get(1, 0) * get(2, 2) -
+                   get(0, 0) * get(1, 2) * get(2, 1);
         }
 
         return triangularize().product();
@@ -249,11 +223,11 @@ public abstract class AbstractMatrix implements Matrix {
         int endi = (columns > rows)? rows : columns;
 
         for(int i = 0; i < endi; i++) {
-            if (Math.abs(unsafe_get(i, i)) <= Matrices.EPS) {
+            if (Math.abs(get(i, i)) <= Matrices.EPS) {
                 boolean c = false;
                 for (int k = i; k < rows; k++) {
                     for (int l = i; l < columns; l++) {
-                        if (Math.abs(unsafe_get(k, l)) > Matrices.EPS) {
+                        if (Math.abs(get(k, l)) > Matrices.EPS) {
                             y = k;
                             x = l;
                             c = true;
@@ -280,20 +254,21 @@ public abstract class AbstractMatrix implements Matrix {
             }
 
             for (x = i; x < columns; x++) {
-                unsafe_set(i, x, unsafe_get(i, x) / unsafe_get(i, i));
+                // TODO: use update() here
+                set(i, x, get(i, x) / get(i, i));
             }
 
             for (y = i + 1; y < rows; y++) {
                 for (x = i; x < columns; x++) {
-                    unsafe_set(y, x, unsafe_get(y, x) - unsafe_get(i, x) 
-                                     * unsafe_get(y, i));
+                    // TODO: use update() here
+                    set(y, x, get(y, x) - get(i, x) * get(y, i));
                 }
             }
 
             for (x = i + 1; x < columns; x++) {
                 for (y = i; y < rows; y++) {
-                    unsafe_set(y, x, unsafe_get(y, x) - unsafe_get(y, i) 
-                                     * unsafe_get(i, x));
+                    // TODO: use update here
+                    set(y, x, get(y, x) - get(y, i) * get(i, x));
                 }
             }
         }
@@ -301,7 +276,7 @@ public abstract class AbstractMatrix implements Matrix {
         int result = 0;
 
         for (int i = 0; i < endi; i++) {
-            if (Math.abs(unsafe_get(i, i)) <= Matrices.EPS) {
+            if (Math.abs(get(i, i)) <= Matrices.EPS) {
                 break;
             }
 
@@ -324,7 +299,7 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                result.unsafe_set(i, j, unsafe_get(i, j) * value);
+                result.set(i, j, get(i, j) * value);
             }
         }
 
@@ -349,31 +324,20 @@ public abstract class AbstractMatrix implements Matrix {
                                                 + vector.length());
         }
 
-       return unsafe_multiply(vector, factory);
-    }
-
-    @Override
-    public Vector unsafe_multiply(Vector vector) {
-        return unsafe_multiply(vector, factory);
-    }
-
-    @Override
-    public Vector unsafe_multiply(Vector vector, Factory factory) {
-
-    	Vector result = factory.createVector(columns);
+        Vector result = factory.createVector(columns);
 
         for (int i = 0; i < rows; i++) {
             double summand = 0;
             for (int j = 0; j < columns; j++) {
-                summand += unsafe_get(i, j) * vector.unsafe_get(j);
+                summand += get(i, j) * vector.get(j);
             }
-            result.unsafe_set(i, summand);
+            result.set(i, summand);
         }
 
         return result;
     }
 
-	@Override
+    @Override
     public Matrix multiply(Matrix matrix) {
         return multiply(matrix, factory);
     }
@@ -392,17 +356,6 @@ public abstract class AbstractMatrix implements Matrix {
                                                + matrix.columns());
         }
 
-        return unsafe_multiply(matrix, factory);
-    }
-
-    @Override
-    public Matrix unsafe_multiply(Matrix matrix) {
-        return unsafe_multiply(matrix, factory);
-    }
-
-    @Override
-    public Matrix unsafe_multiply(Matrix matrix, Factory factory) {
-
         Matrix result = factory.createMatrix(rows, matrix.columns());
 
         for (int j = 0; j < matrix.columns(); j++) {
@@ -415,10 +368,9 @@ public abstract class AbstractMatrix implements Matrix {
                 double summand = 0;
 
                 for (int k = 0; k < columns; k++) {
-                    summand += thisRow.unsafe_get(k) 
-                               * thatColumn.unsafe_get(k);
+                    summand += thisRow.get(k) * thatColumn.get(k);
                 }
-                result.unsafe_set(i, j, summand);
+                result.set(i, j, summand);
             }
         }
 
@@ -446,16 +398,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix unsafe_subtract(Matrix matrix) {
-        return unsafe_subtract(matrix, factory);
-    }
-
-    @Override
-    public Matrix unsafe_subtract(Matrix matrix, Factory factory) {
-        return unsafe_add(matrix.multiply(-1.0), factory);
-    }
-
-    @Override
     public Matrix add(double value) {
         return add(value, factory);
     }
@@ -468,7 +410,7 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                result.unsafe_set(i, j, unsafe_get(i, j) + value);
+                result.set(i, j, get(i, j) + value);
             }
         }
 
@@ -494,23 +436,11 @@ public abstract class AbstractMatrix implements Matrix {
                                                + matrix.columns());
         }
 
-        return unsafe_add(matrix, factory); 
-    }
-
-    @Override
-    public Matrix unsafe_add(Matrix matrix) {
-        return unsafe_add(matrix, factory);
-    }
-
-    @Override
-    public Matrix unsafe_add(Matrix matrix, Factory factory) {
-
         Matrix result = blank(factory);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                result.unsafe_set(i, j, unsafe_get(i, j) 
-                                  + matrix.unsafe_get(i, j));
+                result.set(i, j, get(i, j) + matrix.get(i, j));
             }
         }
 
@@ -571,14 +501,13 @@ public abstract class AbstractMatrix implements Matrix {
         for (int i = 0; i < rows; i++) {
             for (int j = i + 1; j < rows; j++) {
 
-                double c = unsafe_get(j, i) / unsafe_get(i, i);
+                double c = get(j, i) / get(i, i);
 
                 for (int k = i; k < columns; k++) {
                     if (k == i) {
-                        result.unsafe_set(j, k, 0.0);
+                        result.set(j, k, 0.0);
                     } else {
-                        result.unsafe_set(j, k, unsafe_get(j, k) 
-                                          - (unsafe_get(i, k) * c));
+                        result.set(j, k, get(j, k) - (get(i, k) * c));
                     }
                 }
             }
@@ -634,10 +563,15 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public Factory factory() {
+        return factory;
+    }
+
+    @Override
     public void each(MatrixProcedure procedure) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                procedure.apply(i, j, unsafe_get(i, j));
+                procedure.apply(i, j, get(i, j));
             }
         }
     }
@@ -653,7 +587,7 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                result.unsafe_set(i, j, function.evaluate(i, j, unsafe_get(i, j)));
+                result.set(i, j, function.evaluate(i, j, get(i, j)));
             }
         }
 
@@ -669,25 +603,8 @@ public abstract class AbstractMatrix implements Matrix {
     public Matrix transform(int i, int j, MatrixFunction function,
             Factory factory) {
 
-        ensureIndexInRows(i);
-        ensureIndexInColumns(j);
-
-        return unsafe_transform(i, j, function, factory);
-    }
-
-
-    @Override
-    public Matrix unsafe_transform(int i, int j, MatrixFunction function) {
-        return unsafe_transform(i, j, function, factory);
-    }
-
-    @Override
-    public Matrix unsafe_transform(int i, int j, MatrixFunction function,
-            Factory factory) {
-
         Matrix result = copy(factory);
-        result.unsafe_set(i, j, function.evaluate(i, j, 
-                          result.unsafe_get(i, j)));
+        result.set(i, j, function.evaluate(i, j, result.get(i, j)));
 
         return result;
     }
@@ -696,22 +613,14 @@ public abstract class AbstractMatrix implements Matrix {
     public void update(MatrixFunction function) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                unsafe_set(i, j, function.evaluate(i, j, unsafe_get(i, j)));
+                set(i, j, function.evaluate(i, j, get(i, j)));
             }
         }
     }
 
     @Override
     public void update(int i, int j, MatrixFunction function) {
-        ensureIndexInRows(i);
-        ensureIndexInColumns(j);
-
-        unsafe_update(i, j, function);
-    }
-
-    @Override
-    public void unsafe_update(int i, int j, MatrixFunction function) {
-        unsafe_set(i, j, function.evaluate(i, j, unsafe_get(i, j)));
+        set(i, j, function.evaluate(i, j, get(i, j)));
     }
 
     @Override
@@ -723,11 +632,16 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; result && i < rows; i++) {
             for (int j = 0; result && j < columns; j++) {
-                result = result && predicate.test(i, j, unsafe_get(i, j));
+                result = result && predicate.test(i, j, get(i, j));
             }
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix unsafe() {
+        return this;
     }
 
     @Override
@@ -737,7 +651,7 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                long value = (long) unsafe_get(i, j);
+                long value = (long) get(i, j);
                 result = 37 * result + (int) (value ^ (value >>> 32));
             }
         }
@@ -767,8 +681,8 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; result && i < rows; i++) {
             for (int j = 0; result && j < columns; j++) {
-                double a = unsafe_get(i, j);
-                double b = matrix.unsafe_get(i, j);
+                double a = get(i, j);
+                double b = matrix.get(i, j);
 
                 double diff = Math.abs(a - b);
 
@@ -791,7 +705,7 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                long value = (long) unsafe_get(i, j);
+                long value = (long) get(i, j);
                 int size = Long.toString(value).length() + precision + 2;
                 formats[j] = size > formats[j] ? size : formats[j];
             }
@@ -802,7 +716,7 @@ public abstract class AbstractMatrix implements Matrix {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 sb.append(String.format("%" + Integer.toString(formats[j])
-                        + "." + precision + "f", unsafe_get(i, j)));
+                        + "." + precision + "f", get(i, j)));
             }
             sb.append("\n");
         }
@@ -813,19 +727,6 @@ public abstract class AbstractMatrix implements Matrix {
     protected void ensureFactoryIsNotNull(Factory factory) {
         if (factory == null) {
             throw new IllegalArgumentException("Factory can't be null.");
-        }
-    }
-
-    protected void ensureIndexInRows(int i) {
-        if (i >= rows || i < 0) {
-            throw new IllegalArgumentException("Row index out of bounds: " + i);
-        }
-    }
-
-    protected void ensureIndexInColumns(int i) {
-        if (i >= columns || i < 0) {
-            throw new IllegalArgumentException("Column index out of bounds: " 
-                                               + i);
         }
     }
 }

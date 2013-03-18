@@ -45,7 +45,7 @@ public class JacobiSolver implements LinearSystemSolver {
         for (int i = 0; i < a.rows(); i++) {
             for (int j = 0; j < a.columns(); j++) {
                 if (i != j)
-                    a.unsafe_set(i, j, a.unsafe_get(i, j) / a.unsafe_get(i, i));
+                    a.set(i, j, a.get(i, j) / a.get(i, i));
             }
         }
 
@@ -59,14 +59,14 @@ public class JacobiSolver implements LinearSystemSolver {
 
             for (int i = 0; i < a.rows(); i++) {
 
-                double sum = b.unsafe_get(i) / a.unsafe_get(i, i);
+                double sum = b.get(i) / a.get(i, i);
                 for (int j = 0; j < a.columns(); j++) {
                     if (i != j) {
-                        sum -= a.unsafe_get(i, i) * current.unsafe_get(j);
+                        sum -= a.get(i, i) * current.get(j);
                     }
                 }
 
-                next.unsafe_set(i, sum);
+                next.set(i, sum);
             }
 
             current = next;
@@ -89,11 +89,11 @@ public class JacobiSolver implements LinearSystemSolver {
 
             for (int j = 0; j < a.columns(); j++) {
                 if (i != j) {
-                    sum += Math.abs(a.unsafe_get(i, j));
+                    sum += Math.abs(a.get(i, j));
                 }
             }
 
-            if (sum > Math.abs(a.unsafe_get(i, i)) - Matrices.EPS) {
+            if (sum > Math.abs(a.get(i, i)) - Matrices.EPS) {
                 return false;
             }
         }

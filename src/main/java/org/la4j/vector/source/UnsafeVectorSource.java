@@ -33,7 +33,7 @@ public class UnsafeVectorSource implements VectorSource {
 
     @Override
     public double get(int i) {
-        return vector.unsafe_get(i);
+        return vector.get(i);
     }
 
     @Override

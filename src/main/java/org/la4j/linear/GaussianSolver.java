@@ -54,12 +54,12 @@ public class GaussianSolver implements LinearSystemSolver {
         for (int i = 0; i < result.rows(); i++) {
 
             int maxIndex = 0;
-            double maxItem = result.unsafe_get(i, i);
+            double maxItem = result.get(i, i);
 
             for (int k = i + 1; k < result.rows(); k++) {
 
-                if (Math.abs(result.unsafe_get(k, i)) > maxItem) {
-                    maxItem = Math.abs(result.unsafe_get(k, i));
+                if (Math.abs(result.get(k, i)) > maxItem) {
+                    maxItem = Math.abs(result.get(k, i));
                     maxIndex = k;
                 }
             }
@@ -74,12 +74,12 @@ public class GaussianSolver implements LinearSystemSolver {
 
             for (int j = i + 1; j < result.rows(); j++) {
 
-                double C = result.unsafe_get(j, i) / result.unsafe_get(i, i);
-                result.unsafe_set(j, i, C);
+                double C = result.get(j, i) / result.get(i, i);
+                result.set(j, i, C);
 
                 for (int k = i + 1; k < result.columns(); k++) {
-                    result.unsafe_set(j, k, result.unsafe_get(j, k) 
-                                      - result.unsafe_get(i, k) * C);
+                    result.set(j, k, result.get(j, k) 
+                                      - result.get(i, k) * C);
                 }
             }
         }
@@ -99,12 +99,12 @@ public class GaussianSolver implements LinearSystemSolver {
 
             double summand = 0;
             for (int j = i + 1; j < result.length(); j++) {
-                summand += result.unsafe_get(j) * matrix.unsafe_get(i, j);
+                summand += result.get(j) * matrix.get(i, j);
             }
 
-            result.unsafe_set(i, (matrix.unsafe_get(i, matrix.columns() - 1) 
+            result.set(i, (matrix.get(i, matrix.columns() - 1) 
                                                     - summand)
-                              / matrix.unsafe_get(i, i));
+                              / matrix.get(i, i));
         }
 
         return result;

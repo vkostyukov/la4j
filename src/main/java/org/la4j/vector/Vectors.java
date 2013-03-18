@@ -24,6 +24,7 @@ package org.la4j.vector;
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
+import org.la4j.factory.SafeFactory;
 import org.la4j.matrix.Matrices;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
@@ -152,6 +153,16 @@ public final class Vectors {
 
     public static final Factory COMPRESSED_FACTORY = new CRSFactory();
 
+    public static final Factory SAFE_BASIC_FACTORY = 
+            new SafeFactory(BASIC_FACTORY);
+
+    public static final Factory SAFE_COMPRESSED_FACTORY = 
+            new SafeFactory(COMPRESSED_FACTORY);
+
+    public static final Factory UNSAFE_BASIC_FACTORY = BASIC_FACTORY;
+
+    public static final Factory UNSAFE_COMPRESSED_FACTORY = COMPRESSED_FACTORY;
+
     public static final Factory DEFAULT_FACTORY = BASIC_FACTORY;
 
     public static final VectorFunction INC_VECTOR = new IncVecorFunction();
@@ -160,5 +171,13 @@ public final class Vectors {
 
     public static Vector asSingletonVector(double value) {
         return DEFAULT_FACTORY.createVector(new double[] { value });
+    }
+
+    public static Vector asSafeVector(Vector vector) {
+        return vector.safe();
+    }
+
+    public static Vector asUnsafeVector(Vector vector) {
+        return vector.unsafe();
     }
 }

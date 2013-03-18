@@ -155,7 +155,7 @@ public class MatrixMarketStream extends AbstractStream
         writer.newLine();
 
         for (int i = 0; i < vector.length(); i++) {
-            double value = vector.unsafe_get(i);
+            double value = vector.get(i);
             writer.write(String.format(Locale.US, "%.12f", value));
             writer.newLine();
         }
@@ -181,7 +181,7 @@ public class MatrixMarketStream extends AbstractStream
 
         for (int i = 0; i < matrix.rows(); i++) {
             for (int j = 0; j < matrix.columns(); j++) {
-                double value = matrix.unsafe_get(i, j);
+                double value = matrix.get(i, j);
                 writer.write(String.format(Locale.US, "%.12f", value));
                 writer.newLine();
             }
@@ -213,7 +213,7 @@ public class MatrixMarketStream extends AbstractStream
 
         for (int i = 0; i < length; i++) {
             double value = Double.valueOf(nextToken());
-            vector.unsafe_set(i, value);
+            vector.set(i, value);
         }
 
         return vector;
@@ -230,7 +230,7 @@ public class MatrixMarketStream extends AbstractStream
             int i = Integer.valueOf(nextToken()) - 1;
             double value = Double.valueOf(nextToken());
 
-            vector.unsafe_set(i, value);
+            vector.set(i, value);
         }
 
         return vector;
@@ -263,7 +263,7 @@ public class MatrixMarketStream extends AbstractStream
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 double value = Double.valueOf(nextToken());
-                matrix.unsafe_set(i, j, value);
+                matrix.set(i, j, value);
             }
         }
 
@@ -283,7 +283,7 @@ public class MatrixMarketStream extends AbstractStream
             int j = Integer.valueOf(nextToken()) - 1;
             double value = Double.valueOf(nextToken());
 
-            matrix.unsafe_set(i, j, value);
+            matrix.set(i, j, value);
         }
 
         return matrix;

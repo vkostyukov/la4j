@@ -110,7 +110,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     @Override
-    public double unsafe_get(int i, int j) {
+    public double get(int i, int j) {
 
         for (int jj = columnPointers[j]; jj < columnPointers[j + 1]; jj++) {
             if (rowIndices[jj] == i) {
@@ -122,7 +122,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     @Override
-    public void unsafe_set(int i, int j, double value) {
+    public void set(int i, int j, double value) {
 
         for (int jj = columnPointers[j]; jj < columnPointers[j + 1]; jj++) {
             if (rowIndices[jj] == i) {
@@ -206,7 +206,6 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public Vector getColumn(int i) {
-        ensureIndexInColumns(i);
 
         int columnCardinality = columnPointers[i + 1] - columnPointers[i];
 
@@ -226,12 +225,11 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     @Override
     public Vector getColumn(int i, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureIndexInColumns(i);
 
         Vector result = factory.createVector(rows);
 
         for (int jj = columnPointers[i]; jj < columnPointers[i + 1]; jj++) {
-            result.unsafe_set(rowIndices[jj], values[jj]);
+            result.set(rowIndices[jj], values[jj]);
         }
 
         return result;
@@ -240,7 +238,6 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     @Override
     public Vector getRow(int i, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureIndexInRows(i);
 
         Vector result = factory.createVector(columns);
 
@@ -250,7 +247,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                  ii++, k++) {
 
                 if (rowIndices[ii] == i) {
-                    result.unsafe_set(jj, values[ii]);
+                    result.set(jj, values[ii]);
                 }
             }
             jj++;

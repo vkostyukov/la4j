@@ -96,7 +96,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     @Override
-    public double unsafe_get(int i) {
+    public double get(int i) {
 
         for (int k = 0; k < cardinality; k++) {
             if (indices[k] == i) {
@@ -108,7 +108,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     @Override
-    public void unsafe_set(int i, double value) {
+    public void set(int i, double value) {
 
         for (int k = 0; k < cardinality; k++) {
             if (indices[k] == i) {
@@ -172,8 +172,6 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     @Override
     public void swap(int i, int j) {
-        ensureIndexInLength(i);
-        ensureIndexInLength(j);
 
         if (i == j) {
             return;
@@ -216,6 +214,11 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         for (int i = 0; i < cardinality; i++) {
             procedure.apply(indices[i], values[i]);
         }
+    }
+
+    @Override
+    public Vector safe() {
+        return new SparseSafeVector(this);
     }
 
     @Override

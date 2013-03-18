@@ -54,22 +54,22 @@ public class CholeskyDecompositor implements MatrixDecompositor {
                 double s = 0.0;
 
                 for (int i = 0; i < k; i++) {
-                    s += u.unsafe_get(k, i) * u.unsafe_get(j, i);
+                    s += u.get(k, i) * u.get(j, i);
                 }
 
-                s = (matrix.unsafe_get(j, k) - s) / u.unsafe_get(k, k);
+                s = (matrix.get(j, k) - s) / u.get(k, k);
 
-                u.unsafe_set(j, k, s);
+                u.set(j, k, s);
 
                 d = d + s * s;
             }
 
-            d = matrix.unsafe_get(j, j) - d;
+            d = matrix.get(j, j) - d;
 
-            u.unsafe_set(j, j, Math.sqrt(Math.max(d, 0.0)));
+            u.set(j, j, Math.sqrt(Math.max(d, 0.0)));
 
             for (int k = j + 1; k < u.rows(); k++) {
-                u.unsafe_set(j, k, 0.0);
+                u.set(j, k, 0.0);
             }
         }
 
@@ -98,25 +98,25 @@ public class CholeskyDecompositor implements MatrixDecompositor {
                 double s = 0.0;
 
                 for (int i = 0; i < k; i++) {
-                    s += rowk.unsafe_get(i) * rowj.unsafe_get(i);
+                    s += rowk.get(i) * rowj.get(i);
                 }
 
-                s = (matrix.unsafe_get(j, k) - s) / l.unsafe_get(k, k);
+                s = (matrix.get(j, k) - s) / l.get(k, k);
 
-                rowj.unsafe_set(k, s);
+                rowj.set(k, s);
                 l.setRow(j, rowj);
 
                 d = d + s * s;
             }
 
-            d = matrix.unsafe_get(j, j) - d;
+            d = matrix.get(j, j) - d;
 
             result = result && (d > 0.0);
 
-            l.unsafe_set(j, j, Math.sqrt(Math.max(d, 0.0)));
+            l.set(j, j, Math.sqrt(Math.max(d, 0.0)));
 
             for (int k = j + 1; k < n; k++) {
-                l.unsafe_set(j, k, 0.0);
+                l.set(j, k, 0.0);
             }
         }
 

@@ -71,7 +71,7 @@ public class CCSFactory extends CompressedFactory implements Factory {
             int i = random.nextInt(rows);
             int j = random.nextInt(columns);
 
-            matrix.unsafe_set(i, j, random.nextDouble());
+            matrix.set(i, j, random.nextDouble());
         }
 
         return matrix;    
@@ -93,8 +93,8 @@ public class CCSFactory extends CompressedFactory implements Factory {
             int j = random.nextInt(size);
             double value = random.nextDouble();
             
-            matrix.unsafe_set(i, j, value);
-            matrix.unsafe_set(j, i, value);
+            matrix.set(i, j, value);
+            matrix.set(j, i, value);
         }
 
         return matrix;

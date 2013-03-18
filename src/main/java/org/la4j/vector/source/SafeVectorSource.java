@@ -28,7 +28,7 @@ public class SafeVectorSource implements VectorSource {
     private Vector vector;
 
     public SafeVectorSource(Vector vector) {
-        this.vector = vector;
+        this.vector = vector.safe();
     }
 
     @Override

@@ -68,12 +68,12 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
     }
 
     @Override
-    public double unsafe_get(int i, int j) {
+    public double get(int i, int j) {
         return self[i][j];
     }
 
     @Override
-    public void unsafe_set(int i, int j, double value) {
+    public void set(int i, int j, double value) {
         self[i][j] = value;
     }
 
@@ -110,9 +110,6 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
 
     @Override
     public void swapRows(int i, int j) {
-        ensureIndexInRows(i);
-        ensureIndexInRows(j);
-
         if (i != j) {
             double tmp[] = self[i];
             self[i] = self[j];
@@ -122,9 +119,6 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
 
     @Override
     public void swapColumns(int i, int j) {
-        ensureIndexInColumns(i);
-        ensureIndexInColumns(j);
-
         if (i != j) {
             for (int ii = 0; ii < rows; ii++) {
                 double tmp = self[ii][i];
@@ -136,8 +130,6 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
 
     @Override
     public Vector getRow(int i) {
-        ensureIndexInRows(i);
-
         double result[] = new double[columns];
 
         System.arraycopy(self[i], 0, result, 0, columns);

@@ -45,64 +45,64 @@ public class QRDecompositor implements MatrixDecompositor {
             double norm = 0.0;
 
             for (int i = k; i < qr.rows(); i++) {
-                norm = hypot(norm, qr.unsafe_get(i, k));
+                norm = hypot(norm, qr.get(i, k));
             }
 
             if (Math.abs(norm) > Matrices.EPS) {
 
-                if (qr.unsafe_get(k, k) < 0.0) {
+                if (qr.get(k, k) < 0.0) {
                     norm = -norm;
                 }
 
                 for (int i = k; i < qr.rows(); i++) {
-                    qr.unsafe_set(i, k, qr.unsafe_get(i, k) / norm);
+                    qr.set(i, k, qr.get(i, k) / norm);
                 }
 
                 // TODO: Issue 2 
 
-                qr.unsafe_set(k, k, qr.unsafe_get(k, k) + 1.0);
+                qr.set(k, k, qr.get(k, k) + 1.0);
 
                 for (int j = k + 1; j < qr.columns(); j++) {
 
                     double summand = 0.0;
 
                     for (int i = k; i < qr.rows(); i++) {
-                        summand += qr.unsafe_get(i, k) * qr.unsafe_get(i, j);
+                        summand += qr.get(i, k) * qr.get(i, j);
                     }
 
-                    summand = -summand / qr.unsafe_get(k, k);
+                    summand = -summand / qr.get(k, k);
 
                     for (int i = k; i < qr.rows(); i++) {
-                        qr.unsafe_set(i, j, qr.unsafe_get(i, j) + summand 
-                                      * qr.unsafe_get(i, k));
+                        qr.set(i, j, qr.get(i, j) + summand 
+                                      * qr.get(i, k));
                     }
                 }
             }
 
-            rdiag.unsafe_set(k, norm);
+            rdiag.set(k, norm);
         }
 
         Matrix q = qr.blank(factory);
 
         for (int k = q.columns() - 1; k >= 0; k--) {
 
-            q.unsafe_set(k, k, 1.0);
+            q.set(k, k, 1.0);
 
             for (int j = k; j < q.columns(); j++) {
 
-                if (Math.abs(qr.unsafe_get(k, k)) > Matrices.EPS) {
+                if (Math.abs(qr.get(k, k)) > Matrices.EPS) {
 
                     double summand = 0.0;
 
                     for (int i = k; i < q.rows(); i++) {
-                        summand += qr.unsafe_get(i, k) * q.unsafe_get(i, j);
+                        summand += qr.get(i, k) * q.get(i, j);
                     }
 
-                    summand = -summand / qr.unsafe_get(k, k);
+                    summand = -summand / qr.get(k, k);
 
                     for (int i = k; i < q.rows(); i++) {
-                        q.unsafe_set(i, j, q.unsafe_get(i, j) 
-                                     + (summand * qr.unsafe_get(i, k)));
+                        q.set(i, j, q.get(i, j) 
+                                     + (summand * qr.get(i, k)));
                     }
                 }
             }
@@ -113,9 +113,9 @@ public class QRDecompositor implements MatrixDecompositor {
         for (int i = 0; i < r.columns(); i++) {
             for (int j = i; j < r.columns(); j++) {
                 if (i < j) {
-                    r.unsafe_set(i, j, -qr.unsafe_get(i, j));
+                    r.set(i, j, -qr.get(i, j));
                 } else if (i == j) {
-                    r.unsafe_set(i, j, rdiag.unsafe_get(i));
+                    r.set(i, j, rdiag.get(i));
                 }
             }
         }

@@ -69,7 +69,7 @@ public class SymbolSeparatedStream extends AbstractStream
                 vector.resize((vector.length() * 3) / 2 + 1);
             }
 
-            vector.unsafe_set(length++, Double.valueOf(tokenizer.nextToken()));
+            vector.set(length++, Double.valueOf(tokenizer.nextToken()));
         }
 
         vector.resize(length);
@@ -85,7 +85,7 @@ public class SymbolSeparatedStream extends AbstractStream
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < vector.length(); i++) {
-            double value = vector.unsafe_get(i);
+            double value = vector.get(i);
             builder.append(String.format(Locale.US, "%.12f", value));
             if (i + 1 < vector.length()) {
                 builder.append(separator);
@@ -120,7 +120,7 @@ public class SymbolSeparatedStream extends AbstractStream
                     matrix.resize(matrix.rows(), (matrix.columns() * 3) / 2 + 1);
                 }
                 double value = Double.valueOf(tokenizer.nextToken());
-                matrix.unsafe_set(rows, j++, value);
+                matrix.set(rows, j++, value);
             }
 
             columns = j > columns ? j : columns;
@@ -141,7 +141,7 @@ public class SymbolSeparatedStream extends AbstractStream
             StringBuilder builder = new StringBuilder();
 
             for (int j = 0; j < matrix.columns(); j++) {
-                double value = matrix.unsafe_get(i, j);
+                double value = matrix.get(i, j);
                 builder.append(String.format(Locale.US, "%.12f", value));
                 if (j + 1 < matrix.columns()) {
                     builder.append(separator);

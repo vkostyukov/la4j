@@ -177,4 +177,16 @@ public interface Factory extends Serializable {
      * @return
      */
     LinearSystem createLinearSystem(Matrix a, Vector b);
+
+    /**
+     * 
+     * @return
+     */
+    Factory safe();
+
+    /**
+     * 
+     * @return
+     */
+    Factory unsafe();
 }

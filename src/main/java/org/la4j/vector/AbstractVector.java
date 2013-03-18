@@ -45,24 +45,9 @@ public abstract class AbstractVector implements Vector {
     @Override
     public void assign(double value) {
         for (int i = 0; i < length; i++) {
-            unsafe_set(i, value);
+            set(i, value);
         }
     }
-
-    @Override
-    public double get(int i) {
-        ensureIndexInLength(i);
-
-        return unsafe_get(i);
-    }
-
-    @Override
-    public void set(int i, double value) {
-        ensureIndexInLength(i);
-
-        unsafe_set(i, value);
-    }
-
 
     @Override
     public int length() {
@@ -81,7 +66,7 @@ public abstract class AbstractVector implements Vector {
         Vector result = blank(factory);
 
         for (int i = 0; i < length; i++) {
-            result.unsafe_set(i, unsafe_get(i) + value);
+            result.set(i, get(i) + value);
         }
 
         return result;
@@ -105,21 +90,10 @@ public abstract class AbstractVector implements Vector {
                                                + vector.length());
         }
 
-        return unsafe_add(vector, factory);
-    }
-
-    @Override
-    public Vector unsafe_add(Vector vector) {
-        return unsafe_add(vector, factory);
-    }
-
-    @Override
-    public Vector unsafe_add(Vector vector, Factory factory) {
-
         Vector result = blank(factory);
 
         for (int i = 0; i < length; i++) {
-            result.unsafe_set(i, unsafe_get(i) + vector.unsafe_get(i));
+            result.set(i, get(i) + vector.get(i));
         }
 
         return result;
@@ -137,7 +111,7 @@ public abstract class AbstractVector implements Vector {
         Vector result = blank(factory);
 
         for (int i = 0; i < length; i++) {
-            result.unsafe_set(i, unsafe_get(i) * value);
+            result.set(i, get(i) * value);
         }
 
         return result;
@@ -161,21 +135,10 @@ public abstract class AbstractVector implements Vector {
                                                + vector.length());
         }
 
-        return unsafe_multiply(vector, factory);
-    }
-
-    @Override
-    public Vector unsafe_multiply(Vector vector) {
-        return unsafe_multiply(vector, factory);
-    }
-
-    @Override
-    public Vector unsafe_multiply(Vector vector, Factory factory) {
-
         Vector result = blank(factory);
 
         for (int i = 0; i < length; i++) {
-            result.unsafe_set(i, unsafe_get(i) * vector.unsafe_get(i));
+            result.set(i, get(i) * vector.get(i));
         }
 
         return result;
@@ -199,16 +162,6 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector subtract(Vector vector, Factory factory) {
         return add(vector.multiply(-1.0), factory);
-    }
-
-    @Override
-    public Vector unsafe_subtract(Vector vector) {
-        return unsafe_subtract(vector, factory);
-    }
-
-    @Override
-    public Vector unsafe_subtract(Vector vector, Factory factory) {
-        return unsafe_add(vector.multiply(-1.0), factory);
     }
 
     @Override
@@ -236,7 +189,7 @@ public abstract class AbstractVector implements Vector {
         double result = 0.0;
 
         for (int i = 0; i < length; i++) {
-            result += unsafe_get(i) * vector.unsafe_get(i);
+            result += get(i) * vector.get(i);
         }
 
         return result;
@@ -282,9 +235,14 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public Factory factory() {
+        return factory;
+    }
+
+    @Override
     public void each(VectorProcedure procedure) {
         for (int i = 0; i < length; i++) {
-            procedure.apply(i, unsafe_get(i));
+            procedure.apply(i, get(i));
         }
     }
 
@@ -299,7 +257,7 @@ public abstract class AbstractVector implements Vector {
         Vector result = blank(factory);
 
         for (int i = 0; i < length; i++) {
-            result.unsafe_set(i, function.evaluate(i, unsafe_get(i)));
+            result.set(i, function.evaluate(i, get(i)));
         }
 
         return result;
@@ -313,43 +271,24 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector transform(int i, VectorFunction function, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureIndexInLength(i);
-
-        return unsafe_transform(i, function, factory);
-    }
-
-    @Override
-    public Vector unsafe_transform(int i, VectorFunction function) {
-        return unsafe_transform(i, function, factory);
-    }
-
-    @Override
-    public Vector unsafe_transform(int i, VectorFunction function,
-            Factory factory) {
 
         Vector result = copy(factory);
-        result.unsafe_set(i, function.evaluate(i, unsafe_get(i)));
+        result.set(i, function.evaluate(i, get(i)));
 
         return result;
+
     }
 
     @Override
     public void update(VectorFunction function) {
         for (int i = 0; i < length; i++) {
-            unsafe_set(i, function.evaluate(i, unsafe_get(i)));
+            set(i, function.evaluate(i, get(i)));
         }
     }
 
     @Override
     public void update(int i, VectorFunction function) {
-        ensureIndexInLength(i);
-
-        unsafe_update(i, function);
-    }
-
-    @Override
-    public void unsafe_update(int i, VectorFunction function) {
-        unsafe_set(i, function.evaluate(i, unsafe_get(i)));
+        set(i, function.evaluate(i, get(i)));
     }
 
     @Override
@@ -358,10 +297,15 @@ public abstract class AbstractVector implements Vector {
         boolean result = true;
 
         for (int i = 0; i < length; i++) {
-            result = result && predicate.test(i, unsafe_get(i)); 
+            result = result && predicate.test(i, get(i)); 
         }
 
         return result;
+    }
+
+    @Override
+    public Vector unsafe() {
+        return this;
     }
 
     @Override
@@ -370,7 +314,7 @@ public abstract class AbstractVector implements Vector {
         int result = 17;
 
         for (int i = 0; i < length; i++) {
-            long value = (long) unsafe_get(i);
+            long value = (long) get(i);
             result = 37 * result + (int) (value ^ (value >>> 32));
         }
 
@@ -400,8 +344,8 @@ public abstract class AbstractVector implements Vector {
         boolean result = true;
 
         for (int i = 0; result && i < length; i++) {
-            double a = unsafe_get(i);
-            double b = vector.unsafe_get(i);
+            double a = get(i);
+            double b = vector.get(i);
 
             double diff = Math.abs(a - b);
 
@@ -419,7 +363,7 @@ public abstract class AbstractVector implements Vector {
 
         sb.append("[");
         for (int i = 0; i < length; i++) {
-            sb.append(String.format("%6.3f", unsafe_get(i)));
+            sb.append(String.format("%6.3f", get(i)));
             sb.append((i < length - 1 ? ", " : " "));
         }
         sb.append("]");
@@ -430,12 +374,6 @@ public abstract class AbstractVector implements Vector {
     protected void ensureFactoryIsNotNull(Factory factory) {
         if (factory == null) {
             throw new IllegalArgumentException("Factory can't be null.");
-        }
-    }
-
-    protected void ensureIndexInLength(int i) {
-        if (i >= length || i < 0) {
-            throw new IllegalArgumentException("Index out of bounds: " + i);
         }
     }
 }

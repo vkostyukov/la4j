@@ -47,34 +47,34 @@ public class LUDecompositor implements MatrixDecompositor {
 
                 double s = 0.0;
                 for (int k = 0; k < kmax; k++) {
-                    s += lu.unsafe_get(i, k) * jcolumn.unsafe_get(k);
+                    s += lu.get(i, k) * jcolumn.get(k);
                 }
 
-                jcolumn.unsafe_set(i, jcolumn.unsafe_get(i) - s);
-                lu.unsafe_set(i, j, jcolumn.unsafe_get(i));
+                jcolumn.set(i, jcolumn.get(i) - s);
+                lu.set(i, j, jcolumn.get(i));
             }
 
             int p = j;
 
             for (int i = j + 1; i < lu.rows(); i++) {
-                if (Math.abs(jcolumn.unsafe_get(i)) 
-                    > Math.abs(jcolumn.unsafe_get(p)))
+                if (Math.abs(jcolumn.get(i)) 
+                    > Math.abs(jcolumn.get(p)))
 
                     p = i;
             }
 
             if (p != j) {
                 for (int k = 0; k < lu.columns(); k++) {
-                    double t = lu.unsafe_get(p, k);
-                    lu.unsafe_set(p, k, lu.unsafe_get(j, k));
-                    lu.unsafe_set(j, k, t);
+                    double t = lu.get(p, k);
+                    lu.set(p, k, lu.get(j, k));
+                    lu.set(j, k, t);
                 }
             }
 
-            if (j < lu.rows() & lu.unsafe_get(j, j) != 0.0) {
+            if (j < lu.rows() & lu.get(j, j) != 0.0) {
                 for (int i = j + 1; i < lu.rows(); i++) {
-                    lu.unsafe_set(i, j, lu.unsafe_get(i, j) 
-                                  / lu.unsafe_get(j, j));
+                    lu.set(i, j, lu.get(i, j) 
+                                  / lu.get(j, j));
                 }
             }
         }
@@ -84,9 +84,9 @@ public class LUDecompositor implements MatrixDecompositor {
         for (int i = 0; i < l.rows(); i++) {
             for (int j = 0; j <= i; j++) {
                 if (i > j) {
-                    l.unsafe_set(i, j, lu.unsafe_get(i, j));
+                    l.set(i, j, lu.get(i, j));
                 } else if (i == j) {
-                    l.unsafe_set(i, j, 1.0);
+                    l.set(i, j, 1.0);
                 }
             }
         }
@@ -96,7 +96,7 @@ public class LUDecompositor implements MatrixDecompositor {
         for (int i = 0; i < u.columns(); i++) {
             for (int j = i; j < u.columns(); j++) {
                 if (i <= j) {
-                    u.unsafe_set(i, j, lu.get(i, j));
+                    u.set(i, j, lu.get(i, j));
                 }
             }
         }

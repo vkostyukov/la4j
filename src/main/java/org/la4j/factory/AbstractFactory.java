@@ -33,4 +33,14 @@ public abstract class AbstractFactory implements Factory {
     public LinearSystem createLinearSystem(Matrix a, Vector b) {
         return new LinearSystem(a, b, this);
     }
+
+    @Override
+    public Factory safe() {
+        return new SafeFactory(this);
+    }
+
+    @Override
+    public Factory unsafe() {
+        return this;
+    }
 }

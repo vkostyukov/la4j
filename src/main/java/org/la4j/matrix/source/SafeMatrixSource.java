@@ -28,7 +28,7 @@ public class SafeMatrixSource implements MatrixSource {
     private Matrix matrix;
 
     public SafeMatrixSource(Matrix matrix) {
-        this.matrix = matrix;
+        this.matrix = matrix.safe();
     }
 
     @Override

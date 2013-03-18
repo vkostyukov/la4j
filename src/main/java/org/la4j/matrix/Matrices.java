@@ -34,6 +34,7 @@ import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.CCSFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
+import org.la4j.factory.SafeFactory;
 import org.la4j.inversion.GaussianInvertor;
 import org.la4j.inversion.MatrixInvertor;
 import org.la4j.linear.GaussianSolver;
@@ -330,6 +331,26 @@ public final class Matrices {
 
     public final static Factory CCS_FACTORY = new CCSFactory();
 
+    public final static Factory SAFE_BASIC1D_FACTORY = 
+            new SafeFactory(BASIC1D_FACTORY);
+
+    public final static Factory SAFE_BASIC2D_FACTORY = 
+            new SafeFactory(BASIC2D_FACTORY);
+
+    public final static Factory SAFE_CRS_FACTORY = 
+            new SafeFactory(CRS_FACTORY);
+
+    public final static Factory SAFE_CCS_FACTORY = 
+            new SafeFactory(CCS_FACTORY);
+
+    public final static Factory UNSAFE_BASIC1D_FACTORY = BASIC1D_FACTORY;
+
+    public final static Factory UNSAFE_BASIC2D_FACTORY = BASIC2D_FACTORY;
+
+    public final static Factory UNSAFE_CRS_FACTORY = CRS_FACTORY;
+
+    public final static Factory UNSAFE_CCS_FACTORY = CCS_FACTORY;
+
     public final static Factory DEFAULT_DENSE_FACTORY = BASIC2D_FACTORY;
 
     public final static Factory DEFAULT_SPARSE_FACTORY = CRS_FACTORY;
@@ -379,5 +400,13 @@ public final class Matrices {
 
     public static LinearSystem asLinearSystem(Matrix a, Vector b) {
         return DEFAULT_FACTORY.createLinearSystem(a, b);
+    }
+
+    public static Matrix asSafeMatrix(Matrix matrix) {
+        return matrix.safe();
+    }
+
+    public static Matrix asUnsafeMatrix(Matrix matrix) {
+        return matrix.unsafe();
     }
 }

@@ -37,18 +37,6 @@ public abstract class AbstractMatrixTest extends TestCase {
 
     public abstract Factory factory();
 
-    public void testAccess_0x0() {
-
-        Matrix a = factory().createMatrix(new double[][] {{}});
-
-        try {
-            a.get(0, 0);
-        } catch (IllegalArgumentException expected) {
-        } catch (Exception unexpected) {
-            fail("Unexpected exception: " + unexpected.getMessage());
-        }
-    }
-
     public void testAccess_3x3() {
 
         Matrix a = factory().createMatrix(new double[][] {
@@ -59,23 +47,6 @@ public abstract class AbstractMatrixTest extends TestCase {
 
         a.set(0, 1, a.get(1, 1) * 2);
         assertEquals(10.0, a.get(0, 1));
-    }
-
-    public void testAccess_3x1_wrongarg() {
-
-        Matrix a = factory().createMatrix(new double[][] {
-                { 1.0 },
-                { 0.0 },
-                { 7.0 }
-        });
-
-        try {
-            a.set(0, 1, a.get(0, 0) * 2);
-        } catch (IllegalArgumentException expected) {
-        } catch (Exception unexpected) {
-            fail("Unexpected exception: " + unexpected.getMessage());
-        }
-        
     }
 
     public void testAssign_3x3() {

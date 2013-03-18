@@ -44,21 +44,21 @@ public class SweepSolver implements LinearSystemSolver {
 
         for (int i = 0; i < linearSystem.variables() - 1; i++) {
 
-            double maxItem = Math.abs(a.unsafe_get(i, i));
+            double maxItem = Math.abs(a.get(i, i));
             int maxIndex = i;
 
             for (int j = i + 1; j < linearSystem.variables(); j++) {
-                if (Math.abs(a.unsafe_get(j, i)) > maxItem) {
-                    maxItem = Math.abs(a.unsafe_get(j, i));
+                if (Math.abs(a.get(j, i)) > maxItem) {
+                    maxItem = Math.abs(a.get(j, i));
                     maxIndex = j;
                 }
             }
 
             if (maxIndex != i) {
                 for (int j = 0; j < linearSystem.variables(); j++) {
-                    double t = a.unsafe_get(i, j);
-                    a.unsafe_set(i, j, a.unsafe_get(maxIndex, j));
-                    a.unsafe_set(maxIndex, j, t);
+                    double t = a.get(i, j);
+                    a.set(i, j, a.get(maxIndex, j));
+                    a.set(maxIndex, j, t);
                 }
 
                 b.swap(i, maxIndex);
@@ -66,13 +66,13 @@ public class SweepSolver implements LinearSystemSolver {
 
             for (int j = i + 1; j < linearSystem.variables(); j++) {
 
-                double c = a.unsafe_get(j, i) / a.unsafe_get(i, i);
+                double c = a.get(j, i) / a.get(i, i);
                 for (int k = i; k < a.columns(); k++) {
-                    a.unsafe_set(j, k, a.unsafe_get(j, k) - a.unsafe_get(i, k) 
+                    a.set(j, k, a.get(j, k) - a.get(i, k) 
                                  * c);
                 }
 
-                b.unsafe_set(j, b.unsafe_get(j) - b.unsafe_get(i) * c);
+                b.set(j, b.get(j) - b.get(i) * c);
             }
         }
 
@@ -81,10 +81,10 @@ public class SweepSolver implements LinearSystemSolver {
             double summand = 0.0;
 
             for (int j = i + 1; j < a.columns(); j++) {
-                summand += a.unsafe_get(i, j) * x.unsafe_get(j);
+                summand += a.get(i, j) * x.get(j);
             }
 
-            x.unsafe_set(i, (b.unsafe_get(i) - summand) / a.unsafe_get(i, i));
+            x.set(i, (b.get(i) - summand) / a.get(i, i));
         }
 
         return x;

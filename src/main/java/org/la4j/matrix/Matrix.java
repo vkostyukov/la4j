@@ -50,8 +50,8 @@ public interface Matrix extends Externalizable {
     double get(int i, int j);
 
     /**
-     * Sets the (<code>i, j</code>) element of this matrix to <code>value</code>
-     * .
+     * Sets the (<code>i, j</code>) element of this matrix to <code>value</code>.
+     * 
      * 
      * @param i
      *            row of matrix
@@ -61,21 +61,6 @@ public interface Matrix extends Externalizable {
      *            to be stored at (i, j) in matrix
      */
     void set(int i, int j, double value);
-
-    /**
-     * 
-     * @param i
-     * @param j
-     */
-    double unsafe_get(int i, int j);
-
-    /**
-     * 
-     * @param i
-     * @param j
-     * @param value
-     */
-    void unsafe_set(int i, int j, double value);
 
     /**
      * Assigns all elements of this matrix to <code>value</code>.
@@ -171,15 +156,6 @@ public interface Matrix extends Externalizable {
     Vector multiply(Vector vector);
 
     /**
-     * Multiply matrix by vector;
-     * 
-     * @param vector
-     *            to be multiplied
-     * @return multiplied matrix
-     */
-    Vector unsafe_multiply(Vector vector);
-
-    /**
      * Multiply matrix by vector with specified factory;
      * 
      * @param vector
@@ -188,16 +164,6 @@ public interface Matrix extends Externalizable {
      * @return multiplied matrix
      */
     Vector multiply(Vector vector, Factory factory);
-
-    /**
-     * Multiply matrix by vector with specified factory;
-     * 
-     * @param vector
-     *            to be multiplied
-     * @param factory
-     * @return multiplied matrix
-     */
-    Vector unsafe_multiply(Vector vector, Factory factory);
 
     /**
      * Multiply matrix by matrix;
@@ -209,15 +175,6 @@ public interface Matrix extends Externalizable {
     Matrix multiply(Matrix matrix);
 
     /**
-     * Multiply matrix by matrix;
-     * 
-     * @param matrix
-     *            to be multiplied
-     * @return multiplied matrix
-     */
-    Matrix unsafe_multiply(Matrix matrix);
-
-    /**
      * Multiply matrix to matrix with specified factory;
      * 
      * @param matrix
@@ -226,16 +183,6 @@ public interface Matrix extends Externalizable {
      * @throws MatrixException
      */
     Matrix multiply(Matrix matrix, Factory factory);
-
-    /**
-     * Multiply matrix to matrix with specified factory;
-     * 
-     * @param matrix
-     * @param factory
-     * @return
-     * @throws MatrixException
-     */
-    Matrix unsafe_multiply(Matrix matrix, Factory factory);
 
     /**
      * Subtract value from matrix;
@@ -265,15 +212,6 @@ public interface Matrix extends Externalizable {
     Matrix subtract(Matrix matrix);
 
     /**
-     * Subtract matrix by matrix;
-     * 
-     * @param matrix
-     *            to be subtracted
-     * @return subtracted matrix
-     */
-    Matrix unsafe_subtract(Matrix matrix);
-
-    /**
      * Subtract matrix from matrix with specified factory;
      * 
      * @param matrix
@@ -281,15 +219,6 @@ public interface Matrix extends Externalizable {
      * @return
      */
     Matrix subtract(Matrix matrix, Factory factory);
-
-    /**
-     * Subtract matrix from matrix with specified factory;
-     * 
-     * @param matrix
-     * @param factory
-     * @return
-     */
-    Matrix unsafe_subtract(Matrix matrix, Factory factory);
 
     /**
      * Add value to matrix;
@@ -319,15 +248,6 @@ public interface Matrix extends Externalizable {
     Matrix add(Matrix matrix);
 
     /**
-     * Add matrix by matrix;
-     * 
-     * @param matrix
-     *            to be added
-     * @return added matrix
-     */
-    Matrix unsafe_add(Matrix matrix);;
-
-    /**
      * Add matrix to matrix with specified factory;
      * 
      * @param matrix
@@ -336,16 +256,6 @@ public interface Matrix extends Externalizable {
      * @throws MatrixException
      */
     Matrix add(Matrix matrix, Factory factory);
-
-    /**
-     * Add matrix to matrix with specified factory;
-     * 
-     * @param matrix
-     * @param factory
-     * @return
-     * @throws MatrixException
-     */
-    Matrix unsafe_add(Matrix matrix, Factory factory);
 
     /**
      * Dived matrix to value;
@@ -403,9 +313,8 @@ public interface Matrix extends Externalizable {
      * </p>
      * @ return the "rank" of this matrix
      */
-    
     int rank();
-    
+
     /**
      * Get the i-th row of matrix;
      * 
@@ -413,7 +322,6 @@ public interface Matrix extends Externalizable {
      *            row
      * @return the i-th row
      */
-    
     Vector getRow(int i);
 
     /**
@@ -541,6 +449,12 @@ public interface Matrix extends Externalizable {
     Matrix copy(Factory factory);
 
     /**
+     * Returns the factory associated with this matrix.
+     * 
+     * @return factory
+     */
+    Factory factory();
+    /**
      * 
      * @param function
      */
@@ -579,26 +493,6 @@ public interface Matrix extends Externalizable {
 
     /**
      * 
-     * @param i
-     * @param j
-     * @param function
-     * @return
-     */
-    Matrix unsafe_transform(int i, int j, MatrixFunction function);
-
-    /**
-     * 
-     * @param i
-     * @param j
-     * @param function
-     * @param factory
-     * @return
-     */
-    Matrix unsafe_transform(int i, int j, MatrixFunction function, 
-                            Factory factory);
-
-    /**
-     * 
      * @param function
      */
     void update(MatrixFunction function);
@@ -613,16 +507,20 @@ public interface Matrix extends Externalizable {
 
     /**
      * 
-     * @param i
-     * @param j
-     * @param function
-     */
-    void unsafe_update(int i, int j, MatrixFunction function);
-
-    /**
-     * 
      * @param predidate
      * @return
      */
     boolean is(MatrixPredicate predidate);
+
+    /**
+     * 
+     * @return
+     */
+    Matrix safe();
+
+    /**
+     * 
+     * @return
+     */
+    Matrix unsafe();
 }

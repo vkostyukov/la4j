@@ -63,12 +63,12 @@ public class BasicVector extends AbstractVector implements DenseVector {
     }
 
     @Override
-    public double unsafe_get(int i) {
+    public double get(int i) {
         return self[i];
     }
 
     @Override
-    public void unsafe_set(int i, double value) {
+    public void set(int i, double value) {
         self[i] = value;
     }
 
@@ -96,8 +96,6 @@ public class BasicVector extends AbstractVector implements DenseVector {
 
     @Override
     public void swap(int i, int j) {
-        ensureIndexInLength(i);
-        ensureIndexInLength(j);
 
         if (i == j) {
             return;
@@ -113,6 +111,11 @@ public class BasicVector extends AbstractVector implements DenseVector {
         double result[] = new double[length];
         System.arraycopy(self, 0, result, 0, length);
         return result;
+    }
+
+    @Override
+    public Vector safe() {
+        return new DenseSafeVector(this);
     }
 
     @Override

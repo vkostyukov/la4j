@@ -59,12 +59,12 @@ public class EigenDecompositor implements MatrixDecompositor {
 
             Matrix u = generateU(d, factory, k, l);
 
-            v = v.unsafe_multiply(u);
-            d = u.transpose().unsafe_multiply(d.unsafe_multiply(u));
+            v = v.multiply(u);
+            d = u.transpose().multiply(d.multiply(u));
 
-            r.unsafe_set(k, generateRi(d.getRow(k), k));
+            r.set(k, generateRi(d.getRow(k), k));
 
-            r.unsafe_set(l, generateRi(d.getRow(l), l));
+            r.set(l, generateRi(d.getRow(l), l));
 
             iteration++;
 
@@ -82,8 +82,8 @@ public class EigenDecompositor implements MatrixDecompositor {
         int result = exl == 0 ? 1 : 0;
         for (int i = 0; i < vector.length(); i++) {
             if (i != exl
-                    && Math.abs(vector.unsafe_get(result)) < Math.abs(vector
-                            .unsafe_get(i))) {
+                    && Math.abs(vector.get(result)) < Math.abs(vector
+                            .get(i))) {
                 result = i;
             }
         }
@@ -96,7 +96,7 @@ public class EigenDecompositor implements MatrixDecompositor {
         Vector result = factory.createVector(matrix.rows());
 
         for (int i = 0; i < matrix.rows(); i++) {
-            result.unsafe_set(i, generateRi(matrix.getRow(i), i));
+            result.set(i, generateRi(matrix.getRow(i), i));
         }
 
         return result;
@@ -108,7 +108,7 @@ public class EigenDecompositor implements MatrixDecompositor {
 
         for (int i = 0; i < vector.length(); i++) {
             if (i != position) {
-                summand += vector.unsafe_get(i) * vector.unsafe_get(i);
+                summand += vector.get(i) * vector.get(i);
             }
         }
 
@@ -121,20 +121,20 @@ public class EigenDecompositor implements MatrixDecompositor {
 
         double alpha = 0.0, beta = 0.0;
 
-        if ((matrix.unsafe_get(k, k) - matrix.unsafe_get(l, l)) < Matrices.EPS) {
+        if ((matrix.get(k, k) - matrix.get(l, l)) < Matrices.EPS) {
             alpha = beta = Math.sqrt(0.5);
         } else {
-            double mu = 2 * matrix.unsafe_get(k, l)
-                    / (matrix.unsafe_get(k, k) - matrix.unsafe_get(l, l));
+            double mu = 2 * matrix.get(k, l)
+                    / (matrix.get(k, k) - matrix.get(l, l));
             mu = 1 / Math.sqrt(1 + mu * mu);
             alpha = Math.sqrt(0.5 * (1 + mu));
             beta = Math.signum(mu) * Math.sqrt(0.5 * (1 - mu));
         }
 
-        result.unsafe_set(k, k, alpha);
-        result.unsafe_set(l, l, alpha);
-        result.unsafe_set(k, l, -beta);
-        result.unsafe_set(l, k, beta);
+        result.set(k, k, alpha);
+        result.set(l, l, alpha);
+        result.set(k, l, -beta);
+        result.set(l, k, beta);
 
         return result;
     }
@@ -160,15 +160,15 @@ public class EigenDecompositor implements MatrixDecompositor {
         Matrix dd = factory.createMatrix(n, n);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                dd.unsafe_set(i, j, 0.0);
+                dd.set(i, j, 0.0);
             }
 
-            dd.unsafe_set(i, i, d.unsafe_get(i));
+            dd.set(i, i, d.get(i));
 
-            if (e.unsafe_get(i) > 0) {
-                dd.unsafe_set(i, i + 1, e.unsafe_get(i));
-            } else if (e.unsafe_get(i) < 0) {
-                dd.unsafe_set(i, i - 1, e.unsafe_get(i));
+            if (e.get(i) > 0) {
+                dd.set(i, i + 1, e.get(i));
+            } else if (e.get(i) < 0) {
+                dd.set(i, i - 1, e.get(i));
             }
         }
 
@@ -195,7 +195,7 @@ public class EigenDecompositor implements MatrixDecompositor {
             double scale = 0.0;
 
             for (int i = m; i <= high; i++) {
-                scale = scale + Math.abs(h.unsafe_get(i, m - 1));
+                scale = scale + Math.abs(h.get(i, m - 1));
             }
 
             if (scale != 0.0) {
@@ -204,18 +204,18 @@ public class EigenDecompositor implements MatrixDecompositor {
 
                 double hh = 0.0;
                 for (int i = high; i >= m; i--) {
-                    ort.unsafe_set(i, h.unsafe_get(i, m - 1) / scale);
-                    hh += ort.unsafe_get(i) * ort.unsafe_get(i);
+                    ort.set(i, h.get(i, m - 1) / scale);
+                    hh += ort.get(i) * ort.get(i);
                 }
 
                 double g = Math.sqrt(hh);
 
-                if (ort.unsafe_get(m) > Matrices.EPS) {
+                if (ort.get(m) > Matrices.EPS) {
                     g = -g;
                 }
 
-                hh = hh - ort.unsafe_get(m) * g;
-                ort.unsafe_set(m, ort.unsafe_get(m) - g);
+                hh = hh - ort.get(m) * g;
+                ort.set(m, ort.get(m) - g);
 
                 // Apply Householder similarity transformation
                 // H = (I-u*u'/h)*H*(I-u*u')/h)
@@ -223,47 +223,47 @@ public class EigenDecompositor implements MatrixDecompositor {
                 for (int j = m; j < n; j++) {
                     double f = 0.0;
                     for (int i = high; i >= m; i--) {
-                        f += ort.unsafe_get(i) * h.unsafe_get(i, j);
+                        f += ort.get(i) * h.get(i, j);
                     }
                     f = f / hh;
                     for (int i = m; i <= high; i++) {
-                        h.unsafe_set(i, j, h.unsafe_get(i, j) 
-                                     -  (f * ort.unsafe_get(i)));
+                        h.set(i, j, h.get(i, j) 
+                                     -  (f * ort.get(i)));
                     }
                 }
 
                 for (int i = 0; i <= high; i++) {
                     double f = 0.0;
                     for (int j = high; j >= m; j--) {
-                        f += ort.unsafe_get(j) * h.unsafe_get(i, j);
+                        f += ort.get(j) * h.get(i, j);
                     }
                     f = f / hh;
                     for (int j = m; j <= high; j++) {
-                        h.unsafe_set(i, j, h.unsafe_get(i, j) 
-                                     - (f * ort.unsafe_get(j)));
+                        h.set(i, j, h.get(i, j) 
+                                     - (f * ort.get(j)));
                     }
                 }
-                ort.unsafe_set(m, scale * ort.unsafe_get(m));
-                h.unsafe_set(m,  m - 1, scale * g);
+                ort.set(m, scale * ort.get(m));
+                h.set(m,  m - 1, scale * g);
             }
         }
 
         // Accumulate transformations (Algol's ortran).
 
         for (int m = high - 1; m >= low + 1; m--) {
-            if (Math.abs(h.unsafe_get(m, m - 1)) > Matrices.EPS) {
+            if (Math.abs(h.get(m, m - 1)) > Matrices.EPS) {
                 for (int i = m + 1; i <= high; i++) {
-                    ort.unsafe_set(i, h.unsafe_get(i, m - 1));
+                    ort.set(i, h.get(i, m - 1));
                 }
                 for (int j = m; j <= high; j++) {
                     double g = 0.0;
                     for (int i = m; i <= high; i++) {
-                        g += ort.unsafe_get(i) * v.unsafe_get(i, j);
+                        g += ort.get(i) * v.get(i, j);
                     }
                     // Double division avoids possible underflow
-                    g = (g / ort.unsafe_get(m)) / h.unsafe_get(m, m - 1);
+                    g = (g / ort.get(m)) / h.get(m, m - 1);
                     for (int i = m; i <= high; i++) {
-                        v.unsafe_set(i, j, v.unsafe_get(i, j) + g * ort.unsafe_get(i));
+                        v.set(i, j, v.get(i, j) + g * ort.get(i));
                     }
                 }
             }
@@ -294,11 +294,11 @@ public class EigenDecompositor implements MatrixDecompositor {
         double norm = 0.0;
         for (int i = 0; i < nn; i++) {
             if (i < low | i > high) {
-                d.unsafe_set(i, H.unsafe_get(i, i));
-                e.unsafe_set(i, 0.0);
+                d.set(i, H.get(i, i));
+                e.set(i, 0.0);
             }
             for (int j = Math.max(i - 1, 0); j < nn; j++) {
-                norm = norm + Math.abs(H.unsafe_get(i, j));
+                norm = norm + Math.abs(H.get(i, j));
             }
         }
 
@@ -311,13 +311,13 @@ public class EigenDecompositor implements MatrixDecompositor {
 
             int l = n;
             while (l > low) {
-                s = Math.abs(H.unsafe_get(l - 1, l - 1)) 
-                    + Math.abs(H.unsafe_get(l, l));
+                s = Math.abs(H.get(l - 1, l - 1)) 
+                    + Math.abs(H.get(l, l));
 
                 if (s == 0.0) {
                     s = norm;
                 }
-                if (Math.abs(H.unsafe_get(l, l - 1)) < eps * s) {
+                if (Math.abs(H.get(l, l - 1)) < eps * s) {
                     break;
                 }
                 l--;
@@ -327,22 +327,22 @@ public class EigenDecompositor implements MatrixDecompositor {
             // One root found
 
             if (l == n) {
-                H.unsafe_set(n, n, H.unsafe_get(n, n) + exshift);
-                d.unsafe_set(n, H.unsafe_get(n, n));
-                e.unsafe_set(n, 0.0);
+                H.set(n, n, H.get(n, n) + exshift);
+                d.set(n, H.get(n, n));
+                e.set(n, 0.0);
                 n--;
                 iter = 0;
 
                 // Two roots found
 
             } else if (l == n - 1) {
-                w = H.unsafe_get(n, n - 1) * H.unsafe_get(n - 1, n);
-                p = (H.unsafe_get(n - 1, n - 1) - H.unsafe_get(n, n)) / 2.0;
+                w = H.get(n, n - 1) * H.get(n - 1, n);
+                p = (H.get(n - 1, n - 1) - H.get(n, n)) / 2.0;
                 q = p * p + w;
                 z = Math.sqrt(Math.abs(q));
-                H.unsafe_set(n, n, H.unsafe_get(n, n) + exshift);
-                H.unsafe_set(n - 1, n - 1, H.unsafe_get(n - 1, n - 1) + exshift);
-                x = H.unsafe_get(n, n);
+                H.set(n, n, H.get(n, n) + exshift);
+                H.set(n - 1, n - 1, H.get(n - 1, n - 1) + exshift);
+                x = H.get(n, n);
 
                 // Real pair
 
@@ -352,14 +352,14 @@ public class EigenDecompositor implements MatrixDecompositor {
                     } else {
                         z = p - z;
                     }
-                    d.unsafe_set(n - 1, x + z);
-                    d.unsafe_set(n, d.unsafe_get(n - 1));
+                    d.set(n - 1, x + z);
+                    d.set(n, d.get(n - 1));
                     if (z != 0.0) {
-                        d.unsafe_set(n, x - w / z);
+                        d.set(n, x - w / z);
                     }
-                    e.unsafe_set(n - 1, 0.0);
-                    e.unsafe_set(n, 0.0);
-                    x = H.unsafe_get(n, n - 1);
+                    e.set(n - 1, 0.0);
+                    e.set(n, 0.0);
+                    x = H.get(n, n - 1);
                     s = Math.abs(x) + Math.abs(z);
                     p = x / s;
                     q = z / s;
@@ -370,34 +370,34 @@ public class EigenDecompositor implements MatrixDecompositor {
                     // Row modification
 
                     for (int j = n - 1; j < nn; j++) {
-                        z = H.unsafe_get(n - 1, j);
-                        H.unsafe_set(n - 1, j, q * z + p * H.unsafe_get(n, j));
-                        H.unsafe_set(n, j, q * H.unsafe_get(n, j) - p * z);
+                        z = H.get(n - 1, j);
+                        H.set(n - 1, j, q * z + p * H.get(n, j));
+                        H.set(n, j, q * H.get(n, j) - p * z);
                     }
 
                     // Column modification
 
                     for (int i = 0; i <= n; i++) {
-                        z = H.unsafe_get(i, n - 1);
-                        H.unsafe_set(i, n - 1, q * z + p * H.unsafe_get(i, n));
-                        H.unsafe_set(i, n, q * H.unsafe_get(i, n) - p * z);
+                        z = H.get(i, n - 1);
+                        H.set(i, n - 1, q * z + p * H.get(i, n));
+                        H.set(i, n, q * H.get(i, n) - p * z);
                     }
 
                     // Accumulate transformations
 
                     for (int i = low; i <= high; i++) {
-                        z = V.unsafe_get(i, n - 1);
-                        V.unsafe_set(i, n - 1, q * z + p * V.unsafe_get(i, n));
-                        V.unsafe_set(i, n, q * V.unsafe_get(i, n) - p * z);
+                        z = V.get(i, n - 1);
+                        V.set(i, n - 1, q * z + p * V.get(i, n));
+                        V.set(i, n, q * V.get(i, n) - p * z);
                     }
 
                     // Complex pair
 
                 } else {
-                    d.unsafe_set(n - 1, x + p);
-                    d.unsafe_set(n, x + p);
-                    e.unsafe_set(n - 1, z);
-                    e.unsafe_set(n, -z);
+                    d.set(n - 1, x + p);
+                    d.set(n, x + p);
+                    e.set(n - 1, z);
+                    e.set(n, -z);
                 }
                 n = n - 2;
                 iter = 0;
@@ -408,12 +408,12 @@ public class EigenDecompositor implements MatrixDecompositor {
 
                 // Form shift
 
-                x = H.unsafe_get(n, n);
+                x = H.get(n, n);
                 y = 0.0;
                 w = 0.0;
                 if (l < n) {
-                    y = H.unsafe_get(n - 1, n - 1);
-                    w = H.unsafe_get(n, n - 1) * H.unsafe_get(n - 1, n);
+                    y = H.get(n - 1, n - 1);
+                    w = H.get(n, n - 1) * H.get(n - 1, n);
                 }
 
                 // Wilkinson's original ad hoc shift
@@ -421,10 +421,10 @@ public class EigenDecompositor implements MatrixDecompositor {
                 if (iter == 10) {
                     exshift += x;
                     for (int i = low; i <= n; i++) {
-                        H.unsafe_set(i, i, H.unsafe_get(i, i) - x);
+                        H.set(i, i, H.get(i, i) - x);
                     }
-                    s = Math.abs(H.unsafe_get(n, n - 1)) 
-                        + Math.abs(H.unsafe_get(n - 1, n - 2));
+                    s = Math.abs(H.get(n, n - 1)) 
+                        + Math.abs(H.get(n - 1, n - 2));
                     x = y = 0.75 * s; // WTF ???
                     w = -0.4375 * s * s; // Are you kidding me???
                 }
@@ -441,7 +441,7 @@ public class EigenDecompositor implements MatrixDecompositor {
                         }
                         s = x - w / ((y - x) / 2.0 + s);
                         for (int i = low; i <= n; i++) {
-                            H.unsafe_set(i, i, H.unsafe_get(i, i) - s);
+                            H.set(i, i, H.get(i, i) - s);
                         }
                         exshift += s;
                         x = y = w = 0.964;
@@ -454,13 +454,13 @@ public class EigenDecompositor implements MatrixDecompositor {
 
                 int m = n - 2;
                 while (m >= l) {
-                    z = H.unsafe_get(m, m);
+                    z = H.get(m, m);
                     r = x - z;
                     s = y - z;
-                    p = (r * s - w) / H.unsafe_get(m + 1, m) 
-                                      + H.unsafe_get(m, m + 1);
-                    q = H.unsafe_get(m + 1, m + 1) - z - r - s;
-                    r = H.unsafe_get(m + 2, m + 1);
+                    p = (r * s - w) / H.get(m + 1, m) 
+                                      + H.get(m, m + 1);
+                    q = H.get(m + 1, m + 1) - z - r - s;
+                    r = H.get(m + 2, m + 1);
                     s = Math.abs(p) + Math.abs(q) + Math.abs(r);
                     p = p / s;
                     q = q / s;
@@ -468,18 +468,18 @@ public class EigenDecompositor implements MatrixDecompositor {
                     if (m == l) {
                         break;
                     }
-                    if (Math.abs(H.unsafe_get(m, m - 1)) * (Math.abs(q) + Math.abs(r)) < eps
-                            * (Math.abs(p) * (Math.abs(H.unsafe_get(m - 1, m - 1))
-                                    + Math.abs(z) + Math.abs(H.unsafe_get(m + 1, m + 1))))) {
+                    if (Math.abs(H.get(m, m - 1)) * (Math.abs(q) + Math.abs(r)) < eps
+                            * (Math.abs(p) * (Math.abs(H.get(m - 1, m - 1))
+                                    + Math.abs(z) + Math.abs(H.get(m + 1, m + 1))))) {
                         break;
                     }
                     m--;
                 }
 
                 for (int i = m + 2; i <= n; i++) {
-                    H.unsafe_set(i, i - 2, 0.0);
+                    H.set(i, i - 2, 0.0);
                     if (i > m + 2) {
-                        H.unsafe_set(i, i - 3, 0.0);
+                        H.set(i, i - 3, 0.0);
                     }
                 }
 
@@ -488,9 +488,9 @@ public class EigenDecompositor implements MatrixDecompositor {
                 for (int k = m; k <= n - 1; k++) {
                     boolean notlast = (k != n - 1);
                     if (k != m) {
-                        p = H.unsafe_get(k, k - 1);
-                        q = H.unsafe_get(k + 1, k - 1);
-                        r = (notlast ? H.unsafe_get(k + 2, k - 1) : 0.0);
+                        p = H.get(k, k - 1);
+                        q = H.get(k + 1, k - 1);
+                        r = (notlast ? H.get(k + 2, k - 1) : 0.0);
                         x = Math.abs(p) + Math.abs(q) + Math.abs(r);
                         if (x == 0.0) {
                             continue;
@@ -506,9 +506,9 @@ public class EigenDecompositor implements MatrixDecompositor {
                     }
                     if (s != 0) {
                         if (k != m) {
-                            H.unsafe_set(k, k - 1, -s * x);
+                            H.set(k, k - 1, -s * x);
                         } else if (l != m) {
-                            H.unsafe_set(k, k - 1, -H.unsafe_get(k, k - 1));
+                            H.set(k, k - 1, -H.get(k, k - 1));
                         }
                         p = p + s;
                         x = p / s;
@@ -520,44 +520,44 @@ public class EigenDecompositor implements MatrixDecompositor {
                         // Row modification
 
                         for (int j = k; j < nn; j++) {
-                            p = H.unsafe_get(k, j) + q * H.unsafe_get(k + 1, j);
+                            p = H.get(k, j) + q * H.get(k + 1, j);
                             if (notlast) {
-                                p = p + r * H.unsafe_get(k + 2, j);
-                                H.unsafe_set(k + 2, j, H.unsafe_get(k + 2, j) 
+                                p = p + r * H.get(k + 2, j);
+                                H.set(k + 2, j, H.get(k + 2, j) 
                                              - p * z);
                             }
-                            H.unsafe_set(k, j, H.unsafe_get(k, j) - p * x);
-                            H.unsafe_set(k + 1, j, H.unsafe_get(k + 1, j) 
+                            H.set(k, j, H.get(k, j) - p * x);
+                            H.set(k + 1, j, H.get(k + 1, j) 
                                          - p * y);
                         }
 
                         // Column modification
 
                         for (int i = 0; i <= Math.min(n, k + 3); i++) {
-                            p = x * H.unsafe_get(i, k) + y 
-                                * H.unsafe_get(i, k + 1);
+                            p = x * H.get(i, k) + y 
+                                * H.get(i, k + 1);
                             if (notlast) {
-                                p = p + z * H.unsafe_get(i, k + 2);
-                                H.unsafe_set(i, k + 2, H.unsafe_get(i, k + 2)
+                                p = p + z * H.get(i, k + 2);
+                                H.set(i, k + 2, H.get(i, k + 2)
                                              - p * r);
                             }
-                            H.unsafe_set(i, k, H.unsafe_get(i, k) - p);
-                            H.unsafe_set(i, k + 1, H.unsafe_get(i, k + 1) 
+                            H.set(i, k, H.get(i, k) - p);
+                            H.set(i, k + 1, H.get(i, k + 1) 
                                          - p * q);
                         }
 
                         // Accumulate transformations
 
                         for (int i = low; i <= high; i++) {
-                            p = x * V.unsafe_get(i, k) + y 
-                                * V.unsafe_get(i, k + 1);
+                            p = x * V.get(i, k) + y 
+                                * V.get(i, k + 1);
                             if (notlast) {
-                                p = p + z * V.unsafe_get(i, k + 2);
-                                V.unsafe_set(i, k + 2, V.unsafe_get(i, k + 2) 
+                                p = p + z * V.get(i, k + 2);
+                                V.set(i, k + 2, V.get(i, k + 2) 
                                              - p * r);
                             }
-                            V.unsafe_set(i, k, V.unsafe_get(i, k) - p);
-                            V.unsafe_set(i, k + 1, V.unsafe_get(i, k + 1) 
+                            V.set(i, k, V.get(i, k) - p);
+                            V.set(i, k + 1, V.get(i, k + 1) 
                                          - p * q);
                         }
                     } // (s != 0)
@@ -572,54 +572,54 @@ public class EigenDecompositor implements MatrixDecompositor {
         }
 
         for (n = nn - 1; n >= 0; n--) {
-            p = d.unsafe_get(n);
-            q = e.unsafe_get(n);
+            p = d.get(n);
+            q = e.get(n);
 
             // Real vector
 
             if (q == 0) {
                 int l = n;
-                H.unsafe_set(n, n, 1.0);
+                H.set(n, n, 1.0);
                 for (int i = n - 1; i >= 0; i--) {
-                    w = H.unsafe_get(i, i) - p;
+                    w = H.get(i, i) - p;
                     r = 0.0;
                     for (int j = l; j <= n; j++) {
-                        r = r + H.unsafe_get(i, j) * H.unsafe_get(j, n);
+                        r = r + H.get(i, j) * H.get(j, n);
                     }
-                    if (e.unsafe_get(i) < 0.0) {
+                    if (e.get(i) < 0.0) {
                         z = w;
                         s = r;
                     } else {
                         l = i;
-                        if (e.unsafe_get(i) == 0.0) {
+                        if (e.get(i) == 0.0) {
                             if (w != 0.0) {
-                                H.unsafe_set(i, n, -r / w);
+                                H.set(i, n, -r / w);
                             } else {
-                                H.unsafe_set(i, n, -r / (eps * norm));
+                                H.set(i, n, -r / (eps * norm));
                             }
 
                             // Solve real equations
 
                         } else {
-                            x = H.unsafe_get(i, i + 1);
-                            y = H.unsafe_get(i + 1, i);
-                            q = (d.unsafe_get(i) - p) * (d.unsafe_get(i) - p) 
-                                + e.unsafe_get(i) * e.unsafe_get(i);
+                            x = H.get(i, i + 1);
+                            y = H.get(i + 1, i);
+                            q = (d.get(i) - p) * (d.get(i) - p) 
+                                + e.get(i) * e.get(i);
                             t = (x * s - z * r) / q;
-                            H.unsafe_set(i, n, t);
+                            H.set(i, n, t);
                             if (Math.abs(x) > Math.abs(z)) {
-                                H.unsafe_set(i + 1, n, (-r - w * t) / x);
+                                H.set(i + 1, n, (-r - w * t) / x);
                             } else {
-                                H.unsafe_set(i + 1, n, (-s - y * t) / z);
+                                H.set(i + 1, n, (-s - y * t) / z);
                             }
                         }
 
                         // Overflow control
 
-                        t = Math.abs(H.unsafe_get(i, n));
+                        t = Math.abs(H.get(i, n));
                         if ((eps * t) * t > 1) {
                             for (int j = i; j <= n; j++) {
-                                H.unsafe_set(j, n, H.unsafe_get(j, n) / t);
+                                H.set(j, n, H.get(j, n) / t);
                             }
                         }
                     }
@@ -632,48 +632,48 @@ public class EigenDecompositor implements MatrixDecompositor {
 
                 // Last vector component imaginary so matrix is triangular
 
-                if (Math.abs(H.unsafe_get(n, n - 1)) 
-                        > Math.abs(H.unsafe_get(n - 1, n))) {
-                    H.unsafe_set(n - 1, n - 1, q / H.unsafe_get(n, n - 1));
-                    H.unsafe_set(n - 1, n, -(H.unsafe_get(n, n) - p) 
-                                            / H.unsafe_get(n, n - 1));
+                if (Math.abs(H.get(n, n - 1)) 
+                        > Math.abs(H.get(n - 1, n))) {
+                    H.set(n - 1, n - 1, q / H.get(n, n - 1));
+                    H.set(n - 1, n, -(H.get(n, n) - p) 
+                                            / H.get(n, n - 1));
                 } else {
-                    double cdiv[] = cdiv(0.0, -H.unsafe_get(n - 1, n), 
-                         H.unsafe_get(n - 1, n - 1) - p, q);
-                    H.unsafe_set(n - 1, n - 1, cdiv[0]);
-                    H.unsafe_set(n - 1, n, cdiv[1]);
+                    double cdiv[] = cdiv(0.0, -H.get(n - 1, n), 
+                         H.get(n - 1, n - 1) - p, q);
+                    H.set(n - 1, n - 1, cdiv[0]);
+                    H.set(n - 1, n, cdiv[1]);
                 }
-                H.unsafe_set(n, n - 1, 0.0);
-                H.unsafe_set(n, n, 1.0);
+                H.set(n, n - 1, 0.0);
+                H.set(n, n, 1.0);
                 for (int i = n - 2; i >= 0; i--) {
                     double ra, sa, vr, vi;
                     ra = 0.0;
                     sa = 0.0;
                     for (int j = l; j <= n; j++) {
-                        ra = ra + H.unsafe_get(i, j) * H.unsafe_get(j, n - 1);
-                        sa = sa + H.unsafe_get(i, j) * H.unsafe_get(j, n);
+                        ra = ra + H.get(i, j) * H.get(j, n - 1);
+                        sa = sa + H.get(i, j) * H.get(j, n);
                     }
-                    w = H.unsafe_get(i, i) - p;
+                    w = H.get(i, i) - p;
 
-                    if (e.unsafe_get(i) < 0.0) {
+                    if (e.get(i) < 0.0) {
                         z = w;
                         r = ra;
                         s = sa;
                     } else {
                         l = i;
-                        if (e.unsafe_get(i) == 0) {
+                        if (e.get(i) == 0) {
                             double cdiv[] = cdiv(-ra, -sa, w, q);
-                            H.unsafe_set(i, n - 1, cdiv[0]);
-                            H.unsafe_set(i, n, cdiv[1]);
+                            H.set(i, n - 1, cdiv[0]);
+                            H.set(i, n, cdiv[1]);
                         } else {
 
                             // Solve complex equations
 
-                            x = H.unsafe_get(i, i + 1);
-                            y = H.unsafe_get(i + 1, i);
-                            vr = (d.unsafe_get(i) - p) * (d.unsafe_get(i) - p) 
-                                 + e.unsafe_get(i) * e.unsafe_get(i) - q * q;
-                            vi = (d.unsafe_get(i) - p) * 2.0 * q;
+                            x = H.get(i, i + 1);
+                            y = H.get(i + 1, i);
+                            vr = (d.get(i) - p) * (d.get(i) - p) 
+                                 + e.get(i) * e.get(i) - q * q;
+                            vi = (d.get(i) - p) * 2.0 * q;
                             if (vr == 0.0 & vi == 0.0) {
                                 vr = eps
                                         * norm
@@ -683,33 +683,33 @@ public class EigenDecompositor implements MatrixDecompositor {
                             }
                             double cdiv[] = cdiv(x * r - z * ra + q * sa, 
                                                  x * s - z * sa - q * ra, vr, vi);
-                            H.unsafe_set(i, n - 1, cdiv[0]);
-                            H.unsafe_set(i, n, cdiv[1]);
+                            H.set(i, n - 1, cdiv[0]);
+                            H.set(i, n, cdiv[1]);
                             if (Math.abs(x) > (Math.abs(z) + Math.abs(q))) {
-                                H.unsafe_set(i + 1, n - 1, (-ra - w 
-                                             * H.unsafe_get(i, n - 1) + q
-                                             * H.unsafe_get(i, n)) / x);
-                                H.unsafe_set(i + 1, n, (-sa - w 
-                                             * H.unsafe_get(i, n) - q 
-                                             * H.unsafe_get(i, n - 1)) / x);
+                                H.set(i + 1, n - 1, (-ra - w 
+                                             * H.get(i, n - 1) + q
+                                             * H.get(i, n)) / x);
+                                H.set(i + 1, n, (-sa - w 
+                                             * H.get(i, n) - q 
+                                             * H.get(i, n - 1)) / x);
                             } else {
                                 cdiv = cdiv(-r - y 
-                                     * H.unsafe_get(i, n - 1), -s - y 
-                                     * H.unsafe_get(i, n), z, q);
-                                H.unsafe_set(i + 1, n - 1, cdiv[0]);
-                                H.unsafe_set(i + 1, n, cdiv[1]);
+                                     * H.get(i, n - 1), -s - y 
+                                     * H.get(i, n), z, q);
+                                H.set(i + 1, n - 1, cdiv[0]);
+                                H.set(i + 1, n, cdiv[1]);
                             }
                         }
 
                         // Overflow control
 
-                        t = Math.max(Math.abs(H.unsafe_get(i, n - 1)), 
-                                     Math.abs(H.unsafe_get(i, n)));
+                        t = Math.max(Math.abs(H.get(i, n - 1)), 
+                                     Math.abs(H.get(i, n)));
                         if ((eps * t) * t > 1) {
                             for (int j = i; j <= n; j++) {
-                                H.unsafe_set(j, n - 1, 
-                                             H.unsafe_get(j, n - 1) / t);
-                                H.unsafe_set(j, n, H.unsafe_get(j, n) / t);
+                                H.set(j, n - 1, 
+                                             H.get(j, n - 1) / t);
+                                H.set(j, n, H.get(j, n) / t);
                             }
                         }
                     }
@@ -722,7 +722,7 @@ public class EigenDecompositor implements MatrixDecompositor {
         for (int i = 0; i < nn; i++) {
             if (i < low | i > high) {
                 for (int j = i; j < nn; j++) {
-                    V.unsafe_set(i, j, H.unsafe_get(i, j));
+                    V.set(i, j, H.get(i, j));
                 }
             }
         }
@@ -733,9 +733,9 @@ public class EigenDecompositor implements MatrixDecompositor {
             for (int i = low; i <= high; i++) {
                 z = 0.0;
                 for (int k = low; k <= Math.min(j, high); k++) {
-                    z = z + V.unsafe_get(i, k) * H.unsafe_get(k, j);
+                    z = z + V.get(i, k) * H.get(k, j);
                 }
-                V.unsafe_set(i, j, z);
+                V.set(i, j, z);
             }
         }
     }

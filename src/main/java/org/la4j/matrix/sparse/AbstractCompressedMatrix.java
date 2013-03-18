@@ -23,6 +23,7 @@ package org.la4j.matrix.sparse;
 
 import org.la4j.factory.Factory;
 import org.la4j.matrix.AbstractMatrix;
+import org.la4j.matrix.Matrix;
 
 public abstract class AbstractCompressedMatrix extends AbstractMatrix 
     implements SparseMatrix {
@@ -45,5 +46,10 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     @Override
     public double density() {
         return cardinality / (rows * columns);
+    }
+
+    @Override
+    public Matrix safe() {
+        return new SparseSafeMatrix(this);
     }
 }

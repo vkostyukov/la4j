@@ -39,19 +39,19 @@ public abstract class AbstractBasicMatrix extends AbstractMatrix
     }
 
     @Override
-    public Matrix unsafe_multiply(Matrix matrix, Factory factory) {
+    public Matrix multiply(Matrix matrix, Factory factory) {
 
         if (matrix instanceof DenseMatrix && (rows % BLOCKSIZE == 0) 
                 && (columns % BLOCKSIZE == 0) 
                 && (matrix.columns() % BLOCKSIZE == 0)) {
 
-            return unsafe_multiplyBlockedWith64(matrix, factory);
+            return multiplyBlockedWith64(matrix, factory);
         }
 
-        return super.unsafe_multiply(matrix, factory);
+        return super.multiply(matrix, factory);
     }
 
-    private Matrix unsafe_multiplyBlockedWith64(Matrix matrix, Factory factory) {
+    private Matrix multiplyBlockedWith64(Matrix matrix, Factory factory) {
 
         Matrix result = factory.createMatrix(rows, matrix.columns());
 
@@ -61,10 +61,10 @@ public abstract class AbstractBasicMatrix extends AbstractMatrix
                     for(int u = 0; u < BLOCKSIZE; u++) {
                         for(int w = 0; w < BLOCKSIZE; w++) {
                             for(int v = 0; v < BLOCKSIZE; v++) {
-                                result.unsafe_set(i + u, j + v, 
-                                   result.unsafe_get(i + u, j + v) 
-                                   + (unsafe_get(i + u, k + w)) 
-                                   * matrix.unsafe_get(k + w, j + v));
+                                result.set(i + u, j + v, 
+                                   result.get(i + u, j + v) 
+                                   + (get(i + u, k + w)) 
+                                   * matrix.get(k + w, j + v));
                             }
                         }
                     }
@@ -73,5 +73,10 @@ public abstract class AbstractBasicMatrix extends AbstractMatrix
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix safe() {
+        return new DenseSafeMatrix(this);
     }
 }
