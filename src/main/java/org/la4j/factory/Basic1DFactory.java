@@ -21,6 +21,7 @@
 
 package org.la4j.factory;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.matrix.Matrix;
@@ -53,6 +54,15 @@ public class Basic1DFactory extends BasicFactory implements Factory {
 
     public Matrix createMatrix(MatrixSource source) {
         return new Basic1DMatrix(source);
+    }
+
+    @Override
+    public Matrix createConstantMatrix(int rows, int columns, double value) {
+
+        double array[] = new double[rows * columns];
+        Arrays.fill(array, value);
+
+        return new Basic1DMatrix(rows, columns, array);
     }
 
     @Override

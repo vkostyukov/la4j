@@ -57,6 +57,29 @@ public class CRSFactory extends CompressedFactory implements Factory {
     }
 
     @Override
+    public Matrix createConstantMatrix(int rows, int columns, double value) {
+
+        int size = rows * columns;
+
+        double values[] = new double[size];
+        int columnIndices[] = new int[size];
+        int rowPointers[] = new int[rows + 1];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                values[i * columns + j] = value;
+                columnIndices[i * columns + j] = j;
+            }
+            rowPointers[i] = columns * i;
+        }
+
+        rowPointers[rows] = size;
+
+        return new CRSMatrix(rows, columns, size, values, 
+                             columnIndices, rowPointers);
+    }
+
+    @Override
     public Matrix createRandomMatrix(int rows, int columns) {
 
         // TODO: Issue 15
@@ -117,6 +140,7 @@ public class CRSFactory extends CompressedFactory implements Factory {
             columnIndices[i] = i;
             rowPointers[i] = i;
         }
+
         rowPointers[size] = size;
 
         return new CRSMatrix(size, size, size, values, columnIndices,

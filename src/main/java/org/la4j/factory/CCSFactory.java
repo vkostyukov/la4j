@@ -57,6 +57,29 @@ public class CCSFactory extends CompressedFactory implements Factory {
     }
 
     @Override
+    public Matrix createConstantMatrix(int rows, int columns, double value) {
+
+        int size = rows * columns;
+
+        double values[] = new double[size];
+        int rowIndices[] = new int[size];
+        int columnPointers[] = new int[columns + 1];
+
+        for (int j = 0; j < columns; j++) {
+            for (int i = 0; i < rows; i++) {
+                values[j * rows + i] = value;
+                rowIndices[j * rows + i] = i;
+            }
+            columnPointers[j] = rows * j;
+        }
+
+        columnPointers[columns] = size;
+
+        return new CCSMatrix(rows, columns, size, values, rowIndices, 
+                             columnPointers);
+    }
+
+    @Override
     public Matrix createRandomMatrix(int rows, int columns) {
 
         // TODO: Issue 15 

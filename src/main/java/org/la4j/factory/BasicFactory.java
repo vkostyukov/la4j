@@ -21,6 +21,7 @@
 
 package org.la4j.factory;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.vector.Vector;
@@ -56,6 +57,16 @@ public abstract class BasicFactory extends AbstractFactory implements Factory {
     public Vector createVector(VectorSource source) {
         return new BasicVector(source);
     }
+
+    @Override
+    public Vector createConstantVector(int length, double value) {
+
+        double array[] = new double[length];
+        Arrays.fill(array, value);
+
+        return new BasicVector(array);
+    }
+
 
     @Override
     public Vector createRandomVector(int length) {

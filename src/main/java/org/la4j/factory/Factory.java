@@ -81,6 +81,15 @@ public interface Factory extends Serializable {
     Matrix createMatrix(MatrixSource source);
 
     /**
+     * Creates the constant matrix 
+     * 
+     * @param rows
+     * @param columns
+     * @return constant matrix
+     */
+    Matrix createConstantMatrix(int rows, int columns, double value);
+
+    /**
      * Creates random matrix.
      * 
      * @param rows
@@ -163,6 +172,14 @@ public interface Factory extends Serializable {
      * @return
      */
     Vector createVector(VectorSource source);
+
+    /**
+     * Creates the constant vector.
+     * 
+     * @param length
+     * @return constant vector
+     */
+    Vector createConstantVector(int length, double value);
 
     /**
      * Creates random vector.

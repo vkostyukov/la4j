@@ -63,6 +63,11 @@ public class SafeFactory implements Factory {
     }
 
     @Override
+    public Matrix createConstantMatrix(int rows, int columns, double value) {
+        return self.createConstantMatrix(rows, columns, value);
+    }
+
+    @Override
     public Matrix createRandomMatrix(int rows, int columns) {
         return self.createRandomMatrix(rows, columns).safe();
     }
@@ -105,6 +110,11 @@ public class SafeFactory implements Factory {
     @Override
     public Vector createVector(VectorSource source) {
         return self.createVector(source).safe();
+    }
+
+    @Override
+    public Vector createConstantVector(int length, double value) {
+        return self.createConstantVector(length, value);
     }
 
     @Override

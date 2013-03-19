@@ -60,6 +60,20 @@ public abstract class CompressedFactory extends AbstractFactory implements Facto
     }
 
     @Override
+    public Vector createConstantVector(int length, double value) {
+
+        double values[] = new double[length];
+        int indices[] = new int[length];
+
+        for (int i = 0; i < length; i++) {
+            indices[i] = i;
+            values[i] = value;
+        }
+
+        return new CompressedVector(length, length, values, indices);
+    }
+
+    @Override
     public Vector createRandomVector(int length) {
 
         Random rnd = new Random();

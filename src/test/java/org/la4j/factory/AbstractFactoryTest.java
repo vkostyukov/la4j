@@ -74,6 +74,48 @@ public abstract class AbstractFactoryTest extends TestCase {
         }
     }
 
+    public void testCreateConstantMatrix_3x3() {
+
+        Matrix a = factory().createConstantMatrix(3, 3, 10.0);
+
+        assertEquals(3, a.rows());
+        assertEquals(3, a.columns());
+
+        for (int i = 0; i < a.rows(); i++) {
+            for (int j = 0; j < a.columns(); j++) {
+                assertEquals(10.0, a.get(i, j));
+            }
+        }
+    }
+
+    public void testCreateConstantMatrix_2x5() {
+
+        Matrix a = factory().createConstantMatrix(2, 5, 20.0);
+
+        assertEquals(2, a.rows());
+        assertEquals(5, a.columns());
+
+        for (int i = 0; i < a.rows(); i++) {
+            for (int j = 0; j < a.columns(); j++) {
+                assertEquals(20.0, a.get(i, j));
+            }
+        }
+    }
+
+    public void testCreateConstantMatrix_4x1() {
+
+        Matrix a = factory().createConstantMatrix(4, 1, 30.0);
+
+        assertEquals(4, a.rows());
+        assertEquals(1, a.columns());
+
+        for (int i = 0; i < a.rows(); i++) {
+            for (int j = 0; j < a.columns(); j++) {
+                assertEquals(30.0, a.get(i, j));
+            }
+        }
+    }
+
     public void testCreateRandomSymmetricMatrix() {
         Matrix a = factory().createRandomSymmetricMatrix(5);
 
