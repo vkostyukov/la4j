@@ -25,8 +25,25 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
+/**
+ * This class represents LU decomposition of matrices. More details
+ * <p>
+ * <a href="http://mathworld.wolfram.com/LUDecomposition.html"> here.</a>
+ * </p>
+ */
 public class LUDecompositor implements MatrixDecompositor {
 
+	/**
+	 * Returns the result of LU decomposition of given matrix
+	 * <p>
+	 * See <a href="http://mathworld.wolfram.com/LUDecomposition.html">
+	 * http://mathworld.wolfram.com/LUDecomposition.html</a> for more details.
+	 * </p>
+	 * 
+	 * @param matrix
+	 * @param factory
+	 * @return { L, U }
+	 */
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 

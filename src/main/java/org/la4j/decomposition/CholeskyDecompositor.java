@@ -26,8 +26,26 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
+/**
+ * This class represents Cholesky decomposition of matrices. More details
+ * <p>
+ * <a href="http://mathworld.wolfram.com/CholeskyDecomposition.html"> here</a>
+ * </p>
+ */
 public class CholeskyDecompositor implements MatrixDecompositor {
 
+	/**
+	 * Returns the result of Cholesky decomposition of given matrix
+	 * <p>
+	 * See <a href="http://mathworld.wolfram.com/CholeskyDecomposition.html">
+	 * http://mathworld.wolfram.com/CholeskyDecomposition.html</a> for more
+	 * details.
+	 * </p>
+	 * 
+	 * @param matrix
+	 * @param factory
+	 * @return { U }
+	 */
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 
@@ -76,6 +94,18 @@ public class CholeskyDecompositor implements MatrixDecompositor {
         return new Matrix[] { u };
     }
 
+   
+	/**
+	 * Checks if the matrix is positive definite
+	 * <p>
+	 * See <a href="http://mathworld.wolfram.com/PositiveDefiniteMatrix.html">
+	 * http://mathworld.wolfram.com/PositiveDefiniteMatrix.html</a> for more
+	 * details.
+	 * </p>
+	 * 
+	 * @param matrix
+	 * @return <code>true</code> if matrix is positive definite
+	 */
     private boolean isPositiveDefinite(Matrix matrix) {
 
         //

@@ -28,24 +28,21 @@ import org.la4j.vector.Vector;
 
 /**
  * Linear System Solver interface;
- * 
  * This class implements Strategy design pattern;
  */
 public interface LinearSystemSolver extends Serializable {
 
     /**
      * Solve the linear system with factory;
-     * 
      * @param linearSystem
-     * @return
-     * @throws LinearSystemException
+     * @return vector
      */
     Vector solve(LinearSystem linearSystem, Factory factory);
 
     /**
-     * 
-     * @param system
-     * @return
+     * Checks whether this linear system can be solved by this solver
+     * @param linearSystem
+     * @return <code>true</code> if given linear system can be solved by this solver
      */
     boolean suitableFor(LinearSystem linearSystem);
 }

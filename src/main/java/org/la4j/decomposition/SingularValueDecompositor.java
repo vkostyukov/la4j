@@ -26,8 +26,24 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
+/**
+ * This class represents singular value decomposition of matrices. More details
+ * <p><a href="http://mathworld.wolfram.com/SingularValueDecomposition.html">
+ * here.</a> </p>
+ */
 public class SingularValueDecompositor implements MatrixDecompositor {
 
+	/**
+	 * Returns the result of Singular Value decomposition of given matrix
+	 * <p>See <a
+	 * href="http://mathworld.wolfram.com/SingularValueDecomposition.html">
+	 * http://mathworld.wolfram.com/SingularValueDecomposition.html</a> for more
+	 * details. </p>
+	 * 
+	 * @param matrix
+	 * @param factory
+	 * @return { U, D, V }
+	 */
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 

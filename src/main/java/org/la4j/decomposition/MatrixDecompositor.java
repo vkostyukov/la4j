@@ -24,6 +24,12 @@ package org.la4j.decomposition;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 
+/**
+ * Interface for implementing various matrix decompositions. More details
+ * <p><a href="http://mathworld.wolfram.com/MatrixDecomposition.html">
+ * here.</a>
+ * </p>
+ */
 public interface MatrixDecompositor {
 
     /**
