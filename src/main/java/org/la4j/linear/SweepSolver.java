@@ -26,10 +26,27 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
+/**
+ * This class represents <a
+ * href="http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm"> Sweep (or
+ * Tridiagonal matrix, or Thomas) method </a> for solving linear systems.
+ */
 public class SweepSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 
+    /**
+	 * Returns the solution  for the given linear system
+	 * <p>
+	 * See <a href="http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm">
+	 * http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm</a> for more
+	 * details.
+	 * </p>
+	 * 
+	 * @param linearSystem
+	 * @param factory
+	 * @return vector
+	 */
     @Override
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
@@ -90,6 +107,11 @@ public class SweepSolver implements LinearSystemSolver {
         return x;
     }
 
+    /**
+     * Checks whether this linear system can be solved by Sweep solver
+     * @param linearSystem
+     * @return <code>true</code> if given linear system can be solved by Sweep solver
+     */
     @Override
     public boolean suitableFor(LinearSystem linearSystem) {
         return linearSystem.coefficientsMatrix()
