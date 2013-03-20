@@ -26,8 +26,25 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
+/**
+ * This class represents QR decomposition of matrices. More details
+ * <p>
+ * <a href="http://mathworld.wolfram.com/QRDecomposition.html"> here.</a>
+ * </p>
+ */
 public class QRDecompositor implements MatrixDecompositor {
 
+	/**
+	 * Returns the result of QR decomposition of given matrix
+	 * <p>
+	 * See <a href="http://mathworld.wolfram.com/QRDecomposition.html">
+	 * http://mathworld.wolfram.com/QRDecomposition.html</a> for more details.
+	 * </p>
+	 * 
+	 * @param matrix
+	 * @param factory
+	 * @return { Q, R }
+	 */
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 

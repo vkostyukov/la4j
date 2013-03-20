@@ -268,6 +268,10 @@ public final class Matrices {
         }
     }
 
+    /**
+     * Creates a plus function with specified <code>value</code>.
+     * @param value
+     */
     public static MatrixFunction asPlusFunction(double value) {
         return new PlusMatrixFunction(value);
     }

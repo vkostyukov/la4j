@@ -32,6 +32,10 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
+/**
+ * This class encapsulates the
+ * <a href="http://mathworld.wolfram.com/MatrixEquation.html"> Linear System.</a>
+ */
 public class LinearSystem implements Externalizable {
 
     private static final LinearSystemSolver SOLVERS[] = {
@@ -113,6 +117,9 @@ public class LinearSystem implements Externalizable {
         return solver.solve(this, factory);
     }
 
+    /**
+     * Checks whether <code>vector</code> is solution for this linear system.
+     */
     public boolean isSolution(Vector vector) {
 
         if (vector == null) {

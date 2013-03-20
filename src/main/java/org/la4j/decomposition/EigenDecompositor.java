@@ -26,10 +26,28 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
+/**
+ * This class represents Eigen decomposition of matrices. More details
+ * <p>
+ * <a href="http://mathworld.wolfram.com/EigenDecomposition.html"> here.</a>
+ * </p>
+ */
 public class EigenDecompositor implements MatrixDecompositor {
 
     public static final int MAX_ITERATIONS = 10000000;
 
+	/**
+	 * Returns the result of Eigen decomposition of given matrix
+	 * <p>
+	 * See <a href="http://mathworld.wolfram.com/EigenDecomposition.html">
+	 * http://mathworld.wolfram.com/EigenDecomposition.html</a> for more
+	 * details.
+	 * </p>
+	 * 
+	 * @param matrix
+	 * @param factory
+	 * @return { P, D }
+	 */
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 
@@ -43,6 +61,20 @@ public class EigenDecompositor implements MatrixDecompositor {
         }
     }
 
+	/**
+	 * Returns the result of Eigen decomposition for <a
+	 * href="http://mathworld.wolfram.com/SymmetricMatrix.html"> symmetric</a>
+	 * matrix
+	 * <p>
+	 * See <a href="http://mathworld.wolfram.com/EigenDecomposition.html">
+	 * http://mathworld.wolfram.com/EigenDecomposition.html</a> for more
+	 * details.
+	 * </p>
+	 * 
+	 * @param matrix
+	 * @param factory
+	 * @return { P, D }
+	 */
     private Matrix[] decomposeSymmetricMatrix(Matrix matrix, Factory factory) {
 
         Matrix d = matrix.copy();
@@ -77,6 +109,13 @@ public class EigenDecompositor implements MatrixDecompositor {
         return new Matrix[] { v, d };
     }
 
+    
+    /***
+     * 
+     * @param vector
+     * @param exl
+     * @return
+     */
     private int findMax(Vector vector, int exl) {
 
         int result = exl == 0 ? 1 : 0;
@@ -90,7 +129,6 @@ public class EigenDecompositor implements MatrixDecompositor {
 
         return result;
     }
-
     private Vector generateR(Matrix matrix, Factory factory) {
 
         Vector result = factory.createVector(matrix.rows());
@@ -139,6 +177,20 @@ public class EigenDecompositor implements MatrixDecompositor {
         return result;
     }
 
+	/**
+	 * Returns the result of Eigen decomposition for non-<a
+	 * href="http://mathworld.wolfram.com/SymmetricMatrix.html">symmetric</a>
+	 * matrix
+	 * <p>
+	 * See <a href="http://mathworld.wolfram.com/EigenDecomposition.html">
+	 * http://mathworld.wolfram.com/EigenDecomposition.html</a> for more
+	 * details.
+	 * </p>
+	 * 
+	 * @param matrix
+	 * @param factory
+	 * @return { P, D }
+	 */
     private Matrix[] decomposeNonSymmetricMatrix(Matrix matrix, Factory factory) {
 
         Matrix A = matrix.copy();
@@ -176,9 +228,7 @@ public class EigenDecompositor implements MatrixDecompositor {
     }
 
     // Nonsymmetric reduction to Hessenberg form.
-
     private void orthes(Matrix h, Matrix v, Vector ort) {
-
         // This is derived from the Algol procedures orthes and ortran,
         // by Martin and Wilkinson, Handbook for Auto. Comp.,
         // Vol.ii-Linear Algebra, and the corresponding
