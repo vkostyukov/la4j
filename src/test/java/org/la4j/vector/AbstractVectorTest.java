@@ -53,10 +53,10 @@ public abstract class AbstractVectorTest extends TestCase {
                 new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 });
         Vector c = factory().createVector(new double[] { 0.0, 0.0 });
 
-        a.resize(5);
+        a = a.resize(5);
         assertEquals(b, a);
 
-        a.resize(2);
+        a = a.resize(2);
         assertEquals(c, a);
     }
 

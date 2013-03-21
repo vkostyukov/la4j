@@ -42,12 +42,9 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     protected AbstractMatrix(Factory factory, int rows, int columns) {
-        this.factory = factory;
+        ensureDimensionsAreNotNegative(rows, columns);
 
-        if (rows < 0 || columns < 0) {
-            throw new IllegalArgumentException("Wrong matrix dimensions: " 
-                                               + rows + "x" + columns);
-        }
+        this.factory = factory;
 
         this.rows = rows;
         this.columns = columns;
@@ -563,6 +560,26 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public Matrix resize(int rows, int columns) {
+        return resize(rows, columns, factory);
+    }
+
+    @Override
+    public Matrix resize(int rows, int columns, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+
+        Matrix result = factory.createMatrix(rows, columns);
+
+        for (int i = 0; i < Math.min(rows, this.rows); i++) {
+            for (int j = 0; j < Math.min(columns, this.columns); j++) {
+                result.set(i, j, get(i, j));
+            }
+        }
+
+        return result;
+    }
+
+    @Override
     public Factory factory() {
         return factory;
     }
@@ -727,6 +744,13 @@ public abstract class AbstractMatrix implements Matrix {
     protected void ensureFactoryIsNotNull(Factory factory) {
         if (factory == null) {
             throw new IllegalArgumentException("Factory can't be null.");
+        }
+    }
+
+    protected void ensureDimensionsAreNotNegative(int rows, int columns) {
+        if (rows < 0 || columns < 0) {
+            throw new IllegalArgumentException("Wrong matrix dimensions: " 
+                                               + rows + "x" + columns);
         }
     }
 }

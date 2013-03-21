@@ -65,11 +65,6 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
-    public void resize(int rows, int columns) {
-        self.resize(rows, columns);
-    }
-
-    @Override
     public void swapRows(int i, int j) {
         ensureIndexInRows(i);
         ensureIndexInRows(j);
@@ -295,6 +290,16 @@ public abstract class AbstractSafeMatrix implements Matrix {
     @Override
     public Matrix copy(Factory factory) {
         return self.copy(factory);
+    }
+
+    @Override
+    public Matrix resize(int rows, int columns) {
+        return self.resize(rows, columns);
+    }
+
+    @Override
+    public Matrix resize(int rows, int columns, Factory factory) {
+        return self.resize(rows, columns, factory);
     }
 
     @Override

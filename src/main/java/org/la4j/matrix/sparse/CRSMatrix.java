@@ -55,10 +55,12 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     public CRSMatrix(Matrix matrix) {
+        // TODO: replace it with call Matrices.asUsafeSource(matrix); 
         this(new UnsafeMatrixSource(matrix));
     }
 
     public CRSMatrix(double array[][]) {
+        // TODO: replace it with call Matrices.asArray2DSource(array);
         this(new Array2DMatrixSource(array));
     }
 
@@ -86,7 +88,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     public CRSMatrix(int rows, int columns, int cardinality) {
-        super(new CRSFactory(), rows, columns);
+        super(Matrices.CRS_FACTORY, rows, columns);
 
         int alignedSize = align(rows, columns, cardinality);
 
@@ -160,46 +162,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
 
         cardinality++;
-    }
-
-    @Override
-    public void resize(int rows, int columns) {
-
-        if (rows < 0 || columns < 0) {
-            throw new IllegalArgumentException("Wrong dimensions: " 
-                    + rows + "x" + columns);
-        }
-
-        if (this.rows == rows && this.columns == columns) {
-            return;
-        }
-
-        if (this.rows >= rows && this.columns >= columns) {
-
-            int position = 0;
-            for (int k = 0; k < rowPointers[rows]; k++) {
-                if (columns > columnIndices[k]) {
-                    values[position++] = values[k];
-                }
-            }
-
-            cardinality = rowPointers[rows];
-
-        } else if (this.rows < rows) {
-
-            int newRowPointers[] = new int[rows + 1];
-            System.arraycopy(rowPointers, 0, newRowPointers, 0,
-                    rowPointers.length);
-
-            for (int i = this.rows; i < rows + 1; i++) {
-                newRowPointers[i] = cardinality;
-            }
-
-            this.rowPointers = newRowPointers;
-        }
-
-        this.rows = rows;
-        this.columns = columns;
     }
 
     @Override
@@ -391,6 +353,90 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             rowPointers[k] += (position - limit);
         }
     }
+
+    @Override
+    public Matrix copy() {
+        double $values[] = new double[align(rows, columns, cardinality)];
+        int $columnIndices[] = new int[align(rows, columns, cardinality)];
+        int $rowPointers[] = new int[rows + 1];
+
+        System.arraycopy(values, 0, $values, 0, cardinality);
+        System.arraycopy(columnIndices, 0, $columnIndices, 0, cardinality);
+        System.arraycopy(rowPointers, 0, $rowPointers, 0, rows + 1);
+
+        return new CRSMatrix(rows, columns, cardinality, $values, 
+                             $columnIndices, $rowPointers);
+    }
+
+    @Override
+    public Matrix resize(int rows, int columns) {
+        ensureDimensionsAreNotNegative(rows, columns);
+
+        if (this.rows == rows && this.columns == columns) {
+            return copy();
+        }
+
+        if (this.rows >= rows && this.columns >= columns) {
+
+            // TODO: think about cardinality in align call 
+            double $values[] = new double[align(rows, columns, cardinality)];
+            int $columnIndices[] = new int[align(rows, columns, cardinality)];
+            int $rowPointers[] = new int[rows + 1];
+
+            int $cardinality = 0;
+
+            int k = 0, i = 0;
+            while (k < cardinality && i < rows) {
+
+                $rowPointers[i] = $cardinality;
+
+                for (int j = rowPointers[i]; j < rowPointers[i + 1] 
+                        && columnIndices[j] < columns; j++, k++) {
+
+                    $values[$cardinality] = values[j];
+                    $columnIndices[$cardinality] = columnIndices[j];
+                    $cardinality++;
+                }
+                i++;
+            }
+
+            $rowPointers[rows] = $cardinality;
+
+            return new CRSMatrix(rows, columns, $cardinality, $values,
+                                 $columnIndices, $rowPointers);
+        }
+
+        if (this.rows < rows) {
+            double $values[] = new double[align(rows, columns, cardinality)];
+            int $columnIndices[] = new int[align(rows, columns, cardinality)];
+            int $rowPointers[] = new int[rows + 1];
+
+            System.arraycopy(values, 0, $values, 0, cardinality);
+            System.arraycopy(columnIndices, 0, $columnIndices, 0, cardinality);
+            System.arraycopy(rowPointers, 0, $rowPointers, 0, this.rows + 1);
+
+
+            for (int i = this.rows; i < rows + 1; i++) {
+                $rowPointers[i] = cardinality;
+            }
+
+            return new CRSMatrix(rows, columns, cardinality, $values, 
+                                 $columnIndices, $rowPointers);
+        }
+
+        // TODO: think about cardinality in align call
+        double $values[] = new double[align(rows, columns, cardinality)];
+        int $columnIndices[] = new int[align(rows, columns, cardinality)];
+        int $rowPointers[] = new int[rows + 1];
+
+        System.arraycopy(values, 0, $values, 0, cardinality);
+        System.arraycopy(columnIndices, 0, $columnIndices, 0, cardinality);
+        System.arraycopy(rowPointers, 0, $rowPointers, 0, this.rows + 1);
+
+        return new CRSMatrix(rows, columns, cardinality, $values, 
+                $columnIndices, $rowPointers);
+    }
+
 
     @Override
     public void each(MatrixProcedure procedure) {

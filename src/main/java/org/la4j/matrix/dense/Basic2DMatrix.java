@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.la4j.factory.Basic2DFactory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.source.UnsafeMatrixSource;
@@ -61,7 +61,7 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
     }
 
     public Basic2DMatrix(double array[][]) {
-        super(new Basic2DFactory(), array.length, array.length == 0 
+        super(Matrices.BASIC2D_FACTORY, array.length, array.length == 0 
                 ? 0: array[0].length);
 
         this.self = array;
@@ -75,37 +75,6 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
     @Override
     public void set(int i, int j, double value) {
         self[i][j] = value;
-    }
-
-    @Override
-    public void resize(int rows, int columns) {
-
-        if (rows < 0 || columns < 0) {
-            throw new IllegalArgumentException("Wrong dimensions: " 
-                    + rows + "x" + columns);
-        }
-
-        if (this.rows == rows && this.columns == columns) {
-            return;
-        }
-
-        if (this.rows >= rows && this.columns >= columns) {
-            this.rows = rows;
-            this.columns = columns;
-
-            return;
-        }
-
-        double newSelf[][] = new double[rows][columns];
-
-        for (int i = 0; i < this.rows; i++) {
-            System.arraycopy(self[i], 0, newSelf[i], 0, this.columns);
-        }
-
-        this.rows = rows;
-        this.columns = columns;
-
-        self = newSelf;
     }
 
     @Override
@@ -135,6 +104,29 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
         System.arraycopy(self[i], 0, result, 0, columns);
 
         return new BasicVector(result);
+    }
+
+    @Override
+    public Matrix copy() {
+        return new Basic2DMatrix(toArray());
+    }
+
+    @Override
+    public Matrix resize(int rows, int columns) {
+        ensureDimensionsAreNotNegative(rows, columns);
+
+        if (this.rows == rows && this.columns == columns) {
+            return copy();
+        }
+
+        double $self[][] = new double[rows][columns];
+
+        for (int i = 0; i < Math.min(this.rows, rows); i++) {
+            System.arraycopy(self[i], 0, $self[i], 0, 
+                             Math.min(this.columns, columns));
+        }
+
+        return new Basic2DMatrix($self);
     }
 
     @Override

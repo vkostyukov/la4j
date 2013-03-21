@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.la4j.factory.CRSFactory;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
@@ -87,7 +86,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     public CompressedVector(int length, int cardinality, double values[],
                             int indices[]) {
 
-        super(new CRSFactory(), length);
+        super(Vectors.COMPRESSED_FACTORY, length);
 
         this.cardinality = cardinality;
 
@@ -149,28 +148,6 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     @Override
-    public void resize(int length) {
-
-        if (length < 0) {
-            throw new IllegalArgumentException("Wrong dimension: " + length);
-        }
-
-        if (length == this.length) {
-            return;
-        }
-
-        if (length < this.length) {
-            for (int i = 0; i < cardinality; i++) {
-                if (indices[i] > length) {
-                    cardinality--;
-                }
-            }
-        }
-
-        this.length = length;
-    }
-
-    @Override
     public void swap(int i, int j) {
 
         if (i == j) {
@@ -207,6 +184,30 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         int s = indices[jj];
         indices[jj] = indices[ii];
         indices[ii] = s;
+    }
+
+    @Override
+    public Vector copy() {
+        return resize(length);
+    }
+
+    @Override
+    public Vector resize(int length) {
+        ensureLengthIsNotNegative(length);
+
+        int $cardinality = 0;
+        double $values[] = new double[align(length, 0)];
+        int $indices[] = new int[align(length, 0)];
+
+        for (int i = 0; i < cardinality; i++) {
+            if (indices[i] < length) {
+                $values[$cardinality] = values[i];
+                $indices[$cardinality] = indices[i];
+                $cardinality++;
+            }
+        }
+
+        return new CompressedVector(length, $cardinality, $values, $indices);
     }
 
     @Override

@@ -54,10 +54,9 @@ public class GaussianSolver implements LinearSystemSolver {
         int rows = linearSystem.equations();
         int columns = linearSystem.variables();
 
-        Matrix a = linearSystem.coefficientsMatrix().copy();
+        Matrix a = linearSystem.coefficientsMatrix().resize(rows, columns + 1);
         Vector b = linearSystem.rightHandVector().copy();
 
-        a.resize(rows, columns + 1);
         a.setColumn(columns, b);
 
         Matrix triangle = createExtendTriangleMatrix(a);

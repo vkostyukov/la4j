@@ -66,13 +66,13 @@ public class SymbolSeparatedStream extends AbstractStream
         int length = 0;
         while (tokenizer.hasMoreTokens()) {
             if (length == vector.length()) {
-                vector.resize((vector.length() * 3) / 2 + 1);
+                vector = vector.resize((vector.length() * 3) / 2 + 1);
             }
 
             vector.set(length++, Double.valueOf(tokenizer.nextToken()));
         }
 
-        vector.resize(length);
+        vector = vector.resize(length);
 
         closeReader();
         return vector;
@@ -109,7 +109,8 @@ public class SymbolSeparatedStream extends AbstractStream
                 line = reader.readLine(), rows++) {
 
             if (rows == matrix.rows()) {
-                matrix.resize((matrix.rows() * 3) / 2  + 1, matrix.columns());
+                matrix = matrix.resize((matrix.rows() * 3) / 2  + 1, 
+                                       matrix.columns());
             }
 
             StringTokenizer tokenizer = new StringTokenizer(line, separator);
@@ -117,7 +118,8 @@ public class SymbolSeparatedStream extends AbstractStream
             int j = 0;
             while (tokenizer.hasMoreTokens()) {
                 if (j == matrix.columns()) {
-                    matrix.resize(matrix.rows(), (matrix.columns() * 3) / 2 + 1);
+                    matrix = matrix.resize(matrix.rows(), 
+                                           (matrix.columns() * 3) / 2 + 1);
                 }
                 double value = Double.valueOf(tokenizer.nextToken());
                 matrix.set(rows, j++, value);
@@ -126,7 +128,7 @@ public class SymbolSeparatedStream extends AbstractStream
             columns = j > columns ? j : columns;
         }
 
-        matrix.resize(rows, columns);
+        matrix = matrix.resize(rows, columns);
 
         closeReader();
         return matrix;

@@ -84,10 +84,10 @@ public abstract class AbstractMatrixTest extends TestCase {
                 { 0.0, 5.0 } 
         });
 
-        a.resize(a.rows() + 1, a.columns() + 1);
+        a = a.resize(a.rows() + 1, a.columns() + 1);
         assertEquals(b, a);
 
-        a.resize(a.rows() - 2, a.columns() - 2);
+        a = a.resize(a.rows() - 2, a.columns() - 2);
         assertEquals(c, a);
     }
 
@@ -108,10 +108,10 @@ public abstract class AbstractMatrixTest extends TestCase {
                 { 1.0, 0.0 }, 
         });
 
-        a.resize(a.rows() + 1, a.columns() + 1);
+        a = a.resize(a.rows() + 1, a.columns() + 1);
         assertEquals(b, a);
 
-        a.resize(a.rows() - 2, a.columns() - 2);
+        a = a.resize(a.rows() - 2, a.columns() - 2);
         assertEquals(c, a);
     }
 
@@ -132,10 +132,10 @@ public abstract class AbstractMatrixTest extends TestCase {
                 { 0.0 }
         });
 
-        a.resize(a.rows(), a.columns() + 1);
+        a = a.resize(a.rows(), a.columns() + 1);
         assertEquals(b, a);
 
-        a.resize(a.rows(), a.columns() - 3);
+        a = a.resize(a.rows(), a.columns() - 3);
         assertEquals(c, a);
     }
 
@@ -159,10 +159,10 @@ public abstract class AbstractMatrixTest extends TestCase {
                 { 0.0, 5.0, 0.0, 0.0, 0.0 },
         });
 
-        a.resize(a.rows() + 1, a.columns());
+        a = a.resize(a.rows() + 1, a.columns());
         assertEquals(b, a);
 
-        a.resize(a.rows() - 2, a.columns());
+        a = a.resize(a.rows() - 2, a.columns());
         assertEquals(c, a);
     }
 

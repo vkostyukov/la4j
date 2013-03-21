@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.la4j.factory.Basic1DFactory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.source.UnsafeMatrixSource;
@@ -71,7 +71,7 @@ public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
     }
 
     public Basic1DMatrix(int rows, int columns, double array[]) {
-        super(new Basic1DFactory(), rows, columns);
+        super(Matrices.BASIC1D_FACTORY, rows, columns);
 
         this.self = array;
     }
@@ -84,42 +84,6 @@ public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
     @Override
     public void set(int i, int j, double value) {
         self[i * columns + j] = value;
-    }
-
-    @Override
-    public void resize(int rows, int columns) {
-
-        if (rows < 0 || columns < 0) {
-            throw new IllegalArgumentException("Wrong dimensions: " 
-                    + rows + "x" + columns);
-        }
-
-        if (this.rows == rows && this.columns == columns) {
-            return;
-        }
-
-        if (this.rows < rows && this.columns == columns) {
-            double newSelf[] = new double[rows * columns];
-            System.arraycopy(self, 0, newSelf, 0, this.rows * this.columns);
-
-            this.rows = rows;
-            self = newSelf;
-            return;
-        }
-
-        double[] newSelf = new double[rows * columns];
-
-        int columnSize = columns < this.columns ? columns : this.columns;
-        int rowSize =  rows < this.rows ? rows : this.rows;
-
-        for (int i = 0; i < rowSize; i++) {
-            System.arraycopy(self, i * this.columns, newSelf, i * columns, 
-                             columnSize);
-        }
-
-        this.rows = rows;
-        this.columns = columns;
-        self = newSelf;
     }
 
     @Override
@@ -150,6 +114,41 @@ public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
         System.arraycopy(self, i * columns , result, 0, columns);
 
         return new BasicVector(result);
+    }
+
+    @Override
+    public Matrix copy() {
+        double $self[] = new double[rows * columns];
+        System.arraycopy(self, 0, $self, 0, rows * columns);
+        return new Basic1DMatrix(rows, columns, $self);
+    }
+
+    @Override
+    public Matrix resize(int rows, int columns) {
+        ensureDimensionsAreNotNegative(rows, columns);
+
+        if (this.rows == rows && this.columns == columns) {
+            return copy();
+        } 
+
+        if (this.rows < rows && this.columns == columns) {
+            double $self[] = new double[rows * columns];
+            System.arraycopy(self, 0, $self, 0, this.rows * columns);
+
+            return new Basic1DMatrix(rows, columns, $self);
+        }
+
+        double[] $self = new double[rows * columns];
+
+        int columnSize = columns < this.columns ? columns : this.columns;
+        int rowSize =  rows < this.rows ? rows : this.rows;
+
+        for (int i = 0; i < rowSize; i++) {
+            System.arraycopy(self, i * this.columns, $self, i * columns, 
+                             columnSize);
+        }
+
+        return new Basic1DMatrix(rows, columns, $self);
     }
 
     @Override

@@ -38,6 +38,8 @@ public abstract class AbstractVector implements Vector {
     }
 
     protected AbstractVector(Factory factory, int length) {
+        ensureLengthIsNotNegative(length);
+
         this.factory = factory;
         this.length = length;
     }
@@ -235,6 +237,24 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public Vector resize(int length) {
+        return resize(length, factory);
+    }
+
+    @Override
+    public Vector resize(int length, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+
+        Vector result = factory.createVector(length);
+
+        for (int i = 0; i < Math.min(length, this.length); i++) {
+            result.set(i, get(i));
+        }
+
+        return result;
+    }
+
+    @Override
     public Factory factory() {
         return factory;
     }
@@ -270,13 +290,11 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector transform(int i, VectorFunction function, Factory factory) {
-        ensureFactoryIsNotNull(factory);
 
         Vector result = copy(factory);
         result.set(i, function.evaluate(i, get(i)));
 
         return result;
-
     }
 
     @Override
@@ -374,6 +392,12 @@ public abstract class AbstractVector implements Vector {
     protected void ensureFactoryIsNotNull(Factory factory) {
         if (factory == null) {
             throw new IllegalArgumentException("Factory can't be null.");
+        }
+    }
+
+    protected void ensureLengthIsNotNegative(int length) {
+        if (length < 0) {
+            throw new IllegalArgumentException("Wrong vector length: " + length);
         }
     }
 }

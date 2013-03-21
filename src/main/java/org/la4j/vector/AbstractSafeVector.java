@@ -65,11 +65,6 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
-    public void resize(int length) {
-        self.resize(length);
-    }
-
-    @Override
     public Vector add(double value) {
         return self.add(value, factory);
     }
@@ -185,6 +180,16 @@ public abstract class AbstractSafeVector implements Vector {
     @Override
     public Vector copy(Factory factory) {
         return self.copy(factory);
+    }
+
+    @Override
+    public Vector resize(int length) {
+        return self.resize(length);
+    }
+
+    @Override
+    public Vector resize(int length, Factory factory) {
+        return self.resize(length, factory);
     }
 
     @Override

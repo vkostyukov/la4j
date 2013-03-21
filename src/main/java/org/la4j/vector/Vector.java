@@ -61,13 +61,6 @@ public interface Vector extends Externalizable {
     int length();
 
     /**
-     * Resizes this vector to new <code>length</code>.
-     * 
-     * @param length
-     */
-    void resize(int length);
-
-    /**
      * 
      * @param d
      * @return
@@ -236,6 +229,22 @@ public interface Vector extends Externalizable {
      * @return the copy of this vector created with specified factory
      */
     Vector copy(Factory factory);
+
+    /**
+     * Resizes this vector to new <code>length</code>.
+     * 
+     * @param length
+     * @return new vector
+     */
+    Vector resize(int length);
+
+    /**
+     * Resizes this vector to new <code>length</code>.
+     * 
+     * @param length
+     * @return new vector
+     */
+    Vector resize(int length, Factory factory);
 
     /**
      * 

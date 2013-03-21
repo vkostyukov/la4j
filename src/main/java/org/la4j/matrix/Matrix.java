@@ -78,16 +78,6 @@ public interface Matrix extends Externalizable {
     void assign(double value);
 
     /**
-     * Resizes this matrix to new size.
-     * 
-     * @param rows
-     *            new rows size
-     * @param columns
-     *            new columns size
-     */
-    void resize(int rows, int columns);
-
-    /**
      * Swaps <code>i</code> and <code>j</code> rows of this matrix.
      * 
      * @param i
@@ -428,6 +418,26 @@ public interface Matrix extends Externalizable {
      * @param factory
      */
     Matrix copy(Factory factory);
+
+    /**
+     * Resizes this matrix to new size.
+     * 
+     * @param rows
+     *            new rows size
+     * @param columns
+     *            new columns size
+     */
+    Matrix resize(int rows, int columns);
+
+    /**
+     * Resizes this matrix to new size.
+     * 
+     * @param rows
+     *            new rows size
+     * @param columns
+     *            new columns size
+     */
+    Matrix resize(int rows, int columns, Factory factory);
 
     /**
      * Returns the factory associated with this matrix.
