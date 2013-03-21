@@ -29,9 +29,7 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.functor.MatrixProcedure;
-import org.la4j.matrix.source.Array2DMatrixSource;
 import org.la4j.matrix.source.MatrixSource;
-import org.la4j.matrix.source.UnsafeMatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.sparse.CompressedVector;
 
@@ -54,11 +52,11 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     public CCSMatrix(Matrix matrix) {
-        this(new UnsafeMatrixSource(matrix));
+        this(Matrices.asUnsafeSource(matrix));
     }
 
     public CCSMatrix(double array[][]) {
-        this(new Array2DMatrixSource(array));
+        this(Matrices.asArray2DSource(array));
     }
 
     public CCSMatrix(MatrixSource source) {

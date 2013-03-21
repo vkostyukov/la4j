@@ -28,6 +28,11 @@ import org.la4j.factory.SafeFactory;
 import org.la4j.matrix.Matrices;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
+import org.la4j.vector.source.ArrayVectorSource;
+import org.la4j.vector.source.RandomVectorSource;
+import org.la4j.vector.source.SafeVectorSource;
+import org.la4j.vector.source.UnsafeVectorSource;
+import org.la4j.vector.source.VectorSource;
 
 public final class Vectors {
 
@@ -179,5 +184,21 @@ public final class Vectors {
 
     public static Vector asUnsafeVector(Vector vector) {
         return vector.unsafe();
+    }
+
+    public static VectorSource asSafeSource(Vector vector) {
+        return new SafeVectorSource(vector);
+    }
+
+    public static VectorSource asUnsafeSource(Vector vector) {
+        return new UnsafeVectorSource(vector);
+    }
+
+    public static VectorSource asArraySource(double[] array) {
+        return new ArrayVectorSource(array);
+    }
+
+    public static VectorSource asRandomSource(int length) {
+        return new RandomVectorSource(length);
     }
 }

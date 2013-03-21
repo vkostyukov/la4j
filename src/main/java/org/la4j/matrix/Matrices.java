@@ -47,6 +47,14 @@ import org.la4j.linear.SweepSolver;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
+import org.la4j.matrix.source.Array1DMatrixSource;
+import org.la4j.matrix.source.Array2DMatrixSource;
+import org.la4j.matrix.source.IdentityMattixSource;
+import org.la4j.matrix.source.MatrixSource;
+import org.la4j.matrix.source.RandomMatrixSource;
+import org.la4j.matrix.source.RandomSymmetricMatrixSource;
+import org.la4j.matrix.source.SafeMatrixSource;
+import org.la4j.matrix.source.UnsafeMatrixSource;
 import org.la4j.vector.Vector;
 
 public final class Matrices {
@@ -412,5 +420,35 @@ public final class Matrices {
 
     public static Matrix asUnsafeMatrix(Matrix matrix) {
         return matrix.unsafe();
+    }
+
+    public static MatrixSource asSafeSource(Matrix matrix) {
+        return new SafeMatrixSource(matrix);
+    }
+
+    public static MatrixSource asUnsafeSource(Matrix matrix) {
+        return new UnsafeMatrixSource(matrix);
+    }
+
+    public static MatrixSource asArray1DSource(int rows, int columns, 
+            double[] array) {
+
+        return new Array1DMatrixSource(rows, columns, array);
+    }
+
+    public static MatrixSource asArray2DSource(double[][] array) {
+        return new Array2DMatrixSource(array);
+    }
+
+    public static MatrixSource asIdentitySource(int size) {
+        return new IdentityMattixSource(size);
+    }
+
+    public static MatrixSource asRandomSource(int rows, int columns) {
+        return new RandomMatrixSource(rows, columns);
+    }
+
+    public static MatrixSource asRandomSymmetricSource(int size) {
+        return new RandomSymmetricMatrixSource(size);
     }
 }

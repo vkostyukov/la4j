@@ -29,8 +29,6 @@ import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.source.ArrayVectorSource;
-import org.la4j.vector.source.UnsafeVectorSource;
 import org.la4j.vector.source.VectorSource;
 
 public class CompressedVector extends AbstractVector implements SparseVector {
@@ -53,11 +51,11 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     public CompressedVector(Vector vector) {
-        this(new UnsafeVectorSource(vector));
+        this(Vectors.asUnsafeSource(vector));
     }
 
     public CompressedVector(double array[]) {
-        this(new ArrayVectorSource(array));
+        this(Vectors.asArraySource(array));
     }
 
     public CompressedVector(VectorSource source) {

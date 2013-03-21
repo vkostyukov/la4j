@@ -28,7 +28,6 @@ import java.io.ObjectOutput;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
-import org.la4j.matrix.source.UnsafeMatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.BasicVector;
 
@@ -43,7 +42,7 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
     }
 
     public Basic2DMatrix(Matrix matrix) {
-        this(new UnsafeMatrixSource(matrix));
+        this(Matrices.asUnsafeSource(matrix));
     }
 
     public Basic2DMatrix(MatrixSource source) {

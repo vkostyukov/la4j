@@ -28,7 +28,6 @@ import java.io.ObjectOutput;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
-import org.la4j.vector.source.UnsafeVectorSource;
 import org.la4j.vector.source.VectorSource;
 
 public class BasicVector extends AbstractVector implements DenseVector {
@@ -42,7 +41,7 @@ public class BasicVector extends AbstractVector implements DenseVector {
     }
 
     public BasicVector(Vector vector) {
-        this(new UnsafeVectorSource(vector));
+        this(Vectors.asUnsafeSource(vector));
     }
 
     public BasicVector(VectorSource source) {
