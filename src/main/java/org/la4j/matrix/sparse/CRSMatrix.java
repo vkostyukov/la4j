@@ -29,6 +29,7 @@ import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.source.Array2DMatrixSource;
 import org.la4j.matrix.source.MatrixSource;
@@ -437,7 +438,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                 $columnIndices, $rowPointers);
     }
 
-
     @Override
     public void each(MatrixProcedure procedure) {
         int k = 0, i = 0;
@@ -447,6 +447,12 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             }
             i++;
         }
+    }
+
+    @Override
+    public void update(int i, int j, MatrixFunction function) {
+        // TODO Auto-generated method stub
+        super.update(i, j, function);
     }
 
     @Override

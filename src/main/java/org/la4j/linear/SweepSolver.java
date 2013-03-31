@@ -36,17 +36,17 @@ public class SweepSolver implements LinearSystemSolver {
     private static final long serialVersionUID = 4071505L;
 
     /**
-	 * Returns the solution  for the given linear system
-	 * <p>
-	 * See <a href="http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm">
-	 * http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm</a> for more
-	 * details.
-	 * </p>
-	 * 
-	 * @param linearSystem
-	 * @param factory
-	 * @return vector
-	 */
+     * Returns the solution for the given linear system
+     * <p>
+     * See <a href="http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm">
+     * http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm</a> for more
+     * details.
+     * </p>
+     * 
+     * @param linearSystem
+     * @param factory
+     * @return vector
+     */
     @Override
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 

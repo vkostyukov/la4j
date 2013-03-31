@@ -23,6 +23,7 @@ package org.la4j.vector;
 
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
+import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
@@ -307,6 +308,16 @@ public abstract class AbstractVector implements Vector {
     @Override
     public void update(int i, VectorFunction function) {
         set(i, function.evaluate(i, get(i)));
+    }
+
+    @Override
+    public double fold(VectorAccumulator accumulator) {
+
+        for (int i = 0; i < length; i++) {
+            accumulator.update(i, get(i));
+        }
+
+        return accumulator.accumulate();
     }
 
     @Override

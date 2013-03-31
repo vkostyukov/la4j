@@ -28,6 +28,7 @@ import java.io.ObjectOutput;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInvertor;
+import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
@@ -351,6 +352,25 @@ public abstract class AbstractSafeMatrix implements Matrix {
         ensureIndexInColumns(j);
 
         self.update(i, j, function);
+    }
+
+    @Override
+    public double fold(MatrixAccumulator accumulator) {
+        return self.fold(accumulator);
+    }
+
+    @Override
+    public double foldRow(int i, MatrixAccumulator accumulator) {
+        ensureIndexInRows(i);
+
+        return self.foldRow(i, accumulator);
+    }
+
+    @Override
+    public double foldColumn(int i, MatrixAccumulator accumulator) {
+        ensureIndexInColumns(i);
+
+        return self.foldColumn(i, accumulator);
     }
 
     @Override

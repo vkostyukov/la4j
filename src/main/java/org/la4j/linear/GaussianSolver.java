@@ -37,17 +37,17 @@ public class GaussianSolver implements LinearSystemSolver {
     private static final long serialVersionUID = 4071505L;
 
     /**
-	 * Returns the solution for the given linear system
-	 * <p>
-	 * See <a href="http://mathworld.wolfram.com/GaussianElimination.html">
-	 * http://mathworld.wolfram.com/GaussianElimination.html</a> for more
-	 * details.
-	 * </p>
-	 * 
-	 * @param linearSystem
-	 * @param factory
-	 * @return vector
-	 */
+     * Returns the solution for the given linear system
+     * <p>
+     * See <a href="http://mathworld.wolfram.com/GaussianElimination.html">
+     * http://mathworld.wolfram.com/GaussianElimination.html</a> for more
+     * details.
+     * </p>
+     * 
+     * @param linearSystem
+     * @param factory
+     * @return vector
+     */
     @Override
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
@@ -127,13 +127,13 @@ public class GaussianSolver implements LinearSystemSolver {
         return result;
     }
 
-	/**
-	 * Check if this linear system can be solved by Gaussian solver
-	 * 
-	 * @param linearSystem
-	 * @return <code>true</code> if given linear system can be solved by
-	 *         Gaussian solver
-	 */
+    /**
+     * Check if this linear system can be solved by Gaussian solver
+     * 
+     * @param linearSystem
+     * @return <code>true</code> if given linear system can be solved by
+     *         Gaussian solver
+     */
     @Override
     public boolean suitableFor(LinearSystem linearSystem) {
         return true;

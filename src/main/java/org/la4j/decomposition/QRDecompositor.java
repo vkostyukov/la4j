@@ -34,17 +34,17 @@ import org.la4j.vector.Vector;
  */
 public class QRDecompositor implements MatrixDecompositor {
 
-	/**
-	 * Returns the result of QR decomposition of given matrix
-	 * <p>
-	 * See <a href="http://mathworld.wolfram.com/QRDecomposition.html">
-	 * http://mathworld.wolfram.com/QRDecomposition.html</a> for more details.
-	 * </p>
-	 * 
-	 * @param matrix
-	 * @param factory
-	 * @return { Q, R }
-	 */
+    /**
+     * Returns the result of QR decomposition of given matrix
+     * <p>
+     * See <a href="http://mathworld.wolfram.com/QRDecomposition.html">
+     * http://mathworld.wolfram.com/QRDecomposition.html</a> for more details.
+     * </p>
+     * 
+     * @param matrix
+     * @param factory
+     * @return { Q, R }
+     */
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 

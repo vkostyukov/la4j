@@ -26,6 +26,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import org.la4j.factory.Factory;
+import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
@@ -231,6 +232,11 @@ public abstract class AbstractSafeVector implements Vector {
     public void update(int i, VectorFunction function) {
         self.update(i, function);
         
+    }
+
+    @Override
+    public double fold(VectorAccumulator accumulator) {
+        return self.fold(accumulator);
     }
 
     @Override

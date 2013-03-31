@@ -39,17 +39,16 @@ public class JacobiSolver implements LinearSystemSolver {
     private final static int MAX_ITERATIONS = 1000000;
 
     /**
-	 * Returns the solution  for the given linear system
-	 * <p>
-	 * See <a href="http://mathworld.wolfram.com/JacobiMethod.html">
-	 * http://mathworld.wolfram.com/JacobiMethod.html</a> for more
-	 * details.
-	 * </p>
-	 * 
-	 * @param linearSystem
-	 * @param factory
-	 * @return vector
-	 */
+     * Returns the solution for the given linear system
+     * <p>
+     * See <a href="http://mathworld.wolfram.com/JacobiMethod.html">
+     * http://mathworld.wolfram.com/JacobiMethod.html</a> for more details.
+     * </p>
+     * 
+     * @param linearSystem
+     * @param factory
+     * @return vector
+     */
     @Override
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 

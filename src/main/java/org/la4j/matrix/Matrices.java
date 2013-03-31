@@ -45,6 +45,7 @@ import org.la4j.linear.SeidelSolver;
 import org.la4j.linear.SquareRootSolver;
 import org.la4j.linear.SweepSolver;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
+import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.source.Array1DMatrixSource;
@@ -276,6 +277,70 @@ public final class Matrices {
         }
     }
 
+    private static class SumMatrixAccumulator
+            implements MatrixAccumulator {
+
+        private double result;
+
+        public SumMatrixAccumulator(double neutral) {
+            this.result = neutral;
+        }
+
+        @Override
+        public void update(int i, int j, double value) {
+            result += value;
+        }
+
+        @Override
+        public double accumulate() {
+            return result;
+        }
+    }
+
+    private static class ProductMatrixAccumulator
+            implements MatrixAccumulator {
+
+        private double result;
+
+        public ProductMatrixAccumulator(double neutral) {
+            this.result = neutral;
+        }
+
+        @Override
+        public void update(int i, int j, double value) {
+            result *= value;
+        }
+
+        @Override
+        public double accumulate() {
+            return result;
+        }
+    }
+
+    private static class FunctionMatrixAccumulator 
+                implements MatrixAccumulator {
+
+        private MatrixAccumulator accumulator;
+        private MatrixFunction function;
+
+        public FunctionMatrixAccumulator(MatrixAccumulator accumulator,
+                MatrixFunction function) {
+
+            this.accumulator = accumulator;
+            this.function = function;
+        }
+
+        @Override
+        public void update(int i, int j, double value) {
+            accumulator.update(i, j, function.evaluate(i, j, value));
+        }
+
+        @Override
+        public double accumulate() {
+            return accumulator.accumulate();
+        }
+    }
+
     /**
      * Creates a plus function with specified <code>value</code>.
      * @param value
@@ -450,5 +515,27 @@ public final class Matrices {
 
     public static MatrixSource asRandomSymmetricSource(int size) {
         return new RandomSymmetricMatrixSource(size);
+    }
+
+    public static MatrixAccumulator asSumAccumulator(double neutral) {
+        return new SumMatrixAccumulator(neutral);
+    }
+
+    public static MatrixAccumulator asProductAccumulator(double neutral) {
+        return new ProductMatrixAccumulator(neutral);
+    }
+
+    public static MatrixAccumulator asSumFunctionAccumulator(double neutral, 
+            MatrixFunction function) {
+
+        return new FunctionMatrixAccumulator(new SumMatrixAccumulator(neutral), 
+                                             function);
+    }
+
+    public static MatrixAccumulator asProductFunctionAccumulator(double neutral, 
+            MatrixFunction function) {
+
+        return new FunctionMatrixAccumulator(new ProductMatrixAccumulator(neutral), 
+                                             function);
     }
 }

@@ -25,6 +25,7 @@ import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInvertor;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
+import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
@@ -638,6 +639,38 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public void update(int i, int j, MatrixFunction function) {
         set(i, j, function.evaluate(i, j, get(i, j)));
+    }
+
+    @Override
+    public double fold(MatrixAccumulator accumulator) {
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                accumulator.update(i, j, get(i, j));
+            }
+        }
+
+        return accumulator.accumulate();
+    }
+
+    @Override
+    public double foldRow(int i, MatrixAccumulator accumulator) {
+
+        for (int j = 0; j < columns; j++) {
+            accumulator.update(i, j, get(i, j));
+        }
+
+        return accumulator.accumulate();
+    }
+
+    @Override
+    public double foldColumn(int i, MatrixAccumulator accumulator) {
+
+        for (int j = 0; i < rows; j++) {
+            accumulator.update(j, i, get(j, i));
+        }
+
+        return accumulator.accumulate();
     }
 
     @Override

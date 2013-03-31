@@ -33,17 +33,19 @@ import org.la4j.vector.Vector;
  */
 public class SingularValueDecompositor implements MatrixDecompositor {
 
-	/**
-	 * Returns the result of Singular Value decomposition of given matrix
-	 * <p>See <a
-	 * href="http://mathworld.wolfram.com/SingularValueDecomposition.html">
-	 * http://mathworld.wolfram.com/SingularValueDecomposition.html</a> for more
-	 * details. </p>
-	 * 
-	 * @param matrix
-	 * @param factory
-	 * @return { U, D, V }
-	 */
+    /**
+     * Returns the result of Singular Value decomposition of given matrix
+     * <p>
+     * See <a
+     * href="http://mathworld.wolfram.com/SingularValueDecomposition.html">
+     * http://mathworld.wolfram.com/SingularValueDecomposition.html</a> for more
+     * details.
+     * </p>
+     * 
+     * @param matrix
+     * @param factory
+     * @return { U, D, V }
+     */
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 

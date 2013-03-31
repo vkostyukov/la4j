@@ -24,6 +24,7 @@ package org.la4j.vector;
 import java.io.Externalizable;
 
 import org.la4j.factory.Factory;
+import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
@@ -300,6 +301,12 @@ public interface Vector extends Externalizable {
      */
     void update(int i, VectorFunction function);
 
+    /**
+     * 
+     * @param accumulator
+     * @return
+     */
+    double fold(VectorAccumulator accumulator);
     /**
      * 
      * @param predicate

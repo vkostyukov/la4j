@@ -26,6 +26,7 @@ import java.io.Externalizable;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInvertor;
+import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
@@ -147,14 +148,14 @@ public interface Matrix extends Externalizable {
      */
     Vector multiply(Vector vector);
 
-	/**
-	 * Multiplies this matrix by <code>vector</code> with specified
-	 * <code>factory</code>.
-	 * 
-	 * @param vector
-	 * @param factory
-	 * @return multiplied matrix
-	 */
+    /**
+     * Multiplies this matrix by <code>vector</code> with specified
+     * <code>factory</code>.
+     * 
+     * @param vector
+     * @param factory
+     * @return multiplied matrix
+     */
     Vector multiply(Vector vector, Factory factory);
 
     /**
@@ -167,12 +168,12 @@ public interface Matrix extends Externalizable {
     Matrix multiply(Matrix matrix);
 
     /**
-	 * Multiplies this matrix to other <code>matrix</code> with specified
-	 * <code>factory</code>.
-	 * 
-	 * @param matrix
-	 * @param factory
-	 */
+     * Multiplies this matrix to other <code>matrix</code> with specified
+     * <code>factory</code>.
+     * 
+     * @param matrix
+     * @param factory
+     */
     Matrix multiply(Matrix matrix, Factory factory);
 
     /**
@@ -185,12 +186,12 @@ public interface Matrix extends Externalizable {
     Matrix subtract(double value);
 
     /**
-	 * Subtracts <code>value</code> from this matrix with specified
-	 * <code>factory</code>.
-	 * 
-	 * @param value
-	 * @param factory
-	 */
+     * Subtracts <code>value</code> from this matrix with specified
+     * <code>factory</code>.
+     * 
+     * @param value
+     * @param factory
+     */
     Matrix subtract(double value, Factory factory);
 
     /**
@@ -203,12 +204,12 @@ public interface Matrix extends Externalizable {
     Matrix subtract(Matrix matrix);
 
     /**
-	 * Subtracts other <code>matrix</code> from this matrix with specified
-	 * <code>factory</code>.
-	 * 
-	 * @param matrix
-	 * @param factory
-	 */
+     * Subtracts other <code>matrix</code> from this matrix with specified
+     * <code>factory</code>.
+     * 
+     * @param matrix
+     * @param factory
+     */
     Matrix subtract(Matrix matrix, Factory factory);
 
     /**
@@ -221,12 +222,12 @@ public interface Matrix extends Externalizable {
     Matrix add(double value);
 
     /**
-	 * Adds the <code>value</code> to this matrix with specified
-	 * <code>factory</code>
-	 * 
-	 * @param value
-	 * @param factory
-	 */
+     * Adds the <code>value</code> to this matrix with specified
+     * <code>factory</code>
+     * 
+     * @param value
+     * @param factory
+     */
     Matrix add(double value, Factory factory);
 
     /**
@@ -239,12 +240,12 @@ public interface Matrix extends Externalizable {
     Matrix add(Matrix matrix);
 
     /**
-	 * Adds other <code>matrix</code> to this matrix with specified
-	 * <code>factory</code>.
-	 * 
-	 * @param matrix
-	 * @param factory
-	 */
+     * Adds other <code>matrix</code> to this matrix with specified
+     * <code>factory</code>.
+     * 
+     * @param matrix
+     * @param factory
+     */
     Matrix add(Matrix matrix, Factory factory);
 
     /**
@@ -255,12 +256,12 @@ public interface Matrix extends Externalizable {
     Matrix div(double value);
 
     /**
-	 * Divides this matrix by <code>value</code> with specified
-	 * <code>factory</code>.
-	 * 
-	 * @param value
-	 * @param factory
-	 */
+     * Divides this matrix by <code>value</code> with specified
+     * <code>factory</code>.
+     * 
+     * @param value
+     * @param factory
+     */
     Matrix div(double value, Factory factory);
 
     /**
@@ -453,66 +454,90 @@ public interface Matrix extends Externalizable {
     void each(MatrixProcedure procedure);
 
     /**
-	 * Builds a new matrix by applying a <code>function</code> to all elements
-	 * of this matrix.
-	 * 
-	 * @param function
-	 */
+     * Builds a new matrix by applying a <code>function</code> to all elements
+     * of this matrix.
+     * 
+     * @param function
+     */
     Matrix transform(MatrixFunction function);
 
     /**
      * Builds a new matrix by applying a <code>function</code> to all elements
-	 * of this matrix with using of specified <code>factory</code>.
+     * of this matrix with using of specified <code>factory</code>.
+     * 
      * @param function
      */
     Matrix transform(MatrixFunction function, Factory factory);
 
     /**
-	 * Builds a new matrix by applying a <code>function</code> to (
-	 * <code>i</code>, <code>j</code>) element of this matrix.
-	 * 
-	 * @param i
-	 * @param j
-	 * @param function
-	 */
+     * Builds a new matrix by applying a <code>function</code> to (
+     * <code>i</code>, <code>j</code>) element of this matrix.
+     * 
+     * @param i
+     * @param j
+     * @param function
+     */
     Matrix transform(int i, int j, MatrixFunction function);
 
     /**
-	 * Builds a new matrix by applying a <code>function</code> to (
-	 * <code>i</code>, <code>j</code>) element of this matrix with using of
-	 * specified <code>factory</code>.
-	 * 
-	 * @param i
-	 * @param j
-	 * @param function
-	 * @param factory
-	 */
+     * Builds a new matrix by applying a <code>function</code> to (
+     * <code>i</code>, <code>j</code>) element of this matrix with using of
+     * specified <code>factory</code>.
+     * 
+     * @param i
+     * @param j
+     * @param function
+     * @param factory
+     */
     Matrix transform(int i, int j, MatrixFunction function, Factory factory);
 
     /**
-	 * Updates all elements of this matrix by applying <code>function</code>.
-	 * 
-	 * @param function
-	 */
+     * Updates all elements of this matrix by applying <code>function</code>.
+     * 
+     * @param function
+     */
     void update(MatrixFunction function);
 
     /**
-	 * Updates (<code>i</code>, <code>j</code>) element of this matrix by
-	 * applying <code>function</code>.
-	 * 
-	 * @param i
-	 * @param j
-	 * @param function
-	 */
+     * Updates (<code>i</code>, <code>j</code>) element of this matrix by
+     * applying <code>function</code>.
+     * 
+     * @param i
+     * @param j
+     * @param function
+     */
     void update(int i, int j, MatrixFunction function);
 
     /**
-	 * Checks whether this matrix compiles with <code>predicate</code>.
-	 * 
-	 * @param predidate
-	 * @return <code>true</code> if this matrix compiles with
-	 *         <code>predicate</code>.
-	 */
+     * 
+     * @param accumulator
+     * @return
+     */
+    double fold(MatrixAccumulator accumulator);
+
+    /**
+     * 
+     * @param i
+     * @param accumulator
+     * @return
+     */
+    double foldRow(int i, MatrixAccumulator accumulator);
+
+    /**
+     * 
+     * @param i
+     * @param accumulator
+     * @return
+     */
+    double foldColumn(int i, MatrixAccumulator accumulator);
+
+    /**
+     * Checks whether this matrix compiles with <code>predicate</code>.
+     * 
+     * @param predidate
+     * @return <code>true</code> if this matrix compiles with
+     *         <code>predicate</code>.
+     */
     boolean is(MatrixPredicate predidate);
 
     /**

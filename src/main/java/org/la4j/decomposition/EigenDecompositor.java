@@ -36,18 +36,18 @@ public class EigenDecompositor implements MatrixDecompositor {
 
     public static final int MAX_ITERATIONS = 10000000;
 
-	/**
-	 * Returns the result of Eigen decomposition of given matrix
-	 * <p>
-	 * See <a href="http://mathworld.wolfram.com/EigenDecomposition.html">
-	 * http://mathworld.wolfram.com/EigenDecomposition.html</a> for more
-	 * details.
-	 * </p>
-	 * 
-	 * @param matrix
-	 * @param factory
-	 * @return { P, D }
-	 */
+    /**
+     * Returns the result of Eigen decomposition of given matrix
+     * <p>
+     * See <a href="http://mathworld.wolfram.com/EigenDecomposition.html">
+     * http://mathworld.wolfram.com/EigenDecomposition.html</a> for more
+     * details.
+     * </p>
+     * 
+     * @param matrix
+     * @param factory
+     * @return { P, D }
+     */
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 
@@ -61,20 +61,20 @@ public class EigenDecompositor implements MatrixDecompositor {
         }
     }
 
-	/**
-	 * Returns the result of Eigen decomposition for <a
-	 * href="http://mathworld.wolfram.com/SymmetricMatrix.html"> symmetric</a>
-	 * matrix
-	 * <p>
-	 * See <a href="http://mathworld.wolfram.com/EigenDecomposition.html">
-	 * http://mathworld.wolfram.com/EigenDecomposition.html</a> for more
-	 * details.
-	 * </p>
-	 * 
-	 * @param matrix
-	 * @param factory
-	 * @return { P, D }
-	 */
+    /**
+     * Returns the result of Eigen decomposition for <a
+     * href="http://mathworld.wolfram.com/SymmetricMatrix.html"> symmetric</a>
+     * matrix
+     * <p>
+     * See <a href="http://mathworld.wolfram.com/EigenDecomposition.html">
+     * http://mathworld.wolfram.com/EigenDecomposition.html</a> for more
+     * details.
+     * </p>
+     * 
+     * @param matrix
+     * @param factory
+     * @return { P, D }
+     */
     private Matrix[] decomposeSymmetricMatrix(Matrix matrix, Factory factory) {
 
         Matrix d = matrix.copy();
@@ -177,20 +177,20 @@ public class EigenDecompositor implements MatrixDecompositor {
         return result;
     }
 
-	/**
-	 * Returns the result of Eigen decomposition for non-<a
-	 * href="http://mathworld.wolfram.com/SymmetricMatrix.html">symmetric</a>
-	 * matrix
-	 * <p>
-	 * See <a href="http://mathworld.wolfram.com/EigenDecomposition.html">
-	 * http://mathworld.wolfram.com/EigenDecomposition.html</a> for more
-	 * details.
-	 * </p>
-	 * 
-	 * @param matrix
-	 * @param factory
-	 * @return { P, D }
-	 */
+    /**
+     * Returns the result of Eigen decomposition for non-<a
+     * href="http://mathworld.wolfram.com/SymmetricMatrix.html">symmetric</a>
+     * matrix
+     * <p>
+     * See <a href="http://mathworld.wolfram.com/EigenDecomposition.html">
+     * http://mathworld.wolfram.com/EigenDecomposition.html</a> for more
+     * details.
+     * </p>
+     * 
+     * @param matrix
+     * @param factory
+     * @return { P, D }
+     */
     private Matrix[] decomposeNonSymmetricMatrix(Matrix matrix, Factory factory) {
 
         Matrix A = matrix.copy();

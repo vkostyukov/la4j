@@ -26,6 +26,7 @@ import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.factory.SafeFactory;
 import org.la4j.matrix.Matrices;
+import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.source.ArrayVectorSource;
@@ -129,6 +130,67 @@ public final class Vectors {
         }
     }
 
+    private static class SumVectorAccumulator implements VectorAccumulator {
+
+        private double result;
+
+        public SumVectorAccumulator(double neutral) {
+            this.result = neutral;
+        }
+
+        @Override
+        public void update(int i, double value) {
+            result += value;
+        }
+
+        @Override
+        public double accumulate() {
+            return result;
+        }
+    }
+
+    private static class FunctionVectorAccumulator implements VectorAccumulator {
+
+        private VectorAccumulator accumulator;
+        private VectorFunction function;
+        
+        public FunctionVectorAccumulator(VectorAccumulator accumulator,
+                VectorFunction function) {
+
+            this.accumulator = accumulator;
+            this.function = function;
+        }
+
+        @Override
+        public void update(int i, double value) {
+            accumulator.update(i, function.evaluate(i, value));
+        }
+
+        @Override
+        public double accumulate() {
+            return accumulator.accumulate();
+        }
+    }
+
+    private static class ProductVectorAccumulator implements VectorAccumulator {
+
+        private double result;
+
+        public ProductVectorAccumulator(double neutral) {
+            this.result = neutral;
+        }
+
+        @Override
+        public void update(int i, double value) {
+            result *= value;
+        }
+
+        @Override
+        public double accumulate() {
+            return result;
+        }
+    }
+
     public static VectorFunction asPlusFunction(double value) {
         return new PlusFunction(value);
     }
@@ -200,5 +262,27 @@ public final class Vectors {
 
     public static VectorSource asRandomSource(int length) {
         return new RandomVectorSource(length);
+    }
+
+    public static VectorAccumulator asSumAccumulator(double neutral) {
+        return new SumVectorAccumulator(neutral);
+    }
+
+    public static VectorAccumulator asProductAccumulator(double neutral) {
+        return new ProductVectorAccumulator(neutral);
+    }
+
+    public static VectorAccumulator asSumFunctionAccumulator(double neutral, 
+            VectorFunction function) {
+
+        return new FunctionVectorAccumulator(new SumVectorAccumulator(neutral), 
+                                             function);
+    }
+
+    public static VectorAccumulator asProductFunctionAccumulator(double neutral, 
+            VectorFunction function) {
+
+        return new FunctionVectorAccumulator(new ProductVectorAccumulator(neutral),
+                                             function);
     }
 }

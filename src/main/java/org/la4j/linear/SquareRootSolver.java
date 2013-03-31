@@ -36,17 +36,16 @@ public class SquareRootSolver implements LinearSystemSolver {
     private static final long serialVersionUID = 4071505L;
 
     /**
-	 * Returns the solution  for the given linear system
-	 * <p>
-	 * See <a href="http://mathworld.wolfram.com/SquareRootMethod.html">
-	 * http://mathworld.wolfram.com/SquareRootMethod.html</a> for more
-	 * details.
-	 * </p>
-	 * 
-	 * @param linearSystem
-	 * @param factory
-	 * @return vector
-	 */
+     * Returns the solution for the given linear system
+     * <p>
+     * See <a href="http://mathworld.wolfram.com/SquareRootMethod.html">
+     * http://mathworld.wolfram.com/SquareRootMethod.html</a> for more details.
+     * </p>
+     * 
+     * @param linearSystem
+     * @param factory
+     * @return vector
+     */
     @Override
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
@@ -122,13 +121,13 @@ public class SquareRootSolver implements LinearSystemSolver {
         return x;
     }
 
-	/**
-	 * Checks whether this linear system can be solved by Square Root solver
-	 * 
-	 * @param linearSystem
-	 * @return <code>true</code> if given linear system can be solved by Square
-	 *         Root solver
-	 */
+    /**
+     * Checks whether this linear system can be solved by Square Root solver
+     * 
+     * @param linearSystem
+     * @return <code>true</code> if given linear system can be solved by Square
+     *         Root solver
+     */
     @Override
     public boolean suitableFor(LinearSystem linearSystem) {
         return linearSystem.coefficientsMatrix().is(Matrices.SYMMETRIC_MATRIX);
