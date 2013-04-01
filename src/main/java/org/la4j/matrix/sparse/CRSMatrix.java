@@ -29,7 +29,6 @@ import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
-import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
