@@ -216,17 +216,17 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
-    public Vector getColumn(int i) {
-        ensureIndexInColumns(i);
+    public Vector getColumn(int j) {
+        ensureIndexInColumns(j);
 
-        return self.getColumn(i, factory);
+        return self.getColumn(j, factory);
     }
 
     @Override
-    public Vector getColumn(int i, Factory factory) {
-        ensureIndexInColumns(i);
+    public Vector getColumn(int j, Factory factory) {
+        ensureIndexInColumns(j);
 
-        return self.getColumn(i, factory);
+        return self.getColumn(j, factory);
     }
 
     @Override
@@ -237,10 +237,10 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
-    public void setColumn(int i, Vector column) {
-        ensureIndexInColumns(i);
+    public void setColumn(int j, Vector column) {
+        ensureIndexInColumns(j);
 
-        self.setColumn(i, column);
+        self.setColumn(j, column);
     }
 
     @Override
@@ -367,10 +367,10 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
-    public double foldColumn(int i, MatrixAccumulator accumulator) {
-        ensureIndexInColumns(i);
+    public double foldColumn(int j, MatrixAccumulator accumulator) {
+        ensureIndexInColumns(j);
 
-        return self.foldColumn(i, accumulator);
+        return self.foldColumn(j, accumulator);
     }
 
     @Override

@@ -31,9 +31,7 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixProcedure;
-import org.la4j.matrix.source.Array2DMatrixSource;
 import org.la4j.matrix.source.MatrixSource;
-import org.la4j.matrix.source.UnsafeMatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.sparse.CompressedVector;
 
@@ -56,13 +54,11 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     public CRSMatrix(Matrix matrix) {
-        // TODO: replace it with call Matrices.asUsafeSource(matrix); 
-        this(new UnsafeMatrixSource(matrix));
+        this(Matrices.asUnsafeSource(matrix));
     }
 
     public CRSMatrix(double array[][]) {
-        // TODO: replace it with call Matrices.asArray2DSource(array);
-        this(new Array2DMatrixSource(array));
+        this(Matrices.asArray2DSource(array));
     }
 
     public CRSMatrix(MatrixSource source) {
@@ -212,7 +208,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     @Override
-    public Vector getColumn(int i, Factory factory) {
+    public Vector getColumn(int j, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
         Vector result = factory.createVector(rows);
@@ -222,7 +218,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             for (int jj = rowPointers[ii]; jj < rowPointers[ii + 1]; 
                  jj++, k++) {
 
-                if (columnIndices[jj] == i) {
+                if (columnIndices[jj] == j) {
                     result.set(ii, values[jj]);
                 }
             }
@@ -233,7 +229,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     @Override
-    public void setColumn(int i, Vector column) {
+    public void setColumn(int j, Vector column) {
 
         if (column == null) {
             throw new IllegalArgumentException("Column can't be null.");
@@ -247,7 +243,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         for (int ii = 0; ii < column.length(); ii++) {
 
             int position = rowPointers[ii], limit = rowPointers[ii + 1];
-            while (position < limit && columnIndices[position] < i) {
+            while (position < limit && columnIndices[position] < j) {
                 position++;
             }
 
@@ -259,7 +255,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                     growup();
                 }
 
-                if (columnIndices[position] != i || position == limit) {
+                if (columnIndices[position] != j || position == limit) {
 
                     for (int k = cardinality; k > position; k--) {
                         values[k] = values[k - 1];
@@ -270,14 +266,14 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                         rowPointers[k]++;
                     }
 
-                    columnIndices[position] = i;
+                    columnIndices[position] = j;
 
                     cardinality++;
                 }
 
                 values[position] = value;
 
-            } else if (columnIndices[position] == i && position < limit) {
+            } else if (columnIndices[position] == j && position < limit) {
 
                 for (int k = position; k < cardinality - 1; k++) {
                     values[k] = values[k + 1];
@@ -447,12 +443,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             }
             i++;
         }
-    }
-
-    @Override
-    public void update(int i, int j, MatrixFunction function) {
-        // TODO Auto-generated method stub
-        super.update(i, j, function);
     }
 
     @Override

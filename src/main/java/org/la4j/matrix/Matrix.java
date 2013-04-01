@@ -322,18 +322,18 @@ public interface Matrix extends Externalizable {
     /**
      * Gets the <code>i</code> column of this matrix.
      * 
-     * @param i
+     * @param h
      * @return the i-th column
      */
-    Vector getColumn(int i);
+    Vector getColumn(int j);
 
     /**
      * Gets the <code>i</code> column of this matrix.
      * 
-     * @param i
+     * @param h
      * @return the i-th column
      */
-    Vector getColumn(int i, Factory factory);
+    Vector getColumn(int j, Factory factory);
 
     /**
      * Sets the <code>i</code> row of this matrix.
@@ -346,10 +346,10 @@ public interface Matrix extends Externalizable {
     /**
      * Sets the <code>i</code> column of this matrix.
      * 
-     * @param i
+     * @param j
      * @param column
      */
-    void setColumn(int i, Vector column);
+    void setColumn(int j, Vector column);
 
     /**
      * Converts this matrix to triangle matrix.
@@ -525,11 +525,11 @@ public interface Matrix extends Externalizable {
 
     /**
      * 
-     * @param i
+     * @param j
      * @param accumulator
      * @return
      */
-    double foldColumn(int i, MatrixAccumulator accumulator);
+    double foldColumn(int j, MatrixAccumulator accumulator);
 
     /**
      * Checks whether this matrix compiles with <code>predicate</code>.

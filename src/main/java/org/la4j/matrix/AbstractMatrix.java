@@ -89,18 +89,18 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Vector getColumn(int i) {
-        return getColumn(i, factory);
+    public Vector getColumn(int j) {
+        return getColumn(j, factory);
     }
 
     @Override
-    public Vector getColumn(int i, Factory factory) {
+    public Vector getColumn(int j, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
         Vector result = factory.createVector(rows);
 
-        for (int j = 0; j < rows; j++) {
-            result.set(j, get(j, i));
+        for (int i = 0; i < rows; i++) {
+            result.set(i, get(i, j));
         }
 
         return result;
@@ -124,7 +124,7 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public void setColumn(int i, Vector column) {
+    public void setColumn(int j, Vector column) {
 
         if (column == null) {
             throw new IllegalArgumentException("Column can't be null.");
@@ -135,8 +135,8 @@ public abstract class AbstractMatrix implements Matrix {
                                                + column.length());
         }
 
-        for (int j = 0; j < column.length(); j++) {
-            set(j, i, column.get(j));
+        for (int i = 0; i < column.length(); i++) {
+            set(i, j, column.get(i));
         }
     }
 
@@ -664,10 +664,10 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public double foldColumn(int i, MatrixAccumulator accumulator) {
+    public double foldColumn(int j, MatrixAccumulator accumulator) {
 
-        for (int j = 0; i < rows; j++) {
-            accumulator.update(j, i, get(j, i));
+        for (int i = 0; i < rows; i++) {
+            accumulator.update(i, j, get(i, j));
         }
 
         return accumulator.accumulate();

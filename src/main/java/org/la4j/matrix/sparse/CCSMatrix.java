@@ -161,16 +161,16 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     @Override
-    public Vector getColumn(int i) {
+    public Vector getColumn(int j) {
 
-        int columnCardinality = columnPointers[i + 1] - columnPointers[i];
+        int columnCardinality = columnPointers[j + 1] - columnPointers[j];
 
         double columnValues[] = new double[columnCardinality];
         int columnIndices[] = new int[columnCardinality];
 
-        System.arraycopy(values, columnPointers[i], columnValues, 0, 
+        System.arraycopy(values, columnPointers[j], columnValues, 0, 
                          columnCardinality);
-        System.arraycopy(rowIndices, columnPointers[i], columnIndices, 0, 
+        System.arraycopy(rowIndices, columnPointers[j], columnIndices, 0, 
                          columnCardinality);
 
         return new CompressedVector(rows, columnCardinality, columnValues, 
@@ -179,12 +179,12 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
 
     @Override
-    public Vector getColumn(int i, Factory factory) {
+    public Vector getColumn(int j, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
         Vector result = factory.createVector(rows);
 
-        for (int jj = columnPointers[i]; jj < columnPointers[i + 1]; jj++) {
+        for (int jj = columnPointers[j]; jj < columnPointers[j + 1]; jj++) {
             result.set(rowIndices[jj], values[jj]);
         }
 
@@ -262,7 +262,6 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
             return new CCSMatrix(rows, columns, $cardinality, $values,
                     $rowIndices, $columnPointers);
-//            return super.resize(rows, columns);
         }
 
         if (this.columns < columns) {
