@@ -64,6 +64,9 @@ import org.la4j.vector.Vector;
 
 public final class Matrices {
 
+    /**
+     * The machine epsilon, that is calculated at runtime.
+     */
     public static final double EPS;
 
     // Determine the machine epsilon
@@ -347,20 +350,55 @@ public final class Matrices {
 
     /**
      * Creates a plus function with specified <code>value</code>.
+     * 
+     * <p>
+     * The function represents like following: <code>something += value</code>.
+     * </p> 
+     * 
      * @param value
      */
     public static MatrixFunction asPlusFunction(double value) {
         return new PlusMatrixFunction(value);
     }
 
+    /**
+     * Creates a minus function with specified <code>value</code>. 
+     * 
+     * <p>
+     * The function represents like following: <code>something -= value</code>.
+     * </p> 
+     * 
+     * @param value
+     * @return
+     */
     public static MatrixFunction asMinusFunction(double value) {
         return new MinusMatrixFunction(value);
     }
 
+    /**
+     * Creates a multiply function with specified <code>value</code>.
+     * 
+     * <p>
+     * The function represents like following: <code>something *= value</code>.
+     * </p>
+     * 
+     * @param value
+     * @return
+     */
     public static MatrixFunction asMulFunction(double value) {
         return new MulMatrixFunction(value);
     }
 
+    /**
+     * Creates a divide function with specified <code>value</code>.
+     * 
+     * <p>
+     * The function represents like following: <code>something /= value</code>.
+     * </p>
+     * 
+     * @param value
+     * @return
+     */
     public static MatrixFunction asDivFunction(double value) {
         return new DivMatrixFunction(value);
     }
@@ -414,10 +452,20 @@ public final class Matrices {
      */
     public final static Factory BASIC2D_FACTORY = new Basic2DFactory();
 
+    /**
+     * The {@link CRSFactory} singleton instance.
+     */
     public final static Factory CRS_FACTORY = new CRSFactory();
 
+    /**
+     * The {@link CCSFactory} singleton instance.
+     */
     public final static Factory CCS_FACTORY = new CCSFactory();
 
+    /**
+     * {@link AbstractSafeMatrix Safe} version of 
+     * {@link Matrices#BASIC1D_FACTORY}.
+     */
     public final static Factory SAFE_BASIC1D_FACTORY = 
             new SafeFactory(BASIC1D_FACTORY);
 
@@ -481,14 +529,35 @@ public final class Matrices {
 
     public final static LinearSystemSolver DEFAULT_SOLVER = GAUSSIAN_SOLVER;
 
+    /**
+     * Creates a singleton <code>1x1</code> matrix from <code>value</code>.
+     * 
+     * @param value
+     * @return
+     */
     public static Matrix asSingletonMatrix(double value) {
         return DEFAULT_FACTORY.createMatrix(new double[][]{{ value }});
     }
 
+    /**
+     * Creates {@link LinearSystem} instance from matrix <code>a</code> and 
+     * vector <code>b</code>. The {@link Matrices#DEFAULT_FACTORY} is using
+     * for matrix construction.
+     * 
+     * @param a
+     * @param b
+     * @return
+     */
     public static LinearSystem asLinearSystem(Matrix a, Vector b) {
         return DEFAULT_FACTORY.createLinearSystem(a, b);
     }
 
+    /**
+     * Wraps the <code>matrix</code> with safe wrapper.  
+     * 
+     * @param matrix
+     * @return
+     */
     public static Matrix asSafeMatrix(Matrix matrix) {
         return matrix.safe();
     }
