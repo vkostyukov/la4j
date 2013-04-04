@@ -28,14 +28,32 @@ import org.la4j.matrix.Matrix;
 
 public interface MatrixStream {
 
+
     /**
+     * Reads a matrix from the stream. The new matrix will be constructed with 
+     * {@link Matrices#DEFAULT_DENSE_FASCTORY} 
+     * or {@link Matrices#DEFAULT_SPARSE_FACTORY} 
+     * if it is a dense or sparse matrix respectively. 
      * 
      * @return
+     * @throws IOException
+     */
+    Matrix readMatrix() throws IOException;
+
+    /**
+     * Reads a matrix from the stream with specified <code>factory</code>.
+     * 
+     * @param factory
+     * @return
+     * @throws IOException
      */
     Matrix readMatrix(Factory factory) throws IOException;
 
     /**
+     * Writes the <code>matrix</code> to the stream.
      * 
+     * @param matrix
+     * @throws IOException
      */
     void writeMatrix(Matrix matrix) throws IOException;
 }

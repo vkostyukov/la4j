@@ -28,8 +28,10 @@ import java.util.Locale;
 import java.util.StringTokenizer;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 
 public class SymbolSeparatedStream extends AbstractStream 
     implements MatrixStream, VectorStream {
@@ -52,6 +54,11 @@ public class SymbolSeparatedStream extends AbstractStream
     public SymbolSeparatedStream(OutputStream out, String separator) {
         super(out);
         this.separator = separator;
+    }
+
+    @Override
+    public Vector readVector() throws IOException {
+        return readVector(Vectors.DEFAULT_FACTORY);
     }
 
     @Override
@@ -96,6 +103,11 @@ public class SymbolSeparatedStream extends AbstractStream
         writer.newLine();
 
         closeWriter();
+    }
+
+    @Override
+    public Matrix readMatrix() throws IOException {
+        return readMatrix(Matrices.DEFAULT_FACTORY);
     }
 
     @Override

@@ -29,11 +29,13 @@ import java.util.Locale;
 import java.util.StringTokenizer;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.sparse.SparseMatrix;
 import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.sparse.SparseVector;
@@ -92,10 +94,17 @@ public class MatrixMarketStream extends AbstractStream
     }
 
     @Override
+    public Vector readVector() throws IOException {
+        return readVector(null);
+    }
+
+    @Override
     public Vector readVector(Factory factory) throws IOException {
         ensureReaderInitialized();
+
         Vector vector = parseVector(factory);
         closeReader();
+
         return vector;
     }
 
@@ -117,9 +126,16 @@ public class MatrixMarketStream extends AbstractStream
     @Override
     public Matrix readMatrix(Factory factory) throws IOException {
         ensureReaderInitialized();
+
         Matrix matrix = parseMatrix(factory);
         closeReader();
+
         return matrix;
+    }
+
+    @Override
+    public Matrix readMatrix() throws IOException {
+        return readMatrix(null);
     }
 
     @Override
@@ -198,11 +214,14 @@ public class MatrixMarketStream extends AbstractStream
         ensureNext("general");
 
         if (token.equals("array")) {
-            return parseDenseVector(factory);
+            return parseDenseVector(factory == null ? 
+                                    Vectors.DEFAULT_DENSE_FACTORY : factory);
         } else if (token.equals("coordinate")) {
-            return parseSparseVector(factory);
+            return parseSparseVector(factory == null ? 
+                                     Vectors.DEFAULT_SPARSE_FACTORY : factory);
         } else {
-            throw new IOException();
+            throw new IOException("Unexpected token at stream: \"" 
+                                  + token + "\".");
         }
     }
 
@@ -246,11 +265,14 @@ public class MatrixMarketStream extends AbstractStream
         ensureNext("general");
 
         if (token.equals("array")) {
-            return parseDenseMatrix(factory);
+            return parseDenseMatrix(factory == null ?
+                                    Matrices.DEFAULT_DENSE_FACTORY : factory);
         } else if (token.equals("coordinate")) {
-            return parseSparseMatrix(factory);
+            return parseSparseMatrix(factory == null ?
+                                     Matrices.DEFAULT_SPARSE_FACTORY : factory);
         } else {
-            throw new IOException();
+            throw new IOException("Unexpected token at stream: \"" 
+                                  + token + "\".");
         }
     }
 

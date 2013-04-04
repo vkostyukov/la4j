@@ -29,13 +29,27 @@ import org.la4j.vector.Vector;
 public interface VectorStream {
 
     /**
+     * Reads a vector from the stream. The new vector will be constructed with 
+     * {@link Vectors#DEFAULT_DENSE_FASCTORY} 
+     * or {@link Vectors#DEFAULT_SPARSE_FACTORY} 
+     * if it is a dense or sparse vector respectively. 
      * 
+     * @return
+     * @throws IOException
+     */
+    Vector readVector() throws IOException;
+
+    /**
+     * Reads a vector from the stream with specified <code>factory</code>. 
+     * 
+     * @param factory
      * @return
      * @throws IOException
      */
     Vector readVector(Factory factory) throws IOException;
 
     /**
+     * Writes the <code>vector</code> to the stream.
      * 
      * @param vector
      * @throws IOException

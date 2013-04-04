@@ -21,6 +21,7 @@
 
 package org.la4j.matrix;
 
+import java.io.InputStream;
 import java.util.Arrays;
 
 import org.la4j.decomposition.CholeskyDecompositor;
@@ -37,6 +38,8 @@ import org.la4j.factory.Factory;
 import org.la4j.factory.SafeFactory;
 import org.la4j.inversion.GaussianInvertor;
 import org.la4j.inversion.MatrixInvertor;
+import org.la4j.io.MatrixMarketStream;
+import org.la4j.io.SymbolSeparatedStream;
 import org.la4j.linear.GaussianSolver;
 import org.la4j.linear.JacobiSolver;
 import org.la4j.linear.LinearSystem;
@@ -55,6 +58,7 @@ import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.source.RandomMatrixSource;
 import org.la4j.matrix.source.RandomSymmetricMatrixSource;
 import org.la4j.matrix.source.SafeMatrixSource;
+import org.la4j.matrix.source.StreamMatrixSource;
 import org.la4j.matrix.source.UnsafeMatrixSource;
 import org.la4j.vector.Vector;
 
@@ -400,8 +404,14 @@ public final class Matrices {
     public final static MatrixFunction DEC_MATRIX = 
             new DecMatrixFunction();
 
+    /**
+     * The {@link Basic1DFactory} singleton instance.
+     */
     public final static Factory BASIC1D_FACTORY = new Basic1DFactory();
 
+    /**
+     * The {@link Basic2DFactory} singleton instance.
+     */
     public final static Factory BASIC2D_FACTORY = new Basic2DFactory();
 
     public final static Factory CRS_FACTORY = new CRSFactory();
@@ -517,6 +527,20 @@ public final class Matrices {
         return new RandomSymmetricMatrixSource(size);
     }
 
+    public static MatrixSource asMatrixMarketSource(InputStream in) {
+        return new StreamMatrixSource(new MatrixMarketStream(in));
+    }
+
+    public static MatrixSource asSymbolSeparatedSource(InputStream in) {
+        return new StreamMatrixSource(new SymbolSeparatedStream(in));
+    }
+
+    public static MatrixSource asSymbolSeparatedSource(InputStream in, 
+            String separator) {
+
+        return new StreamMatrixSource(new SymbolSeparatedStream(in, separator));
+    }
+
     public static MatrixAccumulator asSumAccumulator(double neutral) {
         return new SumMatrixAccumulator(neutral);
     }
@@ -535,7 +559,7 @@ public final class Matrices {
     public static MatrixAccumulator asProductFunctionAccumulator(double neutral, 
             MatrixFunction function) {
 
-        return new FunctionMatrixAccumulator(new ProductMatrixAccumulator(neutral), 
-                                             function);
+        return new FunctionMatrixAccumulator(new ProductMatrixAccumulator(
+                                             neutral), function);
     }
 }

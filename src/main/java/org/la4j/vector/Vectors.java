@@ -21,10 +21,14 @@
 
 package org.la4j.vector;
 
+import java.io.InputStream;
+
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.factory.SafeFactory;
+import org.la4j.io.MatrixMarketStream;
+import org.la4j.io.SymbolSeparatedStream;
 import org.la4j.matrix.Matrices;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
@@ -32,6 +36,7 @@ import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.source.ArrayVectorSource;
 import org.la4j.vector.source.RandomVectorSource;
 import org.la4j.vector.source.SafeVectorSource;
+import org.la4j.vector.source.StreamVectorSource;
 import org.la4j.vector.source.UnsafeVectorSource;
 import org.la4j.vector.source.VectorSource;
 
@@ -232,6 +237,10 @@ public final class Vectors {
 
     public static final Factory DEFAULT_FACTORY = BASIC_FACTORY;
 
+    public static final Factory DEFAULT_DENSE_FACTORY = BASIC_FACTORY;
+
+    public static final Factory DEFAULT_SPARSE_FACTORY = COMPRESSED_FACTORY;
+
     public static final VectorFunction INC_VECTOR = new IncVecorFunction();
 
     public static final VectorFunction DEC_VECTOR = new DecVectorFunction();
@@ -262,6 +271,20 @@ public final class Vectors {
 
     public static VectorSource asRandomSource(int length) {
         return new RandomVectorSource(length);
+    }
+
+    public static VectorSource asMatrixMarketSource(InputStream in) {
+        return new StreamVectorSource(new MatrixMarketStream(in));
+    }
+
+    public static VectorSource asSymbolSeparatedSource(InputStream in) {
+        return new StreamVectorSource(new SymbolSeparatedStream(in));
+    }
+
+    public static VectorSource asSymbolSeparatedSource(InputStream in, 
+            String separator) {
+
+        return new StreamVectorSource(new SymbolSeparatedStream(in, separator));
     }
 
     public static VectorAccumulator asSumAccumulator(double neutral) {
