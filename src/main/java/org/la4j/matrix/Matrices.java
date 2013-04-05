@@ -349,12 +349,11 @@ public final class Matrices {
     }
 
     /**
-     * Creates a plus function with specified <code>value</code>.
-     * 
+     * Creates a plus function with specified <code>value</code>. The function 
+     * evaluates like following: 
      * <p>
-     * The function represents like following: <code>something += value</code>.
-     * </p> 
-     * 
+     * <center><code>something += value</code></center>
+     * </p>
      * @param value
      */
     public static MatrixFunction asPlusFunction(double value) {
@@ -362,10 +361,10 @@ public final class Matrices {
     }
 
     /**
-     * Creates a minus function with specified <code>value</code>. 
-     * 
+     * Creates a minus function with specified <code>value</code>. The function 
+     * evaluates like following: 
      * <p>
-     * The function represents like following: <code>something -= value</code>.
+     * <center><code>something -= value</code></center>
      * </p> 
      * 
      * @param value
@@ -376,10 +375,10 @@ public final class Matrices {
     }
 
     /**
-     * Creates a multiply function with specified <code>value</code>.
-     * 
+     * Creates a multiply function with specified <code>value</code>. The function 
+     * evaluates like following: 
      * <p>
-     * The function represents like following: <code>something *= value</code>.
+     * <center><code>something *= value</code></center>
      * </p>
      * 
      * @param value
@@ -390,10 +389,10 @@ public final class Matrices {
     }
 
     /**
-     * Creates a divide function with specified <code>value</code>.
-     * 
+     * Creates a divide function with specified <code>value</code>. The function 
+     * evaluates like following: 
      * <p>
-     * The function represents like following: <code>something /= value</code>.
+     * <center><code>something /= value</code></center>
      * </p>
      * 
      * @param value
@@ -403,42 +402,99 @@ public final class Matrices {
         return new DivMatrixFunction(value);
     }
 
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://mathworld.wolfram.com/DiagonalMatrix.html">diagonal 
+     * matrix</a>.
+     */
     public final static MatrixPredicate DIAGONAL_MATRIX = 
             new DiagonalMatrixPredicate();
 
+    /**
+     * Checks whether the matrix is an 
+     * <a href="http://mathworld.wolfram.com/IdentityMatrix.html">identity
+     * matrix</a>.
+     */
     public final static MatrixPredicate IDENTITY_MATRIX = 
             new IdentityMatrixPredicate();
 
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://mathworld.wolfram.com/ZeroMatrix.html">zero
+     * matrix</a>.
+     */
     public final static MatrixPredicate ZERO_MATRIX = 
             new ZeroMatrixPredicate();
 
+    /**
+     * Checks whether the matrix is a 
+     * <a href="http://mathworld.wolfram.com/TridiagonalMatrix.html">tridiagonal
+     * matrix</a>.
+     */
     public final static MatrixPredicate TRIDIAGONAL_MATRIX = 
             new TridiagonalMatrixPredicate();
 
+    /**
+     * Checks whether the matrix is a 
+     * <a href="http://mathworld.wolfram.com/PositiveMatrix.html">positive 
+     * matrix</a>.
+     */
     public final static MatrixPredicate POSITIVE_MATRIX = 
             new PositiveMatrixPredicate();
 
+    /**
+     * Checks whether the matrix is a 
+     * <a href="http://mathworld.wolfram.com/NegativeMatrix.html">negative 
+     * matrix</a>.
+     */
     public final static MatrixPredicate NEGATIVE_MATRIX = 
             new NegativeMatrixPredicate();
 
+    /**
+     * Checks whether the matrix is a lower bidiagonal matrix</a>.
+     */
     public final static MatrixPredicate LOWER_BIDIAGONAL_MATRIX = 
             new LowerBidiagonalMatrixPredicate();
 
+    /**
+     * Checks whether the matrix is an upper bidiagonal matrix. 
+     */
     public final static MatrixPredicate UPPER_BIDIAGONAL_MATRIX = 
             new UpperBidiagonalMatrixPredicate();
 
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://mathworld.wolfram.com/LowerTriangularMatrix.html">lower 
+     * triangular matrix</a>.
+     */
     public final static MatrixPredicate LOWER_TRIANGULAR_MARTIX = 
             new LowerTriangularMatrixPredicate();
 
+    /**
+     * Checks whether the matrix is an
+     * <a href="http://mathworld.wolfram.com/UpperTriangularMatrix.html">upper 
+     * triangular matrix</a>.
+     */
     public final static MatrixPredicate UPPER_TRIANGULAR_MATRIX = 
             new UpperTriangularMatrixPredicate();
 
+    /**
+     * Checks whether the matrix is a 
+     * <a href="http://mathworld.wolfram.com/SymmetricMatrix.html">symmetric 
+     * matrix</a>. 
+     */
     public final static MatrixPredicate SYMMETRIC_MATRIX = 
             new SymmetricMatrixPredicate();
 
+    /**
+     * Increases each element of matrix by <code>1</code>.
+     */
     public final static MatrixFunction INC_MATRIX = 
             new IncMatrixFunction();
 
+    /**
+     * Decreases each element of matrix by <code>1</code>.
+     */
     public final static MatrixFunction DEC_MATRIX = 
             new DecMatrixFunction();
 
@@ -463,70 +519,163 @@ public final class Matrices {
     public final static Factory CCS_FACTORY = new CCSFactory();
 
     /**
-     * {@link AbstractSafeMatrix Safe} version of 
-     * {@link Matrices#BASIC1D_FACTORY}.
+     * Safe version of {@link Matrices#BASIC1D_FACTORY}.
+     * 
+     * <p>
+     * The safe factory creates matrices that is wrapped with safe accessors 
+     * and modifiers. 
+     * </p>
      */
     public final static Factory SAFE_BASIC1D_FACTORY = 
             new SafeFactory(BASIC1D_FACTORY);
 
+    /**
+     * Safe version of {@link Matrices#BASIC2D_FACTORY}.
+     * 
+     * <p>
+     * The safe factory creates matrices that is wrapped with safe accessors 
+     * and modifiers. 
+     * </p>
+     */
     public final static Factory SAFE_BASIC2D_FACTORY = 
             new SafeFactory(BASIC2D_FACTORY);
 
+    /**
+     * Safe version of {@link Matrices#CRS_FACTORY}.
+     * 
+     * <p>
+     * The safe factory creates matrices that is wrapped with safe accessors 
+     * and modifiers. 
+     * </p>
+     */
     public final static Factory SAFE_CRS_FACTORY = 
             new SafeFactory(CRS_FACTORY);
 
+    /**
+     * Safe version of {@link Matrices#CCS_FACTORY}.
+     * 
+     * <p>
+     * The safe factory creates matrices that is wrapped with safe accessors 
+     * and modifiers. 
+     * </p>
+     */
     public final static Factory SAFE_CCS_FACTORY = 
             new SafeFactory(CCS_FACTORY);
 
+    /**
+     * Reference to the {@link Matrices#BASIC1D_FACTORY}.
+     */
     public final static Factory UNSAFE_BASIC1D_FACTORY = BASIC1D_FACTORY;
 
+    /**
+     * Reference to the {@link Matrices#BASIC2D_FACTORY}.
+     */
     public final static Factory UNSAFE_BASIC2D_FACTORY = BASIC2D_FACTORY;
 
+    /**
+     * Reference to the {@link Matrices#CRS_FACTORY}.
+     */
     public final static Factory UNSAFE_CRS_FACTORY = CRS_FACTORY;
 
+    /**
+     * Reference to the {@link Matrices#CCS_FACTORY}.
+     */
     public final static Factory UNSAFE_CCS_FACTORY = CCS_FACTORY;
 
+    /**
+     * The default dense factory singleton instance. References the
+     * {@link Matrices#BASIC2D_FACTORY}.
+     */
     public final static Factory DEFAULT_DENSE_FACTORY = BASIC2D_FACTORY;
 
+    /**
+     * The default sparse factory singleton instance. References the
+     * {@link Matrices#CRS_FACTORY}.
+     */
     public final static Factory DEFAULT_SPARSE_FACTORY = CRS_FACTORY;
 
+    /**
+     * The default matrix factory singleton instance. References the
+     * {@link Matrices#BASIC2D_FACTORY}.
+     */
     public final static Factory DEFAULT_FACTORY = BASIC2D_FACTORY;
 
+    /**
+     * The {@link CholeskyDecompositor} singleton instance.
+     */
     public final static MatrixDecompositor CHOLESKY_DECOMPOSITOR = 
             new CholeskyDecompositor();
 
+    /**
+     * The {@link EigenDecompositor} singleton instance.
+     */
     public final static MatrixDecompositor EIGEN_DECOMPOSITOR = 
             new EigenDecompositor();
 
+    /**
+     * The {@link LUDecompositor} singleton instance.
+     */
     public final static MatrixDecompositor LU_DECOMPOSITOR = 
             new LUDecompositor();
 
+    /**
+     * The {@link QRDecompositor} singleton instance.
+     */
     public final static MatrixDecompositor QR_DECOMPOSITOR = 
             new QRDecompositor();
 
+    /**
+     * The {@link SingularValueDecompositor} singleton instance.
+     */
     public final static MatrixDecompositor SINGULAR_VALUE_DECOMPOSITOR = 
             new SingularValueDecompositor();
 
+    /**
+     * The {@link GaussianInvertor} singleton instance.
+     */
     public final static MatrixInvertor GAUSSIAN_INVERTOR =
             new GaussianInvertor();
 
+    /**
+     * The default matrix invertor singleton instance. References the 
+     * {@link GaussianInvertor}. 
+     */
     public final static MatrixInvertor DEFAULT_INVERTOR = GAUSSIAN_INVERTOR;
 
+    /**
+     * The {@link GaussianSolver} singleton instance.
+     */
     public final static LinearSystemSolver GAUSSIAN_SOLVER = 
             new GaussianSolver();
 
+    /**
+     * The {@link JacobiSolver} singleton instance.
+     */
     public final static LinearSystemSolver JACOBI_SOLVER = 
             new JacobiSolver();
 
+    /**
+     * The {@link SeidelSolver} singleton instance.
+     */
     public final static LinearSystemSolver SEIDEL_SOLVER = 
             new SeidelSolver();
 
+    /**
+     * The {@link SquareRootSolver} singleton instance.
+     */
     public final static LinearSystemSolver SQUARE_ROOT_SOLVER = 
             new SquareRootSolver();
 
+    /**
+     * The {@link SweepSolver} singleton instance.
+     */
     public final static LinearSystemSolver SWEEP_SOLVER = 
             new SweepSolver();
 
+    /**
+     * The default linear system solver singleton instance. References the 
+     * {@link Matrices#GAUSSIAN_SOLVER}.
+     */
     public final static LinearSystemSolver DEFAULT_SOLVER = GAUSSIAN_SOLVER;
 
     /**
@@ -553,7 +702,8 @@ public final class Matrices {
     }
 
     /**
-     * Wraps the <code>matrix</code> with safe wrapper.  
+     * Wraps the <code>matrix</code> with interface that provides safe accessors
+     * and modifiers.
      * 
      * @param matrix
      * @return
@@ -562,62 +712,159 @@ public final class Matrices {
         return matrix.safe();
     }
 
+    /**
+     * Unwraps the safe <code>matrix</code>.
+     * 
+     * @param matrix
+     * @return
+     */
     public static Matrix asUnsafeMatrix(Matrix matrix) {
         return matrix.unsafe();
     }
 
+    /**
+     * Creates a safe matrix source with specified <code>matrix</code>.
+     * 
+     * @param matrix
+     * @return
+     */
     public static MatrixSource asSafeSource(Matrix matrix) {
         return new SafeMatrixSource(matrix);
     }
 
+    /**
+     * Creates a unsafe matrix source with specified <code>matrix</code>.
+     * @param matrix
+     * @return
+     */
     public static MatrixSource asUnsafeSource(Matrix matrix) {
         return new UnsafeMatrixSource(matrix);
     }
 
+    /**
+     * Creates a 1D array matrix source with specified dimensions and 
+     * <code>array</code> reference. 
+     * 
+     * @param rows
+     * @param columns
+     * @param array
+     * @return
+     */
     public static MatrixSource asArray1DSource(int rows, int columns, 
             double[] array) {
 
         return new Array1DMatrixSource(rows, columns, array);
     }
 
+    /**
+     * Creates a 2D array matrix source with specified <code>array</code> 
+     * reference.
+     * 
+     * @param array
+     * @return
+     */
     public static MatrixSource asArray2DSource(double[][] array) {
         return new Array2DMatrixSource(array);
     }
 
+    /**
+     * Creates an identity matrix source with specified <code>size</code>.
+     * 
+     * @param size
+     * @return
+     */
     public static MatrixSource asIdentitySource(int size) {
         return new IdentityMattixSource(size);
     }
 
+    /**
+     * Creates a random matrix source with specified dimensions.
+     * 
+     * @param rows
+     * @param columns
+     * @return
+     */
     public static MatrixSource asRandomSource(int rows, int columns) {
         return new RandomMatrixSource(rows, columns);
     }
 
+    /**
+     * Creates a random symmetric matrix source with specified 
+     * <code>size</code>.
+     * 
+     * @param size
+     * @return
+     */
     public static MatrixSource asRandomSymmetricSource(int size) {
         return new RandomSymmetricMatrixSource(size);
     }
 
+    /**
+     * Creates a MatrixMarket stream source with specified input stream.
+     * 
+     * @param in
+     * @return
+     */
     public static MatrixSource asMatrixMarketSource(InputStream in) {
         return new StreamMatrixSource(new MatrixMarketStream(in));
     }
 
+    /**
+     * Creates a symbol separated stream source (like CSV) with specified
+     * input stream.
+     * 
+     * @param in
+     * @return
+     */
     public static MatrixSource asSymbolSeparatedSource(InputStream in) {
         return new StreamMatrixSource(new SymbolSeparatedStream(in));
     }
 
+    /**
+     * Creates a symbol separated stream source (like CSV) with specified
+     * input stream and <code>separator</code>.
+     * 
+     * @param in
+     * @param separator
+     * @return
+     */
     public static MatrixSource asSymbolSeparatedSource(InputStream in, 
             String separator) {
 
         return new StreamMatrixSource(new SymbolSeparatedStream(in, separator));
     }
 
+    /**
+     * Creates a sum matrix accumulator, that calculates the sum of all 
+     * elements of matrix. 
+     * 
+     * @param neutral
+     * @return
+     */
     public static MatrixAccumulator asSumAccumulator(double neutral) {
         return new SumMatrixAccumulator(neutral);
     }
 
+    /**
+     * Creates a product matrix accumulator, that calculates the product of all
+     * elements of matrix.
+     * 
+     * @param neutral
+     * @return
+     */
     public static MatrixAccumulator asProductAccumulator(double neutral) {
         return new ProductMatrixAccumulator(neutral);
     }
 
+    /**
+     * Creates a sum function accumulator, that calculates the sum of all 
+     * elements of this matrix after applying a <code>function</code> to 
+     * each of them.
+     * 
+     * @param neutral
+     * @param function
+     * @return
+     */
     public static MatrixAccumulator asSumFunctionAccumulator(double neutral, 
             MatrixFunction function) {
 
@@ -625,6 +872,15 @@ public final class Matrices {
                                              function);
     }
 
+    /**
+     * Creates a produce function accumulator, that calculates the produce of
+     * all elements of this matrix after applying a <code>function</code> to
+     * each of them.
+     * 
+     * @param neutral
+     * @param function
+     * @return
+     */
     public static MatrixAccumulator asProductFunctionAccumulator(double neutral, 
             MatrixFunction function) {
 
