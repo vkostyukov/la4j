@@ -278,8 +278,7 @@ public class EigenDecompositor implements MatrixDecompositor {
                     }
                     f = f / hh;
                     for (int i = m; i <= high; i++) {
-                        h.update(i, j, 
-                                 Matrices.asMinusFunction((f * ort.get(i))));
+                        h.update(i, j, Matrices.asMinusFunction(f * ort.get(i)));
                     }
                 }
 
@@ -290,8 +289,7 @@ public class EigenDecompositor implements MatrixDecompositor {
                     }
                     f = f / hh;
                     for (int j = m; j <= high; j++) {
-                        h.update(i, j, 
-                                 Matrices.asMinusFunction((f * ort.get(j))));
+                        h.update(i, j, Matrices.asMinusFunction(f * ort.get(j)));
                     }
                 }
                 ort.set(m, scale * ort.get(m));
@@ -577,8 +575,8 @@ public class EigenDecompositor implements MatrixDecompositor {
                                 H.update(k + 2, j, 
                                          Matrices.asMinusFunction(p * z));
                             }
-                            H.update(k, j, Matrices.asMinusFunction(p  * x));
-                            H.update(k + 1, j, Matrices.asMinusFunction(p  * y));
+                            H.update(k, j, Matrices.asMinusFunction(p * x));
+                            H.update(k + 1, j, Matrices.asMinusFunction(p * y));
                         }
 
                         // Column modification
@@ -589,7 +587,7 @@ public class EigenDecompositor implements MatrixDecompositor {
                             if (notlast) {
                                 p = p + z * H.get(i, k + 2);
                                 H.update(i, k + 2, 
-                                         Matrices.asMinusFunction(p *r));
+                                         Matrices.asMinusFunction(p * r));
                             }
                             H.update(i, k, Matrices.asMinusFunction(p));
                             H.update(i, k + 1, Matrices.asMinusFunction(p * q));

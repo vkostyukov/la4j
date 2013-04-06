@@ -75,7 +75,7 @@ public class QRDecompositor implements MatrixDecompositor {
                     qr.update(i, k, Matrices.asDivFunction(norm));
                 }
 
-                qr.update(k, k, Matrices.asPlusFunction(1.0));
+                qr.update(k, k, Matrices.INC_FUNCTION);
 
                 for (int j = k + 1; j < qr.columns(); j++) {
 

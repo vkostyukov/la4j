@@ -109,8 +109,8 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     t = -t / a.get(k, k);
 
                     for (int i = k; i < a.rows(); i++) {
-                        a.update(i, j, Matrices.asPlusFunction((t * 
-                                 a.get(i, k))));
+                        a.update(i, j, Matrices.asPlusFunction(t * 
+                                 a.get(i, k)));
                     }
                 }
 
