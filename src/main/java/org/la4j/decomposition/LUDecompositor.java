@@ -22,8 +22,10 @@
 package org.la4j.decomposition;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 
 /**
  * This class represents LU decomposition of matrices. More details
@@ -67,7 +69,7 @@ public class LUDecompositor implements MatrixDecompositor {
                     s += lu.get(i, k) * jcolumn.get(k);
                 }
 
-                jcolumn.set(i, jcolumn.get(i) - s);
+                jcolumn.update(i, Vectors.asMinusFunction(s));
                 lu.set(i, j, jcolumn.get(i));
             }
 
@@ -90,8 +92,7 @@ public class LUDecompositor implements MatrixDecompositor {
 
             if (j < lu.rows() & lu.get(j, j) != 0.0) {
                 for (int i = j + 1; i < lu.rows(); i++) {
-                    lu.set(i, j, lu.get(i, j) 
-                                  / lu.get(j, j));
+                    lu.update(i, j, Matrices.asDivFunction(lu.get(j, j)));
                 }
             }
         }

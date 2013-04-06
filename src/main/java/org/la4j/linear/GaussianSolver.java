@@ -95,8 +95,8 @@ public class GaussianSolver implements LinearSystemSolver {
                 result.set(j, i, C);
 
                 for (int k = i + 1; k < result.columns(); k++) {
-                    result.set(j, k, result.get(j, k) 
-                                      - result.get(i, k) * C);
+                    result.update(j, k, Matrices.asMinusFunction(
+                                  result.get(i, k) * C));
                 }
             }
         }
@@ -119,9 +119,8 @@ public class GaussianSolver implements LinearSystemSolver {
                 summand += result.get(j) * matrix.get(i, j);
             }
 
-            result.set(i, (matrix.get(i, matrix.columns() - 1) 
-                                                    - summand)
-                              / matrix.get(i, i));
+            result.set(i, (matrix.get(i, matrix.columns() - 1) - summand)
+                       / matrix.get(i, i));
         }
 
         return result;

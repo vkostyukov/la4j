@@ -25,6 +25,7 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 
 /**
  * This class represents singular value decomposition of matrices. More details
@@ -76,30 +77,28 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
                 for (int i = k; i < a.rows(); i++) {
                     s.set(k, k, hypot(s.get(k, k), 
-                    		a.get(i, k)));
+                          a.get(i, k)));
                 }
 
                 if (Math.abs(s.get(k, k)) > Matrices.EPS) {
 
                     if (a.get(k, k) < 0.0) {
-                        s.set(k, k, -s.get(k, k));
+                        s.update(k, k, Matrices.INV_FUNCTION);
                     }
 
                     for (int i = k; i < a.rows(); i++) {
-                        a.set(i, k, a.get(i, k) 
-                        		/ s.get(k, k));
+                        a.update(i, k, Matrices.asDivFunction(s.get(k, k)));
                     }
 
-                    a.set(k, k, a.get(k, k) + 1.0);
+                    a.update(k, k, Matrices.INC_FUNCTION);
                 }
 
-                s.set(k, k, -s.get(k, k));
+                s.update(k, k, Matrices.INV_FUNCTION);
             }
 
             for (int j = k + 1; j < a.columns(); j++) {
 
-                if ((k < nct) 
-                		& (Math.abs(s.get(k, k)) > Matrices.EPS)) {
+                if ((k < nct) & (Math.abs(s.get(k, k)) > Matrices.EPS)) {
 
                     double t = 0;
 
@@ -110,8 +109,8 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     t = -t / a.get(k, k);
 
                     for (int i = k; i < a.rows(); i++) {
-                        a.set(i, j, a.get(i, j) 
-                        		+ (t * a.get(i, k)));
+                        a.update(i, j, Matrices.asPlusFunction((t * 
+                                 a.get(i, k))));
                     }
                 }
 
@@ -138,15 +137,14 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
                     if (e.get(k + 1) < 0.0) {
 
-                        e.set(k, -e.get(k));
+                        e.update(k, Vectors.INV_FUNCTION);
                     }
 
                     for (int i = k + 1; i < a.columns(); i++) {
-
-                        e.set(i, e.get(i) / e.get(k));
+                        e.update(i, Vectors.asDivFunction(e.get(k)));
                     }
 
-                    e.set(k + 1, e.get(k + 1) + 1.0);
+                    e.update(k + 1, Vectors.INC_FUNCTION);
                 }
 
                 e.set(k, -e.get(k));
@@ -156,9 +154,8 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
                     for (int j = k + 1; j < a.columns(); j++) {
                         for (int i = k + 1; i < a.rows(); i++) {
-                            work.set(i, 
-                            		work.get(i) 
-                            		+ e.get(j) * a.get(i, j));
+                            work.update(i, Vectors.asPlusFunction(e.get(j) * 
+                                        a.get(i, j)));
                         }
                     }
 
@@ -167,8 +164,8 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                         double t = -e.get(j) / e.get(k + 1);
 
                         for (int i = k + 1; i < a.rows(); i++) {
-                            a.set(i, j, a.get(i, j) 
-                            		+ (t * work.get(i)));
+                            a.update(i, j, Matrices.asPlusFunction(t * 
+                                     work.get(i)));
                         }
                     }
                 }
@@ -218,16 +215,15 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     t = -t / u.get(k, k);
 
                     for (int i = k; i < a.rows(); i++) {
-                        u.set(i, j, u.get(i, j) 
-                        		+ (t * u.get(i, k)));
+                        u.update(i, j, Matrices.asPlusFunction(t * u.get(i, k)));
                     }
                 }
 
                 for (int i = k; i < a.rows(); i++) {
-                    u.set(i, k, -u.get(i, k));
+                    u.update(i, k, Matrices.INV_FUNCTION);
                 }
 
-                u.set(k, k, u.get(k, k) + 1.0);
+                u.update(k, k, Matrices.INC_FUNCTION);
 
                 for (int i = 0; i < k - 1; i++) {
                     u.set(i, k, 0.0);
@@ -258,8 +254,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     t = -t / v.get(k + 1, k);
 
                     for (int i = k + 1; i < a.columns(); i++) {
-                        v.set(i, j, v.get(i, j) 
-                        		+ (t * v.get(i, k)));
+                        v.update(i, j, Matrices.asPlusFunction(t * v.get(i, k)));
                     }
                 }
             }
@@ -446,15 +441,15 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     s.set(j, j, t);
                     f = cs * e.get(j) + sn * s.get(j + 1, j + 1);
                     s.set(j + 1, j + 1, 
-                    		-sn * e.get(j) 
-                    		+ cs * s.get(j + 1, j + 1));
+                            -sn * e.get(j) 
+                            + cs * s.get(j + 1, j + 1));
                     g = sn * e.get(j + 1);
-                    e.set(j + 1, cs * e.get(j + 1));
+                    e.update(j + 1, Vectors.asMulFunction(cs));
 
                     if (j < a.rows() - 1) {
                         for (int i = 0; i < a.rows(); i++) {
                             t = cs * u.get(i, j) 
-                            		+ sn * u.get(i, j + 1);
+                                    + sn * u.get(i, j + 1);
                             u.set(i, j + 1,
                                     -sn * u.get(i, j) 
                                     + cs * u.get(i, j + 1));
@@ -471,11 +466,9 @@ public class SingularValueDecompositor implements MatrixDecompositor {
             case 4: {
 
                 if (s.get(k, k) <= 0.0) {
-                    s.set(k, k, 
-                    		(s.get(k, k) < 0.0 ? -s.get(k, k) 
-                    								  : 0.0));
+                    s.set(k, k, s.get(k, k) < 0.0 ? -s.get(k, k) : 0.0);
                     for (int i = 0; i <= pp; i++) {
-                        v.set(i, k, -v.get(i, k));
+                        v.update(i,  k, Matrices.INV_FUNCTION);
                     }
                 }
 

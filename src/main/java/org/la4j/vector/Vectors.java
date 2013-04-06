@@ -79,6 +79,13 @@ public final class Vectors {
         }
     }
 
+    private static class InvVectorFunction implements VectorFunction {
+        @Override
+        public double evaluate(int i, double value) {
+            return -value;
+        }
+    }
+
     private static class PlusFunction implements VectorFunction {
 
         private double arg;
@@ -339,12 +346,17 @@ public final class Vectors {
     /**
      * Increases each element of vector by <code>1</code>.
      */
-    public static final VectorFunction INC_VECTOR = new IncVecorFunction();
+    public static final VectorFunction INC_FUNCTION = new IncVecorFunction();
 
     /**
      * Decreases each element of vectors by <code>1</code>.
      */
-    public static final VectorFunction DEC_VECTOR = new DecVectorFunction();
+    public static final VectorFunction DEC_FUNCTION = new DecVectorFunction();
+
+    /**
+     * Inverts each element of vector.
+     */
+    public static final VectorFunction INV_FUNCTION = new InvVectorFunction();
 
     /**
      * Creates a singleton 1-length vector from <code>value</code>.

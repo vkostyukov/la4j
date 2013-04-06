@@ -224,6 +224,14 @@ public final class Matrices {
         }
     }
 
+    private static class InvMatrixFunction 
+            implements MatrixFunction {
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return -value;
+        }
+    }
+
     private static class PlusMatrixFunction 
             implements MatrixFunction {
 
@@ -490,15 +498,20 @@ public final class Matrices {
     /**
      * Increases each element of matrix by <code>1</code>.
      */
-    public final static MatrixFunction INC_MATRIX = 
+    public final static MatrixFunction INC_FUNCTION = 
             new IncMatrixFunction();
 
     /**
      * Decreases each element of matrix by <code>1</code>.
      */
-    public final static MatrixFunction DEC_MATRIX = 
+    public final static MatrixFunction DEC_FUNCTION = 
             new DecMatrixFunction();
 
+    /**
+     * Inverts each element of matrix.  
+     */
+    public final static MatrixFunction INV_FUNCTION = 
+            new InvMatrixFunction();
     /**
      * The {@link Basic1DFactory} singleton instance.
      */

@@ -72,12 +72,10 @@ public class QRDecompositor implements MatrixDecompositor {
                 }
 
                 for (int i = k; i < qr.rows(); i++) {
-                    qr.set(i, k, qr.get(i, k) / norm);
+                    qr.update(i, k, Matrices.asDivFunction(norm));
                 }
 
-                // TODO: Issue 2 
-
-                qr.set(k, k, qr.get(k, k) + 1.0);
+                qr.update(k, k, Matrices.asPlusFunction(1.0));
 
                 for (int j = k + 1; j < qr.columns(); j++) {
 
@@ -90,8 +88,8 @@ public class QRDecompositor implements MatrixDecompositor {
                     summand = -summand / qr.get(k, k);
 
                     for (int i = k; i < qr.rows(); i++) {
-                        qr.set(i, j, qr.get(i, j) + summand 
-                                      * qr.get(i, k));
+                        qr.update(i, j, Matrices.asPlusFunction(summand * 
+                                  qr.get(i, k)));
                     }
                 }
             }
@@ -118,8 +116,8 @@ public class QRDecompositor implements MatrixDecompositor {
                     summand = -summand / qr.get(k, k);
 
                     for (int i = k; i < q.rows(); i++) {
-                        q.set(i, j, q.get(i, j) 
-                                     + (summand * qr.get(i, k)));
+                        q.update(i, j, Matrices.asPlusFunction(summand * 
+                                 qr.get(i, k)));
                     }
                 }
             }

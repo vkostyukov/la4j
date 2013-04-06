@@ -25,6 +25,7 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 
 /**
  * This class represents Eigen decomposition of matrices. More details
@@ -265,7 +266,7 @@ public class EigenDecompositor implements MatrixDecompositor {
                 }
 
                 hh = hh - ort.get(m) * g;
-                ort.set(m, ort.get(m) - g);
+                ort.update(m, Vectors.asMinusFunction(g));
 
                 // Apply Householder similarity transformation
                 // H = (I-u*u'/h)*H*(I-u*u')/h)
@@ -277,8 +278,8 @@ public class EigenDecompositor implements MatrixDecompositor {
                     }
                     f = f / hh;
                     for (int i = m; i <= high; i++) {
-                        h.set(i, j, h.get(i, j) 
-                                     -  (f * ort.get(i)));
+                        h.update(i, j, 
+                                 Matrices.asMinusFunction((f * ort.get(i))));
                     }
                 }
 
@@ -289,8 +290,8 @@ public class EigenDecompositor implements MatrixDecompositor {
                     }
                     f = f / hh;
                     for (int j = m; j <= high; j++) {
-                        h.set(i, j, h.get(i, j) 
-                                     - (f * ort.get(j)));
+                        h.update(i, j, 
+                                 Matrices.asMinusFunction((f * ort.get(j))));
                     }
                 }
                 ort.set(m, scale * ort.get(m));
@@ -313,7 +314,7 @@ public class EigenDecompositor implements MatrixDecompositor {
                     // Double division avoids possible underflow
                     g = (g / ort.get(m)) / h.get(m, m - 1);
                     for (int i = m; i <= high; i++) {
-                        v.set(i, j, v.get(i, j) + g * ort.get(i));
+                        v.update(i, j, Matrices.asPlusFunction(g * ort.get(i)));
                     }
                 }
             }
@@ -377,7 +378,7 @@ public class EigenDecompositor implements MatrixDecompositor {
             // One root found
 
             if (l == n) {
-                H.set(n, n, H.get(n, n) + exshift);
+                H.update(n, n, Matrices.asPlusFunction(exshift));
                 d.set(n, H.get(n, n));
                 e.set(n, 0.0);
                 n--;
@@ -390,8 +391,8 @@ public class EigenDecompositor implements MatrixDecompositor {
                 p = (H.get(n - 1, n - 1) - H.get(n, n)) / 2.0;
                 q = p * p + w;
                 z = Math.sqrt(Math.abs(q));
-                H.set(n, n, H.get(n, n) + exshift);
-                H.set(n - 1, n - 1, H.get(n - 1, n - 1) + exshift);
+                H.update(n, n, Matrices.asPlusFunction(exshift));
+                H.update(n - 1, n - 1, Matrices.asPlusFunction(exshift));
                 x = H.get(n, n);
 
                 // Real pair
@@ -471,7 +472,7 @@ public class EigenDecompositor implements MatrixDecompositor {
                 if (iter == 10) {
                     exshift += x;
                     for (int i = low; i <= n; i++) {
-                        H.set(i, i, H.get(i, i) - x);
+                        H.update(i, i, Matrices.asMinusFunction(x));
                     }
                     s = Math.abs(H.get(n, n - 1)) 
                         + Math.abs(H.get(n - 1, n - 2));
@@ -491,7 +492,7 @@ public class EigenDecompositor implements MatrixDecompositor {
                         }
                         s = x - w / ((y - x) / 2.0 + s);
                         for (int i = low; i <= n; i++) {
-                            H.set(i, i, H.get(i, i) - s);
+                            H.update(i, i, Matrices.asMinusFunction(s));
                         }
                         exshift += s;
                         x = y = w = 0.964;
@@ -558,7 +559,7 @@ public class EigenDecompositor implements MatrixDecompositor {
                         if (k != m) {
                             H.set(k, k - 1, -s * x);
                         } else if (l != m) {
-                            H.set(k, k - 1, -H.get(k, k - 1));
+                            H.update(k, k - 1, Matrices.INV_FUNCTION);
                         }
                         p = p + s;
                         x = p / s;
@@ -573,12 +574,11 @@ public class EigenDecompositor implements MatrixDecompositor {
                             p = H.get(k, j) + q * H.get(k + 1, j);
                             if (notlast) {
                                 p = p + r * H.get(k + 2, j);
-                                H.set(k + 2, j, H.get(k + 2, j) 
-                                             - p * z);
+                                H.update(k + 2, j, 
+                                         Matrices.asMinusFunction(p * z));
                             }
-                            H.set(k, j, H.get(k, j) - p * x);
-                            H.set(k + 1, j, H.get(k + 1, j) 
-                                         - p * y);
+                            H.update(k, j, Matrices.asMinusFunction(p  * x));
+                            H.update(k + 1, j, Matrices.asMinusFunction(p  * y));
                         }
 
                         // Column modification
@@ -588,12 +588,11 @@ public class EigenDecompositor implements MatrixDecompositor {
                                 * H.get(i, k + 1);
                             if (notlast) {
                                 p = p + z * H.get(i, k + 2);
-                                H.set(i, k + 2, H.get(i, k + 2)
-                                             - p * r);
+                                H.update(i, k + 2, 
+                                         Matrices.asMinusFunction(p *r));
                             }
-                            H.set(i, k, H.get(i, k) - p);
-                            H.set(i, k + 1, H.get(i, k + 1) 
-                                         - p * q);
+                            H.update(i, k, Matrices.asMinusFunction(p));
+                            H.update(i, k + 1, Matrices.asMinusFunction(p * q));
                         }
 
                         // Accumulate transformations
@@ -603,12 +602,11 @@ public class EigenDecompositor implements MatrixDecompositor {
                                 * V.get(i, k + 1);
                             if (notlast) {
                                 p = p + z * V.get(i, k + 2);
-                                V.set(i, k + 2, V.get(i, k + 2) 
-                                             - p * r);
+                                V.update(i, k + 2, 
+                                         Matrices.asMinusFunction(p * r));
                             }
-                            V.set(i, k, V.get(i, k) - p);
-                            V.set(i, k + 1, V.get(i, k + 1) 
-                                         - p * q);
+                            V.update(i, k, Matrices.asMinusFunction(p));
+                            V.update(i, k + 1, Matrices.asMinusFunction(p * q));
                         }
                     } // (s != 0)
                 } // k loop
@@ -669,7 +667,7 @@ public class EigenDecompositor implements MatrixDecompositor {
                         t = Math.abs(H.get(i, n));
                         if ((eps * t) * t > 1) {
                             for (int j = i; j <= n; j++) {
-                                H.set(j, n, H.get(j, n) / t);
+                                H.update(j, n, Matrices.asDivFunction(t));
                             }
                         }
                     }
@@ -757,9 +755,8 @@ public class EigenDecompositor implements MatrixDecompositor {
                                      Math.abs(H.get(i, n)));
                         if ((eps * t) * t > 1) {
                             for (int j = i; j <= n; j++) {
-                                H.set(j, n - 1, 
-                                             H.get(j, n - 1) / t);
-                                H.set(j, n, H.get(j, n) / t);
+                                H.update(j, n - 1, Matrices.asDivFunction(t));
+                                H.update(j, n, Matrices.asDivFunction(t));
                             }
                         }
                     }

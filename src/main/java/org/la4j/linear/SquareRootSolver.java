@@ -93,9 +93,7 @@ public class SquareRootSolver implements LinearSystemSolver {
                                * d.get(l, l);
                 }
 
-                s.set(i, j,
-                        (a.get(i, j) - summand) / (s.get(i, i) 
-                         * d.get(i, i)));
+                s.set(i, j, (a.get(i, j) - summand) / (s.get(i, i) * d.get(i, i)));
             }
 
             double zSummand = 0;

@@ -25,6 +25,7 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 
 /**
  * This class represents <a
@@ -85,11 +86,10 @@ public class SweepSolver implements LinearSystemSolver {
 
                 double c = a.get(j, i) / a.get(i, i);
                 for (int k = i; k < a.columns(); k++) {
-                    a.set(j, k, a.get(j, k) - a.get(i, k) 
-                                 * c);
+                    a.update(j, k, Matrices.asMinusFunction(a.get(i, k) * c));
                 }
 
-                b.set(j, b.get(j) - b.get(i) * c);
+                b.update(j, Vectors.asMinusFunction(b.get(i) * c));
             }
         }
 

@@ -61,8 +61,9 @@ public class JacobiSolver implements LinearSystemSolver {
 
         for (int i = 0; i < a.rows(); i++) {
             for (int j = 0; j < a.columns(); j++) {
-                if (i != j)
-                    a.set(i, j, a.get(i, j) / a.get(i, i));
+                if (i != j) {
+                    a.update(i, j, Matrices.asDivFunction(a.get(i, i)));
+                }
             }
         }
 
