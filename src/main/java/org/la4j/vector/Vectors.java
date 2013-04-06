@@ -196,105 +196,294 @@ public final class Vectors {
         }
     }
 
+    /**
+     * Creates a plus function with specified <code>value</code>. The function 
+     * evaluates like following: 
+     * <p>
+     * <center><code>something += value</code></center>
+     * </p>
+     * 
+     * @param value
+     * @return
+     */
     public static VectorFunction asPlusFunction(double value) {
         return new PlusFunction(value);
     }
 
+    /**
+     * Creates a minus function with specified <code>value</code>. The function 
+     * evaluates like following: 
+     * <p>
+     * <center><code>something -= value</code></center>
+     * </p> 
+     * 
+     * @param value
+     * @return
+     */
     public static VectorFunction asMinusFunction(double value) {
         return new MinusFunction(value);
     }
 
+    /**
+     * Creates a multiply function with specified <code>value</code>. The 
+     * function evaluates like following: 
+     * <p>
+     * <center><code>something *= value</code></center>
+     * </p>
+     * 
+     * @param value
+     * @return
+     */
     public static VectorFunction asMulFunction(double value) {
         return new MulFunction(value);
     }
 
+    /**
+     * Creates a divide function with specified <code>value</code>. The function 
+     * evaluates like following: 
+     * <p>
+     * <center><code>something /= value</code></center>
+     * </p>
+     * 
+     * @param value
+     * @return
+     */
     public static VectorFunction asDivFunction(double value) {
         return new DivFunction(value);
     }
 
+    /**
+     * Checks whether the vector is a
+     * <a href="http://mathworld.wolfram.com/ZeroMatrix.html">zero
+     * vector</a>.
+     */
     public static final VectorPredicate ZERO_VECTOR =
             new ZeroVectorPredicate();
 
+    /**
+     * Checks whether the vector is a 
+     * <a href="http://mathworld.wolfram.com/PositiveMatrix.html">positive 
+     * vector</a>.
+     */
     public static final VectorPredicate POSITIVE_VECTOR =
             new PositiveVectorPredicate();
 
+    /**
+     * Checks whether the vector is a 
+     * <a href="http://mathworld.wolfram.com/NegativeMatrix.html">negative 
+     * vector</a>.
+     */
     public static final VectorPredicate NEGATIVE_VECTOR = 
             new NegativeVectorPredicate();
 
+    /**
+     * The {@link Basic1DFactory} singleton instance.
+     */
     public static final Factory BASIC_FACTORY = new Basic1DFactory();
 
+    /**
+     * The {@link CRSFactory} singletone instance.
+     */
     public static final Factory COMPRESSED_FACTORY = new CRSFactory();
 
+    /**
+     * Safe version of {@link Vectors#BASIC_FACTORY}.
+     * 
+     * <p>
+     * The safe factory creates vectors that is wrapped with safe accessors 
+     * and modifiers. 
+     * </p>
+     */
     public static final Factory SAFE_BASIC_FACTORY = 
             new SafeFactory(BASIC_FACTORY);
 
+    /**
+     * Safe version of {@link Vectors#COMPRESSED_FACTORY}.
+     * 
+     * <p>
+     * The safe factory creates vectors that is wrapped with safe accessors 
+     * and modifiers. 
+     * </p>
+     */
     public static final Factory SAFE_COMPRESSED_FACTORY = 
             new SafeFactory(COMPRESSED_FACTORY);
 
+    /**
+     * Reference to the {@link Vectors#BASIC_FACTORY}.
+     */
     public static final Factory UNSAFE_BASIC_FACTORY = BASIC_FACTORY;
 
+    /**
+     * Reference to the {@link Vectors#COMPRESSED_FACTORY}.
+     */
     public static final Factory UNSAFE_COMPRESSED_FACTORY = COMPRESSED_FACTORY;
 
+    /**
+     * The default factory singleton instance. References the
+     * {@link Vectors#BASIC_FACTORY}.
+     */
     public static final Factory DEFAULT_FACTORY = BASIC_FACTORY;
 
+    /**
+     * The default dense factory singleton instance. References the
+     * {@link Vectors#BASIC_FACTORY}.
+     */
     public static final Factory DEFAULT_DENSE_FACTORY = BASIC_FACTORY;
 
+    /**
+     * The default sparse factory singleton instance. References the
+     * {@link Vectors#COMPRESSED_FACTORY}.
+     */
     public static final Factory DEFAULT_SPARSE_FACTORY = COMPRESSED_FACTORY;
 
+    /**
+     * Increases each element of vector by <code>1</code>.
+     */
     public static final VectorFunction INC_VECTOR = new IncVecorFunction();
 
+    /**
+     * Decreases each element of vectors by <code>1</code>.
+     */
     public static final VectorFunction DEC_VECTOR = new DecVectorFunction();
 
+    /**
+     * Creates a singleton 1-length vector from <code>value</code>.
+     * 
+     * @param value
+     * @return
+     */
     public static Vector asSingletonVector(double value) {
         return DEFAULT_FACTORY.createVector(new double[] { value });
     }
 
+    /**
+     * Wraps the <code>vector</code> with interface that provides safe accessors
+     * and modifiers.
+     * 
+     * @param vector
+     * @return
+     */
     public static Vector asSafeVector(Vector vector) {
         return vector.safe();
     }
 
+    /**
+     * Unwraps the safe <code>vector</code>.
+     * 
+     * @param vector
+     * @return
+     */
     public static Vector asUnsafeVector(Vector vector) {
         return vector.unsafe();
     }
 
+    /**
+     * Creates a safe vector source with specified <code>vector</code>.
+     * 
+     * @param vector
+     * @return
+     */
     public static VectorSource asSafeSource(Vector vector) {
         return new SafeVectorSource(vector);
     }
 
+    /**
+     * Creates a unsafe vector source with specified <code>vector</code>.
+     * 
+     * @param vector
+     * @return
+     */
     public static VectorSource asUnsafeSource(Vector vector) {
         return new UnsafeVectorSource(vector);
     }
 
+    /**
+     * Creates an array vector source with specified <code>array</code> 
+     * reference.
+     * 
+     * @param array
+     * @return
+     */
     public static VectorSource asArraySource(double[] array) {
         return new ArrayVectorSource(array);
     }
 
+    /**
+     * Creates a random vector source with specified <code>length</code>.
+     * 
+     * @param length
+     * @return
+     */
     public static VectorSource asRandomSource(int length) {
         return new RandomVectorSource(length);
     }
 
+    /**
+     * Creates a MatrixMarket stream source with specified input stream.
+     * 
+     * @param in
+     * @return
+     */
     public static VectorSource asMatrixMarketSource(InputStream in) {
         return new StreamVectorSource(new MatrixMarketStream(in));
     }
 
+    /**
+     * Creates a symbol separated stream source (like CSV) with specified
+     * input stream.
+     * 
+     * @param in
+     * @return
+     */
     public static VectorSource asSymbolSeparatedSource(InputStream in) {
         return new StreamVectorSource(new SymbolSeparatedStream(in));
     }
 
+    /**
+     * Creates a symbol separated stream source (like CSV) with specified
+     * input stream and <code>separator</code>.
+     * 
+     * @param in
+     * @param separator
+     * @return
+     */
     public static VectorSource asSymbolSeparatedSource(InputStream in, 
             String separator) {
 
         return new StreamVectorSource(new SymbolSeparatedStream(in, separator));
     }
 
+    /**
+     * Creates a sum vector accumulator, that calculates the sum of all 
+     * elements of vector.
+     * 
+     * @param neutral
+     * @return
+     */
     public static VectorAccumulator asSumAccumulator(double neutral) {
         return new SumVectorAccumulator(neutral);
     }
 
+    /**
+     * Creates a product vector accumulator, that calculates the product of all
+     * elements of vector.
+     * 
+     * @param neutral
+     * @return
+     */
     public static VectorAccumulator asProductAccumulator(double neutral) {
         return new ProductVectorAccumulator(neutral);
     }
 
+    /**
+     * Creates a sum function accumulator, that calculates the sum of all 
+     * elements of vector after applying a <code>function</code> to 
+     * each of them.
+     * 
+     * @param neutral
+     * @param function
+     * @return
+     */
     public static VectorAccumulator asSumFunctionAccumulator(double neutral, 
             VectorFunction function) {
 
@@ -302,6 +491,15 @@ public final class Vectors {
                                              function);
     }
 
+    /**
+     * Creates a produce function accumulator, that calculates the produce of
+     * all elements of matrix after applying a <code>function</code> to
+     * each of them.
+     * 
+     * @param neutral
+     * @param function
+     * @return
+     */
     public static VectorAccumulator asProductFunctionAccumulator(double neutral, 
             VectorFunction function) {
 

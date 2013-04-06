@@ -354,6 +354,7 @@ public final class Matrices {
      * <p>
      * <center><code>something += value</code></center>
      * </p>
+
      * @param value
      */
     public static MatrixFunction asPlusFunction(double value) {
@@ -375,8 +376,8 @@ public final class Matrices {
     }
 
     /**
-     * Creates a multiply function with specified <code>value</code>. The function 
-     * evaluates like following: 
+     * Creates a multiply function with specified <code>value</code>. The 
+     * function evaluates like following: 
      * <p>
      * <center><code>something *= value</code></center>
      * </p>
@@ -734,6 +735,7 @@ public final class Matrices {
 
     /**
      * Creates a unsafe matrix source with specified <code>matrix</code>.
+     * 
      * @param matrix
      * @return
      */
@@ -858,7 +860,7 @@ public final class Matrices {
 
     /**
      * Creates a sum function accumulator, that calculates the sum of all 
-     * elements of this matrix after applying a <code>function</code> to 
+     * elements of matrix after applying a <code>function</code> to 
      * each of them.
      * 
      * @param neutral
@@ -874,7 +876,7 @@ public final class Matrices {
 
     /**
      * Creates a produce function accumulator, that calculates the produce of
-     * all elements of this matrix after applying a <code>function</code> to
+     * all elements of matrix after applying a <code>function</code> to
      * each of them.
      * 
      * @param neutral
