@@ -29,6 +29,7 @@ import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
@@ -126,38 +127,17 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
                 // TODO: Issue 14
                 // clear the value cell if the value is 0
+//                if (value < Matrices.EPS) {
+//                    remove(ii);
+//                    return;
+//                }
 
                 values[ii] = value;
                 return;
             }
         }
 
-        if (Math.abs(value) < Matrices.EPS) {
-            return;
-        }
-
-        if (values.length < cardinality + 1) {
-            growup();
-        }
-
-        int position = rowPointers[i];
-        while (position < rowPointers[i + 1] && j >= columnIndices[position]) {
-            position++;
-        }
-
-        for (int k = cardinality; k > position; k--) {
-            values[k] = values[k - 1];
-            columnIndices[k] = columnIndices[k - 1];
-        }
-
-        values[position] = value;
-        columnIndices[position] = j;
-
-        for (int k = i + 1; k < rows + 1; k++) {
-            rowPointers[k]++;
-        }
-
-        cardinality++;
+        insert(i, j, value);
     }
 
     @Override
@@ -445,6 +425,29 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     @Override
+    public void update(int i, int j, MatrixFunction function) {
+
+        for (int ii = rowPointers[i]; ii < rowPointers[i + 1]; ii++) {
+            if (columnIndices[ii] == j) {
+
+                // TODO: Issue 14
+                // clear the value cell if the value is 0
+                double value = function.evaluate(i, j, values[ii]); 
+
+//                if (value < Matrices.EPS) {
+//                    remove(ii);
+//                    return;
+//                }
+
+                values[ii] = value;
+                return;
+            }
+        }
+
+        insert(i, j, function.evaluate(i, j, 0));
+    }
+
+    @Override
     public void writeExternal(ObjectOutput out) throws IOException {
 
         out.writeInt(rows);
@@ -482,6 +485,36 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             values[k] = in.readDouble();
             rowPointers[i + 1] = k + 1;
         }
+    }
+
+    private void insert(int i, int j, double value) {
+
+        if (Math.abs(value) < Matrices.EPS) {
+            return;
+        }
+
+        if (values.length < cardinality + 1) {
+            growup();
+        }
+
+        int position = rowPointers[i];
+        while (position < rowPointers[i + 1] && j >= columnIndices[position]) {
+            position++;
+        }
+
+        for (int k = cardinality; k > position; k--) {
+            values[k] = values[k - 1];
+            columnIndices[k] = columnIndices[k - 1];
+        }
+
+        values[position] = value;
+        columnIndices[position] = j;
+
+        for (int k = i + 1; k < rows + 1; k++) {
+            rowPointers[k]++;
+        }
+
+        cardinality++;
     }
 
     private void growup() {

@@ -28,6 +28,7 @@ import java.io.ObjectOutput;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
+import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.source.VectorSource;
 
@@ -113,26 +114,13 @@ public class CompressedVector extends AbstractVector implements SparseVector {
                     values[k] = value;
                     return;
                 } else {
-                    cardinality--;
-                    for (int kk = k; kk < cardinality; kk++) {
-                        values[kk] = values[kk + 1];
-                        indices[kk] = indices[kk + 1];
-                    }
+                    remove(k);
+                    return;
                 }
             }
         }
 
-        if (Math.abs(value) < Vectors.EPS) {
-            return;
-        }
-
-        if (values.length <= cardinality + 1) {
-            growup();
-        }
-
-        values[cardinality] = value;
-        indices[cardinality] = i;
-        cardinality++;
+        insert(i, value);
     }
 
     @Override
@@ -216,6 +204,27 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     @Override
+    public void update(int i, VectorFunction function) {
+
+        for (int k = 0; k < cardinality; k++) {
+            if (indices[k] == i) {
+
+                double value = function.evaluate(i, values[k]); 
+
+                if (Math.abs(value) > Vectors.EPS) {
+                    values[k] = value;
+                    return;
+                } else {
+                    remove(k);
+                    return;
+                }
+            }
+        }
+
+        insert(i, function.evaluate(i, function.evaluate(i, 0)));
+    }
+
+    @Override
     public Vector safe() {
         return new SparseSafeVector(this);
     }
@@ -247,6 +256,31 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         for (int i = 0; i < cardinality; i++) {
             indices[i] = in.readInt();
             values[i] = in.readDouble();
+        }
+    }
+
+    private void insert(int i, double value) {
+
+        if (Math.abs(value) < Vectors.EPS) {
+            return;
+        }
+
+        if (values.length <= cardinality + 1) {
+            growup();
+        }
+
+        values[cardinality] = value;
+        indices[cardinality] = i;
+        cardinality++;
+    }
+
+    private void remove(int k) {
+
+        cardinality--;
+
+        for (int kk = k; kk < cardinality; kk++) {
+            values[kk] = values[kk + 1];
+            indices[kk] = indices[kk + 1];
         }
     }
 

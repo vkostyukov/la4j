@@ -28,6 +28,7 @@ import java.io.ObjectOutput;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
@@ -127,37 +128,17 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                 // TODO: Issue 14
                 // clear the value cell if the value is 0
 
+//                if (value < Matrices.EPS) {
+//                    remove(jj);
+//                    return;
+//                }
+
                 values[jj] = value;
                 return;
             }
         }
 
-        if (Math.abs(value) < Matrices.EPS) {
-            return;
-        }
-
-        if (values.length < cardinality + 1) {
-            growup();
-        }
-
-        int position = columnPointers[j];
-        while (position < columnPointers[j + 1] && j >= rowIndices[position]) {
-            position++;
-        }
-
-        for (int k = cardinality; k > position; k--) {
-            values[k] = values[k - 1];
-            rowIndices[k] = rowIndices[k - 1];
-        }
-
-        values[position] = value;
-        rowIndices[position] = i;
-
-        for (int k = j + 1; k < columns + 1; k++) {
-            columnPointers[k]++;
-        }
-
-        cardinality++;
+        insert(i, j, value);
     }
 
     @Override
@@ -298,6 +279,41 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     @Override
+    public void each(MatrixProcedure procedure) {
+        int k = 0, j = 0;
+        while (k < cardinality) {
+            for (int i = columnPointers[j]; i < columnPointers[j + 1]; 
+                 i++, k++) {
+
+                procedure.apply(rowIndices[i], j, values[i]);
+            }
+            j++;
+        }
+    }
+
+    @Override
+    public void update(int i, int j, MatrixFunction function) {
+
+        for (int jj = columnPointers[j]; jj < columnPointers[j + 1]; jj++) {
+            if (rowIndices[jj] == i) {
+
+                // TODO: Issue 14
+                // clear the value cell if the value is 0
+
+//                if (value < Matrices.EPS) {
+//                    remove(jj);
+//                    return;
+//                }
+
+                values[jj] = function.evaluate(i, j, values[jj]);
+                return;
+            }
+        }
+
+        insert(i, j, function.evaluate(i, j, 0));
+    }
+
+    @Override
     public void readExternal(ObjectInput in) throws IOException,
                 ClassNotFoundException {
 
@@ -339,17 +355,34 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
     }
 
-    @Override
-    public void each(MatrixProcedure procedure) {
-        int k = 0, j = 0;
-        while (k < cardinality) {
-            for (int i = columnPointers[j]; i < columnPointers[j + 1]; 
-                 i++, k++) {
+    private void insert(int i, int j, double value) {
 
-                procedure.apply(rowIndices[i], j, values[i]);
-            }
-            j++;
+        if (Math.abs(value) < Matrices.EPS) {
+            return;
         }
+
+        if (values.length < cardinality + 1) {
+            growup();
+        }
+
+        int position = columnPointers[j];
+        while (position < columnPointers[j + 1] && j >= rowIndices[position]) {
+            position++;
+        }
+
+        for (int k = cardinality; k > position; k--) {
+            values[k] = values[k - 1];
+            rowIndices[k] = rowIndices[k - 1];
+        }
+
+        values[position] = value;
+        rowIndices[position] = i;
+
+        for (int k = j + 1; k < columns + 1; k++) {
+            columnPointers[k]++;
+        }
+
+        cardinality++;
     }
 
     private void growup() {
