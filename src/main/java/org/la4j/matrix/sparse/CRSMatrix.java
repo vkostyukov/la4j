@@ -125,7 +125,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         for (int ii = rowPointers[i]; ii < rowPointers[i + 1]; ii++) {
             if (columnIndices[ii] == j) {
 
-                if (value < Matrices.EPS) {
+                if (Math.abs(value) < Matrices.EPS) {
                     remove(i, ii);
                     return;
                 } else {
@@ -430,7 +430,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
                 double value = function.evaluate(i, j, values[ii]); 
 
-                if (value < Matrices.EPS) {
+                if (Math.abs(value) < Matrices.EPS) {
                     remove(i, ii);
                     return;
                 } else {
@@ -517,7 +517,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
         cardinality--;
 
-        for (int kk = k; kk < cardinality; k++) {
+        for (int kk = k; kk < cardinality; kk++) {
             values[kk] = values[kk + 1];
             columnIndices[kk] = columnIndices[kk + 1];
         }
