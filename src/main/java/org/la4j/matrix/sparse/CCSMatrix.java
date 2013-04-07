@@ -125,16 +125,13 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         for (int jj = columnPointers[j]; jj < columnPointers[j + 1]; jj++) {
             if (rowIndices[jj] == i) {
 
-                // TODO: Issue 14
-                // clear the value cell if the value is 0
-
-//                if (value < Matrices.EPS) {
-//                    remove(jj);
-//                    return;
-//                }
-
-                values[jj] = value;
-                return;
+                if (value < Matrices.EPS) {
+                    remove(j, jj);
+                    return;
+                } else {
+                    values[jj] = value;
+                    return;
+                }
             }
         }
 
@@ -297,16 +294,15 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         for (int jj = columnPointers[j]; jj < columnPointers[j + 1]; jj++) {
             if (rowIndices[jj] == i) {
 
-                // TODO: Issue 14
-                // clear the value cell if the value is 0
+                double value = function.evaluate(i, j, values[jj]); 
 
-//                if (value < Matrices.EPS) {
-//                    remove(jj);
-//                    return;
-//                }
-
-                values[jj] = function.evaluate(i, j, values[jj]);
-                return;
+                if (value < Matrices.EPS) {
+                    remove(j, jj);
+                    return;
+                } else {
+                    values[jj] = value;
+                    return;
+                }
             }
         }
 
@@ -383,6 +379,20 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
 
         cardinality++;
+    }
+
+    private void remove(int j, int k) {
+
+        cardinality--;
+
+        for (int kk = k; kk < cardinality; k++) {
+            values[kk] = values[kk + 1];
+            rowIndices[kk] = rowIndices[kk + 1];
+        }
+
+        for (int jj = j + 1; jj < columns + 1; jj++) {
+            columnPointers[jj]--;
+        }
     }
 
     private void growup() {

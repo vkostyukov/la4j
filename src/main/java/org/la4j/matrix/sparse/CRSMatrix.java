@@ -125,15 +125,13 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         for (int ii = rowPointers[i]; ii < rowPointers[i + 1]; ii++) {
             if (columnIndices[ii] == j) {
 
-                // TODO: Issue 14
-                // clear the value cell if the value is 0
-//                if (value < Matrices.EPS) {
-//                    remove(ii);
-//                    return;
-//                }
-
-                values[ii] = value;
-                return;
+                if (value < Matrices.EPS) {
+                    remove(i, ii);
+                    return;
+                } else {
+                    values[ii] = value;
+                    return;
+                }
             }
         }
 
@@ -430,17 +428,15 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         for (int ii = rowPointers[i]; ii < rowPointers[i + 1]; ii++) {
             if (columnIndices[ii] == j) {
 
-                // TODO: Issue 14
-                // clear the value cell if the value is 0
                 double value = function.evaluate(i, j, values[ii]); 
 
-//                if (value < Matrices.EPS) {
-//                    remove(ii);
-//                    return;
-//                }
-
-                values[ii] = value;
-                return;
+                if (value < Matrices.EPS) {
+                    remove(i, ii);
+                    return;
+                } else {
+                    values[ii] = value;
+                    return;
+                }
             }
         }
 
@@ -515,6 +511,20 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
 
         cardinality++;
+    }
+
+    private void remove(int i, int k) {
+
+        cardinality--;
+
+        for (int kk = k; kk < cardinality; k++) {
+            values[kk] = values[kk + 1];
+            columnIndices[kk] = columnIndices[kk + 1];
+        }
+
+        for (int ii = i + 1; ii < rows + 1; ii++) {
+            rowPointers[ii]--;
+        }
     }
 
     private void growup() {
