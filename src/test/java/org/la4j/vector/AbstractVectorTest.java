@@ -60,6 +60,28 @@ public abstract class AbstractVectorTest extends TestCase {
         assertEquals(c, a);
     }
 
+    public void testSlice() {
+
+        Vector a = factory().createVector(
+                new double[] { 1.0, 2.0, 3.0, 4.0, 5,0 }
+        );
+
+
+        Vector b = factory().createVector(
+                new double[] { 2.0, 3.0 }
+        );
+
+        Vector c = factory().createVector(
+                new double[] { 3.0, 4.0, 5.0 }
+        );
+
+        Vector d = a.slice(1, 3);
+        assertEquals(b, d);
+
+        Vector e = a.slice(2, 5);
+        assertEquals(c, e);
+    }
+
     public void testSwap() {
 
         Vector a = factory().createVector(

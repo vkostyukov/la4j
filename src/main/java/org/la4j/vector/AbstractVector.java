@@ -256,6 +256,24 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public Vector slice(int from, int until) {
+        return slice(from, until, factory);
+    }
+
+    @Override
+    public Vector slice(int from, int until, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+
+        Vector result = factory.createVector(until - from);
+
+        for (int i = from; i < until; i++) {
+            result.set(i - from, get(i));
+        }
+
+        return result;
+    }
+
+    @Override
     public Factory factory() {
         return factory;
     }

@@ -248,6 +248,24 @@ public interface Vector extends Externalizable {
     Vector resize(int length, Factory factory);
 
     /**
+     * Slices this vector to given interval [from; until).
+     * 
+     * @param from
+     * @param until
+     * @return
+     */
+    Vector slice(int from, int until);
+
+    /**
+     * Slices this vector to given interval [from; until).
+     * 
+     * @param from
+     * @param until
+     * @return
+     */
+    Vector slice(int from, int until, Factory factory);
+
+    /**
      * 
      * @return
      */

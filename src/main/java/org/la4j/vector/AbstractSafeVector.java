@@ -185,12 +185,22 @@ public abstract class AbstractSafeVector implements Vector {
 
     @Override
     public Vector resize(int length) {
-        return self.resize(length);
+        return self.resize(length, factory);
     }
 
     @Override
     public Vector resize(int length, Factory factory) {
         return self.resize(length, factory);
+    }
+
+    @Override
+    public Vector slice(int from, int until) {
+        return self.slice(from, until, factory);
+    }
+
+    @Override
+    public Vector slice(int from, int until, Factory factory) {
+        return self.slice(from, until, factory);
     }
 
     @Override
