@@ -194,6 +194,26 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
+    public Vector sliceLeft(int until) {
+        return self.sliceLeft(until, factory);
+    }
+
+    @Override
+    public Vector sliceLeft(int until, Factory factory) {
+        return self.sliceLeft(until, factory);
+    }
+
+    @Override
+    public Vector sliceRight(int from) {
+        return self.sliceRight(from, factory);
+    }
+
+    @Override
+    public Vector sliceRight(int from, Factory factory) {
+        return self.sliceRight(from, factory);
+    }
+
+    @Override
     public Vector slice(int from, int until) {
         return self.slice(from, until, factory);
     }

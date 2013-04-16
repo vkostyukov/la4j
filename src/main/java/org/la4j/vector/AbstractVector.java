@@ -256,6 +256,26 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public Vector sliceLeft(int until) {
+        return slice(0, until, factory);
+    }
+
+    @Override
+    public Vector sliceLeft(int until, Factory factory) {
+        return slice(0, until, factory);
+    }
+
+    @Override
+    public Vector sliceRight(int from) {
+        return slice(from, length, factory);
+    }
+
+    @Override
+    public Vector sliceRight(int from, Factory factory) {
+        return slice(from, length, factory);
+    }
+
+    @Override
     public Vector slice(int from, int until) {
         return slice(from, until, factory);
     }

@@ -267,6 +267,34 @@ public interface Vector extends Externalizable {
 
     /**
      * 
+     * @param until
+     * @return
+     */
+    Vector sliceLeft(int until);
+
+    /**
+     * 
+     * @param until
+     * @return
+     */
+    Vector sliceLeft(int until, Factory factory);
+
+    /**
+     * 
+     * @param from
+     * @return
+     */
+    Vector sliceRight(int from); 
+
+    /**
+     * 
+     * @param from
+     * @return
+     */
+    Vector sliceRight(int from, Factory factory); 
+
+    /**
+     * 
      * @return
      */
     Factory factory();
