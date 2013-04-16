@@ -473,6 +473,55 @@ public interface Matrix extends Externalizable {
     Matrix resizeColumns(int columns, Factory factory);
 
     /**
+     * 
+     * 
+     * @param fromRow
+     * @return
+     */
+    Matrix slice(int fromRow, int fromColumn, int untilRow, int untilColumn);
+
+    /**
+     * 
+     * 
+     * @param fromRow
+     * @return
+     */
+    Matrix slice(int fromRow, int fromColumn, int untilRow, int untilColumn, 
+                 Factory factory);
+
+    /**
+     * 
+     * @param untilRow
+     * @param untilColumn
+     * @return
+     */
+    Matrix sliceTopLeft(int untilRow, int untilColumn);
+
+    /**
+     * 
+     * @param untilRow
+     * @param untilColumn
+     * @return
+     */
+    Matrix sliceTopLeft(int untilRow, int untilColumn, Factory factory);
+
+    /**
+     * 
+     * @param fromRow
+     * @param fromColumn
+     * @return
+     */
+    Matrix sliceBottomRight(int fromRow, int fromColumn);
+
+    /**
+     * 
+     * @param fromRow
+     * @param fromColumn
+     * @return
+     */
+    Matrix sliceBottomRight(int fromRow, int fromColumn, Factory factory);
+
+    /**
      * Returns the factory associated with this matrix.
      * 
      * @return factory

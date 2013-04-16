@@ -166,6 +166,24 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(c, a);
     }
 
+    public void testSlice_4x4_to_2x2() {
+
+        Matrix a = factory().createMatrix(new double[][] { 
+                { 1.0, 0.0, 0.0, 0.0 },
+                { 0.0, 5.0, 0.0, 0.0 }, 
+                { 0.0, 0.0, 9.0, 0.0 },
+                { 0.0, 0.0, 0.0, 15.0 } 
+        });
+
+        Matrix b = factory().createMatrix(new double[][] { 
+                { 5.0, 0.0 },
+                { 0.0, 9.0 } 
+        });
+
+        Matrix c = a.slice(1, 1, 3, 3);
+        assertEquals(b, c);
+    }
+
     public void testSwap_3x3() {
 
         Matrix a = factory().createMatrix(new double[][] { 

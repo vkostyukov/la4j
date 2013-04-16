@@ -324,6 +324,40 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public Matrix slice(int fromRow, int fromColumn, int untilRow, 
+            int untilColumn) {
+
+        return self.slice(fromRow, fromColumn, untilRow, untilColumn, factory);
+    }
+
+    @Override
+    public Matrix slice(int fromRow, int fromColumn, int untilRow,
+            int untilColumn, Factory factory) {
+
+        return self.slice(fromRow, fromColumn, untilRow, untilColumn, factory);
+    }
+
+    @Override
+    public Matrix sliceTopLeft(int untilRow, int untilColumn) {
+        return self.sliceTopLeft(untilRow, untilColumn, factory);
+    }
+
+    @Override
+    public Matrix sliceTopLeft(int untilRow, int untilColumn, Factory factory) {
+        return self.sliceTopLeft(untilRow, untilColumn, factory);
+    }
+
+    @Override
+    public Matrix sliceBottomRight(int fromRow, int fromColumn) {
+        return self.sliceBottomRight(fromRow, fromColumn, factory);
+    }
+
+    @Override
+    public Matrix sliceBottomRight(int fromRow, int fromColumn, Factory fac) {
+        return self.sliceBottomRight(fromRow, fromColumn, factory);
+    }
+
+    @Override
     public Factory factory() {
         return factory;
     }

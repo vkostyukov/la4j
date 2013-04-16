@@ -601,6 +601,51 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public Matrix slice(int fromRow, int fromColumn, int untilRow,
+            int untilColumn) {
+
+        return slice(fromRow, fromColumn, untilRow, untilColumn, factory);
+    }
+
+    @Override
+    public Matrix slice(int fromRow, int fromColumn, int untilRow,
+            int untilColumn, Factory factory) {
+
+        ensureFactoryIsNotNull(factory);
+
+        Matrix result = factory.createMatrix(untilRow - fromRow, 
+                                             untilColumn - fromColumn);
+
+        for (int i = fromRow; i < untilRow; i++) {
+            for (int j = fromColumn; j < untilColumn; j++) {
+                result.set(i - fromRow, j - fromColumn, get(i, j));
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public Matrix sliceTopLeft(int untilRow, int untilColumn) {
+        return slice(0, 0, untilRow, untilColumn, factory);
+    }
+
+    @Override
+    public Matrix sliceTopLeft(int untilRow, int untilColumn, Factory factory) {
+        return slice(0, 0, untilRow, untilColumn, factory);
+    }
+
+    @Override
+    public Matrix sliceBottomRight(int fromRow, int fromColumn) {
+        return slice(fromRow, fromColumn, rows, columns, factory);
+    }
+
+    @Override
+    public Matrix sliceBottomRight(int fromRow, int fromColumn, Factory fac) {
+        return slice(fromRow, fromColumn, rows, columns, factory);
+    }
+
+    @Override
     public Factory factory() {
         return factory;
     }
