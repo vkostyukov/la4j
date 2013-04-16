@@ -121,8 +121,7 @@ public class SymbolSeparatedStream extends AbstractStream
                 line = reader.readLine(), rows++) {
 
             if (rows == matrix.rows()) {
-                matrix = matrix.resize((matrix.rows() * 3) / 2  + 1, 
-                                       matrix.columns());
+                matrix = matrix.resizeRows((matrix.rows() * 3) / 2  + 1);
             }
 
             StringTokenizer tokenizer = new StringTokenizer(line, separator);
@@ -130,8 +129,7 @@ public class SymbolSeparatedStream extends AbstractStream
             int j = 0;
             while (tokenizer.hasMoreTokens()) {
                 if (j == matrix.columns()) {
-                    matrix = matrix.resize(matrix.rows(), 
-                                           (matrix.columns() * 3) / 2 + 1);
+                    matrix = matrix.resizeColumns((matrix.columns() * 3) / 2 + 1);
                 }
                 double value = Double.valueOf(tokenizer.nextToken());
                 matrix.set(rows, j++, value);

@@ -441,6 +441,38 @@ public interface Matrix extends Externalizable {
     Matrix resize(int rows, int columns, Factory factory);
 
     /**
+     * Resizes this matrix to new rows size.
+     * 
+     * @param rows
+     * @return
+     */
+    Matrix resizeRows(int rows);
+
+    /**
+     * Resizes this matrix to new rows size.
+     * 
+     * @param rows
+     * @return
+     */
+    Matrix resizeRows(int rows, Factory factory);
+
+    /**
+     * Resizes this matrix to new columns size.
+     * 
+     * @param columns
+     * @return
+     */
+    Matrix resizeColumns(int columns);
+
+    /**
+     * Resizes this matrix to new columns size.
+     * 
+     * @param columns
+     * @return
+     */
+    Matrix resizeColumns(int columns, Factory factory);
+
+    /**
      * Returns the factory associated with this matrix.
      * 
      * @return factory

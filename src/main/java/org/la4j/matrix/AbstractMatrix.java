@@ -566,6 +566,26 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public Matrix resizeRows(int rows) {
+        return resize(rows, columns, factory);
+    }
+
+    @Override
+    public Matrix resizeRows(int rows, Factory factory) {
+        return resize(rows, columns, factory);
+    }
+
+    @Override
+    public Matrix resizeColumns(int columns) {
+        return resize(rows, columns, factory);
+    }
+
+    @Override
+    public Matrix resizeColumns(int columns, Factory factory) {
+        return resize(rows, columns, factory);
+    }
+
+    @Override
     public Matrix resize(int rows, int columns, Factory factory) {
         ensureFactoryIsNotNull(factory);
 

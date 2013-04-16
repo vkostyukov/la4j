@@ -51,10 +51,9 @@ public class GaussianSolver implements LinearSystemSolver {
     @Override
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
-        int rows = linearSystem.equations();
         int columns = linearSystem.variables();
 
-        Matrix a = linearSystem.coefficientsMatrix().resize(rows, columns + 1);
+        Matrix a = linearSystem.coefficientsMatrix().resizeColumns(columns + 1);
         Vector b = linearSystem.rightHandVector().copy();
 
         a.setColumn(columns, b);

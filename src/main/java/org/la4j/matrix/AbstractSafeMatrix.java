@@ -295,12 +295,32 @@ public abstract class AbstractSafeMatrix implements Matrix {
 
     @Override
     public Matrix resize(int rows, int columns) {
-        return self.resize(rows, columns);
+        return self.resize(rows, columns, factory);
     }
 
     @Override
     public Matrix resize(int rows, int columns, Factory factory) {
         return self.resize(rows, columns, factory);
+    }
+
+    @Override
+    public Matrix resizeRows(int rows) {
+        return self.resizeRows(rows, factory);
+    }
+
+    @Override
+    public Matrix resizeRows(int rows, Factory factory) {
+        return self.resizeRows(rows, factory);
+    }
+
+    @Override
+    public Matrix resizeColumns(int columns) {
+        return self.resizeColumns(columns, factory);
+    }
+
+    @Override
+    public Matrix resizeColumns(int columns, Factory factory) {
+        return self.resizeColumns(columns, factory);
     }
 
     @Override
