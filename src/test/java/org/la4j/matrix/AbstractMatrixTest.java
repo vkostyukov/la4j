@@ -601,6 +601,27 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(b, c);
     }
 
+    public void testKronecker() {
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 0.0, 3.0 },
+                { 0.0, 5.0, 0.0 }
+        });
+
+        Matrix b = factory().createMatrix(new double[][] {
+                { 10.0, 0.0 },
+                { 0.0, 20.0 }
+        });
+
+        Matrix c = factory().createMatrix(new double[][] {
+                { 10.0, 0.0, 0.0, 0.0, 30.0, 0.0 },
+                { 0.0, 20.0, 0.0, 0.0, 0.0, 60.0 },
+                { 0.0, 0.0, 50.0, 0.0, 0.0, 0.0 },
+                { 00.0, 0.0, 0.0, 100.0, 0.0, 0.0 }
+        });
+
+        assertEquals(c, a.kronecker(b));
+    }
+
     public void testTrace() {
 
         double array[][] = new double[][] {

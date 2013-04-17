@@ -182,6 +182,16 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public Matrix kronecker(Matrix matrix) {
+        return self.kronecker(matrix, factory);
+    }
+
+    @Override
+    public Matrix kronecker(Matrix matrix, Factory factory) {
+        return self.kronecker(matrix, factory);
+    }
+
+    @Override
     public double trace() {
         return self.trace();
     }

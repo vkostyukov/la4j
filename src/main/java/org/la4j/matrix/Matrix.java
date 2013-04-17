@@ -265,6 +265,22 @@ public interface Matrix extends Externalizable {
     Matrix div(double value, Factory factory);
 
     /**
+     * Calculates the Kronecker product.
+     * 
+     * @param matrix
+     * @return
+     */
+    Matrix kronecker(Matrix matrix);
+
+    /**
+     * Calculates the Kronecker product.
+     * 
+     * @param matrix
+     * @return
+     */
+    Matrix kronecker(Matrix matrix, Factory factory);
+
+    /**
      * Returns the "trace" of this matrix.
      * <p>
      * See <a href="http://mathworld.wolfram.com/MatrixTrace.html">
