@@ -26,6 +26,13 @@ la4j-0.4.0 ```DEV. Planing to release at: Jun 2013```
  * fixed bug in ```MatrixMatketStream``` (contributed by Alessio Placitelli);
  * added ```update()``` method (as compound operator replacement);
  * matrices are unsafe by default (new method pair - ```safe()/unsafe()```);
+ * matrices and vectors support `slice()` method;
+ * support of `kronecker()` product;
+ * support map-reduce approach by method pair `transform()`/`fold()`;
+ * new matrices and vectors sources that handles IO streams;
+ * support of building a constant matrix in factories;
+ * matrices and vectors are immutable in terms of dimension;
+ * sparse entities are self-clearing now;
 
 la4j-0.3.0 <code>Dec 2012</code>
  * la4j got new API and new package naming (starting with "org.la4j.*")
