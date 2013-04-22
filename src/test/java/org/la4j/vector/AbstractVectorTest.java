@@ -63,7 +63,7 @@ public abstract class AbstractVectorTest extends TestCase {
     public void testSlice() {
 
         Vector a = factory().createVector(
-                new double[] { 1.0, 2.0, 3.0, 4.0, 5,0 }
+                new double[] { 1.0, 2.0, 3.0, 4.0, 5.0 }
         );
 
 

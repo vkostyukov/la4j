@@ -82,6 +82,7 @@ public class CCSFactory extends CompressedFactory implements Factory {
 
     @Override
     public Matrix createRandomMatrix(int rows, int columns) {
+
         Random random = new Random();
 
         int cardinality = (rows * columns) / DENSITY;

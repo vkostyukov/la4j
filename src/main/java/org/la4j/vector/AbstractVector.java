@@ -46,6 +46,13 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public void swap(int i, int j) {
+        double s = get(i);
+        set(i, get(j));
+        set(j, s);
+    }
+
+    @Override
     public void assign(double value) {
         for (int i = 0; i < length; i++) {
             set(i, value);

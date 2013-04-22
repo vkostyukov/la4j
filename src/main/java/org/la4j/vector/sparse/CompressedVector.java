@@ -96,10 +96,10 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     @Override
     public double get(int i) {
 
-        for (int k = 0; k < cardinality; k++) {
-            if (indices[k] == i) {
-                return values[k];
-            }
+        int k = searchForIndex(i, 0, cardinality);
+
+        if (k < cardinality && indices[k] == i) {
+            return values[k];
         }
 
         return 0.0;
@@ -108,19 +108,54 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     @Override
     public void set(int i, double value) {
 
-        for (int k = 0; k < cardinality; k++) {
-            if (indices[k] == i) {
-                if (Math.abs(value) > Vectors.EPS) {
-                    values[k] = value;
-                    return;
-                } else {
-                    remove(k);
-                    return;
-                }
+        int k = searchForIndex(i, 0, cardinality);
+
+        if (k < cardinality && indices[k] == i) {
+            if (Math.abs(value) > Vectors.EPS) {
+                values[k] = value;
+            } else {
+                remove(k);
             }
+        } else {
+            insert(k, i, value);
+        }
+    }
+
+    @Override
+    public void swap(int i, int j) {
+
+        if (i == j) {
+            return;
         }
 
-        insert(i, value);
+        int ii = searchForIndex(i, 0, cardinality);
+        int jj = searchForIndex(j, 0, cardinality);
+
+        if ((ii < cardinality && i == indices[ii]) 
+            && (jj < cardinality && j == indices[jj])) {
+
+            double sd = values[ii];
+            values[ii] = values[jj];
+            values[jj] = sd;
+
+        } else if (ii < cardinality && i == indices[ii]) {
+
+            // TODO: write bare-metal code here
+
+            double sd = values[ii]; 
+
+            remove(ii);
+            insert(jj, j, sd);
+
+        } else if (jj < cardinality && j == indices[jj]) {
+
+            // TODO: write bare-metal code here
+
+            double sd = values[jj]; 
+
+            remove(jj);
+            insert(ii, i, sd);
+        }
     }
 
     @Override
@@ -131,45 +166,6 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     @Override
     public double density() {
         return cardinality / length;
-    }
-
-    @Override
-    public void swap(int i, int j) {
-
-        if (i == j) {
-            return;
-        }
-
-        int ii = -1, jj = -1;
-
-        for (int k = 0; (ii == -1 || jj == -1) && k < cardinality; k++) {
-
-            if (ii == -1 && indices[k] == i) {
-                ii = k;
-            }
-
-            if (jj == -1 && indices[k] == j) {
-                jj = k;
-            }
-        }
-
-        if (ii == -1 && jj == -1) {
-            return;
-        }
-
-        if (ii == -1) {
-            indices[jj] = i;
-            return;
-        }
-
-        if (jj == -1) {
-            indices[ii] = j;
-            return;
-        }
-
-        int s = indices[jj];
-        indices[jj] = indices[ii];
-        indices[ii] = s;
     }
 
     @Override
@@ -185,12 +181,20 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         double $values[] = new double[align(length, 0)];
         int $indices[] = new int[align(length, 0)];
 
-        for (int i = 0; i < cardinality; i++) {
-            if (indices[i] < length) {
-                $values[$cardinality] = values[i];
-                $indices[$cardinality] = indices[i];
-                $cardinality++;
+        if (length >= this.length) {
+
+            $cardinality = cardinality; 
+            System.arraycopy(values, 0, $values, 0, cardinality);
+            System.arraycopy(indices, 0, $indices, 0, cardinality);
+
+        } else {
+
+            $cardinality = searchForIndex(length, 0, cardinality);
+            for (int i = 0; i < $cardinality; i++) {
+                $values[i] = values[i];
+                $indices[i] = indices[i];
             }
+
         }
 
         return new CompressedVector(length, $cardinality, $values, $indices);
@@ -206,22 +210,20 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     @Override
     public void update(int i, VectorFunction function) {
 
-        for (int k = 0; k < cardinality; k++) {
-            if (indices[k] == i) {
+        int k = searchForIndex(i, 0, cardinality);
 
-                double value = function.evaluate(i, values[k]); 
+        if (k < cardinality && indices[k] == i) {
 
-                if (Math.abs(value) > Vectors.EPS) {
-                    values[k] = value;
-                    return;
-                } else {
-                    remove(k);
-                    return;
-                }
+            double value = function.evaluate(i, values[k]); 
+
+            if (Math.abs(value) > Vectors.EPS) {
+                values[k] = value;
+            } else {
+                remove(k);
             }
+        } else {
+            insert(k, i, function.evaluate(i, 0.0));
         }
-
-        insert(i, function.evaluate(i, function.evaluate(i, 0)));
     }
 
     @Override
@@ -259,18 +261,54 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         }
     }
 
-    private void insert(int i, double value) {
+    private int searchForIndex(int i, int left, int right) {
+
+        if (left == right) {
+            return left;
+        }
+
+        if (right - left < 8) {
+
+            int j = left;
+            while (j < right && indices[j] < i) {
+                j++;
+            }
+
+            return j;
+        }
+
+        int p = (left + right) / 2;
+
+        if (indices[p] > i) {
+            return searchForIndex(i, left, p);
+        } else if (indices[p] < i) {
+            return searchForIndex(i, p + 1, right);
+        } else {
+            return p;
+        }
+    }
+
+    private void insert(int k, int i, double value) {
 
         if (Math.abs(value) < Vectors.EPS) {
             return;
         }
 
-        if (values.length <= cardinality + 1) {
+        if (values.length < cardinality + 1) {
             growup();
         }
 
-        values[cardinality] = value;
-        indices[cardinality] = i;
+        System.arraycopy(values, k, values, k + 1, cardinality - k);
+        System.arraycopy(indices, k, indices, k + 1, cardinality - k);
+
+//        for (int kk = cardinality; kk > k; kk--) {
+//            values[kk] = values[kk - 1];
+//            indices[kk] = indices[kk - 1];
+//        }
+
+        values[k] = value;
+        indices[k] = i;
+
         cardinality++;
     }
 
@@ -278,10 +316,13 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
         cardinality--;
 
-        for (int kk = k; kk < cardinality; kk++) {
-            values[kk] = values[kk + 1];
-            indices[kk] = indices[kk + 1];
-        }
+        System.arraycopy(values, k + 1, values, k, cardinality - k);
+        System.arraycopy(indices, k + 1, indices, k, cardinality - k);
+
+//        for (int kk = k; kk < cardinality; kk++) {
+//            values[kk] = values[kk + 1];
+//            indices[kk] = indices[kk + 1];
+//        }
     }
 
     private void growup() {

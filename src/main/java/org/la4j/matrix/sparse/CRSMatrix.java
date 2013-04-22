@@ -494,7 +494,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
 
         int position = rowPointers[i];
-        while (position < rowPointers[i + 1] && j >= columnIndices[position]) {
+        while (position < rowPointers[i + 1] && columnIndices[position] < j) {
             position++;
         }
 

@@ -32,6 +32,7 @@ import java.io.ObjectOutputStream;
 import junit.framework.TestCase;
 
 import org.la4j.factory.Factory;
+import org.la4j.vector.Vector;
 
 public abstract class AbstractMatrixTest extends TestCase {
 
@@ -47,6 +48,40 @@ public abstract class AbstractMatrixTest extends TestCase {
 
         a.set(0, 1, a.get(1, 1) * 2);
         assertEquals(10.0, a.get(0, 1));
+    }
+
+    public void testGetColumn_4x4() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 8.0, 3.0, 1.0, 9.0 },
+                { 4.0, 9.0, 6.0, 6.0 },
+                { 9.0, 1.0, 1.0, 4.0 },
+                { 5.0, 7.0, 3.0, 0.0 }
+        });
+
+        Vector b = factory().createVector(new double[] { 8.0, 4.0, 9.0, 5.0 });
+
+        Vector c = factory().createVector(new double[] { 1.0, 6.0, 1.0, 3.0 });
+
+        assertEquals(b, a.getColumn(0));
+        assertEquals(c, a.getColumn(2));
+    }
+
+    public void testGetRow_4x4() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 8.0, 3.0, 1.0, 9.0 },
+                { 4.0, 9.0, 6.0, 6.0 },
+                { 9.0, 1.0, 1.0, 4.0 },
+                { 5.0, 7.0, 3.0, 0.0 }
+        });
+
+        Vector b = factory().createVector(new double[] { 8.0, 3.0, 1.0, 9.0 });
+
+        Vector c = factory().createVector(new double[] { 9.0, 1.0, 1.0, 4.0 });
+
+        assertEquals(b, a.getRow(0));
+        assertEquals(c, a.getRow(2));
     }
 
     public void testAssign_3x3() {

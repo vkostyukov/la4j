@@ -155,7 +155,6 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                                     columnIndices);
     }
 
-
     @Override
     public Vector getColumn(int j, Factory factory) {
         ensureFactoryIsNotNull(factory);
@@ -362,7 +361,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
 
         int position = columnPointers[j];
-        while (position < columnPointers[j + 1] && j >= rowIndices[position]) {
+        while (position < columnPointers[j + 1] && rowIndices[position] < i) {
             position++;
         }
 

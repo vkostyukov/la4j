@@ -22,6 +22,7 @@
 package org.la4j.factory;
 
 
+import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.vector.Vector;
@@ -76,7 +77,7 @@ public abstract class CompressedFactory extends AbstractFactory implements Facto
     @Override
     public Vector createRandomVector(int length) {
 
-        Random rnd = new Random();
+        Random random = new Random();
 
         int cardinality = length / DENSITY;
 
@@ -84,9 +85,11 @@ public abstract class CompressedFactory extends AbstractFactory implements Facto
         int indices[] = new int[cardinality];
 
         for (int i = 0; i < cardinality; i++) {
-            values[i] = rnd.nextDouble();
-            indices[i] = rnd.nextInt(length);
+            values[i] = random.nextDouble();
+            indices[i] = random.nextInt(length);
         }
+
+        Arrays.sort(indices);
 
         return new CompressedVector(length, cardinality, values, indices);
     }
