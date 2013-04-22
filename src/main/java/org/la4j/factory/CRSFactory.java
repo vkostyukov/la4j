@@ -21,6 +21,7 @@
 
 package org.la4j.factory;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.matrix.Matrix;
@@ -82,28 +83,51 @@ public class CRSFactory extends CompressedFactory implements Factory {
     @Override
     public Matrix createRandomMatrix(int rows, int columns) {
 
-        // TODO: Issue 15
+        Random random = new Random();
 
         int cardinality = (rows * columns) / DENSITY;
 
-        Random random = new Random();
+        double values[] = new double[cardinality];
+        int columnIndices[] = new int[cardinality];
+        int rowPointers[] = new int[rows + 1];
 
-        Matrix matrix = new CRSMatrix(rows, columns, cardinality);
+        int kk = cardinality / rows;
+        int indices[] = new int[kk];
 
-        for (int k = 0; k < cardinality; k++) {
-            int i = random.nextInt(rows);
-            int j = random.nextInt(columns);
+        int k = 0;
+        for (int i = 0; i < rows; i++) {
 
-            matrix.set(i, j, random.nextDouble());
+            rowPointers[i] = k;
+
+            for (int ii = 0; ii < kk; ii++) {
+                indices[ii] = random.nextInt(columns);
+            }
+
+            Arrays.sort(indices);
+
+            int previous = -1;
+            for (int ii = 0; ii < kk; ii++) {
+
+                if (indices[ii] == previous) {
+                    continue;
+                }
+
+                values[k] = random.nextDouble();
+                columnIndices[k++] = indices[ii];
+                previous = indices[ii];
+            }
         }
 
-        return matrix;
+        rowPointers[rows] = cardinality;
+
+        return new CRSMatrix(rows, columns, cardinality, values, 
+                             columnIndices, rowPointers);
     }
 
     @Override
     public Matrix createRandomSymmetricMatrix(int size) {
 
-        // TODO: Issue 13
+        // TODO: Issue 15
 
         int cardinality = (size * size) / DENSITY;
 

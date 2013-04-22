@@ -21,6 +21,7 @@
 
 package org.la4j.factory;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.matrix.Matrix;
@@ -81,23 +82,45 @@ public class CCSFactory extends CompressedFactory implements Factory {
 
     @Override
     public Matrix createRandomMatrix(int rows, int columns) {
-
-        // TODO: Issue 15 
+        Random random = new Random();
 
         int cardinality = (rows * columns) / DENSITY;
 
-        Random random = new Random();
+        double values[] = new double[cardinality];
+        int rowIndices[] = new int[cardinality];
+        int columnPointers[] = new int[columns + 1];
 
-        Matrix matrix = new CCSMatrix(rows, columns, cardinality);
+        int kk = cardinality / columns;
+        int indices[] = new int[kk];
 
-        for (int k = 0; k < cardinality; k++) {
-            int i = random.nextInt(rows);
-            int j = random.nextInt(columns);
+        int k = 0;
+        for (int j = 0; j < columns; j++) {
 
-            matrix.set(i, j, random.nextDouble());
+            columnPointers[j] = k;
+
+            for (int jj = 0; jj < kk; jj++) {
+                indices[jj] = random.nextInt(rows);
+            }
+
+            Arrays.sort(indices);
+
+            int previous = -1;
+            for (int jj = 0; jj < kk; jj++) {
+
+                if (indices[jj] == previous) {
+                    continue;
+                }
+
+                values[k] = random.nextDouble();
+                rowIndices[k++] = indices[jj];
+                previous = indices[jj];
+            }
         }
 
-        return matrix;    
+        columnPointers[columns] = cardinality;
+
+        return new CCSMatrix(rows, columns, cardinality, values, 
+                             rowIndices, columnPointers);
     }
 
     @Override
