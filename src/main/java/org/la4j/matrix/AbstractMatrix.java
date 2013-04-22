@@ -322,7 +322,7 @@ public abstract class AbstractMatrix implements Matrix {
                                                 + vector.length());
         }
 
-        Vector result = factory.createVector(columns);
+        Vector result = factory.createVector(rows);
 
         for (int i = 0; i < rows; i++) {
             double summand = 0;
