@@ -82,14 +82,45 @@ public abstract class AbstractVectorTest extends TestCase {
         assertEquals(c, e);
     }
 
-    public void testSwap() {
+    public void testSwap_5() {
 
         Vector a = factory().createVector(
-                new double[] { 1.0, 0.0, 0.0, 0.0, 3.0 });
+                new double[] { 1.0, 0.0, 0.0, 0.0, 3.0 }
+        );
+
         Vector b = factory().createVector(
-                new double[] { 3.0, 0.0, 0.0, 0.0, 1.0 });
+                new double[] { 3.0, 0.0, 0.0, 0.0, 1.0 }
+        );
 
         a.swap(0, 4);
+        assertEquals(b, a);
+    }
+
+    public void testSwap_4() {
+
+        Vector a = factory().createVector(
+                new double[] { 0.0, 1.0, 0.0, 0.0 }
+        );
+
+        Vector b = factory().createVector(
+                new double[] { 0.0, 0.0, 1.0, 0.0 }
+        );
+
+        a.swap(1, 2);
+        assertEquals(b, a);
+    }
+
+    public void testSwap_2() {
+
+        Vector a = factory().createVector(
+                new double[] { 1.0, 2.0 }
+        );
+
+        Vector b = factory().createVector(
+                new double[] { 2.0, 1.0 }
+        );
+
+        a.swap(0, 1);
         assertEquals(b, a);
     }
 

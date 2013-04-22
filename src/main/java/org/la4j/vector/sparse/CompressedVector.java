@@ -138,23 +138,37 @@ public class CompressedVector extends AbstractVector implements SparseVector {
             values[ii] = values[jj];
             values[jj] = sd;
 
-        } else if (ii < cardinality && i == indices[ii]) {
+        } else {
 
-            // TODO: write bare-metal code here
+            boolean p = ii < cardinality && i == indices[ii]; 
 
-            double sd = values[ii]; 
+            if (p || jj < cardinality && j == indices[jj]) {
 
-            remove(ii);
-            insert(jj, j, sd);
+                double sd = values[p ? ii : jj];
 
-        } else if (jj < cardinality && j == indices[jj]) {
+                int min = ii < jj ? ii : jj;
+                int max = ii < jj ? ii : jj;
 
-            // TODO: write bare-metal code here
+                if ((p && min == ii) || (!p && min == jj)) {
 
-            double sd = values[jj]; 
+                    System.arraycopy(values, min, values, min + 1, 
+                                     cardinality - max);
+                    System.arraycopy(indices, min, indices, min + 1, 
+                            cardinality - max);
 
-            remove(jj);
-            insert(ii, i, sd);
+                    values[max] = sd;
+                } else {
+
+                    System.arraycopy(values, min + 1, values, min, 
+                            cardinality - max);
+                    System.arraycopy(indices, min + 1, indices, min, 
+                            cardinality - max);
+
+                   values[min] = sd;
+                }
+
+                indices[max] = p ? j : i;
+            }
         }
     }
 
