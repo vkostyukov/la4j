@@ -33,6 +33,7 @@ la4j-0.4.0 ```DEV. Planing to release at: Jun 2013```
  * support of building a constant matrix in factories;
  * matrices and vectors are immutable in terms of dimension;
  * sparse entities are self-clearing now;
+ * fixed bug in matrix-to-vector multiplication (contributed by Pavel Kalaidin);
 
 la4j-0.3.0 <code>Dec 2012</code>
  * la4j got new API and new package naming (starting with "org.la4j.*")
@@ -95,6 +96,7 @@ made by the authors:
 - Evgenia Krivova
 - Julia Kostyukova
 - Alessio Placitelli
+- Pavel Kalaidin
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013
