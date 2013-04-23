@@ -341,16 +341,20 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     private void growup() {
 
-        int newSize = Math.min(length, (cardinality * 3) / 2 + 1);
+        if (values.length == length) {
+            throw new IllegalStateException("This vector can't grow up.");
+        }
 
-        double newValues[] = new double[newSize];
-        int newIndices[] = new int[newSize];
+        int capacity = Math.min(length, (cardinality * 3) / 2 + 1);
 
-        System.arraycopy(values, 0, newValues, 0, cardinality);
-        System.arraycopy(indices, 0, newIndices, 0, cardinality);
+        double $values[] = new double[capacity];
+        int $indices[] = new int[capacity];
 
-        this.values = newValues;
-        this.indices = newIndices;
+        System.arraycopy(values, 0, $values, 0, cardinality);
+        System.arraycopy(indices, 0, $indices, 0, cardinality);
+
+        values = $values;
+        indices = $indices;
     }
 
     private static int align(int length, int cardinality) {
