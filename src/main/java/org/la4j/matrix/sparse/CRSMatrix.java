@@ -110,10 +110,10 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     @Override
     public double get(int i, int j) {
 
-        for (int ii = rowPointers[i]; ii < rowPointers[i + 1]; ii++) {
-            if (columnIndices[ii] == j) {
-                return values[ii];
-            }
+        int k = searchForColumnIndex(j, rowPointers[i], rowPointers[i + 1]);
+
+        if (k < rowPointers[i + 1] && columnIndices[k] == j) {
+            return values[k];
         }
 
         return 0.0;
@@ -122,20 +122,17 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     @Override
     public void set(int i, int j, double value) {
 
-        for (int ii = rowPointers[i]; ii < rowPointers[i + 1]; ii++) {
-            if (columnIndices[ii] == j) {
+        int k = searchForColumnIndex(j, rowPointers[i], rowPointers[i + 1]);
 
-                if (Math.abs(value) < Matrices.EPS) {
-                    remove(i, ii);
-                    return;
-                } else {
-                    values[ii] = value;
-                    return;
-                }
+        if (k < rowPointers[i + 1] && columnIndices[k] == j) {
+            if (Math.abs(value) < Matrices.EPS) {
+                remove(k, i);
+            } else {
+                values[k] = value;
             }
+        } else {
+            insert(k, i, j, value);
         }
-
-        insert(i, j, value);
     }
 
     @Override
@@ -190,143 +187,83 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
         Vector result = factory.createVector(rows);
 
-        int k = 0, ii = 0;
-        while (k < cardinality) {
-            for (int jj = rowPointers[ii]; jj < rowPointers[ii + 1]; 
-                 jj++, k++) {
+        int i = 0;
+        while (rowPointers[i] < cardinality) {
 
-                if (columnIndices[jj] == j) {
-                    result.set(ii, values[jj]);
-                }
+            int k = searchForColumnIndex(j, rowPointers[i], rowPointers[i + 1]);
+
+            if (k < rowPointers[i + 1] && columnIndices[k] == j) {
+                result.set(i, values[k]);
             }
-            ii++;
+
+            i++;
         }
 
         return result;
     }
 
-    @Override
-    public void setColumn(int j, Vector column) {
-
-        if (column == null) {
-            throw new IllegalArgumentException("Column can't be null.");
-        }
-
-        if (rows != column.length()) {
-            throw new IllegalArgumentException("Wrong column length: " 
-                                               + column.length());
-        }
-
-        for (int ii = 0; ii < column.length(); ii++) {
-
-            int position = rowPointers[ii], limit = rowPointers[ii + 1];
-            while (position < limit && columnIndices[position] < j) {
-                position++;
-            }
-
-            double value = column.get(ii); 
-
-            if (Math.abs(value) > Matrices.EPS) {
-
-                if (values.length < cardinality + 1) {
-                    growup();
-                }
-
-                if (columnIndices[position] != j || position == limit) {
-
-                    for (int k = cardinality; k > position; k--) {
-                        values[k] = values[k - 1];
-                        columnIndices[k] = columnIndices[k - 1];
-                    }
-
-                    for (int k = ii + 1; k < rows + 1; k++) {
-                        rowPointers[k]++;
-                    }
-
-                    columnIndices[position] = j;
-
-                    cardinality++;
-                }
-
-                values[position] = value;
-
-            } else if (columnIndices[position] == j && position < limit) {
-
-                for (int k = position; k < cardinality - 1; k++) {
-                    values[k] = values[k + 1];
-                    columnIndices[k] = columnIndices[k + 1];
-                }
-
-                for (int k = ii + 1; k < rows + 1; k++) {
-                    rowPointers[k]--;
-                }
-
-                cardinality--;
-            }
-        }
-    }
-
-    @Override
-    public void setRow(int i, Vector row) {
-
-        if (row == null) {
-            throw new IllegalArgumentException("Row can't be null.");
-        }
-
-        if (columns != row.length()) {
-            throw new IllegalArgumentException("Wrong row length: " 
-                                               + row.length());
-        }
-
-        int position = rowPointers[i], limit = rowPointers[i + 1];
-
-        rowPointers[i] = limit;
-
-        for (int ii = 0; ii < row.length(); ii++) {
-
-            double value = row.get(ii);
-
-            if (Math.abs(value) > Matrices.EPS) {
-
-                if (position >= limit) {
-
-                    if (values.length < cardinality + 1) {
-                        growup();
-                    }
-
-                    for (int k = cardinality; k > position; k--) {
-                        values[k] = values[k - 1];
-                        columnIndices[k] = columnIndices[k - 1];
-                    }
-
-                    cardinality++;
-
-                } else {
-                    rowPointers[i]--;
-                }
-
-                values[position] = value;
-                columnIndices[position] = ii;
-                position++;
-            }
-        }
-
-        if (limit > position) {
-
-            cardinality -= (limit - position);
-
-            for (int k = position; k < cardinality; k++) {
-                values[k] = values[k + (limit - position)];
-                columnIndices[k] = columnIndices[k + (limit - position)];
-            }
-
-            rowPointers[i] -= (limit - position);
-        }
-
-        for (int k = i + 1; k < rows + 1; k++) {
-            rowPointers[k] += (position - limit);
-        }
-    }
+//    //TODO: Rewrite it
+//    @Override
+//    public void setRow(int i, Vector row) {
+//
+//        if (row == null) {
+//            throw new IllegalArgumentException("Row can't be null.");
+//        }
+//
+//        if (columns != row.length()) {
+//            throw new IllegalArgumentException("Wrong row length: " 
+//                                               + row.length());
+//        }
+//
+//        int position = rowPointers[i], limit = rowPointers[i + 1];
+//
+//        rowPointers[i] = limit;
+//
+//        for (int ii = 0; ii < row.length(); ii++) {
+//
+//            double value = row.get(ii);
+//
+//            if (Math.abs(value) > Matrices.EPS) {
+//
+//                if (position >= limit) {
+//
+//                    if (values.length < cardinality + 1) {
+//                        growup();
+//                    }
+//
+//                    for (int k = cardinality; k > position; k--) {
+//                        values[k] = values[k - 1];
+//                        columnIndices[k] = columnIndices[k - 1];
+//                    }
+//
+//                    cardinality++;
+//
+//                } else {
+//                    rowPointers[i]--;
+//                }
+//
+//                values[position] = value;
+//                columnIndices[position] = ii;
+//                position++;
+//            }
+//        }
+//
+//        if (limit > position) {
+//
+//            cardinality -= (limit - position);
+//
+//            for (int k = position; k < cardinality; k++) {
+//                values[k] = values[k + (limit - position)];
+//                columnIndices[k] = columnIndices[k + (limit - position)];
+//            }
+//
+//            rowPointers[i] -= (limit - position);
+//        }
+//
+//        for (int k = i + 1; k < rows + 1; k++) {
+//            rowPointers[k] += (position - limit);
+//        }
+//    }
 
     @Override
     public Matrix copy() {
@@ -425,22 +362,20 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     @Override
     public void update(int i, int j, MatrixFunction function) {
 
-        for (int ii = rowPointers[i]; ii < rowPointers[i + 1]; ii++) {
-            if (columnIndices[ii] == j) {
+        int k = searchForColumnIndex(j, rowPointers[i], rowPointers[i + 1]);
 
-                double value = function.evaluate(i, j, values[ii]); 
+        if (k < rowPointers[i + 1] && columnIndices[k] == j) {
 
-                if (Math.abs(value) < Matrices.EPS) {
-                    remove(i, ii);
-                    return;
-                } else {
-                    values[ii] = value;
-                    return;
-                }
+            double value = function.evaluate(i, j, values[k]);
+
+            if (Math.abs(value) < Matrices.EPS) {
+                remove(k, i);
+            } else {
+                values[k] = value;
             }
+        } else {
+            insert(k, i, j, function.evaluate(i, j, 0));
         }
-
-        insert(i, j, function.evaluate(i, j, 0));
     }
 
     @Override
@@ -483,7 +418,34 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
     }
 
-    private void insert(int i, int j, double value) {
+    private int searchForColumnIndex(int j, int left, int right) {
+
+        if (left == right) {
+            return left;
+        }
+
+        if (right - left < 8) {
+
+            int jj = left;
+            while (jj < right && columnIndices[jj] < j) {
+                jj++;
+            }
+
+            return jj;
+        }
+
+        int p = (left + right) / 2;
+
+        if (columnIndices[p] > j) {
+            return searchForColumnIndex(j, left, p);
+        } else if (columnIndices[p] < j) {
+            return searchForColumnIndex(j, p + 1, right);
+        } else {
+            return p;
+        }
+    }
+
+    private void insert(int k, int i, int j, double value) {
 
         if (Math.abs(value) < Matrices.EPS) {
             return;
@@ -493,34 +455,37 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             growup();
         }
 
-        int position = rowPointers[i];
-        while (position < rowPointers[i + 1] && columnIndices[position] < j) {
-            position++;
-        }
+        System.arraycopy(values, k, values, k + 1, cardinality - k);
+        System.arraycopy(columnIndices, k, columnIndices, k + 1, 
+                         cardinality - k);
 
-        for (int k = cardinality; k > position; k--) {
-            values[k] = values[k - 1];
-            columnIndices[k] = columnIndices[k - 1];
-        }
+//      for (int k = cardinality; k > position; k--) {
+//          values[k] = values[k - 1];
+//          columnIndices[k] = columnIndices[k - 1];
+//      }
 
-        values[position] = value;
-        columnIndices[position] = j;
+        values[k] = value;
+        columnIndices[k] = j;
 
-        for (int k = i + 1; k < rows + 1; k++) {
-            rowPointers[k]++;
+        for (int ii = i + 1; ii < rows + 1; ii++) {
+            rowPointers[ii]++;
         }
 
         cardinality++;
     }
 
-    private void remove(int i, int k) {
+    private void remove(int k, int i) {
 
         cardinality--;
 
-        for (int kk = k; kk < cardinality; kk++) {
-            values[kk] = values[kk + 1];
-            columnIndices[kk] = columnIndices[kk + 1];
-        }
+        System.arraycopy(values, k + 1, values, k, cardinality - k);
+        System.arraycopy(columnIndices, k + 1, columnIndices, k, 
+                         cardinality - k);
+
+//        for (int kk = k; kk < cardinality; kk++) {
+//            values[kk] = values[kk + 1];
+//            columnIndices[kk] = columnIndices[kk + 1];
+//        }
 
         for (int ii = i + 1; ii < rows + 1; ii++) {
             rowPointers[ii]--;
@@ -529,16 +494,20 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     private void growup() {
 
-        int newSize = Math.min(rows * columns, (cardinality * 3) / 2 + 1);
+        if (values.length == rows * columns) {
+            throw new IllegalStateException("This matrix can't grow up.");
+        }
 
-        double newValues[] = new double[newSize];
-        int newColumnIndices[] = new int[newSize];
+        int capacity = Math.min(rows * columns, (cardinality * 3) / 2 + 1);
 
-        System.arraycopy(values, 0, newValues, 0, cardinality);
-        System.arraycopy(columnIndices, 0, newColumnIndices, 0, cardinality);
+        double $values[] = new double[capacity];
+        int $columnIndices[] = new int[capacity];
 
-        this.values = newValues;
-        this.columnIndices = newColumnIndices;
+        System.arraycopy(values, 0, $values, 0, cardinality);
+        System.arraycopy(columnIndices, 0, $columnIndices, 0, cardinality);
+
+        values = $values;
+        columnIndices = $columnIndices;
     }
 
     private int align(int rows, int columns, int cardinality) {

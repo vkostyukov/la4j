@@ -283,12 +283,12 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
         if (right - left < 8) {
 
-            int j = left;
-            while (j < right && indices[j] < i) {
-                j++;
+            int ii = left;
+            while (ii < right && indices[ii] < i) {
+                ii++;
             }
 
-            return j;
+            return ii;
         }
 
         int p = (left + right) / 2;
