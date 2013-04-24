@@ -216,68 +216,67 @@ public abstract class AbstractMatrix implements Matrix {
             return 0;
         }
 
-        int x = 0; 
-        int y = 0;
+        Matrix copy = copy();
 
-        int endi = (columns > rows)? rows : columns;
+        int min = (columns > rows)? rows : columns;
 
-        for(int i = 0; i < endi; i++) {
-            if (Math.abs(get(i, i)) <= Matrices.EPS) {
-                boolean c = false;
-                for (int k = i; k < rows; k++) {
-                    for (int l = i; l < columns; l++) {
-                        if (Math.abs(get(k, l)) > Matrices.EPS) {
-                            y = k;
-                            x = l;
-                            c = true;
-                            break;
-                        }         
-                    }
+        for (int k = 0; k < min; k++) {
 
-                    if (c) {
-                        break;
+            if (Math.abs(copy.get(k, k)) <= Matrices.EPS) {
+
+                int x = 0; 
+                int y = 0;
+
+                boolean nz = false;
+
+                for (int i = k; i < rows && !nz; i++) {
+                    for (int j = k; j < columns && !nz; j++) {
+
+                        if (Math.abs(copy.get(i, j)) > Matrices.EPS) {
+                            y = i;
+                            x = j;
+
+                            nz = true;
+                        }
                     }
                 }
 
-                if (!c) {
+                if (!nz) {
                     break;
                 }
 
-                if (i != y) {
-                    swapRows(i, y);
+                if (k != y) {
+                    copy.swapRows(k, y);
                 }
 
-                if (i != x) {
-                    swapColumns(i, x);
-                }
-            }
-
-            for (x = i; x < columns; x++) {
-                // TODO: use update() here
-                set(i, x, get(i, x) / get(i, i));
-            }
-
-            for (y = i + 1; y < rows; y++) {
-                for (x = i; x < columns; x++) {
-                    // TODO: use update() here
-                    set(y, x, get(y, x) - get(i, x) * get(y, i));
+                if (k != x) {
+                    copy.swapColumns(k, x);
                 }
             }
 
-            for (x = i + 1; x < columns; x++) {
-                for (y = i; y < rows; y++) {
-                    // TODO: use update here
-                    set(y, x, get(y, x) - get(y, i) * get(i, x));
+            for (int j = k; j < columns; j++) {
+                copy.update(k, j, Matrices.asDivFunction(copy.get(k, k)));
+            }
+
+            for (int i = k + 1; i < rows; i++) {
+                for (int j = k; j < columns; j++) {
+                    copy.update(i, j, Matrices.asMinusFunction(copy.get(k, j) 
+                                      * copy.get(i, k)));
+                }
+            }
+
+            for (int j = k + 1; j < columns; j++) {
+                for (int i = k; i < rows; i++) {
+                    copy.update(i, j, Matrices.asMinusFunction(copy.get(i, k)
+                                * copy.get(k, j))); 
                 }
             }
         }
 
         int result = 0;
 
-        for (int i = 0; i < endi; i++) {
-            if (Math.abs(get(i, i)) <= Matrices.EPS) {
-                break;
-            }
+        while (result < min 
+              && Math.abs(copy.get(result, result)) > Matrices.EPS) {
 
             result++;
         }

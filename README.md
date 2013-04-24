@@ -33,16 +33,15 @@ Matrix b = a.invert(Matrices.DEFAULT_INVERTOR); // uses Gaussian Elimination
 Download
 --------
  
- Details of the latest version of la4j can be found on the la4j
- project web site <http://la4j.org> or GitHub page 
- <https://github.com/vkostyukov/la4j>.
+Details of the latest version of la4j can be found on the la4j 
+project web site <http://la4j.org> or GitHub page <https://github.com/vkostyukov/la4j>.
  
  
 Licensing
 ---------
  
- This software is licensed under the terms you may find in the file 
- named "LICENSE" in this directory.
+This software is licensed under the terms you may find in the file 
+named "LICENSE" in this directory.
  
  
 Contributors

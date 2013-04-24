@@ -160,7 +160,7 @@ public class CRSFactory extends CompressedFactory implements Factory {
         int rowPointers[] = new int[size + 1];
 
         for (int i = 0; i < size; i++) {
-            values[i] = (double) 1.0;
+            values[i] = 1.0;
             columnIndices[i] = i;
             rowPointers[i] = i;
         }
