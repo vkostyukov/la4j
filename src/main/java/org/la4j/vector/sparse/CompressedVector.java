@@ -358,7 +358,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     private static int align(int length, int cardinality) {
-        return Math.min(length, ((cardinality % MINIMUM_SIZE) + 1)
+        return Math.min(length, ((cardinality / MINIMUM_SIZE) + 1)
                         * MINIMUM_SIZE);
     }
 }
