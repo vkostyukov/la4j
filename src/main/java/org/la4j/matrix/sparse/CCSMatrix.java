@@ -436,7 +436,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     private int align(int rows, int columns, int cardinality) {
-        return Math.min(rows * columns, ((cardinality % MINIMUM_SIZE) + 1)
+        return Math.min(rows * columns, ((cardinality / MINIMUM_SIZE) + 1)
                         * MINIMUM_SIZE);
     }
 }
