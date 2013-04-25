@@ -446,12 +446,12 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix div(double value) {
-        return div(value, factory);
+    public Matrix divide(double value) {
+        return divide(value, factory);
     }
 
     @Override
-    public Matrix div(double value, Factory factory) {
+    public Matrix divide(double value, Factory factory) {
         return multiply(1.0 / value, factory);
     }
 

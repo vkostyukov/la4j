@@ -172,13 +172,13 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
-    public Matrix div(double value) {
-        return self.div(value, factory);
+    public Matrix divide(double value) {
+        return self.divide(value, factory);
     }
 
     @Override
-    public Matrix div(double value, Factory factory) {
-        return self.div(value, factory);
+    public Matrix divide(double value, Factory factory) {
+        return self.divide(value, factory);
     }
 
     @Override

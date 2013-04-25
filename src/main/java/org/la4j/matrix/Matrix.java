@@ -253,7 +253,7 @@ public interface Matrix extends Externalizable {
      * 
      * @param value
      */
-    Matrix div(double value);
+    Matrix divide(double value);
 
     /**
      * Divides this matrix by <code>value</code> with specified
@@ -262,7 +262,7 @@ public interface Matrix extends Externalizable {
      * @param value
      * @param factory
      */
-    Matrix div(double value, Factory factory);
+    Matrix divide(double value, Factory factory);
 
     /**
      * Calculates the Kronecker product.
