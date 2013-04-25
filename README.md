@@ -54,7 +54,7 @@ made by the authors:
 - Julia Kostyukova
 - Alessio Placitelli
 - Pavel Kalaidin
-
+- Chandler May
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013

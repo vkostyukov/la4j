@@ -13,9 +13,10 @@ la4j-0.4.0 `Jun 2013`
  * Support of building a constant matrix in factories
  * Matrices and vectors are immutable in terms of dimension
  * Sparse entities are self-clearing (no memory leaks)
+ * Bug fix in `MatrixDecFunction`
+ * Bug fix in `MatrixMatketStream` (contributed by Alessio Placitelli)
  * Bug fix in matrix-to-vector multiplication (contributed by Pavel Kalaidin)
- * Bug fix in ```MatrixDecFunction```
- * Bug fix in ```MatrixMatketStream``` (contributed by Alessio Placitelli)
+ * Bug fix in `align()` method (contributed by Chandler May)
  
 la4j-0.3.0 `Dec 2012`
  * New API and new package naming (starting with "org.la4j.*")
