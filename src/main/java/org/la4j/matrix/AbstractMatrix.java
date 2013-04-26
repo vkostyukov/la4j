@@ -850,8 +850,9 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                long value = (long) get(i, j);
-                int size = Long.toString(value).length() + precision + 2;
+                double value = get(i, j);
+                int size = String.valueOf((long) value).length() 
+                           + precision + (value < 0 && value > -1.0 ? 1 : 0) + 2;
                 formats[j] = size > formats[j] ? size : formats[j];
             }
         }
