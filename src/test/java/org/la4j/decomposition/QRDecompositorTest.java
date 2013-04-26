@@ -44,9 +44,9 @@ public class QRDecompositorTest extends AbstarctDecompositorTest {
     public double[][][] output() {
         return new double[][][] {
                 { 
-                    { 1.0, 0.0, 0.0 }, 
-                    { 0.0, 1.0, 0.0 }, 
-                    { 0.0, 0.0, 1.0 } 
+                    { -1.0, 0.0, 0.0 }, 
+                    { 0.0, -1.0, 0.0 }, 
+                    { 0.0, 0.0, -1.0 } 
                 },
                 { 
                     { 8.0, 0.0, 0.0 }, 
