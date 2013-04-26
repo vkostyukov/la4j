@@ -18,6 +18,7 @@ la4j-0.4.0 `Jun 2013`
  * Bug fix in `MatrixMatketStream` (contributed by Alessio Placitelli)
  * Bug fix in matrix-to-vector multiplication (contributed by Pavel Kalaidin)
  * Bug fix in `align()` method (contributed by Chandler May)
+ * But fix in `QRDecompositor`
  
 la4j-0.3.0 `Dec 2012`
  * New API and new package naming (starting with "org.la4j.*")

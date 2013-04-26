@@ -53,7 +53,7 @@ public abstract class AbstarctDecompositorTest extends TestCase {
 
             assertEquals(output().length, decomposition.length);
 
-            for (int i = 0; i < decomposition.length; i++) {
+            for (int i = 1; i < decomposition.length; i++) {
                 assertEquals(factory.createMatrix(output()[i]),
                         decomposition[i]);
             }

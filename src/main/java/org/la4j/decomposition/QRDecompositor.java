@@ -62,7 +62,7 @@ public class QRDecompositor implements MatrixDecompositor {
             double norm = 0.0;
 
             for (int i = k; i < qr.rows(); i++) {
-                norm = hypot(norm, qr.get(i, k));
+                norm = Math.hypot(norm, qr.get(i, k));
             }
 
             if (Math.abs(norm) > Matrices.EPS) {
@@ -94,7 +94,7 @@ public class QRDecompositor implements MatrixDecompositor {
                 }
             }
 
-            rdiag.set(k, norm);
+            rdiag.set(k, -norm);
         }
 
         Matrix q = qr.blank(factory);
@@ -123,37 +123,18 @@ public class QRDecompositor implements MatrixDecompositor {
             }
         }
 
-        Matrix r = qr.blank(factory);
+        Matrix r = factory.createSquareMatrix(qr.columns());
 
-        for (int i = 0; i < r.columns(); i++) {
+        for (int i = 0; i < r.rows(); i++) {
             for (int j = i; j < r.columns(); j++) {
                 if (i < j) {
-                    r.set(i, j, -qr.get(i, j));
+                    r.set(i, j, qr.get(i, j));
                 } else if (i == j) {
                     r.set(i, j, rdiag.get(i));
                 }
             }
         }
 
-        // TODO: Issue 13
-
-        return new Matrix[] { q.multiply(-1), r };
-    }
-
-    private double hypot(double a, double b) {
-
-        double result;
-
-        if (Math.abs(a) > Math.abs(b)) {
-            result = b / a;
-            result = Math.abs(a) * Math.sqrt(1 + result * result);
-        } else if (b != 0) {
-            result = a / b;
-            result = Math.abs(b) * Math.sqrt(1 + result * result);
-        } else {
-            result = 0.0;
-        }
-
-        return result;
+        return new Matrix[] { q, r };
     }
 }
