@@ -358,16 +358,16 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int j = 0; j < matrix.columns(); j++) {
 
-            Vector thatColumn = matrix.getColumn(j);
+            Vector column = matrix.getColumn(j);
 
             for (int i = 0; i < rows; i++) {
 
-                Vector thisRow = getRow(i);
                 double summand = 0;
 
                 for (int k = 0; k < columns; k++) {
-                    summand += thisRow.get(k) * thatColumn.get(k);
+                    summand += get(i, k) * column.get(k);
                 }
+
                 result.set(i, j, summand);
             }
         }

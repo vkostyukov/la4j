@@ -1,7 +1,8 @@
 Changelog
 ---------
 la4j-0.4.0 `Jun 2013`
- * Significant improvement of sparse entries performance by using binary search
+ * Up to 2x performance improvement of sparse entries (binary search power)
+ * Performance improvement for matrix-to-matrix multiply algorithm (3x for dense, 11x for sparse)
  * New matrix method `rank()` (contributed by Evgenia Krivova)
  * New fast implementation of `determinant()` method
  * New method `update()` (as compound operator replacement)
