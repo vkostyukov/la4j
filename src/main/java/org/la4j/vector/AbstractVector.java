@@ -175,12 +175,12 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public Vector div(double value) {
-        return div(value, factory);
+    public Vector divide(double value) {
+        return divide(value, factory);
     }
 
     @Override
-    public Vector div(double value, Factory factory) {
+    public Vector divide(double value, Factory factory) {
         return multiply(1.0 / value, factory);
     }
 
@@ -217,7 +217,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector normalize(Factory factory) {
-        return div(norm(), factory);
+        return divide(norm(), factory);
     }
 
     @Override

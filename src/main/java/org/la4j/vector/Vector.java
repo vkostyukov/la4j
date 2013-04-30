@@ -156,7 +156,7 @@ public interface Vector extends Externalizable {
      * @param d
      * @return
      */
-    Vector div(double value);
+    Vector divide(double value);
 
     /**
      * 
@@ -164,7 +164,7 @@ public interface Vector extends Externalizable {
      * @param factory
      * @return
      */
-    Vector div(double value, Factory factory);
+    Vector divide(double value, Factory factory);
 
     /**
      * 

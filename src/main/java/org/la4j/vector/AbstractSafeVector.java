@@ -126,13 +126,13 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
-    public Vector div(double value) {
-        return self.div(value, factory);
+    public Vector divide(double value) {
+        return self.divide(value, factory);
     }
 
     @Override
-    public Vector div(double value, Factory factory) {
-        return self.div(value, factory);
+    public Vector divide(double value, Factory factory) {
+        return self.divide(value, factory);
     }
 
     @Override

@@ -485,6 +485,60 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(c, a.subtract(a));
     }
 
+    public void testMultiply_2x3() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 0.0, 3.0 },
+                { 0.0, 5.0, 0.0 }
+        });
+
+        Matrix b = factory().createMatrix(new double[][] {
+                { 2.0, 0.0, 6.0 },
+                { 0.0, 10.0, 0.0 }
+        });
+
+        assertEquals(b, a.multiply(2.0));
+    }
+
+    public void testMultiply_2x3_3() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 0.0, 3.0 },
+                { 0.0, 5.0, 0.0 }
+        });
+
+        Vector b = factory().createVector(new double[]
+                { 10.0, 0.0, 30.0 }
+        );
+
+        Vector c = factory().createVector(new double[]
+                { 100.0, 0.0 }
+        );
+
+        assertEquals(c, a.multiply(b));
+    }
+
+    public void testMultiply_5x2_2() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 0.0 },
+                { 0.0, 5.0 },
+                { 7.0, 0.0 },
+                { 3.0, 0.0 },
+                { 0.0, 1.0 }
+        });
+
+        Vector b = factory().createVector(new double[]
+                { 0.0, 10.0 }
+        );
+
+        Vector c = factory().createVector(new double[]
+                { 0.0, 50.0, 0.0, 0.0, 10.0 }
+        );
+
+        assertEquals(c, a.multiply(b));
+    }
+
     public void testMultiply_1x1_1x1() {
 
         Matrix a = factory().createMatrix(new double[][] {
