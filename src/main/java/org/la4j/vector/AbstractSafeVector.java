@@ -26,6 +26,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
@@ -103,6 +104,16 @@ public abstract class AbstractSafeVector implements Vector {
     @Override
     public Vector multiply(Vector vector, Factory factory) {
         return self.multiply(vector, factory);
+    }
+
+    @Override
+    public Vector multiply(Matrix matrix) {
+        return self.multiply(matrix, factory);
+    }
+
+    @Override
+    public Vector multiply(Matrix matrix, Factory factory) {
+        return self.multiply(matrix, factory);
     }
 
     @Override

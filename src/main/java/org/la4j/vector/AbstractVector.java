@@ -23,6 +23,7 @@ package org.la4j.vector;
 
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
+import org.la4j.matrix.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
@@ -149,6 +150,40 @@ public abstract class AbstractVector implements Vector {
 
         for (int i = 0; i < length; i++) {
             result.set(i, get(i) * vector.get(i));
+        }
+
+        return result;
+    }
+
+    @Override
+    public Vector multiply(Matrix matrix) {
+        return multiply(matrix, factory);
+    }
+
+    @Override
+    public Vector multiply(Matrix matrix, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+
+        if (matrix == null) {
+            throw new IllegalArgumentException("Matrix can't be null.");
+        }
+
+        if (length != matrix.rows()) {
+            throw new IllegalArgumentException("Wrong matrix dimenstions: " 
+                                + matrix.rows() + "x" + matrix.columns() + ".");
+        }
+
+        Vector result = factory.createVector(matrix.columns());
+
+        for (int j = 0; j < matrix.columns(); j++) {
+
+            double summand = 0.0;
+
+            for (int i = 0; i < matrix.rows(); i++) {
+                summand += get(i) * matrix.get(i, j);
+            }
+
+            result.set(j, summand);
         }
 
         return result;

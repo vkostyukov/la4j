@@ -2,7 +2,7 @@ Changelog
 ---------
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)
- * Performance improvement for matrix-to-matrix multiply algorithm (3x for dense, 11x for sparse)
+ * Performance improvement for matrix-by-matrix multiply algorithm (3x for dense, 11x for sparse)
  * New matrix method `rank()` (contributed by Evgenia Krivova)
  * New fast implementation of `determinant()` method
  * New method `update()` (as compound operator replacement)
@@ -14,6 +14,7 @@ la4j-0.4.0 `Jun 2013`
  * Support of building a constant matrix in factories
  * Matrices and vectors are immutable in terms of dimension
  * Sparse entities are self-clearing (no memory leaks)
+ * Support vector-by-matrix multiplication
  * Bug fix in `MatrixDecFunction`
  * Bug fix in `MatrixMatketStream` (contributed by Alessio Placitelli)
  * Bug fix in matrix-to-vector multiplication (contributed by Pavel Kalaidin)

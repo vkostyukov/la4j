@@ -24,6 +24,7 @@ package org.la4j.vector;
 import java.io.Externalizable;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
@@ -120,6 +121,21 @@ public interface Vector extends Externalizable {
      * @return
      */
     Vector multiply(Vector vector, Factory factory);
+
+    /**
+     * 
+     * @param matrix
+     * @return
+     */
+    Vector multiply(Matrix matrix);
+
+    /**
+     * 
+     * @param matrix
+     * @param factory
+     * @return
+     */
+    Vector multiply(Matrix matrix, Factory factory);
 
     /**
      * 

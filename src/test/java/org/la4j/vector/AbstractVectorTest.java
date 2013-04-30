@@ -32,6 +32,7 @@ import java.io.ObjectOutputStream;
 import junit.framework.TestCase;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrix;
 
 public abstract class AbstractVectorTest extends TestCase {
 
@@ -242,6 +243,43 @@ public abstract class AbstractVectorTest extends TestCase {
 
         assertEquals(c, a.multiply(10.0));
         assertEquals(d, a.multiply(b));
+    }
+
+    public void testMultiply_2_2x4() {
+
+        Vector a = factory().createVector(new double[] 
+                { 1.0, 2.0 }
+        );
+
+        Matrix b = factory().createMatrix(new double[][] { 
+                { 0.0, 5.0, 0.0, 6.0 },
+                { 1.0, 0.0, 8.0, 0.0 }
+        });
+
+        Vector c = factory().createVector(new double[] 
+                { 2.0, 5.0, 16.0, 6.0 }
+        );
+
+        assertEquals(c, a.multiply(b));
+    }
+
+    public void testMultiply_3_3x1() {
+
+        Vector a = factory().createVector(new double[] 
+                { 0.0, 2.0, 0.0 }
+        );
+
+        Matrix b = factory().createMatrix(new double[][] { 
+                { 0.0 },
+                { 3.0 },
+                { 0.0 },
+        });
+
+        Vector c = factory().createVector(new double[] 
+                { 6.0 }
+        );
+
+        assertEquals(c, a.multiply(b));
     }
 
     public void testDivide_3() {
