@@ -30,26 +30,30 @@ import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
 
+/**
+ * The real vector interface.
+ */
 public interface Vector extends Externalizable {
 
     /**
-     * Get i-th element of vector;
+     * Returns an element that stored at index {@code i} in this vector.
      * 
-     * @param i
-     *            element number
-     * @return the i-th element
+     * @param i index
+     * @return vector element
      */
     double get(int i);
 
     /**
+     * Assigns an element that stored at index {@code i} in this vector to 
+     * given {@code value}.
      * 
-     * @param i
-     * @param value
+     * @param i index
+     * @param value 
      */
     void set(int i, double value);
 
     /**
-     * Assigns all elements to specified <code>value</code>.
+     * Assigns all elements of this vector to given {@code value}.
      * 
      * @param value
      */
@@ -58,197 +62,240 @@ public interface Vector extends Externalizable {
     /**
      * Returns the length of this vector.
      * 
-     * @return the length of this vector
+     * @return length of this vector
      */
     int length();
 
     /**
+     * Adds given {@code value} to this vector. The new vector will be 
+     * constructed with default {@link Factory factory}. 
      * 
-     * @param d
-     * @return
+     * @param value
+     * @return new vector
      */
     Vector add(double value);
 
     /**
+     * Adds given {@code value} to this vector. The new vector will be 
+     * constructed with given {@code factory}.
      * 
      * @param value
      * @param factory
-     * @return
+     * @return new vector
      */
     Vector add(double value, Factory factory);
 
     /**
+     * Adds given {@code vector} to this vector. The new vector will be
+     * constructed with default {@link Factory factory}.
      * 
-     * @param v
-     * @return
+     * @param vector
+     * @return new vector
      */
     Vector add(Vector vector);
 
     /**
+     * Adds given {@code vector} to this vector. The new vector will be 
+     * constructed with given {@code factory}. 
      * 
      * @param vector
      * @param factory
-     * @return
+     * @return new vector
      */
     Vector add(Vector vector, Factory factory);
 
     /**
+     * Multiplies this vector by given {@code value}. The new vector will be
+     * constructed with default {@link Factory factory}.
      * 
-     * @param d
-     * @return
+     * @param value
+     * @return new vector
      */
     Vector multiply(double value);
 
     /**
+     * Multiplies this vector by given {@code value}. The new vector will be
+     * constructed with given {@code factory}.
      * 
      * @param value
      * @param factory
-     * @return
+     * @return new vector
      */
     Vector multiply(double value, Factory factory);
 
     /**
+     * Multiplies this vector by given {@code vector}. The new vector will be
+     * constructed with default {@link Factory factory}.
      * 
-     * @param v
-     * @return
+     * @param vector
+     * @return new vector
      */
     Vector multiply(Vector vector);
 
     /**
+     * Multiplies this vector by given {@code vector}. The new vector will be
+     * constructed with given {@code factory}.
      * 
      * @param vector
-     * @param factory
-     * @return
+     * @param factory 
+     * @return new vector
      */
     Vector multiply(Vector vector, Factory factory);
 
     /**
+     * Multiples this vector by given {@code matrix}. The new vector will be 
+     * constructed with default {@link Factory factory}.
      * 
      * @param matrix
-     * @return
+     * @return new vector
      */
     Vector multiply(Matrix matrix);
 
     /**
-     * 
+     * Multiples this vector by given {@code matrix}. The new vector will be 
+     * constructed with given {@code factory}.
+
      * @param matrix
      * @param factory
-     * @return
+     * @return new vector
      */
     Vector multiply(Matrix matrix, Factory factory);
 
     /**
+     * Subtracts given {@code value} from this vector. The new vector will be
+     * constructed with default {@link Factory factory}.
      * 
-     * @param d
-     * @return
+     * @param value
+     * @return new vector
      */
     Vector subtract(double value);
 
     /**
-     * 
+     * Subtracts given {@code value} from this vector. The new vector will be
+     * constructed with given {@code factory}.
+
      * @param value
      * @param factory
-     * @return
+     * @return new vector
      */
     Vector subtract(double value, Factory factory);
 
     /**
+     * Subtracts given {@code vector} from this vector. The new vector will be
+     * constructed with default {@link Factory factory}.
      * 
-     * @param v
-     * @return
+     * @param vector
+     * @return new vector
      */
     Vector subtract(Vector vector);
 
     /**
-     * 
+     * Subtracts given {@code vector} from this vector. The new vector will be
+     * constructed with given {@code factory}.
+     *
      * @param vector
      * @param factory
-     * @return
+     * @return new vector
      */
     Vector subtract(Vector vector, Factory factory);
 
     /**
+     * Divides this vector by {@code value}. The new vector will be
+     * constructed with default {@link Factory factory}.
      * 
-     * @param d
-     * @return
+     * @param value
+     * @return new vector
      */
     Vector divide(double value);
 
     /**
-     * 
+     * Divides this vector by {@code value}. The new vector will be
+     * constructed with given {@code factory}.
+
      * @param value
      * @param factory
-     * @return
+     * @return new vector
      */
     Vector divide(double value, Factory factory);
 
     /**
+     * Calculates the product of this vector and given {@code vector}.
      * 
-     * @param v
-     * @return
+     * @param vector
+     * @return product of two vectors
      */
     double product(Vector vector);
 
     /**
      * Calculates the norm of this vector.
      * 
-     * @return the norm of this vector
+     * @return norm of this vector
      */
     double norm();
 
     /**
-     * Normalizes this vector.
+     * Normalizes this vector. The new vector will be constructed 
+     * with default {@link Factory factory}.
      * 
-     * @return the normalized copy of this vector
+     * @return normalized vector
      */
     Vector normalize();
 
     /**
-     * Normalizes this vector with specified factory.
+     * Normalizes this vector. The new vector will be constructed 
+     * with given {@code factory}.
      * 
      * @param factory
-     * @return the normalized factory-created copy of this vector
+     * @return normalized vector
      */
     Vector normalize(Factory factory);
 
     /**
+     * Swaps two elements of this vector. Elements that stored at {@code i} and 
+     * {@code j} indices will be swapped.
      * 
-     * @param i
-     * @param j
+     * @param i index
+     * @param j index
      */
     void swap(int i, int j);
 
     /**
+     * Creates a blank copy of this vector. The new vector will be constructed 
+     * with default {@link Factory factory}. 
      * 
-     * @return
+     * @return blank vector
      */
     Vector blank();
 
     /**
+     * Creates a blank copy of this vector. The new vector will be constructed 
+     * with given {@code factory}. 
      * 
      * @param factory
-     * @return
+     * @return blank vector
      */
     Vector blank(Factory factory);
 
     /**
-     * Returns the copy of this vector.
+     * Copies this vector. The new vector will be constructed 
+     * with default {@link Factory factory}.
      * 
-     * @return the copy of this vector
+     * @return copy of this vector
      */
     Vector copy();
 
     /**
-     * Returns the copy of this vector created with specified factory.
-     * 
+     * Copies this vector. The new vector will be constructed 
+     * with given {@code factory}.
+     *
      * @param factory
-     *            with witch new vector will be created
-     * @return the copy of this vector created with specified factory
+     * @return copy of this vector
      */
     Vector copy(Factory factory);
 
     /**
-     * Resizes this vector to new <code>length</code>.
+     * Resizes this vector to new {@code length}. The new vector 
+     * will be constructed with default {@link Factory factory}.
      * 
      * @param length
      * @return new vector
@@ -256,135 +303,176 @@ public interface Vector extends Externalizable {
     Vector resize(int length);
 
     /**
-     * Resizes this vector to new <code>length</code>.
+     * Resizes this vector to new {@code length}. The new vector 
+     * will be constructed with given {@code factory}.
      * 
      * @param length
+     * @param factory
      * @return new vector
      */
     Vector resize(int length, Factory factory);
 
     /**
-     * Slices this vector to given interval [from; until).
+     * Slices this vector to given interval [{@code from}; {@code until}). 
+     * The new vector will be constructed with default {@link Factory factory}.
      * 
      * @param from
      * @param until
-     * @return
+     * @return new vector
      */
     Vector slice(int from, int until);
 
     /**
-     * Slices this vector to given interval [from; until).
+     * Slices this vector to given interval [{@code from}; {@code until}). 
+     * The new vector will be constructed with given {@code factory}.
      * 
      * @param from
      * @param until
-     * @return
+     * @param factory
+     * @return new vector
      */
     Vector slice(int from, int until, Factory factory);
 
     /**
-     * 
+     * Slices this vector to given left interval [0; {@code until}). 
+     * The new vector will be constructed with default {@link Factory factory}.
+     *  
      * @param until
-     * @return
+     * @return new vector
      */
     Vector sliceLeft(int until);
 
     /**
+     * Slices this vector to given left interval [0; {@code until}). 
+     * The new vector will be constructed with given {@code factory}.
      * 
      * @param until
-     * @return
+     * @param factory
+     * @return new vector
      */
     Vector sliceLeft(int until, Factory factory);
 
     /**
+     * Slices this vector to given right interval [{@code from}; {@code length}). 
+     * The new vector will be constructed with default {@link Factory factory}.
      * 
      * @param from
-     * @return
+     * @return new vector
      */
     Vector sliceRight(int from); 
 
     /**
+     * Slices this vector to given right interval [{@code from}; {@code length}). 
+     * The new vector will be constructed with given {@code factory}.
      * 
      * @param from
-     * @return
+     * @param factory
+     * @return new vector
      */
     Vector sliceRight(int from, Factory factory); 
 
     /**
+     * Returns a factory that associated with this vector.
      * 
-     * @return
+     * @return factory
      */
     Factory factory();
 
     /**
+     * Applies given {@code procedure} to each element of this vector.
      * 
      * @param procedure
      */
     void each(VectorProcedure procedure);
 
     /**
+     * Builds a new vector by applying given {@code function} to each element 
+     * of this vector. The new vector will be constructed with default 
+     * {@link Factory factory}.
      * 
      * @param function
+     * @return new vector
      */
     Vector transform(VectorFunction function);
 
     /**
+     * Builds a new vector by applying given {@code function} to each element 
+     * of this vector. The new vector will be constructed with given 
+     * {@code factory}.
      * 
      * @param function
+     * @param factory
+     * @return new vector
      */
     Vector transform(VectorFunction function, Factory factory);
 
     /**
+     * Builds a new vector by applying given {@code function} to element that 
+     * stored at {@code i} index in this vector. The new vector will be 
+     * constructed with default {@link Factory factory}.
      * 
-     * @param i
+     * @param i index
      * @param function
-     * @return
+     * @return new vector
      */
     Vector transform(int i, VectorFunction function);
 
     /**
+     * Builds a new vector by applying given {@code function} to element that 
+     * stored at {@code i} index in this vector. The new vector will be 
+     * constructed with given {@code factory}.
      * 
-     * @param i
+     * @param i index
      * @param function
      * @param factory
-     * @return
+     * @return new vector
      */
     Vector transform(int i, VectorFunction function, Factory factory);
 
     /**
+     * Updates all elements of this vector by evaluating a given {@code function}.
      * 
      * @param function
      */
     void update(VectorFunction function); 
 
     /**
+     * Updates element that stored at {@code i} index of this vector by 
+     * evaluating a given {@code function}. 
      * 
-     * @param i
+     * @param i index
      * @param function
      */
     void update(int i, VectorFunction function);
 
     /**
+     * Combines all elements of this vector into the value by using given 
+     * {@code accumulator}.
      * 
      * @param accumulator
      * @return
      */
     double fold(VectorAccumulator accumulator);
+
     /**
+     * Checks whether this vector matches to given {@code predicate}.
      * 
      * @param predicate
-     * @return
+     * @return whether matches or not
      */
     boolean is(VectorPredicate predicate);
 
     /**
+     * Wraps this vector with safe interface.
      * 
-     * @return
+     * @return safe vector
      */
     Vector safe();
 
     /**
+     * Wraps this vector with unsafe interface.
      * 
-     * @return
+     * @return unsafe vector
      */
     Vector unsafe();
 }
