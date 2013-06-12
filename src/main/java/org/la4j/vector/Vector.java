@@ -124,23 +124,23 @@ public interface Vector extends Externalizable {
     Vector multiply(double value, Factory factory);
 
     /**
-     * Multiplies this vector by given {@code vector}. The new vector will be
-     * constructed with default {@link Factory factory}.
+     * Calculates the dot product of this vector and given {@code vector}. 
+     * The new vector will be constructed with default {@link Factory factory}.
      * 
      * @param vector
      * @return new vector
      */
-    Vector multiply(Vector vector);
+    Vector dotProduct(Vector vector);
 
     /**
-     * Multiplies this vector by given {@code vector}. The new vector will be
-     * constructed with given {@code factory}.
+     * Calculates the dot product of this vector and given {@code vector}. 
+     * The new vector will be constructed with default {@link Factory factory}.
      * 
      * @param vector
      * @param factory 
      * @return new vector
      */
-    Vector multiply(Vector vector, Factory factory);
+    Vector dotProduct(Vector vector, Factory factory);
 
     /**
      * Multiples this vector by given {@code matrix}. The new vector will be 

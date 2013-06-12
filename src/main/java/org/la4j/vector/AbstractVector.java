@@ -129,12 +129,12 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public Vector multiply(Vector vector) {
-        return multiply(vector, factory);
+    public Vector dotProduct(Vector vector) {
+        return dotProduct(vector, factory);
     }
 
     @Override
-    public Vector multiply(Vector vector, Factory factory) {
+    public Vector dotProduct(Vector vector, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
         if (vector == null) {

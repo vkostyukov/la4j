@@ -242,8 +242,26 @@ public abstract class AbstractVectorTest extends TestCase {
         );
 
         assertEquals(c, a.multiply(10.0));
-        assertEquals(d, a.multiply(b));
+        assertEquals(d, a.dotProduct(b));
     }
+
+    public void testDotProduct_3() {
+
+        Vector a = factory().createVector(new double[] 
+                { 1.0, 0.0, 2.0 }
+        );
+
+        Vector b = factory().createVector(new double[] 
+                { 3.0, 0.0, 0.0 }
+        );
+
+        Vector c = factory().createVector(new double[] 
+                { 3.0, 0.0, 0.0 }
+        );
+
+        assertEquals(c, a.dotProduct(b));
+    }
+
 
     public void testMultiply_2_2x4() {
 

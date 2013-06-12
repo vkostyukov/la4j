@@ -97,13 +97,13 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
-    public Vector multiply(Vector vector) {
-        return self.multiply(vector, factory);
+    public Vector dotProduct(Vector vector) {
+        return self.dotProduct(vector, factory);
     }
 
     @Override
-    public Vector multiply(Vector vector, Factory factory) {
-        return self.multiply(vector, factory);
+    public Vector dotProduct(Vector vector, Factory factory) {
+        return self.dotProduct(vector, factory);
     }
 
     @Override

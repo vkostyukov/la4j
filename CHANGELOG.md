@@ -1,5 +1,8 @@
 Changelog
 ---------
+la4j-0.4.5 `Dec 2013`
+ * 
+
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)
  * Performance improvement for matrix-by-matrix multiply algorithm (3x for dense, 11x for sparse)
