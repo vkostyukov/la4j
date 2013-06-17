@@ -1,24 +1,10 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
- * 
- * This file is part of la4j project (http://la4j.org)
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * You may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * 
- * Contributor(s): -
- * 
+ * Copyright 2011-2013, by Vladimir Kostyukov and Contributors. This file is part of la4j project (http://la4j.org) Licensed under the Apache License, Version 2.0 (the "License");
+ * You may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable
+ * law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and limitations under the License. Contributor(s): -
  */
- 
+
 package org.la4j.vector;
 
 import java.io.IOException;
@@ -38,32 +24,8 @@ public abstract class AbstractSafeVector implements Vector {
     protected Factory factory;
 
     public AbstractSafeVector(Vector vector) {
-        this.self = vector;
-        this.factory = vector.factory().safe();
-    }
-
-    @Override
-    public double get(int i) {
-        ensureIndexInLength(i);
-
-        return self.get(i);
-    }
-
-    @Override
-    public void set(int i, double value) {
-        ensureIndexInLength(i);
-
-        self.set(i, value);
-    }
-
-    @Override
-    public void assign(double value) {
-        self.assign(value);
-    }
-
-    @Override
-    public int length() {
-        return self.length();
+        self = vector;
+        factory = vector.factory().safe();
     }
 
     @Override
@@ -87,91 +49,8 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
-    public Vector multiply(double value) {
-        return self.multiply(value, factory);
-    }
-
-    @Override
-    public Vector multiply(double value, Factory factory) {
-        return self.multiply(value, factory);
-    }
-
-    @Override
-    public Vector dotProduct(Vector vector) {
-        return self.dotProduct(vector, factory);
-    }
-
-    @Override
-    public Vector dotProduct(Vector vector, Factory factory) {
-        return self.dotProduct(vector, factory);
-    }
-
-    @Override
-    public Vector multiply(Matrix matrix) {
-        return self.multiply(matrix, factory);
-    }
-
-    @Override
-    public Vector multiply(Matrix matrix, Factory factory) {
-        return self.multiply(matrix, factory);
-    }
-
-    @Override
-    public Vector subtract(double value) {
-        return self.subtract(value, factory);
-    }
-
-    @Override
-    public Vector subtract(double value, Factory factory) {
-        return self.subtract(value, factory);
-    }
-
-    @Override
-    public Vector subtract(Vector vector) {
-        return self.subtract(vector, factory);
-    }
-
-    @Override
-    public Vector subtract(Vector vector, Factory factory) {
-        return self.subtract(vector, factory);
-    }
-
-    @Override
-    public Vector divide(double value) {
-        return self.divide(value, factory);
-    }
-
-    @Override
-    public Vector divide(double value, Factory factory) {
-        return self.divide(value, factory);
-    }
-
-    @Override
-    public double product(Vector vector) {
-        return self.product(vector);
-    }
-
-    @Override
-    public double norm() {
-        return self.norm();
-    }
-
-    @Override
-    public Vector normalize() {
-        return self.normalize(factory);
-    }
-
-    @Override
-    public Vector normalize(Factory factory) {
-        return self.normalize(factory);
-    }
-
-    @Override
-    public void swap(int i, int j) {
-        ensureIndexInLength(i);
-        ensureIndexInLength(j);
-
-        self.swap(i, j);
+    public void assign(double value) {
+        self.assign(value);
     }
 
     @Override
@@ -195,6 +74,136 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
+    public Vector divide(double value) {
+        return self.divide(value, factory);
+    }
+
+    @Override
+    public Vector divide(double value, Factory factory) {
+        return self.divide(value, factory);
+    }
+
+    @Override
+    public Vector hadamardProduct(Vector vector) {
+        return self.hadamardProduct(vector, factory);
+    }
+
+    @Override
+    public Vector hadamardProduct(Vector vector, Factory factory) {
+        return self.hadamardProduct(vector, factory);
+    }
+
+    @Override
+    public void each(VectorProcedure procedure) {
+        self.each(procedure);
+    }
+
+    protected void ensureIndexInLength(int i) {
+        if (i >= self.length() || i < 0) {
+            throw new IllegalArgumentException("Index out of bounds: " + i);
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return self.equals(obj);
+    }
+
+    @Override
+    public Factory factory() {
+        return factory;
+    }
+
+    @Override
+    public double fold(VectorAccumulator accumulator) {
+        return self.fold(accumulator);
+    }
+
+    @Override
+    public double get(int i) {
+        ensureIndexInLength(i);
+
+        return self.get(i);
+    }
+
+    @Override
+    public int hashCode() {
+        return self.hashCode();
+    }
+
+    @Override
+    public double innerProduct(Vector vector) {
+        return self.innerProduct(vector);
+    }
+
+    @Override
+    public boolean is(VectorPredicate predicate) {
+        return self.is(predicate);
+    }
+
+    @Override
+    public int length() {
+        return self.length();
+    }
+
+    @Override
+    public Vector multiply(double value) {
+        return self.multiply(value, factory);
+    }
+
+    @Override
+    public Vector multiply(double value, Factory factory) {
+        return self.multiply(value, factory);
+    }
+
+    @Override
+    public Vector multiply(Matrix matrix) {
+        return self.multiply(matrix, factory);
+    }
+
+    @Override
+    public Vector multiply(Matrix matrix, Factory factory) {
+        return self.multiply(matrix, factory);
+    }
+
+    @Override
+    public double norm() {
+        return self.norm();
+    }
+
+    @Override
+    public Vector normalize() {
+        return self.normalize(factory);
+    }
+
+    @Override
+    public Vector normalize(Factory factory) {
+        return self.normalize(factory);
+    }
+
+    @Override
+    public Matrix outerProduct(Vector vector) {
+        return self.outerProduct(vector);
+    }
+
+    @Override
+    public Matrix outerProduct(Vector vector, Factory factory) {
+        return self.outerProduct(vector, factory);
+    }
+
+    @Override
+    @Deprecated
+    public double product(Vector vector) {
+        return self.product(vector);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+
+        self.readExternal(in);
+    }
+
+    @Override
     public Vector resize(int length) {
         return self.resize(length, factory);
     }
@@ -202,6 +211,28 @@ public abstract class AbstractSafeVector implements Vector {
     @Override
     public Vector resize(int length, Factory factory) {
         return self.resize(length, factory);
+    }
+
+    @Override
+    public Vector safe() {
+        return this;
+    }
+
+    @Override
+    public void set(int i, double value) {
+        ensureIndexInLength(i);
+
+        self.set(i, value);
+    }
+
+    @Override
+    public Vector slice(int from, int until) {
+        return self.slice(from, until, factory);
+    }
+
+    @Override
+    public Vector slice(int from, int until, Factory factory) {
+        return self.slice(from, until, factory);
     }
 
     @Override
@@ -225,33 +256,36 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
-    public Vector slice(int from, int until) {
-        return self.slice(from, until, factory);
+    public Vector subtract(double value) {
+        return self.subtract(value, factory);
     }
 
     @Override
-    public Vector slice(int from, int until, Factory factory) {
-        return self.slice(from, until, factory);
+    public Vector subtract(double value, Factory factory) {
+        return self.subtract(value, factory);
     }
 
     @Override
-    public Factory factory() {
-        return factory;
+    public Vector subtract(Vector vector) {
+        return self.subtract(vector, factory);
     }
 
     @Override
-    public void each(VectorProcedure procedure) {
-        self.each(procedure);
+    public Vector subtract(Vector vector, Factory factory) {
+        return self.subtract(vector, factory);
     }
 
     @Override
-    public Vector transform(VectorFunction function) {
-        return self.transform(function, factory);
+    public void swap(int i, int j) {
+        ensureIndexInLength(i);
+        ensureIndexInLength(j);
+
+        self.swap(i, j);
     }
 
     @Override
-    public Vector transform(VectorFunction function, Factory factory) {
-        return self.transform(function, factory);
+    public String toString() {
+        return self.toString();
     }
 
     @Override
@@ -265,29 +299,13 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
-    public void update(VectorFunction function) {
-        self.update(function);
+    public Vector transform(VectorFunction function) {
+        return self.transform(function, factory);
     }
 
     @Override
-    public void update(int i, VectorFunction function) {
-        self.update(i, function);
-        
-    }
-
-    @Override
-    public double fold(VectorAccumulator accumulator) {
-        return self.fold(accumulator);
-    }
-
-    @Override
-    public boolean is(VectorPredicate predicate) {
-        return self.is(predicate);
-    }
-
-    @Override
-    public Vector safe() {
-        return this;
+    public Vector transform(VectorFunction function, Factory factory) {
+        return self.transform(function, factory);
     }
 
     @Override
@@ -296,35 +314,18 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return self.equals(obj);
+    public void update(int i, VectorFunction function) {
+        self.update(i, function);
+
     }
 
     @Override
-    public int hashCode() {
-        return self.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return self.toString();
-    }
-
-    @Override
-    public void readExternal(ObjectInput in) throws IOException,
-            ClassNotFoundException {
-
-        self.readExternal(in);
+    public void update(VectorFunction function) {
+        self.update(function);
     }
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         self.writeExternal(out);
-    }
-
-    protected void ensureIndexInLength(int i) {
-        if (i >= self.length() || i < 0) {
-            throw new IllegalArgumentException("Index out of bounds: " + i);
-        }
     }
 }
