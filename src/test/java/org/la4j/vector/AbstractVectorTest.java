@@ -35,6 +35,7 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 
 public abstract class AbstractVectorTest extends TestCase {
+    private static final double DELTA = 1e-10;
 
     public abstract Factory factory();
 
@@ -352,5 +353,21 @@ public abstract class AbstractVectorTest extends TestCase {
         in.close();
 
         assertEquals(a, b);
+    }
+    
+    public void testInnerProduct() {
+        Vector a = factory().createVector(new double[] { 2, 3, 5, 7 });
+        Vector b = factory().createVector(new double[] { 11, 13, 17, 19 });
+        // 2 * 11 + 3 * 13 + 5 * 17 + 7 * 19 = 279
+        assertEquals(279.0, a.innerProduct(b), DELTA);
+    }
+
+    public void testOuterProduct() {
+        Vector a = factory().createVector(new double[] { 2, 3, 5, 7 });
+        Vector b = factory().createVector(new double[] { 11, 13, 17, 19 });
+        Matrix c = factory().createMatrix(new double[][] { { 22, 26, 34, 38 },
+                { 33, 39, 51, 57 }, { 55, 65, 85, 95 },
+                { 77, 91, 119, 133 } });
+        assertEquals(c, a.outerProduct(b));
     }
 }

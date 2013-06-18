@@ -220,7 +220,13 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    @Deprecated
     public double product(Vector vector) {
+        return innerProduct(vector);
+    }
+
+    @Override
+    public double innerProduct(Vector vector) {
 
         if (vector == null) {
             throw new IllegalArgumentException("Vector can't be null.");
@@ -235,6 +241,38 @@ public abstract class AbstractVector implements Vector {
 
         for (int i = 0; i < length; i++) {
             result += get(i) * vector.get(i);
+        }
+
+        return result;
+    }
+
+    @Override
+    public Matrix outerProduct(Vector vector) {
+        return outerProduct(vector, factory);
+    }
+
+    @Override
+    public Matrix outerProduct(Vector vector, Factory factory) {
+
+        if (vector == null) {
+            throw new IllegalArgumentException("Vector can't be null.");
+        }
+
+        if (factory == null) {
+            throw new IllegalArgumentException("Factory can't be null.");
+        }
+
+        if (length != vector.length()) {
+            throw new IllegalArgumentException("Wrong vector length: " 
+                                               + vector.length());
+        }
+        
+        Matrix result = factory.createSquareMatrix(length);
+
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
+                result.set(i, j, get(i) * vector.get(j));
+            }
         }
 
         return result;

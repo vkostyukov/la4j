@@ -147,6 +147,7 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
+    @Deprecated
     public double product(Vector vector) {
         return self.product(vector);
     }
@@ -326,5 +327,20 @@ public abstract class AbstractSafeVector implements Vector {
         if (i >= self.length() || i < 0) {
             throw new IllegalArgumentException("Index out of bounds: " + i);
         }
+    }
+
+    @Override
+    public double innerProduct(Vector vector) {
+        return self.innerProduct(vector);
+    }
+
+    @Override
+    public Matrix outerProduct(Vector vector) {
+        return self.outerProduct(vector);
+    }
+
+    @Override
+    public Matrix outerProduct(Vector vector, Factory factory) {
+        return self.outerProduct(vector, factory);
     }
 }

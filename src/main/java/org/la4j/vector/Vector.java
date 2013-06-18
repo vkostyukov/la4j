@@ -221,12 +221,40 @@ public interface Vector extends Externalizable {
     Vector divide(double value, Factory factory);
 
     /**
-     * Calculates the product of this vector and given {@code vector}.
+     * Calculates the inner product of this vector and given {@code vector}.
      * 
      * @param vector
      * @return product of two vectors
      */
+    @Deprecated
     double product(Vector vector);
+
+    /**
+     * Calculates the inner product of this vector and given {@code vector}.
+     * 
+     * @param vector
+     * @return product of two vectors
+     */
+    double innerProduct(Vector vector);
+
+    /**
+     * Calculates the outer product of this vector and given {@code vector}.
+     * The new matrix will be constructed with default {@code factory}.
+     * 
+     * @param vector
+     * @return outer product of two vectors
+     */
+    Matrix outerProduct(Vector vector);
+
+    /**
+     * Calculates the outer product of this vector and given {@code vector}.
+     * The new matrix will be constructed with given {@code factory}.
+     * 
+     * @param vector
+     * @param factory
+     * @return outer product of two vectors
+     */
+    Matrix outerProduct(Vector vector, Factory factory);
 
     /**
      * Calculates the norm of this vector.
