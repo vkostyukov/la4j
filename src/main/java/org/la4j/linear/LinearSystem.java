@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
@@ -56,7 +55,7 @@ public class LinearSystem implements Externalizable {
     private Factory factory;
 
     public LinearSystem(Matrix a, Vector b) {
-        this(a, b, new Basic2DFactory(), null);
+        this(a, b, Matrices.DEFAULT_FACTORY, null);
     }
 
     public LinearSystem(Matrix a, Vector b, Factory factory) {
@@ -64,7 +63,7 @@ public class LinearSystem implements Externalizable {
     }
 
     public LinearSystem(Matrix a, Vector b, LinearSystemSolver solver) {
-        this(a, b, new Basic2DFactory(), solver);
+        this(a, b, Matrices.DEFAULT_FACTORY, solver);
     }
 
     public LinearSystem(Matrix a, Vector b, Factory factory, 
