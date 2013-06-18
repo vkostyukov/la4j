@@ -55,6 +55,7 @@ made by the authors:
 - Alessio Placitelli
 - Pavel Kalaidin
 - Chandler May
+- Daniel Renshaw
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013

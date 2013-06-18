@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Contributor(s): -
+ * Contributor(s): Daniel Renshaw
  * 
  */
 
@@ -259,11 +259,10 @@ public abstract class AbstractVector implements Vector {
             throw new IllegalArgumentException("Vector can't be null.");
         }
         
-        int otherLength = vector.length();
-        Matrix result = factory.createMatrix(length, otherLength);
+        Matrix result = factory.createMatrix(length, vector.length());
 
         for (int i = 0; i < length; i++) {
-            for (int j = 0; j < otherLength; j++) {
+            for (int j = 0; j < vector.length(); j++) {
                 result.set(i, j, get(i) * vector.get(j));
             }
         }
@@ -273,7 +272,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public double norm() {
-        return Math.sqrt(product(this));
+        return Math.sqrt(innerProduct(this));
     }
 
     @Override
