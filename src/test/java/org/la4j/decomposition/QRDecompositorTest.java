@@ -24,7 +24,7 @@ package org.la4j.decomposition;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class QRDecompositorTest extends AbstractDecompositorTest {
+public class QRDecompositorTest extends AbstarctDecompositorTest {
 
     @Override
     public MatrixDecompositor decompositor() {
