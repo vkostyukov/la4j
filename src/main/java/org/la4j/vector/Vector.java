@@ -124,23 +124,25 @@ public interface Vector extends Externalizable {
     Vector multiply(double value, Factory factory);
 
     /**
-     * Calculates the dot product of this vector and given {@code vector}. 
-     * The new vector will be constructed with default {@link Factory factory}.
+     * Calculates the Hadamard (element-wise/pointwise) product of this vector
+     * and given {@code vector}. The new vector will be constructed with
+     * default {@link Factory factory}.
      * 
      * @param vector
      * @return new vector
      */
-    Vector dotProduct(Vector vector);
+    Vector hadamardProduct(Vector vector);
 
     /**
-     * Calculates the dot product of this vector and given {@code vector}. 
-     * The new vector will be constructed with default {@link Factory factory}.
+     * Calculates the Hadamard (element-wise/pointwise) product of this vector
+     * and given {@code vector}. The new vector will be constructed with given
+     * {@link Factory factory}.
      * 
      * @param vector
      * @param factory 
      * @return new vector
      */
-    Vector dotProduct(Vector vector, Factory factory);
+    Vector hadamardProduct(Vector vector, Factory factory);
 
     /**
      * Multiples this vector by given {@code matrix}. The new vector will be 
@@ -219,12 +221,40 @@ public interface Vector extends Externalizable {
     Vector divide(double value, Factory factory);
 
     /**
-     * Calculates the product of this vector and given {@code vector}.
+     * Calculates the inner product of this vector and given {@code vector}.
      * 
      * @param vector
      * @return product of two vectors
      */
+    @Deprecated
     double product(Vector vector);
+
+    /**
+     * Calculates the inner product of this vector and given {@code vector}.
+     * 
+     * @param vector
+     * @return product of two vectors
+     */
+    double innerProduct(Vector vector);
+
+    /**
+     * Calculates the outer product of this vector and given {@code vector}.
+     * The new matrix will be constructed with default {@code factory}.
+     * 
+     * @param vector
+     * @return outer product of two vectors
+     */
+    Matrix outerProduct(Vector vector);
+
+    /**
+     * Calculates the outer product of this vector and given {@code vector}.
+     * The new matrix will be constructed with given {@code factory}.
+     * 
+     * @param vector
+     * @param factory
+     * @return outer product of two vectors
+     */
+    Matrix outerProduct(Vector vector, Factory factory);
 
     /**
      * Calculates the norm of this vector.
