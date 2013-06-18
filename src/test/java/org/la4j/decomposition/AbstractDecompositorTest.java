@@ -30,7 +30,7 @@ import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 
-public abstract class AbstarctDecompositorTest extends TestCase {
+public abstract class AbstractDecompositorTest extends TestCase {
 
     public abstract MatrixDecompositor decompositor();
 

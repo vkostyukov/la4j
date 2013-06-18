@@ -24,7 +24,7 @@ package org.la4j.decomposition;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class CholeskyDecompositorTest extends AbstarctDecompositorTest {
+public class CholeskyDecompositorTest extends AbstractDecompositorTest {
 
     @Override
     public MatrixDecompositor decompositor() {
