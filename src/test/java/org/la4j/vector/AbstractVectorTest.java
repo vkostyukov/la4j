@@ -363,11 +363,10 @@ public abstract class AbstractVectorTest extends TestCase {
     }
 
     public void testOuterProduct() {
-        Vector a = factory().createVector(new double[] { 2, 3, 5, 7 });
-        Vector b = factory().createVector(new double[] { 11, 13, 17, 19 });
-        Matrix c = factory().createMatrix(new double[][] { { 22, 26, 34, 38 },
-                { 33, 39, 51, 57 }, { 55, 65, 85, 95 },
-                { 77, 91, 119, 133 } });
+        Vector a = factory().createVector(new double[] { 2, 3, 5 });
+        Vector b = factory().createVector(new double[] { 7, 11, 13, 17 });
+        Matrix c = factory().createMatrix(new double[][] { { 14, 22, 26, 34 },
+                { 21, 33, 39, 51 }, { 35, 55, 65, 85 } });
         assertEquals(c, a.outerProduct(b));
     }
 }

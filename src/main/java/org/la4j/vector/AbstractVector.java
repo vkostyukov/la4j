@@ -253,24 +253,17 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Matrix outerProduct(Vector vector, Factory factory) {
+        ensureFactoryIsNotNull(factory);
 
         if (vector == null) {
             throw new IllegalArgumentException("Vector can't be null.");
         }
-
-        if (factory == null) {
-            throw new IllegalArgumentException("Factory can't be null.");
-        }
-
-        if (length != vector.length()) {
-            throw new IllegalArgumentException("Wrong vector length: " 
-                                               + vector.length());
-        }
         
-        Matrix result = factory.createSquareMatrix(length);
+        int otherLength = vector.length();
+        Matrix result = factory.createMatrix(length, otherLength);
 
         for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
+            for (int j = 0; j < otherLength; j++) {
                 result.set(i, j, get(i) * vector.get(j));
             }
         }
