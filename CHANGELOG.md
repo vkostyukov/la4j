@@ -1,7 +1,7 @@
 Changelog
 ---------
 la4j-0.4.5 `Dec 2013`
- * 
+ * New vector methods: `innerProduct`, `outerProduct` (contributed by Daniel Renshaw)
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)
