@@ -2,6 +2,7 @@ Changelog
 ---------
 la4j-0.4.5 `Dec 2013`
  * New vector methods: `innerProduct`, `outerProduct` (contributed by Daniel Renshaw)
+ * Bug fix in `Vector.subtract` method (contributed by Ewald Grusk)
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)
@@ -22,7 +23,7 @@ la4j-0.4.0 `Jun 2013`
  * Bug fix in `MatrixMatketStream` (contributed by Alessio Placitelli)
  * Bug fix in matrix-to-vector multiplication (contributed by Pavel Kalaidin)
  * Bug fix in `align()` method (contributed by Chandler May)
- * But fix in `QRDecompositor`
+ * Bug fix in `QRDecompositor`
  
 la4j-0.3.0 `Dec 2012`
  * New API and new package naming (starting with "org.la4j.*")

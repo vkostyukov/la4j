@@ -56,6 +56,7 @@ made by the authors:
 - Pavel Kalaidin
 - Chandler May
 - Daniel Renshaw
+- Ewald Grusk
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013
