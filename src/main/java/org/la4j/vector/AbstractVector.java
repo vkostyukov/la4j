@@ -97,7 +97,7 @@ public abstract class AbstractVector implements Vector {
         }
 
         if (length != vector.length()) {
-            throw new IllegalArgumentException("Worong vector length: " 
+            throw new IllegalArgumentException("Wrong vector length: " 
                                                + vector.length());
         }
 
@@ -213,7 +213,7 @@ public abstract class AbstractVector implements Vector {
         }
 
         if (length != vector.length()) {
-            throw new IllegalArgumentException("Worong vector length: " 
+            throw new IllegalArgumentException("Wrong vector length: " 
                                                + vector.length());
         }
 
