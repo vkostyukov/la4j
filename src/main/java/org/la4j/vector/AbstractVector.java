@@ -97,7 +97,7 @@ public abstract class AbstractVector implements Vector {
         }
 
         if (length != vector.length()) {
-            throw new IllegalArgumentException("Worong vector length: " 
+            throw new IllegalArgumentException("Wrong vector length: " 
                                                + vector.length());
         }
 
@@ -206,7 +206,24 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector subtract(Vector vector, Factory factory) {
-        return add(vector.multiply(-1.0), factory);
+        ensureFactoryIsNotNull(factory);
+
+        if (vector == null) {
+            throw new IllegalArgumentException("Vector can't be null.");
+        }
+
+        if (length != vector.length()) {
+            throw new IllegalArgumentException("Wrong vector length: " 
+                                               + vector.length());
+        }
+
+        Vector result = blank(factory);
+
+        for (int i = 0; i < length; i++) {
+            result.set(i, get(i) - vector.get(i));
+        }
+
+        return result;
     }
 
     @Override
