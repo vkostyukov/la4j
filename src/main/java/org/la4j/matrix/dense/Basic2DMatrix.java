@@ -168,4 +168,17 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
             }
         }
     }
+    
+    /**
+     * Rotates a matrix by 90 degrees to the right
+     */
+	public Matrix rotate() {
+	    double[][] rotatedMatrix = new double[this.columns()][this.rows()];
+	    for (int row = 0; row < this.rows(); row++) {
+	        for (int column = 0; column < this.columns(); column++) {
+	            rotatedMatrix[column][this.rows()-1-row] = self[row][column];
+	        }
+	    }
+		return new Basic2DMatrix(rotatedMatrix);
+	}
 }

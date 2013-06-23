@@ -42,4 +42,18 @@ public abstract class DenseMatrixTest extends AbstractMatrixTest {
             assertTrue(Arrays.equals(array[i], toArray[i]));
         }
     }
+    
+	public void testRotation() {
+		double array[][] = new double[][] { 
+				{ 1.0, 2.0 }, 
+				{ 3.0, 4.0 } 
+		};
+		Basic2DMatrix m = new Basic2DMatrix(array);
+		Basic2DMatrix n = (Basic2DMatrix) m.rotate();
+		assertTrue(n.get(0, 0) == 3.0);
+		assertTrue(n.get(0, 1) == 1.0);
+		assertTrue(n.get(1, 0) == 4.0);
+		assertTrue(n.get(1, 1) == 2.0);
+	}
+
 }
