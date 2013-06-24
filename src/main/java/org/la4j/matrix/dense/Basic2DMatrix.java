@@ -175,9 +175,9 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
      */
 	public Matrix rotate() {
 	    double[][] rotatedMatrix = new double[this.columns()][this.rows()];
-	    for (int row = 0; row < this.rows(); row++) {
-	        for (int column = 0; column < this.columns(); column++) {
-	            rotatedMatrix[column][this.rows()-1-row] = self[row][column];
+	    for (int i = 0; i < this.rows(); i++) {
+	        for (int j = 0; j < this.columns(); j++) {
+	            rotatedMatrix[j][this.rows()-1-i] = self[i][j];
 	        }
 	    }
 		return new Basic2DMatrix(rotatedMatrix);
