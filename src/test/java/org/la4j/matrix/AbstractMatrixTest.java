@@ -32,6 +32,7 @@ import java.io.ObjectOutputStream;
 import junit.framework.TestCase;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.sparse.CCSMatrix;
 import org.la4j.vector.Vector;
 
 public abstract class AbstractMatrixTest extends TestCase {
@@ -903,7 +904,24 @@ public abstract class AbstractMatrixTest extends TestCase {
 
         assertEquals(b, a);
     }
+    
+    public void testRotate_2x2() {
+		Matrix m1 = factory().createMatrix(new double[][] { 
+				{ 1.0, 2.0 }, 
+				{ 3.0, 4.0 } 
+		});
 
+		Matrix m3 = factory().createMatrix(new double[][] { 
+				{ 3.0, 1.0 }, 
+				{ 4.0, 2.0 } 
+		});
+		
+		Matrix m2 =  m1.rotate();
+
+		assertTrue(m2.equals(m3));
+
+	}
+    
     public void testColumnAccess_3x3() {
 
         Matrix a = factory().createMatrix(new double[][] {

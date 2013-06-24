@@ -29,12 +29,12 @@ import org.la4j.factory.Factory;
 
 public class Basic2DMatrixTest extends DenseMatrixTest {
 
-    @Override
-    public Factory factory() {
-        return new Basic2DFactory();
-    }
+	@Override
+	public Factory factory() {
+		return new Basic2DFactory();
+	}
 
-    public static Test suite() {
-        return new TestSuite(Basic2DMatrixTest.class);
-    }
+	public static Test suite() {
+		return new TestSuite(Basic2DMatrixTest.class);
+	}
 }
