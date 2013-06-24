@@ -180,6 +180,6 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
 	            rotatedMatrix[j][this.rows()-1-i] = self[i][j];
 	        }
 	    }
-		return new Basic2DMatrix(rotatedMatrix);
+	    return factory.createMatrix(rotatedMatrix);
 	}
 }
