@@ -43,7 +43,7 @@ public abstract class DenseMatrixTest extends AbstractMatrixTest {
         }
     }
     
-	public void testRotation() {
+	public void testRotate_2x2() {
 		double array[][] = new double[][] { 
 				{ 1.0, 2.0 }, 
 				{ 3.0, 4.0 } 
