@@ -904,22 +904,79 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(b, a);
     }
 
+    public void testRotate_3x1() {
+	Matrix m1 = factory().createMatrix(new double[][] { 
+		{ 1.0 }, 
+		{ 3.0 },
+		{ 5.0 }
+	});
+
+	Matrix m3 = factory().createMatrix(new double[][] { 
+		{ 5.0, 3.0 , 1.0 }
+	});
+
+	Matrix m2 = m1.rotate();
+
+	assertTrue(m2.equals(m3));
+
+    }
+    
     public void testRotate_2x2() {
-		Matrix m1 = factory().createMatrix(new double[][] { 
-				{ 1.0, 2.0 }, 
-				{ 3.0, 4.0 } 
-		});
+	Matrix m1 = factory().createMatrix(new double[][] { 
+		{ 1.0, 2.0 }, 
+		{ 3.0, 4.0 } 
+	});
 
-		Matrix m3 = factory().createMatrix(new double[][] { 
-				{ 3.0, 1.0 }, 
-				{ 4.0, 2.0 } 
-		});
-		
-		Matrix m2 =  m1.rotate();
+	Matrix m3 = factory().createMatrix(new double[][] { 
+		{ 3.0, 1.0 }, 
+		{ 4.0, 2.0 } 
+	});
 
-		assertTrue(m2.equals(m3));
+	Matrix m2 = m1.rotate();
 
-	}
+	assertTrue(m2.equals(m3));
+
+    }
+    
+    public void testRotate_2x4() {
+	Matrix m1 = factory().createMatrix(new double[][] { 
+		{ 1.0, 2.0 , 3.0, 4.0}, 
+		{ 5.0, 6.0 , 7.0, 8.0} 
+	});
+
+	Matrix m3 = factory().createMatrix(new double[][] { 
+		{ 5.0, 1.0 }, 
+		{ 6.0, 2.0 },
+		{ 7.0, 3.0 },
+		{ 8.0, 4.0 }
+	});
+
+	Matrix m2 = m1.rotate();
+
+	assertTrue(m2.equals(m3));
+
+    }
+    
+    public void testRotate_5x3() {
+	Matrix m1 = factory().createMatrix(new double[][] { 
+		{ 1.0, 2.0 , 3.0 }, 
+		{ 4.0, 5.0 , 6.0 },
+		{ 7.0, 8.0 , 9.0 },
+		{ 10.0, 11.0 , 12.0 },
+		{ 13.0, 14.0 , 15.0 } 
+	});
+
+	Matrix m3 = factory().createMatrix(new double[][] { 
+		{ 13.0, 10.0, 7.0, 4.0, 1.0 }, 
+		{ 14.0, 11.0, 8.0, 5.0, 2.0 },
+		{ 15.0, 12.0, 9.0, 6.0, 3.0 }
+	});
+
+	Matrix m2 = m1.rotate();
+
+	assertTrue(m2.equals(m3));
+
+    }
     
     public void testColumnAccess_3x3() {
 
