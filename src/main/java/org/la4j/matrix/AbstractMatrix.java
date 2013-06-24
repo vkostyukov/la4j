@@ -895,4 +895,15 @@ public abstract class AbstractMatrix implements Matrix {
 	    }
 	    return factory.createMatrix(rotatedMatrix);
 	}
+    
+    public Matrix rotate(Factory factory) {
+    	ensureFactoryIsNotNull(factory);
+		double[][] rotatedMatrix = new double[this.columns()][this.rows()];
+	    for (int i = 0; i < this.rows(); i++) {
+	        for (int j = 0; j < this.columns(); j++) {
+	            rotatedMatrix[j][this.rows()-1-i] = this.get(i, j);
+	        }
+	    }
+	    return factory.createMatrix(rotatedMatrix);
+	}
 }
