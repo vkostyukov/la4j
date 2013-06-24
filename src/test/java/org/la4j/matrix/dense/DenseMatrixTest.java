@@ -42,5 +42,4 @@ public abstract class DenseMatrixTest extends AbstractMatrixTest {
             assertTrue(Arrays.equals(array[i], toArray[i]));
         }
     }
-    
 }
