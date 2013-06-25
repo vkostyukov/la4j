@@ -649,13 +649,15 @@ public interface Matrix extends Externalizable {
 
     /**
      * Rotates a matrix by 90 degrees to the right
+     * 
      * @return The rotated matrix
      */
-	Matrix rotate();
-	
-	/**
+    Matrix rotate();
+
+    /**
      * Rotates a matrix by 90 degrees to the right
+     * 
      * @return The rotated matrix
      */
-	Matrix rotate(Factory factory);
+    Matrix rotate(Factory factory);
 }
