@@ -493,16 +493,10 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     public Matrix rotate() {
-	return rotate(factory);
+        return self.rotate(factory);
     }
 
     public Matrix rotate(Factory factory) {
-	Matrix result = factory().createMatrix(columns(), rows());
-	for (int i = 0; i < rows(); i++) {
-	    for (int j = 0; j < columns(); j++) {
-		result.set(j, rows() - 1 - i, get(i, j));
-	    }
-	}
-	return result;
+        return self.rotate(factory);
     }
 }
