@@ -646,4 +646,18 @@ public interface Matrix extends Externalizable {
      * Wraps this matrix with unsafe interface
      */
     Matrix unsafe();
+
+    /**
+     * Rotates a matrix by 90 degrees to the right
+     * 
+     * @return The rotated matrix
+     */
+    Matrix rotate();
+
+    /**
+     * Rotates a matrix by 90 degrees to the right
+     * 
+     * @return The rotated matrix
+     */
+    Matrix rotate(Factory factory);
 }

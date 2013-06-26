@@ -491,4 +491,12 @@ public abstract class AbstractSafeMatrix implements Matrix {
                                                + i);
         }
     }
+
+    public Matrix rotate() {
+        return self.rotate(factory);
+    }
+
+    public Matrix rotate(Factory factory) {
+        return self.rotate(factory);
+    }
 }
