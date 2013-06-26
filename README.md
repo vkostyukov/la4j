@@ -36,6 +36,18 @@ Download
 Details of the latest version of la4j can be found on the la4j 
 project web site <http://la4j.org> or GitHub page <https://github.com/vkostyukov/la4j>.
  
+
+Clojars
+-------
+
+ Version 0.3.5 :<https://clojars.org/org.la4j/la4j>
+
+    <dependency>
+        <groupId>org.la4j</groupId>
+        <artifactId>la4j</artifactId>
+        <version>0.3.5</version>
+    </dependency>
+
  
 Licensing
 ---------
