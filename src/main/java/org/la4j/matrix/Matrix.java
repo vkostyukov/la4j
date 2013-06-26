@@ -17,6 +17,7 @@
  * 
  * Contributor(s): Evgenia Krivova
  *                 Julia Kostyukova
+ *                 Jakob Moellers
  */
 
 package org.la4j.matrix;
@@ -122,6 +123,20 @@ public interface Matrix extends Externalizable {
      * @return
      */
     Matrix transpose(Factory factory);
+
+    /**
+     * Rotates a matrix by 90 degrees to the right
+     * 
+     * @return The rotated matrix
+     */
+    Matrix rotate();
+
+    /**
+     * Rotates a matrix by 90 degrees to the right
+     * 
+     * @return The rotated matrix
+     */
+    Matrix rotate(Factory factory);
 
     /**
      * Scales this matrix by <code>value</code>.
@@ -646,18 +661,4 @@ public interface Matrix extends Externalizable {
      * Wraps this matrix with unsafe interface
      */
     Matrix unsafe();
-
-    /**
-     * Rotates a matrix by 90 degrees to the right
-     * 
-     * @return The rotated matrix
-     */
-    Matrix rotate();
-
-    /**
-     * Rotates a matrix by 90 degrees to the right
-     * 
-     * @return The rotated matrix
-     */
-    Matrix rotate(Factory factory);
 }

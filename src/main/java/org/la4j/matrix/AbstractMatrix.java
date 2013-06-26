@@ -17,6 +17,7 @@
  * 
  * Contributor(s): Evgenia Krivova
  *                 Pavel Kalaidin
+ *                 Jakob Moellers
  * 
  */
 
@@ -177,6 +178,24 @@ public abstract class AbstractMatrix implements Matrix {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 result.set(j, i, get(i, j));
+            }
+        }
+
+        return result;
+    }
+
+    public Matrix rotate() {
+        return rotate(factory);
+    }
+
+    public Matrix rotate(Factory factory) {
+        ensureFactoryIsNotNull(factory);
+
+        Matrix result = factory.createMatrix(columns, rows);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                result.set(j, rows - 1 - i, get(i, j));
             }
         }
 
@@ -884,20 +903,5 @@ public abstract class AbstractMatrix implements Matrix {
             throw new IllegalArgumentException("Wrong matrix dimensions: " 
                                                + rows + "x" + columns);
         }
-    }
-
-    public Matrix rotate() {
-        return rotate(factory);
-    }
-
-    public Matrix rotate(Factory factory) {
-        ensureFactoryIsNotNull(factory);
-        Matrix result = factory().createMatrix(columns, rows);
-        for (int i = 0; i < rows(); i++) {
-            for (int j = 0; j < columns(); j++) {
-                result.set(j, rows - 1 - i, get(i, j));
-            }
-        }
-        return result;
     }
 }

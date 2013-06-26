@@ -918,7 +918,6 @@ public abstract class AbstractMatrixTest extends TestCase {
         Matrix m2 = m1.rotate();
 
         assertTrue(m2.equals(m3));
-
     }
 
     public void testRotate_2x2() {
@@ -935,7 +934,6 @@ public abstract class AbstractMatrixTest extends TestCase {
         Matrix m2 = m1.rotate();
 
         assertTrue(m2.equals(m3));
-
     }
 
     public void testRotate_2x4() {
@@ -954,7 +952,6 @@ public abstract class AbstractMatrixTest extends TestCase {
         Matrix m2 = m1.rotate();
 
         assertTrue(m2.equals(m3));
-
     }
 
     public void testRotate_5x3() {
@@ -975,7 +972,6 @@ public abstract class AbstractMatrixTest extends TestCase {
         Matrix m2 = m1.rotate();
 
         assertTrue(m2.equals(m3));
-
     }
     
     public void testColumnAccess_3x3() {

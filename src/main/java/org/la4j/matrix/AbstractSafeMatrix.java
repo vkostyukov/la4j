@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Contributor(s): -
+ * Contributor(s): Jakob Moellers
  * 
  */
 
@@ -94,6 +94,14 @@ public abstract class AbstractSafeMatrix implements Matrix {
     @Override
     public Matrix transpose() {
         return self.transpose(factory);
+    }
+
+    public Matrix rotate() {
+        return self.rotate(factory);
+    }
+
+    public Matrix rotate(Factory factory) {
+        return self.rotate(factory);
     }
 
     @Override
@@ -490,13 +498,5 @@ public abstract class AbstractSafeMatrix implements Matrix {
             throw new IllegalArgumentException("Column index out of bounds: " 
                                                + i);
         }
-    }
-
-    public Matrix rotate() {
-        return self.rotate(factory);
-    }
-
-    public Matrix rotate(Factory factory) {
-        return self.rotate(factory);
     }
 }

@@ -57,6 +57,7 @@ made by the authors:
 - Chandler May
 - Daniel Renshaw
 - Ewald Grusk
+- Jakob Moellers
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013
