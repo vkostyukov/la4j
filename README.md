@@ -1,12 +1,10 @@
-Latest release (Jun 2013): <code>[la4j-0.4.0.zip](http://la4j.org/downloads/la4j-0.4.0.zip)</code>
+`Last release (Jun 2013): [la4j-0.4.0.zip](http://la4j.org/downloads/la4j-0.4.0.zip)`
 la4j (Linear Algebra for Java)  [![Build Status](https://travis-ci.org/vkostyukov/la4j.png?branch=master)](https://travis-ci.org/vkostyukov/la4j)
 =============================
-
 ![la4j logo](https://raw.github.com/vkostyukov/la4j/master/la4j-logo.png) 
-
-[la4j](http://la4j.org) - is open source and 100% Java library 
-that provides Linear Algebra primitives and algorithms. There are the 
-key features of la4j listed bellow:
+The [la4j](http://la4j.org) is open source and 100% Java library 
+that provides Linear Algebra primitives (matrices and vectors) and algorithms. 
+There are the key features of the la4j listed bellow:
 
 * No dependencies and tiny size (~130kb jar)
 * Simple and object-oriented/functional API
@@ -33,10 +31,10 @@ Matrix b = a.invert(Matrices.DEFAULT_INVERTOR); // uses Gaussian Elimination
 Download
 --------
  
-Details of the latest version of la4j can be found on the la4j 
-project web site <http://la4j.org> or GitHub page <https://github.com/vkostyukov/la4j>.
- 
- 
+Details of the last version of la4j can be found on the la4j 
+project web site <http://la4j.org> or its GitHub page <https://github.com/vkostyukov/la4j>.
+
+
 Licensing
 ---------
  
