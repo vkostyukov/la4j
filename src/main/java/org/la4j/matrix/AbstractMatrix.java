@@ -24,9 +24,7 @@
 package org.la4j.matrix;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.SortedSet;
-import java.util.TreeMap;
+import java.util.Random;
 
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
@@ -663,25 +661,32 @@ public abstract class AbstractMatrix implements Matrix {
 
     public Matrix shuffle(Factory factory) {
 
-        // Convert matrix to ArrayList
-        ArrayList<Double> list = new ArrayList<Double>();
+        // Convert matrix to array
+        double[] matrix = new double[columns * rows];
         int k = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                list.add(get(i, j));
+                matrix[k] = get(i, j);
                 k++;
             }
         }
 
-        // Shuffle the ArrayList
-        Collections.shuffle(list);
+        // Conduct Fisher-Yates shuffle
+        Random rnd = new Random();
+        for (int i = matrix.length - 1; i >= 0; i--) {
+            int index = rnd.nextInt(i + 1);
+            // Simple swap
+            double a = matrix[index];
+            matrix[index] = matrix[i];
+            matrix[i] = a;
+        }
 
         // Return the shuffled matrix
         Matrix result = factory().createMatrix(rows, columns);
         k = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                result.set(i, j, list.get(k));
+                result.set(i, j, matrix[k]);
                 k++;
             }
         }
