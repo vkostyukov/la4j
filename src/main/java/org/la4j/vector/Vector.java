@@ -505,4 +505,33 @@ public interface Vector extends Externalizable {
      * @return unsafe vector
      */
     Vector unsafe();
+    
+    /**
+     * Vector that contains the same elements but with the elements shuffled
+     * around (which might also result in the same vector (all outcomes are
+     * equally probable)).
+     * 
+     * @return The shuffled vector.
+     */
+    Vector shuffle();
+
+    /**
+     * Vector that contains the same elements but with the elements shuffled
+     * around (which might also result in the same vector (all outcomes are
+     * equally probable)).
+     * 
+     * @param factory
+     *            The factory to use for this
+     * @return The shuffled vector.
+     */
+    Vector shuffle(Factory factory);
+
+    /**
+     * Returns true if both vectors contain the same elements.
+     * 
+     * @param vector
+     *            The vector to compare to
+     * @return True if both vectors contain the same elements
+     */
+    boolean containsSameElementsAsVector(Vector vector);
 }

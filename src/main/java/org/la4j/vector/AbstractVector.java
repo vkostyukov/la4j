@@ -22,6 +22,9 @@
 
 package org.la4j.vector;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
@@ -537,6 +540,61 @@ public abstract class AbstractVector implements Vector {
     protected void ensureLengthIsNotNegative(int length) {
         if (length < 0) {
             throw new IllegalArgumentException("Wrong vector length: " + length);
+        }
+    }
+    
+    @Override
+    public Vector shuffle() {
+        return shuffle(factory);
+    }
+
+    @Override
+    public Vector shuffle(Factory factory) {
+        double[] vector = new double[length];
+        for (int i = 0; i < length; i++) {
+            vector[i] = get(i);
+        }
+
+        //Conduct Fisher-Yates shuffle
+        Random rnd = new Random();
+        for (int i = vector.length - 1; i >= 0; i--) {
+            int index = rnd.nextInt(i + 1);
+            // Simple swap
+            double a = vector[index];
+            vector[index] = vector[i];
+            vector[i] = a;
+        }
+
+        return factory().createVector(vector);
+    }
+
+    @Override
+    public boolean containsSameElementsAsVector(Vector vector) {
+        
+        double[] a = new double[length];
+        for (int i = 0; i < length; i++) {
+            a[i] = get(i);
+        }
+
+        ArrayList<Double> b = new ArrayList<Double>();
+        for (int i = 0; i < length; i++) {
+            b.add(vector.get(i));
+        }
+        
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if (a[i] == b.get(j)) {
+                    b.remove(j);// If match found, remove it from ArrayList to
+                                // decrease complexity
+                    break;
+                }
+            }
+        }
+        
+        if (b.size() == 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
