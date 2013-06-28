@@ -651,6 +651,37 @@ public abstract class AbstractMatrix implements Matrix {
 
         return result;
     }
+    
+    public Matrix shuffle() {
+
+        // Get all elements
+
+        // Shuffle elements
+
+        // Return new matrix
+
+        return null;
+    }
+
+    public Matrix shuffle(Factory factory) {
+
+        // Get all elements
+
+        // Shuffle elements
+
+        // Return new matrix
+
+        return null;
+    }
+
+    public boolean containsSameElementsAsMatrix(Matrix matrix) {
+
+        // Test for equal columns and rows
+
+        // Test for same elements
+
+        return false;
+    }
 
     @Override
     public Matrix slice(int fromRow, int fromColumn, int untilRow,

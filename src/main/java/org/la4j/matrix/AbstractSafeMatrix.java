@@ -95,6 +95,18 @@ public abstract class AbstractSafeMatrix implements Matrix {
     public Matrix transpose() {
         return self.transpose(factory);
     }
+    
+    public Matrix shuffle(){
+        return self.shuffle(factory);
+    }
+    
+    public Matrix shuffle(Factory factory){
+        return self.shuffle(factory);
+    }
+    
+    public boolean containsSameElementsAsMatrix(Matrix matrix) {
+        return self.containsSameElementsAsMatrix(matrix);
+    }
 
     public Matrix rotate() {
         return self.rotate(factory);

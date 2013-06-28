@@ -502,7 +502,30 @@ public interface Matrix extends Externalizable {
      * @return
      */
     Matrix resizeColumns(int columns, Factory factory);
+    
+    /**
+     * Matrix that contains the same elements but with the elements shuffled
+     * around (which might also result in the same matrix (with a small
+     * likelihood)).
+     * 
+     * @return The shuffled matrix.
+     */
+    Matrix shuffle();
 
+    // TODO javadoc
+    Matrix shuffle(Factory factory);
+
+    /**
+     * Returns true if both matrices contain the same elements and have equal
+     * dimensions.
+     * 
+     * @param matrix
+     *            The matrix to compare to
+     * @return True if both matrices contain the same elements and have equal
+     *         dimensions.
+     */
+    boolean containsSameElementsAsMatrix(Matrix matrix);
+    
     /**
      * 
      * 
