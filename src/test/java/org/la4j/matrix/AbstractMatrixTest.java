@@ -903,6 +903,54 @@ public abstract class AbstractMatrixTest extends TestCase {
 
         assertEquals(b, a);
     }
+    
+    public void testContainsSameElementsAsMatrix() {
+        Matrix m1 = factory().createMatrix(new double[][] { 
+                { 1.0, 2.0, 3.0 }, 
+                { 4.0, 5.0, 6.0 },
+                { 7.0, 8.0, 9.0 } 
+        });
+        Matrix m2 = factory().createMatrix(new double[][] { 
+                { 2.0, 1.0, 4.0 }, 
+                { 5.0, 6.0, 9.0 },
+                { 7.0, 3.0, 8.0 } 
+        });
+
+        assertTrue(m1.containsSameElementsAsMatrix(m2));
+
+        Matrix m3 = factory().createMatrix(new double[][] { 
+                { 1.0, 2.0, 3.0 }, 
+                { 4.0, 52.0, 6.0 },
+                { 7.0, 8.0, 9.0 } 
+        });
+        
+        // TODO: make assertfalse out of that
+        assertTrue(!m1.containsSameElementsAsMatrix(m3));
+    }
+    
+    public void testShuffle_3x2() {
+        Matrix m1 = factory().createMatrix(new double[][] { 
+                { 1.0, 2.0 }, 
+                { 4.0, 5.0 }, 
+                { 7.0, 8.0 } 
+        });
+        Matrix m2 = m1.shuffle();
+
+        assertTrue(m1.containsSameElementsAsMatrix(m2));
+    }
+    
+    public void testShuffle_5x3() {
+        Matrix m1 = factory().createMatrix(new double[][] { 
+                { 1.0, 2.0, 3.0 }, 
+                { 4.0, 5.0, 6.0 },
+                { 7.0, 8.0, 9.0 }, 
+                { 10.0, 11.0, 12.0 },
+                { 13.0, 14.0, 15.0 }
+        });
+        Matrix m2 = m1.shuffle();
+
+        assertTrue(m1.containsSameElementsAsMatrix(m2));
+    }
 
     public void testRotate_3x1() {
         Matrix m1 = factory().createMatrix(new double[][] { 
