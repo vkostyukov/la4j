@@ -24,6 +24,9 @@
 package org.la4j.matrix;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.SortedSet;
+import java.util.TreeMap;
 
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
@@ -655,25 +658,34 @@ public abstract class AbstractMatrix implements Matrix {
     }
     
     public Matrix shuffle() {
-
-        // Get all elements
-
-        // Shuffle elements
-
-        // Return new matrix
-
-        return null;
+        return shuffle(factory);
     }
 
     public Matrix shuffle(Factory factory) {
 
-        // Get all elements
+        // Convert matrix to ArrayList
+        ArrayList<Double> list = new ArrayList<Double>();
+        int k = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                list.add(get(i, j));
+                k++;
+            }
+        }
 
-        // Shuffle elements
+        // Shuffle the ArrayList
+        Collections.shuffle(list);
 
-        // Return new matrix
-
-        return null;
+        // Return the shuffled matrix
+        Matrix result = factory().createMatrix(rows, columns);
+        k = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                result.set(i, j, list.get(k));
+                k++;
+            }
+        }
+        return result;
     }
 
     public boolean containsSameElementsAsMatrix(Matrix matrix) {
