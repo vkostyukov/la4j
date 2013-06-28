@@ -23,6 +23,8 @@
 
 package org.la4j.matrix;
 
+import java.util.ArrayList;
+
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInvertor;
@@ -677,10 +679,43 @@ public abstract class AbstractMatrix implements Matrix {
     public boolean containsSameElementsAsMatrix(Matrix matrix) {
 
         // Test for equal columns and rows
+        if (rows != matrix.rows()) {
+            return false;
+        }
+        if (columns != matrix.columns()) {
+            return false;
+        }
 
         // Test for same elements
+        double[] a = new double[columns * rows];
+        int k = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                a[k] = get(i, j);
+                k++;
+            }
+        }
+        ArrayList<Double> b = new ArrayList<Double>();
+        for (int i = 0; i < matrix.rows(); i++) {
+            for (int j = 0; j < matrix.columns(); j++) {
+                b.add(matrix.get(i, j));
+            }
+        }
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if (a[i] == b.get(j)) {
+                    b.remove(j); // If match found, remove it from ArrayList to
+                                 // decrease complexity
+                    break;
+                }
+            }
+        }
 
-        return false;
+        if (b.size() == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
