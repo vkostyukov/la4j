@@ -414,7 +414,27 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix subtract(Matrix matrix, Factory factory) {
-        return add(matrix.multiply(-1.0), factory);
+        ensureFactoryIsNotNull(factory);
+
+        if (matrix == null) {
+            throw new IllegalArgumentException("Matrix can't be null.");
+        }
+
+        if (rows != matrix.rows() || columns != matrix.columns()) {
+            throw new IllegalArgumentException("Wrong matrix dimensions: "
+                                               + matrix.rows() + "x" 
+                                               + matrix.columns());
+        }
+
+        Matrix result = blank(factory);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                result.set(i, j, get(i, j) - matrix.get(i, j));
+            }
+        }
+
+        return result;
     }
 
     @Override
