@@ -549,13 +549,13 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector shuffle(Factory factory) {
-        
+
         Vector vector = copy(factory);
 
-        //Conduct Fisher-Yates shuffle
+        // Conduct Fisher-Yates shuffle
         Random rnd = new Random();
-        for (int i = length - 1; i >= 0; i--) {
-            int rand = rnd.nextInt(i + 1);
+        for (int i = 0; i < length; i++) {
+            int rand = rnd.nextInt(length - i) + i;
             double a = vector.get(rand);
             vector.set(rand, vector.get(i));
             vector.set(i, a);

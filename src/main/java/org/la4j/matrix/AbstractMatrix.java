@@ -664,10 +664,10 @@ public abstract class AbstractMatrix implements Matrix {
 
         // Conduct Fisher-Yates shuffle
         Random rnd = new Random();
-        for (int i = rows - 1; i >= 0; i--) {
-            for (int j = columns - 1; j >= 0; j--) {
-                int ii = rnd.nextInt(i + 1);
-                int jj = rnd.nextInt(j + 1);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                int ii = rnd.nextInt(rows - i) + i;
+                int jj = rnd.nextInt(columns - j) + j;
                 double a = result.get(ii, jj);
                 result.set(ii, jj, result.get(i, j));
                 result.set(i, j, a);
