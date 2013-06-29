@@ -23,7 +23,6 @@
 
 package org.la4j.matrix;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import org.la4j.decomposition.MatrixDecompositor;
@@ -661,78 +660,21 @@ public abstract class AbstractMatrix implements Matrix {
 
     public Matrix shuffle(Factory factory) {
 
-        // Convert matrix to array
-        double[] matrix = new double[columns * rows];
-        int k = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                matrix[k] = get(i, j);
-                k++;
-            }
-        }
+        Matrix result = copy();
 
         // Conduct Fisher-Yates shuffle
         Random rnd = new Random();
-        for (int i = matrix.length - 1; i >= 0; i--) {
-            int index = rnd.nextInt(i + 1);
-            // Simple swap
-            double a = matrix[index];
-            matrix[index] = matrix[i];
-            matrix[i] = a;
-        }
-
-        // Return the shuffled matrix
-        Matrix result = factory().createMatrix(rows, columns);
-        k = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                result.set(i, j, matrix[k]);
-                k++;
+        for (int i = result.rows() - 1; i >= 0; i--) {
+            for (int j = result.columns() - 1; j >= 0; j--) {
+                int index_row = rnd.nextInt(i + 1);
+                int index_column = rnd.nextInt(j + 1);
+                // Simple swap
+                double a = result.get(index_row, index_column);
+                result.set(index_row, index_column, result.get(i, j));
+                result.set(i, j, a);
             }
         }
         return result;
-    }
-
-    public boolean containsSameElementsAsMatrix(Matrix matrix) {
-
-        // Test for equal columns and rows
-        if (rows != matrix.rows()) {
-            return false;
-        }
-        if (columns != matrix.columns()) {
-            return false;
-        }
-
-        // Test for same elements
-        double[] a = new double[columns * rows];
-        int k = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                a[k] = get(i, j);
-                k++;
-            }
-        }
-        ArrayList<Double> b = new ArrayList<Double>();
-        for (int i = 0; i < matrix.rows(); i++) {
-            for (int j = 0; j < matrix.columns(); j++) {
-                b.add(matrix.get(i, j));
-            }
-        }
-        for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < b.size(); j++) {
-                if (a[i] == b.get(j)) {
-                    b.remove(j); // If match found, remove it from ArrayList to
-                                 // decrease complexity
-                    break;
-                }
-            }
-        }
-
-        if (b.size() == 0) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override

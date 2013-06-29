@@ -353,9 +353,4 @@ public abstract class AbstractSafeVector implements Vector {
     public Vector shuffle(Factory factory){
         return self.shuffle(factory);
     }
-
-    @Override
-    public boolean containsSameElementsAsVector(Vector vector){
-        return self.containsSameElementsAsVector(vector);
-    }
 }

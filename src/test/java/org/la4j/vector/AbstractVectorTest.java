@@ -28,6 +28,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
@@ -370,19 +371,55 @@ public abstract class AbstractVectorTest extends TestCase {
         assertEquals(c, a.outerProduct(b));
     }
     
+    /**
+     * Tests whether two vectors contain the same elements
+     * 
+     * @param vector1
+     *            Vector1
+     * @param vector2
+     *            Vector2
+     * @return True if both vectors contain the same elements
+     */
+    public boolean testWhetherVectorsContainSameElements(Vector vector1,
+            Vector vector2) {
+
+        if (vector1.length() == vector2.length()) {
+
+            ArrayList<Double> b = new ArrayList<Double>();
+            for (int i = 0; i < vector2.length(); i++) {
+                b.add(vector2.get(i));
+            }
+            for (int i = 0; i < vector1.length(); i++) {
+                for (int j = 0; j < b.size(); j++) {
+                    if (vector1.get(i) == b.get(j)) {
+                        b.remove(j);
+                        break;
+                    }
+                }
+            }
+            if (b.size() == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    
     public void testContainsSameElementsAsVector() {
         Vector a = factory().createVector(new double[] { 1.0, 1.0, 3.0, 4.0 });
         Vector b = factory().createVector(new double[] { 4.0, 1.0, 1.0, 3.0 });
-        assertTrue(a.containsSameElementsAsVector(b));
+        assertTrue(testWhetherVectorsContainSameElements(a, b));
 
         Vector c = factory().createVector(new double[] { 4.0, 2.0, 1.0, 3.0 });
-        assertFalse(a.containsSameElementsAsVector(c));
+        assertFalse(testWhetherVectorsContainSameElements(a, c));
     }
 
     public void testShuffle() {
         Vector a = factory().createVector(new double[] { 1.0, 1.0, 3.0, 4.0 });
         Vector b = a.shuffle();
-        assertTrue(a.containsSameElementsAsVector(b));
+        assertTrue(testWhetherVectorsContainSameElements(a, b));
     }
     
 }

@@ -526,12 +526,4 @@ public interface Vector extends Externalizable {
      */
     Vector shuffle(Factory factory);
 
-    /**
-     * Returns true if both vectors contain the same elements.
-     * 
-     * @param vector
-     *            The vector to compare to
-     * @return True if both vectors contain the same elements
-     */
-    boolean containsSameElementsAsVector(Vector vector);
 }

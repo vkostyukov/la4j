@@ -105,11 +105,6 @@ public abstract class AbstractSafeMatrix implements Matrix {
     public Matrix shuffle(Factory factory){
         return self.shuffle(factory);
     }
-    
-    @Override
-    public boolean containsSameElementsAsMatrix(Matrix matrix) {
-        return self.containsSameElementsAsMatrix(matrix);
-    }
 
     @Override
     public Matrix rotate() {

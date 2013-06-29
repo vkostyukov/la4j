@@ -22,7 +22,6 @@
 
 package org.la4j.vector;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import org.la4j.factory.Factory;
@@ -568,33 +567,4 @@ public abstract class AbstractVector implements Vector {
         return factory().createVector(vector);
     }
 
-    @Override
-    public boolean containsSameElementsAsVector(Vector vector) {
-        
-        double[] a = new double[length];
-        for (int i = 0; i < length; i++) {
-            a[i] = get(i);
-        }
-
-        ArrayList<Double> b = new ArrayList<Double>();
-        for (int i = 0; i < length; i++) {
-            b.add(vector.get(i));
-        }
-        
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < b.size(); j++) {
-                if (a[i] == b.get(j)) {
-                    b.remove(j);// If match found, remove it from ArrayList to
-                                // decrease complexity
-                    break;
-                }
-            }
-        }
-        
-        if (b.size() == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }

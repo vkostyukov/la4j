@@ -524,17 +524,6 @@ public interface Matrix extends Externalizable {
     Matrix shuffle(Factory factory);
 
     /**
-     * Returns true if both matrices contain the same elements and have equal
-     * dimensions.
-     * 
-     * @param matrix
-     *            The matrix to compare to
-     * @return True if both matrices contain the same elements and have equal
-     *         dimensions.
-     */
-    boolean containsSameElementsAsMatrix(Matrix matrix);
-    
-    /**
      * 
      * 
      * @param fromRow
