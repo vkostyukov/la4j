@@ -953,4 +953,38 @@ public abstract class AbstractMatrix implements Matrix {
                                                + rows + "x" + columns);
         }
     }
+    
+    @Override
+    public double crout(){
+    	if (rows != columns) {
+            throw new IllegalArgumentException("Wrong matrix size: " 
+                    +  "rows != columns");
+        }
+
+        Matrix l = factory.createMatrix(rows, columns);
+        Matrix u = factory.createIdentityMatrix(rows);
+        double s=0;
+        for (int j = 0; j < columns; j++){
+        	for (int i = j; i < rows; i++){
+        		s=0;
+        		for (int k = 0; k < j; k++){
+        			s = s + l.get(i, k)*u.get(k, j);
+        		}
+        		l.set(i,j,get(i, j) - s);
+        	}
+        	
+        	for (int i = j; i < l.rows(); i++){
+        		s=0;
+        		for (int k = 0; k < j; k++){
+        			s = s + l.get(j, k)*u.get(k, i);
+        		}
+	        		if (l.get(j, j) == 0) throw new IllegalArgumentException("Singular matrix!");
+	        		u.set(j,i,(get(j, i) - s)/l.get(j, j));
+        		}       	
+        }
+        
+    	return l.product();
+    }
+
+    
 }

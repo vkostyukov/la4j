@@ -36,4 +36,5 @@ public class DenseSafeMatrix extends AbstractSafeMatrix implements DenseMatrix {
     public double[][] toArray() {
         return dense.toArray();
     }
+
 }

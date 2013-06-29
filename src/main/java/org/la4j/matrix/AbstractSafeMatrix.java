@@ -511,4 +511,9 @@ public abstract class AbstractSafeMatrix implements Matrix {
                                                + i);
         }
     }
+    
+    @Override
+    public double crout(){
+    	return self.crout();
+    }
 }

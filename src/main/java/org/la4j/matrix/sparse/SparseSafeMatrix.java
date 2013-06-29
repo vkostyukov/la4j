@@ -42,4 +42,6 @@ public class SparseSafeMatrix extends AbstractSafeMatrix
     public double density() {
         return sparse.density();
     }
+
+
 }
