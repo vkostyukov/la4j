@@ -28,7 +28,6 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
@@ -385,23 +384,26 @@ public abstract class AbstractVectorTest extends TestCase {
 
         if (vector1.length() == vector2.length()) {
 
-            ArrayList<Double> b = new ArrayList<Double>();
-            for (int i = 0; i < vector2.length(); i++) {
-                b.add(vector2.get(i));
-            }
+            boolean[] checkList = new boolean[vector1.length()];
+
             for (int i = 0; i < vector1.length(); i++) {
-                for (int j = 0; j < b.size(); j++) {
-                    if (vector1.get(i) == b.get(j)) {
-                        b.remove(j);
-                        break;
+                for (int j = 0; j < vector2.length(); j++) {
+                    if (vector1.get(i) == vector2.get(j)) {
+                        if (checkList[j] == false) {
+                            checkList[j] = true;
+                            break;
+                        }
                     }
                 }
             }
-            if (b.size() == 0) {
-                return true;
-            } else {
-                return false;
+
+            boolean result = true;
+            for (int i = 0; i < checkList.length; i++) {
+                if (checkList[i] == false) {
+                    result = false;
+                }
             }
+            return result;
         } else {
             return false;
         }
