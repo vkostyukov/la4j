@@ -345,12 +345,12 @@ public abstract class AbstractSafeVector implements Vector {
     }
     
     @Override
-    public Vector shuffle(){
+    public Vector shuffle() {
         return self.shuffle();
     }
 
     @Override
-    public Vector shuffle(Factory factory){
+    public Vector shuffle(Factory factory) {
         return self.shuffle(factory);
     }
 }

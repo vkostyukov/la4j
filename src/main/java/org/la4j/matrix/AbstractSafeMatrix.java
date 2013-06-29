@@ -97,12 +97,12 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
     
     @Override
-    public Matrix shuffle(){
+    public Matrix shuffle() {
         return self.shuffle(factory);
     }
-    
+
     @Override
-    public Matrix shuffle(Factory factory){
+    public Matrix shuffle(Factory factory) {
         return self.shuffle(factory);
     }
 

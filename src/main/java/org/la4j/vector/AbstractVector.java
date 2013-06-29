@@ -549,22 +549,18 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector shuffle(Factory factory) {
-        double[] vector = new double[length];
-        for (int i = 0; i < length; i++) {
-            vector[i] = get(i);
-        }
+        
+        Vector vector = copy(factory);
 
         //Conduct Fisher-Yates shuffle
         Random rnd = new Random();
-        for (int i = vector.length - 1; i >= 0; i--) {
-            int index = rnd.nextInt(i + 1);
-            // Simple swap
-            double a = vector[index];
-            vector[index] = vector[i];
-            vector[i] = a;
+        for (int i = length - 1; i >= 0; i--) {
+            int rand = rnd.nextInt(i + 1);
+            double a = vector.get(rand);
+            vector.set(rand, vector.get(i));
+            vector.set(i, a);
         }
-
-        return factory().createVector(vector);
+        return vector;
     }
 
 }

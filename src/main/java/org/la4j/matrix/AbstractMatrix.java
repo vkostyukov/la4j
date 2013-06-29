@@ -660,17 +660,16 @@ public abstract class AbstractMatrix implements Matrix {
 
     public Matrix shuffle(Factory factory) {
 
-        Matrix result = copy();
+        Matrix result = copy(factory);
 
         // Conduct Fisher-Yates shuffle
         Random rnd = new Random();
-        for (int i = result.rows() - 1; i >= 0; i--) {
-            for (int j = result.columns() - 1; j >= 0; j--) {
-                int index_row = rnd.nextInt(i + 1);
-                int index_column = rnd.nextInt(j + 1);
-                // Simple swap
-                double a = result.get(index_row, index_column);
-                result.set(index_row, index_column, result.get(i, j));
+        for (int i = rows - 1; i >= 0; i--) {
+            for (int j = columns - 1; j >= 0; j--) {
+                int ii = rnd.nextInt(i + 1);
+                int jj = rnd.nextInt(j + 1);
+                double a = result.get(ii, jj);
+                result.set(ii, jj, result.get(i, j));
                 result.set(i, j, a);
             }
         }
