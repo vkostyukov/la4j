@@ -369,4 +369,59 @@ public abstract class AbstractVectorTest extends TestCase {
                 { 21, 33, 39, 51 }, { 35, 55, 65, 85 } });
         assertEquals(c, a.outerProduct(b));
     }
+    
+    /**
+     * Tests whether two vectors contain the same elements
+     * 
+     * @param vector1
+     *            Vector1
+     * @param vector2
+     *            Vector2
+     * @return True if both vectors contain the same elements
+     */
+    public boolean testWhetherVectorsContainSameElements(Vector vector1,
+            Vector vector2) {
+
+        if (vector1.length() == vector2.length()) {
+
+            boolean[] checkList = new boolean[vector1.length()];
+
+            for (int i = 0; i < vector1.length(); i++) {
+                for (int j = 0; j < vector2.length(); j++) {
+                    if (vector1.get(i) == vector2.get(j)) {
+                        if (checkList[j] == false) {
+                            checkList[j] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            boolean result = true;
+            for (int i = 0; i < checkList.length; i++) {
+                if (checkList[i] == false) {
+                    result = false;
+                }
+            }
+            return result;
+        } else {
+            return false;
+        }
+    }
+    
+    public void testTestWhetherVectorsContainSameElements() {
+        Vector a = factory().createVector(new double[] { 1.0, 1.0, 3.0, 4.0 });
+        Vector b = factory().createVector(new double[] { 4.0, 1.0, 1.0, 3.0 });
+        assertTrue(testWhetherVectorsContainSameElements(a, b));
+
+        Vector c = factory().createVector(new double[] { 4.0, 2.0, 1.0, 3.0 });
+        assertFalse(testWhetherVectorsContainSameElements(a, c));
+    }
+
+    public void testShuffle() {
+        Vector a = factory().createVector(new double[] { 1.0, 1.0, 3.0, 4.0 });
+        Vector b = a.shuffle();
+        assertTrue(testWhetherVectorsContainSameElements(a, b));
+    }
+    
 }

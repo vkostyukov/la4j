@@ -28,6 +28,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
@@ -902,6 +903,108 @@ public abstract class AbstractMatrixTest extends TestCase {
         a.setRow(3, a.getRow(2));
 
         assertEquals(b, a);
+    }
+    
+    
+    
+    /**
+     * Returns true if both matrices contain the same elements and have equal
+     * dimensions.
+     * 
+     * @param matrix1
+     *            Matrix 1
+     * @param matrix2
+     *            Matrix 2
+     * @return True if both matrices contain the same elements and have equal
+     *         dimensions.
+     */
+    public boolean testWhetherMatricesContainSameElements(Matrix matrix1, Matrix matrix2) {
+
+        // Test for equal columns and rows
+        if (matrix1.rows() != matrix2.rows()) {
+            return false;
+        }
+        if (matrix1.columns() != matrix2.columns()) {
+            return false;
+        }
+
+        // Test for same elements
+        double[] a = new double[matrix1.columns() * matrix1.rows()];
+        int k = 0;
+        for (int i = 0; i < matrix1.rows(); i++) {
+            for (int j = 0; j < matrix1.columns(); j++) {
+                a[k] = matrix1.get(i, j);
+                k++;
+            }
+        }
+        ArrayList<Double> b = new ArrayList<Double>();
+        for (int i = 0; i < matrix2.rows(); i++) {
+            for (int j = 0; j < matrix2.columns(); j++) {
+                b.add(matrix2.get(i, j));
+            }
+        }
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if (a[i] == b.get(j)) {
+                    b.remove(j); // If match found, remove it from ArrayList to
+                                 // decrease complexity
+                    break;
+                }
+            }
+        }
+
+        if (b.size() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public void testTestWhetherMatricesContainSameElements() {
+        Matrix m1 = factory().createMatrix(new double[][] { 
+                { 1.0, 1.0, 3.0 }, 
+                { 4.0, 5.0, 6.0 },
+                { 7.0, 8.0, 9.0 } 
+        });
+        Matrix m2 = factory().createMatrix(new double[][] { 
+                { 1.0, 1.0, 4.0 }, 
+                { 5.0, 6.0, 9.0 },
+                { 7.0, 3.0, 8.0 } 
+        });
+
+        assertTrue(testWhetherMatricesContainSameElements(m1, m2));
+
+        Matrix m3 = factory().createMatrix(new double[][] { 
+                { 1.0, 1.0, 3.0 }, 
+                { 4.0, 52.0, 6.0 },
+                { 7.0, 8.0, 9.0 } 
+        });
+        
+        assertFalse(testWhetherMatricesContainSameElements(m1, m3));
+    }
+    
+    public void testShuffle_3x2() {
+        Matrix m1 = factory().createMatrix(new double[][] { 
+                { 1.0, 2.0 }, 
+                { 4.0, 5.0 }, 
+                { 7.0, 8.0 } 
+        });
+        Matrix m2 = m1.shuffle();
+        
+        assertTrue(testWhetherMatricesContainSameElements(m1, m2));
+    }
+    
+    public void testShuffle_5x3() {
+        Matrix m1 = factory().createMatrix(new double[][] { 
+                { 1.0, 2.0, 3.0 }, 
+                { 4.0, 5.0, 6.0 },
+                { 7.0, 8.0, 9.0 }, 
+                { 10.0, 11.0, 12.0 },
+                { 13.0, 14.0, 15.0 }
+        });
+        Matrix m2 = m1.shuffle();
+        
+        assertTrue(testWhetherMatricesContainSameElements(m1, m2));
     }
 
     public void testRotate_3x1() {

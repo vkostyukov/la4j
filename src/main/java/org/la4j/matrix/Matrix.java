@@ -502,6 +502,26 @@ public interface Matrix extends Externalizable {
      * @return
      */
     Matrix resizeColumns(int columns, Factory factory);
+    
+    /**
+     * Matrix that contains the same elements but with the elements shuffled
+     * around (which might also result in the same matrix (with a small
+     * likelihood)).
+     * 
+     * @return The shuffled matrix.
+     */
+    Matrix shuffle();
+
+    /**
+     * Matrix that contains the same elements but with the elements shuffled
+     * around (which might also result in the same matrix (with a small
+     * likelihood)).
+     * 
+     * @param factory
+     *            The factory to use for this
+     * @return The shuffled matrix.
+     */
+    Matrix shuffle(Factory factory);
 
     /**
      * 

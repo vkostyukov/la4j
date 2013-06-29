@@ -22,6 +22,8 @@
 
 package org.la4j.vector;
 
+import java.util.Random;
+
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
@@ -538,5 +540,29 @@ public abstract class AbstractVector implements Vector {
         if (length < 0) {
             throw new IllegalArgumentException("Wrong vector length: " + length);
         }
+    }
+    
+    @Override
+    public Vector shuffle() {
+        return shuffle(factory);
+    }
+
+    @Override
+    public Vector shuffle(Factory factory) {
+
+        ensureFactoryIsNotNull(factory);
+
+        Vector vector = copy(factory);
+
+        // Conduct Fisher-Yates shuffle
+        Random rnd = new Random();
+        for (int i = 0; i < length; i++) {
+            int rand = rnd.nextInt(length - i) + i;
+            double a = vector.get(rand);
+            vector.set(rand, vector.get(i));
+            vector.set(i, a);
+        }
+
+        return vector;
     }
 }
