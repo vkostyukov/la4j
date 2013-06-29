@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
@@ -16,6 +16,7 @@
  * limitations under the License.
  * 
  * Contributor(s): Daniel Renshaw
+ *                 Jakob Moellers
  * 
  */
 
@@ -369,7 +370,7 @@ public abstract class AbstractVectorTest extends TestCase {
                 { 21, 33, 39, 51 }, { 35, 55, 65, 85 } });
         assertEquals(c, a.outerProduct(b));
     }
-    
+
     /**
      * Tests whether two vectors contain the same elements
      * 
@@ -408,7 +409,7 @@ public abstract class AbstractVectorTest extends TestCase {
             return false;
         }
     }
-    
+
     public void testTestWhetherVectorsContainSameElements() {
         Vector a = factory().createVector(new double[] { 1.0, 1.0, 3.0, 4.0 });
         Vector b = factory().createVector(new double[] { 4.0, 1.0, 1.0, 3.0 });
@@ -423,5 +424,4 @@ public abstract class AbstractVectorTest extends TestCase {
         Vector b = a.shuffle();
         assertTrue(testWhetherVectorsContainSameElements(a, b));
     }
-    
 }

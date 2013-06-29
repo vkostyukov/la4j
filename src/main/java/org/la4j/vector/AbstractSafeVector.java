@@ -16,6 +16,7 @@
  * limitations under the License.
  * 
  * Contributor(s): Daniel Renshaw
+ *                 Jakob Moellers
  * 
  */
  
@@ -221,6 +222,16 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
+    public Vector shuffle() {
+        return self.shuffle(factory);
+    }
+
+    @Override
+    public Vector shuffle(Factory factory) {
+        return self.shuffle(factory);
+    }
+
+    @Override
     public Vector sliceLeft(int until) {
         return self.sliceLeft(until, factory);
     }
@@ -342,15 +353,5 @@ public abstract class AbstractSafeVector implements Vector {
         if (i >= self.length() || i < 0) {
             throw new IllegalArgumentException("Index out of bounds: " + i);
         }
-    }
-    
-    @Override
-    public Vector shuffle() {
-        return self.shuffle(factory);
-    }
-
-    @Override
-    public Vector shuffle(Factory factory) {
-        return self.shuffle(factory);
     }
 }

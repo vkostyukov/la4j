@@ -16,6 +16,7 @@
  * limitations under the License.
  * 
  * Contributor(s): Daniel Renshaw
+ *                 Jakob Moellers
  * 
  */
 
@@ -343,6 +344,26 @@ public interface Vector extends Externalizable {
     Vector resize(int length, Factory factory);
 
     /**
+     * Vector that contains the same elements but with the elements shuffled
+     * around (which might also result in the same vector (all outcomes are
+     * equally probable)).
+     * 
+     * @return The shuffled vector.
+     */
+    Vector shuffle();
+
+    /**
+     * Vector that contains the same elements but with the elements shuffled
+     * around (which might also result in the same vector (all outcomes are
+     * equally probable)).
+     * 
+     * @param factory
+     *            The factory to use for this
+     * @return The shuffled vector.
+     */
+    Vector shuffle(Factory factory);
+
+    /**
      * Slices this vector to given interval [{@code from}; {@code until}). 
      * The new vector will be constructed with default {@link Factory factory}.
      * 
@@ -505,25 +526,4 @@ public interface Vector extends Externalizable {
      * @return unsafe vector
      */
     Vector unsafe();
-    
-    /**
-     * Vector that contains the same elements but with the elements shuffled
-     * around (which might also result in the same vector (all outcomes are
-     * equally probable)).
-     * 
-     * @return The shuffled vector.
-     */
-    Vector shuffle();
-
-    /**
-     * Vector that contains the same elements but with the elements shuffled
-     * around (which might also result in the same vector (all outcomes are
-     * equally probable)).
-     * 
-     * @param factory
-     *            The factory to use for this
-     * @return The shuffled vector.
-     */
-    Vector shuffle(Factory factory);
-
 }

@@ -16,6 +16,7 @@
  * limitations under the License.
  * 
  * Contributor(s): Evgenia Krivova
+ *                 Jakob Moellers
  * 
  */
 
@@ -904,9 +905,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 
         assertEquals(b, a);
     }
-    
-    
-    
+
     /**
      * Returns true if both matrices contain the same elements and have equal
      * dimensions.
@@ -918,7 +917,8 @@ public abstract class AbstractMatrixTest extends TestCase {
      * @return True if both matrices contain the same elements and have equal
      *         dimensions.
      */
-    public boolean testWhetherMatricesContainSameElements(Matrix matrix1, Matrix matrix2) {
+    public boolean testWhetherMatricesContainSameElements(Matrix matrix1, 
+            Matrix matrix2) {
 
         // Test for equal columns and rows
         if (matrix1.rows() != matrix2.rows()) {
@@ -959,13 +959,14 @@ public abstract class AbstractMatrixTest extends TestCase {
             return false;
         }
     }
-    
+
     public void testTestWhetherMatricesContainSameElements() {
         Matrix m1 = factory().createMatrix(new double[][] { 
                 { 1.0, 1.0, 3.0 }, 
                 { 4.0, 5.0, 6.0 },
                 { 7.0, 8.0, 9.0 } 
         });
+
         Matrix m2 = factory().createMatrix(new double[][] { 
                 { 1.0, 1.0, 4.0 }, 
                 { 5.0, 6.0, 9.0 },
@@ -979,7 +980,7 @@ public abstract class AbstractMatrixTest extends TestCase {
                 { 4.0, 52.0, 6.0 },
                 { 7.0, 8.0, 9.0 } 
         });
-        
+
         assertFalse(testWhetherMatricesContainSameElements(m1, m3));
     }
     
@@ -989,8 +990,9 @@ public abstract class AbstractMatrixTest extends TestCase {
                 { 4.0, 5.0 }, 
                 { 7.0, 8.0 } 
         });
+
         Matrix m2 = m1.shuffle();
-        
+
         assertTrue(testWhetherMatricesContainSameElements(m1, m2));
     }
     
@@ -1002,8 +1004,9 @@ public abstract class AbstractMatrixTest extends TestCase {
                 { 10.0, 11.0, 12.0 },
                 { 13.0, 14.0, 15.0 }
         });
+
         Matrix m2 = m1.shuffle();
-        
+
         assertTrue(testWhetherMatricesContainSameElements(m1, m2));
     }
 

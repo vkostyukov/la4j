@@ -17,6 +17,7 @@
  * 
  * Contributor(s): Daniel Renshaw
  *                 Ewald Grusk
+ *                 Jakob Moellers
  * 
  */
 
@@ -348,6 +349,31 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public Vector shuffle() {
+        return shuffle(factory);
+    }
+
+    @Override
+    public Vector shuffle(Factory factory) {
+        ensureFactoryIsNotNull(factory);
+
+        Vector result = copy(factory);
+
+        // Conduct Fisher-Yates shuffle
+        Random rnd = new Random();
+
+        for (int i = 0; i < length; i++) {
+            int ii = rnd.nextInt(length - i) + i;
+
+            double a = result.get(ii);
+            result.set(ii, result.get(i));
+            result.set(i, a);
+        }
+
+        return result;
+    }
+
+    @Override
     public Vector sliceLeft(int until) {
         return slice(0, until, factory);
     }
@@ -540,29 +566,5 @@ public abstract class AbstractVector implements Vector {
         if (length < 0) {
             throw new IllegalArgumentException("Wrong vector length: " + length);
         }
-    }
-    
-    @Override
-    public Vector shuffle() {
-        return shuffle(factory);
-    }
-
-    @Override
-    public Vector shuffle(Factory factory) {
-
-        ensureFactoryIsNotNull(factory);
-
-        Vector vector = copy(factory);
-
-        // Conduct Fisher-Yates shuffle
-        Random rnd = new Random();
-        for (int i = 0; i < length; i++) {
-            int rand = rnd.nextInt(length - i) + i;
-            double a = vector.get(rand);
-            vector.set(rand, vector.get(i));
-            vector.set(i, a);
-        }
-
-        return vector;
     }
 }

@@ -680,20 +680,24 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     public Matrix shuffle(Factory factory) {
+        ensureFactoryIsNotNull(factory);
 
         Matrix result = copy(factory);
 
         // Conduct Fisher-Yates shuffle
         Random rnd = new Random();
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 int ii = rnd.nextInt(rows - i) + i;
                 int jj = rnd.nextInt(columns - j) + j;
+
                 double a = result.get(ii, jj);
                 result.set(ii, jj, result.get(i, j));
                 result.set(i, j, a);
             }
         }
+
         return result;
     }
 

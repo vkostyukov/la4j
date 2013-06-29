@@ -5,6 +5,7 @@ la4j-0.4.5 `Dec 2013`
  * Bug fix in `Vector.subtract` method (contributed by Ewald Grusk)
  * Bug fix in `Matrix.subtruct` method (contributed by Ewald Grusk)
  * New matrix method `rotate` (contributed by Jakob Moellers)
+ * New matrix method `shuffle` (contributed by Jakob Moellers)
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)
