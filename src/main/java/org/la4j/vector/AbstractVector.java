@@ -550,6 +550,8 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector shuffle(Factory factory) {
 
+        ensureFactoryIsNotNull(factory);
+
         Vector vector = copy(factory);
 
         // Conduct Fisher-Yates shuffle
@@ -560,7 +562,7 @@ public abstract class AbstractVector implements Vector {
             vector.set(rand, vector.get(i));
             vector.set(i, a);
         }
+
         return vector;
     }
-
 }

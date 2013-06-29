@@ -346,7 +346,7 @@ public abstract class AbstractSafeVector implements Vector {
     
     @Override
     public Vector shuffle() {
-        return self.shuffle();
+        return self.shuffle(factory);
     }
 
     @Override
