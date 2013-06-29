@@ -343,4 +343,14 @@ public abstract class AbstractSafeVector implements Vector {
             throw new IllegalArgumentException("Index out of bounds: " + i);
         }
     }
+    
+    @Override
+    public Vector shuffle() {
+        return self.shuffle(factory);
+    }
+
+    @Override
+    public Vector shuffle(Factory factory) {
+        return self.shuffle(factory);
+    }
 }

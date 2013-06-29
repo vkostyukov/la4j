@@ -23,6 +23,8 @@
 
 package org.la4j.matrix;
 
+import java.util.Random;
+
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInvertor;
@@ -669,6 +671,28 @@ public abstract class AbstractMatrix implements Matrix {
             }
         }
 
+        return result;
+    }
+    
+    public Matrix shuffle() {
+        return shuffle(factory);
+    }
+
+    public Matrix shuffle(Factory factory) {
+
+        Matrix result = copy(factory);
+
+        // Conduct Fisher-Yates shuffle
+        Random rnd = new Random();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                int ii = rnd.nextInt(rows - i) + i;
+                int jj = rnd.nextInt(columns - j) + j;
+                double a = result.get(ii, jj);
+                result.set(ii, jj, result.get(i, j));
+                result.set(i, j, a);
+            }
+        }
         return result;
     }
 
