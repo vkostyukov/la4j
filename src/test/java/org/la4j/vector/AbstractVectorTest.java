@@ -407,7 +407,7 @@ public abstract class AbstractVectorTest extends TestCase {
         }
     }
     
-    public void testContainsSameElementsAsVector() {
+    public void testTestWhetherVectorsContainSameElements() {
         Vector a = factory().createVector(new double[] { 1.0, 1.0, 3.0, 4.0 });
         Vector b = factory().createVector(new double[] { 4.0, 1.0, 1.0, 3.0 });
         assertTrue(testWhetherVectorsContainSameElements(a, b));

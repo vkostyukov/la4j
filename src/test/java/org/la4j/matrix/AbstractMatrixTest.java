@@ -960,7 +960,7 @@ public abstract class AbstractMatrixTest extends TestCase {
         }
     }
     
-    public void testContainsSameElementsAsMatrix() {
+    public void testTestWhetherMatricesContainSameElements() {
         Matrix m1 = factory().createMatrix(new double[][] { 
                 { 1.0, 1.0, 3.0 }, 
                 { 4.0, 5.0, 6.0 },
