@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 import org.la4j.decomposition.CholeskyDecompositor;
+import org.la4j.decomposition.CroutDecompositor;
 import org.la4j.decomposition.EigenDecompositor;
 import org.la4j.decomposition.LUDecompositor;
 import org.la4j.decomposition.MatrixDecompositor;
@@ -902,4 +903,10 @@ public final class Matrices {
         return new FunctionMatrixAccumulator(new ProductMatrixAccumulator(
                                              neutral), function);
     }
+    /**
+     * The {@link CroutDecompositor} singleton instance.
+     */
+    public final static MatrixDecompositor Crout_DECOMPOSITOR = 
+            new CroutDecompositor();
+
 }

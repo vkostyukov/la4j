@@ -227,8 +227,9 @@ public abstract class AbstractMatrix implements Matrix {
                    get(0, 1) * get(1, 0) * get(2, 2) -
                    get(0, 0) * get(1, 2) * get(2, 1);
         }
-
-        return triangularize().product();
+        
+        return decompose(Matrices.Crout_DECOMPOSITOR)[0].product();
+        
     }
 
     @Override
