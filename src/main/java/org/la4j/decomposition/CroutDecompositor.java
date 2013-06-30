@@ -1,6 +1,7 @@
 package org.la4j.decomposition;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 
 /**
@@ -32,10 +33,9 @@ public class CroutDecompositor implements MatrixDecompositor {
 
         Matrix l = factory.createMatrix(matrix.rows(), matrix.columns());
         Matrix u = factory.createIdentityMatrix(matrix.rows());
-        double s=0;
         for (int j = 0; j < l.columns(); j++){
         	for (int i = j; i < l.rows(); i++){
-        		s=0;
+        		double s = 0.0;
         		for (int k = 0; k < j; k++){
         			s = s + l.get(i, k)*u.get(k, j);
         		}
@@ -43,11 +43,13 @@ public class CroutDecompositor implements MatrixDecompositor {
         	}
         		
         	for (int i = j; i < l.rows(); i++){
-        		s=0;
+        		double s = 0.0;
         		for (int k = 0; k < j; k++){
         			s = s + l.get(j, k)*u.get(k, i);
         		}
-	        		if (l.get(j, j) == 0) throw new IllegalArgumentException("Singular matrix!");
+        		if (Math.abs(l.get(j, j)) < Matrices.EPS){
+        			throw new IllegalArgumentException("Singular matrix!");
+        		}
 	        		u.set(j,i,(matrix.get(j, i) - s)/l.get(j, j));
         		}        		        	
         }

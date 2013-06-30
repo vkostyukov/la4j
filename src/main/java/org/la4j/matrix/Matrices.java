@@ -906,7 +906,7 @@ public final class Matrices {
     /**
      * The {@link CroutDecompositor} singleton instance.
      */
-    public final static MatrixDecompositor Crout_DECOMPOSITOR = 
+    public final static MatrixDecompositor CROUT_DECOMPOSITOR = 
             new CroutDecompositor();
 
 }

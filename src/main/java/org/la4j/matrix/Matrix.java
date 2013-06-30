@@ -681,15 +681,5 @@ public interface Matrix extends Externalizable {
      * Wraps this matrix with unsafe interface
      */
     Matrix unsafe();
-  
-    /**
-     * Returns the "determinant" of this matrix, computed with Crout LU-decomposition method.
-     * <p>
-     * See <a href="http://math.fullerton.edu/mathews/n2003/CholeskyMod.html">
-     * http://math.fullerton.edu/mathews/n2003/CholeskyMod.html</a> for more details.
-     * </p>
-     * 
-     * @return the "determinant" of this matrix
-     */   
-    double crout();
+    
 }
