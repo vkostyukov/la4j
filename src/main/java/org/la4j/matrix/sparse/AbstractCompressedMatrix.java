@@ -45,7 +45,7 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
 
     @Override
     public double density() {
-        return cardinality / (rows * columns);
+        return cardinality / (double) (rows * columns);
     }
 
     @Override
