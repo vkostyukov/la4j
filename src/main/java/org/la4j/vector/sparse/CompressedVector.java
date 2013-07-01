@@ -179,7 +179,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     @Override
     public double density() {
-        return cardinality / length;
+        return cardinality / (double) length;
     }
 
     @Override
