@@ -681,4 +681,5 @@ public interface Matrix extends Externalizable {
      * Wraps this matrix with unsafe interface
      */
     Matrix unsafe();
+    
 }
