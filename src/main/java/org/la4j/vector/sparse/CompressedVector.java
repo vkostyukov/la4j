@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Contributor(s): -
+ * Contributor(s): Ewald Grusk
  * 
  */
 
@@ -179,7 +179,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     @Override
     public double density() {
-        return cardinality / length;
+        return cardinality / (double) length;
     }
 
     @Override

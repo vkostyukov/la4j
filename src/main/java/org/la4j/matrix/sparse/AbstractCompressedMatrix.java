@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Contributor(s): -
+ * Contributor(s): Ewald Grusk
  * 
  */
 
@@ -45,7 +45,7 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
 
     @Override
     public double density() {
-        return cardinality / (rows * columns);
+        return cardinality / (double) (rows * columns);
     }
 
     @Override
