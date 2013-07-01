@@ -37,7 +37,7 @@ public class CroutDecompositor implements MatrixDecompositor {
             for (int i = j; i < l.rows(); i++){
                 double s = 0.0;
                 for (int k = 0; k < j; k++){
-                    s = s + l.get(i, k)*u.get(k, j);
+                    s = s + l.get(i, k) * u.get(k, j);
                 }
                 l.set(i,j,matrix.get(i, j) - s);
             }
@@ -45,12 +45,12 @@ public class CroutDecompositor implements MatrixDecompositor {
             for (int i = j; i < l.rows(); i++){
                 double s = 0.0;
                 for (int k = 0; k < j; k++){
-                    s = s + l.get(j, k)*u.get(k, i);
+                    s = s + l.get(j, k) * u.get(k, i);
                 }
                 if (Math.abs(l.get(j, j)) < Matrices.EPS){
                     throw new IllegalArgumentException("Singular matrix!");
                 }
-                    u.set(j,i,(matrix.get(j, i) - s)/l.get(j, j));
+                    u.set(j, i, (matrix.get(j, i) - s) / l.get(j, j));
                 }        		        	
         }
   
