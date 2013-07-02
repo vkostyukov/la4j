@@ -57,6 +57,7 @@ made by the authors:
 - Daniel Renshaw
 - Ewald Grusk
 - Jakob Moellers
+- Yuriy Drozd
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013

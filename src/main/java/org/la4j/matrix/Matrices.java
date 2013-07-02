@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Contributor(s): -
+ * Contributor(s): Yuriy Drozd
  * 
  */
 
@@ -646,6 +646,12 @@ public final class Matrices {
             new SingularValueDecompositor();
 
     /**
+     * The {@link CroutDecompositor} singleton instance.
+     */
+    public final static MatrixDecompositor CROUT_DECOMPOSITOR = 
+            new CroutDecompositor();
+
+    /**
      * The {@link GaussianInvertor} singleton instance.
      */
     public final static MatrixInvertor GAUSSIAN_INVERTOR =
@@ -903,10 +909,4 @@ public final class Matrices {
         return new FunctionMatrixAccumulator(new ProductMatrixAccumulator(
                                              neutral), function);
     }
-    /**
-     * The {@link CroutDecompositor} singleton instance.
-     */
-    public final static MatrixDecompositor CROUT_DECOMPOSITOR = 
-            new CroutDecompositor();
-
 }
