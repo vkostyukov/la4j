@@ -181,6 +181,10 @@ public interface Matrix extends Externalizable {
      * @return multiplied matrix
      */
     Matrix multiply(Matrix matrix);
+    
+    Matrix fmultiply(Matrix matrix);
+    
+    Matrix fmultiply(Matrix matrix, Factory factory); 
 
     /**
      * Multiplies this matrix to other <code>matrix</code> with specified
