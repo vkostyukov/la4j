@@ -36,7 +36,6 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 
 public abstract class AbstractVectorTest extends TestCase {
-    private static final double DELTA = 1e-10;
 
     public abstract Factory factory();
 
@@ -357,17 +356,25 @@ public abstract class AbstractVectorTest extends TestCase {
     }
     
     public void testInnerProduct() {
+
         Vector a = factory().createVector(new double[] { 2, 3, 5, 7 });
         Vector b = factory().createVector(new double[] { 11, 13, 17, 19 });
+
         // 2 * 11 + 3 * 13 + 5 * 17 + 7 * 19 = 279
-        assertEquals(279.0, a.innerProduct(b), DELTA);
+        assertEquals(279.0, a.innerProduct(b));
     }
 
     public void testOuterProduct() {
+
         Vector a = factory().createVector(new double[] { 2, 3, 5 });
         Vector b = factory().createVector(new double[] { 7, 11, 13, 17 });
-        Matrix c = factory().createMatrix(new double[][] { { 14, 22, 26, 34 },
-                { 21, 33, 39, 51 }, { 35, 55, 65, 85 } });
+
+        Matrix c = factory().createMatrix(new double[][] { 
+                { 14, 22, 26, 34 },
+                { 21, 33, 39, 51 }, 
+                { 35, 55, 65, 85 } 
+        });
+
         assertEquals(c, a.outerProduct(b));
     }
 
@@ -411,6 +418,7 @@ public abstract class AbstractVectorTest extends TestCase {
     }
 
     public void testTestWhetherVectorsContainSameElements() {
+
         Vector a = factory().createVector(new double[] { 1.0, 1.0, 3.0, 4.0 });
         Vector b = factory().createVector(new double[] { 4.0, 1.0, 1.0, 3.0 });
         assertTrue(testWhetherVectorsContainSameElements(a, b));
@@ -420,8 +428,10 @@ public abstract class AbstractVectorTest extends TestCase {
     }
 
     public void testShuffle() {
+
         Vector a = factory().createVector(new double[] { 1.0, 1.0, 3.0, 4.0 });
         Vector b = a.shuffle();
+
         assertTrue(testWhetherVectorsContainSameElements(a, b));
     }
 }

@@ -997,6 +997,7 @@ public abstract class AbstractMatrixTest extends TestCase {
     }
     
     public void testShuffle_5x3() {
+
         Matrix m1 = factory().createMatrix(new double[][] { 
                 { 1.0, 2.0, 3.0 }, 
                 { 4.0, 5.0, 6.0 },
@@ -1011,6 +1012,7 @@ public abstract class AbstractMatrixTest extends TestCase {
     }
 
     public void testRotate_3x1() {
+
         Matrix m1 = factory().createMatrix(new double[][] { 
                 { 1.0 }, 
                 { 3.0 }, 
@@ -1027,6 +1029,7 @@ public abstract class AbstractMatrixTest extends TestCase {
     }
 
     public void testRotate_2x2() {
+
         Matrix m1 = factory().createMatrix(new double[][] { 
                 { 1.0, 2.0 }, 
                 { 3.0, 4.0 } 
@@ -1043,6 +1046,7 @@ public abstract class AbstractMatrixTest extends TestCase {
     }
 
     public void testRotate_2x4() {
+
         Matrix m1 = factory().createMatrix(new double[][] { 
                 { 1.0, 2.0, 3.0, 4.0 },
                 { 5.0, 6.0, 7.0, 8.0 } 
@@ -1061,6 +1065,7 @@ public abstract class AbstractMatrixTest extends TestCase {
     }
 
     public void testRotate_5x3() {
+
         Matrix m1 = factory().createMatrix(new double[][] { 
                 { 1.0, 2.0, 3.0 }, 
                 { 4.0, 5.0, 6.0 },

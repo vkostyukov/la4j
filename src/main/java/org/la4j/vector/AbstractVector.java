@@ -241,12 +241,6 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    @Deprecated
-    public double product(Vector vector) {
-        return innerProduct(vector);
-    }
-
-    @Override
     public double innerProduct(Vector vector) {
 
         if (vector == null) {

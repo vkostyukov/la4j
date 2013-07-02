@@ -227,15 +227,6 @@ public interface Vector extends Externalizable {
      * @param vector
      * @return product of two vectors
      */
-    @Deprecated
-    double product(Vector vector);
-
-    /**
-     * Calculates the inner product of this vector and given {@code vector}.
-     * 
-     * @param vector
-     * @return product of two vectors
-     */
     double innerProduct(Vector vector);
 
     /**

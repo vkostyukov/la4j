@@ -148,12 +148,6 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
-    @Deprecated
-    public double product(Vector vector) {
-        return self.product(vector);
-    }
-
-    @Override
     public double innerProduct(Vector vector) {
         return self.innerProduct(vector);
     }
