@@ -511,4 +511,14 @@ public abstract class AbstractSafeMatrix implements Matrix {
                                                + i);
         }
     }
+    
+    @Override 
+    public Matrix fmultiply (Matrix matrix){
+        return self.fmultiply(matrix);
+    }
+    
+    @Override 
+    public Matrix fmultiply (Matrix matrix, Factory factory){
+        return self.fmultiply(matrix,factory);
+    }
 }

@@ -326,6 +326,34 @@ public abstract class AbstractMatrix implements Matrix {
 
         return result;
     }
+    
+    @Override
+    public Matrix fmultiply(Matrix matrix){
+        return fmultiply (matrix,factory);
+    }
+    
+    
+    @Override
+    public Matrix fmultiply(Matrix matrix, Factory factory){
+        ensureFactoryIsNotNull(factory);
+
+        if (matrix == null) {
+            throw new IllegalArgumentException("Matrix can't be null.");
+        }
+
+        if (columns != matrix.rows()) {
+            throw new IllegalArgumentException("Wrong matrix dimensions: " 
+                                               + matrix.rows() + "x" 
+                                               + matrix.columns());
+        }
+        
+        Matrix result = factory.createMatrix(rows(), matrix.columns());
+        for (int i = 0; i < rows(); i++)
+            for (int j = 0; j < matrix.columns(); j++)
+                result.set(i, j, getRow(i).innerProduct(matrix.getColumn(j)));
+        
+        return result;
+    }
 
     @Override
     public Vector multiply(Vector vector) {
