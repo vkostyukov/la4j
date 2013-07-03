@@ -1,11 +1,11 @@
 Changelog
 ---------
-la4j-0.4.5 `Dec 2013`
- * New vector methods: `innerProduct`, `outerProduct` (contributed by Daniel Renshaw)
- * Bug fix in `Vector.subtract` method (contributed by Ewald Grusk)
- * Bug fix in `Matrix.subtract` method (contributed by Ewald Grusk)
- * New matrix method `rotate` (contributed by Jakob Moellers)
- * New matrix method `shuffle` (contributed by Jakob Moellers)
+la4j-0.4.5 `Sep 2013`
+ * New vector methods: `innerProduct()`, `outerProduct()` (contributed by Daniel Renshaw)
+ * Bug fix in `Vector.subtract()` method (contributed by Ewald Grusk)
+ * Bug fix in `Matrix.subtract()` method (contributed by Ewald Grusk)
+ * New matrix method `rotate()` (contributed by Jakob Moellers)
+ * New matrix method `shuffle()` (contributed by Jakob Moellers)
  * Bug fix in `Vector.density()` and `Matrix.density()` (contributed by Ewald Grusk)
  * New decompositor class `CroutDecompositor` (contributed by Yuriy Drozd)
  * Bug fix in `Matrix.determinant()` method (contributed by Yuriy Drozd)
@@ -14,14 +14,14 @@ la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)
  * Performance improvement for matrix-by-matrix multiply algorithm (3x for dense, 11x for sparse)
  * New matrix method `rank()` (contributed by Evgenia Krivova)
- * New fast implementation of `determinant()` method
+ * New fast implementation of `Matrix.determinant()` method
  * New method `update()` (as compound operator replacement)
  * Matrices are unsafe by default (new corresponding methods `safe()` and `unsafe()`)
  * New method `slice()`
  * New matrix method `kronecker()` (contributed by Stefano Iannello)
  * Support map-reduce approach by method pair `transform()` and `fold()`
  * New matrices and vectors sources that handles IO streams
- * Support of building a constant matrix in factories
+ * Support of building a constant matrix in factories (via `createConstantMatrix()`)
  * Matrices and vectors are immutable in terms of dimension
  * Sparse entities are self-clearing (no memory leaks)
  * Support vector-by-matrix multiplication
