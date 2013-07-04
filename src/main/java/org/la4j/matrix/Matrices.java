@@ -175,7 +175,7 @@ public final class Matrices {
                 return false;
             } else {
                 size = rows;
-                values = new double[(size * size - size) / 2 ];
+                values = new double[(size * size - size) / 2];
                 Arrays.fill(values, Double.NaN);
 
                 return true;
@@ -184,15 +184,17 @@ public final class Matrices {
 
         @Override
         public boolean test(int i, int j, double value) {
-            int offset = -1;
+            if (i == j) {
+                return true;
+            }
+
+            final int offset;
 
             if (i < j) {
-                offset = j - (i + 1) + (int)((((size - 1) + (size - i)) / 2.0) 
-                         * i);
-            } else if (i > j) {
-                offset = i - (j + 1) + (int)((((size - 1) + (size - j)) / 2.0) 
-                         * j);
-            } else return true;
+                offset = i + (j * j - j) / 2;
+            } else {
+                offset = j + (i * i - i) / 2;
+            }
 
             if (Double.isNaN(values[offset])) {
                 values[offset] = value;
