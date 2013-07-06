@@ -84,6 +84,7 @@ public class EigenDecompositor implements MatrixDecompositor {
         Matrix v = factory.createIdentityMatrix(matrix.rows());
 
         int iteration = 0;
+        double n = 0.0;
 
         do {
 
@@ -100,10 +101,11 @@ public class EigenDecompositor implements MatrixDecompositor {
             r.set(l, generateRi(d.getRow(l), l));
 
             iteration++;
+            n = r.norm();
 
-        } while (r.norm() > Matrices.EPS && iteration < MAX_ITERATIONS);
+        } while (n > Matrices.EPS && iteration < MAX_ITERATIONS);
 
-        if (iteration > MAX_ITERATIONS) {
+        if (n > Matrices.EPS) {
             throw new IllegalArgumentException("Can't decompose this matrix.");
         }
 
