@@ -55,7 +55,7 @@ import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.source.Array1DMatrixSource;
 import org.la4j.matrix.source.Array2DMatrixSource;
-import org.la4j.matrix.source.IdentityMattixSource;
+import org.la4j.matrix.source.IdentityMatrixSource;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.source.RandomMatrixSource;
 import org.la4j.matrix.source.RandomSymmetricMatrixSource;
@@ -799,7 +799,7 @@ public final class Matrices {
      * @return
      */
     public static MatrixSource asIdentitySource(int size) {
-        return new IdentityMattixSource(size);
+        return new IdentityMatrixSource(size);
     }
 
     /**

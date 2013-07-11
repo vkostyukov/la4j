@@ -21,11 +21,11 @@
 
 package org.la4j.matrix.source;
 
-public class IdentityMattixSource implements MatrixSource {
+public class IdentityMatrixSource implements MatrixSource {
 
     private int size;
 
-    public IdentityMattixSource(int size) {
+    public IdentityMatrixSource(int size) {
         this.size = size;
     }
 
