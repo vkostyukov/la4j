@@ -26,7 +26,6 @@ import junit.framework.TestSuite;
 
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
-import org.la4j.vector.Vector;
 
 public class CompressedVectorTest extends SparseVectorTest {
 
@@ -37,13 +36,5 @@ public class CompressedVectorTest extends SparseVectorTest {
 
     public static Test suite() {
         return new TestSuite(CompressedVectorTest.class);
-    }
-    
-    public void testSwap1(){
-        CompressedVector a = new CompressedVector(new double[] {0.0, 1.0, 0.0, 2.0 });
-        CompressedVector b = new CompressedVector(new double[] {0.0, 0.0, 1.0, 2.0 });
-        a.swap(1, 2);
-        System.out.println(a.toString());
-        assertEquals(a,b);
     }
 }

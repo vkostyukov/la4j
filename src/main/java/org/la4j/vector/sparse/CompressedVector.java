@@ -16,6 +16,7 @@
  * limitations under the License.
  * 
  * Contributor(s): Ewald Grusk
+ *                 Yuriy Drozd
  * 
  */
 
@@ -134,55 +135,53 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         boolean iiNotZero = ii < cardinality && i == indices[ii];
         boolean jjNotZero = jj < cardinality && j == indices[jj];
 
-
         if (iiNotZero && jjNotZero) {
 
             double sd = values[ii];
             values[ii] = values[jj];
             values[jj] = sd;
 
-        } else {      
-            
+        } else {
+
             double notZero = values[iiNotZero ? ii : jj];
 
             int leftIndex = (ii < jj) ? ii : jj;
             int rightIndex = (ii > jj) ? ii : jj;
-            
-            if (((iiNotZero && (leftIndex == ii)) || (jjNotZero && (leftIndex == jj))) && (ii != jj)){
-                
+
+            if (((iiNotZero && (leftIndex == ii)) 
+                 || (jjNotZero && (leftIndex == jj))) && (ii != jj)) {
+
                 System.arraycopy(values, leftIndex + 1, values, leftIndex, 
                         cardinality - leftIndex);
                 System.arraycopy(values, rightIndex - 1, values, rightIndex, 
                         cardinality - rightIndex);
-                
+
                 values[rightIndex - 1] = notZero;
-                
+
                 System.arraycopy(indices, leftIndex + 1, indices, leftIndex, 
                         cardinality - leftIndex);
                 System.arraycopy(indices, rightIndex - 1, indices, rightIndex, 
                         cardinality - rightIndex);
-                
+
                 indices[rightIndex -1] = jjNotZero ? i : j;
-                
-            } 
-            
-            else if((iiNotZero && (rightIndex == ii)) || (jjNotZero && (rightIndex == jj))){
-            
+
+            } else if((iiNotZero && (rightIndex == ii)) 
+                      || (jjNotZero && (rightIndex == jj))) {
+
                 System.arraycopy(values, rightIndex + 1, values, rightIndex, 
                         cardinality - rightIndex);
-                System.arraycopy(values, leftIndex, values, leftIndex+1, 
+                System.arraycopy(values, leftIndex, values, leftIndex + 1, 
                         cardinality - leftIndex);
-                
+
                 values[leftIndex] = notZero;
-                
+
                 System.arraycopy(indices, rightIndex + 1, indices, rightIndex, 
                         cardinality - rightIndex);
-                System.arraycopy(indices, leftIndex, indices, leftIndex+1, 
+                System.arraycopy(indices, leftIndex, indices, leftIndex + 1, 
                         cardinality - leftIndex);
-                
+
                 indices[leftIndex] = jjNotZero ? i : j;
-                
-            }       
+            }
         }
     }
 

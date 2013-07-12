@@ -17,6 +17,7 @@
  * 
  * Contributor(s): Daniel Renshaw
  *                 Jakob Moellers
+ *                 Yuriy Drozd
  * 
  */
 
@@ -155,6 +156,20 @@ public abstract class AbstractVectorTest extends TestCase {
 
         a.swap(1, 2);
         assertEquals(b, a);
+    }
+
+    public void testSwap_4_2() {
+
+        Vector a = factory().createVector(new double[] 
+                { 0.0, 1.0, 0.0, 2.0 }
+        );
+
+        Vector b = factory().createVector(new double[] 
+                { 0.0, 0.0, 1.0, 2.0 }
+        );
+
+        a.swap(1, 2);
+        assertEquals(a,b);
     }
 
     public void testSwap_2() {
@@ -433,14 +448,5 @@ public abstract class AbstractVectorTest extends TestCase {
         Vector b = a.shuffle();
 
         assertTrue(testWhetherVectorsContainSameElements(a, b));
-    }
-    
-    public void testSwap(){
-        Vector a = factory().createVector(new double[] {0.0, 1.0, 0.0, 2.0 });
-        Vector b = factory().createVector(new double[] {0.0, 0.0, 1.0, 2.0 });
-        a.swap(1, 2);
-        
-        assertEquals(a,b);
-        
     }
 }
