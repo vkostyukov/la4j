@@ -62,7 +62,7 @@ public class MatrixSourcesTest extends TestCase {
 
     public void testIdentityMatrixSource() {
         for (Factory factory: FACTORIES) {
-            Matrix a = factory.createMatrix(new IdentityMattixSource(5));
+            Matrix a = factory.createMatrix(new IdentityMatrixSource(5));
 
             assertEquals(5, a.rows());
             assertEquals(5, a.columns());
