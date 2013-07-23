@@ -105,7 +105,7 @@ public class GaussianSolver implements LinearSystemSolver {
 
     private Vector retraceGaus(Matrix matrix, Factory factory) {
 
-        if (Math.abs(matrix.product()) < Matrices.EPS) {
+        if (Math.abs(matrix.diagonalProduct()) < Matrices.EPS) {
             throw new IllegalArgumentException("This system hasn't solution.");
         }
 
