@@ -229,7 +229,7 @@ public abstract class AbstractMatrix implements Matrix {
                    get(0, 0) * get(1, 2) * get(2, 1);
         }
 
-        return decompose(Matrices.CROUT_DECOMPOSITOR)[0].product();
+        return decompose(Matrices.CROUT_DECOMPOSITOR)[0].diagonalProduct();
     }
 
     @Override
@@ -544,7 +544,7 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public double product() {
+    public double diagonalProduct() {
 
         double result = 1;
 
