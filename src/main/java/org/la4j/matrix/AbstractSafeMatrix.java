@@ -217,8 +217,8 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
-    public double product() {
-        return self.product();
+    public double diagonalProduct() {
+        return self.diagonalProduct();
     }
 
     @Override

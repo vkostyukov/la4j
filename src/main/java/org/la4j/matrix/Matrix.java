@@ -311,7 +311,7 @@ public interface Matrix extends Externalizable {
      * 
      * @return the product of diagonal elements of this matrix
      */
-    double product();
+    double diagonalProduct();
 
     /**
      * Returns the "determinant" of this matrix.

@@ -764,7 +764,7 @@ public abstract class AbstractMatrixTest extends TestCase {
                 { 0.0, 0.0, 9.0 }
         });
 
-        assertTrue(Math.abs(a.product() - 45.0) < Matrices.EPS);
+        assertTrue(Math.abs(a.diagonalProduct() - 45.0) < Matrices.EPS);
     }
 
     public void testDeterminant_3x3() {
