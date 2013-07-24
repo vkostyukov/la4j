@@ -314,6 +314,20 @@ public interface Matrix extends Externalizable {
     double diagonalProduct();
 
     /**
+     * Productizes up all elements of the matrix
+     * 
+     * @return the product of all elements of the matrix
+     */
+    double product();
+
+    /**
+     * Summarizes up all elements of the matrix
+     * 
+     * @return the sum of all elements of the matrix
+     */
+    double sum();
+
+    /**
      * Returns the "determinant" of this matrix.
      * <p>
      * See <a href="http://mathworld.wolfram.com/Determinant.html">

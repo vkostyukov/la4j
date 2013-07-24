@@ -222,6 +222,16 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public double product() {
+        return self.product();
+    }
+
+    @Override
+    public double sum() {
+        return self.sum();
+    }
+
+    @Override
     public double determinant() {
         return self.determinant();
     }
