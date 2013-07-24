@@ -13,6 +13,7 @@ la4j-0.4.5 `Sep 2013`
  * Bug fix in `EigenDecompositor` (reported by Ewald Grusk)
  * Bug fix in `CompressedVector.swap()` (reported by Ewald Grusk, contributed by Yuriy Drozd)
  * Typo fix in `IdentityMattixSource` (reported by Ewald Grusk, contributed by Yuriy Drozd)
+ * Renamed `Matrix.product()` to `Matrix.diagonalProduct()` (contributed by Julia Kostyukova)
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)
