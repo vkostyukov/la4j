@@ -241,6 +241,16 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public double product() {
+        return fold(Vectors.asProductAccumulator(1));
+    }
+
+    @Override
+    public double sum() {
+        return fold(Vectors.asSumAccumulator(0));
+    }
+
+    @Override
     public double innerProduct(Vector vector) {
 
         if (vector == null) {

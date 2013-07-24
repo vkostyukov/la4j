@@ -316,6 +316,24 @@ public abstract class AbstractVectorTest extends TestCase {
         assertEquals(c, a.multiply(b));
     }
 
+    public void testProduct_3() {
+
+        Vector a = factory().createVector(new double[]
+                {2.0, 4.0, 6.0}
+        );
+
+        assertTrue(Math.abs(a.product() - 48.0) < Vectors.EPS);
+    }
+
+    public void testSum_3() {
+
+        Vector a = factory().createVector(new double[]
+                {2.0, 4.0, 6.0}
+        );
+
+        assertTrue(Math.abs(a.sum() - 12.0) < Vectors.EPS);
+    }
+
     public void testDivide_3() {
 
         Vector a = factory().createVector(new double[] 

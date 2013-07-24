@@ -556,6 +556,16 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public double product() {
+        return fold(Matrices.asProductAccumulator(1));
+    }
+
+    @Override
+    public double sum() {
+        return fold(Matrices.asSumAccumulator(0));
+    }
+
+    @Override
     public Matrix triangularize() {
         return triangularize(factory);
     }
