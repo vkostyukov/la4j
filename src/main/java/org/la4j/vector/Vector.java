@@ -222,6 +222,20 @@ public interface Vector extends Externalizable {
     Vector divide(double value, Factory factory);
 
     /**
+     * Productizes all elements of the vector
+     * 
+     * @return product of all vector elements
+     */
+    double product();
+
+    /**
+     * Summarizes all elements of the vector
+     * 
+     * @return sum of all elements of the vector
+     */
+    double sum();
+
+    /**
      * Calculates the inner product of this vector and given {@code vector}.
      * 
      * @param vector

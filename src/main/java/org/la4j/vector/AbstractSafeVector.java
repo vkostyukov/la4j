@@ -148,6 +148,16 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
+    public double product() {
+        return self.product();
+    }
+
+    @Override
+    public double sum() {
+        return self.sum();
+    }
+
+    @Override
     public double innerProduct(Vector vector) {
         return self.innerProduct(vector);
     }

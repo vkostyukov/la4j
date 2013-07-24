@@ -756,7 +756,7 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertTrue(Math.abs(a.trace() - 15.0) < Matrices.EPS);
     }
 
-    public void testProduct_3x3() {
+    public void testDiagonalProduct_3x3() {
 
         Matrix a = factory().createMatrix(new double[][] {
                 { 1.0, 0.0, 0.0 },
@@ -765,6 +765,28 @@ public abstract class AbstractMatrixTest extends TestCase {
         });
 
         assertTrue(Math.abs(a.diagonalProduct() - 45.0) < Matrices.EPS);
+    }
+
+    public void testProduct_3x3() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                {1.0, 1.0, 1.0},
+                {1.0, 5.0, 1.0},
+                {1.0, 1.0, 9.0}
+        });
+
+        assertTrue(Math.abs(a.product() - 45.0) < Matrices.EPS);
+    }
+
+    public void testSum_3x3() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 0.0, 0.0 },
+                { 0.0, 5.0, 0.0 },
+                { 0.0, 0.0, 9.0 } 
+        });
+
+        assertTrue(Math.abs(a.sum() - 15.0) < Matrices.EPS);
     }
 
     public void testDeterminant_3x3() {
