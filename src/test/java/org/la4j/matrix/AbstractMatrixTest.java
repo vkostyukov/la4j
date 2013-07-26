@@ -789,6 +789,29 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertTrue(Math.abs(a.sum() - 15.0) < Matrices.EPS);
     }
 
+    public void testHadamardProduct_3x3() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 2.0, 3.0 },
+                { 4.0, 5.0, 6.0 },
+                { 7.0, 8.0, 9.0 } 
+        });
+
+        Matrix b = factory().createMatrix(new double[][] {
+                { 9.0, 8.0, 7.0 },
+                { 6.0, 5.0, 4.0 },
+                { 3.0, 2.0, 1.0 } 
+        });
+
+        Matrix c = factory().createMatrix(new double[][] {
+                {  9.0, 16.0, 21.0 },
+                { 24.0, 25.0, 24.0 },
+                { 21.0, 16.0,  9.0 } 
+        });
+
+        assertEquals(c, a.hadamardProduct(b));
+    }
+
     public void testDeterminant_3x3() {
 
         Matrix a = factory().createMatrix(new double[][] {
