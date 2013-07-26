@@ -742,7 +742,7 @@ public abstract class AbstractMatrixTest extends TestCase {
                 { 00.0, 0.0, 0.0, 100.0, 0.0, 0.0 }
         });
 
-        assertEquals(c, a.kronecker(b));
+        assertEquals(c, a.kroneckerProduct(b));
     }
 
     public void testTrace_3x3() {

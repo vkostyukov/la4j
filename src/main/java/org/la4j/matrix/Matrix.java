@@ -285,7 +285,7 @@ public interface Matrix extends Externalizable {
      * @param matrix
      * @return
      */
-    Matrix kronecker(Matrix matrix);
+    Matrix kroneckerProduct(Matrix matrix);
 
     /**
      * Calculates the Kronecker product.
@@ -293,7 +293,7 @@ public interface Matrix extends Externalizable {
      * @param matrix
      * @return
      */
-    Matrix kronecker(Matrix matrix, Factory factory);
+    Matrix kroneckerProduct(Matrix matrix, Factory factory);
 
     /**
      * Returns the "trace" of this matrix.

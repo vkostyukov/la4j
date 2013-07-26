@@ -502,12 +502,12 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix kronecker(Matrix matrix) {
-        return kronecker(matrix, factory);
+    public Matrix kroneckerProduct(Matrix matrix) {
+        return kroneckerProduct(matrix, factory);
     }
 
     @Override
-    public Matrix kronecker(Matrix matrix, Factory factory) {
+    public Matrix kroneckerProduct(Matrix matrix, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
         if (matrix == null) {
