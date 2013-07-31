@@ -573,17 +573,18 @@ public abstract class AbstractMatrix implements Matrix {
             throw new IllegalArgumentException("Matrix can not be null.");
         }
 
-        if (columns != matrix.rows()) {
-            throw new IllegalArgumentException("Wrong matrix dimensions: " 
-                                               + matrix.rows() + "x" 
-                                               + matrix.columns());
+        if ((columns != matrix.columns()) || (rows != matrix.rows())) {
+            throw new IllegalArgumentException(
+                    "Matrices dimensions are not equal: " + matrix.rows() + "x"
+                            + matrix.columns() + " not equal to " + rows + "x"
+                            + columns);
         }
 
-        Matrix result = factory.createMatrix(rows, matrix.columns());
+        Matrix result = factory.createMatrix(rows, columns);
         
-        for (int i = 0; i < matrix.columns(); i++) {
-            for (int j = 0; j < this.columns(); j++) {
-                result.set(i, j, matrix.get(i, j) * this.get(i, j));
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                result.set(i, j, matrix.get(i, j) * get(i, j));
             }
         }
         

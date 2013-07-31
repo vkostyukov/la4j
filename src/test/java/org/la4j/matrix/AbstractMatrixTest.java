@@ -806,9 +806,76 @@ public abstract class AbstractMatrixTest extends TestCase {
         Matrix c = factory().createMatrix(new double[][] {
                 {  9.0, 16.0, 21.0 },
                 { 24.0, 25.0, 24.0 },
-                { 21.0, 16.0,  9.0 } 
+                { 21.0, 16.0,  
+                    9.0 } 
         });
 
+        assertEquals(c, a.hadamardProduct(b));
+    }
+    
+    public void testHadamardProduct_5x2() {
+        Matrix a = factory().createMatrix(new double[][] {
+                {1.0, 2.0},
+                {2.0, 3.0},
+                {3.0, 4.0},
+                {4.0, 5.0},
+                {5.0, 6.0}
+        });
+        
+        Matrix b = factory().createMatrix(new double[][] {
+                {6.0, 5.0},
+                {5.0, 4.0},
+                {4.0, 3.0},
+                {3.0, 2.0},
+                {2.0, 1.0}
+        });
+        
+        Matrix c = factory().createMatrix(new double[][] {
+                {6.0, 10.0},
+                {10.0, 12.0},
+                {12.0, 12.0},
+                {12.0, 10.0},
+                {10.0, 6.0}
+        });
+        
+        assertEquals(c, a.hadamardProduct(b));
+    }
+    
+    public void testHadamardProduct_3x4() {
+        Matrix a = factory().createMatrix(new double[][] {
+                {1.0, 2.0, 3.0, 4.0},
+                {2.0, 3.0, 4.0, 5.0},
+                {3.0, 4.0, 5.0, 6.0},
+        });
+        
+        Matrix b = factory().createMatrix(new double[][] {
+                {6.0, 5.0, 4.0, 3.0},
+                {5.0, 4.0, 3.0, 2.0},
+                {4.0, 3.0, 2.0, 1.0},
+        });
+        
+        Matrix c = factory().createMatrix(new double[][] {
+                {6.0, 10.0, 12.0, 12.0},
+                {10.0, 12.0, 12.0, 10.0},
+                {12.0, 12.0, 10.0, 6.0},
+        });
+        
+        assertEquals(c, a.hadamardProduct(b));
+    }
+    
+    public void testHadamardProduct_1x3() {
+        Matrix a = factory().createMatrix(new double[][] {
+                {1.0, 2.0, 3.0, 4.0}
+        });
+        
+        Matrix b = factory().createMatrix(new double[][] {
+                {6.0, 5.0, 4.0, 3.0}
+        });
+        
+        Matrix c = factory().createMatrix(new double[][] {
+                {6.0, 10.0, 12.0, 12.0}
+        });
+        
         assertEquals(c, a.hadamardProduct(b));
     }
 
