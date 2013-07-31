@@ -561,6 +561,37 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public Matrix hadamardProduct(Matrix matrix) {
+        return hadamardProduct(matrix, factory);
+    }
+
+    @Override
+    public Matrix hadamardProduct(Matrix matrix, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+
+        if (matrix == null) {
+            throw new IllegalArgumentException("Matrix can not be null.");
+        }
+
+        if ((columns != matrix.columns()) || (rows != matrix.rows())) {
+            throw new IllegalArgumentException(
+                    "Matrices dimensions are not equal: " + matrix.rows() + "x"
+                            + matrix.columns() + " not equal to " + rows + "x"
+                            + columns);
+        }
+
+        Matrix result = factory.createMatrix(rows, columns);
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                result.set(i, j, matrix.get(i, j) * get(i, j));
+            }
+        }
+        
+        return result;
+    }
+
+    @Override
     public double sum() {
         return fold(Matrices.asSumAccumulator(0));
     }
