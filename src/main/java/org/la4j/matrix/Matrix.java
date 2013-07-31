@@ -321,6 +321,23 @@ public interface Matrix extends Externalizable {
     double product();
 
     /**
+     * Returns Hadamard product for two matrices
+     * @param 
+     *            matrix multiplier matrix
+     * @return Hadamard product for two matrices
+     */
+    Matrix hadamardProduct(Matrix matrix);
+
+    /**
+     * Returns Hadamard product for two matrices
+     * @param 
+     *            matrix multiplier matrix
+     * @param factory
+     * @return Hadamard product for two matrices
+     */
+    Matrix hadamardProduct(Matrix matrix, Factory factory);
+
+    /**
      * Summarizes up all elements of the matrix
      * 
      * @return the sum of all elements of the matrix

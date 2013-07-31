@@ -227,6 +227,16 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public Matrix hadamardProduct(Matrix matrix) {
+        return self.hadamardProduct(matrix);
+    }
+
+    @Override
+    public Matrix hadamardProduct(Matrix matrix, Factory factory) {
+        return self.hadamardProduct(matrix, factory);
+    }
+
+    @Override
     public double sum() {
         return self.sum();
     }
