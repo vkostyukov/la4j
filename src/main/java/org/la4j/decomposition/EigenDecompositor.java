@@ -162,14 +162,13 @@ public class EigenDecompositor implements MatrixDecompositor {
 
         double alpha = 0.0, beta = 0.0;
 
-        if ((matrix.get(k, k) - matrix.get(l, l)) < Matrices.EPS) {
+        Matrix result = factory.createIdentityMatrix(matrix.rows());
+        double alpha,beta;
+        if (Math.abs(matrix.get(k, k) - matrix.get(l, l)) < Matrices.EPS) {
             alpha = beta = Math.sqrt(0.5);
         } else {
-            double mu = 2 * matrix.get(k, l)
-                    / (matrix.get(k, k) - matrix.get(l, l));
-            mu = 1 / Math.sqrt(1 + mu * mu);
-            alpha = Math.sqrt(0.5 * (1 + mu));
-            beta = Math.signum(mu) * Math.sqrt(0.5 * (1 - mu));
+            alpha = Math.cos(0.5*Math.atan2(2 * matrix.get(k, l),matrix.get(k, k) - matrix.get(l, l)));
+            beta = Math.sin(0.5*Math.atan2(2 * matrix.get(k, l),matrix.get(k, k) - matrix.get(l, l)));
         }
 
         result.set(k, k, alpha);
