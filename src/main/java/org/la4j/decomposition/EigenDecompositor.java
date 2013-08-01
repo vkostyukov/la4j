@@ -157,11 +157,6 @@ public class EigenDecompositor implements MatrixDecompositor {
     }
 
     private Matrix generateU(Matrix matrix, Factory factory, int k, int l) {
-
-        Matrix result = factory.createIdentityMatrix(matrix.rows());
-
-        double alpha = 0.0, beta = 0.0;
-
         Matrix result = factory.createIdentityMatrix(matrix.rows());
         double alpha,beta;
         if (Math.abs(matrix.get(k, k) - matrix.get(l, l)) < Matrices.EPS) {
