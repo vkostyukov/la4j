@@ -58,6 +58,7 @@ made by the authors:
 - Ewald Grusk
 - Jakob Moellers
 - Yuriy Drozd
+- Maxim Samoylov
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013

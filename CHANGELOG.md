@@ -18,6 +18,7 @@ la4j-0.4.5 `Sep 2013`
  * New vector methods: `sum()` and `product()` (contributed by Julia Kostyukova)
  * Renamed `Matrix.kronecker()` to `Matrix.kroneckerProduct()` (contributed by Julia Kostyukov)
  * New matrix method `hadamardProduct()` (contributed by Julia Kostyukova)
+ * Bug fix in `EigenDecompositor` (contributed by Maxim Samoylov)
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)
