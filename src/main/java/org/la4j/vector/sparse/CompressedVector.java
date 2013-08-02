@@ -235,6 +235,13 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     @Override
+    public void eachNonZero(VectorProcedure procedure) {
+        for (int i = 0; i < cardinality; i++) {
+            if (Math.abs(values[i])>Vectors.EPS) procedure.apply(indices[i], values[i]);
+        }
+    }
+
+    @Override
     public void update(int i, VectorFunction function) {
 
         int k = searchForIndex(i, 0, cardinality);
