@@ -277,7 +277,7 @@ public abstract class AbstractSafeVector implements Vector {
 
     @Override
     public void eachNonZero(VectorProcedure procedure) {
-        self.each(procedure);
+        self.eachNonZero(procedure);
     }
 
     @Override
