@@ -430,7 +430,9 @@ public abstract class AbstractVector implements Vector {
     @Override
     public void eachNonZero(VectorProcedure procedure) {
         for (int i = 0; i < length; i++) {
-            if (Math.abs(get(i))>Vectors.EPS) procedure.apply(i, get(i));
+            if (Math.abs(get(i)) > Vectors.EPS) {
+                procedure.apply(i, get(i));
+            }
         }
     }
 
