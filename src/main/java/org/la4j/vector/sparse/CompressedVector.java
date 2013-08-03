@@ -17,6 +17,7 @@
  * 
  * Contributor(s): Ewald Grusk
  *                 Yuriy Drozd
+ *                 Maxim Samoylov
  * 
  */
 

@@ -16,6 +16,7 @@
  * limitations under the License.
  * 
  * Contributor(s): Alessio Placitelli
+ *                 Maxim Samoylov
  * 
  */
 

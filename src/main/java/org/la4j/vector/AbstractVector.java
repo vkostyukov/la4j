@@ -18,6 +18,7 @@
  * Contributor(s): Daniel Renshaw
  *                 Ewald Grusk
  *                 Jakob Moellers
+ *                 Maxim Samoylov
  * 
  */
 

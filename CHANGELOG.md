@@ -19,6 +19,8 @@ la4j-0.4.5 `Sep 2013`
  * Renamed `Matrix.kronecker()` to `Matrix.kroneckerProduct()` (contributed by Julia Kostyukov)
  * New matrix method `hadamardProduct()` (contributed by Julia Kostyukova)
  * Bug fix in `EigenDecompositor` (contributed by Maxim Samoylov)
+ * Improved stability of `EigenDecompositor` (contributed by Maxim Samoylov)
+ * New vector method `eachNonZero` (contributed by Maxim Samoylov)
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)

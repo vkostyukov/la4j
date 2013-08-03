@@ -17,6 +17,7 @@
  * 
  * Contributor(s): Daniel Renshaw
  *                 Jakob Moellers
+ *                 Maxim Samoylov
  * 
  */
 
