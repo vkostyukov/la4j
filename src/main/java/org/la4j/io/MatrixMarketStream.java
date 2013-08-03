@@ -160,7 +160,7 @@ public class MatrixMarketStream extends AbstractStream
         writer.write(vector.length() + " " + vector.cardinality());
         writer.newLine();
 
-        vector.each(new SparseVectorWriteProcedure(writer));
+        vector.eachNonZero(new SparseVectorWriteProcedure(writer));
     }
 
     private void writeDenseVector(DenseVector vector) throws IOException {

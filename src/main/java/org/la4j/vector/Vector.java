@@ -436,10 +436,17 @@ public interface Vector extends Externalizable {
 
     /**
      * Applies given {@code procedure} to each element of this vector.
-     * 
+     *
      * @param procedure
      */
     void each(VectorProcedure procedure);
+
+    /**
+     * Applies given {@code procedure} to each non-zero element of this vector.
+     *
+     * @param procedure
+     */
+    void eachNonZero(VectorProcedure procedure);
 
     /**
      * Builds a new vector by applying given {@code function} to each element 

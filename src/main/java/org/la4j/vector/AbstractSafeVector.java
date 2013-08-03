@@ -276,6 +276,11 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
+    public void eachNonZero(VectorProcedure procedure) {
+        self.eachNonZero(procedure);
+    }
+
+    @Override
     public Vector transform(VectorFunction function) {
         return self.transform(function, factory);
     }
