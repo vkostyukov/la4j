@@ -228,6 +228,13 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     @Override
+    public void each(VectorProcedure procedure) {
+        for (int i = 0; i < cardinality; i++) {
+            procedure.apply(indices[i], values[i]);
+        }
+    }
+
+    @Override
     public void eachNonZero(VectorProcedure procedure) {
         for (int i = 0; i < cardinality; i++) {
             procedure.apply(indices[i], values[i]);
