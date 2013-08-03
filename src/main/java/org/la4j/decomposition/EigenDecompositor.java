@@ -35,8 +35,6 @@ import org.la4j.vector.Vectors;
  */
 public class EigenDecompositor implements MatrixDecompositor {
 
-    public static final int MAX_ITERATIONS = 10000000;
-
     /**
      * Returns the result of Eigen decomposition of given matrix
      * <p>
@@ -83,7 +81,6 @@ public class EigenDecompositor implements MatrixDecompositor {
 
         Matrix v = factory.createIdentityMatrix(matrix.rows());
 
-        int iteration = 0;
         double n = 0.0;
 
         do {
@@ -97,17 +94,11 @@ public class EigenDecompositor implements MatrixDecompositor {
             d = u.transpose().multiply(d.multiply(u));
 
             r.set(k, generateRi(d.getRow(k), k));
-
             r.set(l, generateRi(d.getRow(l), l));
 
-            iteration++;
             n = r.norm();
 
-        } while (n > Matrices.EPS && iteration < MAX_ITERATIONS);
-
-        if (n > Matrices.EPS) {
-            throw new IllegalArgumentException("Can't decompose this matrix.");
-        }
+        } while (n > Matrices.EPS);
 
         return new Matrix[] { v, d };
     }
@@ -158,12 +149,16 @@ public class EigenDecompositor implements MatrixDecompositor {
 
     private Matrix generateU(Matrix matrix, Factory factory, int k, int l) {
         Matrix result = factory.createIdentityMatrix(matrix.rows());
-        double alpha,beta;
+
+        double alpha = 0.0, beta = 0.0;
+
         if (Math.abs(matrix.get(k, k) - matrix.get(l, l)) < Matrices.EPS) {
             alpha = beta = Math.sqrt(0.5);
         } else {
-            alpha = Math.cos(0.5*Math.atan2(2 * matrix.get(k, l),matrix.get(k, k) - matrix.get(l, l)));
-            beta = Math.sin(0.5*Math.atan2(2 * matrix.get(k, l),matrix.get(k, k) - matrix.get(l, l)));
+            alpha = Math.cos(0.5 * Math.atan2(2 * matrix.get(k, l), 
+                             matrix.get(k, k) - matrix.get(l, l)));
+            beta = Math.sin(0.5 * Math.atan2(2 * matrix.get(k, l), 
+                            matrix.get(k, k) - matrix.get(l, l)));
         }
 
         result.set(k, k, alpha);
