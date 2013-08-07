@@ -321,6 +321,23 @@ public interface Matrix extends Externalizable {
     double product();
 
     /**
+     * Returns Hadamard product for two matrices
+     * @param 
+     *            matrix multiplier matrix
+     * @return Hadamard product for two matrices
+     */
+    Matrix hadamardProduct(Matrix matrix);
+
+    /**
+     * Returns Hadamard product for two matrices
+     * @param 
+     *            matrix multiplier matrix
+     * @param factory
+     * @return Hadamard product for two matrices
+     */
+    Matrix hadamardProduct(Matrix matrix, Factory factory);
+
+    /**
      * Summarizes up all elements of the matrix
      * 
      * @return the sum of all elements of the matrix
@@ -367,7 +384,7 @@ public interface Matrix extends Externalizable {
     /**
      * Gets the <code>i</code> column of this matrix.
      * 
-     * @param h
+     * @param j
      * @return the i-th column
      */
     Vector getColumn(int j);
@@ -375,7 +392,7 @@ public interface Matrix extends Externalizable {
     /**
      * Gets the <code>i</code> column of this matrix.
      * 
-     * @param h
+     * @param j
      * @return the i-th column
      */
     Vector getColumn(int j, Factory factory);
@@ -592,12 +609,35 @@ public interface Matrix extends Externalizable {
      * @return factory
      */
     Factory factory();
-    
+
     /**
      * Applies the <code>procedure</code> to every element of this matrix.
      * @param procedure
      */
     void each(MatrixProcedure procedure);
+
+    /**
+     * Applies the <code>procedure</code> to every element in the
+     * <code>i</code> row of this matrix.
+     * @param procedure
+     * @param i
+     */
+    void eachInRow(MatrixProcedure procedure, int i);
+
+    /**
+     * Applies the <code>procedure</code> to every element in the
+     * <code>i</code> column of this matrix.
+     * @param procedure
+     * @param j
+     */
+    void eachInColumn(MatrixProcedure procedure, int j);
+
+    /**
+     * Applies the <code>procedure</code> to every non-zero element in the
+     * <code>i</code> column of this matrix.
+     * @param procedure
+     */
+    void eachNonZero(MatrixProcedure procedure);
 
     /**
      * Builds a new matrix by applying a <code>function</code> to all elements

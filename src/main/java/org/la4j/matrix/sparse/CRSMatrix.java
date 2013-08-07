@@ -349,13 +349,59 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     @Override
-    public void each(MatrixProcedure procedure) {
+    public void eachNonZero(MatrixProcedure procedure) {
         int k = 0, i = 0;
         while (k < cardinality) {
             for (int j = rowPointers[i]; j < rowPointers[i + 1]; j++, k++) {
                 procedure.apply(i, columnIndices[j], values[j]);
             }
             i++;
+        }
+    }
+
+    @Override
+    public void each(MatrixProcedure procedure) {
+        int l = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (j == columnIndices[l]) {
+                    procedure.apply(i,j,values[l++]);
+                }
+                else {
+                    procedure.apply(i,j,0);
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void eachInRow(MatrixProcedure procedure, int i) {
+        int k = rowPointers[i];
+        for (int j = 0; j < columns; j++) {
+            if (j == columnIndices[k]) {
+                procedure.apply(i,j,values[k++]);
+            }
+            else {
+                procedure.apply(i,j,0);
+            }
+        }
+    }
+
+    @Override
+    public void eachInColumn(MatrixProcedure procedure, int j) {
+        boolean f;
+        for (int i = 0; i < rows; i++) {
+            f = true;
+            for (int k = rowPointers[i]; k < rowPointers[i+1]; k++) {
+                if (k == j) {
+                    procedure.apply(i,j,values[columnIndices[k]]);
+                    f = false;
+                }
+            }
+            if (f) {
+                procedure.apply(i,j,0);
+            }
         }
     }
 

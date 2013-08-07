@@ -227,6 +227,16 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public Matrix hadamardProduct(Matrix matrix) {
+        return self.hadamardProduct(matrix);
+    }
+
+    @Override
+    public Matrix hadamardProduct(Matrix matrix, Factory factory) {
+        return self.hadamardProduct(matrix, factory);
+    }
+
+    @Override
     public double sum() {
         return self.sum();
     }
@@ -405,6 +415,21 @@ public abstract class AbstractSafeMatrix implements Matrix {
     @Override
     public void each(MatrixProcedure procedure) {
         self.each(procedure);
+    }
+
+    @Override
+    public void eachInRow(MatrixProcedure procedure, int i) {
+        self.eachInRow(procedure, i);
+    }
+
+    @Override
+    public void eachInColumn(MatrixProcedure procedure, int j) {
+        self.eachInColumn(procedure, j);
+    }
+
+    @Override
+    public void eachNonZero(MatrixProcedure procedure) {
+        self.eachNonZero(procedure);
     }
 
     @Override
