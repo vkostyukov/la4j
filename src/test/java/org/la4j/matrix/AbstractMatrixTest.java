@@ -1331,4 +1331,55 @@ public abstract class AbstractMatrixTest extends TestCase {
 
         assertEquals(a, b);
     }
+    
+    public void testPower_2x2() {
+        Matrix a = factory().createMatrix(new double[][] { 
+                { 1.0, 2.0 }, 
+                { 3.0, 4.0 } 
+        });
+        
+        Matrix b = factory().createMatrix(new double[][] { 
+                { 7.0, 10.0 }, 
+                { 15.0, 22.0 } 
+        });
+        
+        Matrix c = a.power(2);
+        assertEquals(b, c);
+
+        Matrix d = factory().createMatrix(new double[][] { 
+                { 37.0, 54.0 }, 
+                { 81.0, 118.0 } 
+        });
+        
+        Matrix e = a.power(3);
+        assertEquals(d, e);
+
+        Matrix f = factory().createMatrix(new double[][] { 
+                { 5743.0, 8370.0 }, 
+                { 12555.0, 18298.0 } 
+        });
+        
+        Matrix g = a.power(6);
+        assertEquals(f, g);
+    }
+    
+    public void testPower_3x3(){
+        Matrix h = factory().createMatrix(new double[][] { 
+                { 1.0, 0.0, 0.0 }, 
+                { 4.0, 3.0, 6.0 },
+                { 0.0, 0.0, 9.0 } 
+        });
+
+        Matrix i = factory().createMatrix(new double[][] { 
+                { 1.0, 0.0, 0.0 }, 
+                { 160.0, 81.0, 6480.0 },
+                { 0.0, 0.0, 6561.0 } 
+        });
+        
+        Matrix j = h.power(4);
+        assertEquals(i, j);
+        
+        Matrix k = h.power(1);
+        assertEquals(h, k);
+    }
 }
