@@ -714,8 +714,8 @@ public interface Matrix extends Externalizable {
     Matrix unsafe();
     
     /**
-     * Power operation for matrices. Matrix is returned to the power of n.
-     * This function uses the Exponentiation by squaring method.
+     * Power operation for matrices. Matrix is returned to the power of n. This
+     * function uses the Exponentiation by squaring method.
      * 
      * @param n
      *            The exponent
@@ -724,8 +724,8 @@ public interface Matrix extends Externalizable {
     Matrix power(int n);
 
     /**
-     * Power operation for matrices. Matrix is returned to the power of n.
-     * This function uses the Exponentiation by squaring method.
+     * Power operation for matrices. Matrix is returned to the power of n. This
+     * function uses the Exponentiation by squaring method.
      * 
      * @param n
      *            The exponent
