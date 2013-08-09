@@ -695,14 +695,6 @@ public interface Matrix extends Externalizable {
     void update(int i, int j, MatrixFunction function);
 
     /**
-     * Raises the matrix to <code>n</code>th power
-     *
-     * @param n
-     * @return
-     */
-    Matrix power(int n);
-
-    /**
      * 
      * @param accumulator
      * @return
