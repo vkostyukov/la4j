@@ -1332,31 +1332,31 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(a, b);
     }
     
-	public void testPower() {
-		Matrix a = factory().createMatrix(new double[][] { 
-				{ 1.0, 2.0 }, 
-				{ 3.0, 4.0 } 
-		});
-		Matrix b = a.multiply(a);
-		Matrix c = a.power(2);
-		assertEquals(b, c);
+    public void testPower() {
+        Matrix a = factory().createMatrix(new double[][] { 
+                { 1.0, 2.0 }, 
+                { 3.0, 4.0 } 
+        });
+        Matrix b = a.multiply(a);
+        Matrix c = a.power(2);
+        assertEquals(b, c);
 
-		Matrix d = b.multiply(a);
-		Matrix e = a.power(3);
-		assertEquals(d, e);
+        Matrix d = b.multiply(a);
+        Matrix e = a.power(3);
+        assertEquals(d, e);
 
-		Matrix f = d.multiply(d);
-		Matrix g = a.power(6);
-		assertEquals(f, g);
-		
-		Matrix h = factory().createMatrix(new double[][] { 
-                { 1.0, 0.0, 0.0 },
-                { 4.0, 3.0, 6.0 }, 
+        Matrix f = d.multiply(d);
+        Matrix g = a.power(6);
+        assertEquals(f, g);
+
+        Matrix h = factory().createMatrix(new double[][] { 
+                { 1.0, 0.0, 0.0 }, 
+                { 4.0, 3.0, 6.0 },
                 { 0.0, 0.0, 9.0 } 
         });
-		
-		Matrix i = h.multiply(h.multiply(h.multiply(h)));
-		Matrix j = h.power(4);
-		assertEquals(j, i);
-	}
+
+        Matrix i = h.multiply(h.multiply(h.multiply(h)));
+        Matrix j = h.power(4);
+        assertEquals(j, i);
+    }
 }
