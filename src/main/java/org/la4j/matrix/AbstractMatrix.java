@@ -1005,10 +1005,10 @@ public abstract class AbstractMatrix implements Matrix {
 	}
 
 	private Matrix exponentBySqaring(Matrix x, int n, Factory factory2) {
-		if (!(n == 0)) {
-			// TODO care about n<0!
-			// if (n > 0) {
-			if (n == 1) {
+		if (n >= 0) {
+			if (n == 0) {
+				return factory.createIdentityMatrix(rows);
+			} else if (n == 1) {
 				return x;
 			} else if (n % 2 == 0) {
 				return exponentBySqaring(x.multiply(x), n / 2, factory);
@@ -1016,9 +1016,8 @@ public abstract class AbstractMatrix implements Matrix {
 				return x.multiply(exponentBySqaring(x.multiply(x), (n - 1) / 2, factory));
 			}
 
-			// }
 		} else {
-			throw new IllegalArgumentException("You are not allowed to use 0 as the exponent.");
+			throw new IllegalArgumentException("You are not allowed to use negative exponents.");
 		}
 		throw new IllegalArgumentException("You used illegal arguments for the power()-function.");
 	}
