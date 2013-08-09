@@ -418,13 +418,13 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
-    public void eachInRow(MatrixProcedure procedure, int i) {
-        self.eachInRow(procedure, i);
+    public void eachInRow(int i,MatrixProcedure procedure) {
+        self.eachInRow(i, procedure);
     }
 
     @Override
-    public void eachInColumn(MatrixProcedure procedure, int j) {
-        self.eachInColumn(procedure, j);
+    public void eachInColumn(int j,MatrixProcedure procedure) {
+        self.eachInColumn(j,procedure);
     }
 
     @Override
@@ -471,6 +471,11 @@ public abstract class AbstractSafeMatrix implements Matrix {
         ensureIndexInColumns(j);
 
         self.update(i, j, function);
+    }
+
+    @Override
+    public Matrix power(int n) {
+        return self.power(n);
     }
 
     @Override

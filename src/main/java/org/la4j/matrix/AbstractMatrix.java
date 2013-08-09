@@ -28,8 +28,10 @@ package org.la4j.matrix;
 import java.util.Random;
 
 import org.la4j.decomposition.MatrixDecompositor;
+import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInvertor;
+import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -803,18 +805,16 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public void eachInRow(MatrixProcedure procedure, int i) {
-        Vector vector = this.getRow(i);
+    public void eachInRow(int i,MatrixProcedure procedure) {
         for (int j = 0; j < columns; j++) {
-            procedure.apply(i, j, vector.get(j));
+            procedure.apply(i, j, get(i,j));
         }
     }
 
     @Override
-    public void eachInColumn(MatrixProcedure procedure, int j) {
-        Vector vector = this.getColumn(j);
+    public void eachInColumn(int j,MatrixProcedure procedure) {
         for (int i = 0; i < rows; i++) {
-            procedure.apply(i, j, vector.get(j));
+            procedure.apply(i, j, get(i,j));
         }
     }
 
@@ -874,6 +874,17 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public void update(int i, int j, MatrixFunction function) {
         set(i, j, function.evaluate(i, j, get(i, j)));
+    }
+
+    @Override
+    public Matrix power(int n) {
+        if (this.columns != this.rows) {
+            throw new IllegalArgumentException("Matrix must be square!");
+        }
+        if (n == 0) return new Basic2DFactory().createIdentityMatrix(this.rows);
+        if (n == 1) return this;
+        if (n/2 == 1) return power(n-1).multiply(this);
+        else return power(n/2).power(2);
     }
 
     @Override

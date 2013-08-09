@@ -622,7 +622,7 @@ public interface Matrix extends Externalizable {
      * @param procedure
      * @param i
      */
-    void eachInRow(MatrixProcedure procedure, int i);
+    void eachInRow(int i, MatrixProcedure procedure);
 
     /**
      * Applies the <code>procedure</code> to every element in the
@@ -630,7 +630,7 @@ public interface Matrix extends Externalizable {
      * @param procedure
      * @param j
      */
-    void eachInColumn(MatrixProcedure procedure, int j);
+    void eachInColumn(int j, MatrixProcedure procedure);
 
     /**
      * Applies the <code>procedure</code> to every non-zero element in the
@@ -693,6 +693,14 @@ public interface Matrix extends Externalizable {
      * @param function
      */
     void update(int i, int j, MatrixFunction function);
+
+    /**
+     * Raises the matrix to <code>n</code>th power
+     *
+     * @param n
+     * @return
+     */
+    Matrix power(int n);
 
     /**
      * 
