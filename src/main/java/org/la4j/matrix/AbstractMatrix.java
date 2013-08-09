@@ -1004,20 +1004,21 @@ public abstract class AbstractMatrix implements Matrix {
         return exponentBySqaring(this, n, factory);
     }
 
-    private Matrix exponentBySqaring(Matrix x, int n,
-            Factory factory) {
-        if (n<0)
-            throw new IllegalArgumentException("The exponent has to be larger than 0.");
-        else if (n==0)
+    private Matrix exponentBySqaring(Matrix x, int n, Factory factory) {
+        if (n < 0)
+            throw new IllegalArgumentException(
+                    "The exponent has to be larger than 0.");
+        else if (n == 0)
             return factory.createIdentityMatrix(rows);
-        else if (n>0){
+        else if (n > 0) {
             Matrix result = x;
-            while (n>1){
+            while (n > 1) {
                 result = result.multiply(x);
                 n--;
             }
             return result;
         }
-        throw new IllegalArgumentException("You used illegal arguments for the power()-function.");
+        throw new IllegalArgumentException(
+                "You used illegal arguments for the power()-function.");
     }
 }
