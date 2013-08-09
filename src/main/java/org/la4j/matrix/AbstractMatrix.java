@@ -995,4 +995,31 @@ public abstract class AbstractMatrix implements Matrix {
                                                + rows + "x" + columns);
         }
     }
+    
+	public Matrix power(int n) {
+		return power(n, factory);
+	}
+
+	public Matrix power(int n, Factory factory) {
+		return exponentBySqaring(this, n, factory);
+	}
+
+	private Matrix exponentBySqaring(Matrix x, int n, Factory factory2) {
+		if (!(n == 0)) {
+			// TODO care about n<0!
+			// if (n > 0) {
+			if (n == 1) {
+				return x;
+			} else if (n % 2 == 0) {
+				return exponentBySqaring(x.multiply(x), n / 2, factory);
+			} else if (n % 2 == 1) {
+				return x.multiply(exponentBySqaring(x.multiply(x), (n - 1) / 2, factory));
+			}
+
+			// }
+		} else {
+			throw new IllegalArgumentException("You are not allowed to use 0 as the exponent.");
+		}
+		throw new IllegalArgumentException("You used illegal arguments for the power()-function.");
+	}
 }
