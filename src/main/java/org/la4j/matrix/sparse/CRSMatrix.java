@@ -389,23 +389,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     @Override
-    public void eachInColumn(int j, MatrixProcedure procedure) {
-        boolean f;
-        for (int i = 0; i < rows; i++) {
-            f = true;
-            for (int k = rowPointers[i]; k < rowPointers[i+1]; k++) {
-                if (k == j) {
-                    procedure.apply(i,j,values[columnIndices[k]]);
-                    f = false;
-                }
-            }
-            if (f) {
-                procedure.apply(i,j,0);
-            }
-        }
-    }
-
-    @Override
     public void update(int i, int j, MatrixFunction function) {
 
         int k = searchForColumnIndex(j, rowPointers[i], rowPointers[i + 1]);
