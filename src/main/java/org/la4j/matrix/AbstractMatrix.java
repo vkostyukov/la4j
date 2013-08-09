@@ -1004,7 +1004,7 @@ public abstract class AbstractMatrix implements Matrix {
         return exponentBySqaring(this, n, factory);
     }
 
-    private Matrix exponentBySqaring(Matrix x, int n, Factory factory2) {
+    private Matrix exponentBySqaring(Matrix x, int n, Factory factory) {
         if (n >= 0) {
             if (n == 0) {
                 return factory.createIdentityMatrix(rows);
