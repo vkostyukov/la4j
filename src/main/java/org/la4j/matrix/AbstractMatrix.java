@@ -877,17 +877,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix power(int n) {
-        if (this.columns != this.rows) {
-            throw new IllegalArgumentException("Matrix must be square!");
-        }
-        if (n == 0) return new Basic2DFactory().createIdentityMatrix(this.rows);
-        if (n == 1) return this;
-        if (n/2 == 1) return power(n-1).multiply(this);
-        else return power(n/2).power(2);
-    }
-
-    @Override
     public double fold(MatrixAccumulator accumulator) {
 
         for (int i = 0; i < rows; i++) {

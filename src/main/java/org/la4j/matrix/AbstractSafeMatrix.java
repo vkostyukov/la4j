@@ -474,11 +474,6 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
-    public Matrix power(int n) {
-        return self.power(n);
-    }
-
-    @Override
     public double fold(MatrixAccumulator accumulator) {
         return self.fold(accumulator);
     }
