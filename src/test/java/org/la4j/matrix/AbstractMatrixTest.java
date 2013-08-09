@@ -1378,5 +1378,8 @@ public abstract class AbstractMatrixTest extends TestCase {
         
         Matrix j = h.power(4);
         assertEquals(i, j);
+        
+        Matrix k = h.power(1);
+        assertEquals(h, k);
     }
 }

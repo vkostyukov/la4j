@@ -1007,10 +1007,14 @@ public abstract class AbstractMatrix implements Matrix {
         else if (n == 0)
             return factory.createIdentityMatrix(rows);
         else if (n > 0) {
-            Matrix result = this;
-            while (n > 1) {
-                result = result.multiply(this);
-                n--;
+            Matrix result = factory.createIdentityMatrix(rows);
+            Matrix x = this;
+            while (n > 0) {
+                if (n % 2 == 1) {
+                    result = result.multiply(x);
+                }
+                n /= 2;
+                x = x.multiply(x);
             }
             return result;
         }
