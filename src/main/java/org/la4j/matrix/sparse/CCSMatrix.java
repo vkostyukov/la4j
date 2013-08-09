@@ -316,7 +316,11 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public void eachNonZeroInColumn(int j, MatrixProcedure procedure) {
-        eachInColumn(j,procedure);
+        int k = columnPointers[j], i = rowIndices[k];
+        while (i < columnPointers[j+1]) {
+            procedure.apply(rowIndices[i],j,values[i]);
+            i++;
+        }
     }
 
     @Override
