@@ -28,10 +28,8 @@ package org.la4j.matrix;
 import java.util.Random;
 
 import org.la4j.decomposition.MatrixDecompositor;
-import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInvertor;
-import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
