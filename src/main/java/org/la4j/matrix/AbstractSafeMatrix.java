@@ -433,6 +433,16 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public void eachNonZeroInRow(int i, MatrixProcedure procedure) {
+        self.eachNonZeroInRow(i,procedure);
+    }
+
+    @Override
+    public void eachNonZeroInColumn(int j, MatrixProcedure procedure) {
+        self.eachNonZeroInColumn(j,procedure);
+    }
+
+    @Override
     public Matrix transform(MatrixFunction function) {
         return self.transform(function, factory);
     }

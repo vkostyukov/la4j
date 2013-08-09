@@ -640,6 +640,22 @@ public interface Matrix extends Externalizable {
     void eachNonZero(MatrixProcedure procedure);
 
     /**
+     * Applies the <code>procedure</code> to every non-zero element in the
+     * <code>i</code> row of this matrix.
+     * @param procedure
+     * @param i
+     */
+    void eachNonZeroInRow(int i, MatrixProcedure procedure);
+
+    /**
+     * Applies the <code>procedure</code> to every non-zero element in the
+     * <code>i</code> column of this matrix.
+     * @param procedure
+     * @param j
+     */
+    void eachNonZeroInColumn(int j, MatrixProcedure procedure);
+
+    /**
      * Builds a new matrix by applying a <code>function</code> to all elements
      * of this matrix.
      * 
