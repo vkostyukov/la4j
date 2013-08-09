@@ -21,6 +21,7 @@ la4j-0.4.5 `Sep 2013`
  * Bug fix in `EigenDecompositor` (contributed by Maxim Samoylov)
  * Improved stability of `EigenDecompositor` (contributed by Maxim Samoylov)
  * New vector method `eachNonZero` (contributed by Maxim Samoylov)
+ * New matrix method `power` (contributed by Jakob Moellers)
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)

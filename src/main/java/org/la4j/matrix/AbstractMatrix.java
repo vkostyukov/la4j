@@ -306,7 +306,32 @@ public abstract class AbstractMatrix implements Matrix {
 
         return result;
     }
-    
+
+    public Matrix power(int n) {
+        return power(n, factory);
+    }
+
+    public Matrix power(int n, Factory factory) {
+        if (n < 0) {
+            throw new IllegalArgumentException(
+                    "The exponent has to be larger than 0.");
+        }
+
+        Matrix result = factory.createIdentityMatrix(rows);
+        Matrix that = this;
+
+        while (n > 0) {
+            if (n % 2 == 1) {
+                result = result.multiply(that);
+            }
+
+            n /= 2;
+            that = that.multiply(that);
+        }
+
+        return result;
+    }
+
     @Override
     public Matrix multiply(double value) {
         return multiply(value, factory);
@@ -994,31 +1019,5 @@ public abstract class AbstractMatrix implements Matrix {
             throw new IllegalArgumentException("Wrong matrix dimensions: " 
                                                + rows + "x" + columns);
         }
-    }
-    
-    public Matrix power(int n) {
-        return power(n, factory);
-    }
-
-    public Matrix power(int n, Factory factory) {
-        if (n < 0)
-            throw new IllegalArgumentException(
-                    "The exponent has to be larger than 0.");
-        else if (n == 0)
-            return factory.createIdentityMatrix(rows);
-        else if (n > 0) {
-            Matrix result = factory.createIdentityMatrix(rows);
-            Matrix x = this;
-            while (n > 0) {
-                if (n % 2 == 1) {
-                    result = result.multiply(x);
-                }
-                n /= 2;
-                x = x.multiply(x);
-            }
-            return result;
-        }
-        throw new IllegalArgumentException(
-                "You used illegal arguments for the power()-function.");
     }
 }
