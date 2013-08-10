@@ -406,7 +406,7 @@ public interface Matrix extends Externalizable {
     /**
      * Gets the <code>i</code> column of this matrix.
      * 
-     * @param h
+     * @param j
      * @return the i-th column
      */
     Vector getColumn(int j);
@@ -414,7 +414,7 @@ public interface Matrix extends Externalizable {
     /**
      * Gets the <code>i</code> column of this matrix.
      * 
-     * @param h
+     * @param j
      * @return the i-th column
      */
     Vector getColumn(int j, Factory factory);
@@ -631,12 +631,51 @@ public interface Matrix extends Externalizable {
      * @return factory
      */
     Factory factory();
-    
+
     /**
      * Applies the <code>procedure</code> to every element of this matrix.
      * @param procedure
      */
     void each(MatrixProcedure procedure);
+
+    /**
+     * Applies the <code>procedure</code> to every element in the
+     * <code>i</code> row of this matrix.
+     * @param procedure
+     * @param i
+     */
+    void eachInRow(int i, MatrixProcedure procedure);
+
+    /**
+     * Applies the <code>procedure</code> to every element in the
+     * <code>i</code> column of this matrix.
+     * @param procedure
+     * @param j
+     */
+    void eachInColumn(int j, MatrixProcedure procedure);
+
+    /**
+     * Applies the <code>procedure</code> to every non-zero element in the
+     * <code>i</code> column of this matrix.
+     * @param procedure
+     */
+    void eachNonZero(MatrixProcedure procedure);
+
+    /**
+     * Applies the <code>procedure</code> to every non-zero element in the
+     * <code>i</code> row of this matrix.
+     * @param procedure
+     * @param i
+     */
+    void eachNonZeroInRow(int i, MatrixProcedure procedure);
+
+    /**
+     * Applies the <code>procedure</code> to every non-zero element in the
+     * <code>i</code> column of this matrix.
+     * @param procedure
+     * @param j
+     */
+    void eachNonZeroInColumn(int j, MatrixProcedure procedure);
 
     /**
      * Builds a new matrix by applying a <code>function</code> to all elements
