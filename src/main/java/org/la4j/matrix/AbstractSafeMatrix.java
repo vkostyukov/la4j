@@ -16,6 +16,7 @@
  * limitations under the License.
  * 
  * Contributor(s): Jakob Moellers
+ *                 Maxim Samoylov
  * 
  */
 

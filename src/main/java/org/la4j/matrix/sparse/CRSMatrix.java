@@ -16,6 +16,7 @@
  * limitations under the License.
  * 
  * Contributor(s): Chandler May
+ *                 Maxim Samoylov
  * 
  */
 
@@ -365,11 +366,9 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (j == columnIndices[k]) {
-                    procedure.apply(i, j, values[k]);
-                    k++;
-                }
-                else {
-                    procedure.apply(i, j, 0);
+                    procedure.apply(i, j, values[k++]);
+                } else {
+                    procedure.apply(i, j, 0.0);
                 }
             }
         }
@@ -381,11 +380,9 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         int k = rowPointers[i];
         for (int j = 0; j < columns; j++) {
             if (j == columnIndices[k]) {
-                procedure.apply(i, j, values[k]);
-                k++;
-            }
-            else {
-                procedure.apply(i, j, 0);
+                procedure.apply(i, j, values[k++]);
+            } else {
+                procedure.apply(i, j, 0.0);
             }
         }
     }

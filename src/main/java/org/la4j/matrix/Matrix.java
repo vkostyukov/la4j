@@ -18,6 +18,7 @@
  * Contributor(s): Evgenia Krivova
  *                 Julia Kostyukova
  *                 Jakob Moellers
+ *                 Maxim Samoylov
  */
 
 package org.la4j.matrix;
