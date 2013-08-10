@@ -186,7 +186,7 @@ public class MatrixMarketStream extends AbstractStream
                 + matrix.cardinality());
         writer.newLine();
 
-        matrix.each(new SparseMatrixWriteProcedure(writer));
+        matrix.eachNonZero(new SparseMatrixWriteProcedure(writer));
     }
 
     private void writeDenseMatrix(DenseMatrix matrix) throws IOException {
