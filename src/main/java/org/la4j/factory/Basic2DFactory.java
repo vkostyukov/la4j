@@ -119,4 +119,35 @@ public class Basic2DFactory extends BasicFactory implements Factory {
 
         return new Basic2DMatrix(array);
     }
+
+    @Override
+    public Matrix createBlockMatrix(Matrix A, Matrix B, Matrix C, Matrix D) {
+        if ((A.rows() != B.rows()) || (A.columns() != C.columns()) ||
+            (C.rows() != D.rows()) || (B.columns() != D.columns())) {
+            throw new IllegalArgumentException("Sides of blocks are incompatible!");
+        }
+        int rows = A.rows() + C.rows(), cols = A.columns() + B.columns();
+        double blockMatrix[][] = new double[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if ((i < A.rows()) && (j < A.columns())) {
+                    blockMatrix[i][j] = A.get(i, j);
+                }
+                if ((i < A.rows()) && (j > A.columns())) {
+                    blockMatrix[i][j] = B.get(i, j);
+                }
+                if ((i > A.rows()) && (j < A.columns())) {
+                    blockMatrix[i][j] = C.get(i, j);
+                }
+                if ((i > A.rows()) && (j > A.columns())) {
+                    blockMatrix[i][j] = D.get(i, j);
+                }
+            }
+        }
+
+        return new Basic2DMatrix(blockMatrix);
+    }
+
+
 }
