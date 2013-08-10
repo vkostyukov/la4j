@@ -392,10 +392,8 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public void eachNonZeroInRow(int i, MatrixProcedure procedure) {
-        int k = rowPointers[i], j = k;
-        while (j < rowPointers[i + 1]) {
+        for (int j = rowPointers[i]; j < rowPointers[i + 1]; j++) {
             procedure.apply(i, columnIndices[j], values[j]);
-            j++;
         }
     }
 
