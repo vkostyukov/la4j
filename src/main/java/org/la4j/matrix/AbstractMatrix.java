@@ -830,14 +830,18 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public void eachNonZeroInRow(int i, MatrixProcedure procedure) {
         for (int j = 0; j < columns; j++) {
-            if (Math.abs(get(i, j)) > Matrices.EPS) procedure.apply(i, j, get(i, j));
+            if (Math.abs(get(i, j)) > Matrices.EPS) {
+                procedure.apply(i, j, get(i, j));
+            }
         }
     }
 
     @Override
     public void eachNonZeroInColumn(int j, MatrixProcedure procedure) {
         for (int i = 0; i < rows; i++) {
-            if (Math.abs(get(i, j)) > Matrices.EPS) procedure.apply(i, j, get(i, j));
+            if (Math.abs(get(i, j)) > Matrices.EPS) {
+                procedure.apply(i, j, get(i, j));
+            }
         }
     }
 
