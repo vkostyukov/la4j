@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Contributor(s): -
+ * Contributor(s): Maxim Samoylov
  * 
  */
 
@@ -120,6 +120,7 @@ public class Basic1DFactory extends BasicFactory implements Factory {
             (c.rows() != d.rows()) || (b.columns() != d.columns())) {
             throw new IllegalArgumentException("Sides of blocks are incompatible!");
         }
+
         int rows = a.rows() + c.rows(), cols = a.columns() + b.columns();
         double blockMatrix[] = new double[rows * cols];
 
