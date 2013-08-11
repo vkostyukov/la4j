@@ -52,7 +52,7 @@ public class CroutDecompositor implements MatrixDecompositor {
                     +  "rows != columns");
         }
 
-        Matrix l = factory.createMatrix(matrix.rows(), matrix.columns());
+        Matrix l = matrix.blank(factory);
         Matrix u = factory.createIdentityMatrix(matrix.rows());
 
         for (int j = 0; j < l.columns(); j++) {
@@ -61,10 +61,10 @@ public class CroutDecompositor implements MatrixDecompositor {
                 double s = 0.0;
 
                 for (int k = 0; k < j; k++) {
-                    s = s + l.get(i, k) * u.get(k, j);
+                    s += l.get(i, k) * u.get(k, j);
                 }
 
-                l.set(i,j,matrix.get(i, j) - s);
+                l.set(i, j, matrix.get(i, j) - s);
             }
 
             for (int i = j; i < l.rows(); i++) {
@@ -72,7 +72,7 @@ public class CroutDecompositor implements MatrixDecompositor {
                 double s = 0.0;
 
                 for (int k = 0; k < j; k++) {
-                    s = s + l.get(j, k) * u.get(k, i);
+                    s += l.get(j, k) * u.get(k, i);
                 }
 
                 if (Math.abs(l.get(j, j)) < Matrices.EPS) {

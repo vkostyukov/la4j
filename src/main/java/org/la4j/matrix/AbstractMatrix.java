@@ -230,7 +230,12 @@ public abstract class AbstractMatrix implements Matrix {
                    get(0, 0) * get(1, 2) * get(2, 1);
         }
 
-        return decompose(Matrices.CROUT_DECOMPOSITOR)[0].diagonalProduct();
+        // TODO: switch back to Crout
+        // TODO: for Yury Drozd
+        // TODO: add more test for determinant in AbstractMatrixTest
+        //       for matrices 6x6, 5x5, 2x2, 1x1, 7x7, 10x10
+        //       and use Matrices.EPS * 1000 tollerance
+        return decompose(Matrices.LU_DECOMPOSITOR)[1].diagonalProduct();
     }
 
     @Override
@@ -560,7 +565,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public double trace() {
 
-        double result = 0;
+        double result = 0.0;
 
         for (int i = 0; i < rows; i++) {
             result += get(i, i);
@@ -572,7 +577,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public double diagonalProduct() {
 
-        double result = 1;
+        double result = 1.0;
 
         for (int i = 0; i < rows; i++) {
             result *= get(i, i);

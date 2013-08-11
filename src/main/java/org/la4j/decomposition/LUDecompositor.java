@@ -111,11 +111,9 @@ public class LUDecompositor implements MatrixDecompositor {
 
         Matrix u = factory.createMatrix(lu.columns(), lu.columns());
 
-        for (int i = 0; i < u.columns(); i++) {
+        for (int i = 0; i < u.rows(); i++) {
             for (int j = i; j < u.columns(); j++) {
-                if (i <= j) {
-                    u.set(i, j, lu.get(i, j));
-                }
+                u.set(i, j, lu.get(i, j));
             }
         }
 

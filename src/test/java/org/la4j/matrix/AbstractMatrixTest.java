@@ -887,7 +887,19 @@ public abstract class AbstractMatrixTest extends TestCase {
                 { 0.0, 0.0, 9.0 } 
         });
 
-        assertTrue(Math.abs(a.determinant() - 45.0) < Matrices.EPS);
+        assertEquals(45.0, a.determinant(), Matrices.EPS * 1000);
+    }
+
+    public void testDeterminant_4x4() {
+
+        Matrix a = factory().createMatrix(new double[][] { 
+                { 3.0, 3.0, 4.0, 43.0 }, 
+                { 5.0, 5.0, 6.0, 6.0 }, 
+                { 70.0, 7.0, 8.0, 8.0 }, 
+                { 9.0, 9.0, 10.0, 11.0 }
+        });
+
+        assertEquals(-9954.0, a.determinant(), Matrices.EPS * 1000);
     }
 
     public void testRank_3x3() {
