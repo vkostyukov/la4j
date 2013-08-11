@@ -23,7 +23,6 @@ package org.la4j.factory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Random;
 
 import org.la4j.matrix.Matrices;
