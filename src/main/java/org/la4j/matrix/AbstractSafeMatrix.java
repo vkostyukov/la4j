@@ -424,7 +424,7 @@ public abstract class AbstractSafeMatrix implements Matrix {
 
     @Override
     public void eachInColumn(int j,MatrixProcedure procedure) {
-        self.eachInColumn(j,procedure);
+        self.eachInColumn(j, procedure);
     }
 
     @Override
@@ -434,12 +434,12 @@ public abstract class AbstractSafeMatrix implements Matrix {
 
     @Override
     public void eachNonZeroInRow(int i, MatrixProcedure procedure) {
-        self.eachNonZeroInRow(i,procedure);
+        self.eachNonZeroInRow(i, procedure);
     }
 
     @Override
     public void eachNonZeroInColumn(int j, MatrixProcedure procedure) {
-        self.eachNonZeroInColumn(j,procedure);
+        self.eachNonZeroInColumn(j, procedure);
     }
 
     @Override
