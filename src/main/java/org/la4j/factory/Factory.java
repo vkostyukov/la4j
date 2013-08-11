@@ -75,7 +75,7 @@ public interface Factory extends Serializable {
     /**
      * Creates a matrix from matrix proxy.
      * 
-     * @param matrix
+     * @param source
      * @return
      */
     Matrix createMatrix(MatrixSource source);
@@ -133,6 +133,23 @@ public interface Factory extends Serializable {
     Matrix createIdentityMatrix(int size);
 
     /**
+     * Creates matrix from given blocks.
+     * Throws IllegalArgumentException if sizes of blocks are incompatible.
+     *
+     * <p>
+     * See <a href="http://mathworld.wolfram.com/BlockMatrix.html">
+     * http://mathworld.wolfram.com/BlockMatrix.html</a> for more details.
+     * </p>
+     *
+     * @param a
+     * @param b
+     * @param c
+     * @param d
+     * @return Matrix created from blocks a, b, c, d.
+     */
+    Matrix createBlockMatrix(Matrix a, Matrix b, Matrix c, Matrix d);
+
+    /**
      * Creates an empty vector.
      * 
      * See <a href="http://mathworld.wolfram.com/Vector.html">
@@ -168,7 +185,7 @@ public interface Factory extends Serializable {
 
     /**
      * 
-     * @param proxy
+     * @param source
      * @return
      */
     Vector createVector(VectorSource source);

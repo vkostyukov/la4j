@@ -88,6 +88,11 @@ public class SafeFactory implements Factory {
     }
 
     @Override
+    public Matrix createBlockMatrix(Matrix a, Matrix b, Matrix c, Matrix d) {
+        return self.createBlockMatrix(a, b, c, d).safe();
+    }
+
+    @Override
     public Vector createVector() {
         return self.createVector().safe();
     }
