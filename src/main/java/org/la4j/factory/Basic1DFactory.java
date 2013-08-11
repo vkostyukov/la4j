@@ -115,27 +115,27 @@ public class Basic1DFactory extends BasicFactory implements Factory {
     }
 
     @Override
-    public Matrix createBlockMatrix(Matrix A, Matrix B, Matrix C, Matrix D) {
-        if ((A.rows() != B.rows()) || (A.columns() != C.columns()) ||
-            (C.rows() != D.rows()) || (B.columns() != D.columns())) {
+    public Matrix createBlockMatrix(Matrix a, Matrix b, Matrix c, Matrix d) {
+        if ((a.rows() != b.rows()) || (a.columns() != c.columns()) ||
+            (c.rows() != d.rows()) || (b.columns() != d.columns())) {
             throw new IllegalArgumentException("Sides of blocks are incompatible!");
         }
-        int rows = A.rows() + C.rows(), cols = A.columns() + B.columns();
-        double blockMatrix[] = new double[rows*cols];
+        int rows = a.rows() + c.rows(), cols = a.columns() + b.columns();
+        double blockMatrix[] = new double[rows * cols];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if ((i < A.rows()) && (j < A.columns())) {
-                    blockMatrix[i * rows + j] = A.get(i, j);
+                if ((i < a.rows()) && (j < a.columns())) {
+                    blockMatrix[i * rows + j] = a.get(i, j);
                 }
-                if ((i < A.rows()) && (j > A.columns())) {
-                    blockMatrix[i * rows + j] = B.get(i, j);
+                if ((i < a.rows()) && (j > a.columns())) {
+                    blockMatrix[i * rows + j] = b.get(i, j);
                 }
-                if ((i > A.rows()) && (j < A.columns())) {
-                    blockMatrix[i * rows + j] = C.get(i, j);
+                if ((i > a.rows()) && (j < a.columns())) {
+                    blockMatrix[i * rows + j] = c.get(i, j);
                 }
-                if ((i > A.rows()) && (j > A.columns())) {
-                    blockMatrix[i * rows + j] = D.get(i, j);
+                if ((i > a.rows()) && (j > a.columns())) {
+                    blockMatrix[i * rows + j] = d.get(i, j);
                 }
             }
         }

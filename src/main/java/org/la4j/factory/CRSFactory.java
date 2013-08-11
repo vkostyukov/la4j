@@ -23,7 +23,6 @@ package org.la4j.factory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Random;
 
 import org.la4j.matrix.Matrices;
@@ -175,12 +174,12 @@ public class CRSFactory extends CompressedFactory implements Factory {
     }
 
     @Override
-    public Matrix createBlockMatrix(Matrix A, Matrix B, Matrix C, Matrix D) {
-        if ((A.rows() != B.rows()) || (A.columns() != C.columns()) ||
-            (C.rows() != D.rows()) || (B.columns() != D.columns())) {
+    public Matrix createBlockMatrix(Matrix a, Matrix b, Matrix c, Matrix d) {
+        if ((a.rows() != b.rows()) || (a.columns() != c.columns()) ||
+            (c.rows() != d.rows()) || (b.columns() != d.columns())) {
             throw new IllegalArgumentException("Sides of blocks are incompatible!");
         }
-        int rows = A.rows() + C.rows(), cols = A.columns() + B.columns();
+        int rows = a.rows() + c.rows(), cols = a.columns() + b.columns();
         ArrayList <Double>  values = new ArrayList <Double> ();
         ArrayList <Integer> columnIndices = new ArrayList <Integer> ();
         int rowPointers[] = new int[rows + 1];
@@ -190,17 +189,17 @@ public class CRSFactory extends CompressedFactory implements Factory {
         double current = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if ((i < A.rows()) && (j < A.columns())) {
-                    current = A.get(i, j);
+                if ((i < a.rows()) && (j < a.columns())) {
+                    current = a.get(i, j);
                 }
-                if ((i < A.rows()) && (j > A.columns())) {
-                    current = B.get(i, j);
+                if ((i < a.rows()) && (j > a.columns())) {
+                    current = b.get(i, j);
                 }
-                if ((i > A.rows()) && (j < A.columns())) {
-                    current = C.get(i, j);
+                if ((i > a.rows()) && (j < a.columns())) {
+                    current = c.get(i, j);
                 }
-                if ((i > A.rows()) && (j > A.columns())) {
-                    current = D.get(i, j);
+                if ((i > a.rows()) && (j > a.columns())) {
+                    current = d.get(i, j);
                 }
                 if (Math.abs(current) > Matrices.EPS) {
                     values.add(new Double(current));

@@ -141,13 +141,13 @@ public interface Factory extends Serializable {
      * http://mathworld.wolfram.com/BlockMatrix.html</a> for more details.
      * </p>
      *
-     * @param A
-     * @param B
-     * @param C
-     * @param D
-     * @return Matrix created from blocks A, B, C, D.
+     * @param a
+     * @param b
+     * @param c
+     * @param d
+     * @return Matrix created from blocks a, b, c, d.
      */
-    Matrix createBlockMatrix(Matrix A, Matrix B, Matrix C, Matrix D);
+    Matrix createBlockMatrix(Matrix a, Matrix b, Matrix c, Matrix d);
 
     /**
      * Creates an empty vector.
