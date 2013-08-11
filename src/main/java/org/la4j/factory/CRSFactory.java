@@ -185,7 +185,7 @@ public class CRSFactory extends CompressedFactory implements Factory {
         ArrayList <Integer> columnIndices = new ArrayList <Integer> ();
         int rowPointers[] = new int[rows + 1];
 
-        int k = 0, l = 0;
+        int k = 0;
         rowPointers[0] = 0;
         double current = 0;
         for (int i = 0; i < rows; i++) {
