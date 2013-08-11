@@ -21,9 +21,12 @@
 
 package org.la4j.factory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Random;
 
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.sparse.CRSMatrix;
@@ -170,4 +173,51 @@ public class CRSFactory extends CompressedFactory implements Factory {
         return new CRSMatrix(size, size, size, values, columnIndices,
                              rowPointers);
     }
+
+    @Override
+    public Matrix createBlockMatrix(Matrix A, Matrix B, Matrix C, Matrix D) {
+        if ((A.rows() != B.rows()) || (A.columns() != C.columns()) ||
+            (C.rows() != D.rows()) || (B.columns() != D.columns())) {
+            throw new IllegalArgumentException("Sides of blocks are incompatible!");
+        }
+        int rows = A.rows() + C.rows(), cols = A.columns() + B.columns();
+        ArrayList <Double>  values = new ArrayList <Double> ();
+        ArrayList <Integer> columnIndices = new ArrayList <Integer> ();
+        int rowPointers[] = new int[rows + 1];
+
+        int k = 0, l = 0;
+        rowPointers[0] = 0;
+        double current = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if ((i < A.rows()) && (j < A.columns())) {
+                    current = A.get(i, j);
+                }
+                if ((i < A.rows()) && (j > A.columns())) {
+                    current = B.get(i, j);
+                }
+                if ((i > A.rows()) && (j < A.columns())) {
+                    current = C.get(i, j);
+                }
+                if ((i > A.rows()) && (j > A.columns())) {
+                    current = D.get(i, j);
+                }
+                if (Math.abs(current) > Matrices.EPS) {
+                    values.add(new Double(current));
+                    columnIndices.add(new Integer(j));
+                    k++;
+                }
+            }
+            rowPointers[i + 1] = k;
+        }
+        double valuesArray[] = new double[values.size()];
+        int colIndArray[] = new int[columnIndices.size()];
+        for (int i = 0; i < values.size(); i++) {
+            valuesArray[i] = values.get(i).doubleValue();
+            colIndArray[i] = columnIndices.get(i).intValue();
+        }
+
+        return new CRSMatrix(rows,cols,k,valuesArray,colIndArray,rowPointers);
+    }
+
 }
