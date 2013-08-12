@@ -206,31 +206,7 @@ public abstract class AbstractMatrix implements Matrix {
         return result;
     }
 
-    @Override
-    public double determinant() {
-        if (rows != columns) {
-            throw new IllegalStateException("Can't compute determinant for " +
-                                            "non-square matrix.");
-        }
-
-        if (rows == 0) {
-            return 0.0;
-        } else if (rows == 1) {
-            return get(0, 0);
-        } else if (rows == 2) {
-            return get(0, 0) * get(1, 1) -
-                   get(0, 1) * get(1, 0);
-        } else if (rows == 3) {
-            return get(0, 0) * get(1, 1) * get(2, 2) +
-                   get(0, 1) * get(1, 2) * get(2, 0) +
-                   get(0, 2) * get(1, 0) * get(2, 1) -
-                   get(0, 2) * get(1, 1) * get(2, 0) -
-                   get(0, 1) * get(1, 0) * get(2, 2) -
-                   get(0, 0) * get(1, 2) * get(2, 1);
-        }
-
-        //return decompose(Matrices.CROUT_DECOMPOSITOR)[0].diagonalProduct();
-        // Crout determinant finding
+    private double detCrout() {
         try {
             for (int i = 0; i < rows; i++) {
                 boolean nonzero = false;
@@ -307,6 +283,44 @@ public abstract class AbstractMatrix implements Matrix {
 
         } catch (Exception e) {
             return 0;
+        }
+    }
+
+    private double detLU() {
+        return decompose(Matrices.LU_DECOMPOSITOR)[0].diagonalProduct();
+    }
+
+    @Override
+    public double determinant() {
+        if (rows != columns) {
+            throw new IllegalStateException("Can't compute determinant for " +
+                                            "non-square matrix.");
+        }
+
+        if (rows == 0) {
+            return 0.0;
+        } else if (rows == 1) {
+            return get(0, 0);
+        } else if (rows == 2) {
+            return get(0, 0) * get(1, 1) -
+                   get(0, 1) * get(1, 0);
+        } else if (rows == 3) {
+            return get(0, 0) * get(1, 1) * get(2, 2) +
+                   get(0, 1) * get(1, 2) * get(2, 0) +
+                   get(0, 2) * get(1, 0) * get(2, 1) -
+                   get(0, 2) * get(1, 1) * get(2, 0) -
+                   get(0, 1) * get(1, 0) * get(2, 2) -
+                   get(0, 0) * get(1, 2) * get(2, 1);
+        }
+
+        //return decompose(Matrices.CROUT_DECOMPOSITOR)[0].diagonalProduct();
+        //TODO: Check performance of this code (issue #82)
+        //      and optimize it if possible
+        if (rows < 100) {
+            return detCrout();
+        }
+        else {
+            return detLU();
         }
 
     }
