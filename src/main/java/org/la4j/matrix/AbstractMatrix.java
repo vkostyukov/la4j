@@ -229,7 +229,86 @@ public abstract class AbstractMatrix implements Matrix {
                    get(0, 0) * get(1, 2) * get(2, 1);
         }
 
-        return decompose(Matrices.CROUT_DECOMPOSITOR)[0].diagonalProduct();
+        //return decompose(Matrices.CROUT_DECOMPOSITOR)[0].diagonalProduct();
+        // Crout determinant finding
+        try {
+            for (int i = 0; i < rows; i++) {
+                boolean nonzero = false;
+                for (int j = 0; j < columns; j++)
+                    if (Math.abs(get(i, j)) > Matrices.EPS)
+                        nonzero = true;
+                if (!nonzero)
+                    return 0;
+            }
+
+            double scaling[] = new double[rows];
+            for (int i = 0; i < rows; i++) {
+                double big = 0;
+                for (int j = 0; j < columns; j++)
+                    if (Math.abs(get(i, j)) > Matrices.EPS)
+                        big = Math.abs(get(i, j));
+                scaling[i] = 1.0/big;
+            }
+
+            int sign = 1;
+
+            for (int j = 0; j < columns; j++) {
+
+                for (int i = 0; i < j; i++) {
+                    double sum = get(i, j);
+                    for (int k = 0; k < i; k++)
+                        sum = sum - (get(i, k) * get(k, j));
+                    set(i, j, sum);
+                }
+
+                double big = 0;
+                int imax = -1;
+                for (int i = j; i < rows; i++) {
+                    double sum = get(i, j);
+                    for (int k = 0; k < j; k++)
+                        sum = sum - (get(i, k) * get(k, j));
+                    set(i, j, sum);
+                    double cur = Math.abs(sum);
+                    cur = cur * scaling[i];
+                    if (cur > big) {
+                        big = cur;
+                        imax = i;
+                    }
+                }
+
+                if (j != imax) {
+
+                    for (int k = 0; k < rows; k++) {
+                        double t = get(j, k);
+                        set(j, k, get(imax, k));
+                        set(imax, k, t);
+                    }
+
+                    double t = scaling[imax];
+                    scaling[imax] = scaling[j];
+                    scaling[j] = t;
+
+                    sign = -sign;
+                }
+
+                if (j != rows - 1)
+                    for (int i = j + 1; i < rows; i++)
+                        set(i, j, get(i, j)/get(j, j));
+
+            }
+
+            double result = 1;
+            if (sign == -1)
+                result = - result;
+            for (int i = 0; i < rows; i++)
+                result = result * get(i, i);
+
+            return result;
+
+        } catch (Exception e) {
+            return 0;
+        }
+
     }
 
     @Override
@@ -306,7 +385,32 @@ public abstract class AbstractMatrix implements Matrix {
 
         return result;
     }
-    
+
+    public Matrix power(int n) {
+        return power(n, factory);
+    }
+
+    public Matrix power(int n, Factory factory) {
+        if (n < 0) {
+            throw new IllegalArgumentException(
+                    "The exponent has to be larger than 0.");
+        }
+
+        Matrix result = factory.createIdentityMatrix(rows);
+        Matrix that = this;
+
+        while (n > 0) {
+            if (n % 2 == 1) {
+                result = result.multiply(that);
+            }
+
+            n /= 2;
+            that = that.multiply(that);
+        }
+
+        return result;
+    }
+
     @Override
     public Matrix multiply(double value) {
         return multiply(value, factory);
@@ -606,7 +710,7 @@ public abstract class AbstractMatrix implements Matrix {
         ensureFactoryIsNotNull(factory);
 
         if (is(Matrices.UPPER_TRIANGULAR_MATRIX) 
-                || is(Matrices.LOWER_TRIANGULAR_MARTIX)) {
+                || is(Matrices.LOWER_TRIANGULAR_MATRIX)) {
 
             return copy(factory);
         }
