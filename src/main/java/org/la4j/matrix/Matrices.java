@@ -480,7 +480,7 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/LowerTriangularMatrix.html">lower 
      * triangular matrix</a>.
      */
-    public final static MatrixPredicate LOWER_TRIANGULAR_MARTIX = 
+    public final static MatrixPredicate LOWER_TRIANGULAR_MATRIX =
             new LowerTriangularMatrixPredicate();
 
     /**
