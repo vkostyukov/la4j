@@ -139,6 +139,28 @@ public interface Matrix extends Externalizable {
     Matrix rotate(Factory factory);
 
     /**
+     * Power operation for matrices. Matrix is returned to the power of n. This
+     * function uses the Exponentiation by squaring method.
+     * 
+     * @param n
+     *            The exponent
+     * @return Exponentiated matrix
+     */
+    Matrix power(int n);
+
+    /**
+     * Power operation for matrices. Matrix is returned to the power of n. This
+     * function uses the Exponentiation by squaring method.
+     * 
+     * @param n
+     *            The exponent
+     * @param factory
+     *            Factory for this matrix
+     * @return Exponentiated matrix
+     */
+    Matrix power(int n, Factory factory);
+
+    /**
      * Scales this matrix by <code>value</code>.
      * 
      * @param value

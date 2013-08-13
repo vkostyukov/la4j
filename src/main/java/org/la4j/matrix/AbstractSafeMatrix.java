@@ -556,4 +556,14 @@ public abstract class AbstractSafeMatrix implements Matrix {
                                                + i);
         }
     }
+    
+    @Override
+    public Matrix power(int n) {
+        return self.power(n, factory);
+    }
+
+    @Override
+    public Matrix power(int n, Factory factory) {
+        return self.power(n, factory);
+    }
 }
