@@ -20,7 +20,6 @@
  *                 Jakob Moellers
  *                 Ewald Grusk
  *                 Yuriy Drozd
- *                 Maxim Samoylov
  * 
  */
 
@@ -207,6 +206,91 @@ public abstract class AbstractMatrix implements Matrix {
         return result;
     }
 
+    private double detCrout() {
+        Matrix tmp = this.copy();
+        try {
+            for (int i = 0; i < rows; i++) {
+                boolean nonzero = false;
+                for (int j = 0; j < columns; j++)
+                    if (Math.abs(tmp.get(i, j)) > Matrices.EPS)
+                        nonzero = true;
+                if (!nonzero)
+                    return 0;
+            }
+
+            double scaling[] = new double[rows];
+            for (int i = 0; i < rows; i++) {
+                double big = 0;
+                for (int j = 0; j < columns; j++)
+                    if (Math.abs(tmp.get(i, j)) > Matrices.EPS)
+                        big = Math.abs(tmp.get(i, j));
+                scaling[i] = 1.0 / big;
+            }
+
+            int sign = 1;
+
+            for (int j = 0; j < columns; j++) {
+
+                for (int i = 0; i < j; i++) {
+                    double sum = tmp.get(i, j);
+                    for (int k = 0; k < i; k++)
+                        sum = sum - (tmp.get(i, k) * tmp.get(k, j));
+                    tmp.set(i, j, sum);
+                }
+
+                double big = 0;
+                int imax = -1;
+                for (int i = j; i < rows; i++) {
+                    double sum = tmp.get(i, j);
+                    for (int k = 0; k < j; k++)
+                        sum = sum - (tmp.get(i, k) * tmp.get(k, j));
+                    tmp.set(i, j, sum);
+                    double cur = Math.abs(sum);
+                    cur = cur * scaling[i];
+                    if (cur > big) {
+                        big = cur;
+                        imax = i;
+                    }
+                }
+
+                if (j != imax) {
+
+                    for (int k = 0; k < rows; k++) {
+                        double t = tmp.get(j, k);
+                        tmp.set(j, k, tmp.get(imax, k));
+                        tmp.set(imax, k, t);
+                    }
+
+                    double t = scaling[imax];
+                    scaling[imax] = scaling[j];
+                    scaling[j] = t;
+
+                    sign = -sign;
+                }
+
+                if (j != rows - 1)
+                    for (int i = j + 1; i < rows; i++)
+                        tmp.set(i, j, tmp.get(i, j) / tmp.get(j, j));
+
+            }
+
+            double result = 1;
+            if (sign == -1)
+                result = - result;
+            for (int i = 0; i < rows; i++)
+                result = result * tmp.get(i, i);
+
+            return result;
+
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private double detLU() {
+        return decompose(Matrices.LU_DECOMPOSITOR)[0].diagonalProduct();
+    }
+
     @Override
     public double determinant() {
         if (rows != columns) {
@@ -230,12 +314,14 @@ public abstract class AbstractMatrix implements Matrix {
                    get(0, 0) * get(1, 2) * get(2, 1);
         }
 
-        // TODO: switch back to Crout
-        // TODO: for Yury Drozd
-        // TODO: add more test for determinant in AbstractMatrixTest
-        //       for matrices 6x6, 5x5, 2x2, 1x1, 7x7, 10x10
-        //       and use Matrices.EPS * 1000 tollerance
-        return decompose(Matrices.LU_DECOMPOSITOR)[1].diagonalProduct();
+        //TODO: Check performance of this code (issue #82)
+        // and optimize it if possible
+        if (rows < 100) {
+            return detCrout();
+        }
+        else {
+            return detLU();
+        }
     }
 
     @Override
@@ -565,7 +651,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public double trace() {
 
-        double result = 0.0;
+        double result = 0;
 
         for (int i = 0; i < rows; i++) {
             result += get(i, i);
@@ -577,7 +663,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public double diagonalProduct() {
 
-        double result = 1.0;
+        double result = 1;
 
         for (int i = 0; i < rows; i++) {
             result *= get(i, i);
@@ -637,7 +723,7 @@ public abstract class AbstractMatrix implements Matrix {
         ensureFactoryIsNotNull(factory);
 
         if (is(Matrices.UPPER_TRIANGULAR_MATRIX) 
-                || is(Matrices.LOWER_TRIANGULAR_MARTIX)) {
+                || is(Matrices.LOWER_TRIANGULAR_MATRIX)) {
 
             return copy(factory);
         }
