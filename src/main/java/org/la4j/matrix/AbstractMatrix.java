@@ -20,6 +20,7 @@
  *                 Jakob Moellers
  *                 Ewald Grusk
  *                 Yuriy Drozd
+ *                 Maxim Samoylov
  * 
  */
 
@@ -651,7 +652,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public double trace() {
 
-        double result = 0;
+        double result = 0.0;
 
         for (int i = 0; i < rows; i++) {
             result += get(i, i);
@@ -663,7 +664,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public double diagonalProduct() {
 
-        double result = 1;
+        double result = 1.0;
 
         for (int i = 0; i < rows; i++) {
             result *= get(i, i);
@@ -723,7 +724,7 @@ public abstract class AbstractMatrix implements Matrix {
         ensureFactoryIsNotNull(factory);
 
         if (is(Matrices.UPPER_TRIANGULAR_MATRIX) 
-                || is(Matrices.LOWER_TRIANGULAR_MATRIX)) {
+                || is(Matrices.LOWER_TRIANGULAR_MARTIX)) {
 
             return copy(factory);
         }
