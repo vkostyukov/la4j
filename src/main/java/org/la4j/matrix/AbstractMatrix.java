@@ -219,17 +219,6 @@ public abstract class AbstractMatrix implements Matrix {
                     return 0;
             }
 
-            double scaling[] = new double[rows];
-            for (int i = 0; i < rows; i++) {
-                double big = 0;
-                for (int j = 0; j < columns; j++)
-                    if (Math.abs(tmp.get(i, j)) > Matrices.EPS)
-                        big = Math.abs(tmp.get(i, j));
-                scaling[i] = 1.0 / big;
-            }
-
-            int sign = 1;
-
             for (int j = 0; j < columns; j++) {
 
                 for (int i = 0; i < j; i++) {
@@ -239,7 +228,7 @@ public abstract class AbstractMatrix implements Matrix {
                     tmp.set(i, j, sum);
                 }
 
-                double big = 0;
+                double big = 0.0;
                 int imax = -1;
                 for (int i = j; i < rows; i++) {
                     double sum = tmp.get(i, j);
@@ -247,7 +236,6 @@ public abstract class AbstractMatrix implements Matrix {
                         sum = sum - (tmp.get(i, k) * tmp.get(k, j));
                     tmp.set(i, j, sum);
                     double cur = Math.abs(sum);
-                    cur = cur * scaling[i];
                     if (cur > big) {
                         big = cur;
                         imax = i;
@@ -255,18 +243,11 @@ public abstract class AbstractMatrix implements Matrix {
                 }
 
                 if (j != imax) {
-
                     for (int k = 0; k < rows; k++) {
                         double t = tmp.get(j, k);
                         tmp.set(j, k, tmp.get(imax, k));
                         tmp.set(imax, k, t);
                     }
-
-                    double t = scaling[imax];
-                    scaling[imax] = scaling[j];
-                    scaling[j] = t;
-
-                    sign = -sign;
                 }
 
                 if (j != rows - 1)
@@ -274,14 +255,7 @@ public abstract class AbstractMatrix implements Matrix {
                         tmp.set(i, j, tmp.get(i, j) / tmp.get(j, j));
 
             }
-
-            double result = 1;
-            if (sign == -1)
-                result = - result;
-            for (int i = 0; i < rows; i++)
-                result = result * tmp.get(i, i);
-
-            return result;
+            return tmp.diagonalProduct();
 
         } catch (Exception e) {
             return 0;
