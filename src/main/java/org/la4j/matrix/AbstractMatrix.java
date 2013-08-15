@@ -209,57 +209,61 @@ public abstract class AbstractMatrix implements Matrix {
 
     private double detCrout() {
         Matrix tmp = this.copy();
-        try {
-            for (int i = 0; i < rows; i++) {
-                boolean nonzero = false;
-                for (int j = 0; j < columns; j++)
-                    if (Math.abs(tmp.get(i, j)) > Matrices.EPS)
-                        nonzero = true;
-                if (!nonzero)
-                    return 0;
+        for (int i = 0; i < rows; i++) {
+            boolean nonzero = false;
+            for (int j = 0; j < columns; j++)
+                if (Math.abs(tmp.get(i, j)) > Matrices.EPS) {
+                    nonzero = true;
+                }
+            if (!nonzero) {
+                return 0;
             }
-
-            for (int j = 0; j < columns; j++) {
-
-                for (int i = 0; i < j; i++) {
-                    double sum = tmp.get(i, j);
-                    for (int k = 0; k < i; k++)
-                        sum = sum - (tmp.get(i, k) * tmp.get(k, j));
-                    tmp.set(i, j, sum);
-                }
-
-                double big = 0.0;
-                int imax = -1;
-                for (int i = j; i < rows; i++) {
-                    double sum = tmp.get(i, j);
-                    for (int k = 0; k < j; k++)
-                        sum = sum - (tmp.get(i, k) * tmp.get(k, j));
-                    tmp.set(i, j, sum);
-                    double cur = Math.abs(sum);
-                    if (cur > big) {
-                        big = cur;
-                        imax = i;
-                    }
-                }
-
-                if (j != imax) {
-                    for (int k = 0; k < rows; k++) {
-                        double t = tmp.get(j, k);
-                        tmp.set(j, k, tmp.get(imax, k));
-                        tmp.set(imax, k, t);
-                    }
-                }
-
-                if (j != rows - 1)
-                    for (int i = j + 1; i < rows; i++)
-                        tmp.set(i, j, tmp.get(i, j) / tmp.get(j, j));
-
-            }
-            return tmp.diagonalProduct();
-
-        } catch (Exception e) {
-            return 0;
         }
+
+        for (int j = 0; j < columns; j++) {
+
+            for (int i = 0; i < j; i++) {
+                double sum = tmp.get(i, j);
+                for (int k = 0; k < i; k++) {
+                    sum = sum - (tmp.get(i, k) * tmp.get(k, j));
+                }
+                tmp.set(i, j, sum);
+            }
+
+            double big = 0.0;
+            int imax = -1;
+            for (int i = j; i < rows; i++) {
+                double sum = tmp.get(i, j);
+                for (int k = 0; k < j; k++) {
+                    sum = sum - (tmp.get(i, k) * tmp.get(k, j));
+                }
+                tmp.set(i, j, sum);
+                double cur = Math.abs(sum);
+                if (cur > big) {
+                    big = cur;
+                    imax = i;
+                }
+            }
+
+            if (j != imax) {
+                for (int k = 0; k < rows; k++) {
+                    double t = tmp.get(j, k);
+                    tmp.set(j, k, tmp.get(imax, k));
+                    tmp.set(imax, k, t);
+                }
+            }
+
+            if (j != rows - 1)
+                for (int i = j + 1; i < rows; i++) {
+                    if (Math.abs(tmp.get(j, j)) < Matrices.EPS) {
+                        return 0.0;
+                    } else {
+                        tmp.set(i, j, tmp.get(i, j) / tmp.get(j, j));
+                    }
+                }
+
+        }
+        return tmp.diagonalProduct();
     }
 
     private double detLU() {
