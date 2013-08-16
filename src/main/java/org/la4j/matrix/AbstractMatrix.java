@@ -207,7 +207,7 @@ public abstract class AbstractMatrix implements Matrix {
         return result;
     }
 
-    private double detCrout() {
+    private double determinantByCrout() {
         Matrix tmp = this.copy();
         for (int i = 0; i < rows; i++) {
             boolean nonzero = false;
@@ -266,7 +266,7 @@ public abstract class AbstractMatrix implements Matrix {
         return tmp.diagonalProduct();
     }
 
-    private double detLU() {
+    private double determinantByLUDecomposition() {
         return decompose(Matrices.LU_DECOMPOSITOR)[0].diagonalProduct();
     }
 
@@ -296,10 +296,10 @@ public abstract class AbstractMatrix implements Matrix {
         //TODO: Check performance of this code (issue #82)
         // and optimize it if possible
         if (rows < 100) {
-            return detCrout();
+            return determinantByCrout();
         }
         else {
-            return detLU();
+            return determinantByLUDecomposition();
         }
     }
 
