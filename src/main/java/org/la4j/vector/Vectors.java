@@ -23,6 +23,7 @@ package org.la4j.vector;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.CRSFactory;
@@ -201,7 +202,7 @@ public final class Vectors {
 
         @Override
         public double accumulate() {
-            return result.doubleValue();
+            return result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
         }
     }
 

@@ -24,6 +24,7 @@ package org.la4j.matrix;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 
 import org.la4j.decomposition.CholeskyDecompositor;
@@ -339,7 +340,8 @@ public final class Matrices {
 
         @Override
         public double accumulate() {
-            return result.doubleValue();
+            return result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
+
         }
     }
 
