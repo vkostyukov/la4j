@@ -267,9 +267,9 @@ public abstract class AbstractMatrix implements Matrix {
                     if (Math.abs(tmp.get(j, j)) < Matrices.EPS) {
                         return 0.0;
                     } else {
-                        //TODO: fixed accuracy is not good, need correction in future
                         tmp.set(i, j, (new BigDecimal(tmp.get(i, j)).divide
-                            (new BigDecimal(tmp.get(j, j)), 20, RoundingMode.CEILING)).doubleValue());
+                            (new BigDecimal(tmp.get(j, j)), Matrices.ROUND_FACTOR,
+                                RoundingMode.CEILING)).doubleValue());
                     }
                 }
 
