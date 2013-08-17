@@ -160,7 +160,7 @@ public final class Vectors {
 
         @Override
         public double accumulate() {
-            return result.doubleValue();
+            return result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
         }
     }
 
@@ -202,7 +202,7 @@ public final class Vectors {
 
         @Override
         public double accumulate() {
-            return result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
+            return result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
         }
     }
 

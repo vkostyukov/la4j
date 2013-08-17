@@ -320,7 +320,7 @@ public final class Matrices {
 
         @Override
         public double accumulate() {
-            return result.doubleValue();
+            return result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
         }
     }
 
