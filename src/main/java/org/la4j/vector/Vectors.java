@@ -22,6 +22,8 @@
 package org.la4j.vector;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.CRSFactory;
@@ -43,6 +45,7 @@ import org.la4j.vector.source.VectorSource;
 public final class Vectors {
 
     public static final double EPS = Matrices.EPS;
+    public static final int ROUND_FACTOR = Matrices.ROUND_FACTOR;
 
     private static class ZeroVectorPredicate implements VectorPredicate {
         @Override
@@ -144,20 +147,20 @@ public final class Vectors {
 
     private static class SumVectorAccumulator implements VectorAccumulator {
 
-        private double result;
+        private BigDecimal result;
 
         public SumVectorAccumulator(double neutral) {
-            this.result = neutral;
+            this.result = new BigDecimal(neutral);
         }
 
         @Override
         public void update(int i, double value) {
-            result += value;
+            result = result.add(new BigDecimal(value));
         }
 
         @Override
         public double accumulate() {
-            return result;
+            return result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
         }
     }
 
@@ -186,20 +189,20 @@ public final class Vectors {
 
     private static class ProductVectorAccumulator implements VectorAccumulator {
 
-        private double result;
+        private BigDecimal result;
 
         public ProductVectorAccumulator(double neutral) {
-            this.result = neutral;
+            this.result = new BigDecimal(neutral);
         }
 
         @Override
         public void update(int i, double value) {
-            result *= value;
+            result = result.multiply(new BigDecimal(value));
         }
 
         @Override
         public double accumulate() {
-            return result;
+            return result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
         }
     }
 
