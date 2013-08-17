@@ -26,6 +26,9 @@
 
 package org.la4j.matrix;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.Random;
 
 import org.la4j.decomposition.MatrixDecompositor;
@@ -207,6 +210,77 @@ public abstract class AbstractMatrix implements Matrix {
         return result;
     }
 
+    private double determinantByCrout() {
+        Matrix tmp = this.copy();
+        BigDecimal big;
+        BigDecimal sum;
+        BigDecimal cur;
+        BigDecimal t;
+        int sign = 1;
+        for (int i = 0; i < rows; i++) {
+            boolean nonzero = false;
+            for (int j = 0; j < columns; j++)
+                if (Math.abs(tmp.get(i, j)) > Matrices.EPS) {
+                    nonzero = true;
+                }
+            if (!nonzero) {
+                return 0;
+            }
+        }
+
+        for (int j = 0; j < columns; j++) {
+
+            for (int i = 0; i < j; i++) {
+                sum = new BigDecimal(tmp.get(i, j));
+                for (int k = 0; k < i; k++) {
+                    sum = sum.subtract(new BigDecimal(tmp.get(i, k)).multiply(new BigDecimal(tmp.get(k, j))));
+                }
+                tmp.set(i, j, sum.doubleValue());
+            }
+
+            big = new BigDecimal(BigInteger.ZERO);
+            int imax = -1;
+            for (int i = j; i < rows; i++) {
+                sum = new BigDecimal(tmp.get(i, j));
+                for (int k = 0; k < j; k++) {
+                    sum = sum.subtract(new BigDecimal(tmp.get(i, k)).multiply(new BigDecimal(tmp.get(k, j))));
+                }
+                tmp.set(i, j, sum.doubleValue());
+                cur = sum.abs();
+                if (cur.compareTo(big) > 0) {
+                    big = cur;
+                    imax = i;
+                }
+            }
+
+            if (j != imax) {
+                for (int k = 0; k < rows; k++) {
+                    t = new BigDecimal(tmp.get(j, k));
+                    tmp.set(j, k, tmp.get(imax, k));
+                    tmp.set(imax, k, t.doubleValue());
+                }
+                sign = -sign;
+            }
+
+            if (j != rows - 1)
+                for (int i = j + 1; i < rows; i++) {
+                    if (Math.abs(tmp.get(j, j)) < Matrices.EPS) {
+                        return 0.0;
+                    } else {
+                        tmp.set(i, j, (new BigDecimal(tmp.get(i, j)).divide
+                            (new BigDecimal(tmp.get(j, j)), Matrices.ROUND_FACTOR,
+                                RoundingMode.CEILING)).doubleValue());
+                    }
+                }
+
+        }
+        return sign * tmp.diagonalProduct();
+    }
+
+    private double determinantByLUDecomposition() {
+        return decompose(Matrices.LU_DECOMPOSITOR)[0].diagonalProduct();
+    }
+
     @Override
     public double determinant() {
         if (rows != columns) {
@@ -230,12 +304,14 @@ public abstract class AbstractMatrix implements Matrix {
                    get(0, 0) * get(1, 2) * get(2, 1);
         }
 
-        // TODO: switch back to Crout
-        // TODO: for Yury Drozd
-        // TODO: add more test for determinant in AbstractMatrixTest
-        //       for matrices 6x6, 5x5, 2x2, 1x1, 7x7, 10x10
-        //       and use Matrices.EPS * 1000 tollerance
-        return decompose(Matrices.LU_DECOMPOSITOR)[1].diagonalProduct();
+        //TODO: Check performance of this code (issue #82)
+        // and optimize it if possible
+        if (rows < 100) {
+            return determinantByCrout();
+        }
+        else {
+            return determinantByLUDecomposition();
+        }
     }
 
     @Override
@@ -577,13 +653,13 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public double diagonalProduct() {
 
-        double result = 1.0;
+        BigDecimal result = BigDecimal.ONE;
 
         for (int i = 0; i < rows; i++) {
-            result *= get(i, i);
+            result = result.multiply(new BigDecimal(get(i, i)));
         }
 
-        return result;
+        return result.doubleValue();
     }
 
     @Override

@@ -70,15 +70,21 @@ public final class Matrices {
      * The machine epsilon, that is calculated at runtime.
      */
     public static final double EPS;
-
+    /**
+     * Exponent of machine epsilon
+     */
+    public static final int ROUND_FACTOR;
     // Determine the machine epsilon
     // Tolerance is 10e1
     static {
+        int roundFactor = 0;
         double eps = 1.0;
         while (1 + eps > 1) {
             eps = eps / 2;
+            roundFactor++;
         }
         EPS = eps * 10e1;
+        ROUND_FACTOR = roundFactor - 1;
     }
 
     private static class DiagonalMatrixPredicate implements MatrixPredicate {
