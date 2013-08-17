@@ -23,6 +23,7 @@
 package org.la4j.matrix;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 import org.la4j.decomposition.CholeskyDecompositor;
@@ -305,40 +306,40 @@ public final class Matrices {
     private static class SumMatrixAccumulator
             implements MatrixAccumulator {
 
-        private double result;
+        private BigDecimal result;
 
         public SumMatrixAccumulator(double neutral) {
-            this.result = neutral;
+            this.result = new BigDecimal(neutral);
         }
 
         @Override
         public void update(int i, int j, double value) {
-            result += value;
+            result = result.add(new BigDecimal(value));
         }
 
         @Override
         public double accumulate() {
-            return result;
+            return result.doubleValue();
         }
     }
 
     private static class ProductMatrixAccumulator
             implements MatrixAccumulator {
 
-        private double result;
+        private BigDecimal result;
 
         public ProductMatrixAccumulator(double neutral) {
-            this.result = neutral;
+            this.result = new BigDecimal(neutral);
         }
 
         @Override
         public void update(int i, int j, double value) {
-            result *= value;
+            result = result.multiply(new BigDecimal(value));
         }
 
         @Override
         public double accumulate() {
-            return result;
+            return result.doubleValue();
         }
     }
 
