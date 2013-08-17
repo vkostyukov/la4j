@@ -17,6 +17,7 @@
  * 
  * Contributor(s): Evgenia Krivova
  *                 Jakob Moellers
+ *                 Maxim Samoylov
  * 
  */
 

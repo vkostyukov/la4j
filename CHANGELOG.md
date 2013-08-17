@@ -25,6 +25,7 @@ la4j-0.4.5 `Sep 2013`
  * New matrix methods `eachInRow`, `eachInColumn`(contributed by Maxim Samoylov)
  * New matrix methods `eachNonZeroInRow`, `eachNonZeroInColumn`, `eachNonZero` (contributed by Maxim Samoylov)
  * New factory method `createBlockMatrix` (contributed by Maxim Samoylov)
+ * New fast and stable algorithm for determinant calculation (contributed by Maxim Samoylov)
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)

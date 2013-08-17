@@ -17,6 +17,7 @@
  * 
  * Contributor(s): Yuriy Drozd
  *                 Ewald Grusk
+ *                 Maxim Samoylov
  * 
  */
 
@@ -70,10 +71,12 @@ public final class Matrices {
      * The machine epsilon, that is calculated at runtime.
      */
     public static final double EPS;
+
     /**
      * Exponent of machine epsilon
      */
     public static final int ROUND_FACTOR;
+
     // Determine the machine epsilon
     // Tolerance is 10e1
     static {
