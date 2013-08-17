@@ -26,6 +26,9 @@
 
 package org.la4j.matrix;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.Random;
 
 import org.la4j.decomposition.MatrixDecompositor;
@@ -209,6 +212,11 @@ public abstract class AbstractMatrix implements Matrix {
 
     private double determinantByCrout() {
         Matrix tmp = this.copy();
+        BigDecimal big;
+        BigDecimal sum;
+        BigDecimal cur;
+        BigDecimal t;
+        int sign = 1;
         for (int i = 0; i < rows; i++) {
             boolean nonzero = false;
             for (int j = 0; j < columns; j++)
@@ -223,23 +231,23 @@ public abstract class AbstractMatrix implements Matrix {
         for (int j = 0; j < columns; j++) {
 
             for (int i = 0; i < j; i++) {
-                double sum = tmp.get(i, j);
+                sum = new BigDecimal(tmp.get(i, j));
                 for (int k = 0; k < i; k++) {
-                    sum = sum - (tmp.get(i, k) * tmp.get(k, j));
+                    sum = sum.subtract(new BigDecimal(tmp.get(i, k)).multiply(new BigDecimal(tmp.get(k, j))));
                 }
-                tmp.set(i, j, sum);
+                tmp.set(i, j, sum.doubleValue());
             }
 
-            double big = 0.0;
+            big = new BigDecimal(BigInteger.ZERO);
             int imax = -1;
             for (int i = j; i < rows; i++) {
-                double sum = tmp.get(i, j);
+                sum = new BigDecimal(tmp.get(i, j));
                 for (int k = 0; k < j; k++) {
-                    sum = sum - (tmp.get(i, k) * tmp.get(k, j));
+                    sum = sum.subtract(new BigDecimal(tmp.get(i, k)).multiply(new BigDecimal(tmp.get(k, j))));
                 }
-                tmp.set(i, j, sum);
-                double cur = Math.abs(sum);
-                if (cur > big) {
+                tmp.set(i, j, sum.doubleValue());
+                cur = sum.abs();
+                if (cur.compareTo(big) > 0) {
                     big = cur;
                     imax = i;
                 }
@@ -247,10 +255,11 @@ public abstract class AbstractMatrix implements Matrix {
 
             if (j != imax) {
                 for (int k = 0; k < rows; k++) {
-                    double t = tmp.get(j, k);
+                    t = new BigDecimal(tmp.get(j, k));
                     tmp.set(j, k, tmp.get(imax, k));
-                    tmp.set(imax, k, t);
+                    tmp.set(imax, k, t.doubleValue());
                 }
+                sign = -sign;
             }
 
             if (j != rows - 1)
@@ -258,12 +267,14 @@ public abstract class AbstractMatrix implements Matrix {
                     if (Math.abs(tmp.get(j, j)) < Matrices.EPS) {
                         return 0.0;
                     } else {
-                        tmp.set(i, j, tmp.get(i, j) / tmp.get(j, j));
+                        //TODO: fixed accuracy is not good, need correction in future
+                        tmp.set(i, j, (new BigDecimal(tmp.get(i, j)).divide
+                            (new BigDecimal(tmp.get(j, j)), 20, RoundingMode.CEILING)).doubleValue());
                     }
                 }
 
         }
-        return tmp.diagonalProduct();
+        return sign * tmp.diagonalProduct();
     }
 
     private double determinantByLUDecomposition() {
@@ -642,13 +653,13 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public double diagonalProduct() {
 
-        double result = 1.0;
+        BigDecimal result = BigDecimal.ONE;
 
         for (int i = 0; i < rows; i++) {
-            result *= get(i, i);
+            result = result.multiply(new BigDecimal(get(i, i)));
         }
 
-        return result;
+        return result.doubleValue();
     }
 
     @Override
