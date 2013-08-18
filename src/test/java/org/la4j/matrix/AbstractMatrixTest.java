@@ -917,6 +917,34 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(-9134649369.0, a.determinant(), Matrices.EPS * 1000);
     }
 
+    public void testDeterminant_4x4_1() {
+        Matrix a = factory().createMatrix(new double[][] {
+            {1, 2, 3, 4},
+            {1, 1, 1, 1},
+            {2, 3, 4 ,5},
+            {2, 2, 2, 2}
+        });
+
+        assertEquals(0.0, a.determinant(), Matrices.EPS*1000);
+    }
+
+    public void testDeterminant_10x10() {
+        Matrix a = factory().createMatrix(new double[][] {
+            {15, 6, 84, 67, 4, 11, 81, 47, 57, 41},
+            {21, 94, 86, 55, 16, 31, 60, 62, 33, 61},
+            {3, 32, 57, 56, 55, 66, 70, 87, 6, 37},
+            {71, 48, 8, 24, 43, 61, 56, 24, 37, 63},
+            {79, 45, 36, 20, 13, 96, 31, 77, 67, 54},
+            {20, 63, 41, 79, 46, 100, 90, 23, 42, 94},
+            {15, 10, 36, 18, 25, 81, 76, 29, 23, 53},
+            {43, 79, 60, 94, 26, 24, 50, 38, 53, 12},
+            {100, 59, 26, 99, 72, 17, 29, 3, 76, 14},
+            {18, 38, 141, 123, 59, 77, 151, 134, 63, 78}
+        });
+
+        assertEquals(0.0, a.determinant(), Matrices.EPS*1000);
+    }
+
     public void testRank_3x3() {
 
         Matrix a = factory().createMatrix(new double[][] {
