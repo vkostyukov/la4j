@@ -252,7 +252,9 @@ public abstract class AbstractMatrix implements Matrix {
                     imax = i;
                 }
             }
-
+            if (imax == -1) {
+                return 0.0;
+            }
             if (j != imax) {
                 for (int k = 0; k < rows; k++) {
                     t = new BigDecimal(tmp.get(j, k));
@@ -278,7 +280,8 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     private double determinantByLUDecomposition() {
-        return decompose(Matrices.LU_DECOMPOSITOR)[0].diagonalProduct();
+        Matrix[] LU = decompose(Matrices.LU_DECOMPOSITOR);
+        return LU[0].diagonalProduct() * LU[1].diagonalProduct();
     }
 
     @Override
@@ -306,7 +309,7 @@ public abstract class AbstractMatrix implements Matrix {
 
         //TODO: Check performance of this code (issue #82)
         // and optimize it if possible
-        if (rows < 100) {
+        if (rows < 0) {
             return determinantByCrout();
         }
         else {
@@ -659,7 +662,7 @@ public abstract class AbstractMatrix implements Matrix {
             result = result.multiply(new BigDecimal(get(i, i)));
         }
 
-        return result.doubleValue();
+        return result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
     }
 
     @Override
