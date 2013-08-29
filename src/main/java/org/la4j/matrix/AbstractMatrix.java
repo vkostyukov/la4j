@@ -360,14 +360,14 @@ public abstract class AbstractMatrix implements Matrix {
             double d = copy.get(k, k);
 
             for (int j = k; j < columns; j++) {
-                copy.set(k, j, copy.get(k, j) / d);
+                copy.update(k, j, Matrices.asDivFunction(d));
             }
 
             for (int i = k + 1; i < rows; i++) {
                 double t = copy.get(i, k);
 
                 for (int j = k; j < columns; j++) {
-                    copy.set(i, j, copy.get(i, j) - t * copy.get(k, j));
+                    copy.update(i, j, Matrices.asMinusFunction(t * copy.get(k, j)));
                 }
             }
 
@@ -375,7 +375,7 @@ public abstract class AbstractMatrix implements Matrix {
                 double t = copy.get(k, j);
 
                 for (int i = k; i < rows; i++) {
-                    copy.set(i, j, copy.get(i, j) - t * copy.get(i, k));
+                    copy.update(i, j, Matrices.asMinusFunction(t * copy.get(i, k)));
                 }
             }
         }
