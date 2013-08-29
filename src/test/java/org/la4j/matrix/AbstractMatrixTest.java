@@ -941,6 +941,18 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(3, a.rank());
     }
 
+    public void testRank_4x4_2() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 2.0, 3.0, 4.0 },
+                { 1.0, 1.0, 1.0, 1.0 },
+                { 2.0, 3.0, 4.0, 5.0 },
+                { 2.0, 2.0, 2.0, 2.0 }
+        });
+
+        assertEquals(2, a.rank());
+    }
+
     public void testRank_2x4() {
 
         Matrix a = factory().createMatrix(new double[][] {
