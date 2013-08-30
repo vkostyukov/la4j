@@ -321,7 +321,7 @@ public abstract class AbstractMatrix implements Matrix {
 
         Matrix copy = copy();
 
-        int min = (columns > rows)? rows : columns;
+        int min = (columns > rows) ? rows : columns;
 
         for (int k = 0; k < min; k++) {
 
@@ -357,21 +357,25 @@ public abstract class AbstractMatrix implements Matrix {
                 }
             }
 
+            double d = copy.get(k, k);
+
             for (int j = k; j < columns; j++) {
-                copy.update(k, j, Matrices.asDivFunction(copy.get(k, k)));
+                copy.update(k, j, Matrices.asDivFunction(d));
             }
 
             for (int i = k + 1; i < rows; i++) {
+                double t = copy.get(i, k);
+
                 for (int j = k; j < columns; j++) {
-                    copy.update(i, j, Matrices.asMinusFunction(copy.get(k, j) 
-                                      * copy.get(i, k)));
+                    copy.update(i, j, Matrices.asMinusFunction(t * copy.get(k, j)));
                 }
             }
 
             for (int j = k + 1; j < columns; j++) {
+                double t = copy.get(k, j);
+
                 for (int i = k; i < rows; i++) {
-                    copy.update(i, j, Matrices.asMinusFunction(copy.get(i, k)
-                                * copy.get(k, j))); 
+                    copy.update(i, j, Matrices.asMinusFunction(t * copy.get(i, k)));
                 }
             }
         }
