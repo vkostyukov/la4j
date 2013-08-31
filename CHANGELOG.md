@@ -16,7 +16,7 @@ la4j-0.4.5 `Sep 2013`
  * Renamed `Matrix.product()` to `Matrix.diagonalProduct()` (contributed by Julia Kostyukova)
  * New matrix methods: `sum()` and `product()` (contributed by Julia Kostyukova)
  * New vector methods: `sum()` and `product()` (contributed by Julia Kostyukova)
- * Renamed `Matrix.kronecker()` to `Matrix.kroneckerProduct()` (contributed by Julia Kostyukov)
+ * Renamed `Matrix.kronecker()` to `Matrix.kroneckerProduct()` (contributed by Julia Kostyukova)
  * New matrix method `hadamardProduct()` (contributed by Julia Kostyukova)
  * Bug fix in `EigenDecompositor` (contributed by Maxim Samoylov)
  * Improved stability of `EigenDecompositor` (contributed by Maxim Samoylov)
@@ -27,6 +27,7 @@ la4j-0.4.5 `Sep 2013`
  * New factory method `createBlockMatrix` (contributed by Maxim Samoylov)
  * New fast and stable algorithm for determinant calculation (contributed by Maxim Samoylov)
  * Improved stability of accumulators (contributed by Maxim Samoylov)
+ * Bug fix in `Matrix.rank()` method (contributed by Ewald Grusk)
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)
