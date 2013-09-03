@@ -998,7 +998,7 @@ public abstract class AbstractMatrixTest extends TestCase {
 
         assertEquals(0, a.rank());
     }
-    
+
     public void testRowAccess_3x3() {
 
         Matrix a = factory().createMatrix(new double[][] {
