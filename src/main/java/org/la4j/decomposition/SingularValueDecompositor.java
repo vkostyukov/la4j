@@ -52,11 +52,6 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
         // AHTIUNG: this code derived from Jama
 
-        if (matrix.rows() < matrix.columns()) {
-            throw new IllegalArgumentException("Wrong matrix size: " 
-                    + "rows < columns");
-        }
-
         Matrix a = matrix.copy();
 
         int n = Math.min(a.rows(), a.columns());

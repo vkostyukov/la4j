@@ -314,81 +314,26 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public int rank() {
-
-        if ((columns == 0) || (rows == 0)) {
+        if (rows == 0 || columns == 0) {
             return 0;
         }
 
-        Matrix copy = copy();
+        // TODO: handle small (1x1, 1xn, nx1, 2x2, 2xn, nx2, 3x3, 3xn, nx3) 
+        // matrices without SVD
 
-        int min = (columns > rows) ? rows : columns;
-
-        for (int k = 0; k < min; k++) {
-
-            if (Math.abs(copy.get(k, k)) <= Matrices.EPS) {
-
-                int x = 0; 
-                int y = 0;
-
-                boolean nz = false;
-
-                for (int i = k; i < rows && !nz; i++) {
-                    for (int j = k; j < columns && !nz; j++) {
-
-                        if (Math.abs(copy.get(i, j)) > Matrices.EPS) {
-                            y = i;
-                            x = j;
-
-                            nz = true;
-                        }
-                    }
-                }
-
-                if (!nz) {
-                    break;
-                }
-
-                if (k != y) {
-                    copy.swapRows(k, y);
-                }
-
-                if (k != x) {
-                    copy.swapColumns(k, x);
-                }
-            }
-
-            double d = copy.get(k, k);
-
-            for (int j = k; j < columns; j++) {
-                copy.update(k, j, Matrices.asDivFunction(d));
-            }
-
-            for (int i = k + 1; i < rows; i++) {
-                double t = copy.get(i, k);
-
-                for (int j = k; j < columns; j++) {
-                    copy.update(i, j, Matrices.asMinusFunction(t * copy.get(k, j)));
-                }
-            }
-
-            for (int j = k + 1; j < columns; j++) {
-                double t = copy.get(k, j);
-
-                for (int i = k; i < rows; i++) {
-                    copy.update(i, j, Matrices.asMinusFunction(t * copy.get(i, k)));
-                }
-            }
-        }
+        Matrix usv[] = decompose(Matrices.SINGULAR_VALUE_DECOMPOSITOR);
+        Matrix s = usv[1];
+        double tolerance = Math.max(rows, columns) * s.get(0, 0) * Matrices.EPS;
 
         int result = 0;
 
-        while (result < min 
-              && Math.abs(copy.get(result, result)) > Matrices.EPS) {
-
+        for (int i = 0; i < s.rows(); i++) {
+          if (s.get(i, i) > tolerance) {
             result++;
+          }
         }
 
-        return result;
+       return result;
     }
 
     public Matrix power(int n) {
