@@ -55,6 +55,7 @@ public class LUDecompositor implements MatrixDecompositor {
         }
 
         Matrix lu = matrix.copy();
+        Matrix p = factory.createIdentityMatrix(lu.rows());
 
         for (int j = 0; j < lu.columns(); j++) {
 
@@ -73,24 +74,20 @@ public class LUDecompositor implements MatrixDecompositor {
                 lu.set(i, j, jcolumn.get(i));
             }
 
-            int p = j;
+            int pivot = j;
 
             for (int i = j + 1; i < lu.rows(); i++) {
-                if (Math.abs(jcolumn.get(i)) 
-                    > Math.abs(jcolumn.get(p)))
-
-                    p = i;
-            }
-
-            if (p != j) {
-                for (int k = 0; k < lu.columns(); k++) {
-                    double t = lu.get(p, k);
-                    lu.set(p, k, lu.get(j, k));
-                    lu.set(j, k, t);
+                if (Math.abs(jcolumn.get(i)) > Math.abs(jcolumn.get(pivot))) {
+                    pivot = i;
                 }
             }
 
-            if (j < lu.rows() & lu.get(j, j) != 0.0) {
+            if (pivot != j) {
+                lu.swapRows(pivot, j);
+                p.swapRows(pivot, j);
+            }
+
+            if (j < lu.rows() && Math.abs(lu.get(j, j)) > Matrices.EPS) {
                 for (int i = j + 1; i < lu.rows(); i++) {
                     lu.update(i, j, Matrices.asDivFunction(lu.get(j, j)));
                 }
@@ -117,6 +114,6 @@ public class LUDecompositor implements MatrixDecompositor {
             }
         }
 
-        return new Matrix[] { l, u };
+        return new Matrix[] { l, u, p };
     }
 }

@@ -52,7 +52,12 @@ public class LUDecompositorTest extends AbstractDecompositorTest {
                     { 2.0, 0.0, 9.0 }, 
                     { 0.0, 10.0, 0.0 }, 
                     { 0.0, 0.0, -2.5 } 
-                } 
+                },
+                {
+                    { 0.0, 0.0, 1.0 },
+                    { 0.0, 1.0, 0.0 },
+                    { 1.0, 0.0, 0.0 },
+                }
         };
     }
 

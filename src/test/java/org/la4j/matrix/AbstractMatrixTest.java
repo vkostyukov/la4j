@@ -888,7 +888,7 @@ public abstract class AbstractMatrixTest extends TestCase {
                 { 0.0, 0.0, 9.0 } 
         });
 
-        assertEquals(45.0, a.determinant(), Matrices.EPS * 1000);
+        assertEquals(45.0, a.determinant(), 1e-5);
     }
 
     public void testDeterminant_4x4() {
@@ -900,7 +900,19 @@ public abstract class AbstractMatrixTest extends TestCase {
                 { 9.0, 9.0, 10.0, 11.0 }
         });
 
-        assertEquals(-9954.0, a.determinant(), Matrices.EPS * 1000);
+        assertEquals(-9954.0, a.determinant(), 1e-5);
+    }
+
+    public void testDeterminant_4x4_2() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 2.0, 3.0, 4.0 },
+                { 1.0, 1.0, 1.0, 1.0 },
+                { 2.0, 3.0, 4.0, 5.0 },
+                { 2.0, 2.0, 2.0, 2.0 }
+        });
+
+        assertEquals(0.0, a.determinant(), 1e-5);
     }
 
     public void testDeterminant_7x7() {
@@ -908,14 +920,14 @@ public abstract class AbstractMatrixTest extends TestCase {
         Matrix a = factory().createMatrix(new double[][] {
                 { 1.0,  6.0,  -8.0,  5.0,  -3.0,  41.0, -2.0 },
                 {-8.0, -5.0,   7.0, 23.0,  -7.0,  12.0, -2.0 },
-                { 8.0, 77.0, -65.0, 13.0,  -8.0,  55.0, -47.0},
+                { 8.0, 77.0, -65.0, 13.0,  -8.0,  55.0, -47.0 },
                 {26.0, 27.0, -81.0, -1.0,  10.0, -48.0, -3.0 },
                 { 0.0, 34.0, -79.0,  4.0,  -1.0,  28.0,  6.0 },
-                {-5.0,  8.0, -20.0, 36.0, -12.0,  -7.0, -10.0},
-                {-6.0, 13.0,   9.0, -4.0,  95.0,   2.0,  46.0}
+                {-5.0,  8.0, -20.0, 36.0, -12.0,  -7.0, -10.0 },
+                {-6.0, 13.0,   9.0, -4.0,  95.0,   2.0,  46.0 }
         });
 
-        assertEquals(-9134649369.0, a.determinant(), Matrices.EPS * 1000);
+        assertEquals(-9134649369.0, a.determinant(), 1e-5);
     }
 
     public void testRank_3x3() {
