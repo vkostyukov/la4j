@@ -930,6 +930,34 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(-9134649369.0, a.determinant(), 1e-5);
     }
 
+    public void testDeterminant_6x6() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 5.0, 89.0, 6.0, 23.0, 6.0, 4.0, },
+                { 4.0, 0.0, 27.0, 90.0, 42.0, 12.0 },
+                { 6.0, 0.0, 24.0, 9.0, 41.0, 15.0 },
+                { 31.0, 0.0, 3.0, 22.0, 2.0, 1.0 },
+                { 2.0, 0.0, 37.0, 4.0, 0.0, 21.0 },
+                { 23.0, 8.0, 7.0, 0.0, 12.0, 10.0 }
+        });
+
+        assertEquals(-1695428964.0, a.determinant(), 1e-5);
+    }
+
+    public void testDeterminant_5x5() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { -10.0, 89.0, -6.0, 23.0, 6.0, 4.0 },
+                { 4.0, 5.0, 27.0, 90.0, 0.0, 12.0 },
+                { 6.0, 0.0, 0.0, 9.0, 1.0, 15.0 },
+                { 31.0, 11.0, 0.0, 12.0, 2.0, 1.0 },
+                { 2.0, 0.0, 5.0, 4.0, -1.0, -21.0 },
+                { 3.0, -18.0, 7.0, 0.0, 12.0, 10.0 }
+        });
+
+        assertEquals(3180462.0, a.determinant(), 1e-5);
+    }
+
     public void testRank_3x3() {
 
         Matrix a = factory().createMatrix(new double[][] {

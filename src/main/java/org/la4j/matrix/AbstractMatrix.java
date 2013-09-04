@@ -305,12 +305,29 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         Matrix lup[] = decompose(Matrices.LU_DECOMPOSITOR);
-        double result = lup[1].diagonalProduct();
+        Matrix u = lup[1];
+        Matrix p = lup[2];
+
+        double result = u.diagonalProduct();
+
+        // TODO: we can do that in O(n log n)
+        //       just google: "counting inversions divide and conqueror"
+        int permutations[] = new int[p.rows()];
+        for (int i = 0; i < p.rows(); i++) {
+            for (int j = 0; j < p.columns(); j++) {
+                if (p.get(i, j) > 0.0) {
+                    permutations[i] = j;
+                    break;
+                }
+            }
+        }
 
         int sign = 1;
-        for (int i = 0; i < lup[2].rows(); i++) {
-            if (lup[2].get(i, i) < 1.0) {
-                sign *= -1;
+        for (int i = 0; i < permutations.length; i++) {
+            for (int j = i + 1; j < permutations.length; j++) {
+                if (permutations[j] < permutations[i]) {
+                    sign *= -1;
+                }
             }
         }
 
@@ -323,7 +340,8 @@ public abstract class AbstractMatrix implements Matrix {
             return 0;
         }
 
-        // TODO: handle small (1x1, 1xn, nx1, 2x2, 2xn, nx2, 3x3, 3xn, nx3) 
+        // TODO: 
+        // handle small (1x1, 1xn, nx1, 2x2, 2xn, nx2, 3x3, 3xn, nx3) 
         // matrices without SVD
 
         Matrix usv[] = decompose(Matrices.SINGULAR_VALUE_DECOMPOSITOR);
@@ -331,7 +349,6 @@ public abstract class AbstractMatrix implements Matrix {
         double tolerance = Math.max(rows, columns) * s.get(0, 0) * Matrices.EPS;
 
         int result = 0;
-
         for (int i = 0; i < s.rows(); i++) {
           if (s.get(i, i) > tolerance) {
             result++;
