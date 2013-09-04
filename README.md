@@ -41,6 +41,15 @@ Licensing
  
 This software is licensed under the terms you may find in the file 
 named "LICENSE" in this directory.
+
+How To Contribute
+-----------------
+
+- Fork it
+- Create your feature branch (`git checkout -b my-new-feature`)
+- Commit your changes (`git commit -am 'Add some feature'`)
+- Push to the branch (`git push origin my-new-feature`)
+- Create new Pull Request
  
  
 Contributors
