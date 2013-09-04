@@ -305,8 +305,8 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         Matrix lup[] = decompose(Matrices.LU_DECOMPOSITOR);
-        Matrix u = lup[1];
-        Matrix p = lup[2];
+        Matrix u = lup[Matrices.LU_U];
+        Matrix p = lup[Matrices.LU_P];
 
         double result = u.diagonalProduct();
 
@@ -345,7 +345,7 @@ public abstract class AbstractMatrix implements Matrix {
         // matrices without SVD
 
         Matrix usv[] = decompose(Matrices.SINGULAR_VALUE_DECOMPOSITOR);
-        Matrix s = usv[1];
+        Matrix s = usv[Matrices.SVD_S];
         double tolerance = Math.max(rows, columns) * s.get(0, 0) * Matrices.EPS;
 
         int result = 0;

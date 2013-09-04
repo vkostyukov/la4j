@@ -715,6 +715,61 @@ public final class Matrices {
     public final static LinearSystemSolver DEFAULT_SOLVER = GAUSSIAN_SOLVER;
 
     /**
+     * Index accessor for L (Lower Triangular) matrix in LU decomposition.
+     */
+    public final static int LU_L = 0;
+
+    /**
+     * Index accessor for U (Upper Triangular) matrix in LU decomposition.
+     */
+    public final static int LU_U = 1;
+
+    /**
+     * Index accessor for P (Permutation) matrix in LU decomposition.
+     */
+    public final static int LU_P = 2;
+
+    /**
+     * Index accessor for U (Left Unitary) matrix in SVD decomposition.
+     */
+    public final static int SVD_U = 0;
+
+    /**
+     * Index accessor for S (Singular) matrix in SVD decomposition.
+     */
+    public final static int SVD_S = 1;
+
+    /**
+     * Index accessor for V (Right Unitary) matrix in SVD decomposition.
+     */
+    public final static int SVD_V = 2;
+
+    /**
+     * Index accessor for Q (Orthogonal) matrix in QR decomposition.
+     */
+    public final static int QR_Q = 0;
+
+    /**
+     * Index accessor for R (Upper Triangular) matrix in QR decomposition.
+     */
+    public final static int QR_R = 1;
+
+    /**
+     * Index accessor for L (Lower Unitriangular) matrix in Cholesky decomposition.
+     */
+    public final static int CHOLESKY_L = 0;
+
+    /**
+     * Index accessor for V (Eigenvectors) matrix in Eigen decomposition.
+     */
+    public final static int EIGEN_V = 0;
+
+    /**
+     * Index accessor for D (Eigenvalues) matrix in Eigen decomposition. 
+     */
+    public final static int EIGHEN_D = 1;
+
+    /**
      * Creates a singleton <code>1x1</code> matrix from <code>value</code>.
      * 
      * @param value

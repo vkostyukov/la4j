@@ -36,7 +36,7 @@ import org.la4j.vector.Vectors;
 public class EigenDecompositor implements MatrixDecompositor {
 
     /**
-     * Returns the result of Eigen decomposition of given matrix
+     * Returns the result of Eigen (EVD) decomposition of given matrix
      * <p>
      * See <a href="http://mathworld.wolfram.com/EigenDecomposition.html">
      * http://mathworld.wolfram.com/EigenDecomposition.html</a> for more
@@ -45,7 +45,7 @@ public class EigenDecompositor implements MatrixDecompositor {
      * 
      * @param matrix
      * @param factory
-     * @return { P, D }
+     * @return { V, D }
      */
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {

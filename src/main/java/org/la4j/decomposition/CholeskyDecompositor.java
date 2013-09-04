@@ -44,7 +44,7 @@ public class CholeskyDecompositor implements MatrixDecompositor {
      * 
      * @param matrix
      * @param factory
-     * @return { U }
+     * @return { L }
      */
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
@@ -61,9 +61,9 @@ public class CholeskyDecompositor implements MatrixDecompositor {
             throw new IllegalArgumentException();
         }
 
-        Matrix u = factory.createMatrix(matrix.rows(), matrix.rows());
+        Matrix l = factory.createMatrix(matrix.rows(), matrix.rows());
 
-        for (int j = 0; j < u.rows(); j++) {
+        for (int j = 0; j < l.rows(); j++) {
 
             double d = 0.0;
 
@@ -72,26 +72,26 @@ public class CholeskyDecompositor implements MatrixDecompositor {
                 double s = 0.0;
 
                 for (int i = 0; i < k; i++) {
-                    s += u.get(k, i) * u.get(j, i);
+                    s += l.get(k, i) * l.get(j, i);
                 }
 
-                s = (matrix.get(j, k) - s) / u.get(k, k);
+                s = (matrix.get(j, k) - s) / l.get(k, k);
 
-                u.set(j, k, s);
+                l.set(j, k, s);
 
                 d = d + s * s;
             }
 
             d = matrix.get(j, j) - d;
 
-            u.set(j, j, Math.sqrt(Math.max(d, 0.0)));
+            l.set(j, j, Math.sqrt(Math.max(d, 0.0)));
 
-            for (int k = j + 1; k < u.rows(); k++) {
-                u.set(j, k, 0.0);
+            for (int k = j + 1; k < l.rows(); k++) {
+                l.set(j, k, 0.0);
             }
         }
 
-        return new Matrix[] { u };
+        return new Matrix[] { l };
     }
 
     /**
