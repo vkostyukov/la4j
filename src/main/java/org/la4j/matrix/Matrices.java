@@ -767,7 +767,7 @@ public final class Matrices {
     /**
      * Index accessor for D (Eigenvalues) matrix in Eigen decomposition. 
      */
-    public final static int EIGHEN_D = 1;
+    public final static int EIGEN_D = 1;
 
     /**
      * Creates a singleton <code>1x1</code> matrix from <code>value</code>.
