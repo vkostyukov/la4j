@@ -21,37 +21,107 @@
 
 package org.la4j.decomposition;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import junit.framework.TestCase;
 
-public class CholeskyDecompositorTest extends AbstractDecompositorTest {
+import org.la4j.factory.Basic1DFactory;
+import org.la4j.factory.Basic2DFactory;
+import org.la4j.factory.CCSFactory;
+import org.la4j.factory.CRSFactory;
+import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
+import org.la4j.matrix.Matrix;
+import org.la4j.matrix.MockMatrix;
 
-    @Override
-    public MatrixDecompositor decompositor() {
-        return new CholeskyDecompositor();
+public class CholeskyDecompositorTest extends TestCase {
+
+    public Factory[] factories() {
+        return new Factory[] { new Basic1DFactory(), new Basic2DFactory(),
+                new CRSFactory(), new CCSFactory() };
     }
 
-    @Override
-    public double[][] input() {
-        return new double[][] {
-                { 1.0, -2.0, 0.0 }, 
-                { -2.0, 5.0, 2.0 }, 
-                { 0.0, 2.0, 5.0 } 
+    private void performTest(double[][] input, double[][] output) {
+
+        for (Factory factory : factories()) {
+
+            Matrix a = factory.createMatrix(input);
+            Matrix[] decomposition = a.decompose(Matrices.CHOLESKY_DECOMPOSITOR);
+
+            assertEquals(1, decomposition.length);
+
+            assertEquals(new MockMatrix(factory.createMatrix(output)), 
+                    new MockMatrix(decomposition[Matrices.CHOLESKY_L]));
+        }
+    }
+
+    public void testCholeskyDecomposition_2x2() {
+
+        double[][] input = new double[][] {
+                { 1.0, -2.0},
+                { -2.0, 5.0}
         };
-    }
 
-    @Override
-    public double[][][] output() {
-        return new double[][][] { 
-                { 
-                    { 1.0, 0.0, 0.0 }, 
-                    { -2.0, 1.0, 0.0 },
-                    { 0.0, 2.0, 1.0 } 
-                } 
+        double[][] output = new double[][] { 
+                { 1.0, 0.0},
+                {-2.0, 1.0}
         };
+
+        performTest(input, output);
     }
 
-    public static Test suite() {
-        return new TestSuite(CholeskyDecompositorTest.class);
+    public void testCholeskyDecomposition_3x3() {
+
+        double[][] input = new double[][] {
+                { 1.0,-2.0, 0.0 },
+                {-2.0, 5.0, 2.0 },
+                { 0.0, 2.0, 5.0 }
+        };
+
+        double[][] output = new double[][] { 
+                { 1.0, 0.0, 0.0 },
+                {-2.0, 1.0, 0.0 },
+                { 0.0, 2.0, 1.0 }
+        };
+
+        performTest(input, output);
+    }
+
+    public void testCholeskyDecomposition_4x4() {
+
+        double[][] input = new double[][] {
+             { 18.0, 22.0,  54.0,  42.0 },
+             { 22.0, 70.0,  86.0,  62.0 },
+             { 54.0, 86.0, 174.0, 134.0 },
+             { 42.0, 62.0, 134.0, 106.0 }
+        };
+
+        double[][] output = new double[][] { 
+             {  4.243, 0.000, 0.000, 0.000 },
+             {  5.185, 6.566, 0.000, 0.000 },
+             { 12.728, 3.046, 1.650, 0.000 },
+             {  9.899, 1.625, 1.850, 1.393 }
+        };
+
+        performTest(input, output);
+    }
+
+    public void  testCholeskyDecomposition_5x5() {
+
+        double[][] input = new double[][] {
+             {   6.0,  15.0,   55.0,   72.0,  101.0 },
+             {  15.0,  55.0,  225.0,  229.0,  256.0 },
+             {  55.0, 225.0,  979.0, 1024.0, 1200.0 },
+             {  72.0, 229.0, 1024.0, 2048.0, 2057.0 },
+             { 101.0, 256.0, 1200.0, 2057.0, 6000.0 }
+        };
+
+        double[][] output = new double[][] { 
+             {  2.449,  0.000,  0.000,  0.000,  0.000 },
+             {  6.124,  4.183,  0.000,  0.000,  0.000 },
+             { 22.454, 20.917,  6.110,  0.000,  0.000 },
+             { 29.394, 11.713, 19.476, 25.836,  0.000 },
+             { 41.233,  0.837, 42.007,  0.661, 50.340 }
+        };
+
+        performTest(input, output);
     }
 }
