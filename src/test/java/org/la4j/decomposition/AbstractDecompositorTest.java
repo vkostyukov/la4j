@@ -29,33 +29,28 @@ import org.la4j.factory.CCSFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.MockMatrix;
 
 public abstract class AbstractDecompositorTest extends TestCase {
-
-    public abstract MatrixDecompositor decompositor();
-
-    public abstract double[][] input();
-
-    public abstract double[][][] output();
 
     public Factory[] factories() {
         return new Factory[] { new Basic1DFactory(), new Basic2DFactory(),
                 new CRSFactory(), new CCSFactory() };
     }
 
-    public void testDecompose() {
+    protected void performTest(MatrixDecompositor decompositor, double[][] input, 
+        double[][][] output) {
 
         for (Factory factory : factories()) {
 
-            Matrix a = factory.createMatrix(input());
+            Matrix a = factory.createMatrix(input);
+            Matrix[] decomposition = a.decompose(decompositor);
 
-            Matrix[] decomposition = a.decompose(decompositor());
-
-            assertEquals(output().length, decomposition.length);
+            assertEquals(output.length, decomposition.length);
 
             for (int i = 0; i < decomposition.length; i++) {
-                assertEquals(factory.createMatrix(output()[i]),
-                        decomposition[i]);
+                assertEquals(new MockMatrix(factory.createMatrix(output[i])),
+                        new MockMatrix(decomposition[i]));
             }
         }
     }
