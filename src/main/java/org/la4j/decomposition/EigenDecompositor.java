@@ -55,8 +55,7 @@ public class EigenDecompositor implements MatrixDecompositor {
         } else if (matrix.rows() == matrix.columns()) {
             return decomposeNonSymmetricMatrix(matrix, factory);
         } else {
-            throw new IllegalArgumentException(
-                    "Can't decompose rectangle matrix");
+            throw new IllegalArgumentException("Can't decompose rectangle matrix");
         }
     }
 
@@ -75,6 +74,9 @@ public class EigenDecompositor implements MatrixDecompositor {
      * @return { P, D }
      */
     private Matrix[] decomposeSymmetricMatrix(Matrix matrix, Factory factory) {
+
+        // TODO: Remove all the getRow()/getColumn() from this code.
+        //       This is slow.
 
         Matrix d = matrix.copy();
         Vector r = generateR(d, factory);
@@ -103,7 +105,6 @@ public class EigenDecompositor implements MatrixDecompositor {
         return new Matrix[] { v, d };
     }
 
-    
     /***
      * 
      * @param vector

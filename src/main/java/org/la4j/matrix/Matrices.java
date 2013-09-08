@@ -174,6 +174,8 @@ public final class Matrices {
     // TODO: Issue 5
     //
     // Please, send me a pull-request, if you know how to write it better
+    // This is not a good idea to use such technique. There is might be a memory
+    // leak after the using this predicate.
     // 
     private static class SymmetricMatrixPredicate
             implements AdvancedMatrixPredicate {
