@@ -100,7 +100,7 @@ public class EigenDecompositor implements MatrixDecompositor {
 
             n = r.norm();
 
-        } while (n > Matrices.EPS);
+        } while (Math.abs(n) > Matrices.EPS);
 
         return new Matrix[] { v, d };
     }
@@ -156,10 +156,10 @@ public class EigenDecompositor implements MatrixDecompositor {
         if (Math.abs(matrix.get(k, k) - matrix.get(l, l)) < Matrices.EPS) {
             alpha = beta = Math.sqrt(0.5);
         } else {
-            alpha = Math.cos(0.5 * Math.atan2(2 * matrix.get(k, l), 
-                             matrix.get(k, k) - matrix.get(l, l)));
-            beta = Math.sin(0.5 * Math.atan2(2 * matrix.get(k, l), 
-                            matrix.get(k, k) - matrix.get(l, l)));
+            double mu = 2 * matrix.get(k, l) / (matrix.get(k, k) - matrix.get(l, l));
+            mu = 1.0 / Math.sqrt(1.0 + mu * mu);
+            alpha = Math.sqrt(0.5 * (1.0 + mu));
+            beta = Math.signum(mu) * Math.sqrt(0.5 * (1.0 - mu));
         }
 
         result.set(k, k, alpha);
