@@ -44,10 +44,13 @@ public class GaussianInvertor implements MatrixInvertor {
             Vector b = factory.createVector(matrix.rows());
             b.set(i, 1.0);
 
-            LinearSystem system = factory.createLinearSystem(matrix, b);
-            Vector x = system.solve(Matrices.GAUSSIAN_SOLVER);
-
-            result.setColumn(i, x);
+            try {
+                LinearSystem system = factory.createLinearSystem(matrix, b);
+                Vector x = system.solve(Matrices.GAUSSIAN_SOLVER);
+                result.setColumn(i, x);
+            } catch (IllegalArgumentException ex) {
+                throw new IllegalArgumentException("This matrix is not invertible");
+            }
         }
 
         return result;
