@@ -17,6 +17,7 @@
  * 
  * Contributor(s): Yuriy Drozd
  *                 Ewald Grusk
+ *                 Maxim Samoylov
  * 
  */
 
@@ -72,10 +73,12 @@ public final class Matrices {
      * The machine epsilon, that is calculated at runtime.
      */
     public static final double EPS;
+
     /**
      * Exponent of machine epsilon
      */
     public static final int ROUND_FACTOR;
+
     // Determine the machine epsilon
     // Tolerance is 10e1
     static {
@@ -171,6 +174,8 @@ public final class Matrices {
     // TODO: Issue 5
     //
     // Please, send me a pull-request, if you know how to write it better
+    // This is not a good idea to use such technique. There is might be a memory
+    // leak after the using this predicate.
     // 
     private static class SymmetricMatrixPredicate
             implements AdvancedMatrixPredicate {
@@ -710,6 +715,61 @@ public final class Matrices {
      * {@link Matrices#GAUSSIAN_SOLVER}.
      */
     public final static LinearSystemSolver DEFAULT_SOLVER = GAUSSIAN_SOLVER;
+
+    /**
+     * Index accessor for L (Lower Triangular) matrix in LU decomposition.
+     */
+    public final static int LU_L = 0;
+
+    /**
+     * Index accessor for U (Upper Triangular) matrix in LU decomposition.
+     */
+    public final static int LU_U = 1;
+
+    /**
+     * Index accessor for P (Permutation) matrix in LU decomposition.
+     */
+    public final static int LU_P = 2;
+
+    /**
+     * Index accessor for U (Left Unitary) matrix in SVD decomposition.
+     */
+    public final static int SVD_U = 0;
+
+    /**
+     * Index accessor for S (Singular) matrix in SVD decomposition.
+     */
+    public final static int SVD_S = 1;
+
+    /**
+     * Index accessor for V (Right Unitary) matrix in SVD decomposition.
+     */
+    public final static int SVD_V = 2;
+
+    /**
+     * Index accessor for Q (Orthogonal) matrix in QR decomposition.
+     */
+    public final static int QR_Q = 0;
+
+    /**
+     * Index accessor for R (Upper Triangular) matrix in QR decomposition.
+     */
+    public final static int QR_R = 1;
+
+    /**
+     * Index accessor for L (Lower Unitriangular) matrix in Cholesky decomposition.
+     */
+    public final static int CHOLESKY_L = 0;
+
+    /**
+     * Index accessor for V (Eigenvectors) matrix in Eigen decomposition.
+     */
+    public final static int EIGEN_V = 0;
+
+    /**
+     * Index accessor for D (Eigenvalues) matrix in Eigen decomposition. 
+     */
+    public final static int EIGEN_D = 1;
 
     /**
      * Creates a singleton <code>1x1</code> matrix from <code>value</code>.

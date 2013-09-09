@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Contributor(s): -
+ * Contributor(s): Maxim Samoylov
  * 
  */
 
@@ -68,7 +68,7 @@ public final class Vectors {
         }
     }
 
-    private static class IncVecorFunction implements VectorFunction {
+    private static class IncVectorFunction implements VectorFunction {
         @Override
         public double evaluate(int i, double value) {
             return value + 1.0;
@@ -349,7 +349,7 @@ public final class Vectors {
     /**
      * Increases each element of vector by <code>1</code>.
      */
-    public static final VectorFunction INC_FUNCTION = new IncVecorFunction();
+    public static final VectorFunction INC_FUNCTION = new IncVectorFunction();
 
     /**
      * Decreases each element of vectors by <code>1</code>.

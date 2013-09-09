@@ -52,11 +52,6 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
         // AHTIUNG: this code derived from Jama
 
-        if (matrix.rows() < matrix.columns()) {
-            throw new IllegalArgumentException("Wrong matrix size: " 
-                    + "rows < columns");
-        }
-
         Matrix a = matrix.copy();
 
         int n = Math.min(a.rows(), a.columns());
@@ -75,9 +70,10 @@ public class SingularValueDecompositor implements MatrixDecompositor {
 
             if (k < nct) {
 
+                s.set(k, k, 0.0);
+
                 for (int i = k; i < a.rows(); i++) {
-                    s.set(k, k, hypot(s.get(k, k), 
-                          a.get(i, k)));
+                    s.set(k, k, hypot(s.get(k, k), a.get(i, k)));
                 }
 
                 if (Math.abs(s.get(k, k)) > Matrices.EPS) {
@@ -86,8 +82,9 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                         s.update(k, k, Matrices.INV_FUNCTION);
                     }
 
+                    double skk = s.get(k, k);
                     for (int i = k; i < a.rows(); i++) {
-                        a.update(i, k, Matrices.asDivFunction(s.get(k, k)));
+                        a.update(i, k, Matrices.asDivFunction(skk));
                     }
 
                     a.update(k, k, Matrices.INC_FUNCTION);
@@ -109,8 +106,7 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                     t = -t / a.get(k, k);
 
                     for (int i = k; i < a.rows(); i++) {
-                        a.update(i, j, Matrices.asPlusFunction(t * 
-                                 a.get(i, k)));
+                        a.update(i, j, Matrices.asPlusFunction(t * a.get(i, k)));
                     }
                 }
 
@@ -140,17 +136,21 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                         e.update(k, Vectors.INV_FUNCTION);
                     }
 
+                    double ek = e.get(k);
                     for (int i = k + 1; i < a.columns(); i++) {
-                        e.update(i, Vectors.asDivFunction(e.get(k)));
+                        e.update(i, Vectors.asDivFunction(ek));
                     }
 
                     e.update(k + 1, Vectors.INC_FUNCTION);
                 }
 
-                e.set(k, -e.get(k));
+                e.update(k, Vectors.INV_FUNCTION);
 
-                if ((k + 1 < a.rows()) 
-                		& (Math.abs(e.get(k)) > Matrices.EPS)) {
+                if ((k + 1 < a.rows()) && (Math.abs(e.get(k)) > Matrices.EPS)) {
+
+                    for (int i = k + 1; i < a.rows(); i++) {
+                        work.set(i, 0.0);
+                    }
 
                     for (int j = k + 1; j < a.columns(); j++) {
                         for (int i = k + 1; i < a.rows(); i++) {

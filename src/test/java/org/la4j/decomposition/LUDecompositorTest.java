@@ -21,42 +21,36 @@
 
 package org.la4j.decomposition;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.la4j.matrix.Matrices;
 
 public class LUDecompositorTest extends AbstractDecompositorTest {
 
-    @Override
-    public MatrixDecompositor decompositor() {
-        return new LUDecompositor();
-    }
+    public void testDecompose_3x3() {
 
-    @Override
-    public double[][] input() {
-        return new double[][] {
-                { 1.0, 0.0, 2.0 }, 
+        double[][] input = new double[][] {
+            { 1.0, 0.0, 2.0 },
+            { 0.0, 10.0, 0.0 },
+            { 2.0, 0.0, 9.0 }
+        };
+
+        double[][][] output = new double[][][] { 
+            { 
+                { 1.0, 0.0, 0.0 }, 
+                { 0.0, 1.0, 0.0 }, 
+                { 0.5, 0.0, 1.0 } 
+            },
+            { 
+                { 2.0, 0.0, 9.0 }, 
                 { 0.0, 10.0, 0.0 }, 
-                { 2.0, 0.0, 9.0 } 
+                { 0.0, 0.0, -2.5 } 
+            },
+            {
+                { 0.0, 0.0, 1.0 },
+                { 0.0, 1.0, 0.0 },
+                { 1.0, 0.0, 0.0 },
+            }
         };
-    }
 
-    @Override
-    public double[][][] output() {
-        return new double[][][] {
-                { 
-                    { 1.0, 0.0, 0.0 }, 
-                    { 0.0, 1.0, 0.0 }, 
-                    { 0.5, 0.0, 1.0 } 
-                },
-                { 
-                    { 2.0, 0.0, 9.0 }, 
-                    { 0.0, 10.0, 0.0 }, 
-                    { 0.0, 0.0, -2.5 } 
-                } 
-        };
-    }
-
-    public static Test suite() {
-        return new TestSuite(LUDecompositorTest.class);
+        performTest(Matrices.LU_DECOMPOSITOR, input, output);
     }
 }

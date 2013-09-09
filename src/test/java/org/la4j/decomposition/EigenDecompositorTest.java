@@ -21,28 +21,18 @@
 
 package org.la4j.decomposition;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.la4j.matrix.Matrices;
 
 public class EigenDecompositorTest extends AbstractDecompositorTest {
 
-    @Override
-    public MatrixDecompositor decompositor() {
-        return new EigenDecompositor();
-    }
-
-    @Override
-    public double[][] input() {
-        return new double[][] {
-                { 1.0, 0.0, 0.0 }, 
-                { 0.0, 2.0, 0.0 }, 
+    public void testDecompose_3x3() {
+        double[][] input = new double[][] {
+                { 1.0, 0.0, 0.0 },
+                { 0.0, 2.0, 0.0 },
                 { 0.0, 0.0, 4.0 }
         };
-    }
 
-    @Override
-    public double[][][] output() {
-        return new double[][][] {
+        double[][][] output = new double[][][] { 
                 { 
                     { 0.0, -1.0, 0.0 }, 
                     { 1.0, 0.0, 0.0 }, 
@@ -52,11 +42,9 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                     { 2.0, 0.0, 0.0 }, 
                     { 0.0, 1.0, 0.0 }, 
                     { 0.0, 0.0, 4.0 } 
-                } 
+                }
         };
-    }
 
-    public static Test suite() {
-        return new TestSuite(EigenDecompositorTest.class);
+        performTest(Matrices.EIGEN_DECOMPOSITOR, input, output);
     }
 }
