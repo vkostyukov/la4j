@@ -1083,6 +1083,30 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(0, a.rank());
     }
 
+    public void testRank_7x3() {
+        Matrix a = factory().createMatrix(new double[][] {
+            {1, 2, 0},
+            {0, 0, 0},
+            {0, 0, 0},
+            {0, 0, 0},
+            {0, 0, 1},
+            {0, 0, -1},
+            {1, 2, 1}
+        });
+
+        assertEquals(2, a.rank());
+    }
+
+    public void testRank_3x1() {
+        Matrix a = factory().createMatrix(new double[][] {
+            {1},
+            {2},
+            {0}
+        });
+
+        assertEquals(1, a.rank());
+    }
+
     public void testRowAccess_3x3() {
 
         Matrix a = factory().createMatrix(new double[][] {
