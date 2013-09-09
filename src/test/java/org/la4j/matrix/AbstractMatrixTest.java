@@ -1554,6 +1554,6 @@ public abstract class AbstractMatrixTest extends TestCase {
             {29, -4, -27, -46, 29, 4},
             {-58, 939, 2, 59, 96, -5},
         });
-        assertEquals(a, a.inverse(Matrices.DEFAULT_INVERTOR).inverse(Matrices.DEFAULT_INVERTOR));
+        assertEquals(new MockMatrix(a), new MockMatrix(a.inverse(Matrices.DEFAULT_INVERTOR).inverse(Matrices.DEFAULT_INVERTOR)));
     }
 }
