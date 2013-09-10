@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
@@ -69,7 +68,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             rowPointers[i] = cardinality;
             for (int j = 0; j < columns; j++) {
                 double value = source.get(i, j);
-                if (Math.abs(value) > Matrices.EPS) {
+                if (Math.abs(value) > Matrices.EPS || value < 0.0) {
 
                     if (values.length < cardinality + 1) {
                         growup();
@@ -99,7 +98,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     public CRSMatrix(int rows, int columns, int cardinality, double values[],
             int columnIndices[], int rowPointers[]) {
 
-        super(new CRSFactory(), rows, columns);
+        super(Matrices.CRS_FACTORY, rows, columns);
 
         this.cardinality = cardinality;
 
@@ -126,7 +125,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         int k = searchForColumnIndex(j, rowPointers[i], rowPointers[i + 1]);
 
         if (k < rowPointers[i + 1] && columnIndices[k] == j) {
-            if (Math.abs(value) < Matrices.EPS) {
+            if (Math.abs(value) < Matrices.EPS && value >= 0.0) {
                 remove(k, i);
             } else {
                 values[k] = value;
@@ -202,69 +201,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
         return result;
     }
-
-//    //TODO: Rewrite it
-//    @Override
-//    public void setRow(int i, Vector row) {
-//
-//        if (row == null) {
-//            throw new IllegalArgumentException("Row can't be null.");
-//        }
-//
-//        if (columns != row.length()) {
-//            throw new IllegalArgumentException("Wrong row length: " 
-//                                               + row.length());
-//        }
-//
-//        int position = rowPointers[i], limit = rowPointers[i + 1];
-//
-//        rowPointers[i] = limit;
-//
-//        for (int ii = 0; ii < row.length(); ii++) {
-//
-//            double value = row.get(ii);
-//
-//            if (Math.abs(value) > Matrices.EPS) {
-//
-//                if (position >= limit) {
-//
-//                    if (values.length < cardinality + 1) {
-//                        growup();
-//                    }
-//
-//                    for (int k = cardinality; k > position; k--) {
-//                        values[k] = values[k - 1];
-//                        columnIndices[k] = columnIndices[k - 1];
-//                    }
-//
-//                    cardinality++;
-//
-//                } else {
-//                    rowPointers[i]--;
-//                }
-//
-//                values[position] = value;
-//                columnIndices[position] = ii;
-//                position++;
-//            }
-//        }
-//
-//        if (limit > position) {
-//
-//            cardinality -= (limit - position);
-//
-//            for (int k = position; k < cardinality; k++) {
-//                values[k] = values[k + (limit - position)];
-//                columnIndices[k] = columnIndices[k + (limit - position)];
-//            }
-//
-//            rowPointers[i] -= (limit - position);
-//        }
-//
-//        for (int k = i + 1; k < rows + 1; k++) {
-//            rowPointers[k] += (position - limit);
-//        }
-//    }
 
     @Override
     public Matrix copy() {
@@ -403,7 +339,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
             double value = function.evaluate(i, j, values[k]);
 
-            if (Math.abs(value) < Matrices.EPS) {
+            if (Math.abs(value) < Matrices.EPS && value >= 0.0) {
                 remove(k, i);
             } else {
                 values[k] = value;
@@ -482,7 +418,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     private void insert(int k, int i, int j, double value) {
 
-        if (Math.abs(value) < Matrices.EPS) {
+        if (Math.abs(value) < Matrices.EPS && value >= 0.0) {
             return;
         }
 

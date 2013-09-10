@@ -66,7 +66,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
         for (int i = 0; i < length; i++) {
             double value = source.get(i);
-            if (Math.abs(value) > Vectors.EPS) {
+            if (Math.abs(value) > Vectors.EPS || value < 0.0) {
 
                 if (values.length < cardinality + 1) {
                     growup();
@@ -113,7 +113,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         int k = searchForIndex(i, 0, cardinality);
 
         if (k < cardinality && indices[k] == i) {
-            if (Math.abs(value) > Vectors.EPS) {
+            if (Math.abs(value) > Vectors.EPS || value < 0.0) {
                 values[k] = value;
             } else {
                 remove(k);
@@ -251,7 +251,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
             double value = function.evaluate(i, values[k]); 
 
-            if (Math.abs(value) > Vectors.EPS) {
+            if (Math.abs(value) > Vectors.EPS || value < 0.0) {
                 values[k] = value;
             } else {
                 remove(k);
@@ -325,7 +325,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     private void insert(int k, int i, double value) {
 
-        if (Math.abs(value) < Vectors.EPS) {
+        if (Math.abs(value) < Vectors.EPS && value >= 0.0) {
             return;
         }
 
