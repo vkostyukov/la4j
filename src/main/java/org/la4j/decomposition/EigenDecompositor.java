@@ -71,33 +71,36 @@ public class EigenDecompositor implements MatrixDecompositor {
      * 
      * @param matrix
      * @param factory
-     * @return { P, D }
+     * @return { V, D }
      */
     private Matrix[] decomposeSymmetricMatrix(Matrix matrix, Factory factory) {
-
-        // TODO: Remove all the getRow()/getColumn() from this code.
-        //       This is slow.
 
         Matrix d = matrix.copy();
         Vector r = generateR(d, factory);
 
         Matrix v = factory.createIdentityMatrix(matrix.rows());
+        Matrix u = factory.createIdentityMatrix(matrix.rows());
 
         double n = Matrices.EPS;
         double nn = Matrices.EPS;
 
+        int kk = 0, ll = 0; 
+
         do {
 
-            int k = findMax(r, -1);
-            int l = findMax(d.getRow(k), k);
+            int k = findMax(r);
+            int l = findMax(d, k);
 
-            Matrix u = generateU(d, factory, k, l);
+            regenerateU(u, d, factory, k, l, kk, ll);
+
+            kk = k;
+            ll = l;
 
             v = v.multiply(u);
             d = u.transpose().multiply(d.multiply(u));
 
-            r.set(k, generateRi(d.getRow(k), k));
-            r.set(l, generateRi(d.getRow(l), l));
+            r.set(k, generateRi(d, k));
+            r.set(l, generateRi(d, l));
 
             n = nn;
             nn = r.norm();
@@ -107,51 +110,72 @@ public class EigenDecompositor implements MatrixDecompositor {
         return new Matrix[] { v, d };
     }
 
-    /***
-     * 
-     * @param vector
-     * @param exl
-     * @return
-     */
-    private int findMax(Vector vector, int exl) {
+    private int findMax(Vector vector) {
 
-        int result = exl == 0 ? 1 : 0;
-        for (int i = 0; i < vector.length(); i++) {
-            if (i != exl
-                    && Math.abs(vector.get(result)) < Math.abs(vector
-                            .get(i))) {
+        double value = vector.get(0);
+        int result = 0;
+
+        for (int i = 1; i < vector.length(); i++) {
+            double v = vector.get(i);
+            if (Math.abs(value) < Math.abs(v)) {
                 result = i;
+                value = v;
             }
         }
 
         return result;
     }
-    private Vector generateR(Matrix matrix, Factory factory) {
 
-        Vector result = factory.createVector(matrix.rows());
+    private int findMax(Matrix matrix, int i) {
 
-        for (int i = 0; i < matrix.rows(); i++) {
-            result.set(i, generateRi(matrix.getRow(i), i));
+        double value = i > 0 ? matrix.get(i, 0) : matrix.get(i, 1);
+        int result = i > 0 ? 0 : 1;
+
+        for (int j = 0; j < matrix.columns(); j++) {
+            if (i != j) {
+                double v = matrix.get(i, j);
+                if (Math.abs(value) < Math.abs(v)) {
+                    result = j;
+                    value = v;
+                }
+            }
         }
 
         return result;
     }
 
-    private double generateRi(Vector vector, int position) {
+    private Vector generateR(Matrix matrix, Factory factory) {
+
+        Vector result = factory.createVector(matrix.rows());
+
+        for (int i = 0; i < matrix.rows(); i++) {
+            result.set(i, generateRi(matrix, i));
+        }
+
+        return result;
+    }
+
+    private double generateRi(Matrix matrix, int i) {
 
         double summand = 0;
 
-        for (int i = 0; i < vector.length(); i++) {
-            if (i != position) {
-                summand += vector.get(i) * vector.get(i);
+        for (int j = 0; j < matrix.columns(); j++) {
+            if (j != i) {
+                double value = matrix.get(i, j);
+                summand += value * value;
             }
         }
 
         return summand;
     }
 
-    private Matrix generateU(Matrix matrix, Factory factory, int k, int l) {
-        Matrix result = factory.createIdentityMatrix(matrix.rows());
+    private void regenerateU(Matrix u, Matrix matrix, Factory factory, 
+            int k, int l, int kk, int ll) {
+
+        u.set(kk, kk, 1.0);
+        u.set(ll, ll, 1.0);
+        u.set(kk, ll, 0.0);
+        u.set(ll, kk, 0.0);
 
         double alpha = 0.0, beta = 0.0;
 
@@ -164,12 +188,10 @@ public class EigenDecompositor implements MatrixDecompositor {
             beta = Math.signum(mu) * Math.sqrt(0.5 * (1.0 - mu));
         }
 
-        result.set(k, k, alpha);
-        result.set(l, l, alpha);
-        result.set(k, l, -beta);
-        result.set(l, k, beta);
-
-        return result;
+        u.set(k, k, alpha);
+        u.set(l, l, alpha);
+        u.set(k, l, -beta);
+        u.set(l, k, beta);
     }
 
     /**
