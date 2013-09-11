@@ -83,7 +83,8 @@ public class EigenDecompositor implements MatrixDecompositor {
 
         Matrix v = factory.createIdentityMatrix(matrix.rows());
 
-        double n = 0.0;
+        double n = Matrices.EPS;
+        double nn = Matrices.EPS;
 
         do {
 
@@ -98,9 +99,10 @@ public class EigenDecompositor implements MatrixDecompositor {
             r.set(k, generateRi(d.getRow(k), k));
             r.set(l, generateRi(d.getRow(l), l));
 
-            n = r.norm();
+            n = nn;
+            nn = r.norm();
 
-        } while (Math.abs(n) > Matrices.EPS);
+        } while (Math.abs(n - nn) > Matrices.EPS);
 
         return new Matrix[] { v, d };
     }
