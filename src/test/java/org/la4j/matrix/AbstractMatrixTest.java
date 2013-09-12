@@ -1535,14 +1535,14 @@ public abstract class AbstractMatrixTest extends TestCase {
         Matrix a = factory().createIdentityMatrix(2);
         Matrix b = factory().createIdentityMatrix(2);
 
-        assertEquals(b, a.inverse(Matrices.DEFAULT_INVERTOR));
+        assertEquals(b, a.inverse(Matrices.DEFAULT_INVERTER));
     }
 
     public void testInverse_1x1 () {
         Matrix a = factory().createConstantMatrix(1, 1, -0.5);
         Matrix b = factory().createConstantMatrix(1, 1, -2.0);
 
-        assertEquals(b, a.inverse(Matrices.DEFAULT_INVERTOR));
+        assertEquals(b, a.inverse(Matrices.DEFAULT_INVERTER));
     }
 
     public void testInverseInverse_6x6 () {
@@ -1554,6 +1554,8 @@ public abstract class AbstractMatrixTest extends TestCase {
             {29, -4, -27, -46, 29, 4},
             {-58, 939, 2, 59, 96, -5},
         });
-        assertEquals(new MockMatrix(a), new MockMatrix(a.inverse(Matrices.DEFAULT_INVERTOR).inverse(Matrices.DEFAULT_INVERTOR)));
+        assertEquals(new MockMatrix(a), 
+                     new MockMatrix(a.inverse(Matrices.DEFAULT_INVERTER)
+                                     .inverse(Matrices.DEFAULT_INVERTER)));
     }
 }

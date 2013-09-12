@@ -25,7 +25,7 @@ Matrix a = new Basic2DMatrix(new double[][] {
    { 7.0, 8.0. 9.0 }
 });
 
-Matrix b = a.invert(Matrices.DEFAULT_INVERTOR); // uses Gaussian Elimination 
+Matrix b = a.invert(Matrices.DEFAULT_INVERTER); // uses Gaussian Elimination 
 ```
 
 

@@ -40,8 +40,8 @@ import org.la4j.factory.CCSFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.factory.SafeFactory;
-import org.la4j.inversion.GaussianInvertor;
-import org.la4j.inversion.MatrixInvertor;
+import org.la4j.inversion.GaussianInverter;
+import org.la4j.inversion.MatrixInverter;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
 import org.la4j.linear.GaussianSolver;
@@ -666,14 +666,14 @@ public final class Matrices {
     /**
      * The {@link GaussianInvertor} singleton instance.
      */
-    public final static MatrixInvertor GAUSSIAN_INVERTOR =
-            new GaussianInvertor();
+    public final static MatrixInverter GAUSSIAN_INVERTER =
+            new GaussianInverter();
 
     /**
-     * The default matrix invertor singleton instance. References the 
+     * The default matrix inverter singleton instance. References the 
      * {@link GaussianInvertor}. 
      */
-    public final static MatrixInvertor DEFAULT_INVERTOR = GAUSSIAN_INVERTOR;
+    public final static MatrixInverter DEFAULT_INVERTER = GAUSSIAN_INVERTER;
 
     /**
      * The {@link GaussianSolver} singleton instance.

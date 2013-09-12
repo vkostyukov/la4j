@@ -32,7 +32,7 @@ import java.util.Random;
 
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
-import org.la4j.inversion.MatrixInvertor;
+import org.la4j.inversion.MatrixInverter;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -721,13 +721,13 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix inverse(MatrixInvertor invertor) {
-        return inverse(invertor, factory);
+    public Matrix inverse(MatrixInverter inverter) {
+        return inverse(inverter, factory);
     }
 
     @Override
-    public Matrix inverse(MatrixInvertor invertor, Factory factory) {
-        return invertor.inverse(this, factory);
+    public Matrix inverse(MatrixInverter inverter, Factory factory) {
+        return inverter.inverse(this, factory);
     }
 
     @Override

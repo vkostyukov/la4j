@@ -30,9 +30,9 @@ import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 
-public abstract class AbstractInvertorTest extends TestCase {
+public abstract class AbstractInverterTest extends TestCase {
 
-    public abstract MatrixInvertor invertor();
+    public abstract MatrixInverter inverter();
 
     public Factory[] factories() {
         return new Factory[] { 
@@ -54,7 +54,7 @@ public abstract class AbstractInvertorTest extends TestCase {
                     { 0.0, 3.0, 4.0, 0.0 }
             });
 
-            Matrix b = a.inverse(invertor(), factory);
+            Matrix b = a.inverse(inverter(), factory);
             assertEquals(factory.createIdentityMatrix(a.rows()), a.multiply(b));
         }
     }

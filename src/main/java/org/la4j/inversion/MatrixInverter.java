@@ -21,17 +21,10 @@
 
 package org.la4j.inversion;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrix;
 
-public class GaussianInvertorTest extends AbstractInvertorTest {
+public interface MatrixInverter {
 
-    @Override
-    public MatrixInvertor invertor() {
-        return new GaussianInvertor();
-    }
-
-    public static Test suite() {
-        return new TestSuite(GaussianInvertorTest.class);
-    }
+    Matrix inverse(Matrix matrix, Factory factory);
 }

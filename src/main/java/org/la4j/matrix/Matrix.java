@@ -27,7 +27,7 @@ import java.io.Externalizable;
 
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
-import org.la4j.inversion.MatrixInvertor;
+import org.la4j.inversion.MatrixInverter;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -470,7 +470,7 @@ public interface Matrix extends Externalizable {
      * 
      * @param invertor
      */
-    Matrix inverse(MatrixInvertor invertor);
+    Matrix inverse(MatrixInverter inverter);
 
     /**
      * Inverts this matrix.
@@ -478,7 +478,7 @@ public interface Matrix extends Externalizable {
      * @param invertor
      * @param factory
      */
-    Matrix inverse(MatrixInvertor invertor, Factory factory);
+    Matrix inverse(MatrixInverter inverter, Factory factory);
 
     /**
      * Gets blank matrix.

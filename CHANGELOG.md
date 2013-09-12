@@ -29,6 +29,7 @@ la4j-0.4.5 `Sep 2013`
  * Improved stability of accumulators (contributed by Maxim Samoylov)
  * Bug fix in `Matrix.rank()` method (contributed by Ewald Grusk)
  * Bug fix in `SingularValueDecompositor` class (reported by Jonathan Edwards)
+ * Fixed a typo in `MatrixInvertor` -> `MatrixInverter`
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)

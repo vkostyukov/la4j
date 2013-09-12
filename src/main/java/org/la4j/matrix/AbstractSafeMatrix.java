@@ -28,7 +28,7 @@ import java.io.ObjectOutput;
 
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
-import org.la4j.inversion.MatrixInvertor;
+import org.la4j.inversion.MatrixInverter;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -316,13 +316,13 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
-    public Matrix inverse(MatrixInvertor invertor) {
-        return self.inverse(invertor, factory);
+    public Matrix inverse(MatrixInverter inverter) {
+        return self.inverse(inverter, factory);
     }
 
     @Override
-    public Matrix inverse(MatrixInvertor invertor, Factory factory) {
-        return self.inverse(invertor, factory);
+    public Matrix inverse(MatrixInverter inverter, Factory factory) {
+        return self.inverse(inverter, factory);
     }
 
     @Override

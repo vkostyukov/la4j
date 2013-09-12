@@ -27,7 +27,7 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
-public class GaussianInvertor implements MatrixInvertor {
+public class GaussianInverter implements MatrixInverter {
 
     @Override
     public Matrix inverse(Matrix matrix, Factory factory) {
