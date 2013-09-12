@@ -23,39 +23,40 @@ package org.la4j.inversion;
 
 import junit.framework.TestCase;
 
-import org.la4j.factory.Basic1DFactory;
-import org.la4j.factory.Basic2DFactory;
-import org.la4j.factory.CCSFactory;
-import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.MockMatrix;
 
 public abstract class AbstractInverterTest extends TestCase {
 
     public abstract MatrixInverter inverter();
 
-    public Factory[] factories() {
-        return new Factory[] { 
-                new Basic1DFactory(), 
-                new Basic2DFactory(),
-                new CRSFactory(), 
-                new CCSFactory() 
-        };
+    protected void performTest(double input[][], MatrixInverter inverter) {
+
+        for (Factory factory: Matrices.FACTORIES) {
+
+            Matrix a = factory.createMatrix(input);
+
+            Matrix b = a.inverse(inverter, factory);
+
+            // a * a^-1 = e
+            Matrix c = a.multiply(b);
+            Matrix e = factory.createIdentityMatrix(a.rows());
+
+            assertEquals(new MockMatrix(e), new MockMatrix(c));
+        }
     }
 
     public void testInverse_4x4() {
 
-        for (Factory factory : factories()) {
+        double input[][] = new double[][] {
+                { 9.0, 3.0, 4.0, 5.0 }, 
+                { 1.0, 2.0, 3.0, 6.0 },
+                { 7.0, 0.0, 2.0, 2.0 }, 
+                { 0.0, 3.0, 4.0, 0.0 }
+        };
 
-            Matrix a = factory.createMatrix(new double[][] {
-                    { 9.0, 3.0, 4.0, 5.0 }, 
-                    { 1.0, 2.0, 3.0, 6.0 },
-                    { 7.0, 0.0, 2.0, 2.0 }, 
-                    { 0.0, 3.0, 4.0, 0.0 }
-            });
-
-            Matrix b = a.inverse(inverter(), factory);
-            assertEquals(factory.createIdentityMatrix(a.rows()), a.multiply(b));
-        }
+        performTest(input, inverter());
     }
 }
