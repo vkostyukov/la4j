@@ -28,6 +28,7 @@ import java.io.Externalizable;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInvertor;
+import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
@@ -764,6 +765,14 @@ public interface Matrix extends Externalizable {
      *         <code>predicate</code>.
      */
     boolean is(MatrixPredicate predidate);
+
+    /**
+     * Checks whether this matrix compiles with <code>predicate</code>.
+     * 
+     * @return <code>true</code> if this matrix compiles with
+     *         <code>predicate</code>.
+     */
+    boolean is(AdvancedMatrixPredicate predicate);
 
     /**
      * Wraps this matrix with safe interface

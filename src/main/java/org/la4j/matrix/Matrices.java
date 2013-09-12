@@ -26,7 +26,6 @@ package org.la4j.matrix;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Arrays;
 
 import org.la4j.decomposition.CholeskyDecompositor;
 import org.la4j.decomposition.CroutDecompositor;
@@ -170,58 +169,27 @@ public final class Matrices {
         }
     }
 
-    //
-    // TODO: Issue 5
-    //
-    // Please, send me a pull-request, if you know how to write it better
-    // This is not a good idea to use such technique. There is might be a memory
-    // leak after the using this predicate.
-    // 
     private static class SymmetricMatrixPredicate
             implements AdvancedMatrixPredicate {
 
-        private double values[];
-        private int size;
-
         @Override
-        public boolean test(int rows, int columns) {
-            if (rows != columns) {
+        public boolean test(Matrix matrix) {
+            if (matrix.rows() != matrix.columns()) {
                 return false;
-            } else {
-                size = rows;
-                values = new double[(size * size - size) / 2];
-                Arrays.fill(values, Double.NaN);
-
-                return true;
-            }
-        }
-
-        @Override
-        public boolean test(int i, int j, double value) {
-            if (i == j) {
-                return true;
             }
 
-            final int offset;
-
-            if (i < j) {
-                offset = i + (j * j - j) / 2;
-            } else {
-                offset = j + (i * i - i) / 2;
+            for (int i = 0; i < matrix.rows(); i++) {
+                for (int j = i + 1; j < matrix.columns(); j++) {
+                    double a = matrix.get(i, j);
+                    double b = matrix.get(j, i);
+                    double diff = Math.abs(a - b);
+                    if (diff / Math.max(Math.abs(a), Math.abs(b)) > EPS) {
+                        return false;
+                    }
+                }
             }
 
-            if (Double.isNaN(values[offset])) {
-                values[offset] = value;
-
-                return true;
-            } else {
-                double diff = Math.abs(value - values[offset]);
-
-                return (value == values[offset]) ? true :
-                       diff < EPS ? true :
-                       diff / Math.max(Math.abs(value), Math.abs(values[offset])) 
-                       < EPS;
-            }
+            return true;
         }
     }
 
@@ -510,7 +478,7 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/SymmetricMatrix.html">symmetric 
      * matrix</a>. 
      */
-    public final static MatrixPredicate SYMMETRIC_MATRIX = 
+    public final static AdvancedMatrixPredicate SYMMETRIC_MATRIX = 
             new SymmetricMatrixPredicate();
 
     /**

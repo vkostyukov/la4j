@@ -29,6 +29,7 @@ import java.io.ObjectOutput;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInvertor;
+import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
@@ -506,6 +507,11 @@ public abstract class AbstractSafeMatrix implements Matrix {
     @Override
     public boolean is(MatrixPredicate predidate) {
         return self.is(predidate);
+    }
+
+    @Override
+    public boolean is(AdvancedMatrixPredicate predicate) {
+        return self.is(predicate);
     }
 
     @Override

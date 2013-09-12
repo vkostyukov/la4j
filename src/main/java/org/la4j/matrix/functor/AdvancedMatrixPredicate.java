@@ -21,13 +21,9 @@
 
 package org.la4j.matrix.functor;
 
-public interface AdvancedMatrixPredicate extends MatrixPredicate {
+import org.la4j.matrix.Matrix;
 
-    /**
-     * 
-     * @param rows
-     * @param columns
-     * @return
-     */
-    boolean test(int rows, int columns);
+public interface AdvancedMatrixPredicate {
+
+    boolean test(Matrix matrix);
 }

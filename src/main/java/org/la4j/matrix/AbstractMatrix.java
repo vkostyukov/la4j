@@ -1004,9 +1004,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public boolean is(MatrixPredicate predicate) {
 
-        boolean result = (predicate instanceof AdvancedMatrixPredicate) 
-                ? ((AdvancedMatrixPredicate) predicate).test(rows, columns)
-                : rows > 0 && columns > 0;
+        boolean result = true;
 
         for (int i = 0; result && i < rows; i++) {
             for (int j = 0; result && j < columns; j++) {
@@ -1015,6 +1013,11 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
+    }
+
+    @Override
+    public boolean is(AdvancedMatrixPredicate predicate) {
+        return predicate.test(this);
     }
 
     @Override
