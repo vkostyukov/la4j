@@ -601,6 +601,33 @@ public final class Matrices {
     public final static Factory DEFAULT_FACTORY = BASIC2D_FACTORY;
 
     /**
+     * The array with all factories available.
+     */
+    public final static Factory FACTORIES[] = {
+        BASIC1D_FACTORY, BASIC2D_FACTORY, CRS_FACTORY, CCS_FACTORY
+    };
+
+    /**
+     * The array with unsafe factories available.
+     */
+    public final static Factory UNSAFE_FACTORIES[] = FACTORIES;
+
+    /**
+     * The array with safe factories available.
+     */
+    public final static Factory SAFE_FACTORIES[] = {
+        SAFE_BASIC1D_FACTORY, SAFE_BASIC2D_FACTORY,
+        SAFE_CRS_FACTORY, SAFE_CCS_FACTORY
+    };
+
+    /**
+     * The array with default factories available.
+     */
+    public final static Factory DEFAULT_FACTORIES[] = {
+        DEFAULT_DENSE_FACTORY, DEFAULT_SPARSE_FACTORY
+    };
+
+    /**
      * The {@link CholeskyDecompositor} singleton instance.
      */
     public final static MatrixDecompositor CHOLESKY_DECOMPOSITOR = 

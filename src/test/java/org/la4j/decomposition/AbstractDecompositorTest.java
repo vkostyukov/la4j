@@ -23,25 +23,17 @@ package org.la4j.decomposition;
 
 import junit.framework.TestCase;
 
-import org.la4j.factory.Basic1DFactory;
-import org.la4j.factory.Basic2DFactory;
-import org.la4j.factory.CCSFactory;
-import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.MockMatrix;
 
 public abstract class AbstractDecompositorTest extends TestCase {
 
-    public Factory[] factories() {
-        return new Factory[] { new Basic1DFactory(), new Basic2DFactory(),
-                new CRSFactory(), new CCSFactory() };
-    }
-
     protected void performTest(MatrixDecompositor decompositor, double[][] input, 
         double[][][] output) {
 
-        for (Factory factory : factories()) {
+        for (Factory factory: Matrices.FACTORIES) {
 
             Matrix a = factory.createMatrix(input);
             Matrix[] decomposition = a.decompose(decompositor);
