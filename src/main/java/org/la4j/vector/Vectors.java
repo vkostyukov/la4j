@@ -347,6 +347,32 @@ public final class Vectors {
     public static final Factory DEFAULT_SPARSE_FACTORY = COMPRESSED_FACTORY;
 
     /**
+     * The array with all factories available.
+     */
+    public static final Factory[] FACTORIES = {
+        BASIC_FACTORY, COMPRESSED_FACTORY
+    };
+
+    /**
+     * The array with unsafe factories available.
+     */
+    public static final Factory[] UNSAFE_FACTORIES = FACTORIES;
+
+    /**
+     * The array with safe factories available.
+     */
+    public static final Factory[] SAFE_FACTORIES = {
+        SAFE_BASIC_FACTORY, SAFE_COMPRESSED_FACTORY
+    };
+
+    /**
+     * The array with default factories available.
+     */
+    public static final Factory[] DEFAULT_FACTORIES = {
+        DEFAULT_DENSE_FACTORY, DEFAULT_SPARSE_FACTORY
+    };
+
+    /**
      * Increases each element of vector by <code>1</code>.
      */
     public static final VectorFunction INC_FUNCTION = new IncVectorFunction();
