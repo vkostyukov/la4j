@@ -25,6 +25,24 @@ import org.la4j.matrix.Matrices;
 
 public class QRDecompositorTest extends AbstractDecompositorTest {
 
+    public void testDecompose_1x1() {
+
+        double[][] input = new double[][] {
+                { 15.0 }
+        };
+
+        double[][][] output = new double[][][] { 
+            { 
+                { -1.0}
+            },
+            { 
+                { -15.0 }
+            }
+        };
+
+        performTest(Matrices.QR_DECOMPOSITOR, input, output);
+    }
+
     public void testDecompose_2x2() {
 
         double[][] input = new double[][] {

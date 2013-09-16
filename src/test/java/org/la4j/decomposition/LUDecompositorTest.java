@@ -25,6 +25,52 @@ import org.la4j.matrix.Matrices;
 
 public class LUDecompositorTest extends AbstractDecompositorTest {
 
+    public void testDecompose_1x1() {
+
+        double[][] input = new double[][] {
+            { 71.0 }
+        };
+
+        double[][][] output = new double[][][] { 
+            { 
+                { 1.0 } 
+            },
+            { 
+                { 71.0 } 
+            },
+            {
+                { 1.0 }
+            }
+        };
+
+        performTest(Matrices.LU_DECOMPOSITOR, input, output);
+    }
+
+    public void testDecompose_2x2() {
+
+        double[][] input = new double[][] {
+            { 14.0, 6.0 },
+            { 7.0, 18.0 }
+        };
+
+        double[][][] output = new double[][][] { 
+            { 
+                { 1.0, 0.0 },
+                { 0.5, 1.0 }
+            },
+            { 
+                { 14.0, 6.0 },
+                { 0.0, 15.0 }
+            },
+            {
+                { 1.0, 0.0 },
+                { 0.0, 1.0 }
+            }
+        };
+
+        performTest(Matrices.LU_DECOMPOSITOR, input, output);
+    }
+
     public void testDecompose_3x3() {
 
         double[][] input = new double[][] {
@@ -48,6 +94,105 @@ public class LUDecompositorTest extends AbstractDecompositorTest {
                 { 0.0, 0.0, 1.0 },
                 { 0.0, 1.0, 0.0 },
                 { 1.0, 0.0, 0.0 },
+            }
+        };
+
+        performTest(Matrices.LU_DECOMPOSITOR, input, output);
+    }
+
+    public void testDecompose_3x3_2() {
+
+        double[][] input = new double[][] {
+            { 77.0, 19.0, 1.0 },
+            { -9.0, 17.0, 34.0 },
+            { 11.0, 100.0, -2.0 }
+        };
+
+        double[][][] output = new double[][][] { 
+            { 
+                { 1.0, 0.0, 0.0 },
+                { 0.143, 1.0, 0.0 },
+                { -0.117, 0.198, 1.0 }
+            },
+            { 
+                { 77.0, 19.0, 1.0 },
+                { 0.0, 97.286, -2.143 },
+                { 0.0, 0.0, 34.540 }
+            },
+            {
+                { 1.0, 0.0, 0.0 },
+                { 0.0, 0.0, 1.0 },
+                { 0.0, 1.0, 0.0 } 
+            }
+        };
+
+        performTest(Matrices.LU_DECOMPOSITOR, input, output);
+    }
+
+    public void testDecompose_4x4() {
+
+        double[][] input = new double[][] {
+                { 99.0, 1.0, -10.0, 6.0 },
+                { 14.0, 65.0, 7.0, 48.0 },
+                { 39.0, 40.0, -2.0, 9.0 },
+                { 11.0, 5.0, 43.0, 99.0 }
+        };
+
+        double[][][] output = new double[][][] { 
+            { 
+                { 1.0, 0.0, 0.0, 0.0 },
+                { 0.141, 1.0, 0.0, 0.0 },
+                { 0.111, 0.075, 1.0, 0.0 },
+                { 0.394, 0.611, -0.074, 1.0 }
+            },
+            { 
+                { 99.0, 1.0, -10.0, 6.0 },
+                { 0.0, 64.859, 8.414, 47.152 },
+                { 0.0, 0.0, 43.477, 94.779 },
+                { 0.0, 0.0, 0.000, -15.184 }
+            },
+            {
+                { 1.0, 0.0, 0.0, 0.0 },
+                { 0.0, 1.0, 0.0, 0.0 },
+                { 0.0, 0.0, 0.0, 1.0 },
+                { 0.0, 0.0, 1.0, 0.0 }
+            }
+        };
+
+        performTest(Matrices.LU_DECOMPOSITOR, input, output);
+    }
+
+    public void testDecompose_5x5() {
+
+        double[][] input = new double[][] {
+            { 6.0, 19.0, 81.0, 10.0, 65.0 },
+            { 100.0, 1.0, -10.0, 16.0, 71.0 },
+            { 58.0, -17.0, 88.0, 19.0, 29.0 },
+            {-44.0, 4.0, 16.0, -100.0, 1.0 },
+            { 5.00, 76.0, 93.0, 35.0, -24.0 }
+        };
+
+        double[][][] output = new double[][][] { 
+            { 
+                { 1.0, 0.0, 0.0, 0.0, 0.0 },
+                { 0.05, 1.0, 0.0, 0.0, 0.0 },
+                { 0.58, -0.231, 1.0, 0.0, 0.0 },
+                { -0.44,  0.058, 0.053, 1.0, 0.0 },
+                { 0.06, 0.249, 0.505, 0.088, 1.0 }
+            },
+            { 
+                { 100.0, 1.0, -10.0, 16.0, 71.0 },
+                { 0.0, 75.95, 93.5, 34.2, -27.55 },
+                { 0.0, 0.0, 115.442, 17.636, -18.557 },
+                { 0.0, 0.0, 0.0, -95.896, 34.837 },
+                { 0.0, 0.0, 0.0, 0.0, 73.930 }
+            },
+            {
+                { 0.0, 1.0, 0.0, 0.0, 0.0 },
+                { 0.0, 0.0, 0.0, 0.0, 1.0 },
+                { 0.0, 0.0, 1.0, 0.0, 0.0 },
+                { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                { 1.0, 0.0, 0.0, 0.0, 0.0 }
             }
         };
 
