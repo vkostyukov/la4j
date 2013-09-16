@@ -54,7 +54,6 @@ public class QRDecompositor implements MatrixDecompositor {
         }
 
         Matrix qr = matrix.copy();
-
         Vector rdiag = factory.createVector(qr.columns());
 
         for (int k = 0; k < qr.columns(); k++) {
