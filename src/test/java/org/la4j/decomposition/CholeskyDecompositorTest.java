@@ -25,6 +25,21 @@ import org.la4j.matrix.Matrices;
 
 public class CholeskyDecompositorTest extends AbstractDecompositorTest {
 
+    public void testDecompose_1x1() {
+
+        double[][] input = new double[][] {
+                { 56 }
+        };
+
+        double[][][] output = new double[][][] { 
+                {
+                    { 7.483 }
+                }
+        };
+
+        performTest(Matrices.CHOLESKY_DECOMPOSITOR, input, output);
+    }
+
     public void testDecompose_2x2() {
 
         double[][] input = new double[][] {
