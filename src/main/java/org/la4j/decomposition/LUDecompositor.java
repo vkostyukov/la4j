@@ -24,8 +24,6 @@ package org.la4j.decomposition;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
-import org.la4j.vector.Vector;
-import org.la4j.vector.Vectors;
 
 /**
  * This class represents LU decomposition of matrices. More details
@@ -58,26 +56,22 @@ public class LUDecompositor implements MatrixDecompositor {
         Matrix p = factory.createIdentityMatrix(lu.rows());
 
         for (int j = 0; j < lu.columns(); j++) {
-
-            Vector jcolumn = lu.getColumn(j);
-
             for (int i = 0; i < lu.rows(); i++) {
 
                 int kmax = Math.min(i, j);
 
                 double s = 0.0;
                 for (int k = 0; k < kmax; k++) {
-                    s += lu.get(i, k) * jcolumn.get(k);
+                    s += lu.get(i, k) * lu.get(k, j);
                 }
 
-                jcolumn.update(i, Vectors.asMinusFunction(s));
-                lu.set(i, j, jcolumn.get(i));
+                lu.update(i, j, Matrices.asMinusFunction(s));
             }
 
             int pivot = j;
 
             for (int i = j + 1; i < lu.rows(); i++) {
-                if (Math.abs(jcolumn.get(i)) > Math.abs(jcolumn.get(pivot))) {
+                if (Math.abs(lu.get(i, j)) > Math.abs(lu.get(pivot, j))) {
                     pivot = i;
                 }
             }
@@ -100,7 +94,7 @@ public class LUDecompositor implements MatrixDecompositor {
             for (int j = 0; j <= i; j++) {
                 if (i > j) {
                     l.set(i, j, lu.get(i, j));
-                } else if (i == j) {
+                } else {
                     l.set(i, j, 1.0);
                 }
             }
