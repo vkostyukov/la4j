@@ -1107,6 +1107,22 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(1, a.rank());
     }
 
+    public void testRowAccess_2x1() {
+        Matrix a = factory().createMatrix(new double[][] {
+                { 99.0 },
+                { 88.0 }
+        });
+
+        Matrix b = factory().createMatrix(new double[][] {
+                { 99.0 },
+                { 99.0 }
+        });
+
+        a.setRow(1, a.getRow(0));
+
+        assertEquals(b, a);
+    }
+
     public void testRowAccess_3x3() {
 
         Matrix a = factory().createMatrix(new double[][] {
@@ -1162,6 +1178,31 @@ public abstract class AbstractMatrixTest extends TestCase {
         });
 
         a.setRow(3, a.getRow(2));
+
+        assertEquals(b, a);
+    }
+
+    public void testRowAccess_6x4() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 0.0, 18.0, 15.0, 0.0 },
+                { 1.0, 0.0, -55.0, 9.0 },
+                { 0.0, 0.0, 71.0, 19.0 },
+                { -1.0, -8.0, 54.0, 0.0 },
+                { 25.0, 18.0, 0.0, 0.0 },
+                { 78.0, 28.0, 0.0, -8.0 }
+        });
+
+        Matrix b = factory().createMatrix(new double[][] {
+                { 0.0, 18.0, 15.0, 0.0 },
+                { 1.0, 0.0, -55.0, 9.0 },
+                { 0.0, 0.0, 71.0, 19.0 },
+                { -1.0, -8.0, 54.0, 0.0 },
+                { 25.0, 18.0, 0.0, 0.0 },
+                { 25.0, 18.0, 0.0, 0.0 }
+        });
+
+        a.setRow(5, a.getRow(4));
 
         assertEquals(b, a);
     }
@@ -1344,7 +1385,22 @@ public abstract class AbstractMatrixTest extends TestCase {
 
         assertTrue(m2.equals(m3));
     }
-    
+
+    public void testColumnAccess_2x1() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 11.0, 22.0 },
+        });
+
+        Matrix b = factory().createMatrix(new double[][] { 
+                { 22.0, 22.0 },
+        });
+
+        a.setColumn(0, a.getColumn(1));
+
+        assertEquals(b, a);
+    }
+
     public void testColumnAccess_3x3() {
 
         Matrix a = factory().createMatrix(new double[][] {
@@ -1400,6 +1456,31 @@ public abstract class AbstractMatrixTest extends TestCase {
         });
 
         a.setColumn(1, a.getColumn(0));
+
+        assertEquals(b, a);
+    }
+
+    public void testColumnAccess_6x4() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 0.0, 18.0, 15.0, 0.0 },
+                { 1.0, 0.0, -55.0, 9.0 },
+                { 0.0, 0.0, 71.0, 19.0 },
+                { -1.0, -8.0, 54.0, 0.0 },
+                { 25.0, 18.0, 0.0, 0.0 },
+                { 78.0, 28.0, 0.0, -8.0 }
+        });
+
+        Matrix b = factory().createMatrix(new double[][] {
+                { 0.0, 18.0, 15.0, 0.0 },
+                { 1.0, 0.0, -55.0, 1.0 },
+                { 0.0, 0.0, 71.0, 0.0 },
+                { -1.0, -8.0, 54.0, -1.0 },
+                { 25.0, 18.0, 0.0, 25.0 },
+                { 78.0, 28.0, 0.0, 78.0 }
+        });
+
+        a.setColumn(3, a.getColumn(0));
 
         assertEquals(b, a);
     }
