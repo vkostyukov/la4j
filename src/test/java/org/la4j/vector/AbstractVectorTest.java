@@ -172,6 +172,20 @@ public abstract class AbstractVectorTest extends TestCase {
         assertEquals(a,b);
     }
 
+    public void testSwap_6() {
+
+        Vector a = factory().createVector(new double[] 
+                { 0.0, 0.0, 0.0, 0.0, 0.0, -5.0 }
+        );
+
+        Vector b = factory().createVector(new double[] 
+                { 0.0, 0.0, 0.0, -5.0, 0.0, 0.0 }
+        );
+
+        a.swap(3, 5);
+        assertEquals(a,b);
+    }
+
     public void testSwap_2() {
 
         Vector a = factory().createVector(new double[] 
@@ -387,8 +401,24 @@ public abstract class AbstractVectorTest extends TestCase {
 
         assertEquals(a, b);
     }
-    
-    public void testInnerProduct() {
+
+    public void testInnerProduct_1() {
+
+        Vector a = factory().createVector(new double[] { 18.0 });
+        Vector b = factory().createVector(new double[] { 10.0 });
+
+        assertEquals(180.0, a.innerProduct(b));
+    }
+
+    public void testInnerProduct_3() {
+
+        Vector a = factory().createVector(new double[] { 1.0, 2.0, 3.0 });
+        Vector b = factory().createVector(new double[] { 10.0, 0.0, 10.0 });
+
+        assertEquals(40.0, a.innerProduct(b));
+    }
+
+    public void testInnerProduct_4() {
 
         Vector a = factory().createVector(new double[] { 2, 3, 5, 7 });
         Vector b = factory().createVector(new double[] { 11, 13, 17, 19 });
@@ -397,7 +427,7 @@ public abstract class AbstractVectorTest extends TestCase {
         assertEquals(279.0, a.innerProduct(b));
     }
 
-    public void testOuterProduct() {
+    public void testOuterProduct_3_4() {
 
         Vector a = factory().createVector(new double[] { 2, 3, 5 });
         Vector b = factory().createVector(new double[] { 7, 11, 13, 17 });
@@ -406,6 +436,33 @@ public abstract class AbstractVectorTest extends TestCase {
                 { 14, 22, 26, 34 },
                 { 21, 33, 39, 51 }, 
                 { 35, 55, 65, 85 } 
+        });
+
+        assertEquals(c, a.outerProduct(b));
+    }
+
+    public void testOuterProduct_1_2() {
+
+        Vector a = factory().createVector(new double[] { 2.0 });
+        Vector b = factory().createVector(new double[] { 24.0, 1.0 });
+
+        Matrix c = factory().createMatrix(new double[][] {
+                { 48.0, 2.0 }
+        });
+
+        assertEquals(c, a.outerProduct(b));
+    }
+
+    public void testOuterProduct_4_2() {
+
+        Vector a = factory().createVector(new double[] { 2.0, 0.0, -1.0, 41.0 });
+        Vector b = factory().createVector(new double[] { 4.0, -10.0 });
+
+        Matrix c = factory().createMatrix(new double[][] {
+                { 8.0, -20.0 },
+                { 0.0, 0.0 },
+                { -4.0, 10.0 },
+                { 164.0, -410.0 }
         });
 
         assertEquals(c, a.outerProduct(b));
