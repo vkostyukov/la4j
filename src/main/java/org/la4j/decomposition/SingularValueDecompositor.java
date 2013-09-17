@@ -279,10 +279,9 @@ public class SingularValueDecompositor implements MatrixDecompositor {
                 if (k == -1)
                     break;
 
-                if (Math.abs(e.get(k)) <= tiny
-                        + eps
-                        * (Math.abs(s.get(k, k)) + Math
-                                .abs(s.get(k + 1, k + 1)))) {
+                if (Math.abs(e.get(k)) <= tiny + eps * 
+                        (Math.abs(s.get(k, k)) + Math.abs(s.get(k + 1, k + 1)))) {
+
                     e.set(k, 0.0);
                     break;
                 }
@@ -508,7 +507,11 @@ public class SingularValueDecompositor implements MatrixDecompositor {
             }
         }
 
-        return new Matrix[] { u, s, v };
+        // TODO:
+        // We need to change the logic of this code in order do not use resize
+        // It is also not a good idea to use SVN for [m < n] matrices
+        // We need to change it in further releases
+        return new Matrix[] { u, s.resize(n, a.columns(), factory), v };
     }
 
     private double hypot(double a, double b) {

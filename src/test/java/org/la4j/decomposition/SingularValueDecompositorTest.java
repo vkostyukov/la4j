@@ -100,6 +100,31 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
         performTest(Matrices.SINGULAR_VALUE_DECOMPOSITOR, input, output);
     }
 
+    public void testDecompose_3x1() {
+
+        double[][] input = new double[][] {
+            { 6.0 },
+            { 19.0 },
+            { 20.0 }
+        };
+
+        double[][][] output = new double[][][] { 
+            { 
+                { -0.213 },
+                { -0.673 },
+                { -0.708 }
+            },
+            { 
+                { 28.231 } 
+            },
+            { 
+                { -1.0 } 
+            }
+        };
+
+        performTest(Matrices.SINGULAR_VALUE_DECOMPOSITOR, input, output);
+    }
+
     public void testDecompose_4x4() {
 
         double[][] input = new double[][] {
