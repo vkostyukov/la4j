@@ -23,46 +23,29 @@ package org.la4j.linear;
 
 import junit.framework.TestCase;
 
-import org.la4j.factory.Basic1DFactory;
-import org.la4j.factory.Basic2DFactory;
-import org.la4j.factory.CCSFactory;
-import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.vector.MockVector;
 import org.la4j.vector.Vector;
 
 public abstract class AbstractSolverTest extends TestCase {
 
-    public abstract LinearSystemSolver solver();
+    public void performTest(LinearSystemSolver solver,
+                            double coefficientMatrix[][], 
+                            double rightHandVector[]) {
 
-    public abstract double[][] coefficientMatrix();
+        for (Factory xFactory: Matrices.FACTORIES) {
+            for (Factory yFactory: Matrices.FACTORIES) {
 
-    public abstract double[] rightHandVector();
-
-    public Factory[] factories() {
-        return new Factory[] { 
-                new Basic1DFactory(), 
-                new Basic2DFactory(),
-                new CRSFactory(), 
-                new CCSFactory() 
-        };
-    }
-
-    public void testSolve() {
-
-        for (Factory xFactory : factories()) {
-            for (Factory yFactory : factories()) {
-
-                Matrix a = xFactory.createMatrix(coefficientMatrix());
-                Vector b = yFactory.createVector(rightHandVector());
+                Matrix a = xFactory.createMatrix(coefficientMatrix);
+                Vector b = yFactory.createVector(rightHandVector);
 
                 LinearSystem system = new LinearSystem(a, b);
 
-                Vector x = system.solve(solver());
-                assertTrue(system.isSolution(x));
+                Vector x = system.solve(solver);
 
-                Vector y = system.solve(solver(), yFactory);
-                assertTrue(system.isSolution(y));
+                assertEquals(new MockVector(b), new MockVector(a.multiply(x)));
             }
         }
     }

@@ -21,32 +21,23 @@
 
 package org.la4j.linear;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.la4j.matrix.Matrices;
 
 public class GaussianSolverTest extends AbstractSolverTest {
 
-    @Override
-    public LinearSystemSolver solver() {
-        return new GaussianSolver();
-    }
+    public void testSolve_4x4() {
 
-    @Override
-    public double[][] coefficientMatrix() {
-        return new double[][] {
-                { 9.0, 3.0, 0.0, 5.0 }, 
-                { 1.0, 0.0, 3.0, 6.0 },
-                { 7.0, 0.0, 2.0, 2.0 }, 
-                { 0.0, 3.0, 0.0, 0.0 } 
+        double a[][] = new double[][] {
+            { 9.0, 3.0, 0.0, 5.0 }, 
+            { 1.0, 0.0, 3.0, 6.0 },
+            { 7.0, 0.0, 2.0, 2.0 }, 
+            { 0.0, 3.0, 0.0, 0.0 } 
         };
-    }
 
-    @Override
-    public double[] rightHandVector() {
-        return new double[] { 0.0, 2.0, 0.0, 3.0 };
-    }
+        double b[] = new double[] {
+            0.0, 2.0, 0.0, 3.0
+        };
 
-    public static Test suite() {
-        return new TestSuite(GaussianSolverTest.class);
+        performTest(Matrices.GAUSSIAN_SOLVER, a, b);
     }
 }

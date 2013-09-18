@@ -21,32 +21,20 @@
 
 package org.la4j.linear;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.la4j.matrix.Matrices;
 
 public class SquareRootSolverTest extends AbstractSolverTest {
 
-    @Override
-    public LinearSystemSolver solver() {
-        return new SquareRootSolver();
-    }
+    public void testSolve_3x3() {
 
-    @Override
-    public double[][] coefficientMatrix() {
-        return new double[][] { 
-                { 1.0, 0.0, 0.0 }, 
-                { 0.0, 5.0, 0.0 },
-                { 0.0, 0.0, 9.0 } 
+        double a[][] = new double[][] { 
+            { 1.0, 0.0, 0.0 }, 
+            { 0.0, 5.0, 0.0 },
+            { 0.0, 0.0, 9.0 } 
         };
-    }
 
-    @Override
-    public double[] rightHandVector() {
-        return new double[] { 0.0, 2.0, 0.0 };
-    }
+        double b[] = new double[] { 0.0, 2.0, 0.0 };
 
-    public static Test suite() {
-        return new TestSuite(SquareRootSolverTest.class);
+        performTest(Matrices.SQUARE_ROOT_SOLVER, a, b);
     }
-
 }
