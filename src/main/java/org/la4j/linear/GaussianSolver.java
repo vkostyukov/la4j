@@ -51,78 +51,88 @@ public class GaussianSolver implements LinearSystemSolver {
     @Override
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
+        Matrix a = linearSystem.coefficientsMatrix();
+        Vector b = linearSystem.rightHandVector();
+
+        // TODO: make it general
+        //       move it to LinearSystem class
+        if (a.rows() == 1 && a.columns() == 1) {
+            return factory.createVector(new double[] { b.get(0) / a.get(0, 0) } );
+        }
+
+        if (a.rows() > a.columns()) {
+            throw new IllegalArgumentException("This system can't be solved.");
+        }
+
         int columns = linearSystem.variables();
 
-        Matrix a = linearSystem.coefficientsMatrix().resizeColumns(columns + 1);
-        Vector b = linearSystem.rightHandVector().copy();
+        Matrix aa = a.resizeColumns(columns + 1);
+        Vector bb = b.copy();
 
-        a.setColumn(columns, b);
+        // extend matrix with right-hand-vector
+        aa.setColumn(columns, bb);
 
-        Matrix triangle = createExtendTriangleMatrix(a);
+        // the 1st phase
+        triangularizeWithPivoting(aa);
 
-        return retraceGaus(triangle, factory);
+        if (Math.abs(aa.diagonalProduct()) < Matrices.EPS) {
+            throw new IllegalArgumentException("This system is singular.");
+        }
+
+        // the 2nd phase
+        Vector x = factory.createVector(aa.columns() - 1);
+        backSubstitution(aa, x);
+
+        return x;
     }
 
-    private Matrix createExtendTriangleMatrix(Matrix matrix) {
+    private void triangularizeWithPivoting(Matrix matrix) {
 
-        Matrix result = matrix.copy();
+        for (int i = 0; i + 1 < matrix.rows(); i++) {
 
-        for (int i = 0; i < result.rows(); i++) {
+            int maxIndex = i;
+            double maxItem = Math.abs(matrix.get(i, i));
 
-            int maxIndex = 0;
-            double maxItem = result.get(i, i);
-
-            for (int k = i + 1; k < result.rows(); k++) {
-
-                if (Math.abs(result.get(k, i)) > maxItem) {
-                    maxItem = Math.abs(result.get(k, i));
+            for (int k = i + 1; k < matrix.rows(); k++) {
+                double value = Math.abs(matrix.get(k, i));
+                if (value > maxItem) {
+                    maxItem = value;
                     maxIndex = k;
                 }
             }
 
-            if (Math.abs(maxItem) < Matrices.EPS) {
+            if (maxItem == 0.0) {
                 throw new IllegalArgumentException("This system can't be solved.");
             }
 
             if (maxIndex > i) {
-                result.swapRows(maxIndex, i);
+                matrix.swapRows(maxIndex, i);
             }
 
-            for (int j = i + 1; j < result.rows(); j++) {
+            for (int j = i + 1; j < matrix.rows(); j++) {
 
-                double C = result.get(j, i) / result.get(i, i);
-                result.set(j, i, C);
+                double c = matrix.get(j, i) / matrix.get(i, i);
+                matrix.set(j, i, 0.0);
 
-                for (int k = i + 1; k < result.columns(); k++) {
-                    result.update(j, k, Matrices.asMinusFunction(
-                                  result.get(i, k) * C));
+                for (int k = i + 1; k < matrix.columns(); k++) {
+                    matrix.update(j, k, Matrices.asMinusFunction(matrix.get(i, k) * c));
                 }
             }
         }
-
-        return result;
     }
 
-    private Vector retraceGaus(Matrix matrix, Factory factory) {
+    private void backSubstitution(Matrix matrix, Vector result) {
 
-        if (Math.abs(matrix.diagonalProduct()) < Matrices.EPS) {
-            throw new IllegalArgumentException("This system hasn't solution.");
-        }
+        for (int i = matrix.rows() - 1; i >= 0; i--) {
 
-        Vector result = factory.createVector(matrix.columns() - 1);
-
-        for (int i = result.length() - 1; i >= 0; i--) {
-
-            double summand = 0;
-            for (int j = i + 1; j < result.length(); j++) {
+            double summand = 0.0;
+            for (int j = i + 1; j < matrix.columns() - 1; j++) {
                 summand += result.get(j) * matrix.get(i, j);
             }
 
             result.set(i, (matrix.get(i, matrix.columns() - 1) - summand)
                        / matrix.get(i, i));
         }
-
-        return result;
     }
 
     /**
@@ -134,6 +144,7 @@ public class GaussianSolver implements LinearSystemSolver {
      */
     @Override
     public boolean suitableFor(LinearSystem linearSystem) {
-        return true;
+        return linearSystem.coefficientsMatrix().rows() <=
+               linearSystem.coefficientsMatrix().columns();
     }
 }
