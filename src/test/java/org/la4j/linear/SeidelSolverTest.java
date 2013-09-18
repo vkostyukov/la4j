@@ -37,4 +37,17 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         performTest(Matrices.SEIDEL_SOLVER, a, b);
     }
+
+    public void testSolve_3x3_2() {
+
+        double a[][] = new double[][] { 
+            { 10.0, 1.0, -2.0 },
+            { 3.0, -8.0, 1.0 },
+            { 11.0, -2.0, 15.0 }
+        };
+
+        double b[] = new double[] { 6.8, -10.1, -36.9 };
+
+        performTest(Matrices.JACOBI_SOLVER, a, b);
+    }
 }

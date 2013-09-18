@@ -60,4 +60,17 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         performTest(Matrices.JACOBI_SOLVER, a, b);
     }
+
+    public void testSolve_3x3_2() {
+
+        double a[][] = new double[][] { 
+            { 16.0, 1.0, -2.0 },
+            { 3.0, -5.0, 1.0 },
+            { 11.0, -2.0, 21.0 }
+        };
+
+        double b[] = new double[] { 4.6, 3.3, -38.9 };
+
+        performTest(Matrices.JACOBI_SOLVER, a, b);
+    }
 }

@@ -80,14 +80,14 @@ public class JacobiSolver implements LinearSystemSolver {
 
             for (int i = 0; i < a.rows(); i++) {
 
-                double sum = b.get(i) / a.get(i, i);
+                double summand = b.get(i) / a.get(i, i);
                 for (int j = 0; j < a.columns(); j++) {
                     if (i != j) {
-                        sum -= a.get(i, j) * current.get(j);
+                        summand -= a.get(i, j) * current.get(j);
                     }
                 }
 
-                next.set(i, sum);
+                next.set(i, summand);
             }
 
             current = next;
