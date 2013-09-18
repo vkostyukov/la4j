@@ -67,19 +67,15 @@ public class SquareRootSolver implements LinearSystemSolver {
 
             double dd = 0.0;
             for (int l = 0; l < i; l++) {
-                dd += Math.pow(s.get(l, i), 2) * d.get(l, l);
+                double sli = s.get(l, i);
+                dd += sli * sli * d.get(l, l);
             }
 
             d.set(i, i, Math.signum(a.get(i, i) - dd));
-
-            double ss = 0.0;
-            for (int l = 0; l < i; l++) {
-                ss += s.get(l, i) * s.get(l, i) * d.get(l, l);
-            }
-
-            s.set(i, i, Math.sqrt(Math.abs(a.get(i, i) - ss)));
+            s.set(i, i, Math.sqrt(Math.abs(a.get(i, i) - dd)));
 
             if (s.get(i, i) == 0.0) {
+                // TODO: we can try to rearrange the diagonal elements
                 throw new IllegalArgumentException("This matrix is singular. We can't solve it.");
             }
 
@@ -87,7 +83,9 @@ public class SquareRootSolver implements LinearSystemSolver {
 
                 double summand = 0;
                 for (int l = 0; l < i; l++) {
-                    summand += s.get(l, i) * s.get(l, i) * d.get(l, l);
+                    double sli = s.get(l, i);
+                    double slj = s.get(l, j);
+                    summand += sli * slj * d.get(l, l);
                 }
 
                 s.set(i, j, (a.get(i, j) - summand) / (s.get(i, i) * d.get(i, i)));
@@ -104,7 +102,7 @@ public class SquareRootSolver implements LinearSystemSolver {
 
         for (int i = a.rows() - 1; i >= 0; i--) {
 
-            double summand = 0;
+            double summand = 0.0;
             for (int l = i + 1; l < a.columns(); l++) {
                 summand += x.get(l) * s.get(i, l);
             }

@@ -25,6 +25,29 @@ import org.la4j.matrix.Matrices;
 
 public class SquareRootSolverTest extends AbstractSolverTest {
 
+    public void testSolve_1x1() {
+
+        double a[][] = new double[][] { 
+            { 44.0 } 
+        };
+
+        double b[] = new double[] { -22.0 };
+
+        performTest(Matrices.SQUARE_ROOT_SOLVER, a, b);
+    }
+
+    public void testSolve_2x2() {
+
+        double a[][] = new double[][] { 
+            { -7.0, 77.0 },
+            { 77.0, 14.0 }
+        };
+
+        double b[] = new double[] { -77.0, 768.6 };
+
+        performTest(Matrices.SQUARE_ROOT_SOLVER, a, b);
+    }
+
     public void testSolve_3x3() {
 
         double a[][] = new double[][] { 
@@ -34,6 +57,19 @@ public class SquareRootSolverTest extends AbstractSolverTest {
         };
 
         double b[] = new double[] { 0.0, 2.0, 0.0 };
+
+        performTest(Matrices.SQUARE_ROOT_SOLVER, a, b);
+    }
+
+    public void testSolve_3x3_2() {
+
+        double a[][] = new double[][] { 
+            { 9.0, -1.0, -18.0 }, 
+            { -1.0, 6.0, -3.0 },
+            { -18.0, -3.0, 33.0 } 
+        };
+
+        double b[] = new double[] { -45.0, -10.0, 81.0   };
 
         performTest(Matrices.SQUARE_ROOT_SOLVER, a, b);
     }
