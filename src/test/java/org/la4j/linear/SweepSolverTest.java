@@ -37,4 +37,46 @@ public class SweepSolverTest extends AbstractSolverTest {
 
         performTest(Matrices.SWEEP_SOLVER, a, b);
     }
+
+    public void testSolve_3x3_2() {
+
+        double a[][] = new double[][] { 
+            { -6.0, 11.0, 0.0 }, 
+            { 17.0, 18.0, -20.0 },
+            { 0.0, 20.0, -9.0 } 
+        };
+
+        double b[] = new double[] { -356.0, 497.0, -209.0 };
+
+        performTest(Matrices.SWEEP_SOLVER, a, b);
+    }
+
+    public void testSolve_4x4() {
+
+        double a[][] = new double[][] { 
+            { 1.0, 18.0, 0.0, 0.0 }, 
+            { -21.0, 2.0, -53.0, 0.0 },
+            { 0.0, 19.0, 3.0, -6.0 },
+            { 0.0, 0.0, 66.0, -4.0 }
+        };
+
+        double b[] = new double[] { -180.0, -394.7, -215.3, -10.6 };
+
+        performTest(Matrices.SWEEP_SOLVER, a, b);
+    }
+
+    public void testSolve_5x5() {
+
+        double a[][] = new double[][] { 
+            { 7.0, 8.0, 0.0, 0.0, 0.0 }, 
+            { -9.0, 100.0, -1.0, 0.0, 0.0 },
+            { 0.0, 2.0, 3.0, 10.0, 0.0 },
+            { 0.0, 0.0, -1.0, -77.0, 11.0 },
+            { 0.0, 0.0, 0.0, 5.0, -2.0 }
+        };
+
+        double b[] = new double[] { -1.0, -111.0, -16.0, 185.0, -16.0 };
+
+        performTest(Matrices.SWEEP_SOLVER, a, b);
+    }
 }
