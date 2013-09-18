@@ -69,7 +69,36 @@ public class SquareRootSolverTest extends AbstractSolverTest {
             { -18.0, -3.0, 33.0 } 
         };
 
-        double b[] = new double[] { -45.0, -10.0, 81.0   };
+        double b[] = new double[] { -45.0, -10.0, 81.0 };
+
+        performTest(Matrices.SQUARE_ROOT_SOLVER, a, b);
+    }
+
+    public void testSolve_4x4() {
+
+        double a[][] = new double[][] { 
+            { -55.0, 11.0, 1.0, 0.0 }, 
+            { 11.0, 66.0, 4.0, -1.0 },
+            { 1.0, 4.0, -44.0, -9.0 },
+            { 0.0, -1.0, -9.0, 33.0 }
+        };
+
+        double b[] = new double[] { -276.0, 29.0, -439.0, -89.0 };
+
+        performTest(Matrices.SQUARE_ROOT_SOLVER, a, b);
+    }
+
+    public void testSolve_5x5() {
+
+        double a[][] = new double[][] { 
+            { 14.0, 0.0, -10.0, 11.0, -4.0 },
+            { 0.0, 21.0, -2.0, 0.0, 11.0 },
+            { -10.0, -2.0, -7.0, 1.0, -3.0 },
+            { 11.0, 0.0, 1.0, -28.0, 6.0  },
+            { -4.0, 11.0, -3.0, 6.0, 0.7 },
+        };
+
+        double b[] = new double[] { 104.0, -256.0, -45.0, 54.0, -143.8 };
 
         performTest(Matrices.SQUARE_ROOT_SOLVER, a, b);
     }
