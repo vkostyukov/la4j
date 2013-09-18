@@ -24,6 +24,7 @@ package org.la4j.linear;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.vector.Vector;
 
 /**
@@ -60,9 +61,10 @@ public class JacobiSolver implements LinearSystemSolver {
         Vector b = linearSystem.rightHandVector();
 
         for (int i = 0; i < a.rows(); i++) {
+            MatrixFunction divider = Matrices.asDivFunction(a.get(i, i));
             for (int j = 0; j < a.columns(); j++) {
                 if (i != j) {
-                    a.update(i, j, Matrices.asDivFunction(a.get(i, i)));
+                    a.update(i, j, divider);
                 }
             }
         }
@@ -81,7 +83,7 @@ public class JacobiSolver implements LinearSystemSolver {
                 double sum = b.get(i) / a.get(i, i);
                 for (int j = 0; j < a.columns(); j++) {
                     if (i != j) {
-                        sum -= a.get(i, i) * current.get(j);
+                        sum -= a.get(i, j) * current.get(j);
                     }
                 }
 

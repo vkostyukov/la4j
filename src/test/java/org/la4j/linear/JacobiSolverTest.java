@@ -25,6 +25,29 @@ import org.la4j.matrix.Matrices;
 
 public class JacobiSolverTest extends AbstractSolverTest {
 
+    public void testSolve_1x1() {
+
+        double a[][] = new double[][] { 
+            { 144.0 } 
+        };
+
+        double b[] = new double[] { 12.0 };
+
+        performTest(Matrices.JACOBI_SOLVER, a, b);
+    }
+
+    public void testSolve_2x2() {
+
+        double a[][] = new double[][] { 
+            { 66.0, 1.0 },
+            { 18.0, -20.0 }
+        };
+
+        double b[] = new double[] { 257.0, 212.0 };
+
+        performTest(Matrices.JACOBI_SOLVER, a, b);
+    }
+
     public void testSolve_3x3() {
 
         double a[][] = new double[][] { 
