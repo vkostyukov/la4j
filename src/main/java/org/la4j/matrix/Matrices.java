@@ -193,6 +193,27 @@ public final class Matrices {
         }
     }
 
+    private static class DiagonallyDominantPredicate
+            implements AdvancedMatrixPredicate {
+
+        @Override
+        public boolean test(Matrix matrix) {
+            for (int i = 0; i < matrix.rows(); i++) {
+                double sum = 0;
+                for (int j = 0; j < matrix.columns(); j++) {
+                    if (i != j) {
+                        sum += Math.abs(matrix.get(i, j));
+                    }
+                }
+                if (sum > Math.abs(matrix.get(i, i)) - EPS) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
     private static class IncMatrixFunction 
             implements MatrixFunction {
         @Override
@@ -509,6 +530,13 @@ public final class Matrices {
      */
     public final static AdvancedMatrixPredicate SYMMETRIC_MATRIX = 
             new SymmetricMatrixPredicate();
+
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://en.wikipedia.org/wiki/Diagonally_dominant_matrix">dioganally dominant matrix</a>.
+     */
+    public final static AdvancedMatrixPredicate DIAGONALLY_DOMINANT_MATRIX = 
+            new DiagonallyDominantPredicate();
 
     /**
      * Increases each element of matrix by <code>1</code>.

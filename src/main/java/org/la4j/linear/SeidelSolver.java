@@ -98,23 +98,6 @@ public class SeidelSolver implements LinearSystemSolver {
      */
     @Override
     public boolean suitableFor(LinearSystem linearSystem) {
-
-        Matrix a = linearSystem.coefficientsMatrix();
-
-        for (int i = 0; i < a.rows(); i++) {
-
-            double sum = 0;
-            for (int j = 0; j < a.columns(); j++) {
-                if (i != j) {
-                    sum += Math.abs(a.get(i, j));
-                }
-            }
-
-            if (sum > Math.abs(a.get(i, i)) - Matrices.EPS) {
-                return false;
-            }
-        }
-
-        return true;
+        return linearSystem.coefficientsMatrix().is(Matrices.DIAGONALLY_DOMINANT_MATRIX);
     }
 }
