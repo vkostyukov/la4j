@@ -54,14 +54,8 @@ public class GaussianSolver implements LinearSystemSolver {
         Matrix a = linearSystem.coefficientsMatrix();
         Vector b = linearSystem.rightHandVector();
 
-        // TODO: make it general
-        //       move it to LinearSystem class
-        if (a.rows() == 1 && a.columns() == 1) {
-            return factory.createVector(new double[] { b.get(0) / a.get(0, 0) } );
-        }
-
-        if (a.rows() > a.columns()) {
-            throw new IllegalArgumentException("This system can't be solved.");
+        if (!suitableFor(linearSystem)) {
+            throw new IllegalArgumentException("This system can't be solved by Gauss: rows != columns.");
         }
 
         int columns = linearSystem.variables();
@@ -144,7 +138,7 @@ public class GaussianSolver implements LinearSystemSolver {
      */
     @Override
     public boolean suitableFor(LinearSystem linearSystem) {
-        return linearSystem.coefficientsMatrix().rows() <=
+        return linearSystem.coefficientsMatrix().rows() ==
                linearSystem.coefficientsMatrix().columns();
     }
 }
