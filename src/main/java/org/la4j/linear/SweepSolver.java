@@ -52,37 +52,33 @@ public class SweepSolver implements LinearSystemSolver {
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
         if (!suitableFor(linearSystem)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("This system can't be solved with Sweep solver.");
         }
 
-        Matrix a = linearSystem.coefficientsMatrix();
-        Vector b = linearSystem.rightHandVector();
+        Matrix a = linearSystem.coefficientsMatrix().copy();
+        Vector b = linearSystem.rightHandVector().copy();
 
-        Vector x = factory.createVector(linearSystem.variables());
+        Vector x = factory.createVector(a.columns());
 
-        for (int i = 0; i < linearSystem.variables() - 1; i++) {
+        for (int i = 0; i < a.rows() - 1; i++) {
 
             double maxItem = Math.abs(a.get(i, i));
             int maxIndex = i;
 
-            for (int j = i + 1; j < linearSystem.variables(); j++) {
-                if (Math.abs(a.get(j, i)) > maxItem) {
-                    maxItem = Math.abs(a.get(j, i));
+            for (int j = i + 1; j < a.columns(); j++) {
+                double value = Math.abs(a.get(j, i));
+                if (value > maxItem) {
+                    maxItem = value;
                     maxIndex = j;
                 }
             }
 
             if (maxIndex != i) {
-                for (int j = 0; j < linearSystem.variables(); j++) {
-                    double t = a.get(i, j);
-                    a.set(i, j, a.get(maxIndex, j));
-                    a.set(maxIndex, j, t);
-                }
-
+                a.swapRows(maxIndex, i);
                 b.swap(i, maxIndex);
             }
 
-            for (int j = i + 1; j < linearSystem.variables(); j++) {
+            for (int j = i + 1; j < a.columns(); j++) {
 
                 double c = a.get(j, i) / a.get(i, i);
                 for (int k = i; k < a.columns(); k++) {
@@ -93,7 +89,7 @@ public class SweepSolver implements LinearSystemSolver {
             }
         }
 
-        for (int i = linearSystem.variables() - 1; i >= 0; i--) {
+        for (int i = a.rows() - 1; i >= 0; i--) {
 
             double summand = 0.0;
 
@@ -114,7 +110,6 @@ public class SweepSolver implements LinearSystemSolver {
      */
     @Override
     public boolean suitableFor(LinearSystem linearSystem) {
-        return linearSystem.coefficientsMatrix()
-                .is(Matrices.TRIDIAGONAL_MATRIX);
+        return linearSystem.coefficientsMatrix().is(Matrices.TRIDIAGONAL_MATRIX);
     }
 }

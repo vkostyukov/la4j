@@ -38,11 +38,11 @@ import org.la4j.vector.Vector;
 public class LinearSystem implements Externalizable {
 
     private static final LinearSystemSolver SOLVERS[] = {
-        new SweepSolver(),
-        new JacobiSolver(),
-        new SeidelSolver(),
-        new SquareRootSolver(),
-        new GaussianSolver()
+        Matrices.SWEEP_SOLVER,
+        Matrices.JACOBI_SOLVER,
+        Matrices.SEIDEL_SOLVER,
+        Matrices.SQUARE_ROOT_SOLVER,
+        Matrices.GAUSSIAN_SOLVER
     };
 
     private int equations;

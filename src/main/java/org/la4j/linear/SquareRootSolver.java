@@ -50,7 +50,7 @@ public class SquareRootSolver implements LinearSystemSolver {
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
         if (!suitableFor(linearSystem)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("This system can't be solved with SQRT method.");
         }
 
         Matrix a = linearSystem.coefficientsMatrix();
@@ -65,44 +65,40 @@ public class SquareRootSolver implements LinearSystemSolver {
 
         for (int i = 0; i < a.rows(); i++) {
 
-            double dSumand = 0;
+            double dd = 0.0;
             for (int l = 0; l < i; l++) {
-                dSumand += Math.pow(s.get(l, i), 2) * d.get(l, l);
+                dd += Math.pow(s.get(l, i), 2) * d.get(l, l);
             }
 
-            d.set(i, i, Math.signum(a.get(i, i) - dSumand));
+            d.set(i, i, Math.signum(a.get(i, i) - dd));
 
-            double sSummand = 0;
+            double ss = 0.0;
             for (int l = 0; l < i; l++) {
-                sSummand += s.get(l, i) * s.get(l, i) 
-                            * d.get(l, l);
+                ss += s.get(l, i) * s.get(l, i) * d.get(l, l);
             }
 
-            s.set(i, i, Math.sqrt(Math.abs(a.get(i, i) - sSummand)));
+            s.set(i, i, Math.sqrt(Math.abs(a.get(i, i) - ss)));
 
-            if (Math.abs(s.get(i, i)) < Matrices.EPS) {
-                throw new IllegalArgumentException(
-                        "matrix s contains '0' at main diagonal");
+            if (s.get(i, i) == 0.0) {
+                throw new IllegalArgumentException("This matrix is singular. We can't solve it.");
             }
 
             for (int j = i + 1; j < a.columns(); j++) {
 
                 double summand = 0;
                 for (int l = 0; l < i; l++) {
-                    summand += s.get(l, i) * s.get(l, i) 
-                               * d.get(l, l);
+                    summand += s.get(l, i) * s.get(l, i) * d.get(l, l);
                 }
 
                 s.set(i, j, (a.get(i, j) - summand) / (s.get(i, i) * d.get(i, i)));
             }
 
-            double zSummand = 0;
+            double zz = 0.0;
             for (int l = 0; l < i; l++) {
-                zSummand += z.get(l) * s.get(l, i);
+                zz += z.get(l) * s.get(l, i);
             }
 
-            z.set(i, (b.get(i) - zSummand) / s.get(i, i));
-
+            z.set(i, (b.get(i) - zz) / s.get(i, i));
             y.set(i, z.get(i) / d.get(i, i));
         }
 

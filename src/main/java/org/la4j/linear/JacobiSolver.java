@@ -91,10 +91,6 @@ public class JacobiSolver implements LinearSystemSolver {
             iteration++;
         }
 
-        if (iteration == MAX_ITERATIONS) {
-            throw new IllegalArgumentException();
-        }
-
         return current;
     }
 

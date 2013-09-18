@@ -53,7 +53,7 @@ public class SeidelSolver implements LinearSystemSolver {
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
         if (!suitableFor(linearSystem)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("This system can't be solved with Seidel method.");
         }
 
         Matrix a = linearSystem.coefficientsMatrix().copy();
@@ -70,6 +70,7 @@ public class SeidelSolver implements LinearSystemSolver {
         Vector current = factory.createVector(linearSystem.variables());
 
         int iteration = 0;
+
         while (iteration < MAX_ITERATIONS && !linearSystem.isSolution(current)) {
 
             for (int i = 0; i < a.rows(); i++) {
@@ -85,10 +86,6 @@ public class SeidelSolver implements LinearSystemSolver {
             }
 
             iteration++;
-        }
-
-        if (iteration == MAX_ITERATIONS) {
-            throw new IllegalArgumentException();
         }
 
         return current;
