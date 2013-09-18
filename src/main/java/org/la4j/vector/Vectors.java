@@ -145,6 +145,20 @@ public final class Vectors {
         }
     }
 
+    private static class ModFunction implements VectorFunction {
+
+        private double arg;
+
+        public ModFunction(double arg) {
+            this.arg = arg;
+        }
+
+        @Override
+        public double evaluate(int i, double value) {
+            return value % arg;
+        }
+    }
+
     private static class SumVectorAccumulator implements VectorAccumulator {
 
         private BigDecimal result;
@@ -260,6 +274,20 @@ public final class Vectors {
      */
     public static VectorFunction asDivFunction(double value) {
         return new DivFunction(value);
+    }
+
+    /**
+     * Creates a modulus function with specified <code>value</code>. The function 
+     * evaluates like following:
+     * <p>
+     * <center><code>something %= value</code></center>
+     * </p>
+     *
+     * @param value
+     * @return
+     */
+    public static VectorFunction asModFunction(double value) {
+        return new ModFunction(value);
     }
 
     /**

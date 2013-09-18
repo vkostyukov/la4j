@@ -277,6 +277,21 @@ public final class Matrices {
         }
     }
 
+    private static class ModMatrixFunction
+            implements MatrixFunction {
+
+        private double arg;
+
+        public ModMatrixFunction(double arg) {
+            this.arg = arg;
+        }
+
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return value % arg;
+        }
+    }
+
     private static class SumMatrixAccumulator
             implements MatrixAccumulator {
 
@@ -395,6 +410,20 @@ public final class Matrices {
      */
     public static MatrixFunction asDivFunction(double value) {
         return new DivMatrixFunction(value);
+    }
+
+    /**
+     * Creates a modulus function with specified <code>value</code>. The function 
+     * evaluates like following:
+     * <p>
+     * <center><code>something %= value</code></center>
+     * </p>
+     *
+     * @param value
+     * @return
+     */
+    public static MatrixFunction asModFunction(double value) {
+        return new ModMatrixFunction(value);
     }
 
     /**
