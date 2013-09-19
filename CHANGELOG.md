@@ -33,6 +33,7 @@ la4j-0.4.5 `Sep 2013`
  * New function `Mod` (requested by Luc Trudeau)
  * Bug fix in `GaussianSolver`
  * Bug fix in `SquareRootSolver`
+ * Bug fix in `JacobiSolver`
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)
