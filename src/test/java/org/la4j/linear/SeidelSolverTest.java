@@ -48,6 +48,6 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 6.8, -10.1, -36.9 };
 
-        performTest(Matrices.JACOBI_SOLVER, a, b);
+        performTest(Matrices.SEIDEL_SOLVER, a, b);
     }
 }

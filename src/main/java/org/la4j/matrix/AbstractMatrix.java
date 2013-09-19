@@ -1004,7 +1004,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public boolean is(MatrixPredicate predicate) {
 
-        boolean result = true;
+        boolean result = predicate.test(rows, columns);
 
         for (int i = 0; result && i < rows; i++) {
             for (int j = 0; result && j < columns; j++) {

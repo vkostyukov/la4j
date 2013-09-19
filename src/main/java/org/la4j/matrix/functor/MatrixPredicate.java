@@ -24,6 +24,16 @@ package org.la4j.matrix.functor;
 public interface MatrixPredicate {
 
     /**
+     * Tests rows and columns.
+     * 
+     * @param rows
+     * @param columns
+     * @return
+     */
+    boolean test(int rows, int columns);
+
+    /**
+     * Test each element.
      * 
      * @param i
      * @param j

@@ -93,12 +93,22 @@ public final class Matrices {
 
     private static class DiagonalMatrixPredicate implements MatrixPredicate {
         @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
+        @Override
         public boolean test(int i, int j, double value) {
             return (i != j) ? Math.abs(value) < EPS : true;
         }
     }
 
     private static class IdentityMatrixPredicate implements MatrixPredicate {
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
         @Override
         public boolean test(int i, int j, double value) {
             return (i == j) ? Math.abs(1.0 - value) < EPS 
@@ -108,12 +118,22 @@ public final class Matrices {
 
     private static class ZeroMatrixPredicate implements MatrixPredicate {
         @Override
+        public boolean test(int rows, int columns) {
+            return true;
+        }
+
+        @Override
         public boolean test(int i, int j, double value) {
             return Math.abs(value) < EPS;
         }
     }
 
     private static class TridiagonalMatrixPredicate implements MatrixPredicate {
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
         @Override
         public boolean test(int i, int j, double value) {
             return Math.abs(i - j) > 1 ?  Math.abs(value) < EPS : true; 
@@ -122,20 +142,36 @@ public final class Matrices {
 
     private static class PositiveMatrixPredicate implements MatrixPredicate {
         @Override
+        public boolean test(int rows, int columns) {
+            return true;
+        }
+
+        @Override
         public boolean test(int i, int j, double value) {
-            return value > 0;
+            return value > 0.0;
         }
     }
 
     private static class NegativeMatrixPredicate implements MatrixPredicate {
         @Override
+        public boolean test(int rows, int columns) {
+            return true;
+        }
+
+        @Override
         public boolean test(int i, int j, double value) {
-            return value < 0;
+            return value < 0.0;
         }
     }
 
     private static class LowerBidiagonalMatrixPredicate 
             implements MatrixPredicate {
+
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
         @Override
         public boolean test(int i, int j, double value) {
             return (i == j) || (i == j + 1) 
@@ -146,6 +182,12 @@ public final class Matrices {
 
     private static class UpperBidiagonalMatrixPredicate 
             implements MatrixPredicate {
+
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
         @Override
         public boolean test(int i, int j, double value) {
             return (i == j) || (i == j - 1) 
@@ -155,6 +197,12 @@ public final class Matrices {
 
     private static class LowerTriangularMatrixPredicate 
             implements MatrixPredicate {
+
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
         @Override
         public boolean test(int i, int j, double value) {
             return (i > j) ? Math.abs(value) < EPS : true;
@@ -163,6 +211,12 @@ public final class Matrices {
 
     private static class UpperTriangularMatrixPredicate 
             implements MatrixPredicate {
+
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
         @Override
         public boolean test(int i, int j, double value) {
             return (i < j) ? Math.abs(value) < EPS : true;
@@ -198,6 +252,10 @@ public final class Matrices {
 
         @Override
         public boolean test(Matrix matrix) {
+            if (matrix.rows() != matrix.columns()) {
+                return false;
+            }
+
             for (int i = 0; i < matrix.rows(); i++) {
                 double sum = 0;
                 for (int j = 0; j < matrix.columns(); j++) {
