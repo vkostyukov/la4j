@@ -25,6 +25,29 @@ import org.la4j.matrix.Matrices;
 
 public class SeidelSolverTest extends AbstractSolverTest {
 
+    public void testSolve_1x1() {
+
+        double a[][] = new double[][] { 
+            { -77.0 } 
+        };
+
+        double b[] = new double[] { 11.0 };
+
+        performTest(Matrices.SEIDEL_SOLVER, a, b);
+    }
+
+    public void testSolve_2x2() {
+
+        double a[][] = new double[][] { 
+            { 10.0, 1.0 },
+            { 5.0, -22.0 }
+        };
+
+        double b[] = new double[] { -20.0, -10.0 };
+
+        performTest(Matrices.SEIDEL_SOLVER, a, b);
+    }
+
     public void testSolve_3x3() {
 
         double a[][] = new double[][] { 
@@ -47,6 +70,35 @@ public class SeidelSolverTest extends AbstractSolverTest {
         };
 
         double b[] = new double[] { 6.8, -10.1, -36.9 };
+
+        performTest(Matrices.SEIDEL_SOLVER, a, b);
+    }
+
+    public void testSolve_4x4() {
+
+        double a[][] = new double[][] { 
+            { 32.0, 4.0, 1.0, -3.0 },
+            { -2.0, -10.0, -6.0, 1.0 },
+            { 5.0, -2.0, -12.0, -1.0 },
+            { 0.0, -14.0, -6.0, 21.0 }
+        };
+
+        double b[] = new double[] { -3.9, -5.4, 2.1, 18.4 };
+
+        performTest(Matrices.SEIDEL_SOLVER, a, b);
+    }
+
+    public void testSolve_5x5() {
+
+        double a[][] = new double[][] { 
+            { 10.0, 1.0, 0.0, -2.0, -3.0 },
+            { -1.0, -20.0, 0.0, 4.0, -3.0 },
+            { 2.0, -3.0, 30.0, 5.0, 0.0 },
+            { 5.0, 4.0, -1.0, 40.0, -6.0 },
+            { -2.0, 1.0, 4.0, 10.0, -50.0 }
+        };
+
+        double b[] = new double[] { 0.07, -13.29, -12.45, -41.8, -32.8 };
 
         performTest(Matrices.SEIDEL_SOLVER, a, b);
     }
