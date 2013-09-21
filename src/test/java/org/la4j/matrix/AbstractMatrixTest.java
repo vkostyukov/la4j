@@ -1599,6 +1599,46 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(-7, a.min());
     }
 
+    public void testMaxInRow() {
+        Matrix a = factory().createMatrix(new double[][]{
+            { 0, 0, 1, 0},
+            { -3, 2, 0, 1},
+            {-2, 0, 0, -1}
+        });
+
+        assertEquals(0, a.maxInRow(2));
+    }
+
+    public void testMinInRow() {
+        Matrix a = factory().createMatrix(new double[][]{
+            { 0, 0, 1, 0},
+            { -3, 2, 0, 1},
+            {2, 0, 0, 1}
+        });
+
+        assertEquals(0, a.minInRow(2));
+    }
+
+    public void testMaxInColumn() {
+        Matrix a = factory().createMatrix(new double[][]{
+            { 0, 0, 1, 0},
+            { -3, 2, 0, 1},
+            {-2, 0, 0, -1}
+        });
+
+        assertEquals(0, a.maxInRow(0));
+    }
+
+    public void testMinInColumn() {
+        Matrix a = factory().createMatrix(new double[][]{
+            { 0, 0, 1, 0},
+            { -3, 2, 0, 1},
+            {-2, 0, 0, -1}
+        });
+
+        assertEquals(0, a.minInRow(1));
+    }
+
 
 
 
