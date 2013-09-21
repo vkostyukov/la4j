@@ -445,6 +445,36 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public double max() {
+        return self.max();
+    }
+
+    @Override
+    public double min() {
+        return self.min();
+    }
+
+    @Override
+    public double maxInRow(int i) {
+        return self.maxInRow(i);
+    }
+
+    @Override
+    public double minInRow(int i) {
+        return self.minInRow(i);
+    }
+
+    @Override
+    public double maxInColumn(int j) {
+        return self.maxInColumn(j);
+    }
+
+    @Override
+    public double minInColumn(int j) {
+        return self.minInColumn(j);
+    }
+
+    @Override
     public Matrix transform(MatrixFunction function) {
         return self.transform(function, factory);
     }
