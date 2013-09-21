@@ -679,6 +679,20 @@ public interface Matrix extends Externalizable {
     void eachNonZeroInColumn(int j, MatrixProcedure procedure);
 
     /**
+     * Finds max in whole matrix.
+     *
+     * @return max
+     */
+    double max();
+
+    /**
+     * Finds min in whole matrix.
+     *
+     * @return min
+     */
+    double min();
+
+    /**
      * Builds a new matrix by applying a <code>function</code> to all elements
      * of this matrix.
      * 

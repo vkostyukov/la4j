@@ -549,4 +549,28 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         return Math.min(rows * columns, ((cardinality / MINIMUM_SIZE) + 1)
                 * MINIMUM_SIZE);
     }
+
+
+    @Override
+    public double max() {
+        double max = Double.NEGATIVE_INFINITY;
+        for (int i = 0; i < cardinality; i++) {
+            if (values[i] > max) {
+                max = values[i];
+            }
+        }
+        return (max > 0) ? max : 0;
+    }
+
+    @Override
+    public double min() {
+        double min = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < cardinality; i++) {
+            if (values[i] < min) {
+                min = values[i];
+            }
+        }
+        return (min < 0) ? min : 0;
+    }
+
 }

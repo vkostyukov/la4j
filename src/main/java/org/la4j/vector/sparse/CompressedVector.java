@@ -386,8 +386,8 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     public double max() {
         double max = Double.NEGATIVE_INFINITY;
         for (int i = 0; i < cardinality; i++) {
-            if (values[indices[i]] > max) {
-                max = values[indices[i]];
+            if (values[i] > max) {
+                max = values[i];
             }
         }
         return (max > 0) ? max : 0;
@@ -397,7 +397,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         double min = Double.POSITIVE_INFINITY;
         for (int i = 0; i < cardinality; i++) {
             if (values[i] < min) {
-                min = values[indices[i]];
+                min = values[i];
             }
         }
         return (min < 0) ? min : 0;
