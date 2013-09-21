@@ -467,4 +467,26 @@ public abstract class AbstractVectorTest extends TestCase {
 
         assertTrue(testWhetherVectorsContainSameElements(a, b));
     }
+
+    public void testMax() {
+        Vector a = factory().createVector(new double[]{ 1.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -5.0, 0.0, 0.0, 5.0 });
+        assertEquals(5.0, a.max());
+    }
+
+    public void testMaxCompressed() {
+        Vector a = factory().createVector(new double[]{ 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -5.0, 0.0, 0.0 });
+        assertEquals(5.0, a.max());
+    }
+
+    public void testMin() {
+        Vector a = factory().createVector(new double[]{ 1.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -5.0, 0.0, 0.0, 5.0 });
+        assertEquals(-5.0, a.max());
+    }
+
+    public void testMinCompressed() {
+        Vector a = factory().createVector(new double[]{ 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0 });
+        assertEquals(-5.0, a.max());
+    }
+
+
 }
