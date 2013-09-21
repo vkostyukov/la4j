@@ -927,8 +927,9 @@ public abstract class AbstractMatrix implements Matrix {
         double max = Double.NEGATIVE_INFINITY;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (get(i, j) > max) {
-                    max = get(i, j);
+                double value = get(i, j);
+                if (value > max) {
+                    max = value;
                 }
             }
         }
@@ -940,8 +941,9 @@ public abstract class AbstractMatrix implements Matrix {
         double min = Double.POSITIVE_INFINITY;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (get(i, j) < min) {
-                    min = get(i, j);
+                double value = get(i, j);
+                if (value < min) {
+                    min = value;
                 }
             }
         }
@@ -952,8 +954,9 @@ public abstract class AbstractMatrix implements Matrix {
     public double maxInRow(int i) {
         double max = Double.NEGATIVE_INFINITY;
         for (int j = 0; j < columns; j++) {
-            if (get(i, j) > max) {
-                max = get(i, j);
+            double value = get(i, j);
+            if (value > max) {
+                max = value;
             }
         }
         return max;
@@ -963,8 +966,9 @@ public abstract class AbstractMatrix implements Matrix {
     public double minInRow(int i) {
         double min = Double.POSITIVE_INFINITY;
         for (int j = 0; j < columns; j++) {
-            if (get(i, j) < min) {
-                min = get(i, j);
+            double value = get(i, j);
+            if (value < min) {
+                min = value;
             }
         }
         return min;
@@ -974,8 +978,9 @@ public abstract class AbstractMatrix implements Matrix {
     public double maxInColumn(int j) {
         double max = Double.NEGATIVE_INFINITY;
         for (int i = 0; i < columns; i++) {
-            if (get(i, j) > max) {
-                max = get(i, j);
+            double value = get(i, j);
+            if (value > max) {
+                max = value;
             }
         }
         return max;
@@ -985,8 +990,9 @@ public abstract class AbstractMatrix implements Matrix {
     public double minInColumn(int j) {
         double min = Double.POSITIVE_INFINITY;
         for (int i = 0; i < rows; i++) {
-            if (get(i, j) < min) {
-                min = get(i, j);
+            double value = get(i, j);
+            if (value < min) {
+                min = value;
             }
         }
         return min;

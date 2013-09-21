@@ -441,8 +441,9 @@ public abstract class AbstractVector implements Vector {
     public double max() {
         double max = Double.NEGATIVE_INFINITY;
         for (int i = 0; i < length; i++) {
-            if (get(i) > max) {
-                max = get(i);
+            double value = get(i);
+            if (value > max) {
+                max = value;
             }
         }
         return max;
@@ -452,8 +453,9 @@ public abstract class AbstractVector implements Vector {
     public double min() {
         double min = Double.POSITIVE_INFINITY;
         for (int i = 0; i < length; i++) {
-            if (get(i) < min) {
-                min = get(i);
+            double value = get(i);
+            if (value < min) {
+                min = value;
             }
         }
         return min;
