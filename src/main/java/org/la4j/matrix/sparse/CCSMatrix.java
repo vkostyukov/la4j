@@ -498,5 +498,27 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         return (min < 0) ? min : 0;
     }
 
+    @Override
+    public double maxInColumn(int j) {
+        double max = Double.NEGATIVE_INFINITY;
+        for (int k = columnPointers[j]; k < columnPointers[j + 1]; k++) {
+            if (values[k] > max) {
+                max = values[k];
+            }
+        }
+        return (max > 0) ? max : 0;
+    }
+
+    @Override
+    public double minInColumn(int j) {
+        double min = Double.POSITIVE_INFINITY;
+        for (int k = columnPointers[j]; k < columnPointers[j + 1]; k++) {
+            if (values[k] < min) {
+                min = values[k];
+            }
+        }
+        return (min < 0) ? min : 0;
+    }
+
 
 }

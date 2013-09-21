@@ -573,4 +573,28 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         return (min < 0) ? min : 0;
     }
 
+    @Override
+    public double maxInRow(int i) {
+        double max = Double.NEGATIVE_INFINITY;
+        for (int k = rowPointers[i]; k < rowPointers[i + 1]; k++) {
+            if (values[k] > max) {
+                max = values[k];
+            }
+        }
+        return (max > 0) ? max : 0;
+    }
+
+    @Override
+    public double minInRow(int i) {
+        double min = Double.POSITIVE_INFINITY;
+        for (int k = rowPointers[i]; k < rowPointers[i + 1]; k++) {
+            if (values[k] < min) {
+                min = values[k];
+            }
+        }
+        return (min < 0) ? min : 0;
+    }
+
+
+
 }
