@@ -382,4 +382,24 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         return Math.min(length, ((cardinality / MINIMUM_SIZE) + 1)
                         * MINIMUM_SIZE);
     }
+
+    public double max() {
+        double max = Double.NEGATIVE_INFINITY;
+        for (int i = 0; i < cardinality; i++) {
+            if (values[indices[i]] > max) {
+                max = values[indices[i]];
+            }
+        }
+        return (max > 0) ? max : 0;
+    }
+
+    public double min() {
+        double min = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < cardinality; i++) {
+            if (values[i] < min) {
+                min = values[indices[i]];
+            }
+        }
+        return (min < 0) ? min : 0;
+    }
 }

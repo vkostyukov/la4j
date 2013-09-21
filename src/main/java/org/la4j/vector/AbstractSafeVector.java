@@ -282,6 +282,16 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
+    public double max() {
+        return self.max();
+    }
+
+    @Override
+    public double min() {
+        return self.min();
+    }
+
+    @Override
     public Vector transform(VectorFunction function) {
         return self.transform(function, factory);
     }

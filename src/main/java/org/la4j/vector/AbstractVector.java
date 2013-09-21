@@ -438,6 +438,28 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public double max() {
+        double max = Double.NEGATIVE_INFINITY;
+        for (int i = 0; i < length; i++) {
+            if (get(i) > max) {
+                max = get(i);
+            }
+        }
+        return max;
+    }
+
+    @Override
+    public double min() {
+        double min = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < length; i++) {
+            if (get(i) < min) {
+                min = get(i);
+            }
+        }
+        return min;
+    }
+
+    @Override
     public Vector transform(VectorFunction function) {
         return transform(function, factory);
     }

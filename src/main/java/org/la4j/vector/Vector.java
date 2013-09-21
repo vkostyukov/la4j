@@ -450,6 +450,20 @@ public interface Vector extends Externalizable {
     void eachNonZero(VectorProcedure procedure);
 
     /**
+     * Finds maximum among vector components.
+     *
+     * @return max
+     */
+    double max();
+
+    /**
+     * Finds minimum among vector components.
+     *
+     * @return max
+     */
+    double min();
+
+    /**
      * Builds a new vector by applying given {@code function} to each element 
      * of this vector. The new vector will be constructed with default 
      * {@link Factory factory}.
