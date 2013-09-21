@@ -390,7 +390,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
                 max = values[i];
             }
         }
-        return (max > 0) ? max : 0;
+        return (max > 0.0) ? max : 0.0;
     }
 
     public double min() {
@@ -400,6 +400,6 @@ public class CompressedVector extends AbstractVector implements SparseVector {
                 min = values[i];
             }
         }
-        return (min < 0) ? min : 0;
+        return (min < 0.0) ? min : 0.0;
     }
 }

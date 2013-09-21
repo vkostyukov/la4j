@@ -1619,10 +1619,8 @@ public abstract class AbstractMatrixTest extends TestCase {
             { 6, -7, -2}
         });
 
-        assertEquals(6, a.max());
+        assertEquals(6.0, a.max());
     }
-
-
 
     public void testMaxCompressed() {
         Matrix a = factory().createMatrix(new double[][]{
@@ -1631,7 +1629,7 @@ public abstract class AbstractMatrixTest extends TestCase {
             { 0, -7, -2}
         });
 
-        assertEquals(0, a.max());
+        assertEquals(0.0, a.max());
     }
 
     public void testMinCompressed() {
@@ -1641,7 +1639,7 @@ public abstract class AbstractMatrixTest extends TestCase {
             { 0, 7, 2 }
         });
 
-        assertEquals(0, a.min());
+        assertEquals(0.0, a.min());
     }
 
     public void testMin() {
@@ -1651,7 +1649,7 @@ public abstract class AbstractMatrixTest extends TestCase {
             { 0, -7, -2}
         });
 
-        assertEquals(-7, a.min());
+        assertEquals(-7.0, a.min());
     }
 
     public void testMaxInRow() {
@@ -1661,7 +1659,7 @@ public abstract class AbstractMatrixTest extends TestCase {
             {-2, 0, 0, -1}
         });
 
-        assertEquals(0, a.maxInRow(2));
+        assertEquals(0.0, a.maxInRow(2));
     }
 
     public void testMinInRow() {
@@ -1671,7 +1669,7 @@ public abstract class AbstractMatrixTest extends TestCase {
             {2, 0, 0, 1}
         });
 
-        assertEquals(0, a.minInRow(2));
+        assertEquals(0.0, a.minInRow(2));
     }
 
     public void testMaxInColumn() {
@@ -1681,7 +1679,7 @@ public abstract class AbstractMatrixTest extends TestCase {
             {-2, 0, 0, -1}
         });
 
-        assertEquals(0, a.maxInRow(0));
+        assertEquals(0.0, a.maxInColumn(0));
     }
 
     public void testMinInColumn() {
@@ -1691,6 +1689,6 @@ public abstract class AbstractMatrixTest extends TestCase {
             {-2, 0, 0, -1}
         });
 
-        assertEquals(0, a.minInRow(1));
+        assertEquals(-1.0, a.minInColumn(3));
     }
 }

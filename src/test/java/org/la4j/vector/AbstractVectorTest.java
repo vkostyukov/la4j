@@ -532,17 +532,17 @@ public abstract class AbstractVectorTest extends TestCase {
 
     public void testMaxCompressed() {
         Vector a = factory().createVector(new double[]{ 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -5.0, 0.0, 0.0 });
-        assertEquals(5.0, a.max());
+        assertEquals(0.0, a.max());
     }
 
     public void testMin() {
         Vector a = factory().createVector(new double[]{ 1.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -5.0, 0.0, 0.0, 5.0 });
-        assertEquals(-5.0, a.max());
+        assertEquals(-5.0, a.min());
     }
 
     public void testMinCompressed() {
         Vector a = factory().createVector(new double[]{ 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0 });
-        assertEquals(-5.0, a.max());
+        assertEquals(0.0, a.min());
     }
 
 

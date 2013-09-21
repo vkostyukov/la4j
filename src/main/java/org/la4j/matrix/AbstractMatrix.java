@@ -977,7 +977,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public double maxInColumn(int j) {
         double max = Double.NEGATIVE_INFINITY;
-        for (int i = 0; i < columns; i++) {
+        for (int i = 0; i < rows; i++) {
             double value = get(i, j);
             if (value > max) {
                 max = value;

@@ -486,7 +486,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                 * MINIMUM_SIZE);
     }
 
-
     @Override
     public double max() {
         double max = Double.NEGATIVE_INFINITY;
@@ -495,7 +494,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                 max = values[i];
             }
         }
-        return (max > 0) ? max : 0;
+        return (max > 0.0) ? max : 0.0;
     }
 
     @Override
@@ -506,7 +505,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                 min = values[i];
             }
         }
-        return (min < 0) ? min : 0;
+        return (min < 0.0) ? min : 0.0;
     }
 
     @Override
@@ -517,7 +516,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                 max = values[k];
             }
         }
-        return (max > 0) ? max : 0;
+        return (max > 0.0) ? max : 0.0;
     }
 
     @Override
@@ -528,9 +527,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                 min = values[k];
             }
         }
-        return (min < 0) ? min : 0;
+        return (min < 0.0) ? min : 0.0;
     }
-
-
-
 }
