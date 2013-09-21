@@ -692,6 +692,38 @@ public interface Matrix extends Externalizable {
      */
     double min();
 
+
+    /**
+     * Finds max in <code>i</code> row.
+     *
+     * @return max
+     */
+    double maxInRow(int i);
+
+    /**
+     * Finds min in <code>i</code> row.
+     *
+     * @return min
+     */
+    double minInRow(int i);
+
+
+    /**
+     * Finds max in <code>j</code> column.
+     *
+     * @return max
+     */
+    double maxInColumn(int j);
+
+    /**
+     * Finds min in <code>j</code> column.
+     *
+     * @return min
+     */
+    double minInColumn(int j);
+
+
+
     /**
      * Builds a new matrix by applying a <code>function</code> to all elements
      * of this matrix.

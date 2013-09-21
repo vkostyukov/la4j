@@ -949,6 +949,50 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public double maxInRow(int i) {
+        double max = Double.NEGATIVE_INFINITY;
+        for (int j = 0; j < columns; j++) {
+            if (get(i, j) > max) {
+                max = get(i, j);
+            }
+        }
+        return max;
+    }
+
+    @Override
+    public double minInRow(int i) {
+        double min = Double.POSITIVE_INFINITY;
+        for (int j = 0; j < columns; j++) {
+            if (get(i, j) < min) {
+                min = get(i, j);
+            }
+        }
+        return min;
+    }
+
+    @Override
+    public double maxInColumn(int j) {
+        double max = Double.NEGATIVE_INFINITY;
+        for (int i = 0; i < columns; i++) {
+            if (get(i, j) > max) {
+                max = get(i, j);
+            }
+        }
+        return max;
+    }
+
+    @Override
+    public double minInColumn(int j) {
+        double min = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < rows; i++) {
+            if (get(i, j) < min) {
+                min = get(i, j);
+            }
+        }
+        return min;
+    }
+
+    @Override
     public Matrix transform(MatrixFunction function) {
         return transform(function, factory);
     }
