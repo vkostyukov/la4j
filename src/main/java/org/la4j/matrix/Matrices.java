@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.CholeskyDecompositor;
 import org.la4j.decomposition.CroutDecompositor;
 import org.la4j.decomposition.EigenDecompositor;
@@ -71,25 +72,12 @@ public final class Matrices {
     /**
      * The machine epsilon, that is calculated at runtime.
      */
-    public static final double EPS;
+    public static final double EPS = LinearAlgebra.EPS;
 
     /**
      * Exponent of machine epsilon
      */
-    public static final int ROUND_FACTOR;
-
-    // Determine the machine epsilon
-    // Tolerance is 10e1
-    static {
-        int roundFactor = 0;
-        double eps = 1.0;
-        while (1 + eps > 1) {
-            eps = eps / 2;
-            roundFactor++;
-        }
-        EPS = eps * 10e1;
-        ROUND_FACTOR = roundFactor - 1;
-    }
+    public static final int ROUND_FACTOR = LinearAlgebra.ROUND_FACTOR;
 
     private static class DiagonalMatrixPredicate implements MatrixPredicate {
         @Override

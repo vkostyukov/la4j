@@ -25,13 +25,13 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.factory.SafeFactory;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
-import org.la4j.matrix.Matrices;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
@@ -44,8 +44,8 @@ import org.la4j.vector.source.VectorSource;
 
 public final class Vectors {
 
-    public static final double EPS = Matrices.EPS;
-    public static final int ROUND_FACTOR = Matrices.ROUND_FACTOR;
+    public static final double EPS = LinearAlgebra.EPS;
+    public static final int ROUND_FACTOR = LinearAlgebra.ROUND_FACTOR;
 
     private static class ZeroVectorPredicate implements VectorPredicate {
         @Override
