@@ -4,7 +4,10 @@
 
 The [**la4j**](http://la4j.org) is open source and **100% Java** library 
 that provides **Linear Algebra** primitives (matrices and vectors) and algorithms. The **la4j** was initially designed 
-to be lightweight and simple tool for passionate JVM developers. The key features of the **la4j** are listed bellow:
+to be lightweight and simple tool for passionate Java developers. It has been started as student project and turned into
+one of the most popular Java packages for matrices and vectors.
+
+The key features of the **la4j** are listed bellow:
 
 * No dependencies and tiny size (~150kb jar)
 * Simple and object-oriented/functional API
@@ -70,3 +73,7 @@ made by the authors:
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/vkostyukov/la4j/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
