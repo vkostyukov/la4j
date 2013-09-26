@@ -60,9 +60,7 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
     }
 
     public Basic2DMatrix(double array[][]) {
-        super(Matrices.BASIC2D_FACTORY, array.length, array.length == 0 
-                ? 0: array[0].length);
-
+        super(Matrices.BASIC2D_FACTORY, array.length, array.length == 0 ? 0: array[0].length);
         this.self = array;
     }
 
@@ -99,7 +97,6 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
     @Override
     public Vector getRow(int i) {
         double result[] = new double[columns];
-
         System.arraycopy(self[i], 0, result, 0, columns);
 
         return new BasicVector(result);

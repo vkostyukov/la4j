@@ -49,9 +49,11 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public void swap(int i, int j) {
-        double s = get(i);
-        set(i, get(j));
-        set(j, s);
+        if (i != j) {
+            double s = get(i);
+            set(i, get(j));
+            set(j, s);
+        }
     }
 
     @Override
@@ -92,14 +94,10 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector add(Vector vector, Factory factory) {
         ensureFactoryIsNotNull(factory);
-
-        if (vector == null) {
-            throw new IllegalArgumentException("Vector can't be null.");
-        }
+        ensureArgumentIsNotNull(vector, "vector");
 
         if (length != vector.length()) {
-            throw new IllegalArgumentException("Wrong vector length: " 
-                                               + vector.length());
+            fail("Wrong vector length: " + vector.length() + ". Should be: " + length + ".");
         }
 
         Vector result = blank(factory);
@@ -137,14 +135,10 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector hadamardProduct(Vector vector, Factory factory) {
         ensureFactoryIsNotNull(factory);
-
-        if (vector == null) {
-            throw new IllegalArgumentException("Vector can't be null.");
-        }
+        ensureArgumentIsNotNull(vector,  "vectro");
 
         if (length != vector.length()) {
-            throw new IllegalArgumentException("Wrong vector length: " 
-                                               + vector.length());
+            fail("Wring vector length: " + vector.length() + ". Should be: " + length + ".");
         }
 
         Vector result = blank(factory);
@@ -164,27 +158,24 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector multiply(Matrix matrix, Factory factory) {
         ensureFactoryIsNotNull(factory);
-
-        if (matrix == null) {
-            throw new IllegalArgumentException("Matrix can't be null.");
-        }
+        ensureArgumentIsNotNull(matrix, "matrix");
 
         if (length != matrix.rows()) {
-            throw new IllegalArgumentException("Wrong matrix dimenstions: " 
-                                + matrix.rows() + "x" + matrix.columns() + ".");
+            fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
+                 ". Should be: " + length + "x_.");
         }
 
         Vector result = factory.createVector(matrix.columns());
 
         for (int j = 0; j < matrix.columns(); j++) {
 
-            double summand = 0.0;
+            double acc = 0.0;
 
             for (int i = 0; i < matrix.rows(); i++) {
-                summand += get(i) * matrix.get(i, j);
+                acc += get(i) * matrix.get(i, j);
             }
 
-            result.set(j, summand);
+            result.set(j, acc);
         }
 
         return result;
@@ -208,14 +199,10 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector subtract(Vector vector, Factory factory) {
         ensureFactoryIsNotNull(factory);
-
-        if (vector == null) {
-            throw new IllegalArgumentException("Vector can't be null.");
-        }
+        ensureArgumentIsNotNull(vector, "vector");
 
         if (length != vector.length()) {
-            throw new IllegalArgumentException("Wrong vector length: " 
-                                               + vector.length());
+            fail("Wrong vector length: " + vector.length() + ". Should be: " + length + ".");
         }
 
         Vector result = blank(factory);
@@ -249,14 +236,10 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public double innerProduct(Vector vector) {
-
-        if (vector == null) {
-            throw new IllegalArgumentException("Vector can't be null.");
-        }
+        ensureArgumentIsNotNull(vector, "vector");
 
         if (length != vector.length()) {
-            throw new IllegalArgumentException("Wrong vector length: " 
-                                               + vector.length());
+            fail("Wong vector length: " + vector.length() + ". Should be: " + length + ".");
         }
 
         double result = 0.0;
@@ -276,11 +259,8 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Matrix outerProduct(Vector vector, Factory factory) {
         ensureFactoryIsNotNull(factory);
+        ensureArgumentIsNotNull(vector, "vector");
 
-        if (vector == null) {
-            throw new IllegalArgumentException("Vector can't be null.");
-        }
-        
         Matrix result = factory.createMatrix(length, vector.length());
 
         for (int i = 0; i < length; i++) {
@@ -403,6 +383,7 @@ public abstract class AbstractVector implements Vector {
     public Vector slice(int from, int until, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
+        // TODO: add range checks
         Vector result = factory.createVector(until - from);
 
         for (int i = from; i < until; i++) {
@@ -435,25 +416,31 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public double max() {
+
         double max = Double.NEGATIVE_INFINITY;
+
         for (int i = 0; i < length; i++) {
             double value = get(i);
             if (value > max) {
                 max = value;
             }
         }
+
         return max;
     }
 
     @Override
     public double min() {
+
         double min = Double.POSITIVE_INFINITY;
+
         for (int i = 0; i < length; i++) {
             double value = get(i);
             if (value < min) {
                 min = value;
             }
         }
+
         return min;
     }
 
@@ -589,14 +576,22 @@ public abstract class AbstractVector implements Vector {
     }
 
     protected void ensureFactoryIsNotNull(Factory factory) {
-        if (factory == null) {
-            throw new IllegalArgumentException("Factory can't be null.");
-        }
+        ensureArgumentIsNotNull(factory, "factory");
     }
 
     protected void ensureLengthIsNotNegative(int length) {
         if (length < 0) {
-            throw new IllegalArgumentException("Wrong vector length: " + length);
+            fail("Wrong vector length: " + length);
         }
+    }
+
+    protected void ensureArgumentIsNotNull(Object argument, String name) {
+        if (argument == null) {
+            fail("Bad argument: \"" + name + "\" is 'null'.");
+        }
+    }
+
+    protected void fail(String message) {
+        throw new IllegalArgumentException(message);
     }
 }

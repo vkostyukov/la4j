@@ -84,9 +84,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
              new int[align(length, cardinality)]);
     }
 
-    public CompressedVector(int length, int cardinality, double values[], 
-            int indices[]) {
-
+    public CompressedVector(int length, int cardinality, double values[], int indices[]) {
         super(Vectors.COMPRESSED_FACTORY, length);
 
         this.cardinality = cardinality;
@@ -363,6 +361,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     private void growup() {
 
         if (values.length == length) {
+            // This should never happen
             throw new IllegalStateException("This vector can't grow up.");
         }
 
@@ -379,27 +378,31 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     private static int align(int length, int cardinality) {
-        return Math.min(length, ((cardinality / MINIMUM_SIZE) + 1)
-                        * MINIMUM_SIZE);
+        return Math.min(length, ((cardinality / MINIMUM_SIZE) + 1) * MINIMUM_SIZE);
     }
 
     public double max() {
         double max = Double.NEGATIVE_INFINITY;
+
         for (int i = 0; i < cardinality; i++) {
             if (values[i] > max) {
                 max = values[i];
             }
         }
+
         return (max > 0.0) ? max : 0.0;
     }
 
     public double min() {
+
         double min = Double.POSITIVE_INFINITY;
+
         for (int i = 0; i < cardinality; i++) {
             if (values[i] < min) {
                 min = values[i];
             }
         }
+
         return (min < 0.0) ? min : 0.0;
     }
 }

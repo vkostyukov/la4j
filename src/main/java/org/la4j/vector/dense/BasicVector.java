@@ -73,14 +73,11 @@ public class BasicVector extends AbstractVector implements DenseVector {
 
     @Override
     public void swap(int i, int j) {
-
-        if (i == j) {
-            return;
+        if (i != j) {
+            double d = self[i];
+            self[i] = self[j];
+            self[j] = d;
         }
-
-        double d = self[i];
-        self[i] = self[j];
-        self[j] = d;
     }
 
     @Override

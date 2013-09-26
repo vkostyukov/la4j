@@ -113,14 +113,10 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public void setRow(int i, Vector row) {
-
-        if (row == null) {
-            throw new IllegalArgumentException("Row can't be null.");
-        }
+        ensureArgumentIsNotNull(row, "vector");
 
         if (columns != row.length()) {
-            throw new IllegalArgumentException("Wrong row length: " 
-                                               + row.length());
+            fail("Wrong vector length: " + row.length() + ". Should be: " + columns + ".");
         }
 
         for (int j = 0; j < row.length(); j++) {
@@ -130,14 +126,10 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public void setColumn(int j, Vector column) {
-
-        if (column == null) {
-            throw new IllegalArgumentException("Column can't be null.");
-        }
+        ensureArgumentIsNotNull(column, "vector");
 
         if (rows != column.length()) {
-            throw new IllegalArgumentException("Wrong column length: " 
-                                               + column.length());
+            fail("Wrong vector length: " + column.length() + ". Should be: " + rows + ".");
         }
 
         for (int i = 0; i < column.length(); i++) {
@@ -208,8 +200,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public double determinant() {
         if (rows != columns) {
-            throw new IllegalStateException("Can't compute determinant for " +
-                                            "non-square matrix.");
+            throw new IllegalStateException("Can not compute determinant of non-square matrix.");
         }
 
         if (rows == 0) {
@@ -288,8 +279,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     public Matrix power(int n, Factory factory) {
         if (n < 0) {
-            throw new IllegalArgumentException(
-                    "The exponent has to be larger than 0.");
+            fail("The exponent should be positive: " + n + ".");
         }
 
         Matrix result = factory.createIdentityMatrix(rows);
@@ -335,27 +325,23 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Vector multiply(Vector vector, Factory factory) {
         ensureFactoryIsNotNull(factory);
-
-        if (vector == null) {
-            throw new IllegalArgumentException("Vector can't be null.");
-        }
+        ensureArgumentIsNotNull(vector, "vector");
 
         if (columns != vector.length()) {
-            throw new IllegalArgumentException("Wrong vector length: " 
-                                                + vector.length());
+            fail("Wrong vector length: " + vector.length() + ". Should be: " + columns + ".");
         }
 
         Vector result = factory.createVector(rows);
 
         for (int i = 0; i < rows; i++) {
 
-            double summand = 0;
+            double acc = 0.0;
 
             for (int j = 0; j < columns; j++) {
-                summand += get(i, j) * vector.get(j);
+                acc += get(i, j) * vector.get(j);
             }
 
-            result.set(i, summand);
+            result.set(i, acc);
         }
 
         return result;
@@ -369,15 +355,11 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix multiply(Matrix matrix, Factory factory) {
         ensureFactoryIsNotNull(factory);
-
-        if (matrix == null) {
-            throw new IllegalArgumentException("Matrix can't be null.");
-        }
+        ensureArgumentIsNotNull(matrix, "matrix");
 
         if (columns != matrix.rows()) {
-            throw new IllegalArgumentException("Wrong matrix dimensions: " 
-                                               + matrix.rows() + "x" 
-                                               + matrix.columns());
+            fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
+                 ". Should be: " + columns + "x_.");
         }
 
         Matrix result = factory.createMatrix(rows, matrix.columns());
@@ -388,13 +370,13 @@ public abstract class AbstractMatrix implements Matrix {
 
             for (int i = 0; i < rows; i++) {
 
-                double summand = 0;
+                double acc = 0.0;
 
                 for (int k = 0; k < columns; k++) {
-                    summand += get(i, k) * column.get(k);
+                    acc += get(i, k) * column.get(k);
                 }
 
-                result.set(i, j, summand);
+                result.set(i, j, acc);
             }
         }
 
@@ -419,15 +401,11 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix subtract(Matrix matrix, Factory factory) {
         ensureFactoryIsNotNull(factory);
-
-        if (matrix == null) {
-            throw new IllegalArgumentException("Matrix can't be null.");
-        }
+        ensureArgumentIsNotNull(matrix, "matrix");
 
         if (rows != matrix.rows() || columns != matrix.columns()) {
-            throw new IllegalArgumentException("Wrong matrix dimensions: "
-                                               + matrix.rows() + "x" 
-                                               + matrix.columns());
+            fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
+                 ". Should be: " + rows + "x" + columns + ".");
         }
 
         Matrix result = blank(factory);
@@ -469,15 +447,11 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix add(Matrix matrix, Factory factory) {
         ensureFactoryIsNotNull(factory);
-
-        if (matrix == null) {
-            throw new IllegalArgumentException("Matrix can't be null.");
-        }
+        ensureArgumentIsNotNull(matrix, "matrix");
 
         if (rows != matrix.rows() || columns != matrix.columns()) {
-            throw new IllegalArgumentException("Wrong matrix dimensions: "
-                                               + matrix.rows() + "x" 
-                                               + matrix.columns());
+            fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
+                 ". Should be: " + rows + "x" + columns + ".");
         }
 
         Matrix result = blank(factory);
@@ -509,13 +483,10 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix kroneckerProduct(Matrix matrix, Factory factory) {
         ensureFactoryIsNotNull(factory);
+        ensureArgumentIsNotNull(matrix, "matrix");
 
-        if (matrix == null) {
-            throw new IllegalArgumentException("Matrix can't be null.");
-        }
-
-        int n = rows() * matrix.rows();
-        int m = columns() * matrix.columns();
+        int n = rows * matrix.rows();
+        int m = columns * matrix.columns();
 
         Matrix result = factory.createMatrix(n, m);
 
@@ -569,16 +540,11 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix hadamardProduct(Matrix matrix, Factory factory) {
         ensureFactoryIsNotNull(factory);
-
-        if (matrix == null) {
-            throw new IllegalArgumentException("Matrix can not be null.");
-        }
+        ensureArgumentIsNotNull(matrix, "matrix");
 
         if ((columns != matrix.columns()) || (rows != matrix.rows())) {
-            throw new IllegalArgumentException(
-                    "Matrices dimensions are not equal: " + matrix.rows() + "x"
-                            + matrix.columns() + " not equal to " + rows + "x"
-                            + columns);
+            fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
+                 ". Should be: " + rows + "x" + columns + ".");
         }
 
         Matrix result = factory.createMatrix(rows, columns);
@@ -638,9 +604,7 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix[] decompose(MatrixDecompositor decompositor, 
-            Factory factory) {
-
+    public Matrix[] decompose(MatrixDecompositor decompositor, Factory factory) {
         return decompositor.decompose(this, factory);
     }
 
@@ -757,8 +721,9 @@ public abstract class AbstractMatrix implements Matrix {
 
         ensureFactoryIsNotNull(factory);
 
-        Matrix result = factory.createMatrix(untilRow - fromRow, 
-                                             untilColumn - fromColumn);
+        // TODO: add range check
+
+        Matrix result = factory.createMatrix(untilRow - fromRow, untilColumn - fromColumn);
 
         for (int i = fromRow; i < untilRow; i++) {
             for (int j = fromColumn; j < untilColumn; j++) {
@@ -848,7 +813,9 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public double max() {
+
         double max = Double.NEGATIVE_INFINITY;
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 double value = get(i, j);
@@ -857,12 +824,15 @@ public abstract class AbstractMatrix implements Matrix {
                 }
             }
         }
+
         return max;
     }
 
     @Override
     public double min() {
+
         double min = Double.POSITIVE_INFINITY;
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 double value = get(i, j);
@@ -871,54 +841,67 @@ public abstract class AbstractMatrix implements Matrix {
                 }
             }
         }
+
         return min;
     }
 
     @Override
     public double maxInRow(int i) {
+
         double max = Double.NEGATIVE_INFINITY;
+
         for (int j = 0; j < columns; j++) {
             double value = get(i, j);
             if (value > max) {
                 max = value;
             }
         }
+
         return max;
     }
 
     @Override
     public double minInRow(int i) {
+
         double min = Double.POSITIVE_INFINITY;
+
         for (int j = 0; j < columns; j++) {
             double value = get(i, j);
             if (value < min) {
                 min = value;
             }
         }
+
         return min;
     }
 
     @Override
     public double maxInColumn(int j) {
+
         double max = Double.NEGATIVE_INFINITY;
+
         for (int i = 0; i < rows; i++) {
             double value = get(i, j);
             if (value > max) {
                 max = value;
             }
         }
+
         return max;
     }
 
     @Override
     public double minInColumn(int j) {
+
         double min = Double.POSITIVE_INFINITY;
+
         for (int i = 0; i < rows; i++) {
             double value = get(i, j);
             if (value < min) {
                 min = value;
             }
         }
+
         return min;
     }
 
@@ -946,8 +929,7 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix transform(int i, int j, MatrixFunction function,
-            Factory factory) {
+    public Matrix transform(int i, int j, MatrixFunction function, Factory factory) {
 
         Matrix result = copy(factory);
         result.set(i, j, function.evaluate(i, j, result.get(i, j)));
@@ -1043,10 +1025,12 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public boolean equals(Object object) {
 
-        if (this == object)
+        if (this == object) {
             return true;
-        if (object == null)
+        }
+        if (object == null) {
             return false;
+        }
 
         if (!(object instanceof Matrix)) {
             return false;
@@ -1103,16 +1087,23 @@ public abstract class AbstractMatrix implements Matrix {
         return sb.toString();
     }
 
-    protected void ensureFactoryIsNotNull(Factory factory) {
-        if (factory == null) {
-            throw new IllegalArgumentException("Factory can't be null.");
+    protected  void ensureFactoryIsNotNull(Factory factory) {
+        ensureArgumentIsNotNull(factory, "factory");
+    }
+
+    protected void ensureArgumentIsNotNull(Object argument, String name) {
+        if (argument == null) {
+            fail("Bad argument: \"" + name + "\" is 'null'.");
         }
     }
 
     protected void ensureDimensionsAreNotNegative(int rows, int columns) {
         if (rows < 0 || columns < 0) {
-            throw new IllegalArgumentException("Wrong matrix dimensions: " 
-                                               + rows + "x" + columns);
+            fail("Wrong matrix dimensions: " + rows + "x" + columns);
         }
+    }
+
+    protected void fail(String message) {
+        throw new IllegalArgumentException(message);
     }
 }

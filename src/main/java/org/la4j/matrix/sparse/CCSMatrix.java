@@ -100,9 +100,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         this.columnPointers = new int[columns + 1];
     }
 
-    public CCSMatrix(int rows, int columns, int cardinality, double values[],
-                     int rowIndices[], int columnPointers[]) {
-
+    public CCSMatrix(int rows, int columns, int cardinality, double values[], int rowIndices[], int columnPointers[]) {
         super(Matrices.CCS_FACTORY, rows, columns);
 
         this.cardinality = cardinality;
@@ -458,6 +456,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     private void growup() {
 
         if (values.length == rows * columns) {
+            // This should never happen
             throw new IllegalStateException("This matrix can't grow up.");
         }
 
@@ -474,51 +473,62 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     private int align(int rows, int columns, int cardinality) {
-        return Math.min(rows * columns, ((cardinality / MINIMUM_SIZE) + 1)
-                        * MINIMUM_SIZE);
+        return Math.min(rows * columns, ((cardinality / MINIMUM_SIZE) + 1) * MINIMUM_SIZE);
     }
 
     @Override
     public double max() {
+
         double max = Double.NEGATIVE_INFINITY;
+
         for (int i = 0; i < cardinality; i++) {
             if (values[i] > max) {
                 max = values[i];
             }
         }
+
         return (max > 0.0) ? max : 0.0;
     }
 
     @Override
     public double min() {
+
         double min = Double.POSITIVE_INFINITY;
+
         for (int i = 0; i < cardinality; i++) {
             if (values[i] < min) {
                 min = values[i];
             }
         }
+
         return (min < 0.0) ? min : 0.0;
     }
 
     @Override
     public double maxInColumn(int j) {
+
         double max = Double.NEGATIVE_INFINITY;
+
         for (int k = columnPointers[j]; k < columnPointers[j + 1]; k++) {
             if (values[k] > max) {
                 max = values[k];
             }
         }
+
         return (max > 0.0) ? max : 0.0;
     }
 
     @Override
     public double minInColumn(int j) {
+
         double min = Double.POSITIVE_INFINITY;
+
         for (int k = columnPointers[j]; k < columnPointers[j + 1]; k++) {
             if (values[k] < min) {
                 min = values[k];
             }
         }
+
         return (min < 0.0) ? min : 0.0;
     }
 }

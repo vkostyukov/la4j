@@ -98,9 +98,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         this.rowPointers = new int[rows + 1];
     }
 
-    public CRSMatrix(int rows, int columns, int cardinality, double values[],
-            int columnIndices[], int rowPointers[]) {
-
+    public CRSMatrix(int rows, int columns, int cardinality, double values[], int columnIndices[], int rowPointers[]) {
         super(Matrices.CRS_FACTORY, rows, columns);
 
         this.cardinality = cardinality;
@@ -469,6 +467,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     private void growup() {
 
         if (values.length == rows * columns) {
+            // This should never happen
             throw new IllegalStateException("This matrix can't grow up.");
         }
 
@@ -485,51 +484,62 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     private int align(int rows, int columns, int cardinality) {
-        return Math.min(rows * columns, ((cardinality / MINIMUM_SIZE) + 1)
-                * MINIMUM_SIZE);
+        return Math.min(rows * columns, ((cardinality / MINIMUM_SIZE) + 1) * MINIMUM_SIZE);
     }
 
     @Override
     public double max() {
+
         double max = Double.NEGATIVE_INFINITY;
+
         for (int i = 0; i < cardinality; i++) {
             if (values[i] > max) {
                 max = values[i];
             }
         }
+
         return (max > 0.0) ? max : 0.0;
     }
 
     @Override
     public double min() {
+
         double min = Double.POSITIVE_INFINITY;
+
         for (int i = 0; i < cardinality; i++) {
             if (values[i] < min) {
                 min = values[i];
             }
         }
+
         return (min < 0.0) ? min : 0.0;
     }
 
     @Override
     public double maxInRow(int i) {
+
         double max = Double.NEGATIVE_INFINITY;
+
         for (int k = rowPointers[i]; k < rowPointers[i + 1]; k++) {
             if (values[k] > max) {
                 max = values[k];
             }
         }
+
         return (max > 0.0) ? max : 0.0;
     }
 
     @Override
     public double minInRow(int i) {
+
         double min = Double.POSITIVE_INFINITY;
+
         for (int k = rowPointers[i]; k < rowPointers[i + 1]; k++) {
             if (values[k] < min) {
                 min = values[k];
             }
         }
+
         return (min < 0.0) ? min : 0.0;
     }
 }

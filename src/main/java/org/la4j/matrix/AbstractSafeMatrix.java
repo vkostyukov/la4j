@@ -589,8 +589,7 @@ public abstract class AbstractSafeMatrix implements Matrix {
 
     protected void ensureIndexInColumns(int i) {
         if (i >= self.columns() || i < 0) {
-            throw new IllegalArgumentException("Column index out of bounds: " 
-                                               + i);
+            throw new IllegalArgumentException("Column index out of bounds: " + i);
         }
     }
     
