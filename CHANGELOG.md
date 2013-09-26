@@ -7,7 +7,6 @@ la4j-0.4.5 `Sep 2013`
  * New matrix method `rotate()` (contributed by Jakob Moellers)
  * New matrix method `shuffle()` (contributed by Jakob Moellers)
  * Bug fix in `Vector.density()` and `Matrix.density()` (contributed by Ewald Grusk)
- * New decompositor class `CroutDecompositor` (contributed by Yuriy Drozd)
  * Bug fix in `Matrix.determinant()` method (contributed by Yuriy Drozd)
  * Minor improvement of `SymmetricMatrixPredicate` (contributed by Ewald Grusk)
  * Bug fix in `EigenDecompositor` (reported by Ewald Grusk)

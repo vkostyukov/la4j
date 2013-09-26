@@ -29,7 +29,6 @@ import java.math.RoundingMode;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.CholeskyDecompositor;
-import org.la4j.decomposition.CroutDecompositor;
 import org.la4j.decomposition.EigenDecompositor;
 import org.la4j.decomposition.LUDecompositor;
 import org.la4j.decomposition.MatrixDecompositor;
@@ -756,12 +755,6 @@ public final class Matrices {
      */
     public final static MatrixDecompositor SINGULAR_VALUE_DECOMPOSITOR = 
             new SingularValueDecompositor();
-
-    /**
-     * The {@link CroutDecompositor} singleton instance.
-     */
-    public final static MatrixDecompositor CROUT_DECOMPOSITOR = 
-            new CroutDecompositor();
 
     /**
      * The {@link GaussianInverter} singleton instance.
