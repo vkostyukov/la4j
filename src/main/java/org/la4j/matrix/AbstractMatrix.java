@@ -47,10 +47,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     protected Factory factory;
 
-    protected AbstractMatrix(Factory factory) {
-        this(factory, 0, 0);
-    }
-
     protected AbstractMatrix(Factory factory, int rows, int columns) {
         ensureDimensionsAreNotNegative(rows, columns);
 
