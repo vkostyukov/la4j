@@ -487,7 +487,7 @@ public abstract class AbstractVectorTest extends TestCase {
             for (int i = 0; i < vector1.length(); i++) {
                 for (int j = 0; j < vector2.length(); j++) {
                     if (vector1.get(i) == vector2.get(j)) {
-                        if (checkList[j] == false) {
+                        if (!checkList[j]) {
                             checkList[j] = true;
                             break;
                         }
@@ -497,7 +497,7 @@ public abstract class AbstractVectorTest extends TestCase {
 
             boolean result = true;
             for (int i = 0; i < checkList.length; i++) {
-                if (checkList[i] == false) {
+                if (!checkList[i]) {
                     result = false;
                 }
             }

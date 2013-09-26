@@ -59,13 +59,13 @@ public abstract class AbstractStreamTest extends TestCase {
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-            MatrixStream out = (MatrixStream) stream(bos);
+            MatrixStream out = stream(bos);
             out.writeMatrix(a);
 
             ByteArrayInputStream bis = 
                     new ByteArrayInputStream(bos.toByteArray());
 
-            MatrixStream in = (MatrixStream) stream(bis);
+            MatrixStream in = stream(bis);
             Matrix b = in.readMatrix(factory);
 
             assertEquals(a, b);
@@ -82,13 +82,13 @@ public abstract class AbstractStreamTest extends TestCase {
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-            MatrixStream out = (MatrixStream) stream(bos);
+            MatrixStream out = stream(bos);
             out.writeMatrix(a);
 
             ByteArrayInputStream bis = 
                     new ByteArrayInputStream(bos.toByteArray());
 
-            MatrixStream in = (MatrixStream) stream(bis);
+            MatrixStream in = stream(bis);
             Matrix b = in.readMatrix(factory);
 
             assertEquals(a, b);
@@ -106,13 +106,13 @@ public abstract class AbstractStreamTest extends TestCase {
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-            MatrixStream out = (MatrixStream) stream(bos);
+            MatrixStream out = stream(bos);
             out.writeMatrix(a);
 
             ByteArrayInputStream bis = 
                     new ByteArrayInputStream(bos.toByteArray());
 
-            MatrixStream in = (MatrixStream) stream(bis);
+            MatrixStream in = stream(bis);
             Matrix b = in.readMatrix(factory);
 
             assertEquals(a, b);
@@ -126,13 +126,13 @@ public abstract class AbstractStreamTest extends TestCase {
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-            MatrixStream out = (MatrixStream) stream(bos);
+            MatrixStream out = stream(bos);
             out.writeMatrix(a);
 
             ByteArrayInputStream bis = 
                     new ByteArrayInputStream(bos.toByteArray());
 
-            MatrixStream in = (MatrixStream) stream(bis);
+            MatrixStream in = stream(bis);
             Matrix b = in.readMatrix(factory);
 
             assertEquals(a, b);
@@ -146,13 +146,13 @@ public abstract class AbstractStreamTest extends TestCase {
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-            MatrixStream out = (MatrixStream) stream(bos);
+            MatrixStream out = stream(bos);
             out.writeMatrix(a);
 
             ByteArrayInputStream bis = 
                     new ByteArrayInputStream(bos.toByteArray());
 
-            MatrixStream in = (MatrixStream) stream(bis);
+            MatrixStream in = stream(bis);
             Matrix b = in.readMatrix(factory);
 
             assertEquals(a, b);
@@ -166,13 +166,13 @@ public abstract class AbstractStreamTest extends TestCase {
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-            VectorStream out = (VectorStream) stream(bos);
+            VectorStream out = stream(bos);
             out.writeVector(a);
 
             ByteArrayInputStream bis = 
                     new ByteArrayInputStream(bos.toByteArray());
 
-            VectorStream in = (VectorStream) stream(bis);
+            VectorStream in = stream(bis);
             Vector b = in.readVector(factory);
 
             assertEquals(a, b);
@@ -186,13 +186,13 @@ public abstract class AbstractStreamTest extends TestCase {
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-            VectorStream out = (VectorStream) stream(bos);
+            VectorStream out = stream(bos);
             out.writeVector(a);
 
             ByteArrayInputStream bis = 
                     new ByteArrayInputStream(bos.toByteArray());
 
-            VectorStream in = (VectorStream) stream(bis);
+            VectorStream in = stream(bis);
             Vector b = in.readVector(factory);
 
             assertEquals(a, b);
@@ -206,13 +206,13 @@ public abstract class AbstractStreamTest extends TestCase {
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-            VectorStream out = (VectorStream) stream(bos);
+            VectorStream out = stream(bos);
             out.writeVector(a);
 
             ByteArrayInputStream bis = 
                     new ByteArrayInputStream(bos.toByteArray());
 
-            VectorStream in = (VectorStream) stream(bis);
+            VectorStream in = stream(bis);
             Vector b = in.readVector(factory);
 
             assertEquals(a, b);

@@ -203,8 +203,8 @@ public class CRSFactory extends CompressedFactory implements Factory {
                     current = d.get(i, j);
                 }
                 if (Math.abs(current) > Matrices.EPS) {
-                    values.add(new Double(current));
-                    columnIndices.add(new Integer(j));
+                    values.add(current);
+                    columnIndices.add(j);
                     k++;
                 }
             }
@@ -213,8 +213,8 @@ public class CRSFactory extends CompressedFactory implements Factory {
         double valuesArray[] = new double[values.size()];
         int colIndArray[] = new int[columnIndices.size()];
         for (int i = 0; i < values.size(); i++) {
-            valuesArray[i] = values.get(i).doubleValue();
-            colIndArray[i] = columnIndices.get(i).intValue();
+            valuesArray[i] = values.get(i);
+            colIndArray[i] = columnIndices.get(i);
         }
 
         return new CRSMatrix(rows, cols, k, valuesArray, colIndArray, rowPointers);

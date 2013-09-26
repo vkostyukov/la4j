@@ -35,6 +35,9 @@ import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.sparse.CompressedVector;
 
+/**
+ * This is a CRS (Compressed Row Storage) matrix class.
+ */
 public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix {
 
     private static final long serialVersionUID = 4071505L;

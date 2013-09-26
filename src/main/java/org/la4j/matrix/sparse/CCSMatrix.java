@@ -35,6 +35,9 @@ import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.sparse.CompressedVector;
 
+/**
+ * This is a CCS (Compressed Column Storage) matrix class.
+ */
 public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix {
 
     private static final long serialVersionUID = 4071505L;

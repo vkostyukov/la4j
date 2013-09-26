@@ -30,10 +30,6 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
 
     protected int cardinality;
 
-    public AbstractCompressedMatrix(Factory factory) {
-        super(factory);
-    }
-
     public AbstractCompressedMatrix(Factory factory, int rows, int columns) {
         super(factory, rows, columns);
     }

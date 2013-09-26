@@ -1084,7 +1084,7 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; result && i < rows; i++) {
             for (int j = 0; result && j < columns; j++) {
-                result = result && predicate.test(i, j, get(i, j));
+                result = predicate.test(i, j, get(i, j));
             }
         }
 
@@ -1143,10 +1143,7 @@ public abstract class AbstractMatrix implements Matrix {
 
                 double diff = Math.abs(a - b);
 
-                result = result && (a == b) ? true : 
-                         diff < Matrices.EPS ? true :
-                         diff / Math.max(Math.abs(a), Math.abs(b)) 
-                         < Matrices.EPS;
+                result = (a == b) || (diff < Matrices.EPS || diff / Math.max(Math.abs(a), Math.abs(b)) < Matrices.EPS);
             }
         }
 

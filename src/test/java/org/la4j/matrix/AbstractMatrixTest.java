@@ -1254,11 +1254,7 @@ public abstract class AbstractMatrixTest extends TestCase {
             }
         }
 
-        if (b.size() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return b.size() == 0;
     }
 
     public void testTestWhetherMatricesContainSameElements() {

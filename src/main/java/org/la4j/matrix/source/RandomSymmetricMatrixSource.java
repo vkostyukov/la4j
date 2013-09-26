@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class RandomSymmetricMatrixSource implements MatrixSource {
 
-    private int size;;
+    private int size;
     private Random random;
 
     private double values[];

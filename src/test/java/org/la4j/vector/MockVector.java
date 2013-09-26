@@ -78,9 +78,7 @@ public class MockVector extends AbstractVector implements Vector {
 
             double diff = Math.abs(a - b);
 
-            result = result && (a == b) ? true : 
-                     diff < MOCK_EPS ? true :
-                     diff / Math.max(Math.abs(a), Math.abs(b)) < MOCK_EPS;
+            result = (a == b) || (diff < MOCK_EPS || diff / Math.max(Math.abs(a), Math.abs(b)) < MOCK_EPS);
         }
 
         return result;

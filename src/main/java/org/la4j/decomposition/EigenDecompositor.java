@@ -91,7 +91,7 @@ public class EigenDecompositor implements MatrixDecompositor {
             int k = findMax(r);
             int l = findMax(d, k);
 
-            regenerateU(u, d, factory, k, l, kk, ll);
+            regenerateU(u, d, k, l, kk, ll);
 
             kk = k;
             ll = l;
@@ -169,8 +169,7 @@ public class EigenDecompositor implements MatrixDecompositor {
         return summand;
     }
 
-    private void regenerateU(Matrix u, Matrix matrix, Factory factory, 
-            int k, int l, int kk, int ll) {
+    private void regenerateU(Matrix u, Matrix matrix, int k, int l, int kk, int ll) {
 
         u.set(kk, kk, 1.0);
         u.set(ll, ll, 1.0);
@@ -228,10 +227,6 @@ public class EigenDecompositor implements MatrixDecompositor {
 
         Matrix dd = factory.createMatrix(n, n);
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                dd.set(i, j, 0.0);
-            }
-
             dd.set(i, i, d.get(i));
 
             if (e.get(i) > 0) {
@@ -818,6 +813,5 @@ public class EigenDecompositor implements MatrixDecompositor {
         }
 
         return new double[] { cdivr, cdivi };
-    }
-  
+   }
 }

@@ -87,7 +87,7 @@ public final class Matrices {
 
         @Override
         public boolean test(int i, int j, double value) {
-            return (i != j) ? Math.abs(value) < EPS : true;
+            return (i == j) || Math.abs(value) < EPS;
         }
     }
 
@@ -124,7 +124,7 @@ public final class Matrices {
 
         @Override
         public boolean test(int i, int j, double value) {
-            return Math.abs(i - j) > 1 ?  Math.abs(value) < EPS : true; 
+            return Math.abs(i - j) <= 1 || Math.abs(value) < EPS;
         }
     }
 
@@ -162,9 +162,7 @@ public final class Matrices {
 
         @Override
         public boolean test(int i, int j, double value) {
-            return (i == j) || (i == j + 1) 
-                    ? Math.abs(value) < EPS
-                    : true;
+            return !((i == j) || (i == j + 1)) || Math.abs(value) < EPS;
         }
     }
 
@@ -178,8 +176,7 @@ public final class Matrices {
 
         @Override
         public boolean test(int i, int j, double value) {
-            return (i == j) || (i == j - 1) 
-                    ? Math.abs(value) < EPS : true;
+            return !((i == j) || (i == j - 1)) || Math.abs(value) < EPS;
         }
     }
 
@@ -193,7 +190,7 @@ public final class Matrices {
 
         @Override
         public boolean test(int i, int j, double value) {
-            return (i > j) ? Math.abs(value) < EPS : true;
+            return (i <= j) || Math.abs(value) < EPS;
         }
     }
 
@@ -207,7 +204,7 @@ public final class Matrices {
 
         @Override
         public boolean test(int i, int j, double value) {
-            return (i < j) ? Math.abs(value) < EPS : true;
+            return (i >= j) || Math.abs(value) < EPS;
         }
     }
 
@@ -767,14 +764,14 @@ public final class Matrices {
             new CroutDecompositor();
 
     /**
-     * The {@link GaussianInvertor} singleton instance.
+     * The {@link GaussianInverter} singleton instance.
      */
     public final static MatrixInverter GAUSSIAN_INVERTER =
             new GaussianInverter();
 
     /**
      * The default matrix inverter singleton instance. References the 
-     * {@link GaussianInvertor}. 
+     * {@link GaussianInverter}.
      */
     public final static MatrixInverter DEFAULT_INVERTER = GAUSSIAN_INVERTER;
 
@@ -868,6 +865,26 @@ public final class Matrices {
      * Index accessor for D (Eigenvalues) matrix in Eigen decomposition. 
      */
     public final static int EIGEN_D = 1;
+
+    /**
+     * Index accessor for real part of V (Eigenvectors) matrix in Eigen decomposition.
+     */
+    public final static int EIGEN_V_REAL = EIGEN_V;
+
+    /**
+     * Index accessor for real part of D (Eigenvalues) matrix in Eigen decomposition.
+     */
+    public final static int EIGEN_D_REAL = EIGEN_D;
+
+    /**
+     * Index accessor for imag part of V (Eigenvectors) matrix in Eigen decomposition.
+     */
+    public final static int EIGEN_V_IMAG = 2;
+
+    /**
+     * Index accessor for imag part of D (Eigenvalues) matrix in Eigen decomposition.
+     */
+    public final static int EIGEN_D_IMAG = 3;
 
     /**
      * Creates a singleton <code>1x1</code> matrix from <code>value</code>.

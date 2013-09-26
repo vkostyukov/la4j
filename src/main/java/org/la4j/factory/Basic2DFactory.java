@@ -114,7 +114,7 @@ public class Basic2DFactory extends BasicFactory implements Factory {
         double array[][] = new double[size][size];
 
         for (int i = 0; i < size; i++) {
-            array[i][i] = (double) 1.0;
+            array[i][i] = 1.0;
         }
 
         return new Basic2DMatrix(array);

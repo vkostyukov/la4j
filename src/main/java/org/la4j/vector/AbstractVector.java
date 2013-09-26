@@ -40,10 +40,6 @@ public abstract class AbstractVector implements Vector {
 
     protected Factory factory;
 
-    protected AbstractVector(Factory factory) {
-        this(factory, 0);
-    }
-
     protected AbstractVector(Factory factory, int length) {
         ensureLengthIsNotNegative(length);
 
@@ -572,9 +568,7 @@ public abstract class AbstractVector implements Vector {
 
             double diff = Math.abs(a - b);
 
-            result = result && (a == b) ? true : 
-                     diff < Matrices.EPS ? true :
-                     diff / Math.max(Math.abs(a), Math.abs(b)) < Vectors.EPS;
+            result = (a == b) || (diff < Matrices.EPS || diff / Math.max(Math.abs(a), Math.abs(b)) < Vectors.EPS);
         }
 
         return result;

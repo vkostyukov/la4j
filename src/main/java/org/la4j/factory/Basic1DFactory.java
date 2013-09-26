@@ -108,7 +108,7 @@ public class Basic1DFactory extends BasicFactory implements Factory {
         double array[] = new double[size * size];
 
         for (int i = 0; i < size; i++) {
-            array[i * size + i] = (double) 1.0;
+            array[i * size + i] = 1.0;
         }
 
         return new Basic1DMatrix(size, size, array);
