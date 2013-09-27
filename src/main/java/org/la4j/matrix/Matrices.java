@@ -483,7 +483,7 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/DiagonalMatrix.html">diagonal 
      * matrix</a>.
      */
-    public final static MatrixPredicate DIAGONAL_MATRIX = 
+    public static final MatrixPredicate DIAGONAL_MATRIX = 
             new DiagonalMatrixPredicate();
 
     /**
@@ -491,7 +491,7 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/IdentityMatrix.html">identity
      * matrix</a>.
      */
-    public final static MatrixPredicate IDENTITY_MATRIX = 
+    public static final MatrixPredicate IDENTITY_MATRIX = 
             new IdentityMatrixPredicate();
 
     /**
@@ -499,7 +499,7 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/ZeroMatrix.html">zero
      * matrix</a>.
      */
-    public final static MatrixPredicate ZERO_MATRIX = 
+    public static final MatrixPredicate ZERO_MATRIX = 
             new ZeroMatrixPredicate();
 
     /**
@@ -507,7 +507,7 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/TridiagonalMatrix.html">tridiagonal
      * matrix</a>.
      */
-    public final static MatrixPredicate TRIDIAGONAL_MATRIX = 
+    public static final MatrixPredicate TRIDIAGONAL_MATRIX = 
             new TridiagonalMatrixPredicate();
 
     /**
@@ -515,7 +515,7 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/PositiveMatrix.html">positive 
      * matrix</a>.
      */
-    public final static MatrixPredicate POSITIVE_MATRIX = 
+    public static final MatrixPredicate POSITIVE_MATRIX = 
             new PositiveMatrixPredicate();
 
     /**
@@ -523,19 +523,19 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/NegativeMatrix.html">negative 
      * matrix</a>.
      */
-    public final static MatrixPredicate NEGATIVE_MATRIX = 
+    public static final MatrixPredicate NEGATIVE_MATRIX = 
             new NegativeMatrixPredicate();
 
     /**
      * Checks whether the matrix is a lower bidiagonal matrix</a>.
      */
-    public final static MatrixPredicate LOWER_BIDIAGONAL_MATRIX = 
+    public static final MatrixPredicate LOWER_BIDIAGONAL_MATRIX = 
             new LowerBidiagonalMatrixPredicate();
 
     /**
      * Checks whether the matrix is an upper bidiagonal matrix. 
      */
-    public final static MatrixPredicate UPPER_BIDIAGONAL_MATRIX = 
+    public static final MatrixPredicate UPPER_BIDIAGONAL_MATRIX = 
             new UpperBidiagonalMatrixPredicate();
 
     /**
@@ -543,7 +543,7 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/LowerTriangularMatrix.html">lower 
      * triangular matrix</a>.
      */
-    public final static MatrixPredicate LOWER_TRIANGULAR_MARTIX = 
+    public static final MatrixPredicate LOWER_TRIANGULAR_MARTIX = 
             new LowerTriangularMatrixPredicate();
 
     /**
@@ -551,7 +551,7 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/UpperTriangularMatrix.html">upper 
      * triangular matrix</a>.
      */
-    public final static MatrixPredicate UPPER_TRIANGULAR_MATRIX = 
+    public static final MatrixPredicate UPPER_TRIANGULAR_MATRIX = 
             new UpperTriangularMatrixPredicate();
 
     /**
@@ -559,52 +559,52 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/SymmetricMatrix.html">symmetric 
      * matrix</a>. 
      */
-    public final static AdvancedMatrixPredicate SYMMETRIC_MATRIX = 
+    public static final AdvancedMatrixPredicate SYMMETRIC_MATRIX = 
             new SymmetricMatrixPredicate();
 
     /**
      * Checks whether the matrix is a
      * <a href="http://en.wikipedia.org/wiki/Diagonally_dominant_matrix">dioganally dominant matrix</a>.
      */
-    public final static AdvancedMatrixPredicate DIAGONALLY_DOMINANT_MATRIX = 
+    public static final AdvancedMatrixPredicate DIAGONALLY_DOMINANT_MATRIX = 
             new DiagonallyDominantPredicate();
 
     /**
      * Increases each element of matrix by <code>1</code>.
      */
-    public final static MatrixFunction INC_FUNCTION = 
+    public static final MatrixFunction INC_FUNCTION = 
             new IncMatrixFunction();
 
     /**
      * Decreases each element of matrix by <code>1</code>.
      */
-    public final static MatrixFunction DEC_FUNCTION = 
+    public static final MatrixFunction DEC_FUNCTION = 
             new DecMatrixFunction();
 
     /**
      * Inverts each element of matrix.  
      */
-    public final static MatrixFunction INV_FUNCTION = 
+    public static final MatrixFunction INV_FUNCTION = 
             new InvMatrixFunction();
     /**
      * The {@link Basic1DFactory} singleton instance.
      */
-    public final static Factory BASIC1D_FACTORY = new Basic1DFactory();
+    public static final Factory BASIC1D_FACTORY = new Basic1DFactory();
 
     /**
      * The {@link Basic2DFactory} singleton instance.
      */
-    public final static Factory BASIC2D_FACTORY = new Basic2DFactory();
+    public static final Factory BASIC2D_FACTORY = new Basic2DFactory();
 
     /**
      * The {@link CRSFactory} singleton instance.
      */
-    public final static Factory CRS_FACTORY = new CRSFactory();
+    public static final Factory CRS_FACTORY = new CRSFactory();
 
     /**
      * The {@link CCSFactory} singleton instance.
      */
-    public final static Factory CCS_FACTORY = new CCSFactory();
+    public static final Factory CCS_FACTORY = new CCSFactory();
 
     /**
      * Safe version of {@link Matrices#BASIC1D_FACTORY}.
@@ -614,7 +614,7 @@ public final class Matrices {
      * and modifiers. 
      * </p>
      */
-    public final static Factory SAFE_BASIC1D_FACTORY = 
+    public static final Factory SAFE_BASIC1D_FACTORY = 
             new SafeFactory(BASIC1D_FACTORY);
 
     /**
@@ -625,7 +625,7 @@ public final class Matrices {
      * and modifiers. 
      * </p>
      */
-    public final static Factory SAFE_BASIC2D_FACTORY = 
+    public static final Factory SAFE_BASIC2D_FACTORY = 
             new SafeFactory(BASIC2D_FACTORY);
 
     /**
@@ -636,7 +636,7 @@ public final class Matrices {
      * and modifiers. 
      * </p>
      */
-    public final static Factory SAFE_CRS_FACTORY = 
+    public static final Factory SAFE_CRS_FACTORY = 
             new SafeFactory(CRS_FACTORY);
 
     /**
@@ -647,63 +647,63 @@ public final class Matrices {
      * and modifiers. 
      * </p>
      */
-    public final static Factory SAFE_CCS_FACTORY = 
+    public static final Factory SAFE_CCS_FACTORY = 
             new SafeFactory(CCS_FACTORY);
 
     /**
      * Reference to the {@link Matrices#BASIC1D_FACTORY}.
      */
-    public final static Factory UNSAFE_BASIC1D_FACTORY = BASIC1D_FACTORY;
+    public static final Factory UNSAFE_BASIC1D_FACTORY = BASIC1D_FACTORY;
 
     /**
      * Reference to the {@link Matrices#BASIC2D_FACTORY}.
      */
-    public final static Factory UNSAFE_BASIC2D_FACTORY = BASIC2D_FACTORY;
+    public static final Factory UNSAFE_BASIC2D_FACTORY = BASIC2D_FACTORY;
 
     /**
      * Reference to the {@link Matrices#CRS_FACTORY}.
      */
-    public final static Factory UNSAFE_CRS_FACTORY = CRS_FACTORY;
+    public static final Factory UNSAFE_CRS_FACTORY = CRS_FACTORY;
 
     /**
      * Reference to the {@link Matrices#CCS_FACTORY}.
      */
-    public final static Factory UNSAFE_CCS_FACTORY = CCS_FACTORY;
+    public static final Factory UNSAFE_CCS_FACTORY = CCS_FACTORY;
 
     /**
      * The default dense factory singleton instance. References the
      * {@link Matrices#BASIC2D_FACTORY}.
      */
-    public final static Factory DEFAULT_DENSE_FACTORY = BASIC2D_FACTORY;
+    public static final Factory DEFAULT_DENSE_FACTORY = BASIC2D_FACTORY;
 
     /**
      * The default sparse factory singleton instance. References the
      * {@link Matrices#CRS_FACTORY}.
      */
-    public final static Factory DEFAULT_SPARSE_FACTORY = CRS_FACTORY;
+    public static final Factory DEFAULT_SPARSE_FACTORY = CRS_FACTORY;
 
     /**
      * The default matrix factory singleton instance. References the
      * {@link Matrices#BASIC2D_FACTORY}.
      */
-    public final static Factory DEFAULT_FACTORY = BASIC2D_FACTORY;
+    public static final Factory DEFAULT_FACTORY = BASIC2D_FACTORY;
 
     /**
      * The array with all factories available.
      */
-    public final static Factory FACTORIES[] = {
+    public static final Factory FACTORIES[] = {
         BASIC1D_FACTORY, BASIC2D_FACTORY, CRS_FACTORY, CCS_FACTORY
     };
 
     /**
      * The array with unsafe factories available.
      */
-    public final static Factory UNSAFE_FACTORIES[] = FACTORIES;
+    public static final Factory UNSAFE_FACTORIES[] = FACTORIES;
 
     /**
      * The array with safe factories available.
      */
-    public final static Factory SAFE_FACTORIES[] = {
+    public static final Factory SAFE_FACTORIES[] = {
         SAFE_BASIC1D_FACTORY, SAFE_BASIC2D_FACTORY,
         SAFE_CRS_FACTORY, SAFE_CCS_FACTORY
     };
@@ -711,206 +711,206 @@ public final class Matrices {
     /**
      * The array with default factories available.
      */
-    public final static Factory DEFAULT_FACTORIES[] = {
+    public static final Factory DEFAULT_FACTORIES[] = {
         DEFAULT_DENSE_FACTORY, DEFAULT_SPARSE_FACTORY
     };
 
     /**
      * The {@link CholeskyDecompositor} singleton instance.
      */
-    public final static MatrixDecompositor CHOLESKY_DECOMPOSITOR = 
+    public static final MatrixDecompositor CHOLESKY_DECOMPOSITOR = 
             new CholeskyDecompositor();
 
     /**
      * The {@link EigenDecompositor} singleton instance.
      */
-    public final static MatrixDecompositor EIGEN_DECOMPOSITOR = 
+    public static final MatrixDecompositor EIGEN_DECOMPOSITOR = 
             new EigenDecompositor();
 
     /**
      * The {@link LUDecompositor} singleton instance.
      */
-    public final static MatrixDecompositor LU_DECOMPOSITOR = 
+    public static final MatrixDecompositor LU_DECOMPOSITOR = 
             new LUDecompositor();
 
     /**
      * The {@link RawLUDecompositor} singleton instance.
      */
-    public final static MatrixDecompositor RAW_LU_DECOMPOSITOR =
+    public static final MatrixDecompositor RAW_LU_DECOMPOSITOR =
             new RawLUDecompositor();
 
     /**
      * The {@link QRDecompositor} singleton instance.
      */
-    public final static MatrixDecompositor QR_DECOMPOSITOR = 
+    public static final MatrixDecompositor QR_DECOMPOSITOR = 
             new QRDecompositor();
 
     /**
      * The {@link RawQRDecompositor} singleton instance.
      */
-    public final static MatrixDecompositor RAW_QR_DECOMPOSITOR =
+    public static final MatrixDecompositor RAW_QR_DECOMPOSITOR =
             new RawQRDecompositor();
 
     /**
      * The {@link SingularValueDecompositor} singleton instance.
      */
-    public final static MatrixDecompositor SINGULAR_VALUE_DECOMPOSITOR = 
+    public static final MatrixDecompositor SINGULAR_VALUE_DECOMPOSITOR = 
             new SingularValueDecompositor();
 
     /**
      * The {@link GaussianInverter} singleton instance.
      */
-    public final static MatrixInverter GAUSSIAN_INVERTER =
+    public static final MatrixInverter GAUSSIAN_INVERTER =
             new GaussianInverter();
 
     /**
      * The default matrix inverter singleton instance. References the 
      * {@link GaussianInverter}.
      */
-    public final static MatrixInverter DEFAULT_INVERTER = GAUSSIAN_INVERTER;
+    public static final MatrixInverter DEFAULT_INVERTER = GAUSSIAN_INVERTER;
 
     /**
      * The {@link GaussianSolver} singleton instance.
      */
-    public final static LinearSystemSolver GAUSSIAN_SOLVER = 
+    public static final LinearSystemSolver GAUSSIAN_SOLVER = 
             new GaussianSolver();
 
     /**
      * The {@link JacobiSolver} singleton instance.
      */
-    public final static LinearSystemSolver JACOBI_SOLVER = 
+    public static final LinearSystemSolver JACOBI_SOLVER = 
             new JacobiSolver();
 
     /**
      * The {@link SeidelSolver} singleton instance.
      */
-    public final static LinearSystemSolver SEIDEL_SOLVER = 
+    public static final LinearSystemSolver SEIDEL_SOLVER = 
             new SeidelSolver();
 
     /**
      * The {@link SquareRootSolver} singleton instance.
      */
-    public final static LinearSystemSolver SQUARE_ROOT_SOLVER = 
+    public static final LinearSystemSolver SQUARE_ROOT_SOLVER = 
             new SquareRootSolver();
 
     /**
      * The {@link SweepSolver} singleton instance.
      */
-    public final static LinearSystemSolver SWEEP_SOLVER = 
+    public static final LinearSystemSolver SWEEP_SOLVER = 
             new SweepSolver();
 
     /**
      * The {@link QRSolver} (least squares solver) singleton instance.
      */
-    public final static LinearSystemSolver QR_SOLVER =
+    public static final LinearSystemSolver QR_SOLVER =
             new QRSolver();
 
     /**
      * The {@link LUSolver} (simple square solver) singleton instance.
      */
-    public final static LinearSystemSolver LU_SOLVER =
+    public static final LinearSystemSolver LU_SOLVER =
             new LUSolver();
 
     /**
      * The default linear system solver singleton instance. References the 
      * {@link Matrices#GAUSSIAN_SOLVER}.
      */
-    public final static LinearSystemSolver DEFAULT_SOLVER = GAUSSIAN_SOLVER;
+    public static final LinearSystemSolver DEFAULT_SOLVER = GAUSSIAN_SOLVER;
 
     /**
      * Index accessor for L (Lower Triangular) matrix in LU decomposition.
      */
-    public final static int LU_L = 0;
+    public static final int LU_L = 0;
 
     /**
      * Index accessor for U (Upper Triangular) matrix in LU decomposition.
      */
-    public final static int LU_U = 1;
+    public static final int LU_U = 1;
 
     /**
      * Index accessor for P (Permutation) matrix in LU decomposition.
      */
-    public final static int LU_P = 2;
+    public static final int LU_P = 2;
 
     /**
      * Index accessor for LU matrix in Raw LU decomposition.
      */
-    public final static int RAW_LU_LU = 0;
+    public static final int RAW_LU_LU = 0;
 
     /**
      * Index accessor for P (Permutation) matrix in Raw LU decomposition.
      */
-    public final static int RAW_LU_P = 1;
+    public static final int RAW_LU_P = 1;
 
     /**
      * Index accessor for U (Left Unitary) matrix in SVD decomposition.
      */
-    public final static int SVD_U = 0;
+    public static final int SVD_U = 0;
 
     /**
      * Index accessor for S (Singular) matrix in SVD decomposition.
      */
-    public final static int SVD_S = 1;
+    public static final int SVD_S = 1;
 
     /**
      * Index accessor for V (Right Unitary) matrix in SVD decomposition.
      */
-    public final static int SVD_V = 2;
+    public static final int SVD_V = 2;
 
     /**
      * Index accessor for Q (Orthogonal) matrix in QR decomposition.
      */
-    public final static int QR_Q = 0;
+    public static final int QR_Q = 0;
 
     /**
      * Index accessor for R (Upper Triangular) matrix in QR decomposition.
      */
-    public final static int QR_R = 1;
+    public static final int QR_R = 1;
 
     /**
      * Index accessor for QR matrix in Raw QR decomposition.
      */
-    public final static int RAW_QR_QR = 0;
+    public static final int RAW_QR_QR = 0;
 
     /**
      * Index accessor for R (Diagonal) matrix in Raw QR decomposition.
      */
-    public final static int RAW_QR_R = 1;
+    public static final int RAW_QR_R = 1;
 
     /**
      * Index accessor for L (Lower Unitriangular) matrix in Cholesky decomposition.
      */
-    public final static int CHOLESKY_L = 0;
+    public static final int CHOLESKY_L = 0;
 
     /**
      * Index accessor for V (Eigenvectors) matrix in Eigen decomposition.
      */
-    public final static int EIGEN_V = 0;
+    public static final int EIGEN_V = 0;
 
     /**
      * Index accessor for D (Eigenvalues) matrix in Eigen decomposition. 
      */
-    public final static int EIGEN_D = 1;
+    public static final int EIGEN_D = 1;
 
     /**
      * Index accessor for real part of V (Eigenvectors) matrix in Eigen decomposition.
      */
-    public final static int EIGEN_V_REAL = EIGEN_V;
+    public static final int EIGEN_V_REAL = EIGEN_V;
 
     /**
      * Index accessor for real part of D (Eigenvalues) matrix in Eigen decomposition.
      */
-    public final static int EIGEN_D_REAL = EIGEN_D;
+    public static final int EIGEN_D_REAL = EIGEN_D;
 
     /**
      * Index accessor for imag part of V (Eigenvectors) matrix in Eigen decomposition.
      */
-    public final static int EIGEN_V_IMAG = 2;
+    public static final int EIGEN_V_IMAG = 2;
 
     /**
      * Index accessor for imag part of D (Eigenvalues) matrix in Eigen decomposition.
      */
-    public final static int EIGEN_D_IMAG = 3;
+    public static final int EIGEN_D_IMAG = 3;
 
     /**
      * Creates a singleton <code>1x1</code> matrix from <code>value</code>.

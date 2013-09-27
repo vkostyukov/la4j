@@ -857,4 +857,6 @@ public interface Matrix extends Externalizable {
      * @return
      */
     Vector toColumnVector(Factory factory);
+
+
 }

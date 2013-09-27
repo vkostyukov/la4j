@@ -24,7 +24,6 @@ package org.la4j.decomposition;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
-import org.la4j.vector.Vector;
 
 public class RawQRDecompositor implements MatrixDecompositor {
 

@@ -36,7 +36,7 @@ public class SeidelSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 
-    private final static int MAX_ITERATIONS = 1000000;
+    private static final int MAX_ITERATIONS = 1000000;
 
     /**
      * Returns the solution for the given linear system
