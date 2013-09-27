@@ -515,6 +515,30 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public Matrix toRowMatrix() {
+        return toRowMatrix(factory);
+    }
+
+    @Override
+    public Matrix toRowMatrix(Factory factory) {
+        Matrix result = factory.createMatrix(1, length);
+        result.setRow(0, this);
+        return result;
+    }
+
+    @Override
+    public Matrix toColumnMatrix() {
+        return toColumnMatrix(factory);
+    }
+
+    @Override
+    public Matrix toColumnMatrix(Factory factory) {
+        Matrix result = factory.createMatrix(length, 1);
+        result.setColumn(0, this);
+        return result;
+    }
+
+    @Override
     public int hashCode() {
 
         int result = 17;

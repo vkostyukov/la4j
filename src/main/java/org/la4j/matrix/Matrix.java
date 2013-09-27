@@ -829,4 +829,32 @@ public interface Matrix extends Externalizable {
      * Wraps this matrix with unsafe interface
      */
     Matrix unsafe();
+
+    /**
+     * Converts this matrix to row vector.
+     *
+     * @return
+     */
+    Vector toRowVector();
+
+    /**
+     * Converts this matrix to row vector.
+     *
+     * @return
+     */
+    Vector toRowVector(Factory factory);
+
+    /**
+     * Converts this matrix to column vector.
+     *
+     * @return
+     */
+    Vector toColumnVector();
+
+    /**
+     * Converts this matrix to column vector.
+     *
+     * @return
+     */
+    Vector toColumnVector(Factory factory);
 }

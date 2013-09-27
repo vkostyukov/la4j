@@ -553,4 +553,32 @@ public interface Vector extends Externalizable {
      * @return unsafe vector
      */
     Vector unsafe();
+
+    /**
+     * Converts this vector to matrix with only one row.
+     *
+     * @return
+     */
+    Matrix toRowMatrix();
+
+    /**
+     * Converts this vector to matrix with only one row.
+     *
+     * @return
+     */
+    Matrix toRowMatrix(Factory factory);
+
+    /**
+     * Converts this vector to matrix with only one column.
+     *
+     * @return
+     */
+    Matrix toColumnMatrix();
+
+    /**
+     * Converts this vector to matrix with only one column.
+     *
+     * @return
+     */
+    Matrix toColumnMatrix(Factory factory);
 }

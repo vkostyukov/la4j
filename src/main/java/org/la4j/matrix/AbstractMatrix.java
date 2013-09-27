@@ -405,7 +405,7 @@ public abstract class AbstractMatrix implements Matrix {
 
         if (rows != matrix.rows() || columns != matrix.columns()) {
             fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
-                 ". Should be: " + rows + "x" + columns + ".");
+                    ". Should be: " + rows + "x" + columns + ".");
         }
 
         Matrix result = blank(factory);
@@ -1005,6 +1005,26 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix unsafe() {
         return this;
+    }
+
+    @Override
+    public Vector toRowVector() {
+        return toRowVector(factory);
+    }
+
+    @Override
+    public Vector toRowVector(Factory factory) {
+        return getRow(0, factory);
+    }
+
+    @Override
+    public Vector toColumnVector() {
+        return toColumnVector(factory);
+    }
+
+    @Override
+    public Vector toColumnVector(Factory factory) {
+        return getColumn(0, factory);
     }
 
     @Override

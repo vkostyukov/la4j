@@ -555,6 +555,26 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public Vector toRowVector() {
+        return self.toRowVector(factory);
+    }
+
+    @Override
+    public Vector toRowVector(Factory factory) {
+        return self.toRowVector(factory);
+    }
+
+    @Override
+    public Vector toColumnVector() {
+        return self.toColumnVector(factory);
+    }
+
+    @Override
+    public Vector toColumnVector(Factory factory) {
+        return self.toColumnVector(factory);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return self.equals(obj);
     }
