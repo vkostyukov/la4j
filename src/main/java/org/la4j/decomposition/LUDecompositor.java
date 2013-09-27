@@ -31,7 +31,7 @@ import org.la4j.matrix.Matrix;
  * <a href="http://mathworld.wolfram.com/LUDecomposition.html"> here.</a>
  * </p>
  */
-public class LUDecompositor implements MatrixDecompositor {
+public class LUDecompositor extends RawLUDecompositor implements MatrixDecompositor {
 
     /**
      * Returns the result of LU decomposition of given matrix
@@ -42,51 +42,14 @@ public class LUDecompositor implements MatrixDecompositor {
      * 
      * @param matrix
      * @param factory
-     * @return { L, U }
+     * @return { L, U, P }
      */
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 
-        if (matrix.rows() != matrix.columns()) {
-            throw new IllegalArgumentException("Wrong matrix size: " 
-                    +  "rows != columns");
-        }
-
-        Matrix lu = matrix.copy();
-        Matrix p = factory.createIdentityMatrix(lu.rows());
-
-        for (int j = 0; j < lu.columns(); j++) {
-            for (int i = 0; i < lu.rows(); i++) {
-
-                int kmax = Math.min(i, j);
-
-                double s = 0.0;
-                for (int k = 0; k < kmax; k++) {
-                    s += lu.get(i, k) * lu.get(k, j);
-                }
-
-                lu.update(i, j, Matrices.asMinusFunction(s));
-            }
-
-            int pivot = j;
-
-            for (int i = j + 1; i < lu.rows(); i++) {
-                if (Math.abs(lu.get(i, j)) > Math.abs(lu.get(pivot, j))) {
-                    pivot = i;
-                }
-            }
-
-            if (pivot != j) {
-                lu.swapRows(pivot, j);
-                p.swapRows(pivot, j);
-            }
-
-            if (j < lu.rows() && Math.abs(lu.get(j, j)) > Matrices.EPS) {
-                for (int i = j + 1; i < lu.rows(); i++) {
-                    lu.update(i, j, Matrices.asDivFunction(lu.get(j, j)));
-                }
-            }
-        }
+        Matrix[] lup = super.decompose(matrix, factory);
+        Matrix lu = lup[Matrices.RAW_LU_LU];
+        Matrix p = lup[Matrices.RAW_LU_P];
 
         Matrix l = factory.createMatrix(lu.rows(), lu.columns());
 

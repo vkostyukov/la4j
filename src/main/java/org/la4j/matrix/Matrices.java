@@ -28,12 +28,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.decomposition.CholeskyDecompositor;
-import org.la4j.decomposition.EigenDecompositor;
-import org.la4j.decomposition.LUDecompositor;
-import org.la4j.decomposition.MatrixDecompositor;
-import org.la4j.decomposition.QRDecompositor;
-import org.la4j.decomposition.SingularValueDecompositor;
+import org.la4j.decomposition.*;
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.CCSFactory;
@@ -44,13 +39,7 @@ import org.la4j.inversion.GaussianInverter;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
-import org.la4j.linear.GaussianSolver;
-import org.la4j.linear.JacobiSolver;
-import org.la4j.linear.LinearSystem;
-import org.la4j.linear.LinearSystemSolver;
-import org.la4j.linear.SeidelSolver;
-import org.la4j.linear.SquareRootSolver;
-import org.la4j.linear.SweepSolver;
+import org.la4j.linear.*;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -745,10 +734,22 @@ public final class Matrices {
             new LUDecompositor();
 
     /**
+     * The {@link RawLUDecompositor} singleton instance.
+     */
+    public final static MatrixDecompositor RAW_LU_DECOMPOSITOR =
+            new RawLUDecompositor();
+
+    /**
      * The {@link QRDecompositor} singleton instance.
      */
     public final static MatrixDecompositor QR_DECOMPOSITOR = 
             new QRDecompositor();
+
+    /**
+     * The {@link RawQRDecompositor} singleton instance.
+     */
+    public final static MatrixDecompositor RAW_QR_DECOMPOSITOR =
+            new RawQRDecompositor();
 
     /**
      * The {@link SingularValueDecompositor} singleton instance.
@@ -799,6 +800,18 @@ public final class Matrices {
             new SweepSolver();
 
     /**
+     * The {@link QRSolver} (least squares solver) singleton instance.
+     */
+    public final static LinearSystemSolver QR_SOLVER =
+            new QRSolver();
+
+    /**
+     * The {@link LUSolver} (simple square solver) singleton instance.
+     */
+    public final static LinearSystemSolver LU_SOLVER =
+            new LUSolver();
+
+    /**
      * The default linear system solver singleton instance. References the 
      * {@link Matrices#GAUSSIAN_SOLVER}.
      */
@@ -818,6 +831,16 @@ public final class Matrices {
      * Index accessor for P (Permutation) matrix in LU decomposition.
      */
     public final static int LU_P = 2;
+
+    /**
+     * Index accessor for LU matrix in Raw LU decomposition.
+     */
+    public final static int RAW_LU_LU = 0;
+
+    /**
+     * Index accessor for P (Permutation) matrix in Raw LU decomposition.
+     */
+    public final static int RAW_LU_P = 1;
 
     /**
      * Index accessor for U (Left Unitary) matrix in SVD decomposition.
@@ -843,6 +866,16 @@ public final class Matrices {
      * Index accessor for R (Upper Triangular) matrix in QR decomposition.
      */
     public final static int QR_R = 1;
+
+    /**
+     * Index accessor for QR matrix in Raw QR decomposition.
+     */
+    public final static int RAW_QR_QR = 0;
+
+    /**
+     * Index accessor for R (Diagonal) matrix in Raw QR decomposition.
+     */
+    public final static int RAW_QR_R = 1;
 
     /**
      * Index accessor for L (Lower Unitriangular) matrix in Cholesky decomposition.

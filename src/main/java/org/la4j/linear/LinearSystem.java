@@ -42,7 +42,8 @@ public class LinearSystem implements Externalizable {
         Matrices.JACOBI_SOLVER,
         Matrices.SEIDEL_SOLVER,
         Matrices.SQUARE_ROOT_SOLVER,
-        Matrices.GAUSSIAN_SOLVER
+        Matrices.LU_SOLVER,
+        Matrices.QR_SOLVER
     };
 
     private int equations;
@@ -74,6 +75,14 @@ public class LinearSystem implements Externalizable {
 
         this.equations = a.rows();
         this.variables = a.columns();
+
+        if (equations < variables) {
+            throw new IllegalArgumentException("This system can not be created: equations < variables.");
+        }
+
+        if (equations != b.length()) {
+            throw new IllegalArgumentException("This system can not be created: equations != RHV length.");
+        }
 
         this.factory = factory;
 

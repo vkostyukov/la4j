@@ -32,7 +32,7 @@ import org.la4j.vector.Vector;
  * <a href="http://mathworld.wolfram.com/QRDecomposition.html"> here.</a>
  * </p>
  */
-public class QRDecompositor implements MatrixDecompositor {
+public class QRDecompositor extends RawQRDecompositor implements MatrixDecompositor {
 
     /**
      * Returns the result of QR decomposition of given matrix
@@ -48,53 +48,9 @@ public class QRDecompositor implements MatrixDecompositor {
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 
-        if (matrix.rows() < matrix.columns()) {
-            throw new IllegalArgumentException("Wrong matrix size: " 
-                    +  "rows < columns");
-        }
-
-        Matrix qr = matrix.copy();
-        Vector rdiag = factory.createVector(qr.columns());
-
-        for (int k = 0; k < qr.columns(); k++) {
-
-            double norm = 0.0;
-
-            for (int i = k; i < qr.rows(); i++) {
-                norm = Math.hypot(norm, qr.get(i, k));
-            }
-
-            if (Math.abs(norm) > Matrices.EPS) {
-
-                if (qr.get(k, k) < 0.0) {
-                    norm = -norm;
-                }
-
-                for (int i = k; i < qr.rows(); i++) {
-                    qr.update(i, k, Matrices.asDivFunction(norm));
-                }
-
-                qr.update(k, k, Matrices.INC_FUNCTION);
-
-                for (int j = k + 1; j < qr.columns(); j++) {
-
-                    double summand = 0.0;
-
-                    for (int i = k; i < qr.rows(); i++) {
-                        summand += qr.get(i, k) * qr.get(i, j);
-                    }
-
-                    summand = -summand / qr.get(k, k);
-
-                    for (int i = k; i < qr.rows(); i++) {
-                        qr.update(i, j, Matrices.asPlusFunction(summand * 
-                                  qr.get(i, k)));
-                    }
-                }
-            }
-
-            rdiag.set(k, -norm);
-        }
+        Matrix[] qrr = super.decompose(matrix, factory);
+        Matrix qr = qrr[Matrices.RAW_QR_QR];
+        Matrix r = qrr[Matrices.RAW_QR_R];
 
         Matrix q = qr.blank(factory);
 
@@ -106,31 +62,24 @@ public class QRDecompositor implements MatrixDecompositor {
 
                 if (Math.abs(qr.get(k, k)) > Matrices.EPS) {
 
-                    double summand = 0.0;
+                    double acc = 0.0;
 
                     for (int i = k; i < q.rows(); i++) {
-                        summand += qr.get(i, k) * q.get(i, j);
+                        acc += qr.get(i, k) * q.get(i, j);
                     }
 
-                    summand = -summand / qr.get(k, k);
+                    acc = -acc / qr.get(k, k);
 
                     for (int i = k; i < q.rows(); i++) {
-                        q.update(i, j, Matrices.asPlusFunction(summand * 
-                                 qr.get(i, k)));
+                        q.update(i, j, Matrices.asPlusFunction(acc *qr.get(i, k)));
                     }
                 }
             }
         }
 
-        Matrix r = factory.createSquareMatrix(qr.columns());
-
         for (int i = 0; i < r.rows(); i++) {
-            for (int j = i; j < r.columns(); j++) {
-                if (i < j) {
-                    r.set(i, j, qr.get(i, j));
-                } else if (i == j) {
-                    r.set(i, j, rdiag.get(i));
-                }
+            for (int j = i + 1; j < r.columns(); j++) {
+                r.set(i, j, qr.get(i, j));
             }
         }
 

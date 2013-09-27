@@ -51,19 +51,19 @@ public class GaussianSolver implements LinearSystemSolver {
     @Override
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
-        Matrix a = linearSystem.coefficientsMatrix();
-        Vector b = linearSystem.rightHandVector();
-
         if (!suitableFor(linearSystem)) {
             throw new IllegalArgumentException("This system can't be solved by Gauss: rows != columns.");
         }
+
+        Matrix a = linearSystem.coefficientsMatrix();
+        Vector b = linearSystem.rightHandVector();
 
         int columns = linearSystem.variables();
 
         Matrix aa = a.resizeColumns(columns + 1);
         Vector bb = b.copy();
 
-        // extend matrix with right-hand-vector
+        // augmented matrix:
         aa.setColumn(columns, bb);
 
         // the 1st phase

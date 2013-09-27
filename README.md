@@ -9,11 +9,12 @@ one of the most popular Java packages for matrices and vectors.
 
 The key features of the **la4j** are listed bellow:
 
+* Great performance allied with beautiful design
 * No dependencies and tiny size (~150kb jar)
-* Simple and object-oriented/functional API
+* Fluent and object-oriented/functional API
 * Sparse (CRS, CCS) and dense (1D/2D arrays) matrices and vectors
 * Linear systems solving (Gaussian, Jacobi, Zeidel, Square Root, Sweep and other)
-* Matrices decomposition (Eigenvalues, SVD, QR, LU, Cholesky and other)
+* Matrices decomposition (Eigenvalues/Eigenvectors, SVD, QR, LU, Cholesky and other)
 * Functors support: predicates, functions, procedures and accumulators
 * MatrixMarket/CSV IO formats support
 

@@ -34,6 +34,7 @@ la4j-0.4.5 `Sep 2013`
  * Bug fix in `SquareRootSolver`
  * Bug fix in `JacobiSolver`
  * New matrix and vector methods `max()`, `min()`, `minInRow()`, `maxInColumn()` (contributed by Maxim Samoylov)
+ * New linear solvers: `LUSolver` (for square systems), `QRSolver` (least squares solver)
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)

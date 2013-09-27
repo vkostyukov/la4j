@@ -194,4 +194,27 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
 
         performTest(Matrices.EIGEN_DECOMPOSITOR, input, output);
     }
+
+    public void xtestDecompose_3x3_nonSymmetric() {
+
+        double[][] input = new double[][] {
+            { 1.0, 2.0, 3.0 },
+            { 37.0, 24.0, 11.0 },
+            { 22.0, 51.0, 31.0 }
+        };
+
+        //performTest(Matrices.EIGEN_DECOMPOSITOR, input, null);
+    }
+
+    public void xtestDecompose_4x4_nonSymmetric() {
+
+        double[][] input = new double[][] {
+                { -1.0, -4.0, 4.0, 8.0 },
+                { 4.0, 1.0, -8.0, 2.0 },
+                { -2.0, -4.0, 5.0, 8.0 },
+                { 4.0,-1.0, -8.0, 4.0 }
+        };
+
+        //performTest(Matrices.EIGEN_DECOMPOSITOR, input, null);
+    }
 }
