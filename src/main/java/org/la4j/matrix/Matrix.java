@@ -457,25 +457,25 @@ public interface Matrix extends Externalizable {
     Matrix[] decompose(MatrixDecompositor decompositor);
 
     /**
-	 * Decomposes this matrix with <code>decompositor</code> and
-	 * <code>factory</code>.
-	 * 
-	 * @param decompositor
-	 * @param factory
-	 */
+     * Decomposes this matrix with <code>decompositor</code> and
+     * <code>factory</code>.
+     *
+     * @param decompositor
+     * @param factory
+     */
     Matrix[] decompose(MatrixDecompositor decompositor, Factory factory);
 
     /**
      * Inverts this matrix.
      * 
-     * @param invertor
+     * @param inverter
      */
     Matrix inverse(MatrixInverter inverter);
 
     /**
      * Inverts this matrix.
      * 
-     * @param invertor
+     * @param inverter
      * @param factory
      */
     Matrix inverse(MatrixInverter inverter, Factory factory);
@@ -579,7 +579,7 @@ public interface Matrix extends Externalizable {
     Matrix shuffle(Factory factory);
 
     /**
-     * 
+     * Slices this matrix to ({@code fromRow:untilRow}, {@code fromColumn:untilColumn}).
      * 
      * @param fromRow
      * @return
@@ -587,15 +587,15 @@ public interface Matrix extends Externalizable {
     Matrix slice(int fromRow, int fromColumn, int untilRow, int untilColumn);
 
     /**
-     * 
+     * Slices this matrix to ({@code fromRow:untilRow}, {@code fromColumn:untilColumn})
      * 
      * @param fromRow
      * @return
      */
-    Matrix slice(int fromRow, int fromColumn, int untilRow, int untilColumn, 
-                 Factory factory);
+    Matrix slice(int fromRow, int fromColumn, int untilRow, int untilColumn, Factory factory);
 
     /**
+     * Slices this matrix.
      * 
      * @param untilRow
      * @param untilColumn
@@ -604,6 +604,7 @@ public interface Matrix extends Externalizable {
     Matrix sliceTopLeft(int untilRow, int untilColumn);
 
     /**
+     * Slices this matrix.
      * 
      * @param untilRow
      * @param untilColumn
@@ -612,6 +613,7 @@ public interface Matrix extends Externalizable {
     Matrix sliceTopLeft(int untilRow, int untilColumn, Factory factory);
 
     /**
+     * Slices this matrix.
      * 
      * @param fromRow
      * @param fromColumn
@@ -620,6 +622,7 @@ public interface Matrix extends Externalizable {
     Matrix sliceBottomRight(int fromRow, int fromColumn);
 
     /**
+     * Slices this matrix.
      * 
      * @param fromRow
      * @param fromColumn
@@ -693,7 +696,6 @@ public interface Matrix extends Externalizable {
      */
     double min();
 
-
     /**
      * Finds max in <code>i</code> row.
      *
@@ -722,8 +724,6 @@ public interface Matrix extends Externalizable {
      * @return min
      */
     double minInColumn(int j);
-
-
 
     /**
      * Builds a new matrix by applying a <code>function</code> to all elements
@@ -806,11 +806,11 @@ public interface Matrix extends Externalizable {
     /**
      * Checks whether this matrix compiles with <code>predicate</code>.
      * 
-     * @param predidate
+     * @param predicate
      * @return <code>true</code> if this matrix compiles with
      *         <code>predicate</code>.
      */
-    boolean is(MatrixPredicate predidate);
+    boolean is(MatrixPredicate predicate);
 
     /**
      * Checks whether this matrix compiles with <code>predicate</code>.
