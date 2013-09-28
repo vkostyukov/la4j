@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
@@ -85,7 +86,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     public CompressedVector(int length, int cardinality, double values[], int indices[]) {
-        super(Vectors.COMPRESSED_FACTORY, length);
+        super(LinearAlgebra.SPARSE_FACTORY, length);
 
         this.cardinality = cardinality;
 

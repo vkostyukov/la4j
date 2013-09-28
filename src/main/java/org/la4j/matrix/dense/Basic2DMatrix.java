@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
@@ -60,7 +61,7 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
     }
 
     public Basic2DMatrix(double array[][]) {
-        super(Matrices.BASIC2D_FACTORY, array.length, array.length == 0 ? 0: array[0].length);
+        super(LinearAlgebra.BASIC2D_FACTORY, array.length, array.length == 0 ? 0: array[0].length);
         this.self = array;
     }
 

@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
@@ -89,7 +90,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
 
     public CCSMatrix(int rows, int columns, int cardinality) {
-        super(Matrices.CCS_FACTORY, rows, columns);
+        super(LinearAlgebra.CCS_FACTORY, rows, columns);
 
         int alignedSize = align(rows, columns, cardinality);
 
@@ -101,7 +102,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     public CCSMatrix(int rows, int columns, int cardinality, double values[], int rowIndices[], int columnPointers[]) {
-        super(Matrices.CCS_FACTORY, rows, columns);
+        super(LinearAlgebra.CCS_FACTORY, rows, columns);
 
         this.cardinality = cardinality;
         this.values = values;

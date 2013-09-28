@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
@@ -70,7 +71,7 @@ public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
     }
 
     public Basic1DMatrix(int rows, int columns, double array[]) {
-        super(Matrices.BASIC1D_FACTORY, rows, columns);
+        super(LinearAlgebra.BASIC1D_FACTORY, rows, columns);
 
         this.self = array;
     }
