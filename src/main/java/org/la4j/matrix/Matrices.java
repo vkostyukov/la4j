@@ -586,25 +586,38 @@ public final class Matrices {
      */
     public static final MatrixFunction INV_FUNCTION = 
             new InvMatrixFunction();
+
     /**
      * The {@link Basic1DFactory} singleton instance.
+     *
+     * Deprecated: use {@link LinearAlgebra#BASIC1D_FACTORY} instead.
      */
-    public static final Factory BASIC1D_FACTORY = new Basic1DFactory();
+    @Deprecated
+    public static final Factory BASIC1D_FACTORY = LinearAlgebra.BASIC1D_FACTORY;
 
     /**
      * The {@link Basic2DFactory} singleton instance.
+     *
+     * Deprecated: use {@link LinearAlgebra#BASIC2D_FACTORY} instead.
      */
-    public static final Factory BASIC2D_FACTORY = new Basic2DFactory();
+    @Deprecated
+    public static final Factory BASIC2D_FACTORY = LinearAlgebra.BASIC2D_FACTORY;
 
     /**
      * The {@link CRSFactory} singleton instance.
+     *
+     * Deprecated: use {@link LinearAlgebra#CRS_FACTORY} instead.
      */
-    public static final Factory CRS_FACTORY = new CRSFactory();
+    @Deprecated
+    public static final Factory CRS_FACTORY = LinearAlgebra.CRS_FACTORY;
 
     /**
      * The {@link CCSFactory} singleton instance.
+     *
+     * Deprecated: use {@link LinearAlgebra#CCS_FACTORY} instead.
      */
-    public static final Factory CCS_FACTORY = new CCSFactory();
+    @Deprecated
+    public static final Factory CCS_FACTORY = LinearAlgebra.CCS_FACTORY;
 
     /**
      * Safe version of {@link Matrices#BASIC1D_FACTORY}.
@@ -613,9 +626,11 @@ public final class Matrices {
      * The safe factory creates matrices that is wrapped with safe accessors 
      * and modifiers. 
      * </p>
+     *
+     * Deprecated: use {@link LinearAlgebra#SAFE_BASIC1D_FACTORY} instead.
      */
-    public static final Factory SAFE_BASIC1D_FACTORY = 
-            new SafeFactory(BASIC1D_FACTORY);
+    @Deprecated
+    public static final Factory SAFE_BASIC1D_FACTORY = LinearAlgebra.SAFE_BASIC1D_FACTORY;
 
     /**
      * Safe version of {@link Matrices#BASIC2D_FACTORY}.
@@ -624,9 +639,11 @@ public final class Matrices {
      * The safe factory creates matrices that is wrapped with safe accessors 
      * and modifiers. 
      * </p>
+     *
+     * Deprecated: use {@link LinearAlgebra#SAFE_BASIC2D_FACTORY} instead.
      */
-    public static final Factory SAFE_BASIC2D_FACTORY = 
-            new SafeFactory(BASIC2D_FACTORY);
+    @Deprecated
+    public static final Factory SAFE_BASIC2D_FACTORY = LinearAlgebra.SAFE_BASIC2D_FACTORY;
 
     /**
      * Safe version of {@link Matrices#CRS_FACTORY}.
@@ -635,9 +652,11 @@ public final class Matrices {
      * The safe factory creates matrices that is wrapped with safe accessors 
      * and modifiers. 
      * </p>
+     *
+     * Deprecated: use {@link LinearAlgebra#SAFE_CRS_FACTORY} instead.
      */
-    public static final Factory SAFE_CRS_FACTORY = 
-            new SafeFactory(CRS_FACTORY);
+    @Deprecated
+    public static final Factory SAFE_CRS_FACTORY = LinearAlgebra.SAFE_CRS_FACTORY;
 
     /**
      * Safe version of {@link Matrices#CCS_FACTORY}.
@@ -646,74 +665,94 @@ public final class Matrices {
      * The safe factory creates matrices that is wrapped with safe accessors 
      * and modifiers. 
      * </p>
+     *
+     * Deprecated: use {@link LinearAlgebra#SAFE_CCS_FACTORY} instead.
      */
-    public static final Factory SAFE_CCS_FACTORY = 
-            new SafeFactory(CCS_FACTORY);
+    @Deprecated
+    public static final Factory SAFE_CCS_FACTORY = LinearAlgebra.SAFE_CCS_FACTORY;
 
     /**
      * Reference to the {@link Matrices#BASIC1D_FACTORY}.
+     *
+     * Deprecated: use {@link LinearAlgebra#UNSAFE_BASIC1D_FACTORY} instead.
      */
-    public static final Factory UNSAFE_BASIC1D_FACTORY = BASIC1D_FACTORY;
+    @Deprecated
+    public static final Factory UNSAFE_BASIC1D_FACTORY = LinearAlgebra.UNSAFE_BASIC1D_FACTORY;
 
     /**
      * Reference to the {@link Matrices#BASIC2D_FACTORY}.
+     *
+     * Deprecated: use {@link LinearAlgebra#UNSAFE_BASIC2D_FACTORY} instead.
      */
-    public static final Factory UNSAFE_BASIC2D_FACTORY = BASIC2D_FACTORY;
+    @Deprecated
+    public static final Factory UNSAFE_BASIC2D_FACTORY = LinearAlgebra.UNSAFE_BASIC2D_FACTORY;
 
     /**
      * Reference to the {@link Matrices#CRS_FACTORY}.
+     *
+     * Deprecated: use {@link LinearAlgebra#UNSAFE_CRS_FACTORY} instead.
      */
-    public static final Factory UNSAFE_CRS_FACTORY = CRS_FACTORY;
+    @Deprecated
+    public static final Factory UNSAFE_CRS_FACTORY = LinearAlgebra.UNSAFE_CRS_FACTORY;
 
     /**
      * Reference to the {@link Matrices#CCS_FACTORY}.
+     *
+     * Deprecated: use {@link LinearAlgebra#UNSAFE_CCS_FACTORY} instead.
      */
-    public static final Factory UNSAFE_CCS_FACTORY = CCS_FACTORY;
+    @Deprecated
+    public static final Factory UNSAFE_CCS_FACTORY = LinearAlgebra.UNSAFE_CCS_FACTORY;
 
     /**
      * The default dense factory singleton instance. References the
      * {@link Matrices#BASIC2D_FACTORY}.
+     *
+     * Deprecated: use {@link LinearAlgebra#DENSE_FACTORY} instead.
      */
-    public static final Factory DEFAULT_DENSE_FACTORY = BASIC2D_FACTORY;
+    @Deprecated
+    public static final Factory DEFAULT_DENSE_FACTORY = LinearAlgebra.DENSE_FACTORY;
 
     /**
      * The default sparse factory singleton instance. References the
      * {@link Matrices#CRS_FACTORY}.
+     *
+     * Deprecated: use {@link LinearAlgebra#SPARSE_FACTORY} instead.
      */
-    public static final Factory DEFAULT_SPARSE_FACTORY = CRS_FACTORY;
+    @Deprecated
+    public static final Factory DEFAULT_SPARSE_FACTORY = LinearAlgebra.SPARSE_FACTORY;
 
     /**
      * The default matrix factory singleton instance. References the
      * {@link Matrices#BASIC2D_FACTORY}.
+     *
+     * Deprecated: use {@link LinearAlgebra#DEFAULT_FACTORY} instead.
      */
-    public static final Factory DEFAULT_FACTORY = BASIC2D_FACTORY;
+    @Deprecated
+    public static final Factory DEFAULT_FACTORY = LinearAlgebra.DEFAULT_FACTORY;
 
     /**
      * The array with all factories available.
+     *
+     * Deprecated: use {@link LinearAlgebra#FACTORIES} instead.
      */
-    public static final Factory FACTORIES[] = {
-        BASIC1D_FACTORY, BASIC2D_FACTORY, CRS_FACTORY, CCS_FACTORY
-    };
+    @Deprecated
+    public static final Factory FACTORIES[] = LinearAlgebra.FACTORIES;
 
     /**
      * The array with unsafe factories available.
+     *
+     * Deprecated: use {@link LinearAlgebra#UNSAFE_FACTORIES} instead.
      */
-    public static final Factory UNSAFE_FACTORIES[] = FACTORIES;
+    @Deprecated
+    public static final Factory UNSAFE_FACTORIES[] = LinearAlgebra.UNSAFE_FACTORIES;
 
     /**
      * The array with safe factories available.
+     *
+     * Deprecated: use {@link LinearAlgebra#SAFE_FACTORIES} instead.
      */
-    public static final Factory SAFE_FACTORIES[] = {
-        SAFE_BASIC1D_FACTORY, SAFE_BASIC2D_FACTORY,
-        SAFE_CRS_FACTORY, SAFE_CCS_FACTORY
-    };
-
-    /**
-     * The array with default factories available.
-     */
-    public static final Factory DEFAULT_FACTORIES[] = {
-        DEFAULT_DENSE_FACTORY, DEFAULT_SPARSE_FACTORY
-    };
+    @Deprecated
+    public static final Factory SAFE_FACTORIES[] = LinearAlgebra.SAFE_FACTORIES;
 
     /**
      * The {@link CholeskyDecompositor} singleton instance.
@@ -772,49 +811,57 @@ public final class Matrices {
     /**
      * The {@link GaussianSolver} singleton instance.
      */
+    @Deprecated
     public static final LinearSystemSolver GAUSSIAN_SOLVER = 
-            new GaussianSolver();
+            new GaussianSolver(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link JacobiSolver} singleton instance.
      */
+    @Deprecated
     public static final LinearSystemSolver JACOBI_SOLVER = 
-            new JacobiSolver();
+            new JacobiSolver(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link SeidelSolver} singleton instance.
      */
+    @Deprecated
     public static final LinearSystemSolver SEIDEL_SOLVER = 
-            new SeidelSolver();
+            new SeidelSolver(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link SquareRootSolver} singleton instance.
      */
+    @Deprecated
     public static final LinearSystemSolver SQUARE_ROOT_SOLVER = 
-            new SquareRootSolver();
+            new SquareRootSolver(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link SweepSolver} singleton instance.
      */
+    @Deprecated
     public static final LinearSystemSolver SWEEP_SOLVER = 
-            new SweepSolver();
+            new SweepSolver(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link QRSolver} (least squares solver) singleton instance.
      */
+    @Deprecated
     public static final LinearSystemSolver QR_SOLVER =
-            new QRSolver();
+            new QRSolver(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link LUSolver} (simple square solver) singleton instance.
      */
+    @Deprecated
     public static final LinearSystemSolver LU_SOLVER =
-            new LUSolver();
+            new LUSolver(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The default linear system solver singleton instance. References the 
      * {@link Matrices#GAUSSIAN_SOLVER}.
      */
+    @Deprecated
     public static final LinearSystemSolver DEFAULT_SOLVER = GAUSSIAN_SOLVER;
 
     /**
@@ -931,6 +978,7 @@ public final class Matrices {
      * @param b
      * @return
      */
+    @Deprecated
     public static LinearSystem asLinearSystem(Matrix a, Vector b) {
         return DEFAULT_FACTORY.createLinearSystem(a, b);
     }

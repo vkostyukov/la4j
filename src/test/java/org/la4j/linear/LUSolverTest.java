@@ -21,7 +21,7 @@
 
 package org.la4j.linear;
 
-import org.la4j.matrix.Matrices;
+import org.la4j.LinearAlgebra;
 
 public class LUSolverTest extends AbstractSolverTest {
 
@@ -33,7 +33,7 @@ public class LUSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -31.0 };
 
-        performTest(Matrices.LU_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.LU, a, b);
     }
 
     public void testSolve_2x2() {
@@ -45,7 +45,7 @@ public class LUSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 11.0, 4.0 };
 
-        performTest(Matrices.LU_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.LU, a, b);
     }
 
     public void testSolve_3x3() {
@@ -58,7 +58,7 @@ public class LUSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -146.0, 16.5, 7.5 };
 
-        performTest(Matrices.LU_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.LU, a, b);
     }
 
     public void testSolve_3x3_2() {
@@ -71,7 +71,7 @@ public class LUSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 8.0, 115.2, 20.0 };
 
-        performTest(Matrices.LU_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.LU, a, b);
     }
 
     public void testSolve_4x4() {
@@ -85,7 +85,7 @@ public class LUSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 52.3, -32.6, -29.0, 37.1 };
 
-        performTest(Matrices.LU_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.LU, a, b);
     }
 
     public void testSolve_4x4_2() {
@@ -99,7 +99,7 @@ public class LUSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -41.5, 63.0, -1533.0, 155.0 };
 
-        performTest(Matrices.LU_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.LU, a, b);
     }
 
     public void testSolve_5x5() {
@@ -114,6 +114,6 @@ public class LUSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -110.44, -79.2, 862.8, 221.0, -3.1 };
 
-        performTest(Matrices.LU_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.LU, a, b);
     }
 }

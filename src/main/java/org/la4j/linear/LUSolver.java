@@ -27,9 +27,20 @@ import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 
-public class LUSolver implements LinearSystemSolver {
+public class LUSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
+
+    public LUSolver(Matrix a) {
+        super(a);
+    }
 
     @Override
+    public Vector solve(Vector b, Factory factory) {
+        ensureRHSIsCorrect(b);
+        return solve(new LinearSystem(a, b, factory), factory);
+    }
+
+    @Override
+    @Deprecated
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
         if (!suitableFor(linearSystem)) {
@@ -83,7 +94,13 @@ public class LUSolver implements LinearSystemSolver {
     }
 
     @Override
+    @Deprecated
     public boolean suitableFor(LinearSystem linearSystem) {
-        return linearSystem.equations() == linearSystem.variables();
+        return applicableTo(linearSystem.coefficientsMatrix());
+    }
+
+    @Override
+    public boolean applicableTo(Matrix matrix) {
+        return matrix.rows() == matrix.columns();
     }
 }

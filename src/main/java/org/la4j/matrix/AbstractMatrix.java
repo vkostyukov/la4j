@@ -30,9 +30,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Random;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
+import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -1028,6 +1030,16 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public LinearSystemSolver takeToSmartSolver() {
+        return takeToSolver(LinearAlgebra.SolverFactory.SMART);
+    }
+
+    @Override
+    public LinearSystemSolver takeToSolver(LinearAlgebra.SolverFactory factory) {
+        return factory.create(this);
+    }
+
+    @Override
     public int hashCode() {
 
         int result = 17;
@@ -1068,7 +1080,7 @@ public abstract class AbstractMatrix implements Matrix {
             for (int j = 0; result && j < columns; j++) {
                 double a = get(i, j);
                 double b = matrix.get(i, j);
-
+                                      // vovks-markovka
                 double diff = Math.abs(a - b);
 
                 result = (a == b) || (diff < Matrices.EPS || diff / Math.max(Math.abs(a), Math.abs(b)) < Matrices.EPS);

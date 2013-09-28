@@ -316,13 +316,19 @@ public final class Vectors {
 
     /**
      * The {@link Basic1DFactory} singleton instance.
+     *
+     * Deprecated: use {@link LinearAlgebra#DENSE_FACTORY} instead.
      */
-    public static final Factory BASIC_FACTORY = new Basic1DFactory();
+    @Deprecated
+    public static final Factory BASIC_FACTORY = LinearAlgebra.DENSE_FACTORY;
 
     /**
-     * The {@link CRSFactory} singletone instance.
+     * The {@link CRSFactory} singleton instance.
+     *
+     * Deprecated: use {@link LinearAlgebra#SPARSE_FACTORY} instead.
      */
-    public static final Factory COMPRESSED_FACTORY = new CRSFactory();
+    @Deprecated
+    public static final Factory COMPRESSED_FACTORY = LinearAlgebra.SPARSE_FACTORY;
 
     /**
      * Safe version of {@link Vectors#BASIC_FACTORY}.
@@ -331,9 +337,11 @@ public final class Vectors {
      * The safe factory creates vectors that is wrapped with safe accessors 
      * and modifiers. 
      * </p>
+     *
+     * Deprecated: use {@link LinearAlgebra#SAFE_DENSE_FACTORY} instead.
      */
-    public static final Factory SAFE_BASIC_FACTORY = 
-            new SafeFactory(BASIC_FACTORY);
+    @Deprecated
+    public static final Factory SAFE_BASIC_FACTORY = LinearAlgebra.SAFE_DENSE_FACTORY;
 
     /**
      * Safe version of {@link Vectors#COMPRESSED_FACTORY}.
@@ -342,65 +350,56 @@ public final class Vectors {
      * The safe factory creates vectors that is wrapped with safe accessors 
      * and modifiers. 
      * </p>
+     *
+     * Deprecated: use {@link LinearAlgebra#SAFE_SPARSE_FACTORY} instead.
      */
-    public static final Factory SAFE_COMPRESSED_FACTORY = 
-            new SafeFactory(COMPRESSED_FACTORY);
+    @Deprecated
+    public static final Factory SAFE_COMPRESSED_FACTORY = LinearAlgebra.SAFE_SPARSE_FACTORY;
 
     /**
      * Reference to the {@link Vectors#BASIC_FACTORY}.
+     *
+     * Deprecated: use {@link LinearAlgebra#UNSAFE_DENSE_FACTORY} instead.
      */
-    public static final Factory UNSAFE_BASIC_FACTORY = BASIC_FACTORY;
+    @Deprecated
+    public static final Factory UNSAFE_BASIC_FACTORY = LinearAlgebra.UNSAFE_DENSE_FACTORY;
 
     /**
      * Reference to the {@link Vectors#COMPRESSED_FACTORY}.
+     *
+     * Deprecated: use {@link LinearAlgebra#UNSAFE_SPARSE_FACTORY} instead.
      */
-    public static final Factory UNSAFE_COMPRESSED_FACTORY = COMPRESSED_FACTORY;
+    @Deprecated
+    public static final Factory UNSAFE_COMPRESSED_FACTORY = LinearAlgebra.UNSAFE_SPARSE_FACTORY;
 
     /**
      * The default factory singleton instance. References the
      * {@link Vectors#BASIC_FACTORY}.
+     *
+     * Deprecated: use {@link LinearAlgebra#DEFAULT_FACTORY} instead.
      */
-    public static final Factory DEFAULT_FACTORY = BASIC_FACTORY;
+    @Deprecated
+    public static final Factory DEFAULT_FACTORY = LinearAlgebra.DEFAULT_FACTORY;
 
     /**
      * The default dense factory singleton instance. References the
      * {@link Vectors#BASIC_FACTORY}.
+     *
+     * Deprecated: use {@link LinearAlgebra#DENSE_FACTORY} instead.
      */
-    public static final Factory DEFAULT_DENSE_FACTORY = BASIC_FACTORY;
+    @Deprecated
+    public static final Factory DEFAULT_DENSE_FACTORY = LinearAlgebra.DENSE_FACTORY;
 
     /**
      * The default sparse factory singleton instance. References the
      * {@link Vectors#COMPRESSED_FACTORY}.
+     *
+     * Deprecated: use {@link LinearAlgebra#SPARSE_FACTORY} instead.
      */
-    public static final Factory DEFAULT_SPARSE_FACTORY = COMPRESSED_FACTORY;
+    @Deprecated
+    public static final Factory DEFAULT_SPARSE_FACTORY = LinearAlgebra.SPARSE_FACTORY;
 
-    /**
-     * The array with all factories available.
-     */
-    public static final Factory[] FACTORIES = {
-        BASIC_FACTORY, COMPRESSED_FACTORY
-    };
-
-    /**
-     * The array with unsafe factories available.
-     */
-    public static final Factory[] UNSAFE_FACTORIES = FACTORIES;
-
-    /**
-     * The array with safe factories available.
-     */
-    public static final Factory[] SAFE_FACTORIES = {
-        SAFE_BASIC_FACTORY, SAFE_COMPRESSED_FACTORY
-    };
-
-    /**
-     * The array with default factories available.
-     */
-    public static final Factory[] DEFAULT_FACTORIES = {
-        DEFAULT_DENSE_FACTORY, DEFAULT_SPARSE_FACTORY
-    };
-
-    /**
+     /**
      * Increases each element of vector by <code>1</code>.
      */
     public static final VectorFunction INC_FUNCTION = new IncVectorFunction();

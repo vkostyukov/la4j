@@ -1,22 +1,22 @@
 /*
  * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
- * 
+ *
  * This file is part of la4j project (http://la4j.org)
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * Contributor(s): -
- * 
+ *
  */
 
 package org.la4j.linear;
@@ -31,9 +31,19 @@ import org.la4j.vector.Vector;
  * href="http://mathworld.wolfram.com/SquareRootMethod.html"> Square Root method
  * </a> for solving linear systems.
  */
-public class SquareRootSolver implements LinearSystemSolver {
+public class SquareRootSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
+
+    public SquareRootSolver(Matrix a) {
+        super(a);
+    }
+
+    @Override
+    public Vector solve(Vector b, Factory factory) {
+        ensureRHSIsCorrect(b);
+        return solve(new LinearSystem(a, b, factory), factory);
+    }
 
     /**
      * Returns the solution for the given linear system
@@ -122,6 +132,11 @@ public class SquareRootSolver implements LinearSystemSolver {
      */
     @Override
     public boolean suitableFor(LinearSystem linearSystem) {
-        return linearSystem.coefficientsMatrix().is(Matrices.SYMMETRIC_MATRIX);
+        return applicableTo(linearSystem.coefficientsMatrix());
+    }
+
+    @Override
+    public boolean applicableTo(Matrix matrix) {
+        return matrix.is(Matrices.SYMMETRIC_MATRIX);
     }
 }

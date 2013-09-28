@@ -23,6 +23,7 @@ package org.la4j.linear;
 
 import junit.framework.TestCase;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
@@ -31,22 +32,18 @@ import org.la4j.vector.Vector;
 
 public abstract class AbstractSolverTest extends TestCase {
 
-    public void performTest(LinearSystemSolver solver,
+    public void performTest(LinearAlgebra.SolverFactory solverFactory,
                             double coefficientMatrix[][], 
                             double rightHandVector[]) {
 
-        for (Factory xFactory: Matrices.FACTORIES) {
-            for (Factory yFactory: Matrices.FACTORIES) {
+        for (Factory factory: Matrices.FACTORIES) {
+            Matrix a = factory.createMatrix(coefficientMatrix);
+            Vector b = factory.createVector(rightHandVector);
 
-                Matrix a = xFactory.createMatrix(coefficientMatrix);
-                Vector b = yFactory.createVector(rightHandVector);
+            LinearSystemSolver solver = a.takeToSolver(solverFactory);
+            Vector x = solver.solve(b, factory);
 
-                LinearSystem system = new LinearSystem(a, b);
-
-                Vector x = system.solve(solver);
-
-                assertEquals(new MockVector(b), new MockVector(a.multiply(x)));
-            }
+            assertEquals(new MockVector(b), new MockVector(a.multiply(x)));
         }
     }
 }

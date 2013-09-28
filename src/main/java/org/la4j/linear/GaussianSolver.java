@@ -32,9 +32,19 @@ import org.la4j.vector.Vector;
  * <a href="http://mathworld.wolfram.com/GaussianElimination.html"> here.</a>
  * </p>
  */
-public class GaussianSolver implements LinearSystemSolver {
+public class GaussianSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
+
+    public GaussianSolver(Matrix a) {
+        super(a);
+    }
+
+    @Override
+    public Vector solve(Vector b, Factory factory) {
+        ensureRHSIsCorrect(b);
+        return solve(new LinearSystem(a, b, factory), factory);
+    }
 
     /**
      * Returns the solution for the given linear system
@@ -49,6 +59,7 @@ public class GaussianSolver implements LinearSystemSolver {
      * @return vector
      */
     @Override
+    @Deprecated
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
         if (!suitableFor(linearSystem)) {
@@ -63,14 +74,14 @@ public class GaussianSolver implements LinearSystemSolver {
         Matrix aa = a.resizeColumns(columns + 1);
         Vector bb = b.copy();
 
-        // augmented matrix:
+        // augmented matrix
         aa.setColumn(columns, bb);
 
         // the 1st phase
         triangularizeWithPivoting(aa);
 
         if (Math.abs(aa.diagonalProduct()) < Matrices.EPS) {
-            throw new IllegalArgumentException("This system is singular.");
+            fail("This system is singular.");
         }
 
         // the 2nd phase
@@ -137,8 +148,13 @@ public class GaussianSolver implements LinearSystemSolver {
      *         Gaussian solver
      */
     @Override
+    @Deprecated
     public boolean suitableFor(LinearSystem linearSystem) {
-        return linearSystem.coefficientsMatrix().rows() ==
-               linearSystem.coefficientsMatrix().columns();
+        return applicableTo(linearSystem.coefficientsMatrix());
+    }
+
+    @Override
+    public boolean applicableTo(Matrix matrix) {
+        return matrix.rows() == matrix.columns();
     }
 }

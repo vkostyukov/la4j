@@ -210,6 +210,7 @@ public interface Factory extends Serializable {
      * 
      * @return
      */
+    @Deprecated
     LinearSystem createLinearSystem(Matrix a, Vector b);
 
     /**

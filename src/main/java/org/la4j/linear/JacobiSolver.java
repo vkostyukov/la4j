@@ -33,11 +33,21 @@ import org.la4j.vector.Vector;
  * <a href="http://mathworld.wolfram.com/JacobiMethod.html"> here.</a>
  * </p>
  */
-public class JacobiSolver implements LinearSystemSolver {
+public class JacobiSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 
     private static final int MAX_ITERATIONS = 1000000;
+
+    public JacobiSolver(Matrix a) {
+        super(a);
+    }
+
+    @Override
+    public Vector solve(Vector b, Factory factory) {
+        ensureRHSIsCorrect(b);
+        return solve(new LinearSystem(a, b, factory), factory);
+    }
 
     /**
      * Returns the solution for the given linear system
@@ -51,6 +61,7 @@ public class JacobiSolver implements LinearSystemSolver {
      * @return vector
      */
     @Override
+    @Deprecated
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
         if (!suitableFor(linearSystem)) {
@@ -104,7 +115,13 @@ public class JacobiSolver implements LinearSystemSolver {
      * @return <code>true</code> if given linear system can be solved by Jacobi solver
      */
     @Override
+    @Deprecated
     public boolean suitableFor(LinearSystem linearSystem) {
-        return linearSystem.coefficientsMatrix().is(Matrices.DIAGONALLY_DOMINANT_MATRIX);
+        return applicableTo(linearSystem.coefficientsMatrix());
+    }
+
+    @Override
+    public boolean applicableTo(Matrix matrix) {
+        return matrix.is(Matrices.DIAGONALLY_DOMINANT_MATRIX);
     }
 }

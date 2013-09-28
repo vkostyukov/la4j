@@ -35,6 +35,7 @@ import org.la4j.vector.Vector;
  * This class encapsulates the
  * <a href="http://mathworld.wolfram.com/MatrixEquation.html"> Linear System.</a>
  */
+@Deprecated
 public class LinearSystem implements Externalizable {
 
     private static final LinearSystemSolver SOLVERS[] = {

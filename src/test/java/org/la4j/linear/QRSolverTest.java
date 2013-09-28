@@ -21,7 +21,7 @@
 
 package org.la4j.linear;
 
-import org.la4j.matrix.Matrices;
+import org.la4j.LinearAlgebra;
 
 public class QRSolverTest extends AbstractSolverTest {
 
@@ -33,7 +33,7 @@ public class QRSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -5.0 };
 
-        performTest(Matrices.QR_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.QR, a, b);
     }
 
     public void testSolve_2x2() {
@@ -45,7 +45,7 @@ public class QRSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 5.0, 21.0 };
 
-        performTest(Matrices.QR_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.QR, a, b);
     }
 
     public void testSolve_2x1() {
@@ -57,7 +57,7 @@ public class QRSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -10.0, 12.0 };
 
-        performTest(Matrices.QR_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.QR, a, b);
     }
 
     public void testSolve_3x3() {
@@ -70,7 +70,7 @@ public class QRSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -98.9, -34.0, -56.0 };
 
-        performTest(Matrices.QR_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.QR, a, b);
     }
 
     public void testSolve_3x1() {
@@ -83,7 +83,7 @@ public class QRSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 4.4, -0.4, 44.4 };
 
-        performTest(Matrices.QR_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.QR, a, b);
     }
 
     public void testSolve_3x2() {
@@ -96,7 +96,7 @@ public class QRSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 90.0, -20.0, 120.0 };
 
-        performTest(Matrices.QR_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.QR, a, b);
     }
 
     public void testSolve_4x4() {
@@ -110,7 +110,7 @@ public class QRSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 708.0, 405.0, 319.0, -230.0 };
 
-        performTest(Matrices.QR_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.QR, a, b);
     }
 
     public void testSolve_4x1() {
@@ -124,7 +124,7 @@ public class QRSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 1.0, -8.0, 16.0, 4.0 };
 
-        performTest(Matrices.QR_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.QR, a, b);
     }
 
     public void testSolve_4x2() {
@@ -138,7 +138,7 @@ public class QRSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -870.0, -196.0, 4.95, 1.1 };
 
-        performTest(Matrices.QR_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.QR, a, b);
     }
 
     public void testSolve_4x3() {
@@ -152,7 +152,7 @@ public class QRSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -36.5, 116.9, 1633.5, -540.0 };
 
-        performTest(Matrices.QR_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.QR, a, b);
     }
 
     public void testSolve_5x5() {
@@ -167,6 +167,6 @@ public class QRSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 42.5, -71.0, 117.75, 107.5, 41.0 };
 
-        performTest(Matrices.QR_SOLVER, a, b);
+        performTest(LinearAlgebra.SolverFactory.QR, a, b);
     }
 }

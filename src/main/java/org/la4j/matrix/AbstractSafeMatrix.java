@@ -26,9 +26,11 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
+import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -572,6 +574,16 @@ public abstract class AbstractSafeMatrix implements Matrix {
     @Override
     public Vector toColumnVector(Factory factory) {
         return self.toColumnVector(factory);
+    }
+
+    @Override
+    public LinearSystemSolver takeToSmartSolver() {
+        return self.takeToSmartSolver();
+    }
+
+    @Override
+    public LinearSystemSolver takeToSolver(LinearAlgebra.SolverFactory factory) {
+        return self.takeToSolver(factory);
     }
 
     @Override

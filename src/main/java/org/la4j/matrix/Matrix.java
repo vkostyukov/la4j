@@ -25,9 +25,11 @@ package org.la4j.matrix;
 
 import java.io.Externalizable;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
+import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -858,5 +860,53 @@ public interface Matrix extends Externalizable {
      */
     Vector toColumnVector(Factory factory);
 
+    /**
+     * Takes this matrix to Smart Solver, which uses the most efficient solver internally for this matrix.
+     *
+     * @return
+     */
+    LinearSystemSolver takeToSmartSolver();
 
+    /**
+     * Takes this matrix to given solver factory.
+     *
+     * @param factory
+     * @return
+     */
+    LinearSystemSolver takeToSolver(LinearAlgebra.SolverFactory factory);
+
+    /**
+     * Wraps this matrix within a Smart Inverter, which uses the most efficient inverter internally for this matrix.
+     *
+     * @return
+     */
+    //MatrixInverter takeToSmartInverter();
+
+    // TODO: This is a new API for all major things
+    // TODO: I'll mark all other ways as @Deprecated
+    // MatrixInverter takeToInverter(InverterFactory factory);
+    // MatrixDecompositor takeToDecompositor(DecompositorFactory factory);
+
+    /*
+        // Solving
+        Matrix a = new Basic2DMatrix(...);
+        Vector b = new BasicVector(...);
+        LinearSystemSolver solver = a.takeToSolver(LinearAlgebra.JACOBI_FACTORY);
+        Vector x = solver.solve(b, Matrices.CRS_FACTORY);
+
+        // Decomposing
+        MatrixDecompositor decompositor = a.takeToDecompositor(LinearAlgebra.LU_FACTORY);
+        Matrix[] lup = decompositor.decompose(Matrices.CRS_FACTORY);
+
+        // Inverting
+        MatrixInverter inverter = a.takeToInverter(LinearAlgebra.GAUSSIAN_INVERTER_FACTORY);
+        Matrix aa = inverter.invert();
+
+        // Using Smart Things
+        LinearSystemSolver smartSolver = a.takeToSmartSolver();
+        Vector xx = smartSolver.solve(b);
+
+        MatrixInverter smartInverter = a.takeToSmartInverter();
+        Matrix aaa = smartInverter.invert();
+     */
 }

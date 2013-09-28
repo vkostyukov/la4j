@@ -27,7 +27,17 @@ import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 
-public class QRSolver implements LinearSystemSolver {
+public class QRSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
+
+    public QRSolver(Matrix a) {
+        super(a);
+    }
+
+    @Override
+    public Vector solve(Vector b, Factory factory) {
+        ensureRHSIsCorrect(b);
+        return solve(new LinearSystem(a, b, factory), factory);
+    }
 
     @Override
     public Vector solve(LinearSystem linearSystem, Factory factory) {
@@ -85,6 +95,11 @@ public class QRSolver implements LinearSystemSolver {
 
     @Override
     public boolean suitableFor(LinearSystem linearSystem) {
-        return linearSystem.equations() >= linearSystem.variables();
+        return applicableTo(linearSystem.coefficientsMatrix());
+    }
+
+    @Override
+    public boolean applicableTo(Matrix matrix) {
+        return  matrix.rows() >= matrix.columns();
     }
 }

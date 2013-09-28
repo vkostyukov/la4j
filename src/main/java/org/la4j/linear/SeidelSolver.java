@@ -32,11 +32,21 @@ import org.la4j.vector.Vector;
  * <a href="http://mathworld.wolfram.com/Gauss-SeidelMethod.html"> Seidel method
  * </a> for solving linear systems.
  */
-public class SeidelSolver implements LinearSystemSolver {
+public class SeidelSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 
     private static final int MAX_ITERATIONS = 1000000;
+
+    public SeidelSolver(Matrix a) {
+        super(a);
+    }
+
+    @Override
+    public Vector solve(Vector b, Factory factory) {
+        ensureRHSIsCorrect(b);
+        return solve(new LinearSystem(a, b, factory), factory);
+    }
 
     /**
      * Returns the solution for the given linear system
@@ -51,6 +61,7 @@ public class SeidelSolver implements LinearSystemSolver {
      * @return vector
      */
     @Override
+    @Deprecated
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
         if (!suitableFor(linearSystem)) {
@@ -101,6 +112,11 @@ public class SeidelSolver implements LinearSystemSolver {
      */
     @Override
     public boolean suitableFor(LinearSystem linearSystem) {
-        return linearSystem.coefficientsMatrix().is(Matrices.DIAGONALLY_DOMINANT_MATRIX);
+        return applicableTo(linearSystem.coefficientsMatrix());
+    }
+
+    @Override
+    public boolean applicableTo(Matrix matrix) {
+        return matrix.is(Matrices.DIAGONALLY_DOMINANT_MATRIX);
     }
 }

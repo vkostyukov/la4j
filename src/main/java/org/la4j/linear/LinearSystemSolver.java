@@ -24,6 +24,7 @@ package org.la4j.linear;
 import java.io.Serializable;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
 /**
@@ -37,6 +38,7 @@ public interface LinearSystemSolver extends Serializable {
      * @param linearSystem
      * @return vector
      */
+    @Deprecated
     Vector solve(LinearSystem linearSystem, Factory factory);
 
     /**
@@ -44,5 +46,43 @@ public interface LinearSystemSolver extends Serializable {
      * @param linearSystem
      * @return <code>true</code> if given linear system can be solved by this solver
      */
+    @Deprecated
     boolean suitableFor(LinearSystem linearSystem);
+
+    /**
+     * Solves the system A*x = b.
+     *
+     * @param b
+     * @param factory
+     * @return
+     */
+    Vector solve(Vector b, Factory factory);
+
+    /**
+     * Returns the A matrix of the system.
+     *
+     * @return
+     */
+    Matrix coefficientMatrix();
+
+    /**
+     * Returns the number os unknowns in this solver.
+     *
+     * @return
+     */
+    int unknowns();
+
+    /**
+     * Returns the number of equations in this solver.
+     *
+     * @return
+     */
+    int equations();
+
+    /**
+     * Checks whether this solver applicable to given {@code matrix} or not.
+     *
+     * @param matrix
+     */
+    boolean applicableTo(Matrix matrix);
 }
