@@ -1030,12 +1030,12 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public LinearSystemSolver takeToSmartSolver() {
-        return takeToSolver(LinearAlgebra.SolverFactory.SMART);
+    public LinearSystemSolver withSmartSolver() {
+        return withSolver(LinearAlgebra.SolverFactory.SMART);
     }
 
     @Override
-    public LinearSystemSolver takeToSolver(LinearAlgebra.SolverFactory factory) {
+    public LinearSystemSolver withSolver(LinearAlgebra.SolverFactory factory) {
         return factory.create(this);
     }
 

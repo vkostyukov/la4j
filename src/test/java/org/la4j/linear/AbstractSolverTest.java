@@ -25,7 +25,6 @@ import junit.framework.TestCase;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.MockVector;
 import org.la4j.vector.Vector;
@@ -36,11 +35,12 @@ public abstract class AbstractSolverTest extends TestCase {
                             double coefficientMatrix[][], 
                             double rightHandVector[]) {
 
-        for (Factory factory: Matrices.FACTORIES) {
+        for (Factory factory: LinearAlgebra.FACTORIES) {
+
             Matrix a = factory.createMatrix(coefficientMatrix);
             Vector b = factory.createVector(rightHandVector);
 
-            LinearSystemSolver solver = a.takeToSolver(solverFactory);
+            LinearSystemSolver solver = a.withSolver(solverFactory);
             Vector x = solver.solve(b, factory);
 
             assertEquals(new MockVector(b), new MockVector(a.multiply(x)));

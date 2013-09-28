@@ -861,25 +861,20 @@ public interface Matrix extends Externalizable {
     Vector toColumnVector(Factory factory);
 
     /**
-     * Takes this matrix to Smart Solver, which uses the most efficient solver internally for this matrix.
+     * Creates a new smart solver of this matrix. Smart solver uses the most efficient solver.
      *
      * @return
      */
-    LinearSystemSolver takeToSmartSolver();
+    LinearSystemSolver withSmartSolver();
 
     /**
-     * Takes this matrix to given solver factory.
+     * Creates a new solver by given {@code factory} of this matrix.
      *
      * @param factory
      * @return
      */
-    LinearSystemSolver takeToSolver(LinearAlgebra.SolverFactory factory);
+    LinearSystemSolver withSolver(LinearAlgebra.SolverFactory factory);
 
-    /**
-     * Wraps this matrix within a Smart Inverter, which uses the most efficient inverter internally for this matrix.
-     *
-     * @return
-     */
     //MatrixInverter takeToSmartInverter();
 
     // TODO: This is a new API for all major things
@@ -891,7 +886,7 @@ public interface Matrix extends Externalizable {
         // Solving
         Matrix a = new Basic2DMatrix(...);
         Vector b = new BasicVector(...);
-        LinearSystemSolver solver = a.takeToSolver(LinearAlgebra.JACOBI_FACTORY);
+        LinearSystemSolver solver = a.withSmartSolver(LinearAlgebra.JACOBI_FACTORY);
         Vector x = solver.solve(b, Matrices.CRS_FACTORY);
 
         // Decomposing
@@ -903,8 +898,8 @@ public interface Matrix extends Externalizable {
         Matrix aa = inverter.invert();
 
         // Using Smart Things
-        LinearSystemSolver smartSolver = a.takeToSmartSolver();
-        Vector xx = smartSolver.solve(b);
+        LinearSystemSolver smartSolver = a.withSmartSolver();
+        Vector xx = smartSolver.solve(b, LinearAlgebra.SPARSE_FACTORY);
 
         MatrixInverter smartInverter = a.takeToSmartInverter();
         Matrix aaa = smartInverter.invert();
