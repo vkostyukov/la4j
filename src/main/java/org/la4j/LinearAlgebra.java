@@ -20,8 +20,20 @@
 
 package org.la4j;
 
-import org.la4j.factory.*;
-import org.la4j.linear.*;
+import org.la4j.factory.Basic1DFactory;
+import org.la4j.factory.Basic2DFactory;
+import org.la4j.factory.CCSFactory;
+import org.la4j.factory.CRSFactory;
+import org.la4j.factory.Factory;
+import org.la4j.factory.SafeFactory;
+import org.la4j.linear.GaussianSolver;
+import org.la4j.linear.JacobiSolver;
+import org.la4j.linear.LUSolver;
+import org.la4j.linear.LinearSystemSolver;
+import org.la4j.linear.QRSolver;
+import org.la4j.linear.SeidelSolver;
+import org.la4j.linear.SquareRootSolver;
+import org.la4j.linear.SweepSolver;
 import org.la4j.matrix.Matrix;
 
 /**

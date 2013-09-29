@@ -23,23 +23,33 @@
 
 package org.la4j.matrix;
 
-import java.io.InputStream;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 import org.la4j.LinearAlgebra;
-import org.la4j.decomposition.*;
+import org.la4j.decomposition.CholeskyDecompositor;
+import org.la4j.decomposition.EigenDecompositor;
+import org.la4j.decomposition.LUDecompositor;
+import org.la4j.decomposition.MatrixDecompositor;
+import org.la4j.decomposition.QRDecompositor;
+import org.la4j.decomposition.RawLUDecompositor;
+import org.la4j.decomposition.RawQRDecompositor;
+import org.la4j.decomposition.SingularValueDecompositor;
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.CCSFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
-import org.la4j.factory.SafeFactory;
 import org.la4j.inversion.GaussianInverter;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
-import org.la4j.linear.*;
+import org.la4j.linear.GaussianSolver;
+import org.la4j.linear.JacobiSolver;
+import org.la4j.linear.LUSolver;
+import org.la4j.linear.LinearSystem;
+import org.la4j.linear.LinearSystemSolver;
+import org.la4j.linear.QRSolver;
+import org.la4j.linear.SeidelSolver;
+import org.la4j.linear.SquareRootSolver;
+import org.la4j.linear.SweepSolver;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -54,6 +64,10 @@ import org.la4j.matrix.source.SafeMatrixSource;
 import org.la4j.matrix.source.StreamMatrixSource;
 import org.la4j.matrix.source.UnsafeMatrixSource;
 import org.la4j.vector.Vector;
+
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public final class Matrices {
 
@@ -757,7 +771,7 @@ public final class Matrices {
     /**
      * The {@link CholeskyDecompositor} singleton instance.
      */
-    public static final MatrixDecompositor CHOLESKY_DECOMPOSITOR = 
+    public static final MatrixDecompositor CHOLESKY_DECOMPOSITOR =
             new CholeskyDecompositor();
 
     /**
@@ -833,7 +847,7 @@ public final class Matrices {
      * The {@link SquareRootSolver} singleton instance.
      */
     @Deprecated
-    public static final LinearSystemSolver SQUARE_ROOT_SOLVER = 
+    public static final LinearSystemSolver SQUARE_ROOT_SOLVER =
             new SquareRootSolver(DEFAULT_FACTORY.createMatrix());
 
     /**
