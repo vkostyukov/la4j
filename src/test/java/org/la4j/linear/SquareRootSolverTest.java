@@ -33,7 +33,7 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -22.0 };
 
-        performTest(LinearAlgebra.SolverFactory.SQUARE_ROOT, a, b);
+        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
     }
 
     public void testSolve_2x2() {
@@ -45,7 +45,7 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -77.0, 768.6 };
 
-        performTest(LinearAlgebra.SolverFactory.SQUARE_ROOT, a, b);
+        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
     }
 
     public void testSolve_3x3() {
@@ -58,7 +58,7 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.0, 2.0, 0.0 };
 
-        performTest(LinearAlgebra.SolverFactory.SQUARE_ROOT, a, b);
+        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
     }
 
     public void testSolve_3x3_2() {
@@ -71,7 +71,7 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -45.0, -10.0, 81.0 };
 
-        performTest(LinearAlgebra.SolverFactory.SQUARE_ROOT, a, b);
+        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
     }
 
     public void testSolve_4x4() {
@@ -85,7 +85,7 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -276.0, 29.0, -439.0, -89.0 };
 
-        performTest(LinearAlgebra.SolverFactory.SQUARE_ROOT, a, b);
+        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
     }
 
     public void testSolve_5x5() {
@@ -100,6 +100,6 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 104.0, -256.0, -45.0, 54.0, -143.8 };
 
-        performTest(LinearAlgebra.SolverFactory.SQUARE_ROOT, a, b);
+        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
     }
 }

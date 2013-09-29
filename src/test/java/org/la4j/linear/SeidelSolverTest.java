@@ -33,7 +33,7 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 11.0 };
 
-        performTest(LinearAlgebra.SolverFactory.SEIDEL, a, b);
+        performTest(LinearAlgebra.SEIDEL, a, b);
     }
 
     public void testSolve_2x2() {
@@ -45,7 +45,7 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -20.0, -10.0 };
 
-        performTest(LinearAlgebra.SolverFactory.SEIDEL, a, b);
+        performTest(LinearAlgebra.SEIDEL, a, b);
     }
 
     public void testSolve_3x3() {
@@ -58,7 +58,7 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.0, 2.0, 0.0 };
 
-        performTest(LinearAlgebra.SolverFactory.SEIDEL, a, b);
+        performTest(LinearAlgebra.SEIDEL, a, b);
     }
 
     public void testSolve_3x3_2() {
@@ -71,7 +71,7 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 6.8, -10.1, -36.9 };
 
-        performTest(LinearAlgebra.SolverFactory.SEIDEL, a, b);
+        performTest(LinearAlgebra.SEIDEL, a, b);
     }
 
     public void testSolve_4x4() {
@@ -85,7 +85,7 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -3.9, -5.4, 2.1, 18.4 };
 
-        performTest(LinearAlgebra.SolverFactory.SEIDEL, a, b);
+        performTest(LinearAlgebra.SEIDEL, a, b);
     }
 
     public void testSolve_5x5() {
@@ -100,6 +100,6 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.07, -13.29, -12.45, -41.8, -32.8 };
 
-        performTest(LinearAlgebra.SolverFactory.SEIDEL, a, b);
+        performTest(LinearAlgebra.SEIDEL, a, b);
     }
 }

@@ -34,13 +34,13 @@ import org.la4j.factory.CCSFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.factory.SafeFactory;
-import org.la4j.inversion.GaussianInverter;
+import org.la4j.inversion.GaussJordanInverter;
 import org.la4j.inversion.MatrixInverter;
+import org.la4j.linear.ForwardBackSubstitutionSolver;
 import org.la4j.linear.GaussianSolver;
 import org.la4j.linear.JacobiSolver;
-import org.la4j.linear.LUSolver;
+import org.la4j.linear.LeastSquaresSolver;
 import org.la4j.linear.LinearSystemSolver;
-import org.la4j.linear.QRSolver;
 import org.la4j.linear.SeidelSolver;
 import org.la4j.linear.SquareRootSolver;
 import org.la4j.linear.SweepSolver;
@@ -113,16 +113,16 @@ public final class LinearAlgebra {
                 return new SeidelSolver(matrix);
             }
         },
-        LU {
+        FORWARD_BACK_SUBSTITUTION {
             @Override
             public LinearSystemSolver create(Matrix matrix) {
-                return new LUSolver(matrix);
+                return new ForwardBackSubstitutionSolver(matrix);
             }
         },
-        QR {
+        LEAST_SQUARES {
             @Override
             public LinearSystemSolver create(Matrix matrix) {
-                return new QRSolver(matrix);
+                return new LeastSquaresSolver(matrix);
             }
         },
         SQUARE_ROOT {
@@ -142,34 +142,84 @@ public final class LinearAlgebra {
             public LinearSystemSolver create(Matrix matrix) {
                 // TODO: We can do it smarter in future
                 if (matrix.rows() == matrix.columns()) {
-                    return new LUSolver(matrix);
+                    return new ForwardBackSubstitutionSolver(matrix);
                 } else if (matrix.rows() > matrix.columns()) {
-                    return new QRSolver(matrix);
+                    return new LeastSquaresSolver(matrix);
                 }
 
-                throw new IllegalArgumentException("This coefficient matrix can not be used with any solver.");
+                throw new IllegalArgumentException("Underdetermined system of linear equations can not be solved.");
             }
         };
 
         public abstract LinearSystemSolver create(Matrix matrix);
     }
 
+    /**
+     * References to the Gaussian solver factory.
+     */
+    public static final SolverFactory GAUSSIAN = SolverFactory.GAUSSIAN;
+
+    /**
+     * References to the Jacobi solver factory.
+     */
+    public static final SolverFactory JACOBI = SolverFactory.JACOBI;
+
+    /**
+     * References to the Seidel solver factory.
+     */
+    public static final SolverFactory SEIDEL = SolverFactory.SEIDEL;
+
+    /**
+     * References to the Least Squares solver factory.
+     */
+    public static final SolverFactory LEAST_SQUARES = SolverFactory.LEAST_SQUARES;
+
+    /**
+     * References to the Forward-Back Substitution solver factory.
+     */
+    public static final SolverFactory FORWARD_BACK_SUBSTITUTION = SolverFactory.FORWARD_BACK_SUBSTITUTION;
+
+    /**
+     * References to the Square Root solver factory.
+     */
+    public static final SolverFactory SQUARE_ROOT = SolverFactory.SQUARE_ROOT;
+
+    /**
+     * References to the Smart solver factory.
+     */
+    public static final SolverFactory SOLVER = SolverFactory.SMART;
+
+    /**
+     * References to the Sweep solver factory.
+     */
+    public static final SolverFactory SWEEP = SolverFactory.SWEEP;
+
     public static enum InverterFactory {
-        GAUSSIAN {
+        GAUSS_JORDAN {
             @Override
             public MatrixInverter create(Matrix matrix) {
-                return new GaussianInverter(matrix);
+                return new GaussJordanInverter(matrix);
             }
         },
         SMART {
             @Override
             public MatrixInverter create(Matrix matrix) {
-                return new GaussianInverter(matrix);
+                return new GaussJordanInverter(matrix);
             }
         };
 
         public abstract MatrixInverter create(Matrix matrix);
     }
+
+    /**
+     * Reference to the Gaussian inverter factory.
+     */
+    public static final InverterFactory GAUSS_JORDAN = InverterFactory.GAUSS_JORDAN;
+
+    /**
+     * Reference to the Smart inverter factory.
+     */
+    public static final InverterFactory INVERTER = InverterFactory.SMART;
 
     public static enum DecompositorFactory {
           CHOLESKY {
@@ -191,6 +241,10 @@ public final class LinearAlgebra {
               }
           },
           LU {
+              public static final int L = 0;
+              public static final int U = 1;
+              public static final int P = 2;
+
               @Override
               public MatrixDecompositor create(Matrix matrix) {
                   return new LUDecompositor(matrix);
@@ -217,6 +271,41 @@ public final class LinearAlgebra {
 
         public abstract MatrixDecompositor create(Matrix matrix);
     }
+
+    /**
+     * Reference to Cholesky decompositor factory.
+     */
+    public static final DecompositorFactory CHOLESKY = DecompositorFactory.CHOLESKY;
+
+    /**
+     * Reference to Eigen decompositor factory.
+     */
+    public static final DecompositorFactory EIGEN = DecompositorFactory.EIGEN;
+
+    /**
+     * Reference to Raw LU decompositor factory.
+     */
+    public static final DecompositorFactory RAW_LU = DecompositorFactory.RAW_LU;
+
+    /**
+     * Reference to LU decompositor factory.
+     */
+    public static final DecompositorFactory LU = DecompositorFactory.LU;
+
+    /**
+     * Reference to Raw QR decompositor factory.
+     */
+    public static final DecompositorFactory RAW_QR = DecompositorFactory.RAW_QR;
+
+    /**
+     * Reference to QR decompositor factory.
+     */
+     public static final DecompositorFactory QR = DecompositorFactory.QR;
+
+    /**
+     * Reference to SVD decompositor factory.
+     */
+    public static final DecompositorFactory SVD = DecompositorFactory.SVD;
 
     /**
      * The {@link org.la4j.factory.Basic1DFactory} singleton instance.

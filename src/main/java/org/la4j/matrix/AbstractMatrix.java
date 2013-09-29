@@ -221,7 +221,8 @@ public abstract class AbstractMatrix implements Matrix {
                    get(0, 0) * get(1, 2) * get(2, 1);
         }
 
-        Matrix lup[] = decompose(Matrices.LU_DECOMPOSITOR);
+        MatrixDecompositor decompositor = withDecompositor(LinearAlgebra.LU);
+        Matrix lup[] = decompositor.decompose(factory);
         Matrix u = lup[Matrices.LU_U];
         Matrix p = lup[Matrices.LU_P];
 
@@ -261,7 +262,8 @@ public abstract class AbstractMatrix implements Matrix {
         // handle small (1x1, 1xn, nx1, 2x2, 2xn, nx2, 3x3, 3xn, nx3) 
         // matrices without SVD
 
-        Matrix usv[] = decompose(Matrices.SINGULAR_VALUE_DECOMPOSITOR);
+        MatrixDecompositor decompositor = withDecompositor(LinearAlgebra.SVD);
+        Matrix usv[] = decompositor.decompose(factory);
         Matrix s = usv[Matrices.SVD_S];
         double tolerance = Math.max(rows, columns) * s.get(0, 0) * Matrices.EPS;
 
@@ -601,21 +603,25 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    @Deprecated
     public Matrix[] decompose(MatrixDecompositor decompositor) {
         return decompose(decompositor, factory);
     }
 
     @Override
+    @Deprecated
     public Matrix[] decompose(MatrixDecompositor decompositor, Factory factory) {
         return decompositor.decompose(this, factory);
     }
 
     @Override
+    @Deprecated
     public Matrix inverse(MatrixInverter inverter) {
         return inverse(inverter, factory);
     }
 
     @Override
+    @Deprecated
     public Matrix inverse(MatrixInverter inverter, Factory factory) {
         return inverter.inverse(this, factory);
     }
@@ -1030,18 +1036,8 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public LinearSystemSolver withSmartSolver() {
-        return withSolver(LinearAlgebra.SolverFactory.SMART);
-    }
-
-    @Override
     public LinearSystemSolver withSolver(LinearAlgebra.SolverFactory factory) {
         return factory.create(this);
-    }
-
-    @Override
-    public MatrixInverter withSmartInverter() {
-        return withInverter(LinearAlgebra.InverterFactory.SMART);
     }
 
     @Override

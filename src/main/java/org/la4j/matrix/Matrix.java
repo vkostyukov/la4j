@@ -915,26 +915,12 @@ public interface Matrix extends Externalizable {
     Vector toColumnVector(Factory factory);
 
     /**
-     * Creates a new smart solver of this matrix. Smart solver uses the most efficient solver.
-     *
-     * @return
-     */
-    LinearSystemSolver withSmartSolver();
-
-    /**
      * Creates a new solver by given {@code factory} of this matrix.
      *
      * @param factory
      * @return
      */
     LinearSystemSolver withSolver(LinearAlgebra.SolverFactory factory);
-
-    /**
-     * Creates a new smart inverter of this matrix. Smart inverter uses the most efficient interter.
-     *
-     * @return
-     */
-    MatrixInverter withSmartInverter();
 
     /**
      * Creates a new inverter by given {@code factory} of this matrix.

@@ -21,15 +21,17 @@
 
 package org.la4j.linear;
 
+import org.la4j.LinearAlgebra;
+import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 
-public class LUSolver extends AbstractSolver implements LinearSystemSolver {
+public class LeastSquaresSolver extends AbstractSolver implements LinearSystemSolver {
 
-    public LUSolver(Matrix a) {
+    public LeastSquaresSolver(Matrix a) {
         super(a);
     }
 
@@ -44,53 +46,54 @@ public class LUSolver extends AbstractSolver implements LinearSystemSolver {
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
         if (!suitableFor(linearSystem)) {
-            throw new IllegalArgumentException("This system can not be solved by LUSolver: rows != columns.");
+            fail("This system can not be solved with Least Squares Solver.");
         }
 
         int n = linearSystem.variables();
+        int m = linearSystem.equations();
 
         Matrix a = linearSystem.coefficientsMatrix();
         Vector b = linearSystem.rightHandVector();
 
-        // we use LU for this
-        Matrix[] lup = a.decompose(Matrices.RAW_LU_DECOMPOSITOR);
-        Matrix lu = lup[Matrices.RAW_LU_LU];
-        Matrix p = lup[Matrices.RAW_LU_P];
+        // we use QR for this
+        MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.RAW_QR);
+        Matrix[] qrr = decompositor.decompose(factory);
 
-        // checks whether the lu matrix is singular or not
-        for (int i = 0; i < n; i++) {
-            if (lu.get(i, i) == 0.0) {
-                throw new IllegalArgumentException("This system can not be solved: " +
-                                                   "coefficient matrix is singular.");
+        Matrix qr = qrr[Matrices.RAW_QR_QR];
+        Matrix r = qrr[Matrices.RAW_QR_R];
+
+        // check whether the matrix is full-rank or not
+        for (int i = 0; i < r.rows(); i++) {
+            if (r.get(i, i) == 0.0) {
+                fail("This system can not be solved: coefficient matrix is rank deficient.");
             }
         }
 
-        Vector x = factory.createVector(n);
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (p.get(i, j) != 0.0) {
-                    x.set(i, b.get(j));
-                    break;
-                }
-            }
-        }
+        Vector x = b.copy(factory);
 
         for (int j = 0; j < n; j++) {
-            for (int i = j + 1; i < n; i++) {
-                x.update(i, Vectors.asMinusFunction(x.get(j) * lu.get(i, j)));
+
+            double acc = 0.0;
+
+            for (int i = j; i < m; i++) {
+                acc += qr.get(i, j) * x.get(i);
+            }
+
+            acc = -acc / qr.get(j, j);
+            for (int i = j; i < m; i++) {
+                x.update(i, Vectors.asPlusFunction(acc * qr.get(i, j)));
             }
         }
 
         for (int j = n - 1; j >= 0; j--) {
-            x.update(j, Vectors.asDivFunction(lu.get(j, j)));
+            x.update(j, Vectors.asDivFunction(r.get(j, j)));
 
             for (int i = 0; i < j; i++) {
-                x.update(i, Vectors.asMinusFunction(x.get(j) * lu.get(i, j)));
+                x.update(i, Vectors.asMinusFunction(x.get(j) * qr.get(i, j)));
             }
         }
 
-        return x;
+        return x.slice(0, n);
     }
 
     @Override
@@ -101,6 +104,6 @@ public class LUSolver extends AbstractSolver implements LinearSystemSolver {
 
     @Override
     public boolean applicableTo(Matrix matrix) {
-        return matrix.rows() == matrix.columns();
+        return  matrix.rows() >= matrix.columns();
     }
 }

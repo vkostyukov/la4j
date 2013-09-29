@@ -33,7 +33,7 @@ public class GaussianSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -33.0 };
 
-        performTest(LinearAlgebra.SolverFactory.GAUSSIAN, a, b);
+        performTest(LinearAlgebra.GAUSSIAN, a, b);
     }
 
     public void testSolve_2x2() {
@@ -58,7 +58,7 @@ public class GaussianSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 7.0, -85.5, 0.5 };
 
-        performTest(LinearAlgebra.SolverFactory.GAUSSIAN, a, b);
+        performTest(LinearAlgebra.GAUSSIAN, a, b);
     }
 
     public void testSolve_4x4() {
@@ -72,7 +72,7 @@ public class GaussianSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.0, 2.0, 0.0, 3.0 };
 
-        performTest(LinearAlgebra.SolverFactory.GAUSSIAN, a, b);
+        performTest(LinearAlgebra.GAUSSIAN, a, b);
     }
 
     public void testSolve_5x5() {
@@ -87,6 +87,6 @@ public class GaussianSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 146.0, 486.0, 77.0, 282.0, -157.0 };
 
-        performTest(LinearAlgebra.SolverFactory.GAUSSIAN, a, b);
+        performTest(LinearAlgebra.GAUSSIAN, a, b);
     }
 }

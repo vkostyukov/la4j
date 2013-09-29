@@ -577,18 +577,8 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
-    public LinearSystemSolver withSmartSolver() {
-        return self.withSmartSolver();
-    }
-
-    @Override
     public LinearSystemSolver withSolver(LinearAlgebra.SolverFactory factory) {
         return self.withSolver(factory);
-    }
-
-    @Override
-    public MatrixInverter withSmartInverter() {
-        return self.withSmartInverter();
     }
 
     @Override

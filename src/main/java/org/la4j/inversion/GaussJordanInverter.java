@@ -29,11 +29,11 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
-public class GaussianInverter implements MatrixInverter {
+public class GaussJordanInverter implements MatrixInverter {
 
     private Matrix matrix;
 
-    public GaussianInverter(Matrix matrix) {
+    public GaussJordanInverter(Matrix matrix) {
         this.matrix = matrix;
     }
 
@@ -54,7 +54,7 @@ public class GaussianInverter implements MatrixInverter {
             b.set(i, 1.0);
 
             try {
-                LinearSystemSolver solver = matrix.withSolver(LinearAlgebra.SolverFactory.GAUSSIAN);
+                LinearSystemSolver solver = matrix.withSolver(LinearAlgebra.GAUSSIAN);
                 Vector x = solver.solve(b, factory);
                 result.setColumn(i, x);
             } catch (IllegalArgumentException ex) {

@@ -37,16 +37,16 @@ import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.CCSFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
-import org.la4j.inversion.GaussianInverter;
+import org.la4j.inversion.GaussJordanInverter;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
+import org.la4j.linear.ForwardBackSubstitutionSolver;
 import org.la4j.linear.GaussianSolver;
 import org.la4j.linear.JacobiSolver;
-import org.la4j.linear.LUSolver;
+import org.la4j.linear.LeastSquaresSolver;
 import org.la4j.linear.LinearSystem;
 import org.la4j.linear.LinearSystemSolver;
-import org.la4j.linear.QRSolver;
 import org.la4j.linear.SeidelSolver;
 import org.la4j.linear.SquareRootSolver;
 import org.la4j.linear.SweepSolver;
@@ -839,7 +839,7 @@ public final class Matrices {
             new SingularValueDecompositor(DEFAULT_FACTORY.createMatrix());
 
     /**
-     * The {@link GaussianInverter} singleton instance.
+     * The {@link GaussJordanInverter} singleton instance.
      *
      * <p>
      * This field is deprecated. Use {@link Matrix#withInverter(org.la4j.LinearAlgebra.InverterFactory)} instead.
@@ -847,11 +847,11 @@ public final class Matrices {
      */
     @Deprecated
     public static final MatrixInverter GAUSSIAN_INVERTER =
-            new GaussianInverter(DEFAULT_FACTORY.createMatrix());
+            new GaussJordanInverter(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The default matrix inverter singleton instance. References the 
-     * {@link GaussianInverter}.
+     * {@link GaussJordanInverter}.
      *
      * <p>
      * This field is deprecated. Use {@link Matrix#withInverter(org.la4j.LinearAlgebra.InverterFactory)} instead.
@@ -967,7 +967,7 @@ public final class Matrices {
             new SweepSolver(DEFAULT_FACTORY.createMatrix());
 
     /**
-     * The {@link QRSolver} (least squares solver) singleton instance.
+     * The {@link LeastSquaresSolver} singleton instance.
      * <p>
      * This field is deprecated. Use {@link Matrix#withSolver(org.la4j.LinearAlgebra.SolverFactory)} instead. Like this:
      * <br /><br />
@@ -976,20 +976,19 @@ public final class Matrices {
      *     <br />
      *     Vector b = new BasicVector(...);
      *     <br />
-     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.QR);
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.LEAST_SQUARES);
      *     <br />
      *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
      *     <br />
      * </code>
      * </p>
-
      */
     @Deprecated
-    public static final LinearSystemSolver QR_SOLVER =
-            new QRSolver(DEFAULT_FACTORY.createMatrix());
+    public static final LinearSystemSolver LEAST_SQUARES_SOLVER =
+            new LeastSquaresSolver(DEFAULT_FACTORY.createMatrix());
 
     /**
-     * The {@link LUSolver} (simple square solver) singleton instance.
+     * The {@link ForwardBackSubstitutionSolver} (simple square solver) singleton instance.
      * <p>
      * This field is deprecated. Use {@link Matrix#withSolver(org.la4j.LinearAlgebra.SolverFactory)} instead. Like this:
      * <br /><br />
@@ -1006,14 +1005,14 @@ public final class Matrices {
      * </p>
      */
     @Deprecated
-    public static final LinearSystemSolver LU_SOLVER =
-            new LUSolver(DEFAULT_FACTORY.createMatrix());
+    public static final LinearSystemSolver FORWARD_BACK_SUBSTITUTION_SOLVER =
+            new ForwardBackSubstitutionSolver(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The default linear system solver singleton instance. References the 
      * {@link Matrices#GAUSSIAN_SOLVER}.
      * <p>
-     * This field is deprecated. Use {@link org.la4j.matrix.Matrix#withSmartSolver()} instead. Like this:
+     * This field is deprecated. Use {@link org.la4j.matrix.Matrix#withSolver(org.la4j.LinearAlgebra.SolverFactory)} instead. Like this:
      * <br /><br />
      * <code>
      *     Matrix a = new Basic2DMatrix(...);

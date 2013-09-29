@@ -21,15 +21,17 @@
 
 package org.la4j.linear;
 
+import org.la4j.LinearAlgebra;
+import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 
-public class QRSolver extends AbstractSolver implements LinearSystemSolver {
+public class ForwardBackSubstitutionSolver extends AbstractSolver implements LinearSystemSolver {
 
-    public QRSolver(Matrix a) {
+    public ForwardBackSubstitutionSolver(Matrix a) {
         super(a);
     }
 
@@ -40,66 +42,67 @@ public class QRSolver extends AbstractSolver implements LinearSystemSolver {
     }
 
     @Override
+    @Deprecated
     public Vector solve(LinearSystem linearSystem, Factory factory) {
 
         if (!suitableFor(linearSystem)) {
-            throw new IllegalArgumentException("This system can not be solved with QRSolver.");
+            fail("This system can not be solved by LUSolver: rows != columns.");
         }
 
         int n = linearSystem.variables();
-        int m = linearSystem.equations();
 
         Matrix a = linearSystem.coefficientsMatrix();
         Vector b = linearSystem.rightHandVector();
 
-        // we use QR for this
-        Matrix[] qrr = a.decompose(Matrices.RAW_QR_DECOMPOSITOR);
+        // we use Raw LU for this
+        MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.RAW_LU);
+        Matrix[] lup = decompositor.decompose(factory);
+        Matrix lu = lup[Matrices.RAW_LU_LU];
+        Matrix p = lup[Matrices.RAW_LU_P];
 
-        Matrix qr = qrr[Matrices.RAW_QR_QR];
-        Matrix r = qrr[Matrices.RAW_QR_R];
-
-        // check whether the matrix is full-rank or not
-        for (int i = 0; i < r.rows(); i++) {
-            if (r.get(i, i) == 0.0) {
-                throw new IllegalArgumentException("This system can not be solved: coefficient matrix " +
-                                                   "is rank deficient.");
+        // checks whether the lu matrix is singular or not
+        for (int i = 0; i < n; i++) {
+            if (lu.get(i, i) == 0.0) {
+                fail("This system can not be solved: coefficient matrix is singular.");
             }
         }
 
-        Vector x = b.copy(factory);
+        Vector x = factory.createVector(n);
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (p.get(i, j) != 0.0) {
+                    x.set(i, b.get(j));
+                    break;
+                }
+            }
+        }
 
         for (int j = 0; j < n; j++) {
-
-            double acc = 0.0;
-
-            for (int i = j; i < m; i++) {
-                acc += qr.get(i, j) * x.get(i);
-            }
-
-            acc = -acc / qr.get(j, j);
-            for (int i = j; i < m; i++) {
-                x.update(i, Vectors.asPlusFunction(acc * qr.get(i, j)));
+            for (int i = j + 1; i < n; i++) {
+                x.update(i, Vectors.asMinusFunction(x.get(j) * lu.get(i, j)));
             }
         }
 
         for (int j = n - 1; j >= 0; j--) {
-            x.update(j, Vectors.asDivFunction(r.get(j, j)));
+            x.update(j, Vectors.asDivFunction(lu.get(j, j)));
 
             for (int i = 0; i < j; i++) {
-                x.update(i, Vectors.asMinusFunction(x.get(j) * qr.get(i, j)));
+                x.update(i, Vectors.asMinusFunction(x.get(j) * lu.get(i, j)));
             }
         }
 
-        return x.slice(0, n);
+        return x;
     }
 
     @Override
+    @Deprecated
     public boolean suitableFor(LinearSystem linearSystem) {
         return applicableTo(linearSystem.coefficientsMatrix());
     }
 
     @Override
     public boolean applicableTo(Matrix matrix) {
-        return  matrix.rows() >= matrix.columns();
+        return matrix.rows() == matrix.columns();
     }
 }

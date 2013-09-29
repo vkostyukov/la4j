@@ -22,19 +22,18 @@
 package org.la4j.inversion;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.matrix.Matrices;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class GaussianInverterTest extends AbstractInverterTest {
+public class GaussJordanInverterTest extends AbstractInverterTest {
 
     @Override
     public LinearAlgebra.InverterFactory inverterFactory() {
-        return LinearAlgebra.InverterFactory.GAUSSIAN;
+        return LinearAlgebra.GAUSS_JORDAN;
     }
 
     public static Test suite() {
-        return new TestSuite(GaussianInverterTest.class);
+        return new TestSuite(GaussJordanInverterTest.class);
     }
 }

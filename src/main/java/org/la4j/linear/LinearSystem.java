@@ -43,8 +43,8 @@ public class LinearSystem implements Externalizable {
         Matrices.JACOBI_SOLVER,
         Matrices.SEIDEL_SOLVER,
         Matrices.SQUARE_ROOT_SOLVER,
-        Matrices.LU_SOLVER,
-        Matrices.QR_SOLVER
+        Matrices.FORWARD_BACK_SUBSTITUTION_SOLVER,
+        Matrices.LEAST_SQUARES_SOLVER
     };
 
     private int equations;

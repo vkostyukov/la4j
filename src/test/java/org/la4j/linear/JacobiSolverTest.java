@@ -33,7 +33,7 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 12.0 };
 
-        performTest(LinearAlgebra.SolverFactory.JACOBI, a, b);
+        performTest(LinearAlgebra.JACOBI, a, b);
     }
 
     public void testSolve_2x2() {
@@ -45,7 +45,7 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 257.0, 212.0 };
 
-        performTest(LinearAlgebra.SolverFactory.JACOBI, a, b);
+        performTest(LinearAlgebra.JACOBI, a, b);
     }
 
     public void testSolve_3x3() {
@@ -58,7 +58,7 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.0, 2.0, 0.0 };
 
-        performTest(LinearAlgebra.SolverFactory.JACOBI, a, b);
+        performTest(LinearAlgebra.JACOBI, a, b);
     }
 
     public void testSolve_3x3_2() {
@@ -71,7 +71,7 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 4.6, 3.3, -38.9 };
 
-        performTest(LinearAlgebra.SolverFactory.JACOBI, a, b);
+        performTest(LinearAlgebra.JACOBI, a, b);
     }
 
     public void testSolve_4x4() {
@@ -85,7 +85,7 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -3.9, -5.4, 2.1, 18.4 };
 
-        performTest(LinearAlgebra.SolverFactory.JACOBI, a, b);
+        performTest(LinearAlgebra.JACOBI, a, b);
     }
 
     public void testSolve_5x5() {
@@ -100,6 +100,6 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.07, -13.29, -12.45, -41.8, -32.8 };
 
-        performTest(LinearAlgebra.SolverFactory.JACOBI, a, b);
+        performTest(LinearAlgebra.JACOBI, a, b);
     }
 }
