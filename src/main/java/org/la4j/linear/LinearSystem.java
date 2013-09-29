@@ -110,18 +110,94 @@ public class LinearSystem implements Externalizable {
         return b;
     }
 
+    /**
+     * <p>
+     * This method is deprecated. Use the following instead:
+     * <br />
+     * <code>
+     * <br />
+     *     Matrix a = new Basic2DMatrix(...);
+     * <br />
+     *     Vector b = new BasicVector(...);
+     * <br />
+     *     LinearSystemSolver solver = a.withSmartSolver();
+     * <br />
+     *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
+     * <br />
+     * </code>
+     * </p>
+     *
+     * @return
+     */
     public Vector solve() {
         return solve(solver, factory);
     }
 
+    /**
+     * <p>
+     * This method is deprecated. Use the following instead:
+     * <br />
+     * <code>
+     * <br />
+     *     Matrix a = new Basic2DMatrix(...);
+     * <br />
+     *     Vector b = new BasicVector(...);
+     * <br />
+     *     LinearSystemSolver solver = a.withSmartSolver();
+     * <br />
+     *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
+     * <br />
+     * </code>
+     * </p>
+     *
+     * @return
+     */
     public Vector solve(Factory factory) {
         return solve(solver, factory);
     }
 
+    /**
+     * <p>
+     * This method is deprecated. Use the following instead:
+     * <br />
+     * <code>
+     * <br />
+     *     Matrix a = new Basic2DMatrix(...);
+     * <br />
+     *     Vector b = new BasicVector(...);
+     * <br />
+     *     LinearSystemSolver solver = a.withSmartSolver();
+     * <br />
+     *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
+     * <br />
+     * </code>
+     * </p>
+     *
+     * @return
+     */
     public Vector solve(LinearSystemSolver solver) {
         return solve(solver, factory);
     }
 
+    /**
+     * <p>
+     * This method is deprecated. Use the following instead:
+     * <br />
+     * <code>
+     * <br />
+     *     Matrix a = new Basic2DMatrix(...);
+     * <br />
+     *     Vector b = new BasicVector(...);
+     * <br />
+     *     LinearSystemSolver solver = a.withSmartSolver();
+     * <br />
+     *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
+     * <br />
+     * </code>
+     * </p>
+     *
+     * @return
+     */
     public Vector solve(LinearSystemSolver solver, Factory factory) {
         return solver.solve(this, factory);
     }

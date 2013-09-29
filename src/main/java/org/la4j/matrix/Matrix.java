@@ -469,6 +469,19 @@ public interface Matrix extends Externalizable {
 
     /**
      * Inverts this matrix.
+     * <p>
+     * This method is deprecated. Use the following instead:
+     * <br />
+     * <code>
+     * <br />
+     *     Matrix a = new Basic2DMatrix(...);
+     * <br />
+     *     MatrixInverter inverter = a.withSmartInverter();
+     * <br />
+     *     Matrix b = inverter.inverse();
+     * <br />
+     * </code>
+     * </p>
      * 
      * @param inverter
      */
@@ -477,7 +490,20 @@ public interface Matrix extends Externalizable {
 
     /**
      * Inverts this matrix.
-     * 
+     * <p>
+     * This method is deprecated. Use the following instead:
+     * <br />
+     * <code>
+     * <br />
+     *     Matrix a = new Basic2DMatrix(...);
+     * <br />
+     *     MatrixInverter inverter = a.withSmartInverter();
+     * <br />
+     *     Matrix b = inverter.inverse();
+     * <br />
+     * </code>
+     * </p>
+     *
      * @param inverter
      * @param factory
      */
