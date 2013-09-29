@@ -27,7 +27,7 @@ import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 
-public class LUSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
+public class LUSolver extends AbstractSolver implements LinearSystemSolver {
 
     public LUSolver(Matrix a) {
         super(a);

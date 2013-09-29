@@ -33,10 +33,23 @@ import org.la4j.matrix.Matrix;
 public interface MatrixDecompositor {
 
     /**
-     * 
+     * <p>
+     * This method is deprecated. Use the following instead:
+     * <br />
+     * <code>
+     * <br />
+     *     Matrix a = new Basic2DMatrix(...);
+     * <br />
+     *     MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.DecompositorFactory.LU);
+     * <br />
+     *     Matrix[] lup = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+     * <br />
+     * </code>
+     * </p>
      * @param matrix
      * @param factory
      * @return
      */
+    @Deprecated
     Matrix[] decompose(Matrix matrix, Factory factory);
 }

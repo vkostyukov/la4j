@@ -24,10 +24,26 @@ package org.la4j.inversion;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 
-public interface MatrixInverter {
+import java.io.Serializable;
+
+public interface MatrixInverter extends Serializable {
 
     /**
      * Inverse given matrix.
+     *
+     * <p>
+     * This method is deprecated. Use the following instead:
+     * <br />
+     * <code>
+     * <br />
+     *     Matrix a = new Basic2DMatrix(...);
+     * <br />
+     *     MatrixInverter inverter = a.withSmartInverter();
+     * <br />
+     *     Matrix b = inverter.inverse(LinearAlgebra.DENSE_FACTORY);
+     * <br />
+     * </code>
+     * </p>
      *
      * @param matrix
      * @param factory

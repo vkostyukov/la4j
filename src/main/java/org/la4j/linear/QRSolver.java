@@ -27,7 +27,7 @@ import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 
-public class QRSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
+public class QRSolver extends AbstractSolver implements LinearSystemSolver {
 
     public QRSolver(Matrix a) {
         super(a);

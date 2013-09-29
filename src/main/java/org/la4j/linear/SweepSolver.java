@@ -32,7 +32,7 @@ import org.la4j.vector.Vectors;
  * href="http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm"> Sweep (or
  * Tridiagonal matrix, or Thomas) method </a> for solving linear systems.
  */
-public class SweepSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
+public class SweepSolver extends AbstractSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 

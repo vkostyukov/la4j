@@ -33,7 +33,7 @@ import org.la4j.vector.Vector;
  * <a href="http://mathworld.wolfram.com/JacobiMethod.html"> here.</a>
  * </p>
  */
-public class JacobiSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
+public class JacobiSolver extends AbstractSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 

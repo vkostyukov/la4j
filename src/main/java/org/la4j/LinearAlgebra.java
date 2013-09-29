@@ -20,6 +20,7 @@
 
 package org.la4j;
 
+import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.CCSFactory;
@@ -161,6 +162,17 @@ public final class LinearAlgebra {
         };
 
         public abstract MatrixInverter create(Matrix matrix);
+    }
+
+    public static enum DecompositorFactory {
+          CHOLESKY {
+              @Override
+              public MatrixDecompositor create(Matrix matrix) {
+                  return null;  //To change body of implemented methods use File | Settings | File Templates.
+              }
+          };
+
+        public abstract MatrixDecompositor create(Matrix matrix);
     }
 
     /**

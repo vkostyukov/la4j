@@ -770,43 +770,71 @@ public final class Matrices {
 
     /**
      * The {@link CholeskyDecompositor} singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * </p>
      */
+    @Deprecated
     public static final MatrixDecompositor CHOLESKY_DECOMPOSITOR =
             new CholeskyDecompositor();
 
     /**
      * The {@link EigenDecompositor} singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * </p>
      */
+    @Deprecated
     public static final MatrixDecompositor EIGEN_DECOMPOSITOR = 
             new EigenDecompositor();
 
     /**
      * The {@link LUDecompositor} singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * </p>
      */
+    @Deprecated
     public static final MatrixDecompositor LU_DECOMPOSITOR = 
             new LUDecompositor();
 
     /**
      * The {@link RawLUDecompositor} singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * </p>
      */
+    @Deprecated
     public static final MatrixDecompositor RAW_LU_DECOMPOSITOR =
             new RawLUDecompositor();
 
     /**
      * The {@link QRDecompositor} singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * </p>
      */
+    @Deprecated
     public static final MatrixDecompositor QR_DECOMPOSITOR = 
             new QRDecompositor();
 
     /**
      * The {@link RawQRDecompositor} singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * </p>
      */
+    @Deprecated
     public static final MatrixDecompositor RAW_QR_DECOMPOSITOR =
             new RawQRDecompositor();
 
     /**
      * The {@link SingularValueDecompositor} singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * </p>
      */
+    @Deprecated
     public static final MatrixDecompositor SINGULAR_VALUE_DECOMPOSITOR = 
             new SingularValueDecompositor();
 

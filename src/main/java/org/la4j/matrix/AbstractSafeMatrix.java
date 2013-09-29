@@ -597,6 +597,11 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public MatrixDecompositor withDecompositor(LinearAlgebra.DecompositorFactory factory) {
+        return self.withDecompositor(factory);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return self.equals(obj);
     }

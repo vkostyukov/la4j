@@ -32,7 +32,7 @@ import org.la4j.vector.Vector;
  * <a href="http://mathworld.wolfram.com/GaussianElimination.html"> here.</a>
  * </p>
  */
-public class GaussianSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
+public class GaussianSolver extends AbstractSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 

@@ -31,7 +31,7 @@ import org.la4j.vector.Vector;
  * href="http://mathworld.wolfram.com/SquareRootMethod.html"> Square Root method
  * </a> for solving linear systems.
  */
-public class SquareRootSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
+public class SquareRootSolver extends AbstractSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 

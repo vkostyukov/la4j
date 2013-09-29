@@ -32,7 +32,7 @@ import org.la4j.vector.Vector;
  * <a href="http://mathworld.wolfram.com/Gauss-SeidelMethod.html"> Seidel method
  * </a> for solving linear systems.
  */
-public class SeidelSolver extends AbstractLinearSystemSolver implements LinearSystemSolver {
+public class SeidelSolver extends AbstractSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 

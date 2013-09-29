@@ -453,18 +453,44 @@ public interface Matrix extends Externalizable {
 
     /**
      * Decomposes this matrix.
-     * 
+     * <p>
+     * This method is deprecated. Use the following instead:
+     * <br />
+     * <code>
+     * <br />
+     *     Matrix a = new Basic2DMatrix(...);
+     * <br />
+     *     MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.DecompositorFactory.LU);
+     * <br />
+     *     Matrix[] lup = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+     * <br />
+     * </code>
+     * </p>
      * @param decompositor
      */
+    @Deprecated
     Matrix[] decompose(MatrixDecompositor decompositor);
 
     /**
      * Decomposes this matrix with <code>decompositor</code> and
      * <code>factory</code>.
-     *
+     * <p>
+     * This method is deprecated. Use the following instead:
+     * <br />
+     * <code>
+     * <br />
+     *     Matrix a = new Basic2DMatrix(...);
+     * <br />
+     *     MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.DecompositorFactory.LU);
+     * <br />
+     *     Matrix[] lup = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+     * <br />
+     * </code>
+     * </p>
      * @param decompositor
      * @param factory
      */
+    @Deprecated
     Matrix[] decompose(MatrixDecompositor decompositor, Factory factory);
 
     /**
@@ -917,4 +943,12 @@ public interface Matrix extends Externalizable {
      * @return
      */
     MatrixInverter withInverter(LinearAlgebra.InverterFactory factory);
+
+    /**
+     * Creates a new decompositor by given {@code factory} of this matrix.
+     *
+     * @param factory
+     * @return
+     */
+    MatrixDecompositor withDecompositor(LinearAlgebra.DecompositorFactory factory);
 }

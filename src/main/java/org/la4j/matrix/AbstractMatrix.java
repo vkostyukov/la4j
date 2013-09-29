@@ -1050,6 +1050,11 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public MatrixDecompositor withDecompositor(LinearAlgebra.DecompositorFactory factory) {
+        return factory.create(this);
+    }
+
+    @Override
     public int hashCode() {
 
         int result = 17;

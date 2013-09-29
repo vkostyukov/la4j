@@ -24,13 +24,13 @@ package org.la4j.linear;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
-public abstract class AbstractLinearSystemSolver implements LinearSystemSolver {
+public abstract class AbstractSolver implements LinearSystemSolver {
 
     protected Matrix a;
     protected int unknowns;
     protected int equations;
 
-    protected AbstractLinearSystemSolver(Matrix a) {
+    protected AbstractSolver(Matrix a) {
         if (!applicableTo(a)) {
             fail("Given coefficient matrix can not be used with this solver.");
         }
