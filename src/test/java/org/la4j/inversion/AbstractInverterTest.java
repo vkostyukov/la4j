@@ -23,22 +23,22 @@ package org.la4j.inversion;
 
 import junit.framework.TestCase;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.MockMatrix;
 
 public abstract class AbstractInverterTest extends TestCase {
 
-    public abstract MatrixInverter inverter();
+    public abstract LinearAlgebra.InverterFactory inverterFactory();
 
-    protected void performTest(double input[][], MatrixInverter inverter) {
+    protected void performTest(double input[][], LinearAlgebra.InverterFactory inverterFactory) {
 
-        for (Factory factory: Matrices.FACTORIES) {
+        for (Factory factory: LinearAlgebra.FACTORIES) {
 
             Matrix a = factory.createMatrix(input);
-
-            Matrix b = a.inverse(inverter, factory);
+            MatrixInverter inverter = a.withInverter(inverterFactory);
+            Matrix b = inverter.inverse(factory);
 
             // a * a^-1 = e
             Matrix c = a.multiply(b);
@@ -54,7 +54,7 @@ public abstract class AbstractInverterTest extends TestCase {
                 { -0.5 }
         };
 
-        performTest(input, inverter());
+        performTest(input, inverterFactory());
     }
 
     public void testInverse_2x2 () {
@@ -64,7 +64,7 @@ public abstract class AbstractInverterTest extends TestCase {
                 { 0.0, 1.0 }
         };
 
-        performTest(input, inverter());
+        performTest(input, inverterFactory());
     }
 
     public void testInverse_4x4() {
@@ -77,7 +77,7 @@ public abstract class AbstractInverterTest extends TestCase {
             { -42.0, 1.0, 6.0, 52.0, 22.0 }
         };
 
-        performTest(input, inverter());
+        performTest(input, inverterFactory());
     }
 
     public void testInverseInverse_5x5 () {
@@ -91,7 +91,7 @@ public abstract class AbstractInverterTest extends TestCase {
             {-58.0, 939.0, 2.0, 59.0, 96.0, -5.0 }
         };
 
-        performTest(input, inverter());
+        performTest(input, inverterFactory());
     }
 
     public void testInverseInverse_6x6 () {
@@ -105,6 +105,6 @@ public abstract class AbstractInverterTest extends TestCase {
             {-58.0, 939.0, 2.0, 59.0, 96.0, -5.0 }
         };
 
-        performTest(input, inverter());
+        performTest(input, inverterFactory());
     }
 }

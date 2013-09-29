@@ -21,15 +21,24 @@
 
 package org.la4j.inversion;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.linear.LinearSystem;
+import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
 public class GaussianInverter implements MatrixInverter {
 
+    private Matrix matrix;
+
+    public GaussianInverter(Matrix matrix) {
+        this.matrix = matrix;
+    }
+
     @Override
+    @Deprecated
     public Matrix inverse(Matrix matrix, Factory factory) {
 
         if (matrix.rows() != matrix.columns()) {
@@ -45,14 +54,24 @@ public class GaussianInverter implements MatrixInverter {
             b.set(i, 1.0);
 
             try {
-                LinearSystem system = factory.createLinearSystem(matrix, b);
-                Vector x = system.solve(Matrices.GAUSSIAN_SOLVER);
+                LinearSystemSolver solver = matrix.withSolver(LinearAlgebra.SolverFactory.GAUSSIAN);
+                Vector x = solver.solve(b, factory);
                 result.setColumn(i, x);
             } catch (IllegalArgumentException ex) {
-                throw new IllegalArgumentException("This matrix is not invertible");
+                throw new IllegalArgumentException("This matrix is not invertible.");
             }
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix inverse(Factory factory) {
+        return inverse(matrix, factory);
+    }
+
+    @Override
+    public Matrix inverse() {
+        return inverse(matrix, matrix.factory());
     }
 }

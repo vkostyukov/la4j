@@ -587,6 +587,16 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public MatrixInverter withSmartInverter() {
+        return self.withSmartInverter();
+    }
+
+    @Override
+    public MatrixInverter withInverter(LinearAlgebra.InverterFactory factory) {
+        return self.withInverter(factory);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return self.equals(obj);
     }

@@ -472,6 +472,7 @@ public interface Matrix extends Externalizable {
      * 
      * @param inverter
      */
+    @Deprecated
     Matrix inverse(MatrixInverter inverter);
 
     /**
@@ -480,6 +481,7 @@ public interface Matrix extends Externalizable {
      * @param inverter
      * @param factory
      */
+    @Deprecated
     Matrix inverse(MatrixInverter inverter, Factory factory);
 
     /**
@@ -875,33 +877,18 @@ public interface Matrix extends Externalizable {
      */
     LinearSystemSolver withSolver(LinearAlgebra.SolverFactory factory);
 
-    //MatrixInverter takeToSmartInverter();
-
-    // TODO: This is a new API for all major things
-    // TODO: I'll mark all other ways as @Deprecated
-    // MatrixInverter takeToInverter(InverterFactory factory);
-    // MatrixDecompositor takeToDecompositor(DecompositorFactory factory);
-
-    /*
-        // Solving
-        Matrix a = new Basic2DMatrix(...);
-        Vector b = new BasicVector(...);
-        LinearSystemSolver solver = a.withSmartSolver(LinearAlgebra.JACOBI_FACTORY);
-        Vector x = solver.solve(b, Matrices.CRS_FACTORY);
-
-        // Decomposing
-        MatrixDecompositor decompositor = a.takeToDecompositor(LinearAlgebra.LU_FACTORY);
-        Matrix[] lup = decompositor.decompose(Matrices.CRS_FACTORY);
-
-        // Inverting
-        MatrixInverter inverter = a.takeToInverter(LinearAlgebra.GAUSSIAN_INVERTER_FACTORY);
-        Matrix aa = inverter.invert();
-
-        // Using Smart Things
-        LinearSystemSolver smartSolver = a.withSmartSolver();
-        Vector xx = smartSolver.solve(b, LinearAlgebra.SPARSE_FACTORY);
-
-        MatrixInverter smartInverter = a.takeToSmartInverter();
-        Matrix aaa = smartInverter.invert();
+    /**
+     * Creates a new smart inverter of this matrix. Smart inverter uses the most efficient interter.
+     *
+     * @return
      */
+    MatrixInverter withSmartInverter();
+
+    /**
+     * Creates a new inverter by given {@code factory} of this matrix.
+     *
+     * @param factory
+     * @return
+     */
+    MatrixInverter withInverter(LinearAlgebra.InverterFactory factory);
 }

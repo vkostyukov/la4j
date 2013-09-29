@@ -26,6 +26,8 @@ import org.la4j.factory.CCSFactory;
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 import org.la4j.factory.SafeFactory;
+import org.la4j.inversion.GaussianInverter;
+import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.GaussianSolver;
 import org.la4j.linear.JacobiSolver;
 import org.la4j.linear.LUSolver;
@@ -142,6 +144,23 @@ public final class LinearAlgebra {
         };
 
         public abstract LinearSystemSolver create(Matrix matrix);
+    }
+
+    public static enum InverterFactory {
+        GAUSSIAN {
+            @Override
+            public MatrixInverter create(Matrix matrix) {
+                return new GaussianInverter(matrix);
+            }
+        },
+        SMART {
+            @Override
+            public MatrixInverter create(Matrix matrix) {
+                return new GaussianInverter(matrix);
+            }
+        };
+
+        public abstract MatrixInverter create(Matrix matrix);
     }
 
     /**

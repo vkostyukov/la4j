@@ -813,8 +813,9 @@ public final class Matrices {
     /**
      * The {@link GaussianInverter} singleton instance.
      */
+    @Deprecated
     public static final MatrixInverter GAUSSIAN_INVERTER =
-            new GaussianInverter();
+            new GaussianInverter(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The default matrix inverter singleton instance. References the 

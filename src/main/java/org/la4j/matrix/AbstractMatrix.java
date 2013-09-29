@@ -1040,6 +1040,16 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public MatrixInverter withSmartInverter() {
+        return withInverter(LinearAlgebra.InverterFactory.SMART);
+    }
+
+    @Override
+    public MatrixInverter withInverter(LinearAlgebra.InverterFactory factory) {
+        return factory.create(this);
+    }
+
+    @Override
     public int hashCode() {
 
         int result = 17;

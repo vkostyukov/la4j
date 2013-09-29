@@ -26,5 +26,28 @@ import org.la4j.matrix.Matrix;
 
 public interface MatrixInverter {
 
+    /**
+     * Inverse given matrix.
+     *
+     * @param matrix
+     * @param factory
+     * @return
+     */
+    @Deprecated
     Matrix inverse(Matrix matrix, Factory factory);
+
+    /**
+     * Inverse matrix with factory.
+     *
+     * @param factory
+     * @return
+     */
+    Matrix inverse(Factory factory);
+
+    /**
+     * Inverse matrix.
+     *
+     * @return
+     */
+    Matrix inverse();
 }

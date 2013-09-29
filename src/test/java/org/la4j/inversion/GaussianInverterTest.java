@@ -21,6 +21,7 @@
 
 package org.la4j.inversion;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.matrix.Matrices;
 
 import junit.framework.Test;
@@ -29,8 +30,8 @@ import junit.framework.TestSuite;
 public class GaussianInverterTest extends AbstractInverterTest {
 
     @Override
-    public MatrixInverter inverter() {
-        return Matrices.GAUSSIAN_INVERTER;
+    public LinearAlgebra.InverterFactory inverterFactory() {
+        return LinearAlgebra.InverterFactory.GAUSSIAN;
     }
 
     public static Test suite() {
