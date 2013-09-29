@@ -20,7 +20,14 @@
 
 package org.la4j;
 
+import org.la4j.decomposition.CholeskyDecompositor;
+import org.la4j.decomposition.EigenDecompositor;
+import org.la4j.decomposition.LUDecompositor;
 import org.la4j.decomposition.MatrixDecompositor;
+import org.la4j.decomposition.QRDecompositor;
+import org.la4j.decomposition.RawLUDecompositor;
+import org.la4j.decomposition.RawQRDecompositor;
+import org.la4j.decomposition.SingularValueDecompositor;
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.CCSFactory;
@@ -168,7 +175,43 @@ public final class LinearAlgebra {
           CHOLESKY {
               @Override
               public MatrixDecompositor create(Matrix matrix) {
-                  return null;  //To change body of implemented methods use File | Settings | File Templates.
+                  return new CholeskyDecompositor(matrix);
+              }
+          },
+          EIGEN {
+              @Override
+              public MatrixDecompositor create(Matrix matrix) {
+                  return new EigenDecompositor(matrix);
+              }
+          },
+          RAW_LU {
+              @Override
+              public MatrixDecompositor create(Matrix matrix) {
+                  return new RawLUDecompositor(matrix);
+              }
+          },
+          LU {
+              @Override
+              public MatrixDecompositor create(Matrix matrix) {
+                  return new LUDecompositor(matrix);
+              }
+          },
+          RAW_QR {
+              @Override
+              public MatrixDecompositor create(Matrix matrix) {
+                  return new RawQRDecompositor(matrix);
+              }
+          },
+          QR {
+              @Override
+              public MatrixDecompositor create(Matrix matrix) {
+                  return new QRDecompositor(matrix);
+              }
+          },
+          SVD {
+              @Override
+              public MatrixDecompositor create(Matrix matrix) {
+                  return new SingularValueDecompositor(matrix);
               }
           };
 

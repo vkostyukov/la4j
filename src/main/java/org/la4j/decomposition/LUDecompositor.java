@@ -33,6 +33,10 @@ import org.la4j.matrix.Matrix;
  */
 public class LUDecompositor extends RawLUDecompositor implements MatrixDecompositor {
 
+    public LUDecompositor(Matrix matrix) {
+        super(matrix);
+    }
+
     /**
      * Returns the result of LU decomposition of given matrix
      * <p>
@@ -72,5 +76,10 @@ public class LUDecompositor extends RawLUDecompositor implements MatrixDecomposi
         }
 
         return new Matrix[] { l, u, p };
+    }
+
+    @Override
+    public Matrix[] decompose(Factory factory) {
+        return decompose(matrix, factory);
     }
 }

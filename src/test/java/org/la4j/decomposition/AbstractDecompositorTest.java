@@ -23,26 +23,27 @@ package org.la4j.decomposition;
 
 import junit.framework.TestCase;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.MockMatrix;
 
 public abstract class AbstractDecompositorTest extends TestCase {
 
-    protected void performTest(MatrixDecompositor decompositor, double[][] input, 
-        double[][][] output) {
+    protected void performTest(LinearAlgebra.DecompositorFactory decompositorFactory,
+                               double[][] input, double[][][] output) {
 
-        for (Factory factory: Matrices.FACTORIES) {
+        for (Factory factory: LinearAlgebra.FACTORIES) {
 
             Matrix a = factory.createMatrix(input);
-            Matrix[] decomposition = a.decompose(decompositor);
+            MatrixDecompositor decompositor = a.withDecompositor(decompositorFactory);
+            Matrix[] decomposition = decompositor.decompose(factory);
 
             assertEquals(output.length, decomposition.length);
 
             for (int i = 0; i < decomposition.length; i++) {
                 assertEquals(new MockMatrix(factory.createMatrix(output[i])),
-                        new MockMatrix(decomposition[i]));
+                             new MockMatrix(decomposition[i]));
             }
         }
     }

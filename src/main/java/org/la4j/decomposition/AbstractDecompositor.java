@@ -19,52 +19,30 @@
  *
  */
 
-package org.la4j.linear;
+package org.la4j.decomposition;
 
 import org.la4j.matrix.Matrix;
-import org.la4j.vector.Vector;
 
-public abstract class AbstractSolver implements LinearSystemSolver {
+public abstract class AbstractDecompositor implements MatrixDecompositor {
 
-    // TODO: rename a to matrix
-    protected Matrix a;
-    protected int unknowns;
-    protected int equations;
+    protected Matrix matrix;
 
-    protected AbstractSolver(Matrix a) {
-        if (!applicableTo(a)) {
-            fail("Given coefficient matrix can not be used with this solver.");
+    public AbstractDecompositor(Matrix matrix) {
+        if (!applicableTo(matrix)) {
+            fail("Given matrix can not be used with this decompositor.");
         }
 
-        this.a = a;
-        this.unknowns = a.columns();
-        this.equations = a.rows();
+        this.matrix = matrix;
     }
 
     @Override
-    public Vector solve(Vector b) {
-        return solve(b, b.factory());
+    public Matrix[] decompose() {
+        return decompose(matrix.factory());
     }
 
     @Override
     public Matrix self() {
-        return a;
-    }
-
-    @Override
-    public int unknowns() {
-        return unknowns;
-    }
-
-    @Override
-    public int equations() {
-        return equations;
-    }
-
-    protected void ensureRHSIsCorrect(Vector vector) {
-        if (vector.length() != equations) {
-            fail("Wrong length of RHS vector: " + vector.length() + ".");
-        }
+        return matrix;
     }
 
     protected void fail(String message) {

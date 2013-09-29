@@ -66,4 +66,11 @@ public interface MatrixInverter extends Serializable {
      * @return
      */
     Matrix inverse();
+
+    /**
+     * Returns the self matrix of this inverter.
+     *
+     * @return
+     */
+    Matrix self();
 }

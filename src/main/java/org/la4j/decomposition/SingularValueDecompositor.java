@@ -32,7 +32,11 @@ import org.la4j.vector.Vectors;
  * <p><a href="http://mathworld.wolfram.com/SingularValueDecomposition.html">
  * here.</a> </p>
  */
-public class SingularValueDecompositor implements MatrixDecompositor {
+public class SingularValueDecompositor extends AbstractDecompositor implements MatrixDecompositor {
+
+    public SingularValueDecompositor(Matrix matrix) {
+        super(matrix);
+    }
 
     /**
      * Returns the result of Singular Value decomposition of given matrix
@@ -529,5 +533,15 @@ public class SingularValueDecompositor implements MatrixDecompositor {
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix[] decompose(Factory factory) {
+        return decompose(matrix, factory);
+    }
+
+    @Override
+    public boolean applicableTo(Matrix matrix) {
+        return true;
     }
 }

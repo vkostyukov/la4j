@@ -74,4 +74,9 @@ public class GaussianInverter implements MatrixInverter {
     public Matrix inverse() {
         return inverse(matrix, matrix.factory());
     }
+
+    @Override
+    public Matrix self() {
+        return matrix;
+    }
 }

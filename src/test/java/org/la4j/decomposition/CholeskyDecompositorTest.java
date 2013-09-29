@@ -21,7 +21,7 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.matrix.Matrices;
+import org.la4j.LinearAlgebra;
 
 public class CholeskyDecompositorTest extends AbstractDecompositorTest {
 
@@ -37,7 +37,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(Matrices.CHOLESKY_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.CHOLESKY, input, output);
     }
 
     public void testDecompose_2x2() {
@@ -54,7 +54,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(Matrices.CHOLESKY_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.CHOLESKY, input, output);
     }
 
     public void testDecompose_3x3() {
@@ -73,7 +73,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(Matrices.CHOLESKY_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.CHOLESKY, input, output);
     }
 
     public void testDecompose_4x4() {
@@ -94,7 +94,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(Matrices.CHOLESKY_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.CHOLESKY, input, output);
     }
 
     public void  testDecompose_5x5() {
@@ -117,6 +117,6 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(Matrices.CHOLESKY_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.CHOLESKY, input, output);
     }
 }

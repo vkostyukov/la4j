@@ -771,72 +771,72 @@ public final class Matrices {
     /**
      * The {@link CholeskyDecompositor} singleton instance.
      * <p>
-     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
      */
     @Deprecated
     public static final MatrixDecompositor CHOLESKY_DECOMPOSITOR =
-            new CholeskyDecompositor();
+            new CholeskyDecompositor(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link EigenDecompositor} singleton instance.
      * <p>
-     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
      */
     @Deprecated
     public static final MatrixDecompositor EIGEN_DECOMPOSITOR = 
-            new EigenDecompositor();
+            new EigenDecompositor(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link LUDecompositor} singleton instance.
      * <p>
-     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
      */
     @Deprecated
     public static final MatrixDecompositor LU_DECOMPOSITOR = 
-            new LUDecompositor();
+            new LUDecompositor(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link RawLUDecompositor} singleton instance.
      * <p>
-     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
      */
     @Deprecated
     public static final MatrixDecompositor RAW_LU_DECOMPOSITOR =
-            new RawLUDecompositor();
+            new RawLUDecompositor(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link QRDecompositor} singleton instance.
      * <p>
-     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
      */
     @Deprecated
     public static final MatrixDecompositor QR_DECOMPOSITOR = 
-            new QRDecompositor();
+            new QRDecompositor(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link RawQRDecompositor} singleton instance.
      * <p>
-     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
      */
     @Deprecated
     public static final MatrixDecompositor RAW_QR_DECOMPOSITOR =
-            new RawQRDecompositor();
+            new RawQRDecompositor(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link SingularValueDecompositor} singleton instance.
      * <p>
-     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} )} instead.
+     * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
      */
     @Deprecated
     public static final MatrixDecompositor SINGULAR_VALUE_DECOMPOSITOR = 
-            new SingularValueDecompositor();
+            new SingularValueDecompositor(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link GaussianInverter} singleton instance.

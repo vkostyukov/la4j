@@ -24,13 +24,15 @@ package org.la4j.decomposition;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 
+import java.io.Serializable;
+
 /**
  * Interface for implementing various matrix decompositions. More details
  * <p><a href="http://mathworld.wolfram.com/MatrixDecomposition.html">
  * here.</a>
  * </p>
  */
-public interface MatrixDecompositor {
+public interface MatrixDecompositor extends Serializable {
 
     /**
      * <p>
@@ -52,4 +54,33 @@ public interface MatrixDecompositor {
      */
     @Deprecated
     Matrix[] decompose(Matrix matrix, Factory factory);
+
+    /**
+     * Decomposes the wrapped matrix.
+     *
+     * @return
+     */
+    Matrix[] decompose();
+
+    /**
+     *
+     * @param factory
+     * @return
+     */
+    Matrix[] decompose(Factory factory);
+
+    /**
+     * Returns the self matrix of this decompositor.
+     *
+     * @return
+     */
+    Matrix self();
+
+    /**
+     * Checks whether this decompositor is applicable to given matrix or not.
+     *
+     * @param matrix
+     * @return
+     */
+    boolean applicableTo(Matrix matrix);
 }

@@ -25,12 +25,16 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 
-public class RawLUDecompositor implements MatrixDecompositor {
+public class RawLUDecompositor extends AbstractDecompositor implements MatrixDecompositor {
+
+    public RawLUDecompositor(Matrix matrix) {
+        super(matrix);
+    }
 
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 
-        if (matrix.rows() != matrix.columns()) {
+        if (!applicableTo(matrix)) {
             throw new IllegalArgumentException("Wrong matrix size: rows != columns");
         }
 
@@ -71,5 +75,15 @@ public class RawLUDecompositor implements MatrixDecompositor {
         }
 
         return new Matrix[] { lu, p };
+    }
+
+    @Override
+    public Matrix[] decompose(Factory factory) {
+        return decompose(matrix, factory);
+    }
+
+    @Override
+    public boolean applicableTo(Matrix matrix) {
+        return matrix.rows() == matrix.columns();
     }
 }

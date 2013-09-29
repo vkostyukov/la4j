@@ -21,7 +21,7 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.matrix.Matrices;
+import org.la4j.LinearAlgebra;
 
 public class EigenDecompositorTest extends AbstractDecompositorTest {
 
@@ -42,7 +42,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(Matrices.EIGEN_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.EIGEN, input, output);
     }
 
     public void testDecompose_2x2_symmetric_2() {
@@ -62,7 +62,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(Matrices.EIGEN_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.EIGEN, input, output);
     }
 
     public void testDecompose_3x3_symmetric_1() {
@@ -85,7 +85,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(Matrices.EIGEN_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.EIGEN, input, output);
     }
 
     public void testDecompose_3x3_symmetric_2() {
@@ -108,7 +108,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(Matrices.EIGEN_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.EIGEN, input, output);
     }
 
     public void testDecompose_4x4_symmetric() {
@@ -134,7 +134,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(Matrices.EIGEN_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.EIGEN, input, output);
     }
 
     public void testDecompose_5x5_symmetric_1() {
@@ -163,7 +163,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(Matrices.EIGEN_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.EIGEN, input, output);
     }
 
     public void testDecompose_5x5_symmetric_2() {
@@ -192,7 +192,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(Matrices.EIGEN_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.EIGEN, input, output);
     }
 
     public void xtestDecompose_3x3_nonSymmetric() {

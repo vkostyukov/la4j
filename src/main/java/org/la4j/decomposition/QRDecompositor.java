@@ -33,6 +33,10 @@ import org.la4j.matrix.Matrix;
  */
 public class QRDecompositor extends RawQRDecompositor implements MatrixDecompositor {
 
+    public QRDecompositor(Matrix matrix) {
+        super(matrix);
+    }
+
     /**
      * Returns the result of QR decomposition of given matrix
      * <p>
@@ -83,5 +87,10 @@ public class QRDecompositor extends RawQRDecompositor implements MatrixDecomposi
         }
 
         return new Matrix[] { q, r };
+    }
+
+    @Override
+    public Matrix[] decompose(Factory factory) {
+        return decompose(matrix, factory);
     }
 }

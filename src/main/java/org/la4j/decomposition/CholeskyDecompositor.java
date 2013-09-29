@@ -32,7 +32,11 @@ import org.la4j.vector.Vector;
  * <a href="http://mathworld.wolfram.com/CholeskyDecomposition.html"> here</a>
  * </p>
  */
-public class CholeskyDecompositor implements MatrixDecompositor {
+public class CholeskyDecompositor extends AbstractDecompositor implements MatrixDecompositor {
+
+    public CholeskyDecompositor(Matrix matrix) {
+        super(matrix);
+    }
 
     /**
      * Returns the result of Cholesky decomposition of given matrix
@@ -49,16 +53,8 @@ public class CholeskyDecompositor implements MatrixDecompositor {
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 
-        if (matrix.rows() != matrix.columns()) {
-            throw new IllegalArgumentException("Wrong matrix size:");
-        }
-
-        if (!matrix.is(Matrices.SYMMETRIC_MATRIX)) {
-            throw new IllegalArgumentException();
-        }
-
-        if (!isPositiveDefinite(matrix)) {
-            throw new IllegalArgumentException();
+        if (!applicableTo(matrix)) {
+            fail("This matrix can not be decomposed with Cholesky.");
         }
 
         Matrix l = factory.createMatrix(matrix.rows(), matrix.rows());
@@ -150,5 +146,17 @@ public class CholeskyDecompositor implements MatrixDecompositor {
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix[] decompose(Factory factory) {
+        return decompose(matrix, factory);
+    }
+
+    @Override
+    public boolean applicableTo(Matrix matrix) {
+        return matrix.rows() == matrix.columns() &&
+               matrix.is(Matrices.SYMMETRIC_MATRIX) &&
+               isPositiveDefinite(matrix);
     }
 }

@@ -25,13 +25,17 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 
-public class RawQRDecompositor implements MatrixDecompositor {
+public class RawQRDecompositor extends AbstractDecompositor implements MatrixDecompositor {
+
+    public RawQRDecompositor(Matrix matrix) {
+        super(matrix);
+    }
 
     @Override
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 
-        if (matrix.rows() < matrix.columns()) {
-            throw new IllegalArgumentException("Wrong matrix size: rows < columns.");
+        if (!applicableTo(matrix)) {
+            fail("Wrong matrix size: rows < columns.");
         }
 
         Matrix qr = matrix.copy();
@@ -77,5 +81,15 @@ public class RawQRDecompositor implements MatrixDecompositor {
         }
 
         return new Matrix[] { qr, r };
+    }
+
+    @Override
+    public Matrix[] decompose(Factory factory) {
+        return decompose(matrix, factory);
+    }
+
+    @Override
+    public boolean applicableTo(Matrix matrix) {
+        return matrix.rows() >= matrix.columns();
     }
 }

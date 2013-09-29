@@ -33,7 +33,11 @@ import org.la4j.vector.Vectors;
  * <a href="http://mathworld.wolfram.com/EigenDecomposition.html"> here.</a>
  * </p>
  */
-public class EigenDecompositor implements MatrixDecompositor {
+public class EigenDecompositor extends AbstractDecompositor implements MatrixDecompositor {
+
+    public EigenDecompositor(Matrix matrix) {
+        super(matrix);
+    }
 
     /**
      * Returns the result of Eigen (EVD) decomposition of given matrix
@@ -57,6 +61,16 @@ public class EigenDecompositor implements MatrixDecompositor {
         } else {
             throw new IllegalArgumentException("Can't decompose rectangle matrix");
         }
+    }
+
+    @Override
+    public Matrix[] decompose(Factory factory) {
+        return decompose(matrix, factory);
+    }
+
+    @Override
+    public boolean applicableTo(Matrix matrix) {
+        return matrix.rows() == matrix.columns();
     }
 
     /**

@@ -21,7 +21,7 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.matrix.Matrices;
+import org.la4j.LinearAlgebra;
 
 public class LUDecompositorTest extends AbstractDecompositorTest {
 
@@ -43,7 +43,7 @@ public class LUDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(Matrices.LU_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.LU, input, output);
     }
 
     public void testDecompose_2x2() {
@@ -68,7 +68,7 @@ public class LUDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(Matrices.LU_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.LU, input, output);
     }
 
     public void testDecompose_3x3() {
@@ -97,7 +97,7 @@ public class LUDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(Matrices.LU_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.LU, input, output);
     }
 
     public void testDecompose_3x3_2() {
@@ -126,7 +126,7 @@ public class LUDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(Matrices.LU_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.LU, input, output);
     }
 
     public void testDecompose_4x4() {
@@ -159,7 +159,7 @@ public class LUDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(Matrices.LU_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.LU, input, output);
     }
 
     public void testDecompose_5x5() {
@@ -196,7 +196,7 @@ public class LUDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(Matrices.LU_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.LU, input, output);
     }
 
     public void testDecompose_5x5_2() {
@@ -233,6 +233,6 @@ public class LUDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(Matrices.LU_DECOMPOSITOR, input, output);
+        performTest(LinearAlgebra.DecompositorFactory.LU, input, output);
     }
 }
