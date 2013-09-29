@@ -812,6 +812,10 @@ public final class Matrices {
 
     /**
      * The {@link GaussianInverter} singleton instance.
+     *
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withInverter(org.la4j.LinearAlgebra.InverterFactory)} instead.
+     * </p>
      */
     @Deprecated
     public static final MatrixInverter GAUSSIAN_INVERTER =
@@ -820,18 +824,52 @@ public final class Matrices {
     /**
      * The default matrix inverter singleton instance. References the 
      * {@link GaussianInverter}.
+     *
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withInverter(org.la4j.LinearAlgebra.InverterFactory)} instead.
+     * </p>
      */
+    @Deprecated
     public static final MatrixInverter DEFAULT_INVERTER = GAUSSIAN_INVERTER;
 
     /**
      * The {@link GaussianSolver} singleton instance.
+     *
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withSolver(org.la4j.LinearAlgebra.SolverFactory)} instead. Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     Vector b = new BasicVector(...);
+     *     <br />
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.GAUSSIAN);
+     *     <br />
+     *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
+     * </p>
      */
     @Deprecated
-    public static final LinearSystemSolver GAUSSIAN_SOLVER = 
+    public static final LinearSystemSolver GAUSSIAN_SOLVER =
             new GaussianSolver(DEFAULT_FACTORY.createMatrix());
 
     /**
      * The {@link JacobiSolver} singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withSolver(org.la4j.LinearAlgebra.SolverFactory)} instead. Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     Vector b = new BasicVector(...);
+     *     <br />
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.JACOBI);
+     *     <br />
+     *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
+     * </p>
      */
     @Deprecated
     public static final LinearSystemSolver JACOBI_SOLVER = 
@@ -839,6 +877,20 @@ public final class Matrices {
 
     /**
      * The {@link SeidelSolver} singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withSolver(org.la4j.LinearAlgebra.SolverFactory)} instead. Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     Vector b = new BasicVector(...);
+     *     <br />
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.SEIDEL);
+     *     <br />
+     *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
+     * </p>
      */
     @Deprecated
     public static final LinearSystemSolver SEIDEL_SOLVER = 
@@ -846,6 +898,20 @@ public final class Matrices {
 
     /**
      * The {@link SquareRootSolver} singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withSolver(org.la4j.LinearAlgebra.SolverFactory)} instead. Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     Vector b = new BasicVector(...);
+     *     <br />
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.SQUARE_ROOT);
+     *     <br />
+     *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
+     * </p>
      */
     @Deprecated
     public static final LinearSystemSolver SQUARE_ROOT_SOLVER =
@@ -853,6 +919,20 @@ public final class Matrices {
 
     /**
      * The {@link SweepSolver} singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withSolver(org.la4j.LinearAlgebra.SolverFactory)} instead. Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     Vector b = new BasicVector(...);
+     *     <br />
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.SWEEP);
+     *     <br />
+     *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
+     * </p>
      */
     @Deprecated
     public static final LinearSystemSolver SWEEP_SOLVER = 
@@ -860,6 +940,21 @@ public final class Matrices {
 
     /**
      * The {@link QRSolver} (least squares solver) singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withSolver(org.la4j.LinearAlgebra.SolverFactory)} instead. Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     Vector b = new BasicVector(...);
+     *     <br />
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.QR);
+     *     <br />
+     *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
+     * </p>
+
      */
     @Deprecated
     public static final LinearSystemSolver QR_SOLVER =
@@ -867,6 +962,20 @@ public final class Matrices {
 
     /**
      * The {@link LUSolver} (simple square solver) singleton instance.
+     * <p>
+     * This field is deprecated. Use {@link Matrix#withSolver(org.la4j.LinearAlgebra.SolverFactory)} instead. Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     Vector b = new BasicVector(...);
+     *     <br />
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.LU);
+     *     <br />
+     *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
+     * </p>
      */
     @Deprecated
     public static final LinearSystemSolver LU_SOLVER =
@@ -875,6 +984,20 @@ public final class Matrices {
     /**
      * The default linear system solver singleton instance. References the 
      * {@link Matrices#GAUSSIAN_SOLVER}.
+     * <p>
+     * This field is deprecated. Use {@link org.la4j.matrix.Matrix#withSmartSolver()} instead. Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     Vector b = new BasicVector(...);
+     *     <br />
+     *     LinearSystemSolver solver = a.withSmartSolver();
+     *     <br />
+     *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
+     * </p>
      */
     @Deprecated
     public static final LinearSystemSolver DEFAULT_SOLVER = GAUSSIAN_SOLVER;
@@ -988,6 +1111,10 @@ public final class Matrices {
      * Creates {@link LinearSystem} instance from matrix <code>a</code> and 
      * vector <code>b</code>. The {@link Matrices#DEFAULT_FACTORY} is using
      * for matrix construction.
+     *
+     * <p>
+     * This method is deprecated. Use {@link Matrix#withSolver(org.la4j.LinearAlgebra.SolverFactory)} instead.
+     * </p>
      * 
      * @param a
      * @param b
