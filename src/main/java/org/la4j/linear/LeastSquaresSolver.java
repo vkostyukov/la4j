@@ -59,8 +59,9 @@ public class LeastSquaresSolver extends AbstractSolver implements LinearSystemSo
         MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.RAW_QR);
         Matrix[] qrr = decompositor.decompose(factory);
 
-        Matrix qr = qrr[Matrices.RAW_QR_QR];
-        Matrix r = qrr[Matrices.RAW_QR_R];
+        // TODO: Do something with it.
+        Matrix qr = qrr[0];
+        Matrix r = qrr[1];
 
         // check whether the matrix is full-rank or not
         for (int i = 0; i < r.rows(); i++) {

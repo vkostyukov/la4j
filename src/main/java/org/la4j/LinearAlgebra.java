@@ -241,10 +241,6 @@ public final class LinearAlgebra {
               }
           },
           LU {
-              public static final int L = 0;
-              public static final int U = 1;
-              public static final int P = 2;
-
               @Override
               public MatrixDecompositor create(Matrix matrix) {
                   return new LUDecompositor(matrix);

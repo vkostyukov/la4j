@@ -52,8 +52,8 @@ public class QRDecompositor extends RawQRDecompositor implements MatrixDecomposi
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 
         Matrix[] qrr = super.decompose(matrix, factory);
-        Matrix qr = qrr[Matrices.RAW_QR_QR];
-        Matrix r = qrr[Matrices.RAW_QR_R];
+        Matrix qr = qrr[0];
+        Matrix r = qrr[1];
 
         Matrix q = qr.blank(factory);
 

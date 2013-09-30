@@ -52,8 +52,8 @@ public class LUDecompositor extends RawLUDecompositor implements MatrixDecomposi
     public Matrix[] decompose(Matrix matrix, Factory factory) {
 
         Matrix[] lup = super.decompose(matrix, factory);
-        Matrix lu = lup[Matrices.RAW_LU_LU];
-        Matrix p = lup[Matrices.RAW_LU_P];
+        Matrix lu = lup[0];
+        Matrix p = lup[1];
 
         Matrix l = factory.createMatrix(lu.rows(), lu.columns());
 

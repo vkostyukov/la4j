@@ -223,8 +223,9 @@ public abstract class AbstractMatrix implements Matrix {
 
         MatrixDecompositor decompositor = withDecompositor(LinearAlgebra.LU);
         Matrix lup[] = decompositor.decompose(factory);
-        Matrix u = lup[Matrices.LU_U];
-        Matrix p = lup[Matrices.LU_P];
+        // TODO: Why Java doesn't support pattern matching?
+        Matrix u = lup[1];
+        Matrix p = lup[2];
 
         double result = u.diagonalProduct();
 
@@ -264,7 +265,8 @@ public abstract class AbstractMatrix implements Matrix {
 
         MatrixDecompositor decompositor = withDecompositor(LinearAlgebra.SVD);
         Matrix usv[] = decompositor.decompose(factory);
-        Matrix s = usv[Matrices.SVD_S];
+        // TODO: Where is my pattern matching?
+        Matrix s = usv[1];
         double tolerance = Math.max(rows, columns) * s.get(0, 0) * Matrices.EPS;
 
         int result = 0;

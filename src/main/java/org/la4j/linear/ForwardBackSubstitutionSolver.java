@@ -57,8 +57,9 @@ public class ForwardBackSubstitutionSolver extends AbstractSolver implements Lin
         // we use Raw LU for this
         MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.RAW_LU);
         Matrix[] lup = decompositor.decompose(factory);
-        Matrix lu = lup[Matrices.RAW_LU_LU];
-        Matrix p = lup[Matrices.RAW_LU_P];
+        // TODO: it doesn't look safe.
+        Matrix lu = lup[0];
+        Matrix p = lup[1];
 
         // checks whether the lu matrix is singular or not
         for (int i = 0; i < n; i++) {
