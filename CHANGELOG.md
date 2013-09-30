@@ -34,7 +34,15 @@ la4j-0.4.5 `Sep 2013`
  * Bug fix in `SquareRootSolver`
  * Bug fix in `JacobiSolver`
  * New matrix and vector methods `max()`, `min()`, `minInRow()`, `maxInColumn()` (contributed by Maxim Samoylov)
- * New linear solvers: `LUSolver` (for square systems), `QRSolver` (least squares solver)
+ * New linear solver: `ForwardBackSubstitutionSolver` (for square systems)
+ * New linear solver: `LeastSquaresSolver` (least squares solver)
+ * New all-things-in-one class `LinearAlgebra`
+ * New matrix/vector method: `non()`, which is actually `!is()` delegate
+ * New matrix to vector converters: `toRowVector()`, `toColumnVector()`
+ * New vector to matrix converters: `toRowMatrix()`, `toColumnMatrix()`
+ * New API for solving system of linear equations: `withSolver(SolverFactory)`
+ * New API for decomposing: `withDecompositor(DecompositorFactory)`
+ * New API for inverting: `withInverter(InverterFactory)`
 
 la4j-0.4.0 `Jun 2013`
  * Up to 2x performance improvement of sparse entries (binary search power)
