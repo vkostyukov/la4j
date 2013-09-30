@@ -21,6 +21,7 @@ The key features of the **la4j** are listed bellow:
 
 Brief Example
 ------------
+** Matrix inversion**
 ```java
 Matrix a = new Basic2DMatrix(new double[][] {
    { 1.0, 2.0, 3.0 },
@@ -28,9 +29,46 @@ Matrix a = new Basic2DMatrix(new double[][] {
    { 7.0, 8.0. 9.0 }
 });
 
-Matrix b = a.invert(Matrices.DEFAULT_INVERTER); // uses Gaussian Elimination 
+// We will use Gauss-Jordan method for inverting
+MatrixInverter inverter = a.withInverter(LinearAlgebra.GAUSS_JORDAN);
+// The 'b' matrix will be dense
+Matrix b = inverter.invert(LinearAlgebra.DENSE_FACTORY);
 ```
 
+**System of linear equations**
+```java
+// A coefficient matrix
+Matrix a = new Basic2DMatrix(new double[][] {
+   { 1.0, 2.0, 3.0 },
+   { 4.0, 5.0, 6.0 },
+   { 7.0, 8.0. 9.0 }
+});
+
+// A right hand side vector
+Vector b = new BasicVector(new double[] {
+   { 1.0, 2.0, 3.0 }
+});
+
+// We will use standard Forward-Back Substitution method,
+// which is based on LU decomposition and can be used with square systems
+LinearSystemSolver solver = a.withSolver(LinearAlgebra.FORWARD_BACK_SUBSTITUTION);
+// The 'x' vector will be dense
+Vector x = solver.solve(b, LinearAlgebra.DENSE_FACTORY);
+```
+
+** Matrix decomposition**
+```java
+Matrix a = new Basic2DMatrix(new double[][] {
+   { 1.0, 2.0, 3.0 },
+   { 4.0, 5.0, 6.0 },
+   { 7.0, 8.0. 9.0 }
+});
+
+// We will use LU decompositor
+MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.LU);
+// The result should be treated as: L = lup[0], U = lup[1], P = lup[2]
+Matrix[] lup = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+```
 
 Download
 --------
