@@ -40,7 +40,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.QR, input, output);
+        performTest(LinearAlgebra.QR, input, output);
     }
 
     public void testDecompose_2x2() {
@@ -61,7 +61,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.QR, input, output);
+        performTest(LinearAlgebra.QR, input, output);
     }
 
     public void testDecompose_4x1() {
@@ -85,7 +85,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.QR, input, output);
+        performTest(LinearAlgebra.QR, input, output);
     }
 
     public void testDecompose_3x2() {
@@ -108,7 +108,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.QR, input, output);
+        performTest(LinearAlgebra.QR, input, output);
     }
 
     public void testDecompose_3x3() {
@@ -132,7 +132,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
             } 
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.QR, input, output);
+        performTest(LinearAlgebra.QR, input, output);
     }
 
     public void testDecompose_3x3_2() {
@@ -156,7 +156,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.QR, input, output);
+        performTest(LinearAlgebra.QR, input, output);
     }
 
     public void testDecompose_4x3() {
@@ -182,7 +182,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.QR, input, output);
+        performTest(LinearAlgebra.QR, input, output);
     }
 
     public void testDecompose_5x5() {
@@ -212,6 +212,6 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.QR, input, output);
+        performTest(LinearAlgebra.QR, input, output);
     }
 }

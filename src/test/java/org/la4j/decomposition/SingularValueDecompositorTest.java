@@ -43,7 +43,7 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.SVD, input, output);
+        performTest(LinearAlgebra.SVD, input, output);
     }
 
     public void testDecompose_2x2() {
@@ -68,7 +68,7 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.SVD, input, output);
+        performTest(LinearAlgebra.SVD, input, output);
     }
 
     public void testDecompose_3x3() {
@@ -97,7 +97,7 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.SVD, input, output);
+        performTest(LinearAlgebra.SVD, input, output);
     }
 
     public void testDecompose_3x1() {
@@ -122,7 +122,7 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.SVD, input, output);
+        performTest(LinearAlgebra.SVD, input, output);
     }
 
     public void testDecompose_4x4() {
@@ -155,7 +155,7 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.SVD, input, output);
+        performTest(LinearAlgebra.SVD, input, output);
     }
 
     public void testDecompose_5x5() {
@@ -192,6 +192,6 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.DecompositorFactory.SVD, input, output);
+        performTest(LinearAlgebra.SVD, input, output);
     }
 }
