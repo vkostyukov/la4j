@@ -256,19 +256,70 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
-    public void xtestDecompose_3x3_nonSymmetric() {
-
+    public void testDecompose_2x2_nonSymmetric_1() {
         double[][] input = new double[][] {
-            { 1.0, 2.0, 3.0 },
-            { 37.0, 24.0, 11.0 },
-            { 22.0, 51.0, 31.0 }
+            { 1.0, 2.0},
+            { 37.0, 24.0 }
         };
 
-        //performTest(Matrices.EIGEN_DECOMPOSITOR, input, null);
+        double[][][] output = new double[][][] {
+                {
+                    { -0.573, -0.122 },
+                    { 0.820, -1.572 }
+                },
+                {
+                    { -1.861, 0.0 },
+                    { 0.0, 26.861 }
+                }
+        };
+
+        performTest(LinearAlgebra.EIGEN, input, output);
     }
 
-    public void xtestDecompose_4x4_nonSymmetric() {
+    public void testDecompose_2x2_nonSymmetric_2() {
+        double[][] input = new double[][] {
+                { 6.0, 99.0},
+                { -4.0, 12.0 }
+        };
 
+        double[][][] output = new double[][][] {
+                {
+                    { 4.918, 0.750 },
+                    { 0.000, 1.0 }
+                },
+                {
+                    { 9.0, 19.672 },
+                    { -19.672, 9.0 }
+                }
+        };
+
+        performTest(LinearAlgebra.EIGEN, input, output);
+    }
+
+    public void testDecompose_3x3_nonSymmetric() {
+        double[][] input = new double[][] {
+                { 16.0, -11.0, 99.0 },
+                { 7.0, -2.0, -42.0 },
+                { 8.0, -1.0, -7.0 }
+        };
+
+        double[][][] output = new double[][][] {
+                {
+                    { 0.982, 0.644, -0.353 },
+                    { -0.026, -0.896, -2.320 },
+                    { 0.187, -0.359, -0.186 }
+                },
+                {
+                    { 35.149, 0.0, 0.0 },
+                    { 0.0, -23.856, 0.0 },
+                    { 0.0, 0.0, -4.293 }
+                }
+        };
+
+        performTest(LinearAlgebra.EIGEN, input, output);
+    }
+
+    public void testDecompose_4x4_nonSymmetric() {
         double[][] input = new double[][] {
                 { -1.0, -4.0, 4.0, 8.0 },
                 { 4.0, 1.0, -8.0, 2.0 },
@@ -276,6 +327,50 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 { 4.0,-1.0, -8.0, 4.0 }
         };
 
-        //performTest(Matrices.EIGEN_DECOMPOSITOR, input, null);
+        double[][][] output = new double[][][] {
+                {
+                    { -0.497, -0.503, -2.828, -0.0 },
+                    { 0.503, -0.497, 0.0, -2.828 },
+                    { -0.497, -0.503, -1.414, -0.0 },
+                    { 0.503, -0.497, 0.0, -1.414 }
+                },
+                {
+                    { 3.0, 4.0, 0.0, 0.0 },
+                    { -4.0, 3.0, 0.0, 0.0 },
+                    { 0.0, 0.0, 1.0, 0.0 },
+                    { 0.0, 0.0, 0.0, 2.0 }
+                }
+        };
+
+        performTest(LinearAlgebra.EIGEN, input, output);
+    }
+
+    public void testDecompose_5x5_nonSymmetric() {
+        double[][] input = new double[][] {
+                { 26.0, -1.0, 2.0, 15.0, -3.0 },
+                { -19.0, -11.0, 21.0, -4.0, 0.0 },
+                { 88.0, -22.0, -3.0, -5.0, -17.0 },
+                { 15.0, 45.0, 22.0, 42.0, 54.0 },
+                { -17.0, 55.0, -9.0, 6.0, 2.0 }
+        };
+
+        double[][][] output = new double[][][] {
+                {
+                    { -0.109, 0.159, -0.525, -0.274, 0.091 },
+                    { -0.338, -0.250, -0.015, 0.244, 0.364 },
+                    { 0.341, -0.082, -0.713, -0.389, 0.883 },
+                    { 0.138, -0.492, -0.996, 0.032, -0.760 },
+                    { 0.165, 0.840, 0.153, 0.457, -0.397 }
+                },
+                {
+                    { -23.664, 17.563, 0.0, 0.0, 0.0 },
+                    { -17.563, -23.664, 0.0, 0.0, 0.0 },
+                    { 0.0, 0.0, 58.024, 0.0, 0.0 },
+                    { 0.0, 0.0, 0.0, 22.652, 31.064 },
+                    { 0.0, 0.0, 0.0, -31.064, 22.652 }
+                }
+        };
+
+        performTest(LinearAlgebra.EIGEN, input, output);
     }
 }
