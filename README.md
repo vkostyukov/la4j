@@ -23,6 +23,7 @@ Brief Examples
 --------------
 **Matrix inversion**
 ```java
+// We want simple dense matrix that uses 2D array as internal representation
 Matrix a = new Basic2DMatrix(new double[][] {
    { 1.0, 2.0, 3.0 },
    { 4.0, 5.0, 6.0 },
@@ -36,27 +37,28 @@ Matrix b = inverter.invert(LinearAlgebra.DENSE_FACTORY);
 ```
 **System of linear equations**
 ```java
-// A coefficient matrix
-Matrix a = new Basic2DMatrix(new double[][] {
+// The coefficient matrix 'a' is a CRS (Compressed Sparse Row) matrix 
+Matrix a = new CRSMatrix(new double[][] {
    { 1.0, 2.0, 3.0 },
    { 4.0, 5.0, 6.0 },
    { 7.0, 8.0. 9.0 }
 });
 
-// A right hand side vector
+// A right hand side vector, which is simple dense vector
 Vector b = new BasicVector(new double[] {
-   { 1.0, 2.0, 3.0 }
+   1.0, 2.0, 3.0
 });
 
 // We will use standard Forward-Back Substitution method,
 // which is based on LU decomposition and can be used with square systems
 LinearSystemSolver solver = a.withSolver(LinearAlgebra.FORWARD_BACK_SUBSTITUTION);
-// The 'x' vector will be dense
-Vector x = solver.solve(b, LinearAlgebra.DENSE_FACTORY);
+// The 'x' vector will be sparse
+Vector x = solver.solve(b, LinearAlgebra.SPARSE_FACTORY);
 ```
 **Matrix decomposition**
 ```java
-Matrix a = new Basic2DMatrix(new double[][] {
+// We want simple dense matrix, which is based on 1D double's array 
+Matrix a = new Basic1DMatrix(new double[][] {
    { 1.0, 2.0, 3.0 },
    { 4.0, 5.0, 6.0 },
    { 7.0, 8.0. 9.0 }
