@@ -877,6 +877,21 @@ public interface Matrix extends Externalizable {
     boolean is(AdvancedMatrixPredicate predicate);
 
     /**
+     * Checks whether this matrix compiles with <code>predicate</code>.
+     *
+     * @param predicate
+     * @return <code>true</code> if this matrix doesn't compiles with predicate.
+     */
+    boolean non(MatrixPredicate predicate);
+
+    /**
+     * Checks whether this matrix compiles with <code>predicate</code>.
+     *
+     * @return <code>true</code> if this matrix doesn't compiles with  predicate.
+     */
+    boolean non(AdvancedMatrixPredicate predicate);
+
+    /**
      * Wraps this matrix with safe interface
      */
     Matrix safe();

@@ -333,6 +333,11 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
+    public boolean non(VectorPredicate predicate) {
+        return self.non(predicate);
+    }
+
+    @Override
     public Vector safe() {
         return this;
     }

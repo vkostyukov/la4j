@@ -552,6 +552,16 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public boolean non(MatrixPredicate predicate) {
+        return self.non(predicate);
+    }
+
+    @Override
+    public boolean non(AdvancedMatrixPredicate predicate) {
+        return self.non(predicate);
+    }
+
+    @Override
     public Matrix unsafe() {
         return self;
     }

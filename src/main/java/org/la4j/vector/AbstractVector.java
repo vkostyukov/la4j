@@ -510,6 +510,11 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public boolean non(VectorPredicate predicate) {
+        return !is(predicate);
+    }
+
+    @Override
     public Vector unsafe() {
         return this;
     }

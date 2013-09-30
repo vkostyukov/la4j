@@ -1013,6 +1013,16 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public boolean non(MatrixPredicate predicate) {
+        return !is(predicate);
+    }
+
+    @Override
+    public boolean non(AdvancedMatrixPredicate predicate) {
+        return !is(predicate);
+    }
+
+    @Override
     public Matrix unsafe() {
         return this;
     }

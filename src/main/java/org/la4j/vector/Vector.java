@@ -541,6 +541,14 @@ public interface Vector extends Externalizable {
     boolean is(VectorPredicate predicate);
 
     /**
+     * Checks whether this vector matches to given {@code predicate}.
+     *
+     * @param predicate
+     * @return return true if vector doesn't compiles with predicate
+     */
+    boolean non(VectorPredicate predicate);
+
+    /**
      * Wraps this vector with safe interface.
      * 
      * @return safe vector
