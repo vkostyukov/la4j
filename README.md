@@ -19,9 +19,9 @@ The key features of the **la4j** are listed bellow:
 * MatrixMarket/CSV IO formats support
 
 
-Brief Example
-------------
-** Matrix inversion**
+Brief Examples
+--------------
+**Matrix inversion**
 ```java
 Matrix a = new Basic2DMatrix(new double[][] {
    { 1.0, 2.0, 3.0 },
@@ -34,7 +34,6 @@ MatrixInverter inverter = a.withInverter(LinearAlgebra.GAUSS_JORDAN);
 // The 'b' matrix will be dense
 Matrix b = inverter.invert(LinearAlgebra.DENSE_FACTORY);
 ```
-
 **System of linear equations**
 ```java
 // A coefficient matrix
@@ -55,8 +54,7 @@ LinearSystemSolver solver = a.withSolver(LinearAlgebra.FORWARD_BACK_SUBSTITUTION
 // The 'x' vector will be dense
 Vector x = solver.solve(b, LinearAlgebra.DENSE_FACTORY);
 ```
-
-** Matrix decomposition**
+**Matrix decomposition**
 ```java
 Matrix a = new Basic2DMatrix(new double[][] {
    { 1.0, 2.0, 3.0 },
