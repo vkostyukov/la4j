@@ -120,7 +120,7 @@ public class LinearSystem implements Externalizable {
      * <br />
      *     Vector b = new BasicVector(...);
      * <br />
-     *     LinearSystemSolver solver = a.withSmartSolver();
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SOLVER);
      * <br />
      *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
      * <br />
@@ -143,7 +143,7 @@ public class LinearSystem implements Externalizable {
      * <br />
      *     Vector b = new BasicVector(...);
      * <br />
-     *     LinearSystemSolver solver = a.withSmartSolver();
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SOLVER);
      * <br />
      *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
      * <br />
@@ -166,7 +166,7 @@ public class LinearSystem implements Externalizable {
      * <br />
      *     Vector b = new BasicVector(...);
      * <br />
-     *     LinearSystemSolver solver = a.withSmartSolver();
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SOLVER);
      * <br />
      *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
      * <br />
@@ -189,7 +189,7 @@ public class LinearSystem implements Externalizable {
      * <br />
      *     Vector b = new BasicVector(...);
      * <br />
-     *     LinearSystemSolver solver = a.withSmartSolver();
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SOLVER);
      * <br />
      *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
      * <br />

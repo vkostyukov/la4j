@@ -773,6 +773,16 @@ public final class Matrices {
      * <p>
      * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
+     * Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.CHOLESKY);
+     *     <br />
+     *     Matrix[] l = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
      */
     @Deprecated
     public static final MatrixDecompositor CHOLESKY_DECOMPOSITOR =
@@ -783,6 +793,16 @@ public final class Matrices {
      * <p>
      * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
+     * Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.EIGEN);
+     *     <br />
+     *     Matrix[] vd = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
      */
     @Deprecated
     public static final MatrixDecompositor EIGEN_DECOMPOSITOR = 
@@ -793,6 +813,16 @@ public final class Matrices {
      * <p>
      * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
+     * Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.LU);
+     *     <br />
+     *     Matrix[] lup = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
      */
     @Deprecated
     public static final MatrixDecompositor LU_DECOMPOSITOR = 
@@ -803,6 +833,16 @@ public final class Matrices {
      * <p>
      * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
+     * Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.RAW_LU);
+     *     <br />
+     *     Matrix[] lup = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
      */
     @Deprecated
     public static final MatrixDecompositor RAW_LU_DECOMPOSITOR =
@@ -813,6 +853,16 @@ public final class Matrices {
      * <p>
      * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
+     * Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.QR);
+     *     <br />
+     *     Matrix[] qr = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
      */
     @Deprecated
     public static final MatrixDecompositor QR_DECOMPOSITOR = 
@@ -823,6 +873,16 @@ public final class Matrices {
      * <p>
      * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
+     * Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.RAW_QR);
+     *     <br />
+     *     Matrix[] qrr = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
      */
     @Deprecated
     public static final MatrixDecompositor RAW_QR_DECOMPOSITOR =
@@ -833,6 +893,16 @@ public final class Matrices {
      * <p>
      * This field is deprecated. Use {@link Matrix#withDecompositor(org.la4j.LinearAlgebra.DecompositorFactory)} instead.
      * </p>
+     * Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.SVD);
+     *     <br />
+     *     Matrix[] usv = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
      */
     @Deprecated
     public static final MatrixDecompositor SINGULAR_VALUE_DECOMPOSITOR = 
@@ -844,6 +914,16 @@ public final class Matrices {
      * <p>
      * This field is deprecated. Use {@link Matrix#withInverter(org.la4j.LinearAlgebra.InverterFactory)} instead.
      * </p>
+     * Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     MatrixInverter inverter = a.withInverter(LinearAlgebra.INVERTER);
+     *     <br />
+     *     Matrix b = inverter.inverse(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
      */
     @Deprecated
     public static final MatrixInverter GAUSSIAN_INVERTER =
@@ -856,6 +936,17 @@ public final class Matrices {
      * <p>
      * This field is deprecated. Use {@link Matrix#withInverter(org.la4j.LinearAlgebra.InverterFactory)} instead.
      * </p>
+     * Like this:
+     * <br /><br />
+     * <code>
+     *     Matrix a = new Basic2DMatrix(...);
+     *     <br />
+     *     MatrixInverter inverter = a.withInverter(LinearAlgebra.INVERTER);
+     *     <br />
+     *     Matrix b = inverter.inverse(LinearAlgebra.DENSE_FACTORY);
+     *     <br />
+     * </code>
+     *
      */
     @Deprecated
     public static final MatrixInverter DEFAULT_INVERTER = GAUSSIAN_INVERTER;
@@ -871,7 +962,7 @@ public final class Matrices {
      *     <br />
      *     Vector b = new BasicVector(...);
      *     <br />
-     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.GAUSSIAN);
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.GAUSSIAN);
      *     <br />
      *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
      *     <br />
@@ -892,7 +983,7 @@ public final class Matrices {
      *     <br />
      *     Vector b = new BasicVector(...);
      *     <br />
-     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.JACOBI);
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.JACOBI);
      *     <br />
      *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
      *     <br />
@@ -913,7 +1004,7 @@ public final class Matrices {
      *     <br />
      *     Vector b = new BasicVector(...);
      *     <br />
-     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.SEIDEL);
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SEIDEL);
      *     <br />
      *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
      *     <br />
@@ -934,7 +1025,7 @@ public final class Matrices {
      *     <br />
      *     Vector b = new BasicVector(...);
      *     <br />
-     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.SQUARE_ROOT);
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SQUARE_ROOT);
      *     <br />
      *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
      *     <br />
@@ -955,7 +1046,7 @@ public final class Matrices {
      *     <br />
      *     Vector b = new BasicVector(...);
      *     <br />
-     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.SWEEP);
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SWEEP);
      *     <br />
      *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
      *     <br />
@@ -997,7 +1088,7 @@ public final class Matrices {
      *     <br />
      *     Vector b = new BasicVector(...);
      *     <br />
-     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SolverFactory.LU);
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.FORWARD_BACK_SUBSTITUTION);
      *     <br />
      *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
      *     <br />
@@ -1019,7 +1110,7 @@ public final class Matrices {
      *     <br />
      *     Vector b = new BasicVector(...);
      *     <br />
-     *     LinearSystemSolver solver = a.withSmartSolver();
+     *     LinearSystemSolver solver = a.withSolver(LinearAlgebra.SOLVER);
      *     <br />
      *     Vector x = solver.solve(LinearAlgebra.DENSE_FACTORY);
      *     <br />
