@@ -90,17 +90,17 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
     private Matrix[] decomposeSymmetricMatrix(Matrix matrix, Factory factory) {
 
         Matrix d = matrix.copy();
-        Vector r = generateR(d, factory);
-
         Matrix v = factory.createIdentityMatrix(matrix.rows());
+
+        Vector r = generateR(d, factory);
         Matrix u = factory.createIdentityMatrix(matrix.rows());
 
         double n = Matrices.EPS;
-        double nn = Matrices.EPS;
+        double nn = r.norm();
 
-        int kk = 0, ll = 0; 
+        int kk = 0, ll = 0;
 
-        do {
+        while (Math.abs(n - nn) > Matrices.EPS) {
 
             int k = findMax(r);
             int l = findMax(d, k);
@@ -118,8 +118,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
 
             n = nn;
             nn = r.norm();
-
-        } while (Math.abs(n - nn) > Matrices.EPS);
+        }
 
         return new Matrix[] { v, d };
     }
@@ -170,17 +169,15 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
     }
 
     private double generateRi(Matrix matrix, int i) {
-
-        double summand = 0;
-
+        double acc = 0;
         for (int j = 0; j < matrix.columns(); j++) {
             if (j != i) {
                 double value = matrix.get(i, j);
-                summand += value * value;
+                acc += value * value;
             }
         }
 
-        return summand;
+        return acc;
     }
 
     private void regenerateU(Matrix u, Matrix matrix, int k, int l, int kk, int ll) {

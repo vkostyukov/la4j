@@ -25,6 +25,40 @@ import org.la4j.LinearAlgebra;
 
 public class EigenDecompositorTest extends AbstractDecompositorTest {
 
+    public void testDecompose_1x1_symmetric_1() {
+        double[][] input = new double[][] {
+                { 76.0 }
+        };
+
+        double[][][] output = new double[][][] {
+                {
+                    { 1.0 }
+                },
+                {
+                    { 76.0 }
+                }
+        };
+
+        performTest(LinearAlgebra.EIGEN, input, output);
+    }
+
+    public void testDecompose_1x1_symmetric_2() {
+        double[][] input = new double[][] {
+                { -10.0 }
+        };
+
+        double[][][] output = new double[][][] {
+                {
+                        { 1.0 }
+                },
+                {
+                        { -10.0 }
+                }
+        };
+
+        performTest(LinearAlgebra.EIGEN, input, output);
+    }
+
     public void testDecompose_2x2_symmetric_1() {
         double[][] input = new double[][] {
                 { -5.0, 12.0 },
@@ -111,7 +145,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
-    public void testDecompose_4x4_symmetric() {
+    public void testDecompose_4x4_symmetric_1() {
         double[][] input = new double[][] {
                 { 1.0, 5.0, 7.0, 9.0 },
                 { 5.0, 2.0, 8.0, 4.0 },
@@ -131,6 +165,33 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                     { 0.0, -4.237, 0.0, 0.0 },
                     { 0.0, 0.0, 4.814, 0.0 },
                     { 0.0, 0.0, 0.0, -8.635 }
+                }
+        };
+
+        performTest(LinearAlgebra.EIGEN, input, output);
+    }
+
+    public void testDecompose_4x4_symmetric_2() {
+        double[][] input = new double[][] {
+                { -8.0, 7.0, 2.0, -3.0 },
+                { 7.0, 20.0, -4.0, 5.0 },
+                { 2.0, -4.0, 4.0, 2.0 },
+                { -3.0, 5.0, 2.0, -44.0 }
+        };
+
+        double[][][] output = new double[][][] {
+                {
+                    { -0.947, 0.203, -0.226, 0.1 },
+                    { 0.227, 0.961, -0.13, -0.09 },
+                    { 0.187, -0.179, -0.965, -0.052 },
+                    { 0.127, 0.058, -0.04, 0.989 }
+
+                },
+                {
+                    { -9.672, 0.0, 0.0, 0.0 },
+                    { 0.0, 22.525, 0.0, 0.0 },
+                    { 0.0, 0.0, 4.013, 0.0 },
+                    { 0.0, 0.0, 0.0, -44.866 }
                 }
         };
 

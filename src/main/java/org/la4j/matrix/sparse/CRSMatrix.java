@@ -72,7 +72,8 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             rowPointers[i] = cardinality;
             for (int j = 0; j < columns; j++) {
                 double value = source.get(i, j);
-                if (Math.abs(value) > Matrices.EPS || value < 0.0) {
+                // if (Math.abs(value) > Matrices.EPS || value < 0.0) {
+                if (value != 0.0) {
 
                     if (values.length < cardinality + 1) {
                         growup();
@@ -127,7 +128,8 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         int k = searchForColumnIndex(j, rowPointers[i], rowPointers[i + 1]);
 
         if (k < rowPointers[i + 1] && columnIndices[k] == j) {
-            if (Math.abs(value) < Matrices.EPS && value >= 0.0) {
+            // if (Math.abs(value) < Matrices.EPS && value >= 0.0) {
+            if (value == 0.0) {
                 remove(k, i);
             } else {
                 values[k] = value;
@@ -341,7 +343,8 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
             double value = function.evaluate(i, j, values[k]);
 
-            if (Math.abs(value) < Matrices.EPS && value >= 0.0) {
+            // if (Math.abs(value) < Matrices.EPS && value >= 0.0) {
+            if (value == 0.0) {
                 remove(k, i);
             } else {
                 values[k] = value;
@@ -420,7 +423,8 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     private void insert(int k, int i, int j, double value) {
 
-        if (Math.abs(value) < Matrices.EPS && value >= 0.0) {
+        //if (Math.abs(value) < Matrices.EPS && value >= 0.0) {
+        if (value == 0.0) {
             return;
         }
 
