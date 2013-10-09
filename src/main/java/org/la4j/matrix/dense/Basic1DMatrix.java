@@ -125,7 +125,7 @@ public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
 
     @Override
     public Matrix resize(int rows, int columns) {
-        ensureDimensionsAreNotNegative(rows, columns);
+        ensureDimensionsAreCorrect(rows, columns);
 
         if (this.rows == rows && this.columns == columns) {
             return copy();

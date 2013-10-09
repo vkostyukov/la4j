@@ -82,8 +82,13 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     public CompressedVector(int length, int cardinality) {
-        this(length, cardinality, new double[align(length, cardinality)], 
-             new int[align(length, cardinality)]);
+        super(LinearAlgebra.SPARSE_FACTORY, length);
+
+        int alignedSize = align(length, cardinality);
+
+        this.cardinality = cardinality;
+        this.values = new double[alignedSize];
+        this.indices = new int[alignedSize];
     }
 
     public CompressedVector(int length, int cardinality, double values[], int indices[]) {
@@ -204,7 +209,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     @Override
     public Vector resize(int length) {
-        ensureLengthIsNotNegative(length);
+        ensureLengthIsCorrect(length);
 
         int $cardinality = 0;
         double $values[] = new double[align(length, 0)];
@@ -382,7 +387,13 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         indices = $indices;
     }
 
-    private static int align(int length, int cardinality) {
+    private int align(int length, int cardinality) {
+        if (cardinality < 0) {
+            fail("Cardinality should be positive: " + cardinality + ".");
+        }
+        if (cardinality > length) {
+            fail("Cardinality should be less then or equal to capacity: " + cardinality + ".");
+        }
         return Math.min(length, ((cardinality / MINIMUM_SIZE) + 1) * MINIMUM_SIZE);
     }
 

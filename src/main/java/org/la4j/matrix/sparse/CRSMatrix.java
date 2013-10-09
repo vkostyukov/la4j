@@ -91,8 +91,9 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     public CRSMatrix(int rows, int columns, int cardinality) {
         super(LinearAlgebra.CRS_FACTORY, rows, columns);
+        ensureCardinalityIsCorrect(rows * columns, cardinality);
 
-        int alignedSize = align(rows, columns, cardinality);
+        int alignedSize = align(cardinality);
 
         this.cardinality = 0;
         this.values = new double[alignedSize];
@@ -102,6 +103,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     public CRSMatrix(int rows, int columns, int cardinality, double values[], int columnIndices[], int rowPointers[]) {
         super(LinearAlgebra.CRS_FACTORY, rows, columns);
+        ensureCardinalityIsCorrect(rows * columns, cardinality);
 
         this.cardinality = cardinality;
 
@@ -208,8 +210,8 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public Matrix copy() {
-        double $values[] = new double[align(rows, columns, cardinality)];
-        int $columnIndices[] = new int[align(rows, columns, cardinality)];
+        double $values[] = new double[align(cardinality)];
+        int $columnIndices[] = new int[align(cardinality)];
         int $rowPointers[] = new int[rows + 1];
 
         System.arraycopy(values, 0, $values, 0, cardinality);
@@ -222,7 +224,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public Matrix resize(int rows, int columns) {
-        ensureDimensionsAreNotNegative(rows, columns);
+        ensureDimensionsAreCorrect(rows, columns);
 
         if (this.rows == rows && this.columns == columns) {
             return copy();
@@ -230,9 +232,8 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
         if (this.rows >= rows && this.columns >= columns) {
 
-            // TODO: think about cardinality in align call 
-            double $values[] = new double[align(rows, columns, cardinality)];
-            int $columnIndices[] = new int[align(rows, columns, cardinality)];
+            double $values[] = new double[align(cardinality)];
+            int $columnIndices[] = new int[align(cardinality)];
             int $rowPointers[] = new int[rows + 1];
 
             int $cardinality = 0;
@@ -259,8 +260,8 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
 
         if (this.rows < rows) {
-            double $values[] = new double[align(rows, columns, cardinality)];
-            int $columnIndices[] = new int[align(rows, columns, cardinality)];
+            double $values[] = new double[align(cardinality)];
+            int $columnIndices[] = new int[align(cardinality)];
             int $rowPointers[] = new int[rows + 1];
 
             System.arraycopy(values, 0, $values, 0, cardinality);
@@ -277,8 +278,8 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
 
         // TODO: think about cardinality in align call
-        double $values[] = new double[align(rows, columns, cardinality)];
-        int $columnIndices[] = new int[align(rows, columns, cardinality)];
+        double $values[] = new double[align(cardinality)];
+        int $columnIndices[] = new int[align(cardinality)];
         int $rowPointers[] = new int[rows + 1];
 
         System.arraycopy(values, 0, $values, 0, cardinality);
@@ -312,7 +313,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                 }
             }
         }
-
     }
 
     @Override
@@ -380,7 +380,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         columns = in.readInt();
         cardinality = in.readInt();
 
-        int alignedSize = align(rows, columns, cardinality);
+        int alignedSize = align(cardinality);
 
         values = new double[alignedSize];
         columnIndices = new int[alignedSize];
@@ -488,8 +488,8 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         columnIndices = $columnIndices;
     }
 
-    private int align(int rows, int columns, int cardinality) {
-        return Math.min(rows * columns, ((cardinality / MINIMUM_SIZE) + 1) * MINIMUM_SIZE);
+    private int align(int cardinality) {
+        return ((cardinality / MINIMUM_SIZE) + 1) * MINIMUM_SIZE;
     }
 
     @Override

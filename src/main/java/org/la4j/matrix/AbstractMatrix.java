@@ -50,7 +50,7 @@ public abstract class AbstractMatrix implements Matrix {
     protected Factory factory;
 
     protected AbstractMatrix(Factory factory, int rows, int columns) {
-        ensureDimensionsAreNotNegative(rows, columns);
+        ensureDimensionsAreCorrect(rows, columns);
 
         this.factory = factory;
 
@@ -1152,9 +1152,12 @@ public abstract class AbstractMatrix implements Matrix {
         }
     }
 
-    protected void ensureDimensionsAreNotNegative(int rows, int columns) {
+    protected void ensureDimensionsAreCorrect(int rows, int columns) {
         if (rows < 0 || columns < 0) {
             fail("Wrong matrix dimensions: " + rows + "x" + columns);
+        }
+        if (rows == Integer.MAX_VALUE || columns == Integer.MAX_VALUE) {
+            fail("Wrong matrix dimensions: use 'Integer.MAX_VALUE - 1' instead.");
         }
     }
 

@@ -92,8 +92,9 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     public CCSMatrix(int rows, int columns, int cardinality) {
         super(LinearAlgebra.CCS_FACTORY, rows, columns);
+        ensureCardinalityIsCorrect(rows * columns, cardinality);
 
-        int alignedSize = align(rows, columns, cardinality);
+        int alignedSize = align(cardinality);
 
         this.cardinality = 0;
         this.values = new double[alignedSize];
@@ -104,6 +105,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     public CCSMatrix(int rows, int columns, int cardinality, double values[], int rowIndices[], int columnPointers[]) {
         super(LinearAlgebra.CCS_FACTORY, rows, columns);
+        ensureCardinalityIsCorrect(rows * columns, cardinality);
 
         this.cardinality = cardinality;
         this.values = values;
@@ -194,8 +196,8 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public Matrix copy() {
-        double $values[] = new double[align(rows, columns, cardinality)];
-        int $rowIndices[] = new int[align(rows, columns, cardinality)];
+        double $values[] = new double[align(cardinality)];
+        int $rowIndices[] = new int[align(cardinality)];
         int $columnPointers[] = new int[columns + 1];
 
         System.arraycopy(values, 0, $values, 0, cardinality);
@@ -208,7 +210,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public Matrix resize(int rows, int columns) {
-        ensureDimensionsAreNotNegative(rows, columns);
+        ensureDimensionsAreCorrect(rows, columns);
 
         if (this.rows == rows && this.columns == columns) {
             return copy();
@@ -217,8 +219,8 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         if (this.rows >= rows && this.columns >= columns) {
 
             // TODO: think about cardinality in align call
-            double $values[] = new double[align(rows, columns, cardinality)];
-            int $rowIndices[] = new int[align(rows, columns, cardinality)];
+            double $values[] = new double[align(cardinality)];
+            int $rowIndices[] = new int[align(cardinality)];
             int $columnPointers[] = new int[columns + 1];
 
             int $cardinality = 0;
@@ -246,8 +248,8 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
         if (this.columns < columns) {
 
-            double $values[] = new double[align(rows, columns, cardinality)];
-            int $rowIndices[] = new int[align(rows, columns, cardinality)];
+            double $values[] = new double[align(cardinality)];
+            int $rowIndices[] = new int[align(cardinality)];
             int $columnPointers[] = new int[columns + 1];
 
             System.arraycopy(values, 0, $values, 0, cardinality);
@@ -264,8 +266,8 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
 
         // TODO: think about cardinality in align call
-        double $values[] = new double[align(rows, columns, cardinality)];
-        int $rowIndices[] = new int[align(rows, columns, cardinality)];
+        double $values[] = new double[align(cardinality)];
+        int $rowIndices[] = new int[align(cardinality)];
         int $columnPointers[] = new int[columns + 1];
 
         System.arraycopy(values, 0, $values, 0, cardinality);
@@ -351,7 +353,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         columns = in.readInt();
         cardinality = in.readInt();
 
-        int alignedSize = align(rows, columns, cardinality);
+        int alignedSize = align(cardinality);
 
         values = new double[alignedSize];
         rowIndices = new int[alignedSize];
@@ -477,8 +479,8 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         rowIndices = $rowIndices;
     }
 
-    private int align(int rows, int columns, int cardinality) {
-        return Math.min(rows * columns, ((cardinality / MINIMUM_SIZE) + 1) * MINIMUM_SIZE);
+    private int align(int cardinality) {
+        return ((cardinality / MINIMUM_SIZE) + 1) * MINIMUM_SIZE;
     }
 
     @Override

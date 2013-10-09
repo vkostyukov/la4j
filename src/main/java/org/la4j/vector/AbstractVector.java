@@ -41,7 +41,7 @@ public abstract class AbstractVector implements Vector {
     protected Factory factory;
 
     protected AbstractVector(Factory factory, int length) {
-        ensureLengthIsNotNegative(length);
+        ensureLengthIsCorrect(length);
 
         this.factory = factory;
         this.length = length;
@@ -608,9 +608,12 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(factory, "factory");
     }
 
-    protected void ensureLengthIsNotNegative(int length) {
+    protected void ensureLengthIsCorrect(int length) {
         if (length < 0) {
             fail("Wrong vector length: " + length);
+        }
+        if (length == Integer.MAX_VALUE) {
+            fail("Wrong vector length: use 'Integer.MAX_VALUE - 1' instead.");
         }
     }
 

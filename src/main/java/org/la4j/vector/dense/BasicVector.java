@@ -88,7 +88,7 @@ public class BasicVector extends AbstractVector implements DenseVector {
 
     @Override
     public Vector resize(int length) {
-        ensureLengthIsNotNegative(length);
+        ensureLengthIsCorrect(length);
 
         double $self[] = new double[length];
         System.arraycopy(self, 0, $self, 0, Math.min($self.length, self.length));
