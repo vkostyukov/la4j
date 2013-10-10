@@ -1,5 +1,8 @@
 Changelog
 ---------
+la4j-0.5.0 `Jan 2014`
+ * Bug fix in `align` method for big sparse matrices (reported by Michael Kapper)
+
 la4j-0.4.5 `Sep 2013`
  * New vector methods: `innerProduct()`, `outerProduct()` (contributed by Daniel Renshaw)
  * Bug fix in `Vector.subtract()` method (contributed by Ewald Grusk)
