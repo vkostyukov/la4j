@@ -469,14 +469,21 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
     }
 
+	private long capacity()
+	{
+		return ((long) rows) * columns;
+	}
+
     private void growup() {
 
-        if (values.length == rows * columns) {
+        if (values.length == capacity()) {
             // This should never happen
             throw new IllegalStateException("This matrix can't grow up.");
         }
 
-        int capacity = Math.min(rows * columns, (cardinality * 3) / 2 + 1);
+		int c = rows * columns < 0 ? Integer.MAX_VALUE : rows * columns;
+
+        int capacity = Math.min(c, (cardinality * 3) / 2 + 1);
 
         double $values[] = new double[capacity];
         int $columnIndices[] = new int[capacity];
