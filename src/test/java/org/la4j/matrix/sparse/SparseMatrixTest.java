@@ -37,4 +37,9 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
 
         assertEquals(3, a.cardinality());
     }
+
+	public void testLargeMatrix()
+	{
+		SparseMatrix a = (SparseMatrix) factory().createMatrix(1000000, 1000000);
+	}
 }
