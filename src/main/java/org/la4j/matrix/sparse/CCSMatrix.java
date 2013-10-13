@@ -92,7 +92,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     public CCSMatrix(int rows, int columns, int cardinality) {
         super(LinearAlgebra.CCS_FACTORY, rows, columns);
-        ensureCardinalityIsCorrect(rows * columns, cardinality);
+        ensureCardinalityIsCorrect(rows, columns, cardinality);
 
         int alignedSize = align(cardinality);
 
@@ -105,7 +105,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     public CCSMatrix(int rows, int columns, int cardinality, double values[], int rowIndices[], int columnPointers[]) {
         super(LinearAlgebra.CCS_FACTORY, rows, columns);
-        ensureCardinalityIsCorrect(rows * columns, cardinality);
+        ensureCardinalityIsCorrect(rows, columns, cardinality);
 
         this.cardinality = cardinality;
         this.values = values;

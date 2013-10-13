@@ -49,10 +49,13 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
         return new SparseSafeMatrix(this);
     }
 
-    protected void ensureCardinalityIsCorrect(long capacity, long cardinality) {
+    protected void ensureCardinalityIsCorrect(long rows, long columns, long cardinality) {
         if (cardinality < 0) {
             fail("Cardinality should be positive: " + cardinality + ".");
         }
+
+		long capacity = rows * columns;
+
         if (cardinality > capacity) {
             fail("Cardinality should be less then or equal to capacity: " + cardinality + ".");
         }
