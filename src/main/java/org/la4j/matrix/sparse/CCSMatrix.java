@@ -92,7 +92,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     public CCSMatrix(int rows, int columns, int cardinality) {
         super(LinearAlgebra.CCS_FACTORY, rows, columns);
-        ensureCardinalityIsCorrect(rows * columns, cardinality);
+        ensureCardinalityIsCorrect(rows, columns, cardinality);
 
         int alignedSize = align(cardinality);
 
@@ -105,7 +105,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     public CCSMatrix(int rows, int columns, int cardinality, double values[], int rowIndices[], int columnPointers[]) {
         super(LinearAlgebra.CCS_FACTORY, rows, columns);
-        ensureCardinalityIsCorrect(rows * columns, cardinality);
+        ensureCardinalityIsCorrect(rows, columns, cardinality);
 
         this.cardinality = cardinality;
         this.values = values;
@@ -462,12 +462,14 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     private void growup() {
 
-        if (values.length == rows * columns) {
+        if (values.length == capacity()) {
             // This should never happen
             throw new IllegalStateException("This matrix can't grow up.");
         }
 
-        int capacity = Math.min(rows * columns, (cardinality * 3) / 2 + 1);
+        int min = rows * columns;
+        min = min < 0 ? Integer.MAX_VALUE : min;
+        int capacity = Math.min(min, (cardinality * 3) / 2 + 1);
 
         double $values[] = new double[capacity];
         int $rowIndices[] = new int[capacity];
