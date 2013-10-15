@@ -3,6 +3,7 @@ Changelog
 la4j-0.5.0 `Jan 2014`
  * Bug fix in `align()` method for big sparse matrices (reported by Michael Kapper)
  * Bug fix in `growup()` method for big sparse matrices (contributed by Phil Messenger)
+ * Bug fix in `MatrixMarketStream`
 
 la4j-0.4.5 `Sep 2013`
  * New vector methods: `innerProduct()`, `outerProduct()` (contributed by Daniel Renshaw)
@@ -64,7 +65,7 @@ la4j-0.4.0 `Jun 2013`
  * Sparse entities are self-clearing (no memory leaks)
  * Support vector-by-matrix multiplication
  * Bug fix in `MatrixDecFunction`
- * Bug fix in `MatrixMatketStream` (contributed by Alessio Placitelli)
+ * Bug fix in `MatrixMarketStream` (contributed by Alessio Placitelli)
  * Bug fix in matrix-to-vector multiplication (contributed by Pavel Kalaidin)
  * Bug fix in `align()` method (contributed by Chandler May)
  * Bug fix in `QRDecompositor`
