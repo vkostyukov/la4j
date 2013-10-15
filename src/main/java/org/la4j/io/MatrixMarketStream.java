@@ -219,7 +219,7 @@ public class MatrixMarketStream extends AbstractStream
         if (token.equals("array")) {
             return parseDenseVector(chooseNotNull(factory, LinearAlgebra.DENSE_FACTORY));
         } else if (token.equals("coordinate")) {
-            return parseDenseVector(chooseNotNull(factory, LinearAlgebra.SPARSE_FACTORY));
+            return parseSparseVector(chooseNotNull(factory, LinearAlgebra.SPARSE_FACTORY));
         } else {
             throw new IOException("Unexpected token at stream: \"" + token + "\".");
         }
