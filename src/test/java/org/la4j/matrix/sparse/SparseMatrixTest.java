@@ -37,4 +37,27 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
 
         assertEquals(3, a.cardinality());
     }
+
+    public void testLargeMatrix()
+    {
+        int i = 1000000;
+        int j = 2000000;
+
+        SparseMatrix a = (SparseMatrix) factory().createMatrix(i, j);
+
+        assertEquals(i, a.rows());
+        assertEquals(j, a.columns());
+
+        for(int x = 0; x < i; x += 100000) {
+            for(int y = 0; y < j; y+= 500000) {
+                a.set(x, y, x * y);
+            }
+        }
+
+        for(int x = 0; x < i; x += 100000) {
+            for(int y = 0; y < j; y+= 500000) {
+                assertEquals(x * y, (long) a.get(x, y));
+            }
+        }
+    }
 }
