@@ -109,6 +109,7 @@ made by the authors:
 - Jakob Moellers
 - Yuriy Drozd
 - Maxim Samoylov
+- Phil Messenger
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013
