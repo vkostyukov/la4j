@@ -29,14 +29,13 @@ import java.io.OutputStream;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.sparse.SparseMatrix;
 import org.la4j.vector.Vector;
-import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.sparse.SparseVector;
@@ -96,6 +95,7 @@ public class MatrixMarketStream extends AbstractStream
 
     @Override
     public Vector readVector() throws IOException {
+        // TODO: Not a good idea
         return readVector(null);
     }
 
@@ -136,6 +136,7 @@ public class MatrixMarketStream extends AbstractStream
 
     @Override
     public Matrix readMatrix() throws IOException {
+        // TODO: Not a good idea
         return readMatrix(null);
     }
 
@@ -148,7 +149,8 @@ public class MatrixMarketStream extends AbstractStream
         } else if (matrix instanceof DenseMatrix) {
             writeDenseMatrix((DenseMatrix) matrix);
         } else {
-            throw new IllegalArgumentException("Unknow matrix type.");
+            // Should never happen
+            throw new IllegalArgumentException("Unknown matrix type.");
         }
 
         closeWriter();
@@ -215,14 +217,11 @@ public class MatrixMarketStream extends AbstractStream
         ensureNext("general");
 
         if (token.equals("array")) {
-            return parseDenseVector(factory == null ? 
-                                    Vectors.DEFAULT_DENSE_FACTORY : factory);
+            return parseDenseVector(chooseNotNull(factory, LinearAlgebra.DENSE_FACTORY));
         } else if (token.equals("coordinate")) {
-            return parseSparseVector(factory == null ? 
-                                     Vectors.DEFAULT_SPARSE_FACTORY : factory);
+            return parseDenseVector(chooseNotNull(factory, LinearAlgebra.SPARSE_FACTORY));
         } else {
-            throw new IOException("Unexpected token at stream: \"" 
-                                  + token + "\".");
+            throw new IOException("Unexpected token at stream: \"" + token + "\".");
         }
     }
 
@@ -266,14 +265,11 @@ public class MatrixMarketStream extends AbstractStream
         ensureNext("general");
 
         if (token.equals("array")) {
-            return parseDenseMatrix(factory == null ?
-                                    Matrices.DEFAULT_DENSE_FACTORY : factory);
+            return parseDenseMatrix(chooseNotNull(factory, LinearAlgebra.DENSE_FACTORY));
         } else if (token.equals("coordinate")) {
-            return parseSparseMatrix(factory == null ?
-                                     Matrices.DEFAULT_SPARSE_FACTORY : factory);
+            return parseSparseMatrix(chooseNotNull(factory, LinearAlgebra.SPARSE_FACTORY));
         } else {
-            throw new IOException("Unexpected token at stream: \"" 
-                                  + token + "\".");
+            throw new IOException("Unexpected token at stream: \"" + token + "\".");
         }
     }
 
@@ -315,7 +311,9 @@ public class MatrixMarketStream extends AbstractStream
     private String nextToken() throws IOException {
         while (tokenizer == null || !tokenizer.hasMoreTokens()) {
             String line = reader.readLine();
-            if (line.charAt(0) != '#') {
+
+            // We want to skip comments and empty lines
+            if (!"".equals(line) && (line.startsWith("%%") || !line.startsWith("%"))) {
                 tokenizer = new StringTokenizer(line);
             }
         }
@@ -324,7 +322,11 @@ public class MatrixMarketStream extends AbstractStream
 
     private void ensureNext(String value) throws IOException {
         if (!value.equals(nextToken())) {
-            throw new IOException();
+            throw new IOException("Unexpected token at stream: \"" + value + "\".");
         }
+    }
+
+    private Factory chooseNotNull(Factory first, Factory second) {
+        return first == null ? second : first;
     }
 }
