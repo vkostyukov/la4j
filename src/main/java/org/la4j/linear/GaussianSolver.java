@@ -36,46 +36,21 @@ public class GaussianSolver extends AbstractSolver implements LinearSystemSolver
 
     private static final long serialVersionUID = 4071505L;
 
+    // augmented matrix
+    private Matrix aa;
+
     public GaussianSolver(Matrix a) {
         super(a);
+
+        this.aa = a.resizeColumns(unknowns() + 1);
     }
 
     @Override
     public Vector solve(Vector b, Factory factory) {
         ensureRHSIsCorrect(b);
-        return solve(new LinearSystem(a, b, factory), factory);
-    }
 
-    /**
-     * Returns the solution for the given linear system
-     * <p>
-     * See <a href="http://mathworld.wolfram.com/GaussianElimination.html">
-     * http://mathworld.wolfram.com/GaussianElimination.html</a> for more
-     * details.
-     * </p>
-     * 
-     * @param linearSystem
-     * @param factory
-     * @return vector
-     */
-    @Override
-    @Deprecated
-    public Vector solve(LinearSystem linearSystem, Factory factory) {
-
-        if (!suitableFor(linearSystem)) {
-            throw new IllegalArgumentException("This system can't be solved by Gauss: rows != columns.");
-        }
-
-        Matrix a = linearSystem.coefficientsMatrix();
-        Vector b = linearSystem.rightHandVector();
-
-        int columns = linearSystem.variables();
-
-        Matrix aa = a.resizeColumns(columns + 1);
-        Vector bb = b.copy();
-
-        // augmented matrix
-        aa.setColumn(columns, bb);
+        // extend augmented matrix
+        aa.setColumn(unknowns(), b);
 
         // the 1st phase
         triangularizeWithPivoting(aa);
@@ -130,27 +105,14 @@ public class GaussianSolver extends AbstractSolver implements LinearSystemSolver
 
         for (int i = matrix.rows() - 1; i >= 0; i--) {
 
-            double summand = 0.0;
+            double acc = 0.0;
             for (int j = i + 1; j < matrix.columns() - 1; j++) {
-                summand += result.get(j) * matrix.get(i, j);
+                acc += result.get(j) * matrix.get(i, j);
             }
 
-            result.set(i, (matrix.get(i, matrix.columns() - 1) - summand)
+            result.set(i, (matrix.get(i, matrix.columns() - 1) - acc)
                        / matrix.get(i, i));
         }
-    }
-
-    /**
-     * Check if this linear system can be solved by Gaussian solver
-     * 
-     * @param linearSystem
-     * @return <code>true</code> if given linear system can be solved by
-     *         Gaussian solver
-     */
-    @Override
-    @Deprecated
-    public boolean suitableFor(LinearSystem linearSystem) {
-        return applicableTo(linearSystem.coefficientsMatrix());
     }
 
     @Override

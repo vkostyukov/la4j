@@ -308,26 +308,6 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
-    public Matrix[] decompose(MatrixDecompositor decompositor) {
-        return self.decompose(decompositor, factory);
-    }
-
-    @Override
-    public Matrix[] decompose(MatrixDecompositor decompositor, Factory factory) {
-        return self.decompose(decompositor, factory);
-    }
-
-    @Override
-    public Matrix inverse(MatrixInverter inverter) {
-        return self.inverse(inverter, factory);
-    }
-
-    @Override
-    public Matrix inverse(MatrixInverter inverter, Factory factory) {
-        return self.inverse(inverter, factory);
-    }
-
-    @Override
     public Matrix blank() {
         return self.blank(factory);
     }

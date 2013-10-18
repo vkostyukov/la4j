@@ -42,36 +42,13 @@ public class SquareRootSolver extends AbstractSolver implements LinearSystemSolv
     @Override
     public Vector solve(Vector b, Factory factory) {
         ensureRHSIsCorrect(b);
-        return solve(new LinearSystem(a, b, factory), factory);
-    }
-
-    /**
-     * Returns the solution for the given linear system
-     * <p>
-     * See <a href="http://mathworld.wolfram.com/SquareRootMethod.html">
-     * http://mathworld.wolfram.com/SquareRootMethod.html</a> for more details.
-     * </p>
-     * 
-     * @param linearSystem
-     * @param factory
-     * @return vector
-     */
-    @Override
-    public Vector solve(LinearSystem linearSystem, Factory factory) {
-
-        if (!suitableFor(linearSystem)) {
-            throw new IllegalArgumentException("This system can't be solved with SQRT method.");
-        }
-
-        Matrix a = linearSystem.coefficientsMatrix();
-        Vector b = linearSystem.rightHandVector();
 
         Matrix s = a.blank();
         Matrix d = a.blank();
 
-        Vector x = factory.createVector(linearSystem.variables());
-        Vector y = factory.createVector(linearSystem.variables());
-        Vector z = factory.createVector(linearSystem.variables());
+        Vector x = factory.createVector(unknowns());
+        Vector y = factory.createVector(unknowns());
+        Vector z = factory.createVector(unknowns());
 
         for (int i = 0; i < a.rows(); i++) {
 
@@ -86,19 +63,19 @@ public class SquareRootSolver extends AbstractSolver implements LinearSystemSolv
 
             if (s.get(i, i) == 0.0) {
                 // TODO: we can try to rearrange the diagonal elements
-                throw new IllegalArgumentException("This matrix is singular. We can't solve it.");
+                fail("This matrix is singular. We can't solve it.");
             }
 
             for (int j = i + 1; j < a.columns(); j++) {
 
-                double summand = 0;
+                double acc = 0;
                 for (int l = 0; l < i; l++) {
                     double sli = s.get(l, i);
                     double slj = s.get(l, j);
-                    summand += sli * slj * d.get(l, l);
+                    acc += sli * slj * d.get(l, l);
                 }
 
-                s.set(i, j, (a.get(i, j) - summand) / (s.get(i, i) * d.get(i, i)));
+                s.set(i, j, (a.get(i, j) - acc) / (s.get(i, i) * d.get(i, i)));
             }
 
             double zz = 0.0;
@@ -112,27 +89,15 @@ public class SquareRootSolver extends AbstractSolver implements LinearSystemSolv
 
         for (int i = a.rows() - 1; i >= 0; i--) {
 
-            double summand = 0.0;
+            double acc = 0.0;
             for (int l = i + 1; l < a.columns(); l++) {
-                summand += x.get(l) * s.get(i, l);
+                acc += x.get(l) * s.get(i, l);
             }
 
-            x.set(i, (y.get(i) - summand) / s.get(i, i));
+            x.set(i, (y.get(i) - acc) / s.get(i, i));
         }
 
         return x;
-    }
-
-    /**
-     * Checks whether this linear system can be solved by Square Root solver
-     * 
-     * @param linearSystem
-     * @return <code>true</code> if given linear system can be solved by Square
-     *         Root solver
-     */
-    @Override
-    public boolean suitableFor(LinearSystem linearSystem) {
-        return applicableTo(linearSystem.coefficientsMatrix());
     }
 
     @Override

@@ -47,12 +47,11 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
      * details.
      * </p>
      * 
-     * @param matrix
      * @param factory
      * @return { U, D, V }
      */
     @Override
-    public Matrix[] decompose(Matrix matrix, Factory factory) {
+    public Matrix[] decompose(Factory factory) {
 
         // AHTIUNG: this code derived from Jama
 
@@ -533,11 +532,6 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
         }
 
         return result;
-    }
-
-    @Override
-    public Matrix[] decompose(Factory factory) {
-        return decompose(matrix, factory);
     }
 
     @Override

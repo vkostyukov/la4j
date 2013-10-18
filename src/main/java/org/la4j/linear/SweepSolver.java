@@ -43,40 +43,20 @@ public class SweepSolver extends AbstractSolver implements LinearSystemSolver {
     @Override
     public Vector solve(Vector b, Factory factory) {
         ensureRHSIsCorrect(b);
-        return solve(new LinearSystem(a, b, factory), factory);
-    }
 
-    /**
-     * Returns the solution for the given linear system
-     * <p>
-     * See <a href="http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm">
-     * http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm</a> for more
-     * details.
-     * </p>
-     * 
-     * @param linearSystem
-     * @param factory
-     * @return vector
-     */
-    @Override
-    public Vector solve(LinearSystem linearSystem, Factory factory) {
+        // We need a copy, since the algorithm changes data
+        Matrix aa = a.copy();
+        Vector bb = b.copy();
 
-        if (!suitableFor(linearSystem)) {
-            throw new IllegalArgumentException("This system can't be solved with Sweep solver.");
-        }
+        Vector x = factory.createVector(aa.columns());
 
-        Matrix a = linearSystem.coefficientsMatrix().copy();
-        Vector b = linearSystem.rightHandVector().copy();
+        for (int i = 0; i < aa.rows() - 1; i++) {
 
-        Vector x = factory.createVector(a.columns());
-
-        for (int i = 0; i < a.rows() - 1; i++) {
-
-            double maxItem = Math.abs(a.get(i, i));
+            double maxItem = Math.abs(aa.get(i, i));
             int maxIndex = i;
 
-            for (int j = i + 1; j < a.columns(); j++) {
-                double value = Math.abs(a.get(j, i));
+            for (int j = i + 1; j < aa.columns(); j++) {
+                double value = Math.abs(aa.get(j, i));
                 if (value > maxItem) {
                     maxItem = value;
                     maxIndex = j;
@@ -84,43 +64,33 @@ public class SweepSolver extends AbstractSolver implements LinearSystemSolver {
             }
 
             if (maxIndex != i) {
-                a.swapRows(maxIndex, i);
-                b.swap(i, maxIndex);
+                aa.swapRows(maxIndex, i);
+                bb.swap(i, maxIndex);
             }
 
-            for (int j = i + 1; j < a.columns(); j++) {
+            for (int j = i + 1; j < aa.columns(); j++) {
 
-                double c = a.get(j, i) / a.get(i, i);
-                for (int k = i; k < a.columns(); k++) {
-                    a.update(j, k, Matrices.asMinusFunction(a.get(i, k) * c));
+                double c = aa.get(j, i) / aa.get(i, i);
+                for (int k = i; k < aa.columns(); k++) {
+                    aa.update(j, k, Matrices.asMinusFunction(aa.get(i, k) * c));
                 }
 
-                b.update(j, Vectors.asMinusFunction(b.get(i) * c));
+                bb.update(j, Vectors.asMinusFunction(bb.get(i) * c));
             }
         }
 
-        for (int i = a.rows() - 1; i >= 0; i--) {
+        for (int i = aa.rows() - 1; i >= 0; i--) {
 
-            double summand = 0.0;
+            double acc = 0.0;
 
-            for (int j = i + 1; j < a.columns(); j++) {
-                summand += a.get(i, j) * x.get(j);
+            for (int j = i + 1; j < aa.columns(); j++) {
+                acc += aa.get(i, j) * x.get(j);
             }
 
-            x.set(i, (b.get(i) - summand) / a.get(i, i));
+            x.set(i, (bb.get(i) - acc) / aa.get(i, i));
         }
 
         return x;
-    }
-
-    /**
-     * Checks whether this linear system can be solved by Sweep solver
-     * @param linearSystem
-     * @return <code>true</code> if given linear system can be solved by Sweep solver
-     */
-    @Override
-    public boolean suitableFor(LinearSystem linearSystem) {
-        return applicableTo(linearSystem.coefficientsMatrix());
     }
 
     @Override

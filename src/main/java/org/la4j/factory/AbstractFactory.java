@@ -21,18 +21,9 @@
 
 package org.la4j.factory;
 
-import org.la4j.linear.LinearSystem;
-import org.la4j.matrix.Matrix;
-import org.la4j.vector.Vector;
-
 public abstract class AbstractFactory implements Factory {
 
     private static final long serialVersionUID = 4071505L;
-
-    @Override
-    public LinearSystem createLinearSystem(Matrix a, Vector b) {
-        return new LinearSystem(a, b, this);
-    }
 
     @Override
     public Factory safe() {

@@ -21,7 +21,6 @@
 
 package org.la4j.factory;
 
-import org.la4j.linear.LinearSystem;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
@@ -125,11 +124,6 @@ public class SafeFactory implements Factory {
     @Override
     public Vector createRandomVector(int length) {
         return self.createRandomVector(length).safe();
-    }
-
-    @Override
-    public LinearSystem createLinearSystem(Matrix a, Vector b) {
-        return new LinearSystem(a, b, this);
     }
 
     @Override

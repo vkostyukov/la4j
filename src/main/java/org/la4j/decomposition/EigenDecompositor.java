@@ -47,12 +47,11 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
      * details.
      * </p>
      * 
-     * @param matrix
      * @param factory
      * @return { V, D }
      */
     @Override
-    public Matrix[] decompose(Matrix matrix, Factory factory) {
+    public Matrix[] decompose(Factory factory) {
 
         if (matrix.is(Matrices.SYMMETRIC_MATRIX)) {
             return decomposeSymmetricMatrix(matrix, factory);
@@ -61,11 +60,6 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
         } else {
             throw new IllegalArgumentException("Can't decompose rectangle matrix");
         }
-    }
-
-    @Override
-    public Matrix[] decompose(Factory factory) {
-        return decompose(matrix, factory);
     }
 
     @Override

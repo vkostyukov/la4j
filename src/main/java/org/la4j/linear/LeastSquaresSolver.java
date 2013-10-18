@@ -31,37 +31,30 @@ import org.la4j.vector.Vectors;
 
 public class LeastSquaresSolver extends AbstractSolver implements LinearSystemSolver {
 
+    private static final long serialVersionUID = 4071505L;
+
+    // Matrices from RAW_QR decomposition
+    private Matrix qr;
+    private Matrix r;
+
     public LeastSquaresSolver(Matrix a) {
         super(a);
+
+        // we use QR for this
+        MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.RAW_QR);
+        Matrix[] qrr = decompositor.decompose();
+
+        // TODO: Do something with it.
+        this.qr = qrr[0];
+        this.r = qrr[1];
     }
 
     @Override
     public Vector solve(Vector b, Factory factory) {
         ensureRHSIsCorrect(b);
-        return solve(new LinearSystem(a, b, factory), factory);
-    }
 
-    @Override
-    @Deprecated
-    public Vector solve(LinearSystem linearSystem, Factory factory) {
-
-        if (!suitableFor(linearSystem)) {
-            fail("This system can not be solved with Least Squares Solver.");
-        }
-
-        int n = linearSystem.variables();
-        int m = linearSystem.equations();
-
-        Matrix a = linearSystem.coefficientsMatrix();
-        Vector b = linearSystem.rightHandVector();
-
-        // we use QR for this
-        MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.RAW_QR);
-        Matrix[] qrr = decompositor.decompose(factory);
-
-        // TODO: Do something with it.
-        Matrix qr = qrr[0];
-        Matrix r = qrr[1];
+        int n = unknowns();
+        int m = equations();
 
         // check whether the matrix is full-rank or not
         for (int i = 0; i < r.rows(); i++) {
@@ -95,12 +88,6 @@ public class LeastSquaresSolver extends AbstractSolver implements LinearSystemSo
         }
 
         return x.slice(0, n);
-    }
-
-    @Override
-    @Deprecated
-    public boolean suitableFor(LinearSystem linearSystem) {
-        return applicableTo(linearSystem.coefficientsMatrix());
     }
 
     @Override

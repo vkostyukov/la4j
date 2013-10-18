@@ -605,30 +605,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    @Deprecated
-    public Matrix[] decompose(MatrixDecompositor decompositor) {
-        return decompose(decompositor, factory);
-    }
-
-    @Override
-    @Deprecated
-    public Matrix[] decompose(MatrixDecompositor decompositor, Factory factory) {
-        return decompositor.decompose(this, factory);
-    }
-
-    @Override
-    @Deprecated
-    public Matrix inverse(MatrixInverter inverter) {
-        return inverse(inverter, factory);
-    }
-
-    @Override
-    @Deprecated
-    public Matrix inverse(MatrixInverter inverter, Factory factory) {
-        return inverter.inverse(this, factory);
-    }
-
-    @Override
     public Matrix blank() {
         return blank(factory);
     }

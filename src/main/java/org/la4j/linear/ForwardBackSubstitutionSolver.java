@@ -31,35 +31,29 @@ import org.la4j.vector.Vectors;
 
 public class ForwardBackSubstitutionSolver extends AbstractSolver implements LinearSystemSolver {
 
+    private static final long serialVersionUID = 4071505L;
+
+    // Matrices from RAW_LU decomposition
+    private Matrix lu;
+    private Matrix p;
+
     public ForwardBackSubstitutionSolver(Matrix a) {
         super(a);
+
+        // we use Raw LU for this
+        MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.RAW_LU);
+        Matrix[] lup = decompositor.decompose();
+
+        // TODO: it doesn't look safe.
+        this.lu = lup[0];
+        this.p = lup[1];
     }
 
     @Override
     public Vector solve(Vector b, Factory factory) {
         ensureRHSIsCorrect(b);
-        return solve(new LinearSystem(a, b, factory), factory);
-    }
 
-    @Override
-    @Deprecated
-    public Vector solve(LinearSystem linearSystem, Factory factory) {
-
-        if (!suitableFor(linearSystem)) {
-            fail("This system can not be solved by LUSolver: rows != columns.");
-        }
-
-        int n = linearSystem.variables();
-
-        Matrix a = linearSystem.coefficientsMatrix();
-        Vector b = linearSystem.rightHandVector();
-
-        // we use Raw LU for this
-        MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.RAW_LU);
-        Matrix[] lup = decompositor.decompose(factory);
-        // TODO: it doesn't look safe.
-        Matrix lu = lup[0];
-        Matrix p = lup[1];
+        int n = unknowns();
 
         // checks whether the lu matrix is singular or not
         for (int i = 0; i < n; i++) {
@@ -94,12 +88,6 @@ public class ForwardBackSubstitutionSolver extends AbstractSolver implements Lin
         }
 
         return x;
-    }
-
-    @Override
-    @Deprecated
-    public boolean suitableFor(LinearSystem linearSystem) {
-        return applicableTo(linearSystem.coefficientsMatrix());
     }
 
     @Override

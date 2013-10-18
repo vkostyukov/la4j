@@ -44,14 +44,13 @@ public class QRDecompositor extends RawQRDecompositor implements MatrixDecomposi
      * http://mathworld.wolfram.com/QRDecomposition.html</a> for more details.
      * </p>
      * 
-     * @param matrix
      * @param factory
      * @return { Q, R }
      */
     @Override
-    public Matrix[] decompose(Matrix matrix, Factory factory) {
+    public Matrix[] decompose(Factory factory) {
 
-        Matrix[] qrr = super.decompose(matrix, factory);
+        Matrix[] qrr = super.decompose(factory);
         Matrix qr = qrr[0];
         Matrix r = qrr[1];
 
@@ -87,10 +86,5 @@ public class QRDecompositor extends RawQRDecompositor implements MatrixDecomposi
         }
 
         return new Matrix[] { q, r };
-    }
-
-    @Override
-    public Matrix[] decompose(Factory factory) {
-        return decompose(matrix, factory);
     }
 }

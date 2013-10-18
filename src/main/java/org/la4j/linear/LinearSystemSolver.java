@@ -34,22 +34,6 @@ import org.la4j.vector.Vector;
 public interface LinearSystemSolver extends Serializable {
 
     /**
-     * Solve the linear system with factory;
-     * @param linearSystem
-     * @return vector
-     */
-    @Deprecated
-    Vector solve(LinearSystem linearSystem, Factory factory);
-
-    /**
-     * Checks whether this linear system can be solved by this solver
-     * @param linearSystem
-     * @return <code>true</code> if given linear system can be solved by this solver
-     */
-    @Deprecated
-    boolean suitableFor(LinearSystem linearSystem);
-
-    /**
      * Solves the system A*x = b.
      *
      * @param b

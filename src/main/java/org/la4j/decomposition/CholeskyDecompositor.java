@@ -46,16 +46,11 @@ public class CholeskyDecompositor extends AbstractDecompositor implements Matrix
      * details.
      * </p>
      * 
-     * @param matrix
      * @param factory
      * @return { L }
      */
     @Override
-    public Matrix[] decompose(Matrix matrix, Factory factory) {
-
-        if (!applicableTo(matrix)) {
-            fail("This matrix can not be decomposed with Cholesky.");
-        }
+    public Matrix[] decompose(Factory factory) {
 
         Matrix l = factory.createMatrix(matrix.rows(), matrix.rows());
 
@@ -146,11 +141,6 @@ public class CholeskyDecompositor extends AbstractDecompositor implements Matrix
         }
 
         return result;
-    }
-
-    @Override
-    public Matrix[] decompose(Factory factory) {
-        return decompose(matrix, factory);
     }
 
     @Override

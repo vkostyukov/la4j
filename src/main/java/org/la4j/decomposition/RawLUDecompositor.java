@@ -32,11 +32,7 @@ public class RawLUDecompositor extends AbstractDecompositor implements MatrixDec
     }
 
     @Override
-    public Matrix[] decompose(Matrix matrix, Factory factory) {
-
-        if (!applicableTo(matrix)) {
-            throw new IllegalArgumentException("Wrong matrix size: rows != columns");
-        }
+    public Matrix[] decompose(Factory factory) {
 
         Matrix lu = matrix.copy();
         Matrix p = factory.createIdentityMatrix(lu.rows());
@@ -75,11 +71,6 @@ public class RawLUDecompositor extends AbstractDecompositor implements MatrixDec
         }
 
         return new Matrix[] { lu, p };
-    }
-
-    @Override
-    public Matrix[] decompose(Factory factory) {
-        return decompose(matrix, factory);
     }
 
     @Override

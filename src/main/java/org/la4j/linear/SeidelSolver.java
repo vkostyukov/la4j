@@ -36,83 +36,46 @@ public class SeidelSolver extends AbstractSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 
-    private static final int MAX_ITERATIONS = 1000000;
+    private Matrix aa;
 
     public SeidelSolver(Matrix a) {
         super(a);
+
+        // We need a copy here, since we don't want to change source matrix
+        this.aa = a.copy();
+
+        for (int i = 0; i < aa.rows(); i++) {
+            MatrixFunction divider = Matrices.asDivFunction(aa.get(i, i));
+            for (int j = 0; j < aa.columns(); j++) {
+                if (i != j) {
+                    aa.update(i, j, divider);
+                }
+            }
+        }
     }
 
     @Override
     public Vector solve(Vector b, Factory factory) {
         ensureRHSIsCorrect(b);
-        return solve(new LinearSystem(a, b, factory), factory);
-    }
 
-    /**
-     * Returns the solution for the given linear system
-     * <p>
-     * See <a href="http://mathworld.wolfram.com/Gauss-SeidelMethod.html">
-     * http://mathworld.wolfram.com/Gauss-SeidelMethod.html</a> for more
-     * details.
-     * </p>
-     * 
-     * @param linearSystem
-     * @param factory
-     * @return vector
-     */
-    @Override
-    @Deprecated
-    public Vector solve(LinearSystem linearSystem, Factory factory) {
+        Vector current = factory.createVector(unknowns());
 
-        if (!suitableFor(linearSystem)) {
-            throw new IllegalArgumentException("This system can't be solved with Seidel method.");
-        }
+        while (!a.multiply(current).equals(b)) {
 
-        Matrix a = linearSystem.coefficientsMatrix().copy();
-        Vector b = linearSystem.rightHandVector();
+            for (int i = 0; i < aa.rows(); i++) {
 
-        for (int i = 0; i < a.rows(); i++) {
-            MatrixFunction divider = Matrices.asDivFunction(a.get(i, i));
-            for (int j = 0; j < a.columns(); j++) {
-                if (i != j) {
-                    a.update(i, j, divider);
-                }
-            }
-        }
-
-        Vector current = factory.createVector(linearSystem.variables());
-
-        // TODO: we can peel out the iterations
-        int iteration = 0;
-
-        while (iteration < MAX_ITERATIONS && !linearSystem.isSolution(current)) {
-
-            for (int i = 0; i < a.rows(); i++) {
-
-                double summand = b.get(i) / a.get(i, i);
-                for (int j = 0; j < a.columns(); j++) {
+                double acc = b.get(i) / aa.get(i, i);
+                for (int j = 0; j < aa.columns(); j++) {
                     if (i != j) {
-                        summand -= a.get(i, j) * current.get(j);
+                        acc -= aa.get(i, j) * current.get(j);
                     }
                 }
 
-                current.set(i, summand);
+                current.set(i, acc);
             }
-
-            iteration++;
         }
 
         return current;
-    }
-
-    /**
-     * Checks whether this linear system can be solved by Seidel solver
-     * @param linearSystem
-     * @return <code>true</code> if given linear system can be solved by Seidel solver
-     */
-    @Override
-    public boolean suitableFor(LinearSystem linearSystem) {
-        return applicableTo(linearSystem.coefficientsMatrix());
     }
 
     @Override

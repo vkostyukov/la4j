@@ -32,11 +32,7 @@ public class RawQRDecompositor extends AbstractDecompositor implements MatrixDec
     }
 
     @Override
-    public Matrix[] decompose(Matrix matrix, Factory factory) {
-
-        if (!applicableTo(matrix)) {
-            fail("Wrong matrix size: rows < columns.");
-        }
+    public Matrix[] decompose(Factory factory) {
 
         Matrix qr = matrix.copy();
         Matrix r = factory.createSquareMatrix(qr.columns());
@@ -81,11 +77,6 @@ public class RawQRDecompositor extends AbstractDecompositor implements MatrixDec
         }
 
         return new Matrix[] { qr, r };
-    }
-
-    @Override
-    public Matrix[] decompose(Factory factory) {
-        return decompose(matrix, factory);
     }
 
     @Override

@@ -22,7 +22,6 @@
 package org.la4j.decomposition;
 
 import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 
 /**
@@ -44,14 +43,13 @@ public class LUDecompositor extends RawLUDecompositor implements MatrixDecomposi
      * http://mathworld.wolfram.com/LUDecomposition.html</a> for more details.
      * </p>
      * 
-     * @param matrix
      * @param factory
      * @return { L, U, P }
      */
     @Override
-    public Matrix[] decompose(Matrix matrix, Factory factory) {
+    public Matrix[] decompose(Factory factory) {
 
-        Matrix[] lup = super.decompose(matrix, factory);
+        Matrix[] lup = super.decompose(factory);
         Matrix lu = lup[0];
         Matrix p = lup[1];
 
@@ -76,10 +74,5 @@ public class LUDecompositor extends RawLUDecompositor implements MatrixDecomposi
         }
 
         return new Matrix[] { l, u, p };
-    }
-
-    @Override
-    public Matrix[] decompose(Factory factory) {
-        return decompose(matrix, factory);
     }
 }

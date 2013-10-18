@@ -23,9 +23,7 @@ package org.la4j.inversion;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
-import org.la4j.linear.LinearSystem;
 import org.la4j.linear.LinearSystemSolver;
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
@@ -38,11 +36,10 @@ public class GaussJordanInverter implements MatrixInverter {
     }
 
     @Override
-    @Deprecated
-    public Matrix inverse(Matrix matrix, Factory factory) {
+    public Matrix inverse(Factory factory) {
 
         if (matrix.rows() != matrix.columns()) {
-            throw new IllegalArgumentException("Wrong matrix size: " 
+            throw new IllegalArgumentException("Wrong matrix size: "
                     + "rows != columns");
         }
 
@@ -66,13 +63,8 @@ public class GaussJordanInverter implements MatrixInverter {
     }
 
     @Override
-    public Matrix inverse(Factory factory) {
-        return inverse(matrix, factory);
-    }
-
-    @Override
     public Matrix inverse() {
-        return inverse(matrix, matrix.factory());
+        return inverse(matrix.factory());
     }
 
     @Override

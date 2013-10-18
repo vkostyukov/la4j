@@ -26,10 +26,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.factory.Basic1DFactory;
-import org.la4j.factory.CRSFactory;
-import org.la4j.factory.Factory;
-import org.la4j.factory.SafeFactory;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
 import org.la4j.vector.functor.VectorAccumulator;
@@ -314,91 +310,6 @@ public final class Vectors {
     public static final VectorPredicate NEGATIVE_VECTOR = 
             new NegativeVectorPredicate();
 
-    /**
-     * The {@link Basic1DFactory} singleton instance.
-     *
-     * Deprecated: use {@link LinearAlgebra#DENSE_FACTORY} instead.
-     */
-    @Deprecated
-    public static final Factory BASIC_FACTORY = LinearAlgebra.DENSE_FACTORY;
-
-    /**
-     * The {@link CRSFactory} singleton instance.
-     *
-     * Deprecated: use {@link LinearAlgebra#SPARSE_FACTORY} instead.
-     */
-    @Deprecated
-    public static final Factory COMPRESSED_FACTORY = LinearAlgebra.SPARSE_FACTORY;
-
-    /**
-     * Safe version of {@link Vectors#BASIC_FACTORY}.
-     * 
-     * <p>
-     * The safe factory creates vectors that is wrapped with safe accessors 
-     * and modifiers. 
-     * </p>
-     *
-     * Deprecated: use {@link LinearAlgebra#SAFE_DENSE_FACTORY} instead.
-     */
-    @Deprecated
-    public static final Factory SAFE_BASIC_FACTORY = LinearAlgebra.SAFE_DENSE_FACTORY;
-
-    /**
-     * Safe version of {@link Vectors#COMPRESSED_FACTORY}.
-     * 
-     * <p>
-     * The safe factory creates vectors that is wrapped with safe accessors 
-     * and modifiers. 
-     * </p>
-     *
-     * Deprecated: use {@link LinearAlgebra#SAFE_SPARSE_FACTORY} instead.
-     */
-    @Deprecated
-    public static final Factory SAFE_COMPRESSED_FACTORY = LinearAlgebra.SAFE_SPARSE_FACTORY;
-
-    /**
-     * Reference to the {@link Vectors#BASIC_FACTORY}.
-     *
-     * Deprecated: use {@link LinearAlgebra#UNSAFE_DENSE_FACTORY} instead.
-     */
-    @Deprecated
-    public static final Factory UNSAFE_BASIC_FACTORY = LinearAlgebra.UNSAFE_DENSE_FACTORY;
-
-    /**
-     * Reference to the {@link Vectors#COMPRESSED_FACTORY}.
-     *
-     * Deprecated: use {@link LinearAlgebra#UNSAFE_SPARSE_FACTORY} instead.
-     */
-    @Deprecated
-    public static final Factory UNSAFE_COMPRESSED_FACTORY = LinearAlgebra.UNSAFE_SPARSE_FACTORY;
-
-    /**
-     * The default factory singleton instance. References the
-     * {@link Vectors#BASIC_FACTORY}.
-     *
-     * Deprecated: use {@link LinearAlgebra#DEFAULT_FACTORY} instead.
-     */
-    @Deprecated
-    public static final Factory DEFAULT_FACTORY = LinearAlgebra.DEFAULT_FACTORY;
-
-    /**
-     * The default dense factory singleton instance. References the
-     * {@link Vectors#BASIC_FACTORY}.
-     *
-     * Deprecated: use {@link LinearAlgebra#DENSE_FACTORY} instead.
-     */
-    @Deprecated
-    public static final Factory DEFAULT_DENSE_FACTORY = LinearAlgebra.DENSE_FACTORY;
-
-    /**
-     * The default sparse factory singleton instance. References the
-     * {@link Vectors#COMPRESSED_FACTORY}.
-     *
-     * Deprecated: use {@link LinearAlgebra#SPARSE_FACTORY} instead.
-     */
-    @Deprecated
-    public static final Factory DEFAULT_SPARSE_FACTORY = LinearAlgebra.SPARSE_FACTORY;
-
      /**
      * Increases each element of vector by <code>1</code>.
      */
@@ -421,7 +332,7 @@ public final class Vectors {
      * @return
      */
     public static Vector asSingletonVector(double value) {
-        return DEFAULT_FACTORY.createVector(new double[] { value });
+        return LinearAlgebra.DEFAULT_FACTORY.createVector(new double[] { value });
     }
 
     /**
