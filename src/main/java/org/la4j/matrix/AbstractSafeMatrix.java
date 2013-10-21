@@ -390,6 +390,16 @@ public abstract class AbstractSafeMatrix implements Matrix {
     public Matrix sliceBottomRight(int fromRow, int fromColumn, Factory fac) {
         return self.sliceBottomRight(fromRow, fromColumn, factory);
     }
+    
+    @Override
+    public Matrix select(int[] rowIndices, int[] columnIndices){
+    	return self.select(rowIndices, columnIndices,factory);
+    }
+    
+    @Override
+    public Matrix select(int[] rowIndices, int[] columnIndices, Factory fac){
+    	return self.select(rowIndices, columnIndices,fac);
+    }
 
     @Override
     public Factory factory() {

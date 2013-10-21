@@ -219,4 +219,61 @@ public class CCSFactory extends CompressedFactory implements Factory {
 
         return new CRSMatrix(rows, cols, k, valuesArray, rowIndArray, columnPointers);
     }
+
+    @Override
+    public Matrix createSubmatrix(Matrix matrix, int[] rowIndices, int[] columnIndices){
+    	int rows = rowIndices.length;
+    	int cols = rowIndices.length;
+    	int oldRows = matrix.rows();
+    	int oldCols = matrix.columns();
+
+    	//	verify that all row and column indices 
+    	//  are valid and unique
+    	checkDuplicateIndices(rowIndices);
+    	checkDuplicateIndices(columnIndices);
+    	checkIndexBounds(rowIndices, oldRows);
+    	checkIndexBounds(columnIndices, oldCols);
+    	
+    	/*
+    	 * TODO - If **matrix** is a large sparse matrix then
+    	 * the following code which iterates over the dimensions
+    	 * is going to be very slow. Possible solution - 
+    	 * 
+    	 * Sparse Matrix factory can only accept inputs matrices
+    	 * which are themselves of specific sparse type, otherwise IllegalArgumentException 
+    	 * is thrown.
+    	 *
+    	 */
+    	
+    	// determine number of non-zero values == cardinality
+    	// before allocating space, this is perhaps more efficient
+    	// than single pass and calling grow() when required.
+    	int cardinality = 0;
+    	for(int i=0;i<rows;i++){
+    		for(int j=0;j<cols;j++){
+    			if(matrix.get(rowIndices[i], columnIndices[j]) != 0){
+    				cardinality++;
+    			}
+    		}
+    	}
+    	
+    	double[] values = new double[cardinality];
+    	int[] sparseRowIndices = new int[cardinality];
+    	int[] sparseColumnPointers = new int[rows+1];
+    	
+    	sparseColumnPointers[0] = 0;
+    	int valPtr = 0;
+		for(int j=0;j<cols;j++){
+	    	for(int i=0;i<rows;i++){
+    			double val = matrix.get(rowIndices[i], columnIndices[j]);
+    			if(val != 0){
+    				values[valPtr] = val;
+    				sparseRowIndices[valPtr] = i;
+    				valPtr++;
+    				sparseColumnPointers[j]++;
+    			}
+    		}
+    	}
+    	return new CRSMatrix(rows, cols, cardinality, values, sparseRowIndices, sparseColumnPointers);
+    }   
 }

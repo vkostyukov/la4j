@@ -739,6 +739,38 @@ public abstract class AbstractMatrix implements Matrix {
     public Matrix sliceBottomRight(int fromRow, int fromColumn, Factory fac) {
         return slice(fromRow, fromColumn, rows, columns, factory);
     }
+    
+    @Override
+    public Matrix select(int[] rowIndices, int[] columnIndices){
+     return select(rowIndices, columnIndices, factory);
+    }
+
+	@Override
+	public Matrix select(int[] rowIndices, int[] columnIndices, Factory factory) {
+		int newRows = rowIndices.length;
+		int newCols = columnIndices.length;
+
+		// Test all rowIndices and columnIndices are within bounds
+		checkIndexBounds(rowIndices, this.rows);
+		checkIndexBounds(columnIndices, this.columns);
+
+		/*
+		 * TODO: We might want to allow duplicates, this constraint imposing
+		 * uniqueness might be unnecessary.
+		 */
+		// Test that all rowIndices and columnIndices are unique
+		// checkDuplicateIndices(rowIndices);
+		// checkDuplicateIndices(columnIndices);
+
+		Matrix newMat = factory.createMatrix(newRows, newCols);
+		for (int i = 0; i < newRows; i++) {
+			for (int j = 0; j < newCols; j++) {
+				newMat.set(i, j, get(rowIndices[i], columnIndices[j]));
+			}
+		}
+
+		return newMat;
+	}    
 
     @Override
     public Factory factory() {
@@ -1140,4 +1172,46 @@ public abstract class AbstractMatrix implements Matrix {
     protected void fail(String message) {
         throw new IllegalArgumentException(message);
     }
+    
+	/*
+	 * NOTE: Throwing exceptions from these utility methods directly instead of
+	 * have a boolean function which only perform test. With boolean function
+	 * the caller will ultimately have to raise Exception.
+	 * 
+	 * TODO should move these static functions to a better location where they
+	 * can be re-used in other classes. AbstractMatrix.fail is not a static
+	 * method
+	 */
+
+	/***
+	 * Verifies that the indexList does not contain any duplicate entries.
+	 * 
+	 * @param indexList
+	 */
+
+	protected static void checkDuplicateIndices(int[] indexList) {
+		for (int i = 0; i < indexList.length - 1; i++) {
+			for (int j = i + 1; j < indexList.length; j++) {
+				if (indexList[i] == indexList[j]) {
+					throw new IllegalArgumentException(
+							"Index list contains duplicates");
+				}
+			}
+		}
+
+	}
+
+	/***
+	 * Verifies that all the elements in the indexList are less than the bound
+	 * 
+	 * @param indexList
+	 * @param bound
+	 */
+	protected static void checkIndexBounds(int[] indexList, int bound) {
+		for (int i = 0; i < indexList.length; i++) {
+			if (indexList[i] >= bound) {
+				throw new IllegalArgumentException("Index value out of bounds");
+			}
+		}
+	}    
 }
