@@ -1209,7 +1209,7 @@ public abstract class AbstractMatrix implements Matrix {
 	 */
 	protected static void checkIndexBounds(int[] indexList, int bound) {
 		for (int i = 0; i < indexList.length; i++) {
-			if (indexList[i] >= bound) {
+			if (indexList[i] >= bound || indexList[i] < 0) {
 				throw new IllegalArgumentException("Index value out of bounds");
 			}
 		}
