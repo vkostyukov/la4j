@@ -110,6 +110,7 @@ made by the authors:
 - Yuriy Drozd
 - Maxim Samoylov
 - Phil Messenger
+- Anveshi Charuvaka
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013

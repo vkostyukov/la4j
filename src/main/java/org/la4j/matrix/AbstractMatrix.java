@@ -21,6 +21,7 @@
  *                 Ewald Grusk
  *                 Yuriy Drozd
  *                 Maxim Samoylov
+ *                 Anveshi Charuvaka
  * 
  */
 
@@ -736,7 +737,7 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix sliceBottomRight(int fromRow, int fromColumn, Factory fac) {
+    public Matrix sliceBottomRight(int fromRow, int fromColumn, Factory factory) {
         return slice(fromRow, fromColumn, rows, columns, factory);
     }
     
@@ -751,7 +752,7 @@ public abstract class AbstractMatrix implements Matrix {
         int newCols = columnIndices.length;
 
         if (newRows == 0 || newCols == 0) {
-            fail("No rows or columns selected");
+            fail("No rows or columns selected.");
         }
 
         // Test all rowIndices and columnIndices are within bounds

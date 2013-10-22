@@ -17,6 +17,7 @@
  * 
  * Contributor(s): Chandler May
  *                 Maxim Samoylov
+ *                 Anveshi Charuvaka
  * 
  */
 
@@ -559,7 +560,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         int newCols = columnIndices.length;
         
         if (newRows == 0 || newCols == 0) {
-            fail("No rows or columns selected");
+            fail("No rows or columns selected.");
         }
 
         // Test all rowIndices and columnIndices are within bounds
@@ -589,7 +590,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             newRowPointers[i + 1] = newRowPointers[i];
             for (int j = 0; j < newCols; j++) {
                 double val = get(rowIndices[i], columnIndices[j]);
-                if (val != 0) {
+                if (val != 0.0) {
                     newValues[endPtr] = val;
                     newColumnIndices[endPtr] = j;
                     endPtr++;
@@ -598,8 +599,9 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                 }
             }
         }
+
         return new CRSMatrix(newRows, newCols, newCardinality, newValues,
-                newColumnIndices, newRowPointers);
+                             newColumnIndices, newRowPointers);
     }
     
 }

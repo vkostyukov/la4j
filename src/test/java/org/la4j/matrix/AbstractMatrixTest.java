@@ -18,6 +18,7 @@
  * Contributor(s): Evgenia Krivova
  *                 Jakob Moellers
  *                 Maxim Samoylov
+ *                 Anveshi Charuvaka
  * 
  */
 
@@ -1783,5 +1784,4 @@ public abstract class AbstractMatrixTest extends TestCase {
                 });
         assertEquals(d, a.select(rowInd, colInd));
     }
-
 }

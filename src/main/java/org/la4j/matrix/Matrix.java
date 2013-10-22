@@ -19,6 +19,7 @@
  *                 Julia Kostyukova
  *                 Jakob Moellers
  *                 Maxim Samoylov
+ *                 Anveshi Charuvaka
  */
 
 package org.la4j.matrix;

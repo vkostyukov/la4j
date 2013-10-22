@@ -17,6 +17,7 @@
  * 
  * Contributor(s): Jakob Moellers
  *                 Maxim Samoylov
+ *                 Anveshi Charuvaka
  * 
  */
 
@@ -387,7 +388,7 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
-    public Matrix sliceBottomRight(int fromRow, int fromColumn, Factory fac) {
+    public Matrix sliceBottomRight(int fromRow, int fromColumn, Factory factory) {
         return self.sliceBottomRight(fromRow, fromColumn, factory);
     }
     
