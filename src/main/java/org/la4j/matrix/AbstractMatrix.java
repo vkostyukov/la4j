@@ -770,7 +770,7 @@ public abstract class AbstractMatrix implements Matrix {
 		}
 
 		return newMat;
-	}    
+	}   
 
     @Override
     public Factory factory() {
@@ -1213,5 +1213,5 @@ public abstract class AbstractMatrix implements Matrix {
 				throw new IllegalArgumentException("Index value out of bounds");
 			}
 		}
-	}    
+	} 
 }
