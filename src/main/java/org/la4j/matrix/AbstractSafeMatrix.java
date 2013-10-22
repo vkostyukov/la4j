@@ -392,13 +392,13 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
     
     @Override
-    public Matrix select(int[] rowIndices, int[] columnIndices){
-    	return self.select(rowIndices, columnIndices,factory);
+    public Matrix select(int[] rowIndices, int[] columnIndices) {
+        return self.select(rowIndices, columnIndices, factory);
     }
-    
+
     @Override
-    public Matrix select(int[] rowIndices, int[] columnIndices, Factory fac){
-    	return self.select(rowIndices, columnIndices,fac);
+    public Matrix select(int[] rowIndices, int[] columnIndices, Factory factory) {
+        return self.select(rowIndices, columnIndices, factory);
     }
 
     @Override

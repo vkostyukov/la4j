@@ -548,6 +548,10 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 	public Matrix select(int[] rowIndices, int[] columnIndices) {
 		int newRows = rowIndices.length;
 		int newCols = columnIndices.length;
+		
+        if (newRows == 0 || newCols == 0) {
+            fail("No rows or columns selected");
+        }
 
 		// Test all rowIndices and columnIndices are within bounds
 		checkIndexBounds(rowIndices, this.rows);
