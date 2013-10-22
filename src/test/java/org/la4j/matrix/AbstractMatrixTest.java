@@ -1687,4 +1687,101 @@ public abstract class AbstractMatrixTest extends TestCase {
 
         assertEquals(-1.0, a.minInColumn(3));
     }
+
+    private Matrix matrixA() {
+        return factory().createMatrix(new double[][] {
+                // 0 1 2 3 4 5
+                { 8.93, 5.88, 6.57, 9.3, 3.65, 0.08 },// 0
+                { 3.96, 8.26, 2.51, 9.61, 4.63, 6.12 },// 1
+                { 7.37, 5.79, 8.8, 0.87, 7.83, 6.15 },// 2
+                { 3.43, 9.08, 1.16, 2.3, 3.66, 4.93 },// 3
+                { 7.05, 7.75, 8.11, 2.93, 9.04, 6.72 } // 4
+                });
+    }
+
+    public void testSelect1() {
+        // Throw exception when row indices are invalid
+        Matrix a = matrixA();
+        int[] rowInd = new int[] { 3, 4, 10 };
+        int[] colInd = new int[] { 0, 1, 2 }; // all columns
+        try {
+            a.select(rowInd, colInd);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            // Do nothing
+        }
+    }
+
+    public void testSelect2() {
+        // Throw exception when column indices are invalid
+        Matrix a = matrixA();
+        int[] rowInd = new int[] { 0, 1, 2 };
+        int[] colInd = new int[] { -1, 1, 2 }; // all columns
+        try {
+            a.select(rowInd, colInd);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            // Do nothing
+        }
+    }
+
+    public void testSelect3() {
+        // All columns and a subset of rows selected.
+        Matrix a = matrixA();
+        int[] rowInd = new int[] { 1, 3, 4 };
+        int[] colInd = new int[] { 0, 1, 2, 3, 4, 5 }; // all columns
+        Matrix b = factory().createMatrix(new double[][] {
+                // 0 1 2 3 4 5
+                { 3.96, 8.26, 2.51, 9.61, 4.63, 6.12 },// 1
+                { 3.43, 9.08, 1.16, 2.3, 3.66, 4.93 },// 3
+                { 7.05, 7.75, 8.11, 2.93, 9.04, 6.72 } // 4
+                });
+        assertEquals(b, a.select(rowInd, colInd));
+    }
+
+    public void testSelect4() {
+        // All rows and a subset of columns selected.
+        Matrix a = matrixA();
+        int[] rowInd = new int[] { 0, 1, 2, 3, 4 };
+        int[] colInd = new int[] { 0, 2, 4, 5 }; // all columns
+        Matrix c = factory().createMatrix(new double[][] {
+                // 0 2 4 5
+                { 8.93, 6.57, 3.65, 0.08 },// 0
+                { 3.96, 2.51, 4.63, 6.12 },// 1
+                { 7.37, 8.8, 7.83, 6.15 },// 2
+                { 3.43, 1.16, 3.66, 4.93 },// 3
+                { 7.05, 8.11, 9.04, 6.72 } // 4
+                });
+        assertEquals(c, a.select(rowInd, colInd));
+    }
+
+    public void testSelect5() {
+        // A subset of rows and columns is selected.
+        Matrix a = matrixA();
+        int[] rowInd = new int[] { 1, 3, 4 };
+        int[] colInd = new int[] { 2, 4, 5 };
+        Matrix d = factory().createMatrix(new double[][] {
+                // 2 4 5
+                { 2.51, 4.63, 6.12 },// 1
+                { 1.16, 3.66, 4.93 },// 3
+                { 8.11, 9.04, 6.72 } // 4
+                });
+        assertEquals(d, a.select(rowInd, colInd));
+    }
+
+    public void testSelect6() {
+        // Duplication of rows and columns.
+        Matrix a = matrixA();
+        int[] rowInd = new int[] { 1, 3, 3, 4 };
+        int[] colInd = new int[] { 2, 2, 4, 5, 5 };
+        Matrix d = factory().createMatrix(new double[][] {
+                // 2 2 4 5 5
+                { 2.51, 2.51, 4.63, 6.12, 6.12 },// 1
+                { 1.16, 1.16, 3.66, 4.93, 4.93 },// 3
+                { 1.16, 1.16, 3.66, 4.93, 4.93 },// 3
+                { 8.11, 8.11, 9.04, 6.72, 6.72 } // 4
+                });
+        assertEquals(d, a.select(rowInd, colInd));
+    }
+
 }

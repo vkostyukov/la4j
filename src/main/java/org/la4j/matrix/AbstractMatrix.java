@@ -739,6 +739,33 @@ public abstract class AbstractMatrix implements Matrix {
     public Matrix sliceBottomRight(int fromRow, int fromColumn, Factory fac) {
         return slice(fromRow, fromColumn, rows, columns, factory);
     }
+    
+    @Override
+    public Matrix select(int[] rowIndices, int[] columnIndices) {
+        return select(rowIndices, columnIndices, factory);
+    }
+
+    @Override
+    public Matrix select(int[] rowIndices, int[] columnIndices, Factory factory) {
+        int newRows = rowIndices.length;
+        int newCols = columnIndices.length;
+
+        if (newRows == 0 || newCols == 0) {
+            fail("No rows or columns selected");
+        }
+
+        // Test all rowIndices and columnIndices are within bounds
+        checkIndexBounds(rowIndices, rows);
+        checkIndexBounds(columnIndices, columns);
+
+        Matrix result = factory.createMatrix(newRows, newCols);
+        for (int i = 0; i < newRows; i++) {
+            for (int j = 0; j < newCols; j++) {
+                result.set(i, j, get(rowIndices[i], columnIndices[j]));
+            }
+        }
+        return result;
+    }
 
     @Override
     public Factory factory() {
@@ -1139,5 +1166,24 @@ public abstract class AbstractMatrix implements Matrix {
 
     protected void fail(String message) {
         throw new IllegalArgumentException(message);
+    }
+    
+    /*
+     * TODO should make the utility function static and maybe move them to a
+     * better location to be re-used in other classes.
+     */
+
+    /***
+     * Verifies that all the elements in the indexList are less than the bound
+     * 
+     * @param indexList
+     * @param bound
+     */
+    protected void checkIndexBounds(int[] indexList, int bound) {
+        for (int i = 0; i < indexList.length; i++) {
+            if (indexList[i] >= bound || indexList[i] < 0) {
+                fail("Index value out of bounds");
+            }
+        }
     }
 }

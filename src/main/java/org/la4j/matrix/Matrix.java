@@ -600,6 +600,30 @@ public interface Matrix extends Externalizable {
      * @return
      */
     Matrix sliceBottomRight(int fromRow, int fromColumn, Factory factory);
+    
+    /**
+     * Returns a new matrix with the selected rows and columns. This method can
+     * be used either return a specific subset of rows and/or columns or to
+     * permute the indices in an arbitrary order. The list of indices are
+     * allowed to contain duplicates indices. This is more general than slice()
+     * which selects only contiguous blocks. However, where applicable slice()
+     * is probably more efficient.
+     * 
+     * @param rowIndices
+     *            list of row indexes, each index < rows()
+     * @param columnIndices
+     *            list of column indexes, each index < columns()
+     * @return The new matrix with the selected rows and columns.
+     * @throws IllegalArgumentException
+     *             if invalid row or column indices are provided.
+     */
+
+    public Matrix select(int[] rowIndices, int[] columnIndices);
+
+    /**
+     * Returns a new matrix with the selected rows and columns.
+     */
+    public Matrix select(int[] rowIndices, int[] columnIndices, Factory factory);
 
     /**
      * Returns the factory associated with this matrix.

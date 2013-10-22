@@ -549,4 +549,57 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
         return (min < 0.0) ? min : 0.0;
     }
+    
+    /**
+     * Returns a CRSMatrix with the selected rows and columns.
+     */
+    @Override
+    public Matrix select(int[] rowIndices, int[] columnIndices) {
+        int newRows = rowIndices.length;
+        int newCols = columnIndices.length;
+        
+        if (newRows == 0 || newCols == 0) {
+            fail("No rows or columns selected");
+        }
+
+        // Test all rowIndices and columnIndices are within bounds
+        checkIndexBounds(rowIndices, rows);
+        checkIndexBounds(columnIndices, columns);
+
+        // determine number of non-zero values (cardinality)
+        // before allocating space, this is perhaps more efficient
+        // than single pass and calling grow() when required.
+        int newCardinality = 0;
+        for (int i = 0; i < newRows; i++) {
+            for (int j = 0; j < newCols; j++) {
+                if (get(rowIndices[i], columnIndices[j]) != 0.0) {
+                    newCardinality++;
+                }
+            }
+        }
+
+        // Construct the raw structure for the sparse matrix
+        double[] newValues = new double[newCardinality];
+        int[] newColumnIndices = new int[newCardinality];
+        int[] newRowPointers = new int[newRows + 1];
+
+        newRowPointers[0] = 0;
+        int endPtr = 0;
+        for (int i = 0; i < newRows; i++) {
+            newRowPointers[i + 1] = newRowPointers[i];
+            for (int j = 0; j < newCols; j++) {
+                double val = get(rowIndices[i], columnIndices[j]);
+                if (val != 0) {
+                    newValues[endPtr] = val;
+                    newColumnIndices[endPtr] = j;
+                    endPtr++;
+                    newRowPointers[i + 1] += 1;
+
+                }
+            }
+        }
+        return new CRSMatrix(newRows, newCols, newCardinality, newValues,
+                newColumnIndices, newRowPointers);
+    }
+    
 }
