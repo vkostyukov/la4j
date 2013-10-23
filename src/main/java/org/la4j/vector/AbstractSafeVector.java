@@ -267,6 +267,18 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
+    public Vector select(int[] indices) {
+        // TODO: The bound check should be done here.
+        return self.select(indices, factory);
+    }
+
+    @Override
+    public Vector select(int[] indices, Factory factory) {
+        // TODO: The bound check should be done here.
+        return self.select(indices, factory);
+    }
+
+    @Override
     public Factory factory() {
         return factory;
     }

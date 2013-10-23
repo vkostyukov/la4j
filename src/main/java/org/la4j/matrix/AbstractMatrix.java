@@ -756,6 +756,7 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         // Test all rowIndices and columnIndices are within bounds
+        // TODO: Since matrices are unsafe by default we might want to skip this check.
         checkIndexBounds(rowIndices, rows);
         checkIndexBounds(columnIndices, columns);
 
@@ -1107,7 +1108,6 @@ public abstract class AbstractMatrix implements Matrix {
             for (int j = 0; result && j < columns; j++) {
                 double a = get(i, j);
                 double b = matrix.get(i, j);
-                                      // vovks-markovka
                 double diff = Math.abs(a - b);
 
                 result = (a == b) || (diff < Matrices.EPS || diff / Math.max(Math.abs(a), Math.abs(b)) < Matrices.EPS);

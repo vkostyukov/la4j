@@ -394,6 +394,27 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public Vector select(int[] indices) {
+        return select(indices, factory);
+    }
+
+    @Override
+    public Vector select(int[] indices, Factory factory) {
+        int newLength = indices.length;
+
+        if (newLength == 0) {
+            fail("Now elements selected.");
+        }
+
+        Vector result = factory.createVector(newLength);
+        for (int i = 0; i < newLength; i++) {
+            result.set(i, get(indices[i]));
+        }
+
+        return result;
+    }
+
+    @Override
     public Factory factory() {
         return factory;
     }

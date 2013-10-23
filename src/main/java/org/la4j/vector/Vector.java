@@ -426,7 +426,30 @@ public interface Vector extends Externalizable {
      * @param factory
      * @return new vector
      */
-    Vector sliceRight(int from, Factory factory); 
+    Vector sliceRight(int from, Factory factory);
+
+
+    /**
+     * Returns a new vector with the selected elements.
+     *
+     * @param indices
+     *            list of indices, each index < length()
+     * @return The new vector with the selected elements.
+     * @throws IllegalArgumentException
+     *             if invalid index is provided.
+     */
+    public Vector select(int[] indices);
+
+    /**
+     * Returns a new vector with the selected elements.
+     *
+     * @param indices
+     *            list of indices, each index < length()
+     * @return The new vector with the selected elements.
+     * @throws IllegalArgumentException
+     *             if invalid index is provided.
+     */
+    public Vector select(int[] indices, Factory factory);
 
     /**
      * Returns a factory that associated with this vector.

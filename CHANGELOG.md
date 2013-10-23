@@ -5,6 +5,7 @@ la4j-0.5.0 `Jan 2014`
  * Bug fix in `growup()` method for big sparse matrices (contributed by Phil Messenger)
  * Bug fix in `MatrixMarketStream`
  * New matrix method: `select()` (contributed by Anveshi Charuvaka)
+ * New vector method: `select()`
 
 la4j-0.4.5 `Sep 2013`
  * New vector methods: `innerProduct()`, `outerProduct()` (contributed by Daniel Renshaw)

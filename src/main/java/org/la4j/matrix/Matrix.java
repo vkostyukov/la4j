@@ -601,7 +601,7 @@ public interface Matrix extends Externalizable {
      * @return
      */
     Matrix sliceBottomRight(int fromRow, int fromColumn, Factory factory);
-    
+
     /**
      * Returns a new matrix with the selected rows and columns. This method can
      * be used either return a specific subset of rows and/or columns or to
@@ -618,7 +618,6 @@ public interface Matrix extends Externalizable {
      * @throws IllegalArgumentException
      *             if invalid row or column indices are provided.
      */
-
     public Matrix select(int[] rowIndices, int[] columnIndices);
 
     /**
