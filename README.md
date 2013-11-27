@@ -111,6 +111,7 @@ made by the authors:
 - Maxim Samoylov
 - Phil Messenger
 - Anveshi Charuvaka
+- Clement Skau
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013

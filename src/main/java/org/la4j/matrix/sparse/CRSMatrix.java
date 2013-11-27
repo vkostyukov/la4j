@@ -18,6 +18,7 @@
  * Contributor(s): Chandler May
  *                 Maxim Samoylov
  *                 Anveshi Charuvaka
+ *                 Clement Skau
  * 
  */
 
