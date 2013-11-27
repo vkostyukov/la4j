@@ -477,8 +477,11 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             throw new IllegalStateException("This matrix can't grow up.");
         }
 
-        int min = rows * columns;
-        min = min < 0 ? Integer.MAX_VALUE : min;
+        int min = (
+            (rows != 0 && columns > Integer.MAX_VALUE / rows) ?
+            Integer.MAX_VALUE :
+            (rows * columns)
+            );
         int capacity = Math.min(min, (cardinality * 3) / 2 + 1);
 
         double $values[] = new double[capacity];

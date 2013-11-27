@@ -60,4 +60,29 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
             }
         }
     }
+
+    public void testCapacityOverflow() {
+        int i = 65536;
+        int j = 65536;
+
+        // Integer 65536 * 65536 overflows to 0
+        assertEquals(0, i * j);
+
+        SparseMatrix a = (SparseMatrix) factory().createMatrix(i, j);
+
+        assertEquals(i, a.rows());
+        assertEquals(j, a.columns());
+
+        a.set(0, 0, 42.0);
+        assertEquals(42.0, a.get(0, 0));
+
+        a.set(i-1, j-1, 7.0);
+        assertEquals(7.0, a.get(i-1, j-1));
+
+        // Since values and Indices array sizes are align'd with CCSMatrix and
+        //  CRSMatrix.MINIMUM_SIZE (=32), we need to set more than 32 values.
+        for(int row = 0 ; row < 32 ; row++) {
+            a.set(row, 1, 3.1415);
+        }
+    }
 }
