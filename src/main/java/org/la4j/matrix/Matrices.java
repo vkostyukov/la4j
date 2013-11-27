@@ -233,17 +233,9 @@ public final class Matrices {
             return true;
         }
     }
-    
-    
-    /**
-     * 
-     * 
-     * @author alex
-     *
-     */
+
     private static class InvertiblePredicate
     			implements AdvancedMatrixPredicate {
-
 		@Override
 		public boolean test(Matrix matrix) {
 			if( matrix.columns() == matrix.rows() )
@@ -252,7 +244,6 @@ public final class Matrices {
 			}
 			return false;
 		}
-    	
     }
 
     private static class IncMatrixFunction 
