@@ -2,20 +2,17 @@ package org.la4j.optimization;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
-import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.MockVector;
 import org.la4j.vector.Vector;
 
 import junit.framework.TestCase;
 
-public class AbstractOptimizerTest extends TestCase {
-	
-	private double absoluteEps = 1e-7;
-	
+public abstract class AbstractOptimizerTest extends TestCase {
+		
 	public void performTest(LinearAlgebra.OptimizerFactory optimizerFactory,
-			double coefficientMatrix[][], double rightHandVector[], double accuracy) {
-
+			double coefficientMatrix[][], double rightHandVector[], double accuracy) {		
+		
 		for (Factory factory : LinearAlgebra.FACTORIES) {
 
 			Matrix a = factory.createMatrix(coefficientMatrix);

@@ -43,7 +43,6 @@ import org.la4j.linear.LeastSquaresSolver;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.optimization.LinearSystemOptimizer;
 import org.la4j.optimization.NonlinearConjugateGradientOptimizer;
-import org.la4j.optimization.NonlinearConjugateGradientOptimizerTest;
 import org.la4j.linear.SeidelSolver;
 import org.la4j.linear.SquareRootSolver;
 import org.la4j.linear.SweepSolver;
