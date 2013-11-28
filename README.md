@@ -27,7 +27,7 @@ Brief Examples
 Matrix a = new Basic2DMatrix(new double[][] {
    { 1.0, 2.0, 3.0 },
    { 4.0, 5.0, 6.0 },
-   { 7.0, 8.0. 9.0 }
+   { 7.0, 8.0, 9.0 }
 });
 
 // We will use Gauss-Jordan method for inverting
@@ -41,7 +41,7 @@ Matrix b = inverter.invert(LinearAlgebra.DENSE_FACTORY);
 Matrix a = new CRSMatrix(new double[][] {
    { 1.0, 2.0, 3.0 },
    { 4.0, 5.0, 6.0 },
-   { 7.0, 8.0. 9.0 }
+   { 7.0, 8.0, 9.0 }
 });
 
 // A right hand side vector, which is simple dense vector
@@ -61,7 +61,7 @@ Vector x = solver.solve(b, LinearAlgebra.SPARSE_FACTORY);
 Matrix a = new Basic1DMatrix(new double[][] {
    { 1.0, 2.0, 3.0 },
    { 4.0, 5.0, 6.0 },
-   { 7.0, 8.0. 9.0 }
+   { 7.0, 8.0, 9.0 }
 });
 
 // We will use LU decompositor
@@ -107,7 +107,7 @@ made by the authors:
 - Daniel Renshaw
 - Ewald Grusk
 - Jakob Moellers
-- Yuriy Drozd
+- Iurii Drozd
 - Maxim Samoylov
 - Phil Messenger
 - Anveshi Charuvaka
