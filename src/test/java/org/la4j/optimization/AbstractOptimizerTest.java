@@ -10,8 +10,11 @@ import org.la4j.vector.Vector;
 import junit.framework.TestCase;
 
 public class AbstractOptimizerTest extends TestCase {
+	
+	private double absoluteEps = 1e-7;
+	
 	public void performTest(LinearAlgebra.OptimizerFactory optimizerFactory,
-			double coefficientMatrix[][], double rightHandVector[]) {
+			double coefficientMatrix[][], double rightHandVector[], double accuracy) {
 
 		for (Factory factory : LinearAlgebra.FACTORIES) {
 
@@ -19,9 +22,11 @@ public class AbstractOptimizerTest extends TestCase {
 			Vector b = factory.createVector(rightHandVector);
 
 			LinearSystemOptimizer solver = a.withOptimizer(optimizerFactory);
-			Vector x = solver.solve(b, factory);
+			Vector x = solver.solve(b, factory, accuracy);
 
-			assertEquals(new MockVector(b), new MockVector(a.multiply(x)));
+			double eps = (new MockVector(b)).add((new MockVector(a.multiply(x)).multiply(-1.0))).max();
+			
+			assertTrue(Math.abs(eps) <= accuracy);
 		}
 	}
 }

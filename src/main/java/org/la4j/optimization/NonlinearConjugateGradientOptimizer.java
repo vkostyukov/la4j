@@ -11,15 +11,16 @@ public class NonlinearConjugateGradientOptimizer extends AbstractOptimizer imple
 
 	private Vector start; 
 	private int maxIterations = 10000;
-	private double eps = 1e-5;
 	
+	private double step;
+		
 	public NonlinearConjugateGradientOptimizer(Matrix a) {
 		super(a);		
 		start = LinearAlgebra.BASIC1D_FACTORY.createVector(this.unknowns);
 	}
 
 	@Override
-	public Vector solve(Vector b, Factory factory) {
+	public Vector solve(Vector b, Factory factory, double accuracy) {
 		Vector oldX = start.copy();				
 		Vector oldGradient = formGradient(matrix, start, b).multiply(-1.0);
 		Vector newX = alphaLineSearch(matrix, b, oldX, oldGradient);
@@ -27,9 +28,10 @@ public class NonlinearConjugateGradientOptimizer extends AbstractOptimizer imple
 		Vector direction = newGradient.copy();
 		
 		int k = 0;
-		double beta = 1;		
+		double beta = 1;
+		step = accuracy;
 		
-		while ((k++ < maxIterations) && (formGradient(matrix, oldX, b).norm() > eps)){			
+		while ((k++ < maxIterations) && (formGradient(matrix, oldX, b).norm() > accuracy)){			
 			newGradient = formGradient(matrix, newX, b).multiply(-1.0);
 			beta = Math.pow(formGradient(matrix, newX, b).norm(), 2) / Math.pow(formGradient(matrix, oldX, b).norm(), 2);
 			direction = newGradient.add(direction.multiply(beta));
@@ -64,7 +66,7 @@ public class NonlinearConjugateGradientOptimizer extends AbstractOptimizer imple
 		Vector oldX = x.copy();
 		double newF = form(A, x, b);
 		double oldF = form(A, x, b);
-		double alpha = eps;
+		double alpha = step;
 		
 		do{
 			k++;

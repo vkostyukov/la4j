@@ -878,9 +878,9 @@ public interface Matrix extends Externalizable {
     LinearSystemSolver withSolver(LinearAlgebra.SolverFactory factory);
 
     /**
-     * Creates a new optimizer by given {@code factory} of this matrix.
-     *
+     * Creates a new optimizer with given {@code accuracy} by {@code factory} of this matrix 
      * @param factory
+     * @param accourancy
      * @return
      */
     LinearSystemOptimizer withOptimizer(LinearAlgebra.OptimizerFactory factory);

@@ -12,13 +12,21 @@ import org.la4j.vector.Vector;
  */
 public interface LinearSystemOptimizer extends Serializable{
 	/**
-     * Optimize the system A*x = b.
+     * Optimize the system A*x = b with default accuracy 1e-7;
+     *
+     * @param b
+     * @return
+     */
+    Vector solve(Vector b, double accuracy);
+    
+    /**
+     * Optimize the system A*x = b with given {@code accuracy}  accuracy
      *
      * @param b
      * @return
      */
     Vector solve(Vector b);
-
+       
     /**
      * Optimize the system A*x = b.
      *
@@ -26,7 +34,7 @@ public interface LinearSystemOptimizer extends Serializable{
      * @param factory
      * @return
      */
-    Vector solve(Vector b, Factory factory);
+    Vector solve(Vector b, Factory factory, double accuracy);
 
     /**
      * Returns the self matrix of the optimizator.

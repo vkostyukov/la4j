@@ -17,12 +17,18 @@ public abstract class AbstractOptimizer implements LinearSystemOptimizer {
 
         this.matrix = a;
         this.unknowns = a.columns();
-        this.equations = a.rows();
+        this.equations = a.rows();        
+    }
+    
+    
+    @Override
+    public Vector solve(Vector b, double accuracy) {
+        return solve(b, b.factory(), accuracy);
     }
     
     @Override
     public Vector solve(Vector b) {
-        return solve(b, b.factory());
+        return solve(b, b.factory(), 1e-7);
     }
 
     @Override

@@ -4,6 +4,8 @@ import org.la4j.LinearAlgebra;
 
 public class NonlinearConjugateGradientOptimizerTest extends AbstractOptimizerTest {
 	
+	private double epsForSolving = 1e-7;
+	
 	//Ensure optimizer solves good linear systems as well.
 	public void testSolve_1x1() {
 
@@ -13,7 +15,7 @@ public class NonlinearConjugateGradientOptimizerTest extends AbstractOptimizerTe
 
         double b[] = new double[] { -33.0 };
 
-        performTest(LinearAlgebra.OptimizerFactory.NLCG, a, b);
+        performTest(LinearAlgebra.OptimizerFactory.NLCG, a, b, epsForSolving);
     }
 	
 	//Ensure optimizer solves good linear systems as well.
@@ -26,7 +28,7 @@ public class NonlinearConjugateGradientOptimizerTest extends AbstractOptimizerTe
 
         double b[] = new double[] { 21.0, -37.0 };
 
-        performTest(LinearAlgebra.OptimizerFactory.NLCG, a, b);
+        performTest(LinearAlgebra.OptimizerFactory.NLCG, a, b, epsForSolving);
     }
 	
 	//Ensure optimizer solves good linear systems as well.
@@ -40,6 +42,17 @@ public class NonlinearConjugateGradientOptimizerTest extends AbstractOptimizerTe
 
         double b[] = new double[] { 7.0, -85.5, 0.5 };
 
-        performTest(LinearAlgebra.OptimizerFactory.NLCG, a, b);
+        performTest(LinearAlgebra.OptimizerFactory.NLCG, a, b, epsForSolving);
     }
+	
+	public void testSolve_3x4 () {
+		double[][] a = new double[][] {
+				   { 1.0, 2.0, 3.0, 4.0 },
+				   { 4.0, 5.0, 6.0, 7.0 },
+				   { 7.0, 8.0, 9.0, 10.0 }
+				};
+		double[] b = new double[] { 1.0, 2.0, 3.0 };
+		
+		performTest(LinearAlgebra.OptimizerFactory.NLCG, a, b, 0.001);				
+	}
 }
