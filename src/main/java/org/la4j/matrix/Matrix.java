@@ -31,6 +31,7 @@ import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.LinearSystemSolver;
+import org.la4j.optimization.LinearSystemOptimizer;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -875,6 +876,15 @@ public interface Matrix extends Externalizable {
      * @return
      */
     LinearSystemSolver withSolver(LinearAlgebra.SolverFactory factory);
+
+    /**
+     * Creates a new optimizer by given {@code factory} of this matrix.
+     *
+     * @param factory
+     * @return
+     */
+    LinearSystemOptimizer withOptimizer(LinearAlgebra.OptimizerFactory factory);
+
 
     /**
      * Creates a new inverter by given {@code factory} of this matrix.

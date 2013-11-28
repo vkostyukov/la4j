@@ -37,6 +37,7 @@ import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
+import org.la4j.optimization.LinearSystemOptimizer;
 import org.la4j.vector.Vector;
 
 public abstract class AbstractSafeMatrix implements Matrix {
@@ -580,6 +581,11 @@ public abstract class AbstractSafeMatrix implements Matrix {
     @Override
     public LinearSystemSolver withSolver(LinearAlgebra.SolverFactory factory) {
         return self.withSolver(factory);
+    }
+    
+    @Override
+	public LinearSystemOptimizer withOptimizer(LinearAlgebra.OptimizerFactory factory){
+        return self.withOptimizer(factory);
     }
 
     @Override
