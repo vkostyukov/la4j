@@ -890,5 +890,5 @@ public interface Matrix extends Externalizable {
      * @param factory
      * @return
      */
-    MatrixDecompositor withDecompositor(LinearAlgebra.DecompositorFactory factory);
+    MatrixDecompositor withDecompositor(LinearAlgebra.DecompositorFactory factory); 
 }
