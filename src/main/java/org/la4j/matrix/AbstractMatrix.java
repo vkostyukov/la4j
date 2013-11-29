@@ -995,6 +995,7 @@ public abstract class AbstractMatrix implements Matrix {
         Vector sum = factory.createVector(rows);
         for (int i = 0; i < rows; i++) {
           sum.set(i, foldRow(i, accumulator));
+          accumulator.reset();
         }
         return sum;
     }
@@ -1016,6 +1017,7 @@ public abstract class AbstractMatrix implements Matrix {
         Vector sum = factory.createVector(columns);
         for (int i = 0; i < columns; i++) {
           sum.set(i, foldColumn(i, accumulator));
+          accumulator.reset();
         }
         return sum;
     }
