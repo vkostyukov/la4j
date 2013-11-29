@@ -442,6 +442,7 @@ public interface Matrix extends Externalizable {
 
     /**
      * Converts this matrix to triangle matrix.
+     * @return 
      */
     Matrix triangularize();
 
@@ -792,11 +793,25 @@ public interface Matrix extends Externalizable {
 
     /**
      * 
+     * @param accumulator
+     * @return vector of the accumulations for each row
+     */
+    Vector foldRows(MatrixAccumulator accumulator);
+
+    /**
+     * 
      * @param j
      * @param accumulator
      * @return
      */
     double foldColumn(int j, MatrixAccumulator accumulator);
+
+    /**
+     * 
+     * @param accumulator
+     * @return vector of the accumulations for each column
+     */
+    Vector foldColumns(MatrixAccumulator accumulator);
 
     /**
      * Checks whether this matrix compiles with <code>predicate</code>.
