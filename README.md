@@ -112,6 +112,7 @@ made by the authors:
 - Phil Messenger
 - Anveshi Charuvaka
 - Clement Skau
+- Miron Aseev
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013
