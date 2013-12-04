@@ -41,6 +41,8 @@ import org.la4j.linear.GaussianSolver;
 import org.la4j.linear.JacobiSolver;
 import org.la4j.linear.LeastSquaresSolver;
 import org.la4j.linear.LinearSystemSolver;
+import org.la4j.optimization.LinearSystemOptimizer;
+import org.la4j.optimization.NonlinearConjugateGradientOptimizer;
 import org.la4j.linear.SeidelSolver;
 import org.la4j.linear.SquareRootSolver;
 import org.la4j.linear.SweepSolver;
@@ -152,6 +154,17 @@ public final class LinearAlgebra {
         };
 
         public abstract LinearSystemSolver create(Matrix matrix);
+    }
+    
+    public static enum OptimizerFactory{
+    	NLCG {
+    		@Override
+    		public LinearSystemOptimizer create(Matrix matrix){
+    			return new NonlinearConjugateGradientOptimizer(matrix);
+    		}
+    	};
+    	
+    	public abstract LinearSystemOptimizer create(Matrix matrix);
     }
 
     /**

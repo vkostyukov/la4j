@@ -58,7 +58,7 @@ public interface LinearSystemSolver extends Serializable {
     Matrix self();
 
     /**
-     * Returns the number os unknowns in this solver.
+     * Returns the number of unknowns in this solver.
      *
      * @return
      */
