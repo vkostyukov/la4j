@@ -234,6 +234,14 @@ public final class Matrices {
         }
     }
 
+    private static class InvertiblePredicate implements AdvancedMatrixPredicate {
+
+        @Override
+        public boolean test(Matrix matrix) {
+            return matrix.rows() == matrix.columns() && matrix.determinant() != 0;
+        }
+    }
+
     private static class IncMatrixFunction 
             implements MatrixFunction {
         @Override
@@ -557,6 +565,13 @@ public final class Matrices {
      */
     public static final AdvancedMatrixPredicate DIAGONALLY_DOMINANT_MATRIX = 
             new DiagonallyDominantPredicate();
+
+    /**
+     * Checks whether the matrix is
+     * <a href="http://en.wikipedia.org/wiki/Invertible_matrix">invertible</a>.
+     */
+    public static final AdvancedMatrixPredicate INVERTIBLE_MATRIX =
+            new InvertiblePredicate();
 
     /**
      * Increases each element of matrix by <code>1</code>.
