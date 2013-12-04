@@ -238,7 +238,7 @@ public final class Matrices {
 
         @Override
         public boolean test(Matrix matrix) {
-            return matrix.rows() == matrix.columns() && matrix.determinant() != 0;
+            return matrix.rows() == matrix.columns() && matrix.determinant() != 0.0;
         }
     }
 
