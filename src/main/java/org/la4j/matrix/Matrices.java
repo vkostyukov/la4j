@@ -242,6 +242,14 @@ public final class Matrices {
         }
     }
 
+    private static class SquareMatrixPredicate implements AdvancedMatrixPredicate {
+
+        @Override
+        public boolean test(Matrix matrix) {
+            return matrix.rows() == matrix.columns();
+        }
+    }
+
     private static class IncMatrixFunction 
             implements MatrixFunction {
         @Override
@@ -572,6 +580,13 @@ public final class Matrices {
      */
     public static final AdvancedMatrixPredicate INVERTIBLE_MATRIX =
             new InvertiblePredicate();
+
+    /**
+     * Checks whether the matrix is
+     * <a href="http://en.wikipedia.org/wiki/Square_matrix">square</a>.
+     */
+    public static final AdvancedMatrixPredicate SQUARE_MATRIX =
+            new SquareMatrixPredicate();
 
     /**
      * Increases each element of matrix by <code>1</code>.
