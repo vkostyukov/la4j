@@ -239,6 +239,23 @@ public final class Vectors {
         }
     }
 
+    public static class MaximumDistanceFunction implements DistanceFunction {
+
+        @Override
+        public double compute(Vector vector) {
+            double max = Math.abs(vector.get(0));
+
+            for (int i = 1; i < vector.length(); i++) {
+                double item = Math.abs(vector.get(i));
+                if (item > max) {
+                    max = item;
+                }
+            }
+
+            return max;
+        }
+    }
+
     /**
      * Creates a plus function with specified <code>value</code>. The function 
      * evaluates like following: 
@@ -357,6 +374,8 @@ public final class Vectors {
      * Calculates the Manhattan norm of a vector.
      */
     public static final DistanceFunction MANHATTAN_DISTANCE = new ManhattanDistanceFunction();
+
+    public static final DistanceFunction MAXIMUM_DISTANCE = new MaximumDistanceFunction();
 
     /**
      * Creates a singleton 1-length vector from <code>value</code>.
