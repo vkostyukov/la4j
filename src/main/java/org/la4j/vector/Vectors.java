@@ -239,7 +239,7 @@ public final class Vectors {
         }
     }
 
-    public static class MaximumNormFunction implements NormFunction {
+    public static class InfinityNormFunction implements NormFunction {
 
         @Override
         public double compute(Vector vector) {
@@ -368,17 +368,17 @@ public final class Vectors {
     /**
      * Calculates the Euclidean norm of a vector.
      */
-    public static final NormFunction EUCLIDEAN_DISTANCE = new EuclideanNormFunction();
+    public static final NormFunction EUCLIDEAN_NORM = new EuclideanNormFunction();
 
     /**
      * Calculates the Manhattan norm of a vector.
      */
-    public static final NormFunction MANHATTAN_DISTANCE = new ManhattanNormFunction();
+    public static final NormFunction MANHATTAN_NORM = new ManhattanNormFunction();
 
     /**
      * Calculates the Maximum norm of a vector.
      */
-    public static final NormFunction MAXIMUM_DISTANCE = new MaximumNormFunction();
+    public static final NormFunction INFINITY_NORM = new InfinityNormFunction();
 
     /**
      * Creates a singleton 1-length vector from <code>value</code>.
