@@ -181,7 +181,7 @@ public abstract class AbstractSafeVector implements Vector {
 
     @Override
     public double norm(DistanceFunction function) {
-        return function.compute(self);
+        return self.norm(function);
     }
 
     @Override
