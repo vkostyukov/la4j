@@ -31,6 +31,7 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.functor.DistanceFunction;
 
 /**
  * The real vector interface.
@@ -269,6 +270,14 @@ public interface Vector extends Externalizable {
      * @return norm of this vector
      */
     double norm();
+
+    /**
+     * Calculates the norm of this vector.
+     * Calculation depends on a DistanceFunction type implementation
+     *
+     * @return norm of this vector
+     */
+    double norm(DistanceFunction function);
 
     /**
      * Normalizes this vector. The new vector will be constructed 
