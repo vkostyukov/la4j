@@ -33,6 +33,7 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.functor.DistanceFunction;
 
 public abstract class AbstractSafeVector implements Vector {
 
@@ -176,6 +177,11 @@ public abstract class AbstractSafeVector implements Vector {
     @Override
     public double norm() {
         return self.norm();
+    }
+
+    @Override
+    public double norm(DistanceFunction function) {
+        return function.compute(self);
     }
 
     @Override
