@@ -375,6 +375,9 @@ public final class Vectors {
      */
     public static final DistanceFunction MANHATTAN_DISTANCE = new ManhattanDistanceFunction();
 
+    /**
+     * Calculates the Maximum norm of a vector.
+     */
     public static final DistanceFunction MAXIMUM_DISTANCE = new MaximumDistanceFunction();
 
     /**
