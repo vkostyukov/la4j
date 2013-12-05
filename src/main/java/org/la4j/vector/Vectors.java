@@ -225,6 +225,20 @@ public final class Vectors {
         }
     }
 
+    private static class ManhattanDistanceFunction implements DistanceFunction {
+
+        @Override
+        public double compute(Vector vector) {
+            double result = 0.0;
+
+            for (int i = 0; i < vector.length(); i++) {
+                result += Math.abs(vector.get(i));
+            }
+
+            return result;
+        }
+    }
+
     /**
      * Creates a plus function with specified <code>value</code>. The function 
      * evaluates like following: 
@@ -338,6 +352,11 @@ public final class Vectors {
      * Calculates the Euclidean norm of a vector.
      */
     public static final DistanceFunction EUCLIDEAN_DISTANCE = new EuclideanDistanceFunction();
+
+    /**
+     * Calculates the Manhattan norm of a vector.
+     */
+    public static final DistanceFunction MANHATTAN_DISTANCE = new ManhattanDistanceFunction();
 
     /**
      * Creates a singleton 1-length vector from <code>value</code>.
