@@ -28,6 +28,7 @@ import java.math.RoundingMode;
 import org.la4j.LinearAlgebra;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
+import org.la4j.vector.functor.DistanceFunction;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
@@ -216,6 +217,14 @@ public final class Vectors {
         }
     }
 
+    private static class EuclideanDistanceFunction implements DistanceFunction {
+
+        @Override
+        public double compute(Vector vector) {
+            return Math.sqrt(vector.innerProduct(vector));
+        }
+    }
+
     /**
      * Creates a plus function with specified <code>value</code>. The function 
      * evaluates like following: 
@@ -324,6 +333,11 @@ public final class Vectors {
      * Inverts each element of vector.
      */
     public static final VectorFunction INV_FUNCTION = new InvVectorFunction();
+
+    /**
+     * Calculates the Euclidean norm of a vector.
+     */
+    public static final DistanceFunction EUCLIDEAN_DISTANCE = new EuclideanDistanceFunction();
 
     /**
      * Creates a singleton 1-length vector from <code>value</code>.
