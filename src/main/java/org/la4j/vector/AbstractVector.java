@@ -275,7 +275,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public double norm() {
-        return Math.sqrt(innerProduct(this));
+        return norm(Vectors.EUCLIDEAN_DISTANCE);
     }
 
     @Override
