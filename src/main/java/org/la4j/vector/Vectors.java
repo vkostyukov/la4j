@@ -28,7 +28,7 @@ import java.math.RoundingMode;
 import org.la4j.LinearAlgebra;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
-import org.la4j.vector.functor.DistanceFunction;
+import org.la4j.vector.functor.NormFunction;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
@@ -217,7 +217,7 @@ public final class Vectors {
         }
     }
 
-    private static class EuclideanDistanceFunction implements DistanceFunction {
+    private static class EuclideanNormFunction implements NormFunction {
 
         @Override
         public double compute(Vector vector) {
@@ -225,7 +225,7 @@ public final class Vectors {
         }
     }
 
-    private static class ManhattanDistanceFunction implements DistanceFunction {
+    private static class ManhattanNormFunction implements NormFunction {
 
         @Override
         public double compute(Vector vector) {
@@ -239,7 +239,7 @@ public final class Vectors {
         }
     }
 
-    public static class MaximumDistanceFunction implements DistanceFunction {
+    public static class MaximumNormFunction implements NormFunction {
 
         @Override
         public double compute(Vector vector) {
@@ -368,17 +368,17 @@ public final class Vectors {
     /**
      * Calculates the Euclidean norm of a vector.
      */
-    public static final DistanceFunction EUCLIDEAN_DISTANCE = new EuclideanDistanceFunction();
+    public static final NormFunction EUCLIDEAN_DISTANCE = new EuclideanNormFunction();
 
     /**
      * Calculates the Manhattan norm of a vector.
      */
-    public static final DistanceFunction MANHATTAN_DISTANCE = new ManhattanDistanceFunction();
+    public static final NormFunction MANHATTAN_DISTANCE = new ManhattanNormFunction();
 
     /**
      * Calculates the Maximum norm of a vector.
      */
-    public static final DistanceFunction MAXIMUM_DISTANCE = new MaximumDistanceFunction();
+    public static final NormFunction MAXIMUM_DISTANCE = new MaximumNormFunction();
 
     /**
      * Creates a singleton 1-length vector from <code>value</code>.
