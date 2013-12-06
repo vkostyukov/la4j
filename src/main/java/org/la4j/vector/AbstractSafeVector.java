@@ -179,6 +179,11 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
+    public double norm(Vectors.NormFunction function) {
+        return self.norm(function);
+    }
+
+    @Override
     public Vector normalize() {
         return self.normalize(factory);
     }

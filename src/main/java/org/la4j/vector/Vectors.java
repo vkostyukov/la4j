@@ -216,6 +216,50 @@ public final class Vectors {
         }
     }
 
+    public static interface NormFunction {
+
+        double compute(Vector vector);
+    }
+
+    private static class EuclideanNormFunction implements NormFunction {
+
+        @Override
+        public double compute(Vector vector) {
+            return Math.sqrt(vector.innerProduct(vector));
+        }
+    }
+
+    private static class ManhattanNormFunction implements NormFunction {
+
+        @Override
+        public double compute(Vector vector) {
+            double result = 0.0;
+
+            for (int i = 0; i < vector.length(); i++) {
+                result += Math.abs(vector.get(i));
+            }
+
+            return result;
+        }
+    }
+
+    public static class InfinityNormFunction implements NormFunction {
+
+        @Override
+        public double compute(Vector vector) {
+            double max = Math.abs(vector.get(0));
+
+            for (int i = 1; i < vector.length(); i++) {
+                double item = Math.abs(vector.get(i));
+                if (item > max) {
+                    max = item;
+                }
+            }
+
+            return max;
+        }
+    }
+
     /**
      * Creates a plus function with specified <code>value</code>. The function 
      * evaluates like following: 
@@ -324,6 +368,21 @@ public final class Vectors {
      * Inverts each element of vector.
      */
     public static final VectorFunction INV_FUNCTION = new InvVectorFunction();
+
+    /**
+     * Calculates the Euclidean norm of a vector.
+     */
+    public static final NormFunction EUCLIDEAN_NORM = new EuclideanNormFunction();
+
+    /**
+     * Calculates the Manhattan norm of a vector.
+     */
+    public static final NormFunction MANHATTAN_NORM = new ManhattanNormFunction();
+
+    /**
+     * Calculates the Maximum norm of a vector.
+     */
+    public static final NormFunction INFINITY_NORM = new InfinityNormFunction();
 
     /**
      * Creates a singleton 1-length vector from <code>value</code>.

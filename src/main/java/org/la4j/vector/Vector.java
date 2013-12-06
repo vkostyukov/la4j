@@ -271,6 +271,14 @@ public interface Vector extends Externalizable {
     double norm();
 
     /**
+     * Calculates the norm of this vector.
+     * Calculation depends on a NormFunction type implementation
+     *
+     * @return norm of this vector
+     */
+    double norm(Vectors.NormFunction function);
+
+    /**
      * Normalizes this vector. The new vector will be constructed 
      * with default {@link Factory factory}.
      * 
