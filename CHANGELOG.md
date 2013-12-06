@@ -4,11 +4,12 @@ la4j-0.5.0 `Jan 2014`
  * Bug fix in `align()` method for big sparse matrices (reported by Michael Kapper)
  * Bug fix in `growup()` method for big sparse matrices (contributed by Phil Messenger)
  * Bug fix in `MatrixMarketStream`
- * New matrix method: `select()` (contributed by Anveshi Charuvaka)
- * New vector method: `select()`
+ * New matrix method `select()` (contributed by Anveshi Charuvaka)
+ * New vector method `select()`
  * Bug fix in `growup()` method for the case with positive overflow (contributed by Clement Skau)
  * New matrix predicate `Matrices.SQUARE_MATRIX` (contributed by Miron Aseev)
  * New matrix predicate `Matrices.INVERTIBLE_MATRIX` (contributed by Miron Aseev)
+ * New vector method `norm(NormFunction)` that implements p-norm support (contributed by Miron Aseev)
 
 la4j-0.4.5 `Sep 2013`
  * New vector methods: `innerProduct()`, `outerProduct()` (contributed by Daniel Renshaw)

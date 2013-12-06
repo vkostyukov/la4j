@@ -19,6 +19,7 @@
  *                 Ewald Grusk
  *                 Jakob Moellers
  *                 Maxim Samoylov
+ *                 Miron Aseev
  * 
  */
 
