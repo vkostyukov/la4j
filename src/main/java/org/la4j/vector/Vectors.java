@@ -28,7 +28,6 @@ import java.math.RoundingMode;
 import org.la4j.LinearAlgebra;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
-import org.la4j.vector.functor.NormFunction;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
@@ -215,6 +214,11 @@ public final class Vectors {
         public double accumulate() {
             return result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
         }
+    }
+
+    public static interface NormFunction {
+
+        double compute(Vector vector);
     }
 
     private static class EuclideanNormFunction implements NormFunction {
