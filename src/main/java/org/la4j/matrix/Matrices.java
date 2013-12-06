@@ -256,6 +256,10 @@ public final class Matrices {
 
         @Override
         public boolean test(Matrix matrix) {
+            if (matrix.rows() != matrix.columns()) {
+                return false;
+            }
+            
             int n = matrix.rows();
             boolean result = true;
             Matrix l = matrix.blank();
