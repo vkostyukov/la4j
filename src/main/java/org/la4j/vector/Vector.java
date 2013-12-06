@@ -31,7 +31,6 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.functor.NormFunction;
 
 /**
  * The real vector interface.
@@ -277,7 +276,7 @@ public interface Vector extends Externalizable {
      *
      * @return norm of this vector
      */
-    double norm(NormFunction function);
+    double norm(Vectors.NormFunction function);
 
     /**
      * Normalizes this vector. The new vector will be constructed 

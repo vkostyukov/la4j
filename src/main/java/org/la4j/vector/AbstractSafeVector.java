@@ -33,7 +33,6 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.functor.NormFunction;
 
 public abstract class AbstractSafeVector implements Vector {
 
@@ -180,7 +179,7 @@ public abstract class AbstractSafeVector implements Vector {
     }
 
     @Override
-    public double norm(NormFunction function) {
+    public double norm(Vectors.NormFunction function) {
         return self.norm(function);
     }
 
