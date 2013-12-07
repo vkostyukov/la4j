@@ -85,25 +85,9 @@ public class CholeskyDecompositor extends AbstractDecompositor implements Matrix
         return new Matrix[] { l };
     }
 
-    /**
-     * Checks if the matrix is positive definite
-     * <p>
-     * See <a href="http://mathworld.wolfram.com/PositiveDefiniteMatrix.html">
-     * http://mathworld.wolfram.com/PositiveDefiniteMatrix.html</a> for more
-     * details.
-     * </p>
-     * 
-     * @param matrix
-     * @return <code>true</code> if matrix is positive definite
-     */
-    private boolean isPositiveDefinite(Matrix matrix) {
-        return matrix.is(Matrices.POSITIVE_DEFINITE);
-    }
-
     @Override
     public boolean applicableTo(Matrix matrix) {
         return matrix.rows() == matrix.columns() &&
-               matrix.is(Matrices.SYMMETRIC_MATRIX) &&
-               isPositiveDefinite(matrix);
+                matrix.is(Matrices.SYMMETRIC_MATRIX) && matrix.is(Matrices.POSITIVE_DEFINITE);
     }
 }
