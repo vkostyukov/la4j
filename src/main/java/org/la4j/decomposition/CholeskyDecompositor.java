@@ -85,68 +85,9 @@ public class CholeskyDecompositor extends AbstractDecompositor implements Matrix
         return new Matrix[] { l };
     }
 
-    /**
-     * Checks if the matrix is positive definite
-     * <p>
-     * See <a href="http://mathworld.wolfram.com/PositiveDefiniteMatrix.html">
-     * http://mathworld.wolfram.com/PositiveDefiniteMatrix.html</a> for more
-     * details.
-     * </p>
-     * 
-     * @param matrix
-     * @return <code>true</code> if matrix is positive definite
-     */
-    private boolean isPositiveDefinite(Matrix matrix) {
-
-        //
-        // TODO: Issue 12
-        //
-
-        int n = matrix.rows();
-        boolean result = true;
-
-        Matrix l = matrix.blank();
-
-        for (int j = 0; j < n; j++) {
-
-            Vector rowj = l.getRow(j);
-
-            double d = 0.0;
-            for (int k = 0; k < j; k++) {
-
-                Vector rowk = l.getRow(k);
-                double s = 0.0;
-
-                for (int i = 0; i < k; i++) {
-                    s += rowk.get(i) * rowj.get(i);
-                }
-
-                s = (matrix.get(j, k) - s) / l.get(k, k);
-
-                rowj.set(k, s);
-                l.setRow(j, rowj);
-
-                d = d + s * s;
-            }
-
-            d = matrix.get(j, j) - d;
-
-            result = result && (d > 0.0);
-
-            l.set(j, j, Math.sqrt(Math.max(d, 0.0)));
-
-            for (int k = j + 1; k < n; k++) {
-                l.set(j, k, 0.0);
-            }
-        }
-
-        return result;
-    }
-
     @Override
     public boolean applicableTo(Matrix matrix) {
         return matrix.rows() == matrix.columns() &&
-               matrix.is(Matrices.SYMMETRIC_MATRIX) &&
-               isPositiveDefinite(matrix);
+                matrix.is(Matrices.SYMMETRIC_MATRIX) && matrix.is(Matrices.POSITIVE_DEFINITE);
     }
 }
