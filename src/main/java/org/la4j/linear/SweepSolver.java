@@ -45,7 +45,7 @@ public class SweepSolver extends AbstractSolver implements LinearSystemSolver {
         ensureRHSIsCorrect(b);
 
         // We need a copy, since the algorithm changes data
-        Matrix aa = a.copy();
+        Matrix aa = matrix.copy();
         Vector bb = b.copy();
 
         Vector x = factory.createVector(aa.columns());

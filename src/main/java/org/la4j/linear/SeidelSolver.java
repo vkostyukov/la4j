@@ -60,7 +60,7 @@ public class SeidelSolver extends AbstractSolver implements LinearSystemSolver {
 
         Vector current = factory.createVector(unknowns());
 
-        while (!a.multiply(current).equals(b)) {
+        while (!matrix.multiply(current).equals(b)) {
 
             for (int i = 0; i < aa.rows(); i++) {
 

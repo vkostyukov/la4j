@@ -43,14 +43,14 @@ public class SquareRootSolver extends AbstractSolver implements LinearSystemSolv
     public Vector solve(Vector b, Factory factory) {
         ensureRHSIsCorrect(b);
 
-        Matrix s = a.blank();
-        Matrix d = a.blank();
+        Matrix s = matrix.blank();
+        Matrix d = matrix.blank();
 
         Vector x = factory.createVector(unknowns());
         Vector y = factory.createVector(unknowns());
         Vector z = factory.createVector(unknowns());
 
-        for (int i = 0; i < a.rows(); i++) {
+        for (int i = 0; i < matrix.rows(); i++) {
 
             double dd = 0.0;
             for (int l = 0; l < i; l++) {
@@ -58,15 +58,15 @@ public class SquareRootSolver extends AbstractSolver implements LinearSystemSolv
                 dd += sli * sli * d.get(l, l);
             }
 
-            d.set(i, i, Math.signum(a.get(i, i) - dd));
-            s.set(i, i, Math.sqrt(Math.abs(a.get(i, i) - dd)));
+            d.set(i, i, Math.signum(matrix.get(i, i) - dd));
+            s.set(i, i, Math.sqrt(Math.abs(matrix.get(i, i) - dd)));
 
             if (s.get(i, i) == 0.0) {
                 // TODO: we can try to rearrange the diagonal elements
                 fail("This matrix is singular. We can't solve it.");
             }
 
-            for (int j = i + 1; j < a.columns(); j++) {
+            for (int j = i + 1; j < matrix.columns(); j++) {
 
                 double acc = 0;
                 for (int l = 0; l < i; l++) {
@@ -75,7 +75,7 @@ public class SquareRootSolver extends AbstractSolver implements LinearSystemSolv
                     acc += sli * slj * d.get(l, l);
                 }
 
-                s.set(i, j, (a.get(i, j) - acc) / (s.get(i, i) * d.get(i, i)));
+                s.set(i, j, (matrix.get(i, j) - acc) / (s.get(i, i) * d.get(i, i)));
             }
 
             double zz = 0.0;
@@ -87,10 +87,10 @@ public class SquareRootSolver extends AbstractSolver implements LinearSystemSolv
             y.set(i, z.get(i) / d.get(i, i));
         }
 
-        for (int i = a.rows() - 1; i >= 0; i--) {
+        for (int i = matrix.rows() - 1; i >= 0; i--) {
 
             double acc = 0.0;
-            for (int l = i + 1; l < a.columns(); l++) {
+            for (int l = i + 1; l < matrix.columns(); l++) {
                 acc += x.get(l) * s.get(i, l);
             }
 
