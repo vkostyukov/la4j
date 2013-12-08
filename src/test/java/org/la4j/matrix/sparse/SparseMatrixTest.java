@@ -85,4 +85,21 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
             a.set(row, 1, 3.1415);
         }
     }
+
+    public void testIssue141() {
+        int i = 5000000;
+        int j = 7340;
+
+        // Test overflow
+        assertTrue(i * j < 0);
+
+        SparseMatrix a = (SparseMatrix) factory().createMatrix(5000000, 7340);
+
+        assertEquals(i, a.rows());
+        assertEquals(j, a.columns());
+
+        for(int row = 0 ; row < 32 ; row++) {
+            a.set(row, 1, 3.1415);
+        }
+    }
 }
