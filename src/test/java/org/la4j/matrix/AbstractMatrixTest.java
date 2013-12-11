@@ -1784,4 +1784,39 @@ public abstract class AbstractMatrixTest extends TestCase {
                 });
         assertEquals(d, a.select(rowInd, colInd));
     }
+    
+    public void testFoldSum() {
+        Matrix d = factory().createMatrix(new double[][] {
+            { 6.436, 4.808, 3.923, 5.866 },
+            { 7.072, 5.899, 4.771, 3.537 },
+            { 7.282, 0.636, 0.010, 3.673 },
+            { 5.833, 0.201, 6.941, 5.914 },
+            { 5.757, 6.807, 7.830, 2.601 },
+            { 0.434, 1.996, 9.329, 1.115 },
+        });
+        
+        Vector columnSums = factory().createVector(new double[] {
+            32.814, 20.347, 32.804, 22.706
+        });
+        
+        for (int col = 0; col < d.columns(); col++) {
+            double sum = d.foldColumn(col, Matrices.asSumAccumulator(0.0));
+            assertEquals(sum, columnSums.get(col));
+        }
+        
+        Vector s = d.foldColumns(Matrices.asSumAccumulator(0.0));
+        assertEquals(s, columnSums);
+
+        Vector rowSums = factory().createVector(new double[] {
+            21.033, 21.279, 11.601, 18.889, 22.995, 12.874
+        });
+
+        for (int row = 0; row < d.columns(); row++) {
+            double sum = d.foldRow(row, Matrices.asSumAccumulator(0.0));
+            assertEquals(sum, rowSums.get(row));
+        }
+        
+        s = d.foldRows(Matrices.asSumAccumulator(0.0));
+        assertEquals(s, rowSums);
+    }
 }

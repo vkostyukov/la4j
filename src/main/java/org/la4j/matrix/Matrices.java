@@ -398,8 +398,10 @@ public final class Matrices {
             implements MatrixAccumulator {
 
         private BigDecimal result;
+        private final double neutral;
 
-        public SumMatrixAccumulator(double neutral) {
+        public SumMatrixAccumulator(double neutral_) {
+            this.neutral = neutral_;
             this.result = new BigDecimal(neutral);
         }
 
@@ -412,14 +414,21 @@ public final class Matrices {
         public double accumulate() {
             return result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
         }
+
+        @Override
+        public void reset() {
+            this.result = new BigDecimal(neutral);
+        }
     }
 
     private static class ProductMatrixAccumulator
             implements MatrixAccumulator {
 
         private BigDecimal result;
+        private final double neutral;
 
-        public ProductMatrixAccumulator(double neutral) {
+        public ProductMatrixAccumulator(double neutral_) {
+            this.neutral = neutral_;
             this.result = new BigDecimal(neutral);
         }
 
@@ -433,13 +442,18 @@ public final class Matrices {
             return result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
 
         }
+
+        @Override
+        public void reset() {
+            this.result = new BigDecimal(neutral);
+        }
     }
 
     private static class FunctionMatrixAccumulator 
                 implements MatrixAccumulator {
 
-        private MatrixAccumulator accumulator;
-        private MatrixFunction function;
+        private final MatrixAccumulator accumulator;
+        private final MatrixFunction function;
 
         public FunctionMatrixAccumulator(MatrixAccumulator accumulator,
                 MatrixFunction function) {
@@ -456,6 +470,11 @@ public final class Matrices {
         @Override
         public double accumulate() {
             return accumulator.accumulate();
+        }
+
+        @Override
+        public void reset() {
+            this.accumulator.reset();
         }
     }
 
