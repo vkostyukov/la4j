@@ -11,6 +11,7 @@ la4j-0.5.0 `Jan 2014`
  * New matrix predicate `Matrices.INVERTIBLE_MATRIX` (contributed by Miron Aseev)
  * New vector method `norm(NormFunction)` that implements p-norm support (contributed by Miron Aseev)
  * New matrix predicate `PositiveDefiniteMatrix` (contributed by Miron Aseev)
+ * Bug fix in `each`, `eachInRow`, `eachInColumn` methods of sparse matrices
 
 la4j-0.4.5 `Sep 2013`
  * New vector methods: `innerProduct()`, `outerProduct()` (contributed by Daniel Renshaw)
