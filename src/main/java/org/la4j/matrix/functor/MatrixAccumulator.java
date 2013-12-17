@@ -25,14 +25,20 @@ public interface MatrixAccumulator {
 
     /**
      * 
+     * @param row
+     * @param col
      * @param value
-     * @return
      */
-    void update(int i, int j, double value);
+    void update(int row, int col, double value);
 
     /**
      * 
      * @return
      */
     double accumulate();
+    
+    /**
+     * Reset the accumulator state
+     */
+    void reset();
 }

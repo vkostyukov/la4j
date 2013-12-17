@@ -521,10 +521,34 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public Vector foldRows(MatrixAccumulator accumulator) {
+        ensureFactoryIsNotNull(factory);
+    
+        Vector sum = factory.createVector(rows());
+        for (int i = 0; i < rows(); i++) {
+            sum.set(i, foldRow(i, accumulator));
+        }
+
+        return sum;
+    }
+
+    @Override
     public double foldColumn(int j, MatrixAccumulator accumulator) {
         ensureIndexInColumns(j);
 
         return self.foldColumn(j, accumulator);
+    }
+
+    @Override
+    public Vector foldColumns(MatrixAccumulator accumulator) {
+        ensureFactoryIsNotNull(factory);
+    
+        Vector sum = factory.createVector(columns());
+        for (int i = 0; i < rows(); i++) {
+            sum.set(i, foldColumn(i, accumulator));
+        }
+
+        return sum;
     }
 
     @Override
@@ -617,6 +641,16 @@ public abstract class AbstractSafeMatrix implements Matrix {
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         self.writeExternal(out);
+    }
+
+    protected  void ensureFactoryIsNotNull(Factory factory) {
+        ensureArgumentIsNotNull(factory, "factory");
+    }
+
+    protected void ensureArgumentIsNotNull(Object argument, String name) {
+        if (argument == null) {
+            throw new IllegalArgumentException("Bad argument: \"" + name + "\" is 'null'.");
+        }
     }
 
     protected void ensureIndexInRows(int i) {
