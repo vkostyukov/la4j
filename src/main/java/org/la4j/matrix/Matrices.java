@@ -19,7 +19,8 @@
  *                 Ewald Grusk
  *                 Maxim Samoylov
  *                 Miron Aseev
- * 
+ *                 Todd Brunhoff
+ *
  */
 
 package org.la4j.matrix;

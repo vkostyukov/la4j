@@ -20,6 +20,7 @@
  *                 Jakob Moellers
  *                 Maxim Samoylov
  *                 Anveshi Charuvaka
+ *                 Todd Brunhoff
  */
 
 package org.la4j.matrix;

@@ -113,6 +113,7 @@ made by the authors:
 - Anveshi Charuvaka
 - Clement Skau
 - Miron Aseev
+- Todd Brunhoff
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013
