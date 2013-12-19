@@ -130,6 +130,57 @@ public abstract class AbstractVectorTest extends TestCase {
         assertEquals(c, a.sliceRight(1));
     }
 
+    public void testSelect_4() {
+        Vector a = factory().createVector(new double[]
+                { 0.0, 3.0, 7.0, 0.0 }
+        );
+
+        Vector b = factory().createVector(new double[]
+                { 3.0, 0.0, 0.0, 7.0 }
+        );
+
+        Vector c = factory().createVector(new double[]
+                { 7.0, 7.0, 0.0, 0.0 }
+        );
+
+        assertEquals(b, a.select(new int[]{ 1, 0, 3, 2 }));
+        assertEquals(c, a.select(new int[]{ 2, 2, 0, 3 }));
+    }
+
+    public void testSelect_5() {
+        Vector a = factory().createVector(new double[]
+                { 1.0, 6.0, 0.0, 0.0, 8.0 }
+        );
+
+        Vector b = factory().createVector(new double[]
+                { 1.0, 1.0, 1.0 }
+        );
+
+        Vector c = factory().createVector(new double[]
+                { 0.0, 0.0, 8.0, 8.0, 1.0, 0.0 }
+        );
+
+        assertEquals(b, a.select(new int[]{ 0, 0, 0 }));
+        assertEquals(c, a.select(new int[]{ 2, 3, 4, 4, 0, 3 }));
+    }
+
+    public void testSelect_3() {
+        Vector a = factory().createVector(new double[]
+                { 1.0, 0.0, 0.0 }
+        );
+
+        Vector b = factory().createVector(new double[]
+                { 0.0, 0.0, 0.0, 0.0 }
+        );
+
+        Vector c = factory().createVector(new double[]
+                { 1.0 }
+        );
+
+        assertEquals(b, a.select(new int[]{ 1, 2, 2, 1 }));
+        assertEquals(c, a.select(new int[]{ 0 }));
+    }
+
     public void testSwap_5() {
 
         Vector a = factory().createVector(new double[] 
@@ -544,6 +595,4 @@ public abstract class AbstractVectorTest extends TestCase {
         Vector a = factory().createVector(new double[]{ 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0 });
         assertEquals(0.0, a.min());
     }
-
-
 }
