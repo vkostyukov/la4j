@@ -57,7 +57,7 @@ Vector x = solver.solve(b, LinearAlgebra.SPARSE_FACTORY);
 ```
 **Matrix decomposition**
 ```java
-// We want simple dense matrix, which is based on 1D double's array 
+// We want simple dense matrix, which is based on 1D double array
 Matrix a = new Basic1DMatrix(new double[][] {
    { 1.0, 2.0, 3.0 },
    { 4.0, 5.0, 6.0 },
@@ -73,7 +73,7 @@ Matrix[] lup = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
 Changelog
 ------------
 
-See [CHANGELOG.md](https://github.com/vkostyukov/la4j/blob/master/CHANGELOG.md).
+See [CHANGELOG.md](https://github.com/vkostyukov/la4j/blob/master/CHANGELOG.md)
 
 
 Download
@@ -102,7 +102,7 @@ How To Contribute
 Contributors
 ------------
 
-See [CONTRIBUTORS.md](https://github.com/vkostyukov/la4j/blob/master/CONTRIBUTORS.md).
+See [CONTRIBUTORS.md](https://github.com/vkostyukov/la4j/blob/master/CONTRIBUTORS.md)
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013
