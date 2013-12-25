@@ -389,7 +389,9 @@ public abstract class AbstractVector implements Vector {
     public Vector slice(int from, int until, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
-        // TODO: add range checks
+        if (until - from < 0) {
+            fail("Wrong slice range: [" + from + ".." + until + "].");
+        }
         Vector result = factory.createVector(until - from);
 
         for (int i = from; i < until; i++) {
@@ -413,6 +415,7 @@ public abstract class AbstractVector implements Vector {
         }
 
         Vector result = factory.createVector(newLength);
+
         for (int i = 0; i < newLength; i++) {
             result.set(i, get(indices[i]));
         }

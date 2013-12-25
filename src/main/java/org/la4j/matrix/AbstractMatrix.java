@@ -709,7 +709,9 @@ public abstract class AbstractMatrix implements Matrix {
 
         ensureFactoryIsNotNull(factory);
 
-        // TODO: add range check
+        if (untilRow - fromRow < 0 || untilColumn - fromColumn < 0) {
+            fail("Wrong slice range: [" + fromRow + ".." + untilRow + "][" + fromColumn + ".." + untilColumn + "].");
+        }
 
         Matrix result = factory.createMatrix(untilRow - fromRow, untilColumn - fromColumn);
 
@@ -756,17 +758,14 @@ public abstract class AbstractMatrix implements Matrix {
             fail("No rows or columns selected.");
         }
 
-        // Test all rowIndices and columnIndices are within bounds
-        // TODO: Since matrices are unsafe by default we might want to skip this check.
-        checkIndexBounds(rowIndices, rows);
-        checkIndexBounds(columnIndices, columns);
-
         Matrix result = factory.createMatrix(newRows, newCols);
+
         for (int i = 0; i < newRows; i++) {
             for (int j = 0; j < newCols; j++) {
                 result.set(i, j, get(rowIndices[i], columnIndices[j]));
             }
         }
+
         return result;
     }
 
@@ -1192,24 +1191,5 @@ public abstract class AbstractMatrix implements Matrix {
 
     protected void fail(String message) {
         throw new IllegalArgumentException(message);
-    }
-    
-    /*
-     * TODO should make the utility function static and maybe move them to a
-     * better location to be re-used in other classes.
-     */
-
-    /***
-     * Verifies that all the elements in the indexList are less than the bound
-     * 
-     * @param indexList
-     * @param bound
-     */
-    protected void checkIndexBounds(int[] indexList, int bound) {
-        for (int i = 0; i < indexList.length; i++) {
-            if (indexList[i] >= bound || indexList[i] < 0) {
-                fail("Index value out of bounds");
-            }
-        }
     }
 }
