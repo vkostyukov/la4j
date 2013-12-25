@@ -70,6 +70,12 @@ MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.LU);
 Matrix[] lup = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
 ```
 
+Changelog
+------------
+
+See [CHANGELOG.md](https://github.com/vkostyukov/la4j/blob/master/CHANGELOG.md).
+
+
 Download
 --------
  
@@ -96,24 +102,7 @@ How To Contribute
 Contributors
 ------------
 
-The [**la4j**](http://la4j.org) wouldn't be the library it is today without the source contributions 
-made by the authors:
-- Wajdy Essam
-- Evgenia Krivova
-- Julia Kostyukova
-- Alessio Placitelli
-- Pavel Kalaidin
-- Chandler May
-- Daniel Renshaw
-- Ewald Grusk
-- Jakob Moellers
-- Iurii Drozd
-- Maxim Samoylov
-- Phil Messenger
-- Anveshi Charuvaka
-- Clement Skau
-- Miron Aseev
-- Todd Brunhoff
+See [CONTRIBUTORS.md](https://github.com/vkostyukov/la4j/blob/master/CONTRIBUTORS.md).
 
 ----
 by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013
