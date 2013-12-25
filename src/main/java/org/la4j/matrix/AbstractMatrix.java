@@ -991,14 +991,14 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Vector foldRows(MatrixAccumulator accumulator) {
-        ensureFactoryIsNotNull(factory);
-    
-        Vector sum = factory.createVector(rows);
+
+        Vector result = factory.createVector(rows);
+
         for (int i = 0; i < rows; i++) {
-          sum.set(i, foldRow(i, accumulator));
-          accumulator.reset();
+          result.set(i, foldRow(i, accumulator));
         }
-        return sum;
+
+        return result;
     }
 
     @Override
@@ -1013,14 +1013,14 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Vector foldColumns(MatrixAccumulator accumulator) {
-        ensureFactoryIsNotNull(factory);
-    
-        Vector sum = factory.createVector(columns);
+
+        Vector result = factory.createVector(columns);
+
         for (int i = 0; i < columns; i++) {
-          sum.set(i, foldColumn(i, accumulator));
-          accumulator.reset();
+          result.set(i, foldColumn(i, accumulator));
         }
-        return sum;
+
+        return result;
     }
 
     @Override

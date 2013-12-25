@@ -382,8 +382,8 @@ public final class Matrices {
         private BigDecimal result;
         private final double neutral;
 
-        public SumMatrixAccumulator(double neutral_) {
-            this.neutral = neutral_;
+        public SumMatrixAccumulator(double neutral) {
+            this.neutral = neutral;
             this.result = new BigDecimal(neutral);
         }
 
@@ -394,12 +394,9 @@ public final class Matrices {
 
         @Override
         public double accumulate() {
-            return result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
-        }
-
-        @Override
-        public void reset() {
-            this.result = new BigDecimal(neutral);
+            double value = result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
+            result = new BigDecimal(neutral);
+            return value;
         }
     }
 
@@ -409,8 +406,8 @@ public final class Matrices {
         private BigDecimal result;
         private final double neutral;
 
-        public ProductMatrixAccumulator(double neutral_) {
-            this.neutral = neutral_;
+        public ProductMatrixAccumulator(double neutral) {
+            this.neutral = neutral;
             this.result = new BigDecimal(neutral);
         }
 
@@ -421,13 +418,10 @@ public final class Matrices {
 
         @Override
         public double accumulate() {
-            return result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
+            double value = result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
+            result = new BigDecimal(neutral);
+            return value;
 
-        }
-
-        @Override
-        public void reset() {
-            this.result = new BigDecimal(neutral);
         }
     }
 
@@ -452,11 +446,6 @@ public final class Matrices {
         @Override
         public double accumulate() {
             return accumulator.accumulate();
-        }
-
-        @Override
-        public void reset() {
-            this.accumulator.reset();
         }
     }
 

@@ -24,21 +24,18 @@ package org.la4j.matrix.functor;
 public interface MatrixAccumulator {
 
     /**
+     * Updates the accumulated value.
      * 
-     * @param row
-     * @param col
+     * @param i
+     * @param j
      * @param value
      */
-    void update(int row, int col, double value);
+    void update(int i, int j, double value);
 
     /**
+     * Accumulates the value.
      * 
      * @return
      */
     double accumulate();
-    
-    /**
-     * Reset the accumulator state
-     */
-    void reset();
 }

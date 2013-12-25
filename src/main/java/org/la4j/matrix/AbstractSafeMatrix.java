@@ -523,14 +523,7 @@ public abstract class AbstractSafeMatrix implements Matrix {
 
     @Override
     public Vector foldRows(MatrixAccumulator accumulator) {
-        ensureFactoryIsNotNull(factory);
-    
-        Vector sum = factory.createVector(rows());
-        for (int i = 0; i < rows(); i++) {
-            sum.set(i, foldRow(i, accumulator));
-        }
-
-        return sum;
+       return self.foldRows(accumulator);
     }
 
     @Override
@@ -542,14 +535,7 @@ public abstract class AbstractSafeMatrix implements Matrix {
 
     @Override
     public Vector foldColumns(MatrixAccumulator accumulator) {
-        ensureFactoryIsNotNull(factory);
-    
-        Vector sum = factory.createVector(columns());
-        for (int i = 0; i < rows(); i++) {
-            sum.set(i, foldColumn(i, accumulator));
-        }
-
-        return sum;
+        return self.foldColumns(accumulator);
     }
 
     @Override
