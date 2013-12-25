@@ -560,10 +560,6 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             fail("No rows or columns selected.");
         }
 
-        // Test all rowIndices and columnIndices are within bounds
-        checkIndexBounds(rowIndices, this.rows);
-        checkIndexBounds(columnIndices, this.columns);
-
         // determine number of non-zero values (cardinality)
         // before allocating space, this is perhaps more efficient
         // than single pass and calling grow() when required.

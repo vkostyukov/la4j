@@ -569,10 +569,6 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             fail("No rows or columns selected.");
         }
 
-        // Test all rowIndices and columnIndices are within bounds
-        checkIndexBounds(rowIndices, rows);
-        checkIndexBounds(columnIndices, columns);
-
         // determine number of non-zero values (cardinality)
         // before allocating space, this is perhaps more efficient
         // than single pass and calling grow() when required.
@@ -609,5 +605,4 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         return new CRSMatrix(newRows, newCols, newCardinality, newValues,
                              newColumnIndices, newRowPointers);
     }
-    
 }
