@@ -88,6 +88,6 @@ public class CholeskyDecompositor extends AbstractDecompositor implements Matrix
     @Override
     public boolean applicableTo(Matrix matrix) {
         return matrix.rows() == matrix.columns() &&
-                matrix.is(Matrices.SYMMETRIC_MATRIX) && matrix.is(Matrices.POSITIVE_DEFINITE);
+                matrix.is(Matrices.SYMMETRIC_MATRIX) && matrix.is(Matrices.POSITIVE_DEFINITE_MATRIX);
     }
 }

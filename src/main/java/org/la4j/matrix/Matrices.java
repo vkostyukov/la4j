@@ -41,7 +41,6 @@ import org.la4j.matrix.source.RandomSymmetricMatrixSource;
 import org.la4j.matrix.source.SafeMatrixSource;
 import org.la4j.matrix.source.StreamMatrixSource;
 import org.la4j.matrix.source.UnsafeMatrixSource;
-import org.la4j.vector.Vector;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -628,7 +627,10 @@ public final class Matrices {
     public static final AdvancedMatrixPredicate INVERTIBLE_MATRIX =
             new InvertiblePredicate();
 
-    public static final AdvancedMatrixPredicate POSITIVE_DEFINITE =
+    /**
+     * Checks whether the matrix is positive definite.
+     */
+    public static final AdvancedMatrixPredicate POSITIVE_DEFINITE_MATRIX =
             new PositiveDefiniteMatrixPredicate();
 
     /**
