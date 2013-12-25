@@ -277,6 +277,49 @@ public final class Matrices {
         }
     }
 
+    private static class PositiveDefiniteMatrixOldPredicate implements AdvancedMatrixPredicate {
+
+        @Override
+        public boolean test(Matrix matrix) {
+            if (matrix.rows() != matrix.columns() || matrix.determinant() <= 0) {
+                return false;
+            }
+
+            int n = matrix.rows();
+            boolean result = true;
+            Matrix l = matrix.blank();
+
+            for (int j = 0; j < n; j++) {
+                Vector rowj = l.getRow(j);
+                double d = 0.0;
+
+                for (int k = 0; k < j; k++) {
+                    Vector rowk = l.getRow(k);
+                    double s = 0.0;
+
+                    for (int i = 0; i < k; i++) {
+                        s += rowk.get(i) * rowj.get(i);
+                    }
+
+                    s = (matrix.get(j, k) - s) / l.get(k, k);
+                    rowj.set(k, s);
+                    l.setRow(j, rowj);
+                    d = d + s * s;
+                }
+
+                d = matrix.get(j, j) - d;
+                result = result && (d > 0.0);
+                l.set(j, j, Math.sqrt(Math.max(d, 0.0)));
+
+                for (int k = j + 1; k < n; k++) {
+                    l.set(j, k, 0.0);
+                }
+            }
+
+            return result;
+        }
+    }
+
     private static class IncMatrixFunction 
             implements MatrixFunction {
         @Override
@@ -610,6 +653,9 @@ public final class Matrices {
 
     public static final AdvancedMatrixPredicate POSITIVE_DEFINITE =
             new PositiveDefiniteMatrixPredicate();
+
+    public static final AdvancedMatrixPredicate POSITIVE_DEFINITE_OLD =
+            new PositiveDefiniteMatrixOldPredicate();
 
     /**
      * Checks whether the matrix is
