@@ -72,6 +72,16 @@ public abstract class AbstractSafeMatrix implements Matrix {
     }
 
     @Override
+    public void assignRow(int i, double value) {
+        self.assignRow(i, value);
+    }
+
+    @Override
+    public void assignColumn(int j, double value) {
+        self.assignColumn(j, value);
+    }
+
+    @Override
     public void swapRows(int i, int j) {
         ensureIndexInRows(i);
         ensureIndexInRows(j);
@@ -507,6 +517,20 @@ public abstract class AbstractSafeMatrix implements Matrix {
         ensureIndexInColumns(j);
 
         self.update(i, j, function);
+    }
+
+    @Override
+    public void updateRow(int i, MatrixFunction function) {
+        ensureIndexInRows(i);
+
+        self.updateRow(i, function);
+    }
+
+    @Override
+    public void updateColumn(int j, MatrixFunction function) {
+        ensureIndexInColumns(j);
+
+        self.updateColumn(j, function);
     }
 
     @Override

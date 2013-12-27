@@ -85,6 +85,23 @@ public interface Matrix extends Externalizable {
      */
     void assign(double value);
 
+
+    /**
+     * Assigns all elements of specified row to <code>value</code>.
+     *
+     * @param i
+     * @param value
+     */
+    void assignRow(int i, double value);
+
+    /**
+     * Assigns all elements of specified column to <code>value</code>.
+     *
+     * @param j
+     * @param value
+     */
+    void assignColumn(int j, double value);
+
     /**
      * Swaps <code>i</code> and <code>j</code> rows of this matrix.
      * 
@@ -776,6 +793,23 @@ public interface Matrix extends Externalizable {
      * @param function
      */
     void update(int i, int j, MatrixFunction function);
+
+    /**
+     * Updates specified row of this matrix by applying <code>function<code/>.
+     *
+     * @param i
+     * @param function
+     */
+    void updateRow(int i, MatrixFunction function);
+
+
+    /**
+     * Updates specified column of this matrix by applying <code>function<code/>.
+     *
+     * @param j
+     * @param function
+     */
+    void updateColumn(int j, MatrixFunction function);
 
     /**
      * 

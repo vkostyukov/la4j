@@ -301,6 +301,21 @@ public final class Matrices {
         }
     }
 
+    private static class ConstantMatrixFunction
+            implements MatrixFunction {
+
+        private double constant;
+
+        public ConstantMatrixFunction(double constant) {
+            this.constant = constant;
+        }
+
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return constant;
+        }
+    }
+
     private static class PlusMatrixFunction 
             implements MatrixFunction {
 
@@ -447,6 +462,21 @@ public final class Matrices {
         public double accumulate() {
             return accumulator.accumulate();
         }
+    }
+
+    /**
+     * Creates a constant function with specified <code>value</code>. The function
+     * evaluates like following:
+     *
+     * <p>
+     * <center><code>something = constant</code></center>
+     * </p>
+     *
+     * @param constant
+     * @return
+     */
+    public static MatrixFunction asConstantFunction(double constant) {
+        return new ConstantMatrixFunction(constant);
     }
 
     /**
