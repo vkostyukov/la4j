@@ -654,10 +654,6 @@ public abstract class AbstractSafeMatrix implements Matrix {
         self.writeExternal(out);
     }
 
-    protected  void ensureFactoryIsNotNull(Factory factory) {
-        ensureArgumentIsNotNull(factory, "factory");
-    }
-
     protected void ensureArgumentIsNotNull(Object argument, String name) {
         if (argument == null) {
             throw new IllegalArgumentException("Bad argument: \"" + name + "\" is 'null'.");
