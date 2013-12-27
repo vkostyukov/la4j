@@ -446,32 +446,12 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public double max() {
-
-        double max = Double.NEGATIVE_INFINITY;
-
-        for (int i = 0; i < length; i++) {
-            double value = get(i);
-            if (value > max) {
-                max = value;
-            }
-        }
-
-        return max;
+        return fold(Vectors.asMaxAccumulator(Double.NEGATIVE_INFINITY));
     }
 
     @Override
     public double min() {
-
-        double min = Double.POSITIVE_INFINITY;
-
-        for (int i = 0; i < length; i++) {
-            double value = get(i);
-            if (value < min) {
-                min = value;
-            }
-        }
-
-        return min;
+        return fold(Vectors.asMinAccumulator(Double.POSITIVE_INFINITY));
     }
 
     @Override

@@ -436,7 +436,6 @@ public final class Matrices {
             double value = result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
             result = new BigDecimal(neutral);
             return value;
-
         }
     }
 
@@ -461,6 +460,58 @@ public final class Matrices {
         @Override
         public double accumulate() {
             return accumulator.accumulate();
+        }
+    }
+
+    private static class MinMatrixAccumulator
+            implements MatrixAccumulator {
+
+        private double neutral;
+        private double result;
+
+        public MinMatrixAccumulator(double neutral) {
+            this.neutral = neutral;
+            this.result = neutral;
+        }
+
+        @Override
+        public void update(int i, int j, double value) {
+            if (value < result) {
+                result = value;
+            }
+        }
+
+        @Override
+        public double accumulate() {
+            double value = result;
+            result = neutral;
+            return value;
+        }
+    }
+
+    private static class MaxMatrixAccumulator
+            implements MatrixAccumulator {
+
+        private double neutral;
+        private double result;
+
+        public MaxMatrixAccumulator(double neutral) {
+            this.neutral = neutral;
+            this.result = neutral;
+        }
+
+        @Override
+        public void update(int i, int j, double value) {
+            if (value > result) {
+                result = value;
+            }
+        }
+
+        @Override
+        public double accumulate() {
+            double value = result;
+            result = neutral;
+            return value;
         }
     }
 
@@ -819,6 +870,26 @@ public final class Matrices {
             String separator) {
 
         return new StreamMatrixSource(new SymbolSeparatedStream(in, separator));
+    }
+
+    /**
+     * Creates a min matrix accumulator that calculates the minimum.
+     *
+     * @param neutral
+     * @return
+     */
+    public static MatrixAccumulator asMinAccumulator(double neutral) {
+        return new MinMatrixAccumulator(neutral);
+    }
+
+    /**
+     * Creates a max matrix accumulator that calculates the maximum.
+     *
+     * @param neutral
+     * @return
+     */
+    public static MatrixAccumulator asMaxAccumulator(double neutral) {
+        return new MaxMatrixAccumulator(neutral);
     }
 
     /**

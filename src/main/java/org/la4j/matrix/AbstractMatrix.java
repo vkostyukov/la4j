@@ -834,96 +834,32 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public double max() {
-
-        double max = Double.NEGATIVE_INFINITY;
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                double value = get(i, j);
-                if (value > max) {
-                    max = value;
-                }
-            }
-        }
-
-        return max;
+        return fold(Matrices.asMaxAccumulator(Double.NEGATIVE_INFINITY));
     }
 
     @Override
     public double min() {
-
-        double min = Double.POSITIVE_INFINITY;
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                double value = get(i, j);
-                if (value < min) {
-                    min = value;
-                }
-            }
-        }
-
-        return min;
+        return fold(Matrices.asMinAccumulator(Double.POSITIVE_INFINITY));
     }
 
     @Override
     public double maxInRow(int i) {
-
-        double max = Double.NEGATIVE_INFINITY;
-
-        for (int j = 0; j < columns; j++) {
-            double value = get(i, j);
-            if (value > max) {
-                max = value;
-            }
-        }
-
-        return max;
+        return foldRow(i, Matrices.asMaxAccumulator(Double.NEGATIVE_INFINITY));
     }
 
     @Override
     public double minInRow(int i) {
-
-        double min = Double.POSITIVE_INFINITY;
-
-        for (int j = 0; j < columns; j++) {
-            double value = get(i, j);
-            if (value < min) {
-                min = value;
-            }
-        }
-
-        return min;
+        return foldRow(i, Matrices.asMinAccumulator(Double.POSITIVE_INFINITY));
     }
 
     @Override
     public double maxInColumn(int j) {
-
-        double max = Double.NEGATIVE_INFINITY;
-
-        for (int i = 0; i < rows; i++) {
-            double value = get(i, j);
-            if (value > max) {
-                max = value;
-            }
-        }
-
-        return max;
+        return foldColumn(j, Matrices.asMaxAccumulator(Double.NEGATIVE_INFINITY));
     }
 
     @Override
     public double minInColumn(int j) {
-
-        double min = Double.POSITIVE_INFINITY;
-
-        for (int i = 0; i < rows; i++) {
-            double value = get(i, j);
-            if (value < min) {
-                min = value;
-            }
-        }
-
-        return min;
+        return foldColumn(j, Matrices.asMinAccumulator(Double.POSITIVE_INFINITY));
     }
 
     @Override

@@ -217,6 +217,56 @@ public final class Vectors {
         }
     }
 
+    private static class MinVectorAccumulator implements VectorAccumulator {
+
+        private double result;
+        private double neutral;
+
+        public MinVectorAccumulator(double neutral) {
+            this.neutral = neutral;
+            this.result = neutral;
+        }
+
+        @Override
+        public void update(int i, double value) {
+            if (value < result) {
+                result = value;
+            }
+        }
+
+        @Override
+        public double accumulate() {
+            double value = result;
+            result = neutral;
+            return value;
+        }
+    }
+
+    private static class MaxVectorAccumulator implements VectorAccumulator {
+
+        private double result;
+        private double neutral;
+
+        public MaxVectorAccumulator(double neutral) {
+            this.neutral = neutral;
+            this.result = neutral;
+        }
+
+        @Override
+        public void update(int i, double value) {
+            if (value > result) {
+                result = value;
+            }
+        }
+
+        @Override
+        public double accumulate() {
+            double value = result;
+            result = neutral;
+            return value;
+        }
+    }
+
     public static interface NormFunction {
 
         double compute(Vector vector);
@@ -512,6 +562,26 @@ public final class Vectors {
      */
     public static VectorAccumulator asProductAccumulator(double neutral) {
         return new ProductVectorAccumulator(neutral);
+    }
+
+    /**
+     * Creates a min vector accumulator that calculates the minimum.
+     *
+     * @param neutral
+     * @return
+     */
+    public static VectorAccumulator asMinAccumulator(double neutral) {
+        return new MinVectorAccumulator(neutral);
+    }
+
+    /**
+     * Creates a max vector accumulator that calculates the maximum.
+     *
+     * @param neutral
+     * @return
+     */
+    public static VectorAccumulator asMaxAccumulator(double neutral) {
+        return new MaxVectorAccumulator(neutral);
     }
 
     /**
