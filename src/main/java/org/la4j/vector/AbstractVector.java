@@ -136,10 +136,10 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector hadamardProduct(Vector vector, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureArgumentIsNotNull(vector,  "vectro");
+        ensureArgumentIsNotNull(vector,  "vector");
 
         if (length != vector.length()) {
-            fail("Wring vector length: " + vector.length() + ". Should be: " + length + ".");
+            fail("Wrong vector length: " + vector.length() + ". Should be: " + length + ".");
         }
 
         Vector result = blank(factory);
@@ -227,12 +227,12 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public double product() {
-        return fold(Vectors.asProductAccumulator(1));
+        return fold(Vectors.asProductAccumulator(1.0));
     }
 
     @Override
     public double sum() {
-        return fold(Vectors.asSumAccumulator(0));
+        return fold(Vectors.asSumAccumulator(0.0));
     }
 
     @Override
@@ -392,6 +392,7 @@ public abstract class AbstractVector implements Vector {
         if (until - from < 0) {
             fail("Wrong slice range: [" + from + ".." + until + "].");
         }
+
         Vector result = factory.createVector(until - from);
 
         for (int i = from; i < until; i++) {
@@ -411,7 +412,7 @@ public abstract class AbstractVector implements Vector {
         int newLength = indices.length;
 
         if (newLength == 0) {
-            fail("Now elements selected.");
+            fail("No elements selected.");
         }
 
         Vector result = factory.createVector(newLength);

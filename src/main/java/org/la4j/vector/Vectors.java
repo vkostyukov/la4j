@@ -158,9 +158,11 @@ public final class Vectors {
 
     private static class SumVectorAccumulator implements VectorAccumulator {
 
+        private double neutral;
         private BigDecimal result;
 
         public SumVectorAccumulator(double neutral) {
+            this.neutral = neutral;
             this.result = new BigDecimal(neutral);
         }
 
@@ -171,7 +173,32 @@ public final class Vectors {
 
         @Override
         public double accumulate() {
-            return result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
+            double value = result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
+            result = new BigDecimal(neutral);
+            return value;
+        }
+    }
+
+    private static class ProductVectorAccumulator implements VectorAccumulator {
+
+        private double neutral;
+        private BigDecimal result;
+
+        public ProductVectorAccumulator(double neutral) {
+            this.neutral = neutral;
+            this.result = new BigDecimal(neutral);
+        }
+
+        @Override
+        public void update(int i, double value) {
+            result = result.multiply(new BigDecimal(value));
+        }
+
+        @Override
+        public double accumulate() {
+            double value = result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
+            result = new BigDecimal(neutral);
+            return value;
         }
     }
 
@@ -195,25 +222,6 @@ public final class Vectors {
         @Override
         public double accumulate() {
             return accumulator.accumulate();
-        }
-    }
-
-    private static class ProductVectorAccumulator implements VectorAccumulator {
-
-        private BigDecimal result;
-
-        public ProductVectorAccumulator(double neutral) {
-            this.result = new BigDecimal(neutral);
-        }
-
-        @Override
-        public void update(int i, double value) {
-            result = result.multiply(new BigDecimal(value));
-        }
-
-        @Override
-        public double accumulate() {
-            return result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
         }
     }
 
