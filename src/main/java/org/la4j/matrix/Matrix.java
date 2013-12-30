@@ -724,7 +724,6 @@ public interface Matrix extends Externalizable {
      */
     double minInRow(int i);
 
-
     /**
      * Finds max in <code>j</code> column.
      *
@@ -776,6 +775,41 @@ public interface Matrix extends Externalizable {
      * @param factory
      */
     Matrix transform(int i, int j, MatrixFunction function, Factory factory);
+
+    /**
+     *
+     * @param i
+     * @param function
+     * @return
+     */
+    Matrix transformRow(int i, MatrixFunction function);
+
+    /**
+     *
+     * @param i
+     * @param function
+     * @param factory
+     * @return
+     */
+    Matrix transformRow(int i, MatrixFunction function, Factory factory);
+
+    /**
+     *
+     * @param j
+     * @param function
+     * @param factory
+     * @return
+     */
+    Matrix transformColumn(int j, MatrixFunction function);
+
+    /**
+     *
+     * @param j
+     * @param function
+     * @param factory
+     * @return
+     */
+    Matrix transformColumn(int j, MatrixFunction function, Factory factory);
 
     /**
      * Updates all elements of this matrix by applying <code>function</code>.

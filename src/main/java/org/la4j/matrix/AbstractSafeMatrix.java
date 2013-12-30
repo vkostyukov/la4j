@@ -111,7 +111,7 @@ public abstract class AbstractSafeMatrix implements Matrix {
     public Matrix transpose() {
         return self.transpose(factory);
     }
-    
+
     @Override
     public Matrix shuffle() {
         return self.shuffle(factory);
@@ -486,6 +486,26 @@ public abstract class AbstractSafeMatrix implements Matrix {
     @Override
     public Matrix transform(MatrixFunction function, Factory factory) {
         return self.transform(function, factory);
+    }
+
+    @Override
+    public Matrix transformRow(int i, MatrixFunction function) {
+        return self.transformRow(i, function, factory);
+    }
+
+    @Override
+    public Matrix transformRow(int i, MatrixFunction function, Factory factory) {
+        return self.transformRow(i, function, factory);
+    }
+
+    @Override
+    public Matrix transformColumn(int j, MatrixFunction function) {
+        return self.transformColumn(j, function, factory);
+    }
+
+    @Override
+    public Matrix transformColumn(int j, MatrixFunction function, Factory factory) {
+        return self.transformColumn(j, function, factory);
     }
 
     @Override

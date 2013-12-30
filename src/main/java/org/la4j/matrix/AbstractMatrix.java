@@ -895,6 +895,40 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public Matrix transformRow(int i, MatrixFunction function) {
+        return transformRow(i, function, factory);
+    }
+
+    @Override
+    public Matrix transformRow(int i, MatrixFunction function, Factory factory) {
+
+        Matrix result = copy(factory);
+
+        for (int j = 0; j < columns; j++) {
+            result.set(i, j, function.evaluate(i, j, result.get(i, j)));
+        }
+
+        return result;
+    }
+
+    @Override
+    public Matrix transformColumn(int j, MatrixFunction function) {
+        return transformColumn(j, function, factory);
+    }
+
+    @Override
+    public Matrix transformColumn(int j, MatrixFunction function, Factory factory) {
+
+        Matrix result = copy(factory);
+
+        for (int i = 0; i < rows; i++) {
+            result.set(i, j, function.evaluate(i, j, result.get(i, j)));
+        }
+
+        return result;
+    }
+
+    @Override
     public void update(MatrixFunction function) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {

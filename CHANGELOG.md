@@ -15,6 +15,7 @@ la4j-0.5.0 `Jan 2014`
  * New matrix methods: `foldColumns` and `foldRows` (contributed by Todd Brunhoff)
  * New matrix methods: `assignRow` and `assignColumn`
  * New matrix methods: `updateRow` and `updateColumn`
+ * New matrix methods: `transformRow` and `transformColumn`
 
 la4j-0.4.5 `Sep 2013`
  * New vector methods: `innerProduct()`, `outerProduct()` (contributed by Daniel Renshaw)
