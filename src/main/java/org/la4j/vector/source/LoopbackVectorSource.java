@@ -19,30 +19,25 @@
  * 
  */
 
-package org.la4j.matrix.source;
+package org.la4j.vector.source;
 
-import org.la4j.matrix.Matrix;
+import org.la4j.vector.Vector;
 
-public class SafeMatrixSource implements MatrixSource {
+public class LoopbackVectorSource implements VectorSource {
 
-    private Matrix matrix;
+    private Vector vector;
 
-    public SafeMatrixSource(Matrix matrix) {
-        this.matrix = matrix.safe();
+    public LoopbackVectorSource(Vector vector) {
+        this.vector = vector;
     }
 
     @Override
-    public double get(int i, int j) {
-        return matrix.get(i, j);
+    public double get(int i) {
+        return vector.get(i);
     }
 
     @Override
-    public int columns() {
-        return matrix.columns();
-    }
-
-    @Override
-    public int rows() {
-        return matrix.rows();
+    public int length() {
+        return vector.length();
     }
 }

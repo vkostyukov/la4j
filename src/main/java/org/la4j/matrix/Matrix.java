@@ -915,16 +915,6 @@ public interface Matrix extends Externalizable {
     boolean non(AdvancedMatrixPredicate predicate);
 
     /**
-     * Wraps this matrix with safe interface
-     */
-    Matrix safe();
-
-    /**
-     * Wraps this matrix with unsafe interface
-     */
-    Matrix unsafe();
-
-    /**
      * Converts this matrix to row vector.
      *
      * @return

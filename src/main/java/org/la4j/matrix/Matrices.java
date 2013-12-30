@@ -35,12 +35,11 @@ import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.source.Array1DMatrixSource;
 import org.la4j.matrix.source.Array2DMatrixSource;
 import org.la4j.matrix.source.IdentityMatrixSource;
+import org.la4j.matrix.source.LoopbackMatrixSource;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.source.RandomMatrixSource;
 import org.la4j.matrix.source.RandomSymmetricMatrixSource;
-import org.la4j.matrix.source.SafeMatrixSource;
 import org.la4j.matrix.source.StreamMatrixSource;
-import org.la4j.matrix.source.UnsafeMatrixSource;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -735,48 +734,17 @@ public final class Matrices {
      * @return
      */
     public static Matrix asSingletonMatrix(double value) {
-        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(new double[][]{{ value }});
+        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(new double[][]{{value}});
     }
 
     /**
-     * Wraps the <code>matrix</code> with interface that provides safe accessors
-     * and modifiers.
+     * Creates a loopback matrix source with specified <code>matrix</code>.
      * 
      * @param matrix
      * @return
      */
-    public static Matrix asSafeMatrix(Matrix matrix) {
-        return matrix.safe();
-    }
-
-    /**
-     * Unwraps the safe <code>matrix</code>.
-     * 
-     * @param matrix
-     * @return
-     */
-    public static Matrix asUnsafeMatrix(Matrix matrix) {
-        return matrix.unsafe();
-    }
-
-    /**
-     * Creates a safe matrix source with specified <code>matrix</code>.
-     * 
-     * @param matrix
-     * @return
-     */
-    public static MatrixSource asSafeSource(Matrix matrix) {
-        return new SafeMatrixSource(matrix);
-    }
-
-    /**
-     * Creates a unsafe matrix source with specified <code>matrix</code>.
-     * 
-     * @param matrix
-     * @return
-     */
-    public static MatrixSource asUnsafeSource(Matrix matrix) {
-        return new UnsafeMatrixSource(matrix);
+    public static MatrixSource asMatrixSource(Matrix matrix) {
+        return new LoopbackMatrixSource(matrix);
     }
 
     /**

@@ -33,10 +33,9 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.source.ArrayVectorSource;
+import org.la4j.vector.source.LoopbackVectorSource;
 import org.la4j.vector.source.RandomVectorSource;
-import org.la4j.vector.source.SafeVectorSource;
 import org.la4j.vector.source.StreamVectorSource;
-import org.la4j.vector.source.UnsafeVectorSource;
 import org.la4j.vector.source.VectorSource;
 
 public final class Vectors {
@@ -450,38 +449,7 @@ public final class Vectors {
      * @return
      */
     public static Vector asSingletonVector(double value) {
-        return LinearAlgebra.DEFAULT_FACTORY.createVector(new double[] { value });
-    }
-
-    /**
-     * Wraps the <code>vector</code> with interface that provides safe accessors
-     * and modifiers.
-     * 
-     * @param vector
-     * @return
-     */
-    public static Vector asSafeVector(Vector vector) {
-        return vector.safe();
-    }
-
-    /**
-     * Unwraps the safe <code>vector</code>.
-     * 
-     * @param vector
-     * @return
-     */
-    public static Vector asUnsafeVector(Vector vector) {
-        return vector.unsafe();
-    }
-
-    /**
-     * Creates a safe vector source with specified <code>vector</code>.
-     * 
-     * @param vector
-     * @return
-     */
-    public static VectorSource asSafeSource(Vector vector) {
-        return new SafeVectorSource(vector);
+        return LinearAlgebra.DEFAULT_FACTORY.createVector(new double[]{value});
     }
 
     /**
@@ -490,8 +458,8 @@ public final class Vectors {
      * @param vector
      * @return
      */
-    public static VectorSource asUnsafeSource(Vector vector) {
-        return new UnsafeVectorSource(vector);
+    public static VectorSource asVectorSource(Vector vector) {
+        return new LoopbackVectorSource(vector);
     }
 
     /**

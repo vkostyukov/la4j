@@ -42,7 +42,7 @@ public class BasicVector extends AbstractVector implements DenseVector {
     }
 
     public BasicVector(Vector vector) {
-        this(Vectors.asUnsafeSource(vector));
+        this(Vectors.asVectorSource(vector));
     }
 
     public BasicVector(VectorSource source) {
@@ -101,11 +101,6 @@ public class BasicVector extends AbstractVector implements DenseVector {
         double result[] = new double[length];
         System.arraycopy(self, 0, result, 0, length);
         return result;
-    }
-
-    @Override
-    public Vector safe() {
-        return new DenseSafeVector(this);
     }
 
     @Override

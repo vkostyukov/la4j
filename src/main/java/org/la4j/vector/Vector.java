@@ -581,20 +581,6 @@ public interface Vector extends Externalizable {
     boolean non(VectorPredicate predicate);
 
     /**
-     * Wraps this vector with safe interface.
-     * 
-     * @return safe vector
-     */
-    Vector safe();
-
-    /**
-     * Wraps this vector with unsafe interface.
-     * 
-     * @return unsafe vector
-     */
-    Vector unsafe();
-
-    /**
      * Converts this vector to matrix with only one row.
      *
      * @return

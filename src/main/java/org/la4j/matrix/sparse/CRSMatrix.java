@@ -60,7 +60,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     public CRSMatrix(Matrix matrix) {
-        this(Matrices.asUnsafeSource(matrix));
+        this(Matrices.asMatrixSource(matrix));
     }
 
     public CRSMatrix(double array[][]) {

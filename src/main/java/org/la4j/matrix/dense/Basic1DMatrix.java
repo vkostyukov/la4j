@@ -43,7 +43,7 @@ public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
     }
 
     public Basic1DMatrix(Matrix matrix) {
-        this(Matrices.asUnsafeSource(matrix));
+        this(Matrices.asMatrixSource(matrix));
     }
 
     public Basic1DMatrix(MatrixSource source) {

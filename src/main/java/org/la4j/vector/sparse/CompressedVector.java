@@ -55,7 +55,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     public CompressedVector(Vector vector) {
-        this(Vectors.asUnsafeSource(vector));
+        this(Vectors.asVectorSource(vector));
     }
 
     public CompressedVector(double array[]) {
@@ -266,11 +266,6 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         } else {
             insert(k, i, function.evaluate(i, 0.0));
         }
-    }
-
-    @Override
-    public Vector safe() {
-        return new SparseSafeVector(this);
     }
 
     @Override

@@ -219,5 +219,4 @@ public class CRSFactory extends CompressedFactory implements Factory {
 
         return new CRSMatrix(rows, cols, k, valuesArray, colIndArray, rowPointers);
     }
-
 }

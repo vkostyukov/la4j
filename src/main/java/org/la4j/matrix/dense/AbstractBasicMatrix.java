@@ -70,9 +70,4 @@ public abstract class AbstractBasicMatrix extends AbstractMatrix
 
         return result;
     }
-
-    @Override
-    public Matrix safe() {
-        return new DenseSafeMatrix(this);
-    }
 }

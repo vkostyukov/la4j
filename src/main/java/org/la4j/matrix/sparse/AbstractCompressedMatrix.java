@@ -44,11 +44,6 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
         return cardinality / (double) (rows * columns);
     }
 
-    @Override
-    public Matrix safe() {
-        return new SparseSafeMatrix(this);
-    }
-
     protected long capacity() {
         return ((long) rows) * columns;
     }

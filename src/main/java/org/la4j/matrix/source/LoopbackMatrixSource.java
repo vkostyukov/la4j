@@ -23,11 +23,11 @@ package org.la4j.matrix.source;
 
 import org.la4j.matrix.Matrix;
 
-public class UnsafeMatrixSource implements MatrixSource {
+public class LoopbackMatrixSource implements MatrixSource {
 
     private Matrix matrix;
 
-    public UnsafeMatrixSource(Matrix matrix) {
+    public LoopbackMatrixSource(Matrix matrix) {
         this.matrix = matrix;
     }
 

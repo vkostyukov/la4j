@@ -1042,11 +1042,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix unsafe() {
-        return this;
-    }
-
-    @Override
     public Vector toRowVector() {
         return toRowVector(factory);
     }
