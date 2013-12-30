@@ -29,7 +29,7 @@ import org.la4j.vector.Vector;
 import org.la4j.vector.source.VectorSource;
 import org.la4j.vector.sparse.CompressedVector;
 
-public abstract class CompressedFactory extends AbstractFactory implements Factory {
+public abstract class CompressedFactory implements Factory {
 
     private static final long serialVersionUID = 4071505L;
 

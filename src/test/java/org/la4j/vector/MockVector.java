@@ -46,11 +46,6 @@ public class MockVector extends AbstractVector implements Vector {
     }
 
     @Override
-    public Vector safe() {
-        return self.safe();
-    }
-
-    @Override
     public boolean equals(Object object) {
 
         if (this == object) {

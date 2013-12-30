@@ -526,11 +526,6 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public Vector unsafe() {
-        return this;
-    }
-
-    @Override
     public Matrix toRowMatrix() {
         return toRowMatrix(factory);
     }

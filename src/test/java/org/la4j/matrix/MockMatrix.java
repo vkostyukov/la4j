@@ -46,11 +46,6 @@ public class MockMatrix extends AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix safe() {
-        return self.safe();
-    }
-
-    @Override
     public boolean equals(Object object) {
 
         if (this == object)

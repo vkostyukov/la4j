@@ -204,16 +204,4 @@ public interface Factory extends Serializable {
      * @return
      */
     Vector createRandomVector(int length);
-
-    /**
-     * 
-     * @return
-     */
-    Factory safe();
-
-    /**
-     * 
-     * @return
-     */
-    Factory unsafe();
 }

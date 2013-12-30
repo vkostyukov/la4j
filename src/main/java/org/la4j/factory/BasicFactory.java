@@ -29,7 +29,7 @@ import org.la4j.vector.dense.BasicVector;
 import org.la4j.vector.source.VectorSource;
 
 
-public abstract class BasicFactory extends AbstractFactory implements Factory {
+public abstract class BasicFactory implements Factory {
 
     private static final long serialVersionUID = 4071505L;
 
