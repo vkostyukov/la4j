@@ -53,7 +53,7 @@ public final class LinearAlgebra {
     /**
      * The la4j version.
      */
-    public static final String VERSION = "0.4.5";
+    public static final String VERSION = "0.5.0";
 
     /**
      * The la4j name.
@@ -63,7 +63,7 @@ public final class LinearAlgebra {
     /**
      * The la4j date.
      */
-    public static final String DATE = "Sep 2013";
+    public static final String DATE = "Jan 2014";
 
     /**
      * The la4j full name.
