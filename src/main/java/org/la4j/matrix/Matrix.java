@@ -50,574 +50,638 @@ import org.la4j.vector.Vector;
 public interface Matrix extends Externalizable {
 
     /**
-     * Returns the (<code>i, j</code>) element of this matrix.
-     * 
-     * <p>
-     * See <a href="http://mathworld.wolfram.com/MatrixElement.html">
-     * http://mathworld.wolfram.com/MatrixElement.html</a> for more details.
-     * </p>
-     * 
-     * @param i
-     *            row of matrix
-     * @param j
-     *            column of matrix
-     * @return the element at (i, j) of this matrix
+     * Gets the specified element of this matrix.
+     *
+     * @param i element's row index
+     * @param j element's column index
+     *
+     * @return the element of this matrix
      */
     double get(int i, int j);
 
     /**
-     * Assigns the (<code>i, j</code>) element of this matrix to <code>value</code>.
+     * Sets the specified element of this matrix to given {@code value}.
      * 
-     * 
-     * @param i
-     *            row of matrix
-     * @param j
-     *            column of matrix
-     * @param value
-     *            to be stored at (i, j) in matrix
+     * @param i element's row index
+     * @param j element's column index
+     * @param value element's new value
      */
     void set(int i, int j, double value);
 
     /**
-     * Assigns all elements of this matrix to <code>value</code>.
+     * Assigns all elements of this matrix to given {@code value}.
      * 
-     * @param value
+     * @param value the elements' new value
      */
     void assign(double value);
 
-
     /**
-     * Assigns all elements of specified row to <code>value</code>.
+     * Assigns all elements of the specified row of this matrix to given {@code value}.
      *
-     * @param i
-     * @param value
+     * @param i the row index
+     * @param value the elements' new value
      */
     void assignRow(int i, double value);
 
     /**
-     * Assigns all elements of specified column to <code>value</code>.
+     * Assigns all elements of the specified column of this matrix to given {@code value}.
      *
-     * @param j
-     * @param value
+     * @param j the column index
+     * @param value the elements' new value
      */
     void assignColumn(int j, double value);
 
     /**
-     * Swaps <code>i</code> and <code>j</code> rows of this matrix.
+     * Swaps the specified rows of this matrix.
      * 
-     * @param i
-     * @param j
+     * @param i the row index
+     * @param j the row index
      */
     void swapRows(int i, int j);
 
     /**
-     * Swaps <code>i</code> and <code>j</code> columns of this matrix.
+     * Swaps the specified columns of this matrix.
      * 
-     * @param i
-     * @param j
+     * @param i the column index
+     * @param j the column index
      */
     void swapColumns(int i, int j);
 
     /**
-     * Gets rows number of this matrix.
+     * Returns the number of rows of this matrix.
      * 
-     * @return rows number
+     * @return the number of rows
      */
     int rows();
 
     /**
-     * Gets columns number of this matrix.
+     * Returns the number of columns of this matrix.
      * 
-     * @return columns number
+     * @return the number of columns
      */
     int columns();
 
     /**
      * Transposes this matrix.
      * 
-     * @return transposed matrix
+     * @return the transposed matrix
      */
     Matrix transpose();
 
     /**
-     * Transposes this matrix with specified <code>factory</code>.
+     * Transposes this matrix.
      * 
-     * @param factory
-     * @return
+     * @param factory the factory of result matrix
+     *
+     * @return the transposed matrix
      */
     Matrix transpose(Factory factory);
 
     /**
-     * Rotates a matrix by 90 degrees to the right
+     * Rotates this matrix by 90 degrees to the right.
      * 
-     * @return The rotated matrix
+     * @return the rotated matrix
      */
     Matrix rotate();
 
     /**
-     * Rotates a matrix by 90 degrees to the right
-     * 
-     * @return The rotated matrix
+     * Rotates this matrix by 90 degrees to the right.
+     *
+     * @param factory the factory of result matrix
+     *
+     * @return the rotated matrix
      */
     Matrix rotate(Factory factory);
 
     /**
-     * Power operation for matrices. Matrix is returned to the power of n. This
-     * function uses the Exponentiation by squaring method.
-     * 
-     * @param n
-     *            The exponent
-     * @return Exponentiated matrix
+     * Powers this matrix of given exponent {code n}.
+     *
+     * @param n the exponent
+     *
+     * @return the powered matrix
      */
     Matrix power(int n);
 
     /**
-     * Power operation for matrices. Matrix is returned to the power of n. This
-     * function uses the Exponentiation by squaring method.
-     * 
-     * @param n
-     *            The exponent
-     * @param factory
-     *            Factory for this matrix
-     * @return Exponentiated matrix
+     * Powers this matrix of given exponent {code n}.
+     *
+     * @param n the exponent
+     * @param factory the factory of result matrix
+     *
+     * @return the powered matrix
      */
     Matrix power(int n, Factory factory);
 
     /**
-     * Scales this matrix by <code>value</code>.
+     * Scales this matrix by given {@code value} (v).
      * 
-     * @param value
-     * @return scaled matrix
+     * @param value the scale factor
+     *
+     * @return A * v
      */
     Matrix multiply(double value);
 
     /**
-     * Scales this matrix to <code>value</code> with <code>factory</code>.
-     * 
-     * @param value
-     * @param factory
-     * @return
+     * Scales this matrix by given {@code value} (v).
+     *
+     * @param value the scale factor
+     * @param factory the factory of result matrix
+     *
+     * @return A * v
      */
     Matrix multiply(double value, Factory factory);
 
     /**
-     * Multiplies this matrix by <code>vector</code>.
+     * Multiplies this matrix (A) by given {@code vector} (x).
      * 
-     * @param vector
-     * @return multiplied matrix
+     * @param vector the vector
+     *
+     * @return A * x
      */
     Vector multiply(Vector vector);
 
     /**
-     * Multiplies this matrix by <code>vector</code> with specified
-     * <code>factory</code>.
-     * 
-     * @param vector
-     * @param factory
-     * @return multiplied matrix
+     * Multiplies this matrix (A) by given {@code vector} (x).
+     *
+     * @param vector the right hand vector for multiplication
+     * @param factory the factory of result matrix
+     *
+     * @return A * x
      */
     Vector multiply(Vector vector, Factory factory);
 
     /**
-     * Multiplies this matrix by other <code>matrix</code>.
+     * Multiplies this matrix (A) by given {@code matrix} (B).
      * 
-     * @param matrix
-     *            to be multiplied
-     * @return multiplied matrix
+     * @param matrix the right hand matrix for multiplication
+     *
+     * @return A * B
      */
     Matrix multiply(Matrix matrix);
 
     /**
-     * Multiplies this matrix to other <code>matrix</code> with specified
-     * <code>factory</code>.
-     * 
-     * @param matrix
-     * @param factory
+     * Multiplies this matrix (A) by given {@code matrix} (B).
+     *
+     * @param matrix the right hand matrix for multiplication
+     * @param factory the factory of result matrix
+     *
+     * @return A * B
      */
     Matrix multiply(Matrix matrix, Factory factory);
 
     /**
-     * Subtracts the <code>value</code> from this matrix.
-     * 
-     * @param value
-     *            to be subtracted
-     * @return subtracted matrix
+     * Subtracts given {@code value} (v) from every element of this matrix (A).
+     *
+     * @param value the right hand value for subtraction
+     *
+     * @return A - v
      */
     Matrix subtract(double value);
 
     /**
-     * Subtracts <code>value</code> from this matrix with specified
-     * <code>factory</code>.
-     * 
-     * @param value
-     * @param factory
+     * Subtracts given {@code value} (v) from every element of this matrix (A).
+     *
+     * @param value the right hand value for subtraction
+     * @param factory the factory of result matrix
+     *
+     * @return A - v
      */
     Matrix subtract(double value, Factory factory);
 
     /**
-     * Subtracts other <code>matrix</code> by this matrix.
-     * 
-     * @param matrix
-     *            to be subtracted
-     * @return subtracted matrix
+     * Subtracts given {@code matrix} (B) from this matrix (A).
+     *
+     * @param matrix the right hand matrix for subtraction
+     *
+     * @return A - B
      */
     Matrix subtract(Matrix matrix);
 
     /**
-     * Subtracts other <code>matrix</code> from this matrix with specified
-     * <code>factory</code>.
-     * 
-     * @param matrix
-     * @param factory
+     * Subtracts given {@code matrix} (B) from this matrix (A).
+     *
+     * @param matrix the right hand matrix for subtraction
+     * @param factory the factory of result matrix
+     *
+     * @return A - B
      */
     Matrix subtract(Matrix matrix, Factory factory);
 
     /**
-     * Adds the <code>value</code> to this matrix.
+     * Adds given {@code value} (v) to every element of this matrix (A).
      * 
-     * @param value
-     *            to be added
-     * @return added matrix
+     * @param value the right hand value for addition
+     *
+     * @return A + v
      */
     Matrix add(double value);
 
     /**
-     * Adds the <code>value</code> to this matrix with specified
-     * <code>factory</code>
-     * 
-     * @param value
-     * @param factory
+     * Adds given {@code value} (v) to every element of this matrix (A).
+     *
+     * @param value the right hand value for addition
+     * @param factory the factory of result matrix
+     *
+     * @return A + v
      */
     Matrix add(double value, Factory factory);
 
     /**
-     * Adds other <code>matrix</code> to this matrix.
+     * Adds given {@code matrix} (B) to this matrix (A).
      * 
-     * @param matrix
-     *            to be added
-     * @return added matrix
+     * @param matrix the right hand matrix for addition
+     *
+     * @return A + B
      */
     Matrix add(Matrix matrix);
 
     /**
-     * Adds other <code>matrix</code> to this matrix with specified
-     * <code>factory</code>.
-     * 
-     * @param matrix
-     * @param factory
+     * Adds given {@code matrix} (B) to this matrix (A).
+     *
+     * @param matrix the right hand matrix for addition
+     * @param factory the factory of result matrix
+     *
+     * @return A + B
      */
     Matrix add(Matrix matrix, Factory factory);
 
     /**
-     * Divides this matrix by <code>value</code>.
+     * Divides every element of this matrix (A) by given {@code value} (v).
      * 
-     * @param value
+     * @param value the right hand value for division
+     *
+     * @return A / v
      */
     Matrix divide(double value);
 
     /**
-     * Divides this matrix by <code>value</code> with specified
-     * <code>factory</code>.
-     * 
-     * @param value
-     * @param factory
+     * Divides every element of this matrix (A) by given {@code value} (v).
+     *
+     * @param value the right hand value for division
+     * @param factory the factory of result matrix
+     *
+     * @return A / v
      */
     Matrix divide(double value, Factory factory);
 
     /**
-     * Calculates the Kronecker product.
+     * Calculates the Kronecker product of this matrix (A) and given {@code matrix} (B).
      * 
-     * @param matrix
-     * @return
+     * @param matrix the right hand matrix for Kronecker product
+     *
+     * @return A (+) B
      */
     Matrix kroneckerProduct(Matrix matrix);
 
     /**
-     * Calculates the Kronecker product.
-     * 
-     * @param matrix
-     * @return
+     * Calculates the Kronecker product of this matrix (A) and given {@code matrix} (B).
+     *
+     * @param matrix the right hand matrix for Kronecker product
+     * @param factory the factory of result matrix
+     *
+     * @return A (+) B
      */
     Matrix kroneckerProduct(Matrix matrix, Factory factory);
 
     /**
-     * Returns the "trace" of this matrix.
+     * Calculates the trace of this matrix.
+     *
      * <p>
      * See <a href="http://mathworld.wolfram.com/MatrixTrace.html">
      * http://mathworld.wolfram.com/MatrixTrace.html</a> for more details.
      * </p>
      * 
-     * @return the "trace" of this matrix
+     * @return the trace of this matrix
      */
     double trace();
 
     /**
-     * Returns the product of diagonal elements of this matrix.
+     * Calculates the product of diagonal elements of this matrix.
      * 
      * @return the product of diagonal elements of this matrix
      */
     double diagonalProduct();
 
     /**
-     * Productizes up all elements of the matrix
+     * Multiplies up all elements of the matrix.
      * 
      * @return the product of all elements of the matrix
      */
     double product();
 
     /**
-     * Returns Hadamard product for two matrices
-     * @param 
-     *            matrix multiplier matrix
-     * @return Hadamard product for two matrices
-     */
-    Matrix hadamardProduct(Matrix matrix);
-
-    /**
-     * Returns Hadamard product for two matrices
-     * @param 
-     *            matrix multiplier matrix
-     * @param factory
-     * @return Hadamard product for two matrices
-     */
-    Matrix hadamardProduct(Matrix matrix, Factory factory);
-
-    /**
-     * Summarizes up all elements of the matrix
-     * 
+     * Summarizes up all elements of the matrix.
+     *
      * @return the sum of all elements of the matrix
      */
     double sum();
 
     /**
-     * Returns the "determinant" of this matrix.
+     * Calculates the Hadamard product of this and given {@code matrix}.
+     *
+     * @param matrix the right hand matrix for Hadamard product
+     *
+     * @return the Hadamard product of two matrices
+     */
+    Matrix hadamardProduct(Matrix matrix);
+
+    /**
+     * Calculates the Hadamard product of this and given {@code matrix}.
+     *
+     * @param matrix the right hand matrix for Hadamard product
+     * @param factory the factory of result matrix
+     *
+     * @return the Hadamard product of two matrices
+     */
+    Matrix hadamardProduct(Matrix matrix, Factory factory);
+
+    /**
+     * Calculates the determinant of this matrix.
+     *
      * <p>
      * See <a href="http://mathworld.wolfram.com/Determinant.html">
      * http://mathworld.wolfram.com/Determinant.html</a> for more details.
      * </p>
      * 
-     * @return the "determinant" of this matrix
+     * @return the determinant of this matrix
      */
     double determinant();
 
     /**
-     * Returns the "rank" of this matrix.
+     * Calculates the rank of this matrix.
+     *
      * <p>
      * See <a href="http://mathworld.wolfram.com/MatrixRank.html">
      * http://mathworld.wolfram.com/MatrixRank.html</a> for more details.
      * </p>
-     * @return the "rank" of this matrix
+     *
+     * @return the rank of this matrix
      */
     int rank();
 
     /**
-     * Gets the <code>i</code> row of this matrix.
-     * 
-     * @param i
-     * @return the i-th row
+     * Copies the specified row of this matrix into the vector.
+     *
+     * @param i the row index
+     *
+     * @return the row represented as vector
      */
     Vector getRow(int i);
 
     /**
-     * Gets the <code>i</code> row of this matrix.
-     * 
-     * @param i
-     * @return the i-th row
+     * Copies the specified row of this matrix into the vector.
+     *
+     * @param i the row index
+     * @param factory the factory of result vector
+     *
+     * @return the row represented as vector
      */
     Vector getRow(int i, Factory factory);
 
     /**
-     * Gets the <code>i</code> column of this matrix.
-     * 
-     * @param j
-     * @return the i-th column
+     * Copies the specified column of this matrix into the vector.
+     *
+     * @param j the column index
+     *
+     * @return the column represented as vector
      */
     Vector getColumn(int j);
 
     /**
-     * Gets the <code>i</code> column of this matrix.
-     * 
-     * @param j
-     * @return the i-th column
+     * Copies the specified column of this matrix into the vector.
+     *
+     * @param j the column index
+     * @param factory the factory of result vector
+     *
+     * @return the column represented as vector
      */
     Vector getColumn(int j, Factory factory);
 
     /**
-     * Sets the <code>i</code> row of this matrix.
-     * 
-     * @param i
-     * @param row
+     * Copies given {@code vector} into the specified row of this matrix.
+     *
+     * @param i the row index
+     * @param vector the row represented as vector
      */
-    void setRow(int i, Vector row);
+    void setRow(int i, Vector vector);
 
     /**
-     * Sets the <code>i</code> column of this matrix.
-     * 
-     * @param j
-     * @param column
+     * Copies given {@code vector} into the specified column of this matrix.
+     *
+     * @param j the column index
+     * @param vector the column represented as vector
      */
-    void setColumn(int j, Vector column);
+    void setColumn(int j, Vector vector);
 
     /**
-     * Converts this matrix to triangle matrix.
-     * @return 
+     * Converts this matrix into the triangle matrix.
+     *
+     * @return tirangularized matrix
      */
+    @Deprecated
     Matrix triangularize();
 
     /**
-     * Converts this matrix to triangle with <code>factory</code>.
-     * 
-     * @param factory
+     * Converts this matrix into the triangle matrix.
+     *
+     * @param factory the factory of result matrix
+     *
+     * @return tirangularized matrix
      */
+    @Deprecated
     Matrix triangularize(Factory factory);
 
     /**
-     * Gets blank matrix.
+     * Creates the blank (an empty matrix with same size) matrix of this matrix.
      * 
-     * @return blanked matrix
+     * @return blank matrix
      */
     Matrix blank();
 
     /**
-     * Gets blank matrix with <code>factory</code>.
-     * 
-     * @param factory
+     * Creates the blank (an empty matrix with same size) matrix of this matrix.
+     *
+     * @param factory the factory of result matrix
+     *
+     * @return blank matrix
      */
     Matrix blank(Factory factory);
 
     /**
-     * Gets copy of this matrix.
+     * Copies this matrix.
+     *
+     * @return the copy of this matrix
      */
     Matrix copy();
 
     /**
-     * Gets copy of this matrix with <code>factory</code>.
-     * 
-     * @param factory
+     * Copies this matrix.
+     *
+     * @param factory the factory of result matrix
+     *
+     * @return the copy of this matrix
      */
     Matrix copy(Factory factory);
 
     /**
-     * Resizes this matrix to new size.
-     * 
-     * @param rows
-     *            new rows size
-     * @param columns
-     *            new columns size
+     * Copies this matrix into the new matrix with specified dimensions: {@code rows} and {@code columns}.
+     *
+     * @param rows the number of rows in new matrix
+     * @param columns the number of columns in new matrix
+     *
+     * @return the copy of this matrix with new size
      */
     Matrix resize(int rows, int columns);
 
     /**
-     * Resizes this matrix to new size.
-     * 
-     * @param rows
-     *            new rows size
-     * @param columns
-     *            new columns size
+     * Copies this matrix into the new matrix with specified dimensions: {@code rows} and {@code columns}.
+     *
+     * @param rows the number of rows in new matrix
+     * @param columns the number of columns in new matrix
+     * @param factory the factory of result matrix
+     *
+     * @return the copy of this matrix with new size
      */
     Matrix resize(int rows, int columns, Factory factory);
 
     /**
-     * Resizes this matrix to new rows size.
-     * 
-     * @param rows
-     * @return
+     * Copies this matrix into the new matrix with specified row dimension: {@code rows}.
+     *
+     * @param rows the number of rows in new matrix
+     *
+     * @return the copy of this matrix with new size
      */
     Matrix resizeRows(int rows);
 
     /**
-     * Resizes this matrix to new rows size.
-     * 
-     * @param rows
-     * @return
+     * Copies this matrix into the new matrix with specified row dimension: {@code rows}.
+     *
+     * @param rows the number of rows in new matrix
+     * @param factory the factory of result matrix
+     *
+     * @return the copy of this matrix with new size
      */
     Matrix resizeRows(int rows, Factory factory);
 
     /**
-     * Resizes this matrix to new columns size.
-     * 
-     * @param columns
-     * @return
+     * Copies this matrix into the new matrix with specified column dimension: {@code columns}.
+     *
+     * @param columns the number of columns in new matrix
+     *
+     * @return the copy of this matrix with new size
      */
     Matrix resizeColumns(int columns);
 
     /**
-     * Resizes this matrix to new columns size.
-     * 
-     * @param columns
-     * @return
+     * Copies this matrix into the new matrix with specified column dimension: {@code columns}.
+     *
+     * @param columns the number of columns in new matrix
+     * @param factory the factory of result matrix
+     *
+     * @return the copy of this matrix with new size
      */
     Matrix resizeColumns(int columns, Factory factory);
 
     /**
-     * Matrix that contains the same elements but with the elements shuffled
-     * around (which might also result in the same matrix (with a small
-     * likelihood)).
-     * 
-     * @return The shuffled matrix.
+     * Shuffles this matrix.
+     *
+     * <p>
+     * Copies this matrix into the matrix that contains the same elements but with the elements
+     * shuffled around (which might also result in the same matrix (with a small likelihood)).
+     * </p>
+     *
+     * @return the shuffled matrix
      */
     Matrix shuffle();
 
     /**
-     * Matrix that contains the same elements but with the elements shuffled
-     * around (which might also result in the same matrix (with a small
-     * likelihood)).
-     * 
-     * @param factory
-     *            The factory to use for this
-     * @return The shuffled matrix.
+     * Shuffles this matrix.
+     *
+     * <p>
+     * Copies this matrix into the matrix that contains the same elements but with the elements
+     * shuffled around (which might also result in the same matrix (with a small likelihood)).
+     * </p>
+     *
+     * @param factory the factory of result matrix
+     *
+     * @return the shuffled matrix
      */
     Matrix shuffle(Factory factory);
 
     /**
-     * Slices this matrix to ({@code fromRow:untilRow}, {@code fromColumn:untilColumn}).
-     * 
-     * @param fromRow
-     * @return
+     * Retrieves the specified sub-matrix of this matrix. The sub-matrix is specified by
+     * intervals for row indices and column indices.
+     *
+     * @param fromRow the beginning of the row indices interval
+     * @param fromColumn the beginning of the column indices interval
+     * @param untilRow the ending of the row indices interval
+     * @param untilColumn the ending of the column indices interval
+     *
+     * @return the sub-matrix of this matrix
      */
     Matrix slice(int fromRow, int fromColumn, int untilRow, int untilColumn);
 
     /**
-     * Slices this matrix to ({@code fromRow:untilRow}, {@code fromColumn:untilColumn})
-     * 
-     * @param fromRow
-     * @return
+     * Retrieves the specified sub-matrix of this matrix. The sub-matrix is specified by
+     * intervals for row indices and column indices.
+     *
+     * @param fromRow the beginning of the row indices interval
+     * @param fromColumn the beginning of the column indices interval
+     * @param untilRow the ending of the row indices interval
+     * @param untilColumn the ending of the column indices interval
+     * @param factory the factory of result matrix
+     *
+     * @return the sub-matrix of this matrix
      */
     Matrix slice(int fromRow, int fromColumn, int untilRow, int untilColumn, Factory factory);
 
     /**
-     * Slices this matrix.
-     * 
-     * @param untilRow
-     * @param untilColumn
-     * @return
+     * Retrieves the specified sub-matrix of this matrix. The sub-matrix is specified by
+     * intervals for row indices and column indices. The top left points of both intervals
+     * are fixed to zero.
+     *
+     * @param untilRow the ending of the row indices interval
+     * @param untilColumn the ending of the column indices interval
+     *
+     * @return the sub-matrix of this matrix
      */
     Matrix sliceTopLeft(int untilRow, int untilColumn);
 
     /**
-     * Slices this matrix.
-     * 
-     * @param untilRow
-     * @param untilColumn
-     * @return
+     * Retrieves the specified sub-matrix of this matrix. The sub-matrix is specified by
+     * intervals for row indices and column indices. The top left points of both intervals
+     * are fixed to zero.
+     *
+     * @param untilRow the ending of the row indices interval
+     * @param untilColumn the ending of the column indices interval
+     * @param factory the factory of result matrix
+     *
+     * @return the sub-matrix of this matrix
      */
     Matrix sliceTopLeft(int untilRow, int untilColumn, Factory factory);
 
     /**
-     * Slices this matrix.
-     * 
-     * @param fromRow
-     * @param fromColumn
-     * @return
+     * Retrieves the specified sub-matrix of this matrix. The sub-matrix is specified by
+     * intervals for row indices and column indices. The bottom right points of both intervals
+     * are fixed to matrix dimensions - it's rows and columns correspondingly.
+     *
+     * @param fromRow the beginning of the row indices interval
+     * @param fromColumn the beginning of the column indices interval
+     *
+     * @return the sub-matrix of this matrix
      */
     Matrix sliceBottomRight(int fromRow, int fromColumn);
 
     /**
-     * Slices this matrix.
-     * 
-     * @param fromRow
-     * @param fromColumn
-     * @return
+     * Retrieves the specified sub-matrix of this matrix. The sub-matrix is specified by
+     * intervals for row indices and column indices. The bottom right points of both intervals
+     * are fixed to matrix dimensions - it's rows and columns correspondingly.
+     *
+     * @param fromRow the beginning of the row indices interval
+     * @param fromColumn the beginning of the column indices interval
+     * @param factory the factory of result matrix
+     *
+     * @return the sub-matrix of this matrix
      */
     Matrix sliceBottomRight(int fromRow, int fromColumn, Factory factory);
 
@@ -629,340 +693,395 @@ public interface Matrix extends Externalizable {
      * which selects only contiguous blocks. However, where applicable slice()
      * is probably more efficient.
      * 
-     * @param rowIndices
-     *            list of row indexes, each index < rows()
-     * @param columnIndices
-     *            list of column indexes, each index < columns()
-     * @return The new matrix with the selected rows and columns.
-     * @throws IllegalArgumentException
-     *             if invalid row or column indices are provided.
+     * @param rowIndices the array of row indices
+     * @param columnIndices the array of column indices
+     *
+     * @return The new matrix with the selected rows and columns
+     *
+     * @throws IllegalArgumentException if invalid row or column indices are provided
      */
     public Matrix select(int[] rowIndices, int[] columnIndices);
 
     /**
-     * Returns a new matrix with the selected rows and columns.
+     * Returns a new matrix with the selected rows and columns. This method can
+     * be used either return a specific subset of rows and/or columns or to
+     * permute the indices in an arbitrary order. The list of indices are
+     * allowed to contain duplicates indices. This is more general than slice()
+     * which selects only contiguous blocks. However, where applicable slice()
+     * is probably more efficient.
+     *
+     * @param rowIndices the array of row indices
+     * @param columnIndices the array of column indices
+     * @param factory the factory of result matrix
+     *
+     * @return The new matrix with the selected rows and columns
+     *
+     * @throws IllegalArgumentException if invalid row or column indices are provided
      */
     public Matrix select(int[] rowIndices, int[] columnIndices, Factory factory);
 
     /**
-     * Returns the factory associated with this matrix.
+     * Returns the factory of this matrix.
      * 
-     * @return factory
+     * @return the factory of this matrix
      */
     Factory factory();
 
     /**
-     * Applies the <code>procedure</code> to every element of this matrix.
-     * @param procedure
+     * Applies given {@code procedure} to each element of this matrix.
+     *
+     * @param procedure the matrix procedure
      */
     void each(MatrixProcedure procedure);
 
     /**
-     * Applies the <code>procedure</code> to every element in the
-     * <code>i</code> row of this matrix.
-     * @param procedure
-     * @param i
+     * Applies given {@code procedure} to each element of specified row of this matrix.
+     *
+     * @param i the row index
+     * @param procedure the matrix procedure
      */
     void eachInRow(int i, MatrixProcedure procedure);
 
     /**
-     * Applies the <code>procedure</code> to every element in the
-     * <code>i</code> column of this matrix.
-     * @param procedure
-     * @param j
+     * Applies given {@code procedure} to each element of specified column of this matrix.
+     *
+     * @param j the column index
+     * @param procedure the matrix procedure
      */
     void eachInColumn(int j, MatrixProcedure procedure);
 
     /**
-     * Applies the <code>procedure</code> to every non-zero element in the
-     * <code>i</code> column of this matrix.
-     * @param procedure
+     * Applies given {@code procedure} to each non-zero element of this matrix.
+     *
+     * @param procedure the matrix procedure
      */
     void eachNonZero(MatrixProcedure procedure);
 
     /**
-     * Applies the <code>procedure</code> to every non-zero element in the
-     * <code>i</code> row of this matrix.
-     * @param procedure
-     * @param i
+     * Applies given {@code procedure} to each non-zero element of specified row of this matrix.
+     *
+     * @param i the row index
+     * @param procedure the matrix procedure
      */
     void eachNonZeroInRow(int i, MatrixProcedure procedure);
 
     /**
-     * Applies the <code>procedure</code> to every non-zero element in the
-     * <code>i</code> column of this matrix.
-     * @param procedure
-     * @param j
+     * Applies given {@code procedure} to each non-zero element of specified column of this matrix.
+     *
+     * @param j the column index
+     * @param procedure the matrix procedure
      */
     void eachNonZeroInColumn(int j, MatrixProcedure procedure);
 
     /**
-     * Finds max in whole matrix.
+     * Searches for the maximum value of this matrix.
      *
-     * @return max
+     * @return maximum value of this matrix
      */
     double max();
 
     /**
-     * Finds min in whole matrix.
+     * Searches for the minimum value of this matrix.
      *
-     * @return min
+     * @return minimum value of this matrix
      */
     double min();
 
     /**
-     * Finds max in <code>i</code> row.
+     * Searches for the maximum value of specified row in this matrix.
      *
-     * @return max
+     * @param i the row index
+     *
+     * @return maximum value of specified row in this matrix
      */
     double maxInRow(int i);
 
     /**
-     * Finds min in <code>i</code> row.
+     * Searches for the minimum value of specified row in this matrix.
      *
-     * @return min
+     * @param i the row index
+     *
+     * @return minimum value of specified row in this matrix
      */
     double minInRow(int i);
 
     /**
-     * Finds max in <code>j</code> column.
+     * Searches for the maximum value of specified column in this matrix.
      *
-     * @return max
+     * @param j the column index
+     *
+     * @return maximum value of specified column in this matrix
      */
     double maxInColumn(int j);
 
     /**
-     * Finds min in <code>j</code> column.
+     * Searches for the minimum value of specified column in this matrix.
      *
-     * @return min
+     * @param j the column index
+     *
+     * @return minimum value of specified column in this matrix
      */
     double minInColumn(int j);
 
     /**
-     * Builds a new matrix by applying a <code>function</code> to all elements
-     * of this matrix.
-     * 
-     * @param function
+     * Builds a new matrix by applying given {@code function} to each element of this matrix.
+     *
+     * @param function the matrix function
+     *
+     * @return the transformed matrix
      */
     Matrix transform(MatrixFunction function);
 
     /**
-     * Builds a new matrix by applying a <code>function</code> to all elements
-     * of this matrix with using of specified <code>factory</code>.
-     * 
-     * @param function
+     * Builds a new matrix by applying given {@code function} to each element of this matrix.
+     *
+     * @param function the matrix function
+     * @param factory the factory of result matrix
+     *
+     * @return the transformed matrix
      */
     Matrix transform(MatrixFunction function, Factory factory);
 
     /**
-     * Builds a new matrix by applying a <code>function</code> to (
-     * <code>i</code>, <code>j</code>) element of this matrix.
-     * 
-     * @param i
-     * @param j
-     * @param function
+     * Builds a new matrix by applying given {@code function} to specified element of this matrix.
+     *
+     * @param i the row index
+     * @param j the column index
+     * @param function the matrix function
+     *
+     * @return the transformed matrix
      */
     Matrix transform(int i, int j, MatrixFunction function);
 
     /**
-     * Builds a new matrix by applying a <code>function</code> to (
-     * <code>i</code>, <code>j</code>) element of this matrix with using of
-     * specified <code>factory</code>.
-     * 
-     * @param i
-     * @param j
-     * @param function
-     * @param factory
+     * Builds a new matrix by applying given {@code function} to specified element of this matrix.
+     *
+     * @param i the row index
+     * @param j the column index
+     * @param function the matrix function
+     * @param factory the factory of result matrix
+     *
+     * @return the transformed matrix
      */
     Matrix transform(int i, int j, MatrixFunction function, Factory factory);
 
     /**
+     * Builds a new matrix by applying given {@code function} to each element of specified
+     * row in this matrix.
      *
-     * @param i
-     * @param function
-     * @return
+     * @param i the row index
+     * @param function the matrix function
+     *
+     * @return the transformed matrix
      */
     Matrix transformRow(int i, MatrixFunction function);
 
     /**
+     * Builds a new matrix by applying given {@code function} to each element of specified
+     * row in this matrix.
      *
-     * @param i
-     * @param function
-     * @param factory
-     * @return
+     * @param i the row index
+     * @param function the matrix function
+     * @param factory the factory of result matrix
+     *
+     * @return the transformed matrix
      */
     Matrix transformRow(int i, MatrixFunction function, Factory factory);
 
     /**
+     * Builds a new matrix by applying given {@code function} to each element of specified
+     * column in this matrix.
      *
-     * @param j
-     * @param function
-     * @param factory
-     * @return
+     * @param j the column index
+     * @param function the matrix function
+     *
+     * @return the transformed matrix
      */
     Matrix transformColumn(int j, MatrixFunction function);
 
     /**
+     * Builds a new matrix by applying given {@code function} to each element of specified
+     * column in this matrix.
      *
-     * @param j
-     * @param function
-     * @param factory
-     * @return
+     * @param j the column index
+     * @param function the matrix function
+     * @param factory the factory of result matrix
+     *
+     * @return the transformed matrix
      */
     Matrix transformColumn(int j, MatrixFunction function, Factory factory);
 
     /**
-     * Updates all elements of this matrix by applying <code>function</code>.
+     * Updates all elements of this matrix by applying given {@code function}.
      * 
-     * @param function
+     * @param function the matrix function
      */
     void update(MatrixFunction function);
 
     /**
-     * Updates (<code>i</code>, <code>j</code>) element of this matrix by
-     * applying <code>function</code>.
-     * 
-     * @param i
-     * @param j
-     * @param function
+     * Updates the specified element of this matrix by applying given {@code function}.
+     *
+     * @param i the row index
+     * @param j the column index
+     * @param function the matrix function
      */
     void update(int i, int j, MatrixFunction function);
 
     /**
-     * Updates specified row of this matrix by applying <code>function<code/>.
+     * Updates all elements of the specified row in this matrix by applying given {@code function}.
      *
-     * @param i
-     * @param function
+     * @param i the row index
+     * @param function the matrix function
      */
     void updateRow(int i, MatrixFunction function);
 
-
     /**
-     * Updates specified column of this matrix by applying <code>function<code/>.
+     * Updates all elements of the specified column in this matrix by applying given {@code function}.
      *
-     * @param j
-     * @param function
+     * @param j the column index
+     * @param function the matrix function
      */
     void updateColumn(int j, MatrixFunction function);
 
     /**
+     * Folds all elements of this matrix with given {@code accumulator}.
      * 
-     * @param accumulator
-     * @return
+     * @param accumulator the matrix accumulator
+     *
+     * @return the accumulated value
      */
     double fold(MatrixAccumulator accumulator);
 
     /**
-     * 
-     * @param i
-     * @param accumulator
-     * @return
+     * Folds all elements of specified row in this matrix with given {@code accumulator}.
+     *
+     * @param i the row index
+     * @param accumulator the matrix accumulator
+     *
+     * @return the accumulated value
      */
     double foldRow(int i, MatrixAccumulator accumulator);
 
     /**
-     * 
-     * @param accumulator
-     * @return vector of the accumulations for each row
+     * Folds all elements (in row-by-row manner) of this matrix with given {@code accumulator}.
+     *
+     * @param accumulator the matrix accumulator
+     *
+     * @return the accumulated vector
      */
     Vector foldRows(MatrixAccumulator accumulator);
 
     /**
-     * 
-     * @param j
-     * @param accumulator
-     * @return
+     * Folds all elements of specified column in this matrix with given {@code accumulator}.
+     *
+     * @param j the column index
+     * @param accumulator the matrix accumulator
+     *
+     * @return the accumulated value
      */
     double foldColumn(int j, MatrixAccumulator accumulator);
 
     /**
-     * 
-     * @param accumulator
-     * @return vector of the accumulations for each column
+     * Folds all elements (in column-by-column manner) of this matrix with given {@code accumulator}.
+     *
+     * @param accumulator the matrix accumulator
+     *
+     * @return the accumulated vector
      */
     Vector foldColumns(MatrixAccumulator accumulator);
 
     /**
-     * Checks whether this matrix compiles with <code>predicate</code>.
+     * Checks whether this matrix compiles with given {@code predicate} or not.
      * 
-     * @param predicate
-     * @return <code>true</code> if this matrix compiles with
-     *         <code>predicate</code>.
+     * @param predicate the matrix predicate
+     *
+     * @return whether this matrix compiles with predicate
      */
     boolean is(MatrixPredicate predicate);
 
     /**
-     * Checks whether this matrix compiles with <code>predicate</code>.
-     * 
-     * @return <code>true</code> if this matrix compiles with
-     *         <code>predicate</code>.
+     * Checks whether this matrix compiles with given {@code predicate} or not.
+     *
+     * @param predicate the advanced matrix predicate
+     *
+     * @return whether this matrix compiles with predicate
      */
     boolean is(AdvancedMatrixPredicate predicate);
 
     /**
-     * Checks whether this matrix compiles with <code>predicate</code>.
+     * Checks whether this matrix compiles with given {@code predicate} or not.
      *
-     * @param predicate
-     * @return <code>true</code> if this matrix doesn't compiles with predicate.
+     * @param predicate the matrix predicate
+     *
+     * @return whether this matrix compiles with predicate
      */
     boolean non(MatrixPredicate predicate);
 
     /**
-     * Checks whether this matrix compiles with <code>predicate</code>.
+     * Checks whether this matrix compiles with given {@code predicate} or not.
      *
-     * @return <code>true</code> if this matrix doesn't compiles with  predicate.
+     * @param predicate the advanced matrix predicate
+     *
+     * @return whether this matrix compiles with predicate
      */
     boolean non(AdvancedMatrixPredicate predicate);
 
     /**
-     * Converts this matrix to row vector.
+     * Converts this matrix into the row vector.
      *
-     * @return
+     * @return the row vector of this matrix
      */
     Vector toRowVector();
 
     /**
-     * Converts this matrix to row vector.
+     * Converts this matrix into the row vector.
      *
-     * @return
+     * @param factory the factory of result vector
+     *
+     * @return the row vector of this matrix
      */
     Vector toRowVector(Factory factory);
 
     /**
-     * Converts this matrix to column vector.
+     * Converts this matrix into the column vector.
      *
-     * @return
+     * @return the column vector of this matrix
      */
     Vector toColumnVector();
 
     /**
-     * Converts this matrix to column vector.
+     * Converts this matrix into the column vector.
      *
-     * @return
+     * @param factory the factory of result vector
+     *
+     * @return the column vector of this matrix
      */
     Vector toColumnVector(Factory factory);
 
     /**
      * Creates a new solver by given {@code factory} of this matrix.
      *
-     * @param factory
-     * @return
+     * @param factory the solver factory
+     *
+     * @return the linear system solver of this matrix
      */
     LinearSystemSolver withSolver(LinearAlgebra.SolverFactory factory);
 
     /**
      * Creates a new inverter by given {@code factory} of this matrix.
      *
-     * @param factory
-     * @return
+     * @param factory the inverter factory
+     *
+     * @return the inverter of this matrix
      */
     MatrixInverter withInverter(LinearAlgebra.InverterFactory factory);
 
     /**
      * Creates a new decompositor by given {@code factory} of this matrix.
      *
-     * @param factory
-     * @return
+     * @param factory the decompositor factory
+     *
+     * @return the decompositor of this matrix
      */
     MatrixDecompositor withDecompositor(LinearAlgebra.DecompositorFactory factory);
 }
