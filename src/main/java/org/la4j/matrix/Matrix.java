@@ -363,21 +363,21 @@ public interface Matrix extends Externalizable {
     double diagonalProduct();
 
     /**
-     * Multiplies up all elements of the matrix.
+     * Multiplies up all elements of this matrix.
      * 
-     * @return the product of all elements of the matrix
+     * @return the product of all elements of this matrix
      */
     double product();
 
     /**
-     * Summarizes up all elements of the matrix.
+     * Summarizes up all elements of this matrix.
      *
-     * @return the sum of all elements of the matrix
+     * @return the sum of all elements of this matrix
      */
     double sum();
 
     /**
-     * Calculates the Hadamard product of this and given {@code matrix}.
+     * Calculates the Hadamard (element-wise) product of this and given {@code matrix}.
      *
      * @param matrix the right hand matrix for Hadamard product
      *
@@ -386,7 +386,7 @@ public interface Matrix extends Externalizable {
     Matrix hadamardProduct(Matrix matrix);
 
     /**
-     * Calculates the Hadamard product of this and given {@code matrix}.
+     * Calculates the Hadamard (element-wise) product of this and given {@code matrix}.
      *
      * @param matrix the right hand matrix for Hadamard product
      * @param factory the factory of result matrix
@@ -696,7 +696,7 @@ public interface Matrix extends Externalizable {
      * @param rowIndices the array of row indices
      * @param columnIndices the array of column indices
      *
-     * @return The new matrix with the selected rows and columns
+     * @return the new matrix with the selected rows and columns
      *
      * @throws IllegalArgumentException if invalid row or column indices are provided
      */
@@ -714,7 +714,7 @@ public interface Matrix extends Externalizable {
      * @param columnIndices the array of column indices
      * @param factory the factory of result matrix
      *
-     * @return The new matrix with the selected rows and columns
+     * @return the new matrix with the selected rows and columns
      *
      * @throws IllegalArgumentException if invalid row or column indices are provided
      */
@@ -774,14 +774,14 @@ public interface Matrix extends Externalizable {
     void eachNonZeroInColumn(int j, MatrixProcedure procedure);
 
     /**
-     * Searches for the maximum value of this matrix.
+     * Searches for the maximum value of the elements of this matrix.
      *
      * @return maximum value of this matrix
      */
     double max();
 
     /**
-     * Searches for the minimum value of this matrix.
+     * Searches for the minimum value of the elements of this matrix.
      *
      * @return minimum value of this matrix
      */
