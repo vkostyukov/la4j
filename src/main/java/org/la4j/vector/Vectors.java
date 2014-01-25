@@ -310,70 +310,55 @@ public final class Vectors {
     }
 
     /**
-     * Creates a plus function with specified <code>value</code>. The function 
-     * evaluates like following: 
-     * <p>
-     * <center><code>something += value</code></center>
-     * </p>
-     * 
-     * @param value
-     * @return
+     * Creates a plus function that adds given {@code value} to it's argument.
+     *
+     * @param value a value to be added to function's argument
+     *
+     * @return a closure object that does {@code _ + _}
      */
     public static VectorFunction asPlusFunction(double value) {
         return new PlusFunction(value);
     }
 
     /**
-     * Creates a minus function with specified <code>value</code>. The function 
-     * evaluates like following: 
-     * <p>
-     * <center><code>something -= value</code></center>
-     * </p> 
-     * 
-     * @param value
-     * @return
+     * Creates a minus function that subtracts given {@code value} from it's argument.
+     *
+     * @param value a value to be subtracted from function's argument
+     *
+     * @return a closure that does {@code _ - _}
      */
     public static VectorFunction asMinusFunction(double value) {
         return new MinusFunction(value);
     }
 
     /**
-     * Creates a multiply function with specified <code>value</code>. The 
-     * function evaluates like following: 
-     * <p>
-     * <center><code>something *= value</code></center>
-     * </p>
-     * 
-     * @param value
-     * @return
+     * Creates a mul function that multiplies given {@code value} by it's argument.
+     *
+     * @param value a value to be multiplied by function's argument
+     *
+     * @return a closure that does {@code _ * _}
      */
     public static VectorFunction asMulFunction(double value) {
         return new MulFunction(value);
     }
 
     /**
-     * Creates a divide function with specified <code>value</code>. The function 
-     * evaluates like following: 
-     * <p>
-     * <center><code>something /= value</code></center>
-     * </p>
-     * 
-     * @param value
-     * @return
+     * Creates a div function that divides it's argument by given {@code value}.
+     *
+     * @param value a divisor value
+     *
+     * @return a closure that does {@code _ / _}
      */
     public static VectorFunction asDivFunction(double value) {
         return new DivFunction(value);
     }
 
     /**
-     * Creates a modulus function with specified <code>value</code>. The function 
-     * evaluates like following:
-     * <p>
-     * <center><code>something %= value</code></center>
-     * </p>
+     * Creates a mod function that calculates the modulus of it's argument and given {@code value}.
      *
-     * @param value
-     * @return
+     * @param value a divisor value
+     *
+     * @return a closure that does {@code _ % _}
      */
     public static VectorFunction asModFunction(double value) {
         return new ModFunction(value);
@@ -419,74 +404,78 @@ public final class Vectors {
     public static final VectorFunction INV_FUNCTION = new InvVectorFunction();
 
     /**
-     * Creates a singleton 1-length vector from <code>value</code>.
+     * Creates a singleton 1-length vector of given {@code value}.
      * 
-     * @param value
-     * @return
+     * @param value the vector's singleton value
+     *
+     * @return a singleton vector
      */
     public static Vector asSingletonVector(double value) {
         return LinearAlgebra.DEFAULT_FACTORY.createVector(new double[]{value});
     }
 
     /**
-     * Creates a unsafe vector source with specified <code>vector</code>.
+     * Creates a vector source of given {@code vector}.
      * 
-     * @param vector
-     * @return
+     * @param vector the source vector
+     *
+     * @return a vector source
      */
     public static VectorSource asVectorSource(Vector vector) {
         return new LoopbackVectorSource(vector);
     }
 
     /**
-     * Creates an array vector source with specified <code>array</code> 
-     * reference.
+     * Creates an array vector source of given array {@code reference}.
      * 
-     * @param array
-     * @return
+     * @param array the source array
+     *
+     * @return an array vector source
      */
     public static VectorSource asArraySource(double[] array) {
         return new ArrayVectorSource(array);
     }
 
     /**
-     * Creates a random vector source with specified <code>length</code>.
+     * Creates a random vector source of given {@code length}.
      * 
-     * @param length
-     * @return
+     * @param length the length of the source
+     *
+     * @return a random vector source
      */
     public static VectorSource asRandomSource(int length) {
         return new RandomVectorSource(length);
     }
 
     /**
-     * Creates a MatrixMarket stream source with specified input stream.
+     * Creates a MatrixMarket stream source of given input stream {@code in}.
      * 
-     * @param in
-     * @return
+     * @param in the input stream
+     *
+     * @return a MatrixMarket stream source
      */
     public static VectorSource asMatrixMarketSource(InputStream in) {
         return new StreamVectorSource(new MatrixMarketStream(in));
     }
 
     /**
-     * Creates a symbol separated stream source (like CSV) with specified
-     * input stream.
-     * 
-     * @param in
-     * @return
+     * Creates a symbol separated stream source (like CSV) of given input stream {@code in}.
+     *
+     * @param in the input stream
+     *
+     * @return a symbol separated stream source
      */
     public static VectorSource asSymbolSeparatedSource(InputStream in) {
         return new StreamVectorSource(new SymbolSeparatedStream(in));
     }
 
     /**
-     * Creates a symbol separated stream source (like CSV) with specified
-     * input stream and <code>separator</code>.
-     * 
-     * @param in
-     * @param separator
-     * @return
+     * Creates a symbol separated stream source (like CSV) of given input stream {@code in}.
+     *
+     * @param in the input stream
+     * @param separator the values' separator
+     *
+     * @return a symbol separated stream source
      */
     public static VectorSource asSymbolSeparatedSource(InputStream in, 
             String separator) {
@@ -495,22 +484,22 @@ public final class Vectors {
     }
 
     /**
-     * Creates a sum vector accumulator, that calculates the sum of all 
-     * elements of vector.
+     * Creates a sum vector accumulator that calculates the sum of all elements in the vector.
      * 
-     * @param neutral
-     * @return
+     * @param neutral the neutral value
+     *
+     * @return a sum accumulator
      */
     public static VectorAccumulator asSumAccumulator(double neutral) {
         return new SumVectorAccumulator(neutral);
     }
 
     /**
-     * Creates a product vector accumulator, that calculates the product of all
-     * elements of vector.
+     * Creates a product vector accumulator that calculates the product of all elements in the vector.
      * 
-     * @param neutral
-     * @return
+     * @param neutral the neutral value
+     *
+     * @return a product accumulator
      */
     public static VectorAccumulator asProductAccumulator(double neutral) {
         return new ProductVectorAccumulator(neutral);
@@ -531,31 +520,36 @@ public final class Vectors {
      * across the vector's elements.
      *
      * @return a maximum vector accumulator
-     * @return
      */
     public static VectorAccumulator mkMaxAccumulator() {
         return new MaxVectorAccumulator();
     }
 
     /**
+     * Makes an Euclidean norm accumulator that allows to use
+     * {@link Vector#fold(org.la4j.vector.functor.VectorAccumulator)} method for norm calculation.
      *
-     * @return
+     * @return an Euclidean norm accumulator
      */
     public static VectorAccumulator mkEuclideanNormAccumulator() {
         return new EuclideanNormAccumulator();
     }
 
     /**
+     * Makes a Manhattan norm accumulator that allows to use
+     * {@link Vector#fold(org.la4j.vector.functor.VectorAccumulator)} method for norm calculation.
      *
-     * @return
+     * @return a Manhattan norm accumulator
      */
     private static VectorAccumulator mkManhattanNormAccumulator() {
         return new ManhattanNormAccumulator();
     }
 
     /**
+     * Makes an Infinity norm accumulator that allows to use
+     * {@link Vector#fold(org.la4j.vector.functor.VectorAccumulator)} method for norm calculation.
      *
-     * @return
+     * @return an Infinity norm accumulator
      */
     private static VectorAccumulator mkInfinityNormAccumulator() {
         return new InfinityNormAccumulator();
@@ -563,12 +557,12 @@ public final class Vectors {
 
     /**
      * Creates a sum function accumulator, that calculates the sum of all 
-     * elements of vector after applying a <code>function</code> to 
-     * each of them.
+     * elements in the vector after applying given {@code function} to each of them.
      * 
-     * @param neutral
-     * @param function
-     * @return
+     * @param neutral the neutral value
+     * @param function the vector function
+     *
+     * @returna a sum function accumulator
      */
     public static VectorAccumulator asSumFunctionAccumulator(double neutral, 
             VectorFunction function) {
@@ -578,13 +572,14 @@ public final class Vectors {
     }
 
     /**
-     * Creates a produce function accumulator, that calculates the produce of
-     * all elements of matrix after applying a <code>function</code> to
+     * Creates a product function accumulator, that calculates the product of
+     * all elements in the matrix after applying given {@code function} to
      * each of them.
      * 
-     * @param neutral
-     * @param function
-     * @return
+     * @param neutral the neutral value
+     * @param function the vector function
+     *
+     * @return a product function accumulator
      */
     public static VectorAccumulator asProductFunctionAccumulator(double neutral, 
             VectorFunction function) {
