@@ -300,18 +300,18 @@ public final class Matrices {
         }
     }
 
-    private static class ConstantMatrixFunction
+    private static class ConstMatrixFunction
             implements MatrixFunction {
 
-        private double constant;
+        private double arg;
 
-        public ConstantMatrixFunction(double constant) {
-            this.constant = constant;
+        public ConstMatrixFunction(double arg) {
+            this.arg = arg;
         }
 
         @Override
         public double evaluate(int i, int j, double value) {
-            return constant;
+            return arg;
         }
     }
 
@@ -499,84 +499,66 @@ public final class Matrices {
     }
 
     /**
-     * Creates a constant function of given {@code value}. The function
-     * evaluates like following:
+     * Creates a const function that evaluates it's argument to given {@code value}.
      *
-     * <p>
-     * <center><code>something = constant</code></center>
-     * </p>
+     * @param value a const value
      *
-     * @param constant
-     * @return
+     * @return a closure object that does {@code _}
      */
-    public static MatrixFunction asConstantFunction(double constant) {
-        return new ConstantMatrixFunction(constant);
+    public static MatrixFunction asConstFunction(double value) {
+        return new ConstMatrixFunction(value);
     }
 
     /**
-     * Creates a plus function with specified <code>value</code>. The function 
-     * evaluates like following: 
-     * <p>
-     * <center><code>something += value</code></center>
-     * </p>
-
-     * @param value
+     * Creates a plus function that adds given {@code value} to it's argument.
+     *
+     * @param value a value to be added to function's argument
+     *
+     * @return a closure object that does {@code _ + _}
      */
     public static MatrixFunction asPlusFunction(double value) {
         return new PlusMatrixFunction(value);
     }
 
     /**
-     * Creates a minus function with specified <code>value</code>. The function 
-     * evaluates like following: 
-     * <p>
-     * <center><code>something -= value</code></center>
-     * </p> 
-     * 
-     * @param value
-     * @return
+     * Creates a minus function that subtracts given {@code value} from it's argument.
+     *
+     * @param value a value to be subtracted from function's argument
+     *
+     * @return a closure that does {@code _ - _}
      */
     public static MatrixFunction asMinusFunction(double value) {
         return new MinusMatrixFunction(value);
     }
 
     /**
-     * Creates a multiply function with specified <code>value</code>. The 
-     * function evaluates like following: 
-     * <p>
-     * <center><code>something *= value</code></center>
-     * </p>
-     * 
-     * @param value
-     * @return
+     * Creates a mul function that multiplies given {@code value} by it's argument.
+     *
+     * @param value a value to be multiplied by function's argument
+     *
+     * @return a closure that does {@code _ * _}
      */
     public static MatrixFunction asMulFunction(double value) {
         return new MulMatrixFunction(value);
     }
 
     /**
-     * Creates a divide function with specified <code>value</code>. The function 
-     * evaluates like following: 
-     * <p>
-     * <center><code>something /= value</code></center>
-     * </p>
-     * 
-     * @param value
-     * @return
+     * Creates a div function that divides it's argument by given {@code value}.
+     *
+     * @param value a divisor value
+     *
+     * @return a closure that does {@code _ / _}
      */
     public static MatrixFunction asDivFunction(double value) {
         return new DivMatrixFunction(value);
     }
 
     /**
-     * Creates a modulus function with specified <code>value</code>. The function 
-     * evaluates like following:
-     * <p>
-     * <center><code>something %= value</code></center>
-     * </p>
+     * Creates a mod function that calculates the modulus of it's argument and given {@code value}.
      *
-     * @param value
-     * @return
+     * @param value a divisor value
+     *
+     * @return a closure that does {@code _ % _}
      */
     public static MatrixFunction asModFunction(double value) {
         return new ModMatrixFunction(value);
@@ -712,115 +694,116 @@ public final class Matrices {
             new InvMatrixFunction();
 
     /**
-     * Creates a singleton <code>1x1</code> matrix from <code>value</code>.
+     * Creates a singleton 1x1 matrix of given {@code value}.
      * 
-     * @param value
-     * @return
+     * @param value the singleton value
+     *
+     * @return a singleton matrix
      */
     public static Matrix asSingletonMatrix(double value) {
-        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(new double[][]{{value}});
+        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(new double[][]{{ value }});
     }
 
     /**
-     * Creates a loopback matrix source with specified <code>matrix</code>.
+     * Creates a matrix source of given {@code matrix}.
      * 
-     * @param matrix
-     * @return
+     * @param matrix the source matrix
+     *
+     * @return a matrix source
      */
     public static MatrixSource asMatrixSource(Matrix matrix) {
         return new LoopbackMatrixSource(matrix);
     }
 
     /**
-     * Creates a 1D array matrix source with specified dimensions and 
-     * <code>array</code> reference. 
+     * Creates a 1D-array matrix source of given {@code array} reference.
      * 
-     * @param rows
-     * @param columns
-     * @param array
-     * @return
+     * @param rows the number of rows in the source
+     * @param columns the number of columns in the source
+     * @param array the array reference
+     *
+     * @return a 1D-array matrix source
      */
-    public static MatrixSource asArray1DSource(int rows, int columns, 
-            double[] array) {
-
+    public static MatrixSource asArray1DSource(int rows, int columns, double[] array) {
         return new Array1DMatrixSource(rows, columns, array);
     }
 
     /**
-     * Creates a 2D array matrix source with specified <code>array</code> 
-     * reference.
+     * Creates a 2D-array matrix source of given {@code array} reference.
      * 
-     * @param array
-     * @return
+     * @param array the array reference
+     *
+     * @return a 2D-array matrix source
      */
     public static MatrixSource asArray2DSource(double[][] array) {
         return new Array2DMatrixSource(array);
     }
 
     /**
-     * Creates an identity matrix source with specified <code>size</code>.
+     * Creates an identity matrix source of given {@code size}.
      * 
-     * @param size
-     * @return
+     * @param size the source size
+     *
+     * @return an identity matrix source
      */
     public static MatrixSource asIdentitySource(int size) {
         return new IdentityMatrixSource(size);
     }
 
     /**
-     * Creates a random matrix source with specified dimensions.
+     * Creates a random matrix source of specified dimensions.
      * 
-     * @param rows
-     * @param columns
-     * @return
+     * @param rows the number of rows in the source
+     * @param columns the number of columns in the source
+     *
+     * @return a random matrix source
      */
     public static MatrixSource asRandomSource(int rows, int columns) {
         return new RandomMatrixSource(rows, columns);
     }
 
     /**
-     * Creates a random symmetric matrix source with specified 
-     * <code>size</code>.
+     * Creates a random symmetric matrix source of given {@code size}.
      * 
-     * @param size
-     * @return
+     * @param size the size of the source
+     *
+     * @return a random symmetric matrix source
      */
     public static MatrixSource asRandomSymmetricSource(int size) {
         return new RandomSymmetricMatrixSource(size);
     }
 
     /**
-     * Creates a MatrixMarket stream source with specified input stream.
-     * 
-     * @param in
-     * @return
+     * Creates a MatrixMarket stream source of given input stream {@code in}.
+     *
+     * @param in the input stream
+     *
+     * @return a MatrixMarket stream source
      */
     public static MatrixSource asMatrixMarketSource(InputStream in) {
         return new StreamMatrixSource(new MatrixMarketStream(in));
     }
 
     /**
-     * Creates a symbol separated stream source (like CSV) with specified
-     * input stream.
-     * 
-     * @param in
-     * @return
+     * Creates a symbol separated stream source (like CSV) of given input stream {@code in}.
+     *
+     * @param in the input stream
+     *
+     * @return a symbol separated stream source
      */
     public static MatrixSource asSymbolSeparatedSource(InputStream in) {
         return new StreamMatrixSource(new SymbolSeparatedStream(in));
     }
 
     /**
-     * Creates a symbol separated stream source (like CSV) with specified
-     * input stream and <code>separator</code>.
-     * 
-     * @param in
-     * @param separator
-     * @return
+     * Creates a symbol separated stream source (like CSV) of given input stream {@code in}.
+     *
+     * @param in the input stream
+     * @param separator the values' separator
+     *
+     * @return a symbol separated stream source
      */
-    public static MatrixSource asSymbolSeparatedSource(InputStream in, 
-            String separator) {
-
+    public static MatrixSource asSymbolSeparatedSource(InputStream in, String separator) {
         return new StreamMatrixSource(new SymbolSeparatedStream(in, separator));
     }
 
@@ -843,56 +826,51 @@ public final class Matrices {
     }
 
     /**
-     * Creates a sum matrix accumulator, that calculates the sum of all 
-     * elements of matrix. 
-     * 
-     * @param neutral
-     * @return
+     * Creates a sum matrix accumulator that calculates the sum of all elements in the matrix.
+     *
+     * @param neutral the neutral value
+     *
+     * @return a sum accumulator
      */
     public static MatrixAccumulator asSumAccumulator(double neutral) {
         return new SumMatrixAccumulator(neutral);
     }
 
     /**
-     * Creates a product matrix accumulator, that calculates the product of all
-     * elements of matrix.
-     * 
-     * @param neutral
-     * @return
+     * Creates a product matrix accumulator that calculates the product of all elements in the matrix.
+     *
+     * @param neutral the neutral value
+     *
+     * @return a product accumulator
      */
     public static MatrixAccumulator asProductAccumulator(double neutral) {
         return new ProductMatrixAccumulator(neutral);
     }
 
     /**
-     * Creates a sum function accumulator, that calculates the sum of all 
-     * elements of matrix after applying a <code>function</code> to 
-     * each of them.
-     * 
-     * @param neutral
-     * @param function
-     * @return
+     * Creates a sum function accumulator, that calculates the sum of all
+     * elements in the matrix after applying given {@code function} to each of them.
+     *
+     * @param neutral the neutral value
+     * @param function the matrix function
+     *
+     * @returna a sum function accumulator
      */
-    public static MatrixAccumulator asSumFunctionAccumulator(double neutral, 
-            MatrixFunction function) {
-
-        return new FunctionMatrixAccumulator(new SumMatrixAccumulator(neutral), 
-                                             function);
+    public static MatrixAccumulator asSumFunctionAccumulator(double neutral, MatrixFunction function) {
+        return new FunctionMatrixAccumulator(new SumMatrixAccumulator(neutral), function);
     }
 
     /**
-     * Creates a produce function accumulator, that calculates the produce of
-     * all elements of matrix after applying a <code>function</code> to
+     * Creates a product function accumulator, that calculates the product of
+     * all elements in the matrix after applying given {@code function} to
      * each of them.
-     * 
-     * @param neutral
-     * @param function
-     * @return
+     *
+     * @param neutral the neutral value
+     * @param function the matrix function
+     *
+     * @return a product function accumulator
      */
-    public static MatrixAccumulator asProductFunctionAccumulator(double neutral, 
-            MatrixFunction function) {
-
-        return new FunctionMatrixAccumulator(new ProductMatrixAccumulator(
-                                             neutral), function);
+    public static MatrixAccumulator asProductFunctionAccumulator(double neutral, MatrixFunction function) {
+        return new FunctionMatrixAccumulator(new ProductMatrixAccumulator(neutral), function);
     }
 }

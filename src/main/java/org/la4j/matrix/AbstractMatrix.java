@@ -62,17 +62,17 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public void assign(double value) {
-        update(Matrices.asConstantFunction(value));
+        update(Matrices.asConstFunction(value));
     }
 
     @Override
     public void assignRow(int i, double value) {
-        updateRow(i, Matrices.asConstantFunction(value));
+        updateRow(i, Matrices.asConstFunction(value));
     }
 
     @Override
     public void assignColumn(int j, double value) {
-        updateColumn(j, Matrices.asConstantFunction(value));
+        updateColumn(j, Matrices.asConstFunction(value));
     }
 
     @Override

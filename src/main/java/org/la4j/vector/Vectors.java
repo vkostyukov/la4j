@@ -502,9 +502,7 @@ public final class Vectors {
      *
      * @return a symbol separated stream source
      */
-    public static VectorSource asSymbolSeparatedSource(InputStream in, 
-            String separator) {
-
+    public static VectorSource asSymbolSeparatedSource(InputStream in, String separator) {
         return new StreamVectorSource(new SymbolSeparatedStream(in, separator));
     }
 
@@ -587,16 +585,13 @@ public final class Vectors {
      *
      * @returna a sum function accumulator
      */
-    public static VectorAccumulator asSumFunctionAccumulator(double neutral, 
-            VectorFunction function) {
-
-        return new FunctionVectorAccumulator(new SumVectorAccumulator(neutral), 
-                                             function);
+    public static VectorAccumulator asSumFunctionAccumulator(double neutral, VectorFunction function) {
+        return new FunctionVectorAccumulator(new SumVectorAccumulator(neutral), function);
     }
 
     /**
      * Creates a product function accumulator, that calculates the product of
-     * all elements in the matrix after applying given {@code function} to
+     * all elements in the vector after applying given {@code function} to
      * each of them.
      * 
      * @param neutral the neutral value
@@ -604,10 +599,7 @@ public final class Vectors {
      *
      * @return a product function accumulator
      */
-    public static VectorAccumulator asProductFunctionAccumulator(double neutral, 
-            VectorFunction function) {
-
-        return new FunctionVectorAccumulator(new ProductVectorAccumulator(neutral),
-                                             function);
+    public static VectorAccumulator asProductFunctionAccumulator(double neutral, VectorFunction function) {
+        return new FunctionVectorAccumulator(new ProductVectorAccumulator(neutral), function);
     }
 }
