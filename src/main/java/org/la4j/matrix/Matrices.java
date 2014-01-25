@@ -465,25 +465,17 @@ public final class Matrices {
     private static class MinMatrixAccumulator
             implements MatrixAccumulator {
 
-        private double neutral;
-        private double result;
-
-        public MinMatrixAccumulator(double neutral) {
-            this.neutral = neutral;
-            this.result = neutral;
-        }
+        private double result = Double.POSITIVE_INFINITY;
 
         @Override
         public void update(int i, int j, double value) {
-            if (value < result) {
-                result = value;
-            }
+            result = Math.min(result, value);
         }
 
         @Override
         public double accumulate() {
             double value = result;
-            result = neutral;
+            result = Double.POSITIVE_INFINITY;
             return value;
         }
     }
@@ -491,25 +483,17 @@ public final class Matrices {
     private static class MaxMatrixAccumulator
             implements MatrixAccumulator {
 
-        private double neutral;
-        private double result;
-
-        public MaxMatrixAccumulator(double neutral) {
-            this.neutral = neutral;
-            this.result = neutral;
-        }
+        private double result = Double.NEGATIVE_INFINITY;
 
         @Override
         public void update(int i, int j, double value) {
-            if (value > result) {
-                result = value;
-            }
+            result = Math.max(result, value);
         }
 
         @Override
         public double accumulate() {
             double value = result;
-            result = neutral;
+            result = Double.NEGATIVE_INFINITY;
             return value;
         }
     }
@@ -841,23 +825,21 @@ public final class Matrices {
     }
 
     /**
-     * Creates a min matrix accumulator that calculates the minimum.
+     * Makes a minimum matrix accumulator that accumulates the minimum of matrix elements.
      *
-     * @param neutral
-     * @return
+     * @return a minimum vector accumulator
      */
-    public static MatrixAccumulator asMinAccumulator(double neutral) {
-        return new MinMatrixAccumulator(neutral);
+    public static MatrixAccumulator mkMinAccumulator() {
+        return new MinMatrixAccumulator();
     }
 
     /**
-     * Creates a max matrix accumulator that calculates the maximum.
+     * Makes a maximum matrix accumulator that accumulates the maximum of matrix elements.
      *
-     * @param neutral
-     * @return
+     * @return a maximum vector accumulator
      */
-    public static MatrixAccumulator asMaxAccumulator(double neutral) {
-        return new MaxMatrixAccumulator(neutral);
+    public static MatrixAccumulator mkMaxAccumulator() {
+        return new MaxMatrixAccumulator();
     }
 
     /**

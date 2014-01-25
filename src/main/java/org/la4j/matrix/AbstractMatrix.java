@@ -834,32 +834,32 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public double max() {
-        return fold(Matrices.asMaxAccumulator(Double.NEGATIVE_INFINITY));
+        return fold(Matrices.mkMaxAccumulator());
     }
 
     @Override
     public double min() {
-        return fold(Matrices.asMinAccumulator(Double.POSITIVE_INFINITY));
+        return fold(Matrices.mkMinAccumulator());
     }
 
     @Override
     public double maxInRow(int i) {
-        return foldRow(i, Matrices.asMaxAccumulator(Double.NEGATIVE_INFINITY));
+        return foldRow(i, Matrices.mkMaxAccumulator());
     }
 
     @Override
     public double minInRow(int i) {
-        return foldRow(i, Matrices.asMinAccumulator(Double.POSITIVE_INFINITY));
+        return foldRow(i, Matrices.mkMinAccumulator());
     }
 
     @Override
     public double maxInColumn(int j) {
-        return foldColumn(j, Matrices.asMaxAccumulator(Double.NEGATIVE_INFINITY));
+        return foldColumn(j, Matrices.mkMaxAccumulator());
     }
 
     @Override
     public double minInColumn(int j) {
-        return foldColumn(j, Matrices.asMinAccumulator(Double.POSITIVE_INFINITY));
+        return foldColumn(j, Matrices.mkMinAccumulator());
     }
 
     @Override

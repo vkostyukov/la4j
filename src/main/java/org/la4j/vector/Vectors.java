@@ -506,8 +506,7 @@ public final class Vectors {
     }
 
     /**
-     * Makes a minimum vector accumulator that accumulates the minimum
-     * across the vector's elements.
+     * Makes a minimum vector accumulator that accumulates the minimum across vector elements.
      *
      * @return a minimum vector accumulator
      */
@@ -516,8 +515,7 @@ public final class Vectors {
     }
 
     /**
-     * Makes a maximum vector accumulator that accumulates the maximum
-     * across the vector's elements.
+     * Makes a maximum vector accumulator that accumulates the maximum across vector elements.
      *
      * @return a maximum vector accumulator
      */
