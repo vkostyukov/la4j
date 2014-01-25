@@ -105,7 +105,7 @@ Contributors
 See [CONTRIBUTORS.md](https://github.com/vkostyukov/la4j/blob/master/CONTRIBUTORS.md)
 
 ----
-by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2013
+by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2014
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/vkostyukov/la4j/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

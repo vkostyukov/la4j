@@ -562,7 +562,7 @@ public final class Vectors {
      *
      * @return a Manhattan norm accumulator
      */
-    private static VectorAccumulator mkManhattanNormAccumulator() {
+    public static VectorAccumulator mkManhattanNormAccumulator() {
         return new ManhattanNormAccumulator();
     }
 
@@ -572,7 +572,7 @@ public final class Vectors {
      *
      * @return an Infinity norm accumulator
      */
-    private static VectorAccumulator mkInfinityNormAccumulator() {
+    public static VectorAccumulator mkInfinityNormAccumulator() {
         return new InfinityNormAccumulator();
     }
 

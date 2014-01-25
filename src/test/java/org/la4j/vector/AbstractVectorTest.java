@@ -263,13 +263,34 @@ public abstract class AbstractVectorTest extends TestCase {
         assertEquals(b, a);
     }
 
-    public void testNorm_4() {
+    public void testEuclideanNorm_3() {
+        Vector a = factory().createVector(new double[] { 1.0, 2.0, 3.0 });
+        assertEquals(3.74165, a.fold(Vectors.mkEuclideanNormAccumulator()), 1e-5);
+    }
 
-        Vector a = factory().createVector(new double[] { 0.0, 0.0, 0.0, 4.0 });
-        Vector b = factory().createVector(new double[] { 0.0, 0.0, 0.0, 1.0 });
+    public void testEuclideanNorm_5() {
+        Vector a = factory().createVector(new double[] { 1.0, 0.0, 3.0, 0.0, -5.0 });
+        assertEquals(5.91607, a.fold(Vectors.mkEuclideanNormAccumulator()), 1e-5);
+    }
 
-        assertEquals(4.0, a.norm());
-        assertEquals(b, a.normalize());
+    public void testManhattanNorm_3() {
+        Vector a = factory().createVector(new double[] { 1.0, 2.0, 3.0 });
+        assertEquals(6.0, a.fold(Vectors.mkManhattanNormAccumulator()), 1e-5);
+    }
+
+    public void testManhattanNorm_5() {
+        Vector a = factory().createVector(new double[] { 1.0, 0.0, 3.0, 0.0, -5.0 });
+        assertEquals(9.0, a.fold(Vectors.mkManhattanNormAccumulator()), 1e-5);
+    }
+
+    public void testInfinityNorm_3() {
+        Vector a = factory().createVector(new double[] { 1.0, 2.0, 3.0 });
+        assertEquals(3.0, a.fold(Vectors.mkInfinityNormAccumulator()), 1e-5);
+    }
+
+    public void testInfinityNorm_5() {
+        Vector a = factory().createVector(new double[] { 1.0, 0.0, 3.0, 0.0, -5.0 });
+        assertEquals(5.0, a.fold(Vectors.mkInfinityNormAccumulator()), 1e-5);
     }
 
     public void testAdd_3() {
