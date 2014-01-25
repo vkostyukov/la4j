@@ -274,21 +274,19 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    @Deprecated
     public double norm() {
-        return norm(Vectors.EUCLIDEAN_NORM);
+        return fold(Vectors.mkEuclideanNormAccumulator());
     }
 
     @Override
-    public double norm(Vectors.NormFunction function) {
-        return function.compute(this);
-    }
-
-    @Override
+    @Deprecated
     public Vector normalize() {
         return normalize(factory);
     }
 
     @Override
+    @Deprecated
     public Vector normalize(Factory factory) {
         return divide(norm(), factory);
     }

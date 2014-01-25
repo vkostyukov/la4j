@@ -274,47 +274,54 @@ public final class Vectors {
         }
     }
 
-    public static interface NormFunction {
+    private static class EuclideanNormAccumulator implements VectorAccumulator {
 
-        double compute(Vector vector);
-    }
-
-    private static class EuclideanNormFunction implements NormFunction {
+        private double result = 0.0;
 
         @Override
-        public double compute(Vector vector) {
-            return Math.sqrt(vector.innerProduct(vector));
+        public void update(int i, double value) {
+            result += (value * value);
+        }
+
+        @Override
+        public double accumulate() {
+            double value = Math.sqrt(result);
+            result = 0.0;
+            return value;
         }
     }
 
-    private static class ManhattanNormFunction implements NormFunction {
+    private static class ManhattanNormAccumulator implements VectorAccumulator {
+
+        private double result = 0.0;
 
         @Override
-        public double compute(Vector vector) {
-            double result = 0.0;
+        public void update(int i, double value) {
+            result += Math.abs(value);
+        }
 
-            for (int i = 0; i < vector.length(); i++) {
-                result += Math.abs(vector.get(i));
-            }
-
-            return result;
+        @Override
+        public double accumulate() {
+            double value = result;
+            result = 0.0;
+            return value;
         }
     }
 
-    public static class InfinityNormFunction implements NormFunction {
+    private static class InfinityNormAccumulator implements VectorAccumulator {
+
+        private double result = Double.NEGATIVE_INFINITY;
 
         @Override
-        public double compute(Vector vector) {
-            double max = Math.abs(vector.get(0));
+        public void update(int i, double value) {
+            result = Math.max(result, Math.abs(value));
+        }
 
-            for (int i = 1; i < vector.length(); i++) {
-                double item = Math.abs(vector.get(i));
-                if (item > max) {
-                    max = item;
-                }
-            }
-
-            return max;
+        @Override
+        public double accumulate() {
+            double value = result;
+            result = Double.NEGATIVE_INFINITY;
+            return value;
         }
     }
 
@@ -426,21 +433,6 @@ public final class Vectors {
      * Inverts each element of vector.
      */
     public static final VectorFunction INV_FUNCTION = new InvVectorFunction();
-
-    /**
-     * Calculates the Euclidean norm of a vector.
-     */
-    public static final NormFunction EUCLIDEAN_NORM = new EuclideanNormFunction();
-
-    /**
-     * Calculates the Manhattan norm of a vector.
-     */
-    public static final NormFunction MANHATTAN_NORM = new ManhattanNormFunction();
-
-    /**
-     * Calculates the Maximum norm of a vector.
-     */
-    public static final NormFunction INFINITY_NORM = new InfinityNormFunction();
 
     /**
      * Creates a singleton 1-length vector from <code>value</code>.
@@ -558,6 +550,30 @@ public final class Vectors {
      */
     public static VectorAccumulator asMaxAccumulator(double neutral) {
         return new MaxVectorAccumulator(neutral);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static VectorAccumulator mkEuclideanNormAccumulator() {
+        return new EuclideanNormAccumulator();
+    }
+
+    /**
+     *
+     * @return
+     */
+    private static VectorAccumulator mkManhattanNormAccumulator() {
+        return new ManhattanNormAccumulator();
+    }
+
+    /**
+     *
+     * @return
+     */
+    private static VectorAccumulator mkInfinityNormAccumulator() {
+        return new InfinityNormAccumulator();
     }
 
     /**
