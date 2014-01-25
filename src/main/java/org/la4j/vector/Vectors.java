@@ -85,6 +85,20 @@ public final class Vectors {
         }
     }
 
+    private static class ConstVectorFunction implements VectorFunction {
+
+        private double arg;
+
+        public ConstVectorFunction(double arg) {
+            this.arg = arg;
+        }
+
+        @Override
+        public double evaluate(int i, double value) {
+            return arg;
+        }
+    }
+
     private static class PlusFunction implements VectorFunction {
 
         private double arg;
@@ -307,6 +321,17 @@ public final class Vectors {
             result = Double.NEGATIVE_INFINITY;
             return value;
         }
+    }
+
+    /**
+     * Creates a const function that evaluates it's argument to given {@code value}.
+     *
+     * @param value a const value
+     *
+     * @return a closure object that does {@code _}
+     */
+    public static VectorFunction asConstFunction(double value) {
+        return new ConstVectorFunction(value);
     }
 
     /**

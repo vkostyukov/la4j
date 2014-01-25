@@ -499,7 +499,7 @@ public final class Matrices {
     }
 
     /**
-     * Creates a constant function with specified <code>value</code>. The function
+     * Creates a constant function of given {@code value}. The function
      * evaluates like following:
      *
      * <p>

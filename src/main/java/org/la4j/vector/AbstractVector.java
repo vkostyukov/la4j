@@ -59,9 +59,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public void assign(double value) {
-        for (int i = 0; i < length; i++) {
-            set(i, value);
-        }
+        update(Vectors.asConstFunction(value));
     }
 
     @Override
