@@ -226,68 +226,52 @@ public final class Vectors {
 
     private static class MinVectorAccumulator implements VectorAccumulator {
 
-        private double result;
-        private double neutral;
-
-        public MinVectorAccumulator(double neutral) {
-            this.neutral = neutral;
-            this.result = neutral;
-        }
+        private double result = Double.POSITIVE_INFINITY;
 
         @Override
         public void update(int i, double value) {
-            if (value < result) {
-                result = value;
-            }
+            result = Math.min(result, value);
         }
 
         @Override
         public double accumulate() {
             double value = result;
-            result = neutral;
+            result = Double.POSITIVE_INFINITY;
             return value;
         }
     }
 
     private static class MaxVectorAccumulator implements VectorAccumulator {
 
-        private double result;
-        private double neutral;
-
-        public MaxVectorAccumulator(double neutral) {
-            this.neutral = neutral;
-            this.result = neutral;
-        }
+        private double result = Double.NEGATIVE_INFINITY;
 
         @Override
         public void update(int i, double value) {
-            if (value > result) {
-                result = value;
-            }
+            result = Math.max(result, value);
         }
 
         @Override
         public double accumulate() {
             double value = result;
-            result = neutral;
+            result = Double.NEGATIVE_INFINITY;
             return value;
         }
     }
 
     private static class EuclideanNormAccumulator implements VectorAccumulator {
 
-        private double result = 0.0;
+        private BigDecimal result = new BigDecimal(0.0);
 
         @Override
         public void update(int i, double value) {
-            result += (value * value);
+            result = result.add(new BigDecimal(value * value));
         }
 
         @Override
         public double accumulate() {
-            double value = Math.sqrt(result);
-            result = 0.0;
-            return value;
+            double value = result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
+            result = new BigDecimal(0.0);
+            return Math.sqrt(value);
         }
     }
 
@@ -533,23 +517,24 @@ public final class Vectors {
     }
 
     /**
-     * Creates a min vector accumulator that calculates the minimum.
+     * Makes a minimum vector accumulator that accumulates the minimum
+     * across the vector's elements.
      *
-     * @param neutral
-     * @return
+     * @return a minimum vector accumulator
      */
-    public static VectorAccumulator asMinAccumulator(double neutral) {
-        return new MinVectorAccumulator(neutral);
+    public static VectorAccumulator mkMinAccumulator() {
+        return new MinVectorAccumulator();
     }
 
     /**
-     * Creates a max vector accumulator that calculates the maximum.
+     * Makes a maximum vector accumulator that accumulates the maximum
+     * across the vector's elements.
      *
-     * @param neutral
+     * @return a maximum vector accumulator
      * @return
      */
-    public static VectorAccumulator asMaxAccumulator(double neutral) {
-        return new MaxVectorAccumulator(neutral);
+    public static VectorAccumulator mkMaxAccumulator() {
+        return new MaxVectorAccumulator();
     }
 
     /**

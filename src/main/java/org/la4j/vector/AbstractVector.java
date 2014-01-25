@@ -445,12 +445,12 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public double max() {
-        return fold(Vectors.asMaxAccumulator(Double.NEGATIVE_INFINITY));
+        return fold(Vectors.mkMaxAccumulator());
     }
 
     @Override
     public double min() {
-        return fold(Vectors.asMinAccumulator(Double.POSITIVE_INFINITY));
+        return fold(Vectors.mkMinAccumulator());
     }
 
     @Override
