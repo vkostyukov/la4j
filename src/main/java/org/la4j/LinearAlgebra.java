@@ -53,7 +53,7 @@ public final class LinearAlgebra {
     /**
      * The la4j version.
      */
-    public static final String VERSION = "0.5.0";
+    public static final String VERSION = "0.4.9";
 
     /**
      * The la4j name.
