@@ -430,13 +430,27 @@ public final class Vectors {
 
     /**
      * Creates a singleton 1-length vector of given {@code value}.
+     *
+     * This method is deprecated. Use the {@link org.la4j.vector.Vectors#asVector(double...)}
      * 
      * @param value the vector's singleton value
      *
      * @return a singleton vector
      */
+    @Deprecated
     public static Vector asSingletonVector(double value) {
         return LinearAlgebra.DEFAULT_FACTORY.createVector(new double[]{value});
+    }
+
+    /**
+     * Creates a default vector from given vararg {@code values}.
+     *
+     * @param values of the vector
+     *
+     * @return a default vector
+     */
+    public static Vector asVector(double... values) {
+        return LinearAlgebra.DEFAULT_FACTORY.createVector(values);
     }
 
     /**

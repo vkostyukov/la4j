@@ -700,8 +700,76 @@ public final class Matrices {
      *
      * @return a singleton matrix
      */
+    @Deprecated
     public static Matrix asSingletonMatrix(double value) {
         return LinearAlgebra.DEFAULT_FACTORY.createMatrix(new double[][]{{ value }});
+    }
+
+    /**
+     * Creates a default 1x1 matrix from given {@code value}.
+     *
+     * @param value of the matrix
+     *
+     * @return a default 1x1 matrix
+     */
+    public static Matrix asMatrix1x1(double value) {
+        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(new double[][]{{ value }});
+    }
+
+    /**
+     * Creates a default 2x2 matrix from given {@code value}.
+     *
+     * @param values of the matrix
+     *
+     * @return a default 2x2 matrix
+     */
+    public static Matrix asMatrix2x2(double... values) {
+        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(unflatten(values, 2));
+    }
+
+    /**
+     * Creates a default 3x3 matrix from given {@code value}.
+     *
+     * @param values of the matrix
+     *
+     * @return a default 3x3 matrix
+     */
+    public static Matrix asMatrix3x3(double... values) {
+
+        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(unflatten(values, 3));
+    }
+
+    /**
+     * Creates a default 4x4 matrix from given {@code value}.
+     *
+     * @param values of the matrix
+     *
+     * @return a default 4x4 matrix
+     */
+    public static Matrix asMatrix4x4(double... values) {
+        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(unflatten(values, 4));
+    }
+
+    /**
+     * TODO: It might be a good idea to put internal routines into a special utility class.
+     *
+     * An internal routine that un-flats given 1D {@code array} to square 2D array with size {@code n}.
+     *
+     * @param array the 1D array
+     * @param n the size of square 2D array
+     *
+     * @return the square 2D array
+     */
+    private static double[][] unflatten(double array[], int n) {
+        double result[][] = new double[n][n];
+
+        int m = Math.min(array.length, n * n);
+
+        for (int i = 0; i < m; i++) {
+            result[i / n][i % n] = array[i];
+        }
+
+        return result;
     }
 
     /**
