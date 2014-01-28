@@ -272,24 +272,6 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    @Deprecated
-    public double norm() {
-        return fold(Vectors.mkEuclideanNormAccumulator());
-    }
-
-    @Override
-    @Deprecated
-    public Vector normalize() {
-        return normalize(factory);
-    }
-
-    @Override
-    @Deprecated
-    public Vector normalize(Factory factory) {
-        return divide(norm(), factory);
-    }
-
-    @Override
     public Vector blank() {
         return blank(factory);
     }

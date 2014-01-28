@@ -263,49 +263,6 @@ public interface Vector extends Externalizable {
     Matrix outerProduct(Vector vector, Factory factory);
 
     /**
-     * Calculates the Euclidean norm of this vector.
-     *
-     * This method is deprecated. Use the following approach instead:
-     *
-     * <code>
-     *     Vector a = ...;
-     *     double norm0   = a.fold(Vectors.mkEuclideanNormAccumulator());
-     *     double norm1   = a.fold(Vectors.mkManhattanNormAccumulator());
-     *     double normInf = a.fold(Vectors.mkInfinityNormAccumulator());
-     * <code/>
-     *
-     * @return the Euclidean norm of this vector
-     */
-    @Deprecated
-    double norm();
-
-    /**
-     * Normalizes this vector.
-     *
-     * This method is deprecated. Use the following approach instead:
-     *
-     * <code>
-     *     Vector a = ...;
-     *     double norm1 = a.fold(Vectors.mkManhattanNormAccumulator());
-     *     Vector b = a.divide(norm1);
-     * <code/>
-     *
-     * @return the normalized vector
-     */
-    @Deprecated
-    Vector normalize();
-
-    /**
-     * Normalizes this vector.
-     *
-     * @param factory the factory of result vector
-     *
-     * @return the normalized vector
-     */
-    @Deprecated
-    Vector normalize(Factory factory);
-
-    /**
      * Swaps the specified elements of this vector.
      * 
      * @param i element's index

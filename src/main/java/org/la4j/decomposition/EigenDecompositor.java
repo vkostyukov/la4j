@@ -26,6 +26,7 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
+import org.la4j.vector.functor.VectorAccumulator;
 
 /**
  * This class represents Eigen decomposition of matrices. More details
@@ -89,8 +90,10 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
         Vector r = generateR(d, factory);
         Matrix u = factory.createIdentityMatrix(matrix.rows());
 
+        VectorAccumulator normAccumulator = Vectors.mkEuclideanNormAccumulator();
+
         double n = Matrices.EPS;
-        double nn = r.norm();
+        double nn = r.fold(normAccumulator);
 
         int kk = 0, ll = 0;
 
@@ -111,7 +114,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
             r.set(l, generateRi(d, l));
 
             n = nn;
-            nn = r.norm();
+            nn = r.fold(normAccumulator);
         }
 
         return new Matrix[] { v, d };
