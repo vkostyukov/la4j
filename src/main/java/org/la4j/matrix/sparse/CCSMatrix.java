@@ -363,11 +363,26 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         rowIndices = new int[alignedSize];
         columnPointers = new int[columns + 1];
 
+        int lastJ = 0;
+        int lastK = 0;
         for (int k = 0; k < cardinality; k++) {
             rowIndices[k] = in.readInt();
             int j = in.readInt();
             values[k] = in.readDouble();
+            for(int jj = lastJ+1; jj <= j; jj++)
+            {
+               columnPointers[jj] = lastK;
+            }
             columnPointers[j + 1] = k + 1;
+            lastJ = j+1;
+            lastK = k+1;
+        }
+        if (columnPointers.length > lastJ)
+        {
+            for (int k = lastJ+1; k < columnPointers.length; k++)
+            {
+                columnPointers[k] = lastK;
+            }
         }
     }
 

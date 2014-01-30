@@ -1541,7 +1541,7 @@ public abstract class AbstractMatrixTest extends TestCase {
     public void testSerialization() throws IOException, ClassNotFoundException {
 
         Matrix a = factory().createMatrix(new double[][] {
-                { 0.0, 0.0, 3.0 },
+                { 1.0, 0.0, 3.0 },
                 { 0.0, 0.0, 6.0 },
                 { 0.0, 0.0, 9.0 }
         });
