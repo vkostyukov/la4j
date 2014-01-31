@@ -363,26 +363,15 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         rowIndices = new int[alignedSize];
         columnPointers = new int[columns + 1];
 
-        int lastJ = 0;
-        int lastK = 0;
-        for (int k = 0; k < cardinality; k++) {
-            rowIndices[k] = in.readInt();
-            int j = in.readInt();
-            values[k] = in.readDouble();
-            for(int jj = lastJ+1; jj <= j; jj++)
-            {
-               columnPointers[jj] = lastK;
-            }
-            columnPointers[j + 1] = k + 1;
-            lastJ = j+1;
-            lastK = k+1;
+        // read pairs (value, column index)
+        for (int i = 0; i < cardinality; i++) {
+            values[i] = in.readDouble();
+            rowIndices[i] = in.readInt();
         }
-        if (columnPointers.length > lastJ)
-        {
-            for (int k = lastJ+1; k < columnPointers.length; k++)
-            {
-                columnPointers[k] = lastK;
-            }
+
+        // read row pointers
+        for (int i = 0; i < rows + 1; i++) {
+            columnPointers[i] = in.readInt();
         }
     }
 
@@ -393,16 +382,15 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         out.writeInt(columns);
         out.writeInt(cardinality);
 
-        int k = 0, j = 0;
-        while (k < cardinality) {
-            for (int i = columnPointers[j]; i < columnPointers[j + 1]; 
-                 i++, k++) {
+        // write pairs (value, row index)
+        for (int i = 0; i < cardinality; i++) {
+            out.writeDouble(values[i]);
+            out.writeInt(rowIndices[i]);
+        }
 
-                out.writeInt(rowIndices[i]);
-                out.writeInt(j);
-                out.writeDouble(values[i]);
-            }
-            j++;
+        // write column pointers
+        for (int i = 0; i < columns + 1; i++) {
+            out.writeInt(columnPointers[i]);
         }
     }
 

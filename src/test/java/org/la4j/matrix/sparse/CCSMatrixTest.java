@@ -40,27 +40,4 @@ public class CCSMatrixTest extends SparseMatrixTest {
     public static Test suite() {
         return new TestSuite(CCSMatrixTest.class);
     }
-
-    /*
-      Specifically tests the behaviour when a matrix is declared as larger than its initial population. Ensures
-      columns between and beyond those originally populuated are correctly set on re-read.
-     */
-    public void testExportImport() throws IOException, ClassNotFoundException
-    {
-        final String filename = "CCSMatrixTextExport.out";
-        Matrix toExport = factory().createMatrix(10,10);
-        toExport.set(0, 0, 1.0);
-        toExport.set(2, 3, 2.0);
-        FileOutputStream fos = new FileOutputStream(filename);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        toExport.writeExternal(oos);
-        oos.close();
-        fos.close();
-
-        Matrix imported = factory().createMatrix();
-        FileInputStream fis = new FileInputStream(filename);
-        imported.readExternal(new ObjectInputStream(fis));
-        fis.close();
-        assertEquals(imported,toExport);
-    }
 }
