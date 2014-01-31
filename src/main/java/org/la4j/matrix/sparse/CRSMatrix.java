@@ -365,14 +365,15 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         out.writeInt(columns);
         out.writeInt(cardinality);
 
-        int k = 0, i = 0;
-        while (k < cardinality) {
-            for (int j = rowPointers[i]; j < rowPointers[i + 1]; j++, k++) {
-                out.writeInt(i);
-                out.writeInt(columnIndices[j]);
-                out.writeDouble(values[j]);
-            }
-            i++;
+        // write pairs (value, column index)
+        for (int i = 0; i < cardinality; i++) {
+            out.writeDouble(values[i]);
+            out.writeInt(columnIndices[i]);
+        }
+
+        // write row pointers
+        for (int i = 0; i < rows + 1; i++) {
+            out.writeInt(rowPointers[i]);
         }
     }
 
@@ -390,11 +391,15 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         columnIndices = new int[alignedSize];
         rowPointers = new int[rows + 1];
 
-        for (int k = 0; k < cardinality; k++) {
-            int i = in.readInt();
-            columnIndices[k] = in.readInt();
-            values[k] = in.readDouble();
-            rowPointers[i + 1] = k + 1;
+        // read pairs (value, column index)
+        for (int i = 0; i < cardinality; i++) {
+            values[i] = in.readDouble();
+            columnIndices[i] = in.readInt();
+        }
+
+        // read row pointers
+        for (int i = 0; i < rows + 1; i++) {
+            rowPointers[i] = in.readInt();
         }
     }
 
