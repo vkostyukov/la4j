@@ -26,9 +26,6 @@ import junit.framework.TestSuite;
 
 import org.la4j.factory.CCSFactory;
 import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrix;
-
-import java.io.*;
 
 public class CCSMatrixTest extends SparseMatrixTest {
 
