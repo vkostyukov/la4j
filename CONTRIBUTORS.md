@@ -20,3 +20,4 @@ made by the authors:
 - Clement Skau
 - Miron Aseev
 - Todd Brunhoff
+- Catherine da Graca
