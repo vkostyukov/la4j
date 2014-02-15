@@ -537,6 +537,15 @@ public interface Vector extends Externalizable {
     double fold(VectorAccumulator accumulator);
 
     /**
+     * Folds non-zero elements of this vector with given {@code accumulator}.
+     *
+     * @param accumulator the vector accumulator
+     *
+     * @return the accumulated value
+     */
+    double foldNonZero(VectorAccumulator accumulator);
+
+    /**
      * Checks whether this vector compiles with given {@code predicate} or not.
      * 
      * @param predicate the vector predicate

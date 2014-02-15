@@ -487,6 +487,12 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public double foldNonZero(VectorAccumulator accumulator) {
+        eachNonZero(Vectors.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
+    }
+
+    @Override
     public boolean is(VectorPredicate predicate) {
 
         boolean result = true;

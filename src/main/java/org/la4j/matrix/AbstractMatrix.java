@@ -833,6 +833,48 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public double foldNonZero(MatrixAccumulator accumulator) {
+        eachNonZero(Matrices.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
+    }
+
+    @Override
+    public double foldNonZeroInRow(int i, MatrixAccumulator accumulator) {
+        eachNonZeroInRow(i, Matrices.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
+    }
+
+    @Override
+    public double foldNonZeroInColumn(int j, MatrixAccumulator accumulator) {
+        eachNonZeroInColumn(j, Matrices.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
+    }
+
+    @Override
+    public Vector foldNonZeroInColumns(MatrixAccumulator accumulator) {
+
+        Vector result = factory.createVector(columns);
+
+        for (int i = 0; i < columns; i++) {
+            result.set(i, foldNonZeroInColumn(i, accumulator));
+        }
+
+        return result;
+    }
+
+    @Override
+    public Vector foldNonZeroInRows(MatrixAccumulator accumulator) {
+
+        Vector result = factory.createVector(rows);
+
+        for (int i = 0; i < rows; i++) {
+            result.set(i, foldNonZeroInRow(i, accumulator));
+        }
+
+        return result;
+    }
+
+    @Override
     public double max() {
         return fold(Matrices.mkMaxAccumulator());
     }

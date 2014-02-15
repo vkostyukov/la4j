@@ -32,6 +32,7 @@ import org.la4j.io.SymbolSeparatedStream;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
+import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.source.ArrayVectorSource;
 import org.la4j.vector.source.LoopbackVectorSource;
 import org.la4j.vector.source.RandomVectorSource;
@@ -320,6 +321,20 @@ public final class Vectors {
             double value = result;
             result = Double.NEGATIVE_INFINITY;
             return value;
+        }
+    }
+
+    private static class AccumulatorVectorProcedure implements VectorProcedure {
+
+        private VectorAccumulator accumulator;
+
+        public AccumulatorVectorProcedure(VectorAccumulator accumulator) {
+            this.accumulator = accumulator;
+        }
+
+        @Override
+        public void apply(int i, double value) {
+            accumulator.update(i, value);
         }
     }
 
@@ -615,5 +630,18 @@ public final class Vectors {
      */
     public static VectorAccumulator asProductFunctionAccumulator(double neutral, VectorFunction function) {
         return new FunctionVectorAccumulator(new ProductVectorAccumulator(neutral), function);
+    }
+
+    /**
+     * Creates an accumulator procedure that adapts a vector accumulator for procedure
+     * interface. This is useful for reusing a single accumulator for multiple fold operations
+     * in multiple vectors.
+     *
+     * @param accumulator the vector accumulator
+     *
+     * @return an accumulator procedure
+     */
+    public static VectorProcedure asAccumulatorProcedure(VectorAccumulator accumulator) {
+        return new AccumulatorVectorProcedure(accumulator);
     }
 }

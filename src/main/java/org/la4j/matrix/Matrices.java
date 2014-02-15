@@ -32,6 +32,7 @@ import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
+import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.source.Array1DMatrixSource;
 import org.la4j.matrix.source.Array2DMatrixSource;
 import org.la4j.matrix.source.IdentityMatrixSource;
@@ -498,6 +499,20 @@ public final class Matrices {
         }
     }
 
+    private static class AccumulatorMatrixProcedure implements MatrixProcedure {
+
+        private MatrixAccumulator accumulator;
+
+        public AccumulatorMatrixProcedure(MatrixAccumulator accumulator) {
+            this.accumulator = accumulator;
+        }
+
+        @Override
+        public void apply(int i, int j, double value) {
+            accumulator.update(i, j, value);
+        }
+    }
+
     /**
      * Creates a const function that evaluates it's argument to given {@code value}.
      *
@@ -940,5 +955,18 @@ public final class Matrices {
      */
     public static MatrixAccumulator asProductFunctionAccumulator(double neutral, MatrixFunction function) {
         return new FunctionMatrixAccumulator(new ProductMatrixAccumulator(neutral), function);
+    }
+
+    /**
+     * Creates an accumulator procedure that adapts a matrix accumulator for procedure
+     * interface. This is useful for reusing a single accumulator for multiple fold operations
+     * in multiple matrices.
+     *
+     * @param accumulator the matrix accumulator
+     *
+     * @return an accumulator procedure
+     */
+    public static MatrixProcedure asAccumulatorProcedure(MatrixAccumulator accumulator) {
+        return new AccumulatorMatrixProcedure(accumulator);
     }
 }
