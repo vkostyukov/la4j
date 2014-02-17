@@ -27,7 +27,7 @@ package org.la4j.matrix.functor;
 public interface MatrixAccumulator {
 
     /**
-     * Updates the accumulated value with matrix element.
+     * Updates a value that was accumulated so far with new matrix element.
      * 
      * @param i the row index
      * @param j the column index
@@ -36,9 +36,8 @@ public interface MatrixAccumulator {
     void update(int i, int j, double value);
 
     /**
-     * Accumulates the value and resets this accumulator, so
-     * it can be reused.
-     * 
+     * Return the accumulated value and resets this accumulator.
+     *
      * @return an accumulated value
      */
     double accumulate();

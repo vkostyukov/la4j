@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -21,18 +21,24 @@
 
 package org.la4j.vector.functor;
 
+/**
+ * A vector accumulator that accumulates vector's elements.
+ */
 public interface VectorAccumulator {
 
     /**
+     * Updates a value that was accumulated so far with new
+     * vector's element.
      * 
-     * @param i
-     * @param value
+     * @param i the element's index
+     * @param value the element's value
      */
     void update(int i, double value);
 
     /**
+     * Returns the accumulated value and resets this accumulator.
      * 
-     * @return
+     * @return the accumulated value
      */
     double accumulate();
 }

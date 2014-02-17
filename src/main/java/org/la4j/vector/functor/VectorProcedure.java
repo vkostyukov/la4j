@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -21,12 +21,16 @@
 
 package org.la4j.vector.functor;
 
+/**
+ * A vector procedure that acts on vector's elements.
+ */
 public interface VectorProcedure {
 
     /**
+     * Acts on vector's element.
      * 
-     * @param i
-     * @param value
+     * @param i the element's index
+     * @param value the element's value
      */
     void apply(int i, double value);
 }

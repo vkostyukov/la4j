@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -21,13 +21,18 @@
 
 package org.la4j.vector.functor;
 
+/**
+ * A vector function that takes a vector's element and produces a new value.
+ */
 public interface VectorFunction {
 
     /**
+     * Evaluates vector's element.
      * 
-     * @param i
-     * @param value
-     * @return
+     * @param i the element's index
+     * @param value the element's value
+     *
+     * @return a new element's value
      */
     double evaluate(int i, double value);
 }

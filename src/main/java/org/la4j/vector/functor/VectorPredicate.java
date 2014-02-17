@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -21,13 +21,18 @@
 
 package org.la4j.vector.functor;
 
+/**
+ * A vector predicate that tests vector's elements.
+ */
 public interface VectorPredicate {
 
     /**
+     * Tests vector's element.
      * 
-     * @param i
-     * @param value
-     * @return
+     * @param i the element's index
+     * @param value the element's value
+     *
+     * @return whether the element meets this predicate
      */
     boolean test(int i, double value);
 }
