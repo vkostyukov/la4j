@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -21,13 +21,18 @@
 
 package org.la4j.matrix.functor;
 
+/**
+ * A matrix procedure that performs an action of every matrix element.
+ *
+ */
 public interface MatrixProcedure {
 
     /**
+     * Acts on a matrix element.
      * 
-     * @param i
-     * @param j
-     * @param value
+     * @param i the row index
+     * @param j the columns
+     * @param value the element's value
      */
     void apply(int i, int j, double value);
 }

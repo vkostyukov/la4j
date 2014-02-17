@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -21,24 +21,29 @@
 
 package org.la4j.matrix.functor;
 
+/**
+ * A matrix predicate that tests each matrix element.
+ */
 public interface MatrixPredicate {
 
     /**
-     * Tests rows and columns.
+     * Tests number of rows and columns in the matrix.
      * 
-     * @param rows
-     * @param columns
-     * @return
+     * @param rows the number of rows
+     * @param columns the number of columns
+     *
+     * @return whether the shape meets this predicate
      */
     boolean test(int rows, int columns);
 
     /**
-     * Test each element.
+     * Tests matrix element.
      * 
-     * @param i
-     * @param j
-     * @param value
-     * @return
+     * @param i the row index
+     * @param j the column index
+     * @param value the element's value
+     *
+     * @return whether the element meets this predicate
      */
     boolean test(int i, int j, double value); 
 }

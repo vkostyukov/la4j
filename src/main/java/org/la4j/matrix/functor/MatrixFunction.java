@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -21,14 +21,20 @@
 
 package org.la4j.matrix.functor;
 
+/**
+ * A matrix function that takes an element with its indices and produces
+ * a new value.
+ */
 public interface MatrixFunction {
 
     /**
+     * Evaluates a specified element.
      * 
-     * @param i
-     * @param j
-     * @param value
-     * @return
+     * @param i the row index
+     * @param j the column index
+     * @param value the element's value
+     *
+     * @return a new element's value
      */
     double evaluate(int i, int j, double value);
 }

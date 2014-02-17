@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -23,7 +23,18 @@ package org.la4j.matrix.functor;
 
 import org.la4j.matrix.Matrix;
 
+/**
+ * An advanced matrix predicate that test the whole matrix rather than its
+ * elements.
+ */
 public interface AdvancedMatrixPredicate {
 
+    /**
+     * Tests given {@code matrix}.
+     *
+     * @param matrix the source matrix
+     *
+     * @return whether the matrix meets this predicate
+     */
     boolean test(Matrix matrix);
 }
