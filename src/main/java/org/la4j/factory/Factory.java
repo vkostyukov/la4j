@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -32,107 +32,99 @@ public interface Factory extends Serializable {
 
     /**
      * Creates an empty matrix.
-     * 
-     * <p>
-     * See <a href="http://mathworld.wolfram.com/Matrix.html">
-     * http://mathworld.wolfram.com/Matrix.html</a> for more details.
-     * </p>
-     * 
-     * @return empty matrix
+     *
+     * @return an empty matrix
      */
     Matrix createMatrix();
 
     /**
-     * Creates a matrix with specified size.
+     * Creates a matrix of specified shape.
      * 
-     * <p>
-     * See <a href="http://mathworld.wolfram.com/Matrix.html">
-     * http://mathworld.wolfram.com/Matrix.html</a> for more details.
-     * </p>
-     * @param rows
-     * @param columns
-     * @return
+     * @param rows the number of matrix rows
+     * @param columns the number of matrix columns
+     *
+     * @return a new matrix of given shape
      */
     Matrix createMatrix(int rows, int columns);
 
     /**
-     * Creates a matrix from array.
+     * Creates a matrix from given {@code array}.
      * 
-     * @param array
-     * @return
+     * @param array the source 2D array
+     *
+     * @return a new matrix of given array
      */
     Matrix createMatrix(double array[][]);
 
     /**
-     * Creates a matrix from another matrix.
+     * Creates a matrix from another {@code matrix}.
      * 
-     * @param matrix
-     * @return
+     * @param matrix the source matrix
+     *
+     * @return a new matrix
      */
     Matrix createMatrix(Matrix matrix);
 
     /**
-     * Creates a matrix from matrix proxy.
+     * Creates a matrix from given matrix {@code source}.
      * 
-     * @param source
-     * @return
+     * @param source the matrix source
+     *
+     * @return a new matrix
      */
     Matrix createMatrix(MatrixSource source);
 
     /**
-     * Creates the constant matrix 
+     * Creates a constant matrix of given shape with {@code value} stored in
+     * each matrix cell.
      * 
-     * @param rows
-     * @param columns
-     * @return constant matrix
+     * @param rows the number of matrix rows
+     * @param columns the number of matrix columns
+     *
+     * @return a constant matrix
      */
     Matrix createConstantMatrix(int rows, int columns, double value);
 
     /**
-     * Creates random matrix.
+     * Creates a random matrix of given shape.
      * 
-     * @param rows
-     * @param columns
-     * @return
+     * @param rows the number of matrix rows
+     * @param columns the number of matrix columns
+     *
+     * @return a random matrix
      */
     Matrix createRandomMatrix(int rows, int columns);
 
     /**
-     * Creates random symmetric matrix.
+     * Creates a square random symmetric matrix of given {@code size}.
      * 
-     * @param size
-     * @return
+     * @param size the number of matrix rows/columns
+     *
+     * @return a square random symmetric matrix
      */
     Matrix createRandomSymmetricMatrix(int size);
 
     /**
-     * Creates square matrix with specified size.
+     * Creates a square matrix of given {@code size}.
      * 
-     * <p>
-     * See <a href="http://mathworld.wolfram.com/SquareMatrix.html">
-     * http://mathworld.wolfram.com/SquareMatrix.html</a> for more details.
-     * </p>
-     * 
-     * @param size
-     * @return
+     * @param size the number of matrix rows/columns
+     *
+     * @return a square matrix
      */
     Matrix createSquareMatrix(int size);
 
     /**
-     * Creates identity matrix.
-     * 
-     * <p>
-     * See <a href="http://mathworld.wolfram.com/IdentityMatrix.html">
-     * http://mathworld.wolfram.com/IdentityMatrix.html</a> for more details.
-     * </p>
-     * 
-     * @param size
-     * @return
+     * Creates an identity matrix of given {@code size}. An identity matrix
+     * contains {@code 1.0} at its main diagonal.
+     *
+     * @param size the number of matrix rows/columns
+     *
+     * @return an identity matrix
      */
     Matrix createIdentityMatrix(int size);
 
     /**
-     * Creates matrix from given blocks.
+     * Creates a matrix from given blocks.
      * Throws IllegalArgumentException if sizes of blocks are incompatible.
      *
      * <p>
@@ -140,11 +132,12 @@ public interface Factory extends Serializable {
      * http://mathworld.wolfram.com/BlockMatrix.html</a> for more details.
      * </p>
      *
-     * @param a
-     * @param b
-     * @param c
-     * @param d
-     * @return Matrix created from blocks a, b, c, d.
+     * @param a the first block
+     * @param b the second block
+     * @param c the third block
+     * @param d the forth block
+     *
+     * @return a block matrix
      */
     Matrix createBlockMatrix(Matrix a, Matrix b, Matrix c, Matrix d);
 
@@ -160,57 +153,63 @@ public interface Factory extends Serializable {
     /**
      * Creates an empty vector.
      * 
-     * See <a href="http://mathworld.wolfram.com/Vector.html">
-     * http://mathworld.wolfram.com/Vector.html</a> for more details.
-     * </p>
-     * 
      * @return empty vector
      */
     Vector createVector();
 
     /**
-     * Creates vector with specified length.
+     * Creates a vector of given {@code length}.
      * 
-     * @param length
-     * @return
+     * @param length the vector's length
+     *
+     * @return a new vector
      */
     Vector createVector(int length);
 
     /**
-     * Creates vector from array.
+     * Creates a vector from given {@code array}.
      * 
-     * @param array
-     * @return
+     * @param array the source 1D array
+     *
+     * @return a new vector
      */
     Vector createVector(double array[]);
 
     /**
+     * Creates a vector from another {@code vector}.
      * 
-     * @param vector
-     * @return
+     * @param vector the source vector
+     *
+     * @return a new vector
      */
     Vector createVector(Vector vector);
 
     /**
+     * Creates a vector of given {@code source}.
      * 
-     * @param source
-     * @return
+     * @param source the vector source
+     *
+     * @return a new vector
      */
     Vector createVector(VectorSource source);
 
     /**
-     * Creates the constant vector.
+     * Creates a constant vector of given {@code length} and constant
+     * {@code value}.
      * 
-     * @param length
-     * @return constant vector
+     * @param length the vector's length
+     * @param value the constant value
+     *
+     * @return a constant vector
      */
     Vector createConstantVector(int length, double value);
 
     /**
-     * Creates random vector.
+     * Creates a random vector of given {@code length}.
      * 
-     * @param length
-     * @return
+     * @param length the vector's length
+     *
+     * @return a random vector
      */
     Vector createRandomVector(int length);
 }
