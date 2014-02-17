@@ -51,27 +51,27 @@ import org.la4j.matrix.Matrix;
 public final class LinearAlgebra {
 
     /**
-     * The la4j version.
+     * The library version.
      */
     public static final String VERSION = "0.5.0";
 
     /**
-     * The la4j name.
+     * The library name.
      */
     public static final String NAME = "la4j";
 
     /**
-     * The la4j date.
+     * The library release date.
      */
     public static final String DATE = "March 2014";
 
     /**
-     * The la4j full name.
+     * The library full name.
      */
     public static final String FULL_NAME = NAME + "-" + VERSION + " (" + DATE + ")";
 
     /**
-     * The machine epsilon, that is calculated at runtime.
+     * The machine epsilon, which is calculated at runtime.
      */
     public static final double EPS;
 
@@ -333,12 +333,13 @@ public final class LinearAlgebra {
     public static final Factory SPARSE_FACTORY = CRS_FACTORY;
 
     /**
-     * The default matrix factory singleton instance. References the {@link LinearAlgebra#BASIC2D_FACTORY}.
+     * The default matrix factory singleton instance.
+     * References the {@link LinearAlgebra#BASIC2D_FACTORY}.
      */
     public static final Factory DEFAULT_FACTORY = BASIC2D_FACTORY;
 
     /**
-     * The array with all factories available.
+     * The array with all factories available. This is useful for testing.
      */
     public static final Factory FACTORIES[] = {
             BASIC1D_FACTORY, BASIC2D_FACTORY, CRS_FACTORY, CCS_FACTORY

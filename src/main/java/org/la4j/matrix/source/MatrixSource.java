@@ -23,7 +23,7 @@ package org.la4j.matrix.source;
 
 /**
  * A matrix source abstraction that is primary used as a constructor
- * parameter for matrices.
+ * parameter for matrices.gi
  */
 public interface MatrixSource {
 

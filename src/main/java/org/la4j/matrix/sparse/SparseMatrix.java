@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -26,15 +26,18 @@ import org.la4j.matrix.Matrix;
 public interface SparseMatrix extends Matrix {
 
     /**
-     * Returns the number of non-zero elements of this matrix.
+     * Returns the cardinality (the number of non-zero elements)
+     * of this sparse matrix.
      * 
-     * @return the number of non-zero elements of this matrix
+     * @return the cardinality of this matrix
      */
     int cardinality();
 
     /**
+     * Returns the density (non-zero elements divided by total elements)
+     * of this sparse matrix.
      * 
-     * @return
+     * @return the density of this matrix
      */
     double density();
 }

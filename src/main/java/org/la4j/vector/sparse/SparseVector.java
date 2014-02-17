@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -21,20 +21,23 @@
 
 package org.la4j.vector.sparse;
 
-import org.la4j.vector.*;
+import org.la4j.vector.Vector;
 
 public interface SparseVector extends Vector {
 
     /**
-     * Returns the number of non-zero elements of this vector.
-     * 
-     * @return the number of non-zero elements of this vector
+     * Returns the cardinality (the number of non-zero elements)
+     * of this sparse vector.
+     *
+     * @return the cardinality of this vector
      */
     int cardinality();
 
     /**
-     * 
-     * @return
+     * Returns the density (non-zero elements divided by total elements)
+     * of this sparse vector.
+     *
+     * @return the density of this vector
      */
     double density();
 }

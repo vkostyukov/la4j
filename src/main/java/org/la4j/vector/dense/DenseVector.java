@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -26,9 +26,9 @@ import org.la4j.vector.Vector;
 public interface DenseVector extends Vector {
 
     /**
-     * Converts this dense vector to double array.
+     * Converts this dense vector to a double array.
      * 
-     * @return array representation of this vector
+     * @return an array representation of this vector
      */
     double[] toArray();
 }
