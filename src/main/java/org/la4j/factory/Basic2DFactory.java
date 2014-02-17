@@ -149,4 +149,17 @@ public class Basic2DFactory extends BasicFactory implements Factory {
 
         return new Basic2DMatrix(blockMatrix);
     }
+
+    @Override
+    public Matrix createDiagonalMatrix(double[] diagonal) {
+
+        int size = diagonal.length;
+        double array[][] = new double[size][size];
+
+        for (int i = 0; i < size; i++) {
+            array[i][i] = diagonal[i];
+        }
+
+        return new Basic2DMatrix(array);
+    }
 }

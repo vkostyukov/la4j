@@ -157,20 +157,10 @@ public class CRSFactory extends CompressedFactory implements Factory {
     @Override
     public Matrix createIdentityMatrix(int size) {
 
-        double values[] = new double[size];
-        int columnIndices[] = new int[size];
-        int rowPointers[] = new int[size + 1];
+        double diagonal[] = new double[size];
+        Arrays.fill(diagonal, 1.0);
 
-        for (int i = 0; i < size; i++) {
-            values[i] = 1.0;
-            columnIndices[i] = i;
-            rowPointers[i] = i;
-        }
-
-        rowPointers[size] = size;
-
-        return new CRSMatrix(size, size, size, values, columnIndices,
-                             rowPointers);
+        return createDiagonalMatrix(diagonal);
     }
 
     @Override
@@ -218,5 +208,22 @@ public class CRSFactory extends CompressedFactory implements Factory {
         }
 
         return new CRSMatrix(rows, cols, k, valuesArray, colIndArray, rowPointers);
+    }
+
+    @Override
+    public Matrix createDiagonalMatrix(double[] diagonal) {
+
+        int size = diagonal.length;
+        int columnIndices[] = new int[size];
+        int rowPointers[] = new int[size + 1];
+
+        for (int i = 0; i < size; i++) {
+            columnIndices[i] = i;
+            rowPointers[i] = i;
+        }
+
+        rowPointers[size] = size;
+
+        return new CRSMatrix(size, size, size, diagonal, columnIndices, rowPointers);
     }
 }

@@ -149,6 +149,15 @@ public interface Factory extends Serializable {
     Matrix createBlockMatrix(Matrix a, Matrix b, Matrix c, Matrix d);
 
     /**
+     * Creates a diagonal matrix of given {@code diagonal}.
+     *
+     * @param diagonal the matrix diagonal
+     *
+     * @return a diagonal matrix
+     */
+    Matrix createDiagonalMatrix(double diagonal[]);
+
+    /**
      * Creates an empty vector.
      * 
      * See <a href="http://mathworld.wolfram.com/Vector.html">

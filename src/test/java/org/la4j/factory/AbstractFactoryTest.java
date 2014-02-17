@@ -144,7 +144,26 @@ public abstract class AbstractFactoryTest extends TestCase {
         }
     }
 
-    public void testVector() {
+    public void testCreateDiagonalMatrix_3x3() {
+
+        double diagonal[] = new double[] { 1.0, 2.0, 3.0 };
+        Matrix a = factory().createDiagonalMatrix(diagonal);
+
+        assertEquals(3, a.rows());
+        assertEquals(3, a.columns());
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (i == j) {
+                    assertEquals(diagonal[i], a.get(i, j));
+                } else {
+                    assertEquals(0.0, a.get(i, j));
+                }
+            }
+        }
+    }
+
+    public void testCreateVector() {
         Vector a = factory().createVector();
         Vector b = factory().createVector(5);
         Vector c = factory().createRandomVector(5);
@@ -155,6 +174,20 @@ public abstract class AbstractFactoryTest extends TestCase {
 
         for (int i = 0; i < b.length(); i++) {
             assertEquals(0.0, b.get(i));
+        }
+    }
+
+    public void testCreateConstantVector_3() {
+        Vector a = factory().createConstantVector(3, 3.14);
+        Vector b = factory().createConstantVector(1, 3.14);
+
+        assertEquals(3, a.length());
+        assertEquals(1, b.length());
+
+        assertEquals(b.get(0), 3.14);
+
+        for (int i = 0; i < 3; i++) {
+            assertEquals(3.14, a.get(i));
         }
     }
 

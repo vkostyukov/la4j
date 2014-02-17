@@ -143,4 +143,18 @@ public class Basic1DFactory extends BasicFactory implements Factory {
 
         return new Basic1DMatrix(rows, cols, blockMatrix);
     }
+
+    @Override
+    public Matrix createDiagonalMatrix(double[] diagonal) {
+
+        int size = diagonal.length;
+        double array[] = new double[size * size];
+
+        for (int i = 0; i < size; i++) {
+            array[i * size + i] = diagonal[i];
+        }
+
+        return new Basic1DMatrix(size, size, array);
+
+    }
 }
