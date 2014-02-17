@@ -4,7 +4,7 @@
   <groupId>org.la4j</groupId>
   <artifactId>la4j</artifactId>
   <packaging>jar</packaging>
-  <version>0.4.9</version>
+  <version>0.5.0</version>
   <name>la4j</name>
   <url>http://la4j.org</url>
   <description>A 100% Java sparse and dense matrix library.</description>

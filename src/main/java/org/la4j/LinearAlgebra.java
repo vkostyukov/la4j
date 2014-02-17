@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013, by Vladimir Kostyukov and Contributors.
+ * Copyright 2011-2014, by Vladimir Kostyukov and Contributors.
  * 
  * This file is part of la4j project (http://la4j.org)
  * 
@@ -53,7 +53,7 @@ public final class LinearAlgebra {
     /**
      * The la4j version.
      */
-    public static final String VERSION = "0.4.9";
+    public static final String VERSION = "0.5.0";
 
     /**
      * The la4j name.
@@ -63,7 +63,7 @@ public final class LinearAlgebra {
     /**
      * The la4j date.
      */
-    public static final String DATE = "Jan 2014";
+    public static final String DATE = "March 2014";
 
     /**
      * The la4j full name.
