@@ -33,7 +33,7 @@ Matrix a = new Basic2DMatrix(new double[][] {
 // We will use Gauss-Jordan method for inverting
 MatrixInverter inverter = a.withInverter(LinearAlgebra.GAUSS_JORDAN);
 // The 'b' matrix will be dense
-Matrix b = inverter.invert(LinearAlgebra.DENSE_FACTORY);
+Matrix b = inverter.inverse(LinearAlgebra.DENSE_FACTORY);
 ```
 **System of linear equations**
 ```java
