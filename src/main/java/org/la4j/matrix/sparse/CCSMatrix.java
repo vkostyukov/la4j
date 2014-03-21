@@ -60,6 +60,10 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         this (rows, columns, 0);
     }
 
+    public CCSMatrix(int rows, int columns, double array[]) {
+        this (Matrices.asArray1DSource(rows, columns, array));
+    }
+
     public CCSMatrix(Matrix matrix) {
         this(Matrices.asMatrixSource(matrix));
     }

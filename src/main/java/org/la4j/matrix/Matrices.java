@@ -26,8 +26,11 @@
 package org.la4j.matrix;
 
 import org.la4j.LinearAlgebra;
+import org.la4j.factory.Factory;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
+import org.la4j.matrix.builder.TerminalMatrixBuilder;
+import org.la4j.matrix.builder.MatrixBuilder;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -585,7 +588,7 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/DiagonalMatrix.html">diagonal 
      * matrix</a>.
      */
-    public static final MatrixPredicate DIAGONAL_MATRIX = 
+    public static final MatrixPredicate DIAGONAL_MATRIX =
             new DiagonalMatrixPredicate();
 
     /**
@@ -900,6 +903,17 @@ public final class Matrices {
      */
     public static MatrixSource asSymbolSeparatedSource(InputStream in, String separator) {
         return new StreamMatrixSource(new SymbolSeparatedStream(in, separator));
+    }
+
+    /**
+     * Creates a new matrix builder instance of given {@code factory}.
+     *
+     * @param factory the builder's factory
+     *
+     * @return a factorised matrix builder
+     */
+    public static MatrixBuilder asBuilder(Factory factory) {
+        return new TerminalMatrixBuilder(factory);
     }
 
     /**

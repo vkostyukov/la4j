@@ -6,6 +6,7 @@ la4j-0.5.0 `May 2014`
  * New vector method: `foldNonZero`
  * New factory method: `createDiagonalMatrix`
  * New matrix source: `DiagonalMatrixSource`
+ * New entity: `MatrixBuilder`
 
 la4j-0.4.9 `Jan 2014`
  * Bug fix in `align()` method for big sparse matrices (reported by Michael Kapper)

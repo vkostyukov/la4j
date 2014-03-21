@@ -28,7 +28,7 @@ import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.matrix.source.MatrixSource;
 
-public class Basic2DFactory extends BasicFactory implements Factory {
+public class Basic2DFactory extends BasicFactory {
 
     private static final long serialVersionUID = 4071505L;
 
@@ -40,6 +40,11 @@ public class Basic2DFactory extends BasicFactory implements Factory {
     @Override
     public Matrix createMatrix(int rows, int columns) {
         return new Basic2DMatrix(rows, columns);
+    }
+
+    @Override
+    public Matrix createMatrix(int rows, int columns, double[] array) {
+        return new Basic2DMatrix(rows, columns, array);
     }
 
     @Override
@@ -70,15 +75,13 @@ public class Basic2DFactory extends BasicFactory implements Factory {
     }
 
     @Override
-    public Matrix createRandomMatrix(int rows, int columns) {
+    public Matrix createRandomMatrix(int rows, int columns, Random random) {
 
         double array[][] = new double[rows][columns];
 
-        Random rnd = new Random();
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                array[i][j] = rnd.nextDouble();
+                array[i][j] = random.nextDouble();
             }
         }
 
@@ -86,15 +89,13 @@ public class Basic2DFactory extends BasicFactory implements Factory {
     }
 
     @Override
-    public Matrix createRandomSymmetricMatrix(int size) {
+    public Matrix createRandomSymmetricMatrix(int size, Random random) {
 
         double array[][] = new double[size][size];
 
-        Random rnd = new Random();
-
         for (int i = 0; i < size; i++) {
             for (int j = i; j < size; j++) {
-                double value = rnd.nextDouble();
+                double value = random.nextDouble();
                 array[i][j] = value;
                 array[j][i] = value;
             }

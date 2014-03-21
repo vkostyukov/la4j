@@ -22,20 +22,21 @@
 package org.la4j.factory;
 
 import java.io.Serializable;
+import java.util.Random;
 
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.source.VectorSource;
 
-public interface Factory extends Serializable {
+public abstract class Factory implements Serializable {
 
     /**
      * Creates an empty matrix.
      *
      * @return an empty matrix
      */
-    Matrix createMatrix();
+    public abstract Matrix createMatrix();
 
     /**
      * Creates a matrix of specified shape.
@@ -45,7 +46,18 @@ public interface Factory extends Serializable {
      *
      * @return a new matrix of given shape
      */
-    Matrix createMatrix(int rows, int columns);
+    public abstract Matrix createMatrix(int rows, int columns);
+
+    /**
+     * Creates a matrix of specified shape.
+     *
+     * @param rows the number of matrix rows
+     * @param columns the number of matrix columns
+     * @param array the source 1D array
+     *
+     * @return a new matrix of given shape
+     */
+    public abstract Matrix createMatrix(int rows, int columns, double array[]);
 
     /**
      * Creates a matrix from given {@code array}.
@@ -54,7 +66,7 @@ public interface Factory extends Serializable {
      *
      * @return a new matrix of given array
      */
-    Matrix createMatrix(double array[][]);
+    public abstract Matrix createMatrix(double array[][]);
 
     /**
      * Creates a matrix from another {@code matrix}.
@@ -63,7 +75,7 @@ public interface Factory extends Serializable {
      *
      * @return a new matrix
      */
-    Matrix createMatrix(Matrix matrix);
+    public abstract Matrix createMatrix(Matrix matrix);
 
     /**
      * Creates a matrix from given matrix {@code source}.
@@ -72,7 +84,7 @@ public interface Factory extends Serializable {
      *
      * @return a new matrix
      */
-    Matrix createMatrix(MatrixSource source);
+    public abstract Matrix createMatrix(MatrixSource source);
 
     /**
      * Creates a constant matrix of given shape with {@code value} stored in
@@ -83,7 +95,7 @@ public interface Factory extends Serializable {
      *
      * @return a constant matrix
      */
-    Matrix createConstantMatrix(int rows, int columns, double value);
+    public abstract Matrix createConstantMatrix(int rows, int columns, double value);
 
     /**
      * Creates a random matrix of given shape.
@@ -93,7 +105,20 @@ public interface Factory extends Serializable {
      *
      * @return a random matrix
      */
-    Matrix createRandomMatrix(int rows, int columns);
+    public Matrix createRandomMatrix(int rows, int columns) {
+        return createRandomMatrix(rows, columns, new Random());
+    }
+
+    /**
+     * Creates a random matrix of given shape.
+     *
+     * @param rows the number of matrix rows
+     * @param columns the number of matrix columns
+     * @param random the random object instance
+     *
+     * @return a random matrix
+     */
+    public abstract Matrix createRandomMatrix(int rows, int columns, Random random);
 
     /**
      * Creates a square random symmetric matrix of given {@code size}.
@@ -102,7 +127,19 @@ public interface Factory extends Serializable {
      *
      * @return a square random symmetric matrix
      */
-    Matrix createRandomSymmetricMatrix(int size);
+    Matrix createRandomSymmetricMatrix(int size) {
+        return createRandomSymmetricMatrix(size, new Random());
+    }
+
+    /**
+     * Creates a square random symmetric matrix of given {@code size}.
+     *
+     * @param size the number of matrix rows/columns
+     * @param random the random object instance
+     *
+     * @return a square random symmetric matrix
+     */
+    public abstract Matrix createRandomSymmetricMatrix(int size, Random random);
 
     /**
      * Creates a square matrix of given {@code size}.
@@ -111,7 +148,7 @@ public interface Factory extends Serializable {
      *
      * @return a square matrix
      */
-    Matrix createSquareMatrix(int size);
+    public abstract Matrix createSquareMatrix(int size);
 
     /**
      * Creates an identity matrix of given {@code size}. An identity matrix
@@ -121,7 +158,7 @@ public interface Factory extends Serializable {
      *
      * @return an identity matrix
      */
-    Matrix createIdentityMatrix(int size);
+    public abstract Matrix createIdentityMatrix(int size);
 
     /**
      * Creates a matrix from given blocks.
@@ -139,7 +176,7 @@ public interface Factory extends Serializable {
      *
      * @return a block matrix
      */
-    Matrix createBlockMatrix(Matrix a, Matrix b, Matrix c, Matrix d);
+    public abstract Matrix createBlockMatrix(Matrix a, Matrix b, Matrix c, Matrix d);
 
     /**
      * Creates a diagonal matrix of given {@code diagonal}.
@@ -148,14 +185,14 @@ public interface Factory extends Serializable {
      *
      * @return a diagonal matrix
      */
-    Matrix createDiagonalMatrix(double diagonal[]);
+    public abstract Matrix createDiagonalMatrix(double diagonal[]);
 
     /**
      * Creates an empty vector.
      * 
      * @return empty vector
      */
-    Vector createVector();
+    public abstract Vector createVector();
 
     /**
      * Creates a vector of given {@code length}.
@@ -164,7 +201,7 @@ public interface Factory extends Serializable {
      *
      * @return a new vector
      */
-    Vector createVector(int length);
+    public abstract Vector createVector(int length);
 
     /**
      * Creates a vector from given {@code array}.
@@ -173,7 +210,7 @@ public interface Factory extends Serializable {
      *
      * @return a new vector
      */
-    Vector createVector(double array[]);
+    public abstract Vector createVector(double array[]);
 
     /**
      * Creates a vector from another {@code vector}.
@@ -182,7 +219,7 @@ public interface Factory extends Serializable {
      *
      * @return a new vector
      */
-    Vector createVector(Vector vector);
+    public abstract Vector createVector(Vector vector);
 
     /**
      * Creates a vector of given {@code source}.
@@ -191,7 +228,7 @@ public interface Factory extends Serializable {
      *
      * @return a new vector
      */
-    Vector createVector(VectorSource source);
+    public abstract Vector createVector(VectorSource source);
 
     /**
      * Creates a constant vector of given {@code length} and constant
@@ -202,7 +239,7 @@ public interface Factory extends Serializable {
      *
      * @return a constant vector
      */
-    Vector createConstantVector(int length, double value);
+    public abstract Vector createConstantVector(int length, double value);
 
     /**
      * Creates a random vector of given {@code length}.
@@ -211,5 +248,17 @@ public interface Factory extends Serializable {
      *
      * @return a random vector
      */
-    Vector createRandomVector(int length);
+    public Vector createRandomVector(int length) {
+        return createRandomVector(length, new Random());
+    }
+
+    /**
+     * Creates a random vector of given {@code length}.
+     *
+     * @param length the vector's length
+     * @param random the random object instance
+     *
+     * @return a random vector
+     */
+    public abstract Vector createRandomVector(int length, Random random);
 }

@@ -60,6 +60,18 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
         this(new double[rows][columns]);
     }
 
+    public Basic2DMatrix(int rows, int columns, double array[]) {
+        this(rows, columns);
+
+        // TODO:
+        // We suppose that 'array.length = rows * columns' for now.
+        // Probably, we should check this explicitly.
+
+        for (int i = 0; i < rows; i++) {
+            System.arraycopy(array, i * columns, self[i], 0, columns);
+        }
+    }
+
     public Basic2DMatrix(double array[][]) {
         super(LinearAlgebra.BASIC2D_FACTORY, array.length, array.length == 0 ? 0: array[0].length);
         this.self = array;

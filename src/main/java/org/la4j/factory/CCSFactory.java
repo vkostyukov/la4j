@@ -31,7 +31,7 @@ import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.sparse.CCSMatrix;
 import org.la4j.matrix.sparse.CRSMatrix;
 
-public class CCSFactory extends CompressedFactory implements Factory {
+public class CCSFactory extends CompressedFactory {
 
     private static final long serialVersionUID = 4071505L;
 
@@ -43,6 +43,11 @@ public class CCSFactory extends CompressedFactory implements Factory {
     @Override
     public Matrix createMatrix(int rows, int columns) {
         return new CCSMatrix(rows, columns);
+    }
+
+    @Override
+    public Matrix createMatrix(int rows, int columns, double array[]) {
+        return new CCSMatrix(rows, columns, array);
     }
 
     @Override
@@ -84,9 +89,7 @@ public class CCSFactory extends CompressedFactory implements Factory {
     }
 
     @Override
-    public Matrix createRandomMatrix(int rows, int columns) {
-
-        Random random = new Random();
+    public Matrix createRandomMatrix(int rows, int columns, Random random) {
 
         int cardinality = (rows * columns) / DENSITY;
 
@@ -128,13 +131,11 @@ public class CCSFactory extends CompressedFactory implements Factory {
     }
 
     @Override
-    public Matrix createRandomSymmetricMatrix(int size) {
+    public Matrix createRandomSymmetricMatrix(int size, Random random) {
 
         // TODO: Issue 15
 
         int cardinality = (size * size) / DENSITY;
-
-        Random random = new Random();
 
         Matrix matrix = new CCSMatrix(size, size, cardinality);
 

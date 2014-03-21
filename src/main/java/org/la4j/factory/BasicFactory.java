@@ -24,12 +24,13 @@ package org.la4j.factory;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.BasicVector;
 import org.la4j.vector.source.VectorSource;
 
 
-public abstract class BasicFactory implements Factory {
+public abstract class BasicFactory extends Factory {
 
     private static final long serialVersionUID = 4071505L;
 
@@ -69,13 +70,11 @@ public abstract class BasicFactory implements Factory {
 
 
     @Override
-    public Vector createRandomVector(int length) {
-
-        Random rnd = new Random();
+    public Vector createRandomVector(int length, Random random) {
 
         double array[] = new double[length];
         for (int i = 0; i < length; i++) {
-            array[i] = rnd.nextDouble();
+            array[i] = random.nextDouble();
         }
 
         return new BasicVector(array);
