@@ -614,5 +614,4 @@ public interface Vector extends Externalizable {
      * @return the vector converted to a string
      */
     String mkString(NumberFormat formatter, String delimiter);
-
 }
