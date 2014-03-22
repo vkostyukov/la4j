@@ -26,6 +26,7 @@ import java.io.IOException;
 import org.la4j.io.MatrixStream;
 import org.la4j.matrix.Matrix;
 
+@Deprecated
 public class StreamMatrixSource implements MatrixSource {
 
     private Matrix matrix;

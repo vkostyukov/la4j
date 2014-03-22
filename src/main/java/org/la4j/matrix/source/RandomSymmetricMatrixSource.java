@@ -24,6 +24,7 @@ package org.la4j.matrix.source;
 import java.util.Arrays;
 import java.util.Random;
 
+@Deprecated
 public class RandomSymmetricMatrixSource implements MatrixSource {
 
     private int size;

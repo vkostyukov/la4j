@@ -833,6 +833,7 @@ public final class Matrices {
      *
      * @return an identity matrix source
      */
+    @Deprecated
     public static MatrixSource asIdentitySource(int size) {
         return new IdentityMatrixSource(size);
     }
@@ -845,6 +846,7 @@ public final class Matrices {
      *
      * @return a random matrix source
      */
+    @Deprecated
     public static MatrixSource asRandomSource(int rows, int columns) {
         return new RandomMatrixSource(rows, columns);
     }
@@ -856,6 +858,7 @@ public final class Matrices {
      *
      * @return a random symmetric matrix source
      */
+    @Deprecated
     public static MatrixSource asRandomSymmetricSource(int size) {
         return new RandomSymmetricMatrixSource(size);
     }
@@ -867,6 +870,7 @@ public final class Matrices {
      *
      * @return a diagonal matrix source
      */
+    @Deprecated
     public static MatrixSource asDiagonalSource(double diagonal[]) {
         return new DiagonalMatrixSource(diagonal);
     }
@@ -878,6 +882,7 @@ public final class Matrices {
      *
      * @return a MatrixMarket stream source
      */
+    @Deprecated
     public static MatrixSource asMatrixMarketSource(InputStream in) {
         return new StreamMatrixSource(new MatrixMarketStream(in));
     }
@@ -889,6 +894,7 @@ public final class Matrices {
      *
      * @return a symbol separated stream source
      */
+    @Deprecated
     public static MatrixSource asSymbolSeparatedSource(InputStream in) {
         return new StreamMatrixSource(new SymbolSeparatedStream(in));
     }
