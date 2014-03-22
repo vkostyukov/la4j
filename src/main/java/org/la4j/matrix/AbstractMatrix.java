@@ -30,6 +30,8 @@ package org.la4j.matrix;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Random;
 
 import org.la4j.LinearAlgebra;
@@ -45,6 +47,22 @@ import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.vector.Vector;
 
 public abstract class AbstractMatrix implements Matrix {
+
+    private static final String DEFAULT_ROWS_DELIMITER = "\n";
+    private static final String DEFAULT_COLUMNS_DELIMITER = " ";
+    private static final NumberFormat DEFAULT_FORMATTER = new DecimalFormat("0.000");
+    private static final String[] INDENTS = { // 9 predefined indents for alignment
+            " ",
+            "  ",
+            "   ",
+            "    ",
+            "     ",
+            "      ",
+            "       ",
+            "        ",
+            "         ",
+            "          "
+    };
 
     protected int rows;
     protected int columns;
@@ -1170,16 +1188,35 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public String toString() {
+        return mkString(DEFAULT_FORMATTER,
+                        DEFAULT_ROWS_DELIMITER,
+                        DEFAULT_COLUMNS_DELIMITER);
+    }
 
-        final int precision = 3; 
+    @Override
+    public String mkString(NumberFormat formatter) {
+        return mkString(formatter,
+                        DEFAULT_ROWS_DELIMITER,
+                        DEFAULT_COLUMNS_DELIMITER);
+    }
+
+    @Override
+    public String mkString(String rowsDelimiter, String columnsDelimiter) {
+        return mkString(DEFAULT_FORMATTER,
+                        rowsDelimiter,
+                        columnsDelimiter);
+    }
+
+    @Override
+    public String mkString(NumberFormat formatter, String rowsDelimiter, String columnsDelimiter) {
 
         int formats[] = new int[columns];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 double value = get(i, j);
-                int size = String.valueOf((long) value).length() 
-                           + precision + (value < 0 && value > -1.0 ? 1 : 0) + 2;
+                String output = formatter.format(value);
+                int size = output.length();
                 formats[j] = size > formats[j] ? size : formats[j];
             }
         }
@@ -1188,10 +1225,22 @@ public abstract class AbstractMatrix implements Matrix {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                sb.append(String.format("%" + Integer.toString(formats[j])
-                        + "." + precision + "f", get(i, j)));
+                String output = formatter.format(get(i, j));
+                int outputLength = output.length();
+
+                if (outputLength < formats[j]) {
+                    int align = formats[j] - outputLength;
+                    if (align > INDENTS.length - 1) {
+                        indent(sb, align);
+                    } else {
+                        sb.append(INDENTS[align - 1]);
+                    }
+                }
+
+                sb.append(output);
+                sb.append(columnsDelimiter);
             }
-            sb.append("\n");
+            sb.append(rowsDelimiter);
         }
 
         return sb.toString();
@@ -1218,5 +1267,12 @@ public abstract class AbstractMatrix implements Matrix {
 
     protected void fail(String message) {
         throw new IllegalArgumentException(message);
+    }
+
+    private void indent(StringBuilder sb, int howMany) {
+        while (howMany > 0) {
+            sb.append(" ");
+            howMany--;
+        }
     }
 }

@@ -26,6 +26,7 @@
 package org.la4j.matrix;
 
 import java.io.Externalizable;
+import java.text.NumberFormat;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
@@ -1131,4 +1132,34 @@ public interface Matrix extends Externalizable {
      * @return the decompositor of this matrix
      */
     MatrixDecompositor withDecompositor(LinearAlgebra.DecompositorFactory factory);
+
+    /**
+     * Converts this matrix into the string representation.
+     *
+     * @param formatter the number formatter
+     *
+     * @return the matrix converted to a string
+     */
+    String mkString(NumberFormat formatter);
+
+    /**
+     * Converts this matrix into the string representation.
+     *
+     * @param rowsDelimiter the rows' delimiter
+     * @param columnsDelimiter the columns' delimiter
+     *
+     * @return the matrix converted to a string
+     */
+    String mkString(String rowsDelimiter, String columnsDelimiter);
+
+    /**
+     * Converts this matrix into the string representation.
+     *
+     * @param formatter the number formatter
+     * @param rowsDelimiter the rows' delimiter
+     * @param columnsDelimiter the columns' delimiter
+     *
+     * @return the matrix converted to a string
+     */
+    String mkString(NumberFormat formatter, String rowsDelimiter, String columnsDelimiter);
 }
