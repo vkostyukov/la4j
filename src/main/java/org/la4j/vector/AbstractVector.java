@@ -25,6 +25,8 @@
 
 package org.la4j.vector;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Random;
 
 import org.la4j.factory.Factory;
@@ -36,6 +38,9 @@ import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
 
 public abstract class AbstractVector implements Vector {
+
+    private static final String DEFAULT_DELIMITER = ", ";
+    private static final NumberFormat DEFAULT_FORMATTER = new DecimalFormat("0.000");
 
     protected int length;
 
@@ -582,14 +587,26 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public String toString() {
+        return mkString(DEFAULT_FORMATTER,
+                        DEFAULT_DELIMITER);
+    }
+
+    @Override
+    public String mkString(NumberFormat formatter) {
+        return mkString(formatter,
+                        DEFAULT_DELIMITER);
+    }
+
+    @Override
+    public String mkString(NumberFormat formatter, String delimiter) {
+
         StringBuilder sb = new StringBuilder();
 
-        sb.append("[");
         for (int i = 0; i < length; i++) {
-            sb.append(String.format("%6.3f", get(i)));
-            sb.append((i < length - 1 ? ", " : " "));
+
+            sb.append(formatter.format(get(i)));
+            sb.append((i < length - 1 ? delimiter : ""));
         }
-        sb.append("]");
 
         return sb.toString();
     }

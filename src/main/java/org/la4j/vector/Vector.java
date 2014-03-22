@@ -25,6 +25,7 @@
 package org.la4j.vector;
 
 import java.io.Externalizable;
+import java.text.NumberFormat;
 
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
@@ -594,4 +595,24 @@ public interface Vector extends Externalizable {
      * @return the column matrix
      */
     Matrix toColumnMatrix(Factory factory);
+
+    /**
+     * Converts this vector into the string representation.
+     *
+     * @param formatter the number formatter
+     *
+     * @return the vector converted to a string
+     */
+    String mkString(NumberFormat formatter);
+
+    /**
+     * Converts this vector into the string representation.
+     *
+     * @param formatter the number formatter
+     * @param delimiter the elements' delimiter
+     *
+     * @return the vector converted to a string
+     */
+    String mkString(NumberFormat formatter, String delimiter);
+
 }
