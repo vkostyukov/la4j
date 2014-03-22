@@ -2,10 +2,10 @@
 =============================
 ![la4j logo](https://raw.github.com/vkostyukov/la4j/master/la4j-logo.png) 
 
-The [**la4j**](http://la4j.org) is open source and **100% Java** library 
-that provides **Linear Algebra** primitives (matrices and vectors) and algorithms. The **la4j** was initially designed 
-to be lightweight and simple tool for passionate Java developers. It has been started as student project and turned into
-one of the most popular Java packages for matrices and vectors.
+The [**la4j**](http://la4j.org) is an open source and **100% Java** library
+that provides **Linear Algebra** primitives (matrices and vectors) and algorithms. The **la4j** library was initially
+designed to be a lightweight and simple tool for passionate Java developers. It has been started as student project
+and turned into one of the most popular Java packages for matrices and vectors.
 
 The key features of the **la4j** are listed bellow:
 
@@ -13,17 +13,38 @@ The key features of the **la4j** are listed bellow:
 * No dependencies and tiny size (~150kb jar)
 * Fluent and object-oriented/functional API
 * Sparse (CRS, CCS) and dense (1D/2D arrays) matrices and vectors
-* Linear systems solving (Gaussian, Jacobi, Zeidel, Square Root, Sweep and other)
+* Linear systems solving (Gaussian, Jacobi, Seidel, Square Root, Sweep and other)
 * Matrices decomposition (Eigenvalues/Eigenvectors, SVD, QR, LU, Cholesky and other)
 * Functors support: predicates, functions, procedures and accumulators
 * MatrixMarket/CSV IO formats support
 
 
-Brief Examples
---------------
+Samples
+-------
+**Building the matrix**
+```java
+// We will use a CRS (Compressed Row Storage) matrix builder
+Matrix a = Matrices.asBuilder(LinearAlgebra.CRS_FACTORY)
+           .shape(10, 20)        // We want a 10x20 matrix
+           .source(new Random()) // ... with random elements
+           .build();             // ... and it should be a simple matrix
+
+// We will use a 2D array matrix builder
+Matrix b = Matrices.asBuilder(LinearAlgebra.BASIC2D_FACTORY)
+           .shape(25, 25)    // We want a 25x25 matrix
+           .source(3.14)     // ... with all the elements equal '3.14'
+           .buildDiagonal(); // ... and it should be a diagonal matrix
+
+// We wil use a CCS (Compressed Column Storage) matrix builder
+Matrix c = Matrices.asBuilder(LinearAlgebra.CCS_FACTORY)
+           .shape(14, 14)         // We want a 14x14 matrix
+           .source(new Random())  // ... with random elements
+           .buildSymmetric();     // ... and it should be a symmetric matrix
+```
+
 **Matrix inversion**
 ```java
-// We want simple dense matrix that uses 2D array as internal representation
+// We want a simple dense matrix that uses 2D array as internal representation
 Matrix a = new Basic2DMatrix(new double[][] {
    { 1.0, 2.0, 3.0 },
    { 4.0, 5.0, 6.0 },
@@ -37,7 +58,7 @@ Matrix b = inverter.inverse(LinearAlgebra.DENSE_FACTORY);
 ```
 **System of linear equations**
 ```java
-// The coefficient matrix 'a' is a CRS (Compressed Sparse Row) matrix 
+// The coefficient matrix 'a' is a CRS (Compressed Row Storage) matrix
 Matrix a = new CRSMatrix(new double[][] {
    { 1.0, 2.0, 3.0 },
    { 4.0, 5.0, 6.0 },
