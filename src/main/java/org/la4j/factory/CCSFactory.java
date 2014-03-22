@@ -91,7 +91,7 @@ public class CCSFactory extends CompressedFactory {
     @Override
     public Matrix createRandomMatrix(int rows, int columns, Random random) {
 
-        int cardinality = (rows * columns) / DENSITY;
+        int cardinality = Math.max((rows * columns) / DENSITY, columns);
 
         double values[] = new double[cardinality];
         int rowIndices[] = new int[cardinality];
