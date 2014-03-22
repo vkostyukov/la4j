@@ -116,6 +116,12 @@ public abstract class UnderlyingMatrixBuilder implements MatrixBuilder {
     public abstract Matrix buildIdentity(MatrixStream stream);
     public abstract Matrix buildDiagonal(MatrixStream stream);
 
+    // matrix source
+    public abstract Matrix build(Matrix matrix);
+    public abstract Matrix buildSymmetric(Matrix matrix);
+    public abstract Matrix buildIdentity(Matrix matrix);
+    public abstract Matrix buildDiagonal(Matrix matrix);
+
     // shape + value source
     public abstract Matrix build(int rows, int columns, double value);
     public abstract Matrix buildDiagonal(int rows, int columns, double value);
@@ -164,6 +170,15 @@ public abstract class UnderlyingMatrixBuilder implements MatrixBuilder {
         return buildIdentity(rows, columns);
     }
 
+    // shape + matrix source
+    public abstract Matrix build(int rows, int columns, Matrix matrix);
+    public abstract Matrix buildSymmetric(int rows, int columns, Matrix matrix);
+    public abstract Matrix buildDiagonal(int rows, int columns, Matrix matrix);
+
+    public Matrix buildIdentity(int rows, int columns, Matrix matrix) {
+        return buildIdentity(rows, columns);
+    }
+
     @Override
     public MatrixBuilder shape(int rows, int columns) {
         return new ShapedMatrixBuilder(this, rows, columns);
@@ -192,5 +207,10 @@ public abstract class UnderlyingMatrixBuilder implements MatrixBuilder {
     @Override
     public MatrixBuilder source(MatrixStream stream) {
         return new StreamSourcedMatrixBuilder(this, stream);
+    }
+
+    @Override
+    public MatrixBuilder source(Matrix matrix) {
+        return new MatrixSourcedMatrixBuilder(this, matrix);
     }
 }

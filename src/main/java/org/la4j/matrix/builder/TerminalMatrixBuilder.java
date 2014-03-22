@@ -70,15 +70,7 @@ public class TerminalMatrixBuilder extends UnderlyingMatrixBuilder {
 
     @Override
     public Matrix buildDiagonal(double[][] array) {
-
-        int size = Math.min(array.length, array[0].length);
-        double diagonal[] = new double[size];
-
-        for (int i = 0; i < size; i++) {
-            diagonal[i] = array[i][i];
-        }
-
-        return buildDiagonal(diagonal);
+        return diagonalized(Matrices.asArray2DSource(array));
     }
 
     @Override
@@ -105,16 +97,8 @@ public class TerminalMatrixBuilder extends UnderlyingMatrixBuilder {
 
     @Override
     public Matrix buildDiagonal(MatrixStream stream) {
-
         Matrix source = streamedOrEmpty(stream);
-        int size = Math.min(source.rows(), source.columns());
-        double diagonal[] = new double[size];
-
-        for (int i = 0; i < size; i++) {
-            diagonal[i] = source.get(i, i);
-        }
-
-        return buildDiagonal(diagonal);
+        return diagonalized(Matrices.asMatrixSource(source));
     }
 
     @Override
@@ -142,8 +126,7 @@ public class TerminalMatrixBuilder extends UnderlyingMatrixBuilder {
 
     @Override
     public Matrix buildDiagonal(int rows, int columns, double[] array) {
-        int size = Math.min(rows, columns);
-        return factory.createDiagonalMatrix(array).resize(size, size);
+        return diagonalized(Matrices.asArray1DSource(rows, columns, array));
     }
 
     @Override
@@ -203,6 +186,44 @@ public class TerminalMatrixBuilder extends UnderlyingMatrixBuilder {
         return buildDiagonal(stream).resize(size, size);
     }
 
+    @Override
+    public Matrix build(Matrix matrix) {
+        return factory.createMatrix(matrix);
+    }
+
+    @Override
+    public Matrix buildSymmetric(Matrix matrix) {
+        return symmetrized(Matrices.asMatrixSource(matrix));
+    }
+
+    @Override
+    public Matrix buildIdentity(Matrix matrix) {
+        int size = Math.min(matrix.rows(), matrix.columns());
+        return buildIdentity(size, size);
+    }
+
+    @Override
+    public Matrix buildDiagonal(Matrix matrix) {
+        return diagonalized(Matrices.asMatrixSource(matrix));
+    }
+
+    @Override
+    public Matrix build(int rows, int columns, Matrix matrix) {
+        return build(matrix).resize(rows, columns);
+    }
+
+    @Override
+    public Matrix buildSymmetric(int rows, int columns, Matrix matrix) {
+        int size = Math.min(rows, columns);
+        return buildSymmetric(matrix).resize(size, size);
+    }
+
+    @Override
+    public Matrix buildDiagonal(int rows, int columns, Matrix matrix) {
+        int size = Math.min(rows, columns);
+        return buildDiagonal(matrix).resize(size, size);
+    }
+
     private Matrix streamedOrEmpty(MatrixStream stream) {
         try {
             return stream.readMatrix(factory);
@@ -225,5 +246,17 @@ public class TerminalMatrixBuilder extends UnderlyingMatrixBuilder {
         }
 
         return result;
+    }
+
+    private Matrix diagonalized(MatrixSource source) {
+
+        int size = Math.min(source.rows(), source.columns());
+        double diagonal[] = new double[size];
+
+        for (int i = 0; i < size; i++) {
+            diagonal[i] = source.get(i, i);
+        }
+
+        return factory.createDiagonalMatrix(diagonal);
     }
 }

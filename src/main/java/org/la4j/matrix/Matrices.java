@@ -907,6 +907,7 @@ public final class Matrices {
      *
      * @return a symbol separated stream source
      */
+    @Deprecated
     public static MatrixSource asSymbolSeparatedSource(InputStream in, String separator) {
         return new StreamMatrixSource(new SymbolSeparatedStream(in, separator));
     }

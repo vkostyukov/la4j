@@ -134,8 +134,23 @@ public abstract class NonTerminalMatrixBuilder extends UnderlyingMatrixBuilder {
     }
 
     @Override
+    public Matrix build(int rows, int columns, Matrix matrix) {
+        return underlying.build(rows, columns, matrix);
+    }
+
+    @Override
+    public Matrix buildSymmetric(int rows, int columns, Matrix matrix) {
+        return underlying.buildSymmetric(rows, columns, matrix);
+    }
+
+    @Override
+    public Matrix buildDiagonal(int rows, int columns, Matrix matrix) {
+        return underlying.buildDiagonal(rows, columns, matrix);
+    }
+
+    @Override
     public Matrix buildDiagonal(MatrixStream stream) {
-        return null;
+        return underlying.buildDiagonal(stream);
     }
 
     @Override
@@ -231,6 +246,26 @@ public abstract class NonTerminalMatrixBuilder extends UnderlyingMatrixBuilder {
     @Override
     public Matrix build(double value) {
         return underlying.build(value);
+    }
+
+    @Override
+    public Matrix build(Matrix matrix) {
+        return underlying.build(matrix);
+    }
+
+    @Override
+    public Matrix buildSymmetric(Matrix matrix) {
+        return underlying.buildSymmetric(matrix);
+    }
+
+    @Override
+    public Matrix buildIdentity(Matrix matrix) {
+        return underlying.buildIdentity(matrix);
+    }
+
+    @Override
+    public Matrix buildDiagonal(Matrix matrix) {
+        return underlying.buildDiagonal(matrix);
     }
 
     @Override

@@ -86,6 +86,15 @@ public interface MatrixBuilder {
     MatrixBuilder source(MatrixStream stream);
 
     /**
+     * Specifies the source of a result matrix;
+     *
+     * @param matrix the source matrix
+     *
+     * @return a sourced matrix build
+     */
+    MatrixBuilder source(Matrix matrix);
+
+    /**
      * Commits the building process and returns a simple matrix.
      *
      * @return a freshly built matrix
