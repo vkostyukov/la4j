@@ -8,6 +8,7 @@ la4j-0.5.0 `May 2014`
  * New matrix source: `DiagonalMatrixSource`
  * New entity: `MatrixBuilder`
  * New matrix/vector method `mkString()` for customized to-string conversion
+ * Bug fix in random generation of sparse matrices
 
 la4j-0.4.9 `Jan 2014`
  * Bug fix in `align()` method for big sparse matrices (reported by Michael Kapper)
