@@ -26,6 +26,7 @@ import java.io.IOException;
 import org.la4j.io.VectorStream;
 import org.la4j.vector.Vector;
 
+@Deprecated
 public class StreamVectorSource implements VectorSource {
 
     private Vector vector;

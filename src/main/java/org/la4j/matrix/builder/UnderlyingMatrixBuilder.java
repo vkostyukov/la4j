@@ -20,7 +20,6 @@
 
 package org.la4j.matrix.builder;
 
-import org.la4j.LinearAlgebra;
 import org.la4j.io.MatrixStream;
 import org.la4j.matrix.Matrix;
 
