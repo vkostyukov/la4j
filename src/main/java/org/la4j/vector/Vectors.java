@@ -25,6 +25,7 @@ package org.la4j.vector;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Random;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
@@ -500,8 +501,8 @@ public final class Vectors {
      *
      * @return a random vector source
      */
-    public static VectorSource asRandomSource(int length) {
-        return new RandomVectorSource(length);
+    public static VectorSource asRandomSource(int length, Random random) {
+        return new RandomVectorSource(length, random);
     }
 
     /**

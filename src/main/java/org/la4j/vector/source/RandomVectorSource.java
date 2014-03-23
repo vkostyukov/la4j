@@ -28,9 +28,9 @@ public class RandomVectorSource implements VectorSource {
     private int length;
     private Random random;
 
-    public RandomVectorSource(int length) {
+    public RandomVectorSource(int length, Random random) {
         this.length = length;
-        this.random = new Random();
+        this.random = random;
     }
 
     @Override
