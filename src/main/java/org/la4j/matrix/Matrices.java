@@ -633,7 +633,7 @@ public final class Matrices {
             new NegativeMatrixPredicate();
 
     /**
-     * Checks whether the matrix is a lower bidiagonal matrix</a>.
+     * Checks whether the matrix is a lower bi-diagonal matrix</a>.
      */
     public static final MatrixPredicate LOWER_BIDIAGONAL_MATRIX = 
             new LowerBidiagonalMatrixPredicate();
@@ -641,7 +641,7 @@ public final class Matrices {
     /**
      * Checks whether the matrix is an upper bidiagonal matrix. 
      */
-    public static final MatrixPredicate UPPER_BIDIAGONAL_MATRIX = 
+    public static final MatrixPredicate UPPER_BIDIAGONAL_MATRIX =
             new UpperBidiagonalMatrixPredicate();
 
     /**
@@ -649,7 +649,7 @@ public final class Matrices {
      * <a href="http://mathworld.wolfram.com/LowerTriangularMatrix.html">lower 
      * triangular matrix</a>.
      */
-    public static final MatrixPredicate LOWER_TRIANGULAR_MARTIX = 
+    public static final MatrixPredicate LOWER_TRIANGULAR_MATRIX =
             new LowerTriangularMatrixPredicate();
 
     /**
@@ -670,7 +670,7 @@ public final class Matrices {
 
     /**
      * Checks whether the matrix is a
-     * <a href="http://en.wikipedia.org/wiki/Diagonally_dominant_matrix">dioganally dominant matrix</a>.
+     * <a href="http://en.wikipedia.org/wiki/Diagonally_dominant_matrix">diagonally dominant matrix</a>.
      */
     public static final AdvancedMatrixPredicate DIAGONALLY_DOMINANT_MATRIX = 
             new DiagonallyDominantPredicate();
@@ -971,7 +971,7 @@ public final class Matrices {
      * @param neutral the neutral value
      * @param function the matrix function
      *
-     * @returna a sum function accumulator
+     * @return a sum function accumulator
      */
     public static MatrixAccumulator asSumFunctionAccumulator(double neutral, MatrixFunction function) {
         return new FunctionMatrixAccumulator(new SumMatrixAccumulator(neutral), function);

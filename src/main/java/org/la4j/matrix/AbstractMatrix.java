@@ -605,7 +605,7 @@ public abstract class AbstractMatrix implements Matrix {
         ensureFactoryIsNotNull(factory);
 
         if (is(Matrices.UPPER_TRIANGULAR_MATRIX) 
-                || is(Matrices.LOWER_TRIANGULAR_MARTIX)) {
+                || is(Matrices.LOWER_TRIANGULAR_MATRIX)) {
 
             return copy(factory);
         }
