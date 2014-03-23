@@ -158,15 +158,7 @@ public class TerminalMatrixBuilder extends UnderlyingMatrixBuilder {
 
     @Override
     public Matrix buildDiagonal(int rows, int columns, Random random) {
-
-        int size = Math.min(rows, columns);
-        double diagonal[] = new double[size];
-
-        for (int i = 0; i < size; i++) {
-            diagonal[i] = random.nextDouble();
-        }
-
-        return buildDiagonal(diagonal);
+        return diagonalized(Matrices.asRandomSource(rows, columns, random));
     }
 
     @Override

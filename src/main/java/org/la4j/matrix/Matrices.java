@@ -49,6 +49,7 @@ import org.la4j.matrix.source.StreamMatrixSource;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Random;
 
 public final class Matrices {
 
@@ -843,12 +844,12 @@ public final class Matrices {
      * 
      * @param rows the number of rows in the source
      * @param columns the number of columns in the source
+     * @param random the random generator instance
      *
      * @return a random matrix source
      */
-    @Deprecated
-    public static MatrixSource asRandomSource(int rows, int columns) {
-        return new RandomMatrixSource(rows, columns);
+    public static MatrixSource asRandomSource(int rows, int columns, Random random) {
+        return new RandomMatrixSource(rows, columns, random);
     }
 
     /**
