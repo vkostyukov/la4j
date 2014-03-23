@@ -58,14 +58,14 @@ public final class Vectors {
     private static class PositiveVectorPredicate implements VectorPredicate {
         @Override
         public boolean test(int i, double value) {
-            return value > 0;
+            return value > 0.0;
         }
     }
 
     private static class NegativeVectorPredicate implements VectorPredicate {
         @Override
         public boolean test(int i, double value) {
-            return value < 0;
+            return value < 0.0;
         }
     }
 
@@ -630,7 +630,7 @@ public final class Vectors {
      * @param neutral the neutral value
      * @param function the vector function
      *
-     * @returna a sum function accumulator
+     * @return a sum function accumulator
      */
     public static VectorAccumulator asSumFunctionAccumulator(double neutral, VectorFunction function) {
         return new FunctionVectorAccumulator(new SumVectorAccumulator(neutral), function);
