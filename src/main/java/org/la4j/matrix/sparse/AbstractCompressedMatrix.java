@@ -59,4 +59,9 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
             fail("Cardinality should be less then or equal to capacity: " + cardinality + ".");
         }
     }
+
+    @Override
+    public boolean isZeroAt(int i, int j) {
+        return !nonZeroAt(i, j);
+    }
 }

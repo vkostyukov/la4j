@@ -40,4 +40,22 @@ public interface SparseVector extends Vector {
      * @return the density of this vector
      */
     double density();
+
+    /**
+     * Whether or not the specified element is zero.
+     *
+     * @param i element's index
+     *
+     * @return {@code true} if specified element is zero, {@code false} otherwise
+     */
+    boolean isZeroAt(int i);
+
+    /**
+     * * Whether or not the specified element is not zero.
+     *
+     * @param i element's index
+     *
+     * @return {@code true} if specified element is zero, {@code false} otherwise
+     */
+    boolean nonZeroAt(int i);
 }

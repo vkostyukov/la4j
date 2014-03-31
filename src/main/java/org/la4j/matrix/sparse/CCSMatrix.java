@@ -399,6 +399,12 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
     }
 
+    @Override
+    public boolean nonZeroAt(int i, int j) {
+        int k = searchForRowIndex(i, columnPointers[j], columnPointers[j + 1]);
+        return k < columnPointers[j + 1] && rowIndices[k] == i;
+    }
+
     private int searchForRowIndex(int i, int left, int right) {
 
         if (left == right) {

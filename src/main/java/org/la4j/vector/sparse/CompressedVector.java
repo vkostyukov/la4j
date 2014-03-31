@@ -298,6 +298,17 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         }
     }
 
+    @Override
+    public boolean isZeroAt(int i) {
+        return !nonZeroAt(i);
+    }
+
+    @Override
+    public boolean nonZeroAt(int i) {
+        int k = searchForIndex(i, 0, cardinality);
+        return k < cardinality && indices[k] == i;
+    }
+
     private int searchForIndex(int i, int left, int right) {
 
         if (left == right) {

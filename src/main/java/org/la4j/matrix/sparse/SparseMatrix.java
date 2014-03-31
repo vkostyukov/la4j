@@ -40,4 +40,24 @@ public interface SparseMatrix extends Matrix {
      * @return the density of this matrix
      */
     double density();
+
+    /**
+     * Whether or not the specified element is zero.
+     *
+     * @param i element's row index
+     * @param j element's column index
+     *
+     * @return {@code true} if specified element is zero, {@code false} otherwise
+     */
+    boolean isZeroAt(int i, int j);
+
+    /**
+     * Whether or not the specified element is not zero.
+     *
+     * @param i element's row index
+     * @param j element's column index
+     *
+     * @return {@code true} if specified element is not zero, {@code false} otherwise
+     */
+    boolean nonZeroAt(int i, int j);
 }
