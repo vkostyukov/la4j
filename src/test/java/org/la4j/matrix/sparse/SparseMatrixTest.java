@@ -22,6 +22,10 @@
 package org.la4j.matrix.sparse;
 
 import org.la4j.matrix.AbstractMatrixTest;
+import org.la4j.matrix.Matrices;
+import org.la4j.matrix.functor.MatrixAccumulator;
+import org.la4j.vector.MockVector;
+import org.la4j.vector.Vector;
 
 public abstract class SparseMatrixTest extends AbstractMatrixTest {
 
@@ -101,5 +105,62 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         for(int row = 0 ; row < 32 ; row++) {
             a.set(row, 1, 3.1415);
         }
+    }
+
+    public void testFoldNonZero_3x3() {
+
+        SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                { 1.0, 0.0, 2.0 },
+                { 4.0, 0.0, 5.0 },
+                { 0.0, 0.0, 0.0 }
+        });
+
+        MatrixAccumulator sum = Matrices.asSumAccumulator(0.0);
+        MatrixAccumulator product = Matrices.asProductAccumulator(1.0);
+
+        assertEquals(12.0, a.foldNonZero(sum));
+        // check whether the accumulator were flushed or not
+        assertEquals(12.0, a.foldNonZero(sum));
+
+        assertEquals(40.0, a.foldNonZero(product));
+        // check whether the accumulator were flushed or not
+        assertEquals(40.0, a.foldNonZero(product));
+
+        assertEquals(20.0, a.foldNonZeroInRow(1, product));
+        assertEquals(10.0, a.foldNonZeroInColumn(2, product));
+
+        Vector nonZeroInColumns = a.foldNonZeroInColumns(product);
+        assertEquals(new MockVector(factory().createVector(new double[] { 4.0, 1.0, 10.0})),
+                nonZeroInColumns);
+
+        Vector nonZeroInRows = a.foldNonZeroInRows(product);
+        assertEquals(new MockVector(factory().createVector(new double[] { 2.0, 20.0, 1.0})),
+                nonZeroInRows);
+    }
+
+    public void testIsZeroAt_5x3() {
+
+        SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                { 1.0, 0.0, 0.0 },
+                { 0.0, 0.0, 2.0 },
+                { 0.0, 0.0, 0.0 },
+                { 0.0, 3.0, 0.0 },
+                { 0.0, 0.0, 0.0 }
+        });
+
+        assertTrue(a.isZeroAt(2, 2));
+        assertFalse(a.isZeroAt(3, 1));
+    }
+
+    public void testNonZeroAt_3x4() {
+
+        SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                { 0.0, 0.0, 2.0, 0.0 },
+                { 0.0, 0.0, 0.0, 0.0 },
+                { 0.0, 1.0, 0.0, 0.0 }
+        });
+
+        assertTrue(a.nonZeroAt(2, 1));
+        assertFalse(a.nonZeroAt(0, 3));
     }
 }

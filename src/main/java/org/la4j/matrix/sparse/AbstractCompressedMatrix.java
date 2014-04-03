@@ -23,7 +23,11 @@ package org.la4j.matrix.sparse;
 
 import org.la4j.factory.Factory;
 import org.la4j.matrix.AbstractMatrix;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.functor.MatrixAccumulator;
+import org.la4j.matrix.functor.MatrixProcedure;
+import org.la4j.vector.Vector;
 
 public abstract class AbstractCompressedMatrix extends AbstractMatrix 
     implements SparseMatrix {
@@ -63,5 +67,76 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     @Override
     public boolean isZeroAt(int i, int j) {
         return !nonZeroAt(i, j);
+    }
+
+    @Override
+    public void eachNonZero(MatrixProcedure procedure) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (Math.abs(get(i,j)) > Matrices.EPS) {
+                    procedure.apply(i, j, get(i, j));
+                }
+            }
+        }
+    }
+
+    @Override
+    public void eachNonZeroInRow(int i, MatrixProcedure procedure) {
+        for (int j = 0; j < columns; j++) {
+            if (Math.abs(get(i, j)) > Matrices.EPS) {
+                procedure.apply(i, j, get(i, j));
+            }
+        }
+    }
+
+    @Override
+    public void eachNonZeroInColumn(int j, MatrixProcedure procedure) {
+        for (int i = 0; i < rows; i++) {
+            if (Math.abs(get(i, j)) > Matrices.EPS) {
+                procedure.apply(i, j, get(i, j));
+            }
+        }
+    }
+
+    @Override
+    public double foldNonZero(MatrixAccumulator accumulator) {
+        eachNonZero(Matrices.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
+    }
+
+    @Override
+    public double foldNonZeroInRow(int i, MatrixAccumulator accumulator) {
+        eachNonZeroInRow(i, Matrices.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
+    }
+
+    @Override
+    public double foldNonZeroInColumn(int j, MatrixAccumulator accumulator) {
+        eachNonZeroInColumn(j, Matrices.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
+    }
+
+    @Override
+    public Vector foldNonZeroInColumns(MatrixAccumulator accumulator) {
+
+        Vector result = factory.createVector(columns);
+
+        for (int i = 0; i < columns; i++) {
+            result.set(i, foldNonZeroInColumn(i, accumulator));
+        }
+
+        return result;
+    }
+
+    @Override
+    public Vector foldNonZeroInRows(MatrixAccumulator accumulator) {
+
+        Vector result = factory.createVector(rows);
+
+        for (int i = 0; i < rows; i++) {
+            result.set(i, foldNonZeroInRow(i, accumulator));
+        }
+
+        return result;
     }
 }

@@ -752,29 +752,6 @@ public interface Matrix extends Externalizable {
     void eachInColumn(int j, MatrixProcedure procedure);
 
     /**
-     * Applies given {@code procedure} to each non-zero element of this matrix.
-     *
-     * @param procedure the matrix procedure
-     */
-    void eachNonZero(MatrixProcedure procedure);
-
-    /**
-     * Applies given {@code procedure} to each non-zero element of specified row of this matrix.
-     *
-     * @param i the row index
-     * @param procedure the matrix procedure
-     */
-    void eachNonZeroInRow(int i, MatrixProcedure procedure);
-
-    /**
-     * Applies given {@code procedure} to each non-zero element of specified column of this matrix.
-     *
-     * @param j the column index
-     * @param procedure the matrix procedure
-     */
-    void eachNonZeroInColumn(int j, MatrixProcedure procedure);
-
-    /**
      * Searches for the maximum value of the elements of this matrix.
      *
      * @return maximum value of this matrix
@@ -990,53 +967,6 @@ public interface Matrix extends Externalizable {
      * @return the accumulated vector
      */
     Vector foldColumns(MatrixAccumulator accumulator);
-
-    /**
-     * Folds non-zero elements of this matrix with given {@code accumulator}.
-     *
-     * @param accumulator the matrix accumulator
-     *
-     * @return the accumulated value
-     */
-    double foldNonZero(MatrixAccumulator accumulator);
-
-    /**
-     * Folds non-zero elements of specified row in this matrix with given {@code accumulator}.
-     *
-     * @param i the row index
-     * @param accumulator the matrix accumulator
-     *
-     * @return the accumulated value
-     */
-    double foldNonZeroInRow(int i, MatrixAccumulator accumulator);
-
-    /**
-     * Folds non-zero elements of specified column in this matrix with given {@code accumulator}.
-     *
-     * @param j the column index
-     * @param accumulator the matrix accumulator
-     *
-     * @return the accumulated value
-     */
-    double foldNonZeroInColumn(int j, MatrixAccumulator accumulator);
-
-    /**
-     * Folds non-zero elements (in a column-by-column manner) of this matrix with given {@code accumulator}.
-     *
-     * @param accumulator the matrix accumulator
-     *
-     * @return the accumulated vector
-     */
-    Vector foldNonZeroInColumns(MatrixAccumulator accumulator);
-
-    /**
-     * Folds non-zero elements (in a row-by-row manner) of this matrix with given {@code accumulator}.
-     *
-     * @param accumulator the matrix accumulator
-     *
-     * @return the accumulated vector
-     */
-    Vector foldNonZeroInRows(MatrixAccumulator accumulator);
 
     /**
      * Checks whether this matrix compiles with given {@code predicate} or not.
