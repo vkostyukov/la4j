@@ -420,15 +420,6 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public void eachNonZero(VectorProcedure procedure) {
-        for (int i = 0; i < length; i++) {
-            if (Math.abs(get(i)) > Vectors.EPS) {
-                procedure.apply(i, get(i));
-            }
-        }
-    }
-
-    @Override
     public double max() {
         return fold(Vectors.mkMaxAccumulator());
     }
@@ -488,12 +479,6 @@ public abstract class AbstractVector implements Vector {
             accumulator.update(i, get(i));
         }
 
-        return accumulator.accumulate();
-    }
-
-    @Override
-    public double foldNonZero(VectorAccumulator accumulator) {
-        eachNonZero(Vectors.asAccumulatorProcedure(accumulator));
         return accumulator.accumulate();
     }
 

@@ -415,7 +415,6 @@ public interface Vector extends Externalizable {
      */
     Vector sliceRight(int from, Factory factory);
 
-
     /**
      * Returns a new vector with the selected elements.
      *
@@ -447,13 +446,6 @@ public interface Vector extends Externalizable {
      * @param procedure the vector procedure
      */
     void each(VectorProcedure procedure);
-
-    /**
-     * Applies given {@code procedure} to each non-zero element of this vector.
-     *
-     * @param procedure the vector procedure
-     */
-    void eachNonZero(VectorProcedure procedure);
 
     /**
      * Searches for the maximum value of the elements of this vector.
@@ -536,15 +528,6 @@ public interface Vector extends Externalizable {
      * @return the accumulated value
      */
     double fold(VectorAccumulator accumulator);
-
-    /**
-     * Folds non-zero elements of this vector with given {@code accumulator}.
-     *
-     * @param accumulator the vector accumulator
-     *
-     * @return the accumulated value
-     */
-    double foldNonZero(VectorAccumulator accumulator);
 
     /**
      * Checks whether this vector compiles with given {@code predicate} or not.

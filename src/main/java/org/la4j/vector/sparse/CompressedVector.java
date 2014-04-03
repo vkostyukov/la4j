@@ -31,6 +31,7 @@ import org.la4j.LinearAlgebra;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
+import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.source.VectorSource;
@@ -307,6 +308,12 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     public boolean nonZeroAt(int i) {
         int k = searchForIndex(i, 0, cardinality);
         return k < cardinality && indices[k] == i;
+    }
+
+    @Override
+    public double foldNonZero(VectorAccumulator accumulator) {
+        eachNonZero(Vectors.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
     }
 
     private int searchForIndex(int i, int left, int right) {

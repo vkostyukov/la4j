@@ -37,7 +37,7 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
 
- public abstract class AbstractVectorTest extends TestCase {
+public abstract class AbstractVectorTest extends TestCase {
 
     public abstract Factory factory();
 
@@ -643,20 +643,5 @@ import org.la4j.vector.functor.VectorAccumulator;
         assertEquals(0.0, a.fold(product));
         // check whether the accumulator were flushed
         assertEquals(0.0, a.fold(product));
-    }
-
-    public void testFoldNonZero_5() {
-        Vector a = factory().createVector(new double[] { 2.0, 0.0, 5.0, 0.0, 2.0 });
-
-        VectorAccumulator sum = Vectors.asSumAccumulator(0.0);
-        VectorAccumulator product = Vectors.asProductAccumulator(1.0);
-
-        assertEquals(9.0, a.foldNonZero(sum));
-        // check whether the accumulator were flushed
-        assertEquals(9.0, a.foldNonZero(sum));
-
-        assertEquals(20.0, a.foldNonZero(product));
-        // check whether the accumulator were flushed
-        assertEquals(20.0, a.foldNonZero(product));
     }
 }

@@ -22,14 +22,56 @@
 package org.la4j.vector.sparse;
 
 import org.la4j.vector.AbstractVectorTest;
+import org.la4j.vector.Vectors;
+import org.la4j.vector.functor.VectorAccumulator;
+import org.la4j.vector.functor.VectorProcedure;
 
 public abstract class SparseVectorTest extends AbstractVectorTest {
 
     public void testCardinality() {
 
         SparseVector a = (SparseVector) factory().createVector(
-                new double[] { 0.0, 0.0, 0.0, 0.0, 1.0 });
+                new double[] { 0.0, 0.0, 0.0, 0.0, 1.0 }
+        );
 
         assertEquals(1, a.cardinality());
+    }
+
+    public void testFoldNonZero_5() {
+
+        SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 2.0, 0.0, 5.0, 0.0, 2.0 }
+        );
+
+        VectorAccumulator sum = Vectors.asSumAccumulator(0.0);
+        VectorAccumulator product = Vectors.asProductAccumulator(1.0);
+
+        assertEquals(9.0, a.foldNonZero(sum));
+        // check whether the accumulator were flushed
+        assertEquals(9.0, a.foldNonZero(sum));
+
+        assertEquals(20.0, a.foldNonZero(product));
+        // check whether the accumulator were flushed
+        assertEquals(20.0, a.foldNonZero(product));
+    }
+
+    public void testIsZeroAt_4() {
+
+        SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 1.0, 0.0, 0.0, 4.0 }
+        );
+
+        assertTrue(a.isZeroAt(1));
+        assertFalse(a.isZeroAt(3));
+    }
+
+    public void testNonZeroAt_6() {
+
+        SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 0.0, 5.0, 2.0, 0.0, 0.0, 0.0 }
+        );
+
+        assertTrue(a.nonZeroAt(1));
+        assertFalse(a.nonZeroAt(3));
     }
 }

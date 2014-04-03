@@ -22,6 +22,8 @@
 package org.la4j.vector.sparse;
 
 import org.la4j.vector.Vector;
+import org.la4j.vector.functor.VectorAccumulator;
+import org.la4j.vector.functor.VectorProcedure;
 
 public interface SparseVector extends Vector {
 
@@ -58,4 +60,20 @@ public interface SparseVector extends Vector {
      * @return {@code true} if specified element is zero, {@code false} otherwise
      */
     boolean nonZeroAt(int i);
+
+    /**
+     * Folds non-zero elements of this vector with given {@code accumulator}.
+     *
+     * @param accumulator the vector accumulator
+     *
+     * @return the accumulated value
+     */
+    double foldNonZero(VectorAccumulator accumulator);
+
+    /**
+     * Applies given {@code procedure} to each non-zero element of this vector.
+     *
+     * @param procedure the vector procedure
+     */
+    void eachNonZero(VectorProcedure procedure);
 }
