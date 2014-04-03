@@ -76,4 +76,15 @@ public interface SparseVector extends Vector {
      * @param procedure the vector procedure
      */
     void eachNonZero(VectorProcedure procedure);
+
+    /**
+     * Gets the specified element, or a {@code defaultValue} if there
+     * is no actual element at index {@code i} in this sparse vector.
+     *
+     * @param i the element's index
+     * @param defaultValue the default value
+     *
+     * @return the element of this vector or a default value
+     */
+    double getOrElse(int i, double defaultValue);
 }

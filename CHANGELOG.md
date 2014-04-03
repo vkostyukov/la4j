@@ -2,14 +2,15 @@ Changelog
 ---------
 la4j-0.5.0 `Apr 2014`
  * Bug fix in serialization algorithm of sparse matrices (contributed by Catherine da Graca)`
- * New sparse matrix methods: `foldNonZero`, `foldNonZeroInRow`, `foldNonZeroInColumn`, `foldNonZeroInColumns`, `foldNonZeroInRows`
- * New sparse vector method: `foldNonZero`
+ * New sparse matrix methods: `foldNonZero()`, `foldNonZeroInRow()`, `foldNonZeroInColumn()`, `foldNonZeroInColumns()`, `foldNonZeroInRows()`
+ * New sparse vector method: `foldNonZero()`
  * New entity: `MatrixBuilder`
  * New entity: `VectorBuilder`
  * New matrix/vector method `mkString()` for customized to-string conversion
  * Bug fix in random generation of sparse matrices
- * New sparse methods: `isZeroAt` and `nonZeroAt`
+ * New sparse methods: `isZeroAt()` and `nonZeroAt()`
  * Method `eachNonZero` is available only for sparse entities
+ * New sparse method: `getOrElse()`
 
 la4j-0.4.9 `Jan 2014`
  * Bug fix in `align()` method for big sparse matrices (reported by Michael Kapper)

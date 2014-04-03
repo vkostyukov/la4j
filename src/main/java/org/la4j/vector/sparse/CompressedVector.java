@@ -103,6 +103,11 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     @Override
     public double get(int i) {
+        return getOrElse(i, 0.0);
+    }
+
+    @Override
+    public double getOrElse(int i, double defaultValue) {
 
         int k = searchForIndex(i, 0, cardinality);
 
@@ -110,7 +115,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
             return values[k];
         }
 
-        return 0.0;
+        return defaultValue;
     }
 
     @Override

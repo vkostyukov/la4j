@@ -74,4 +74,15 @@ public abstract class SparseVectorTest extends AbstractVectorTest {
         assertTrue(a.nonZeroAt(1));
         assertFalse(a.nonZeroAt(3));
     }
+
+    public void testGetOrElse_5() {
+
+        SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
+        );
+
+        assertEquals(0.0, a.getOrElse(1, 0.0));
+        assertEquals(1.0, a.getOrElse(2, 3.14));
+        assertEquals(4.2, a.getOrElse(3, 4.2));
+    }
 }
