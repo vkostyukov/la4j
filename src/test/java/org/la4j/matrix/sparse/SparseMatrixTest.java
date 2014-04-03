@@ -163,4 +163,16 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         assertTrue(a.nonZeroAt(2, 1));
         assertFalse(a.nonZeroAt(0, 3));
     }
+
+    public void testGetOrElse_2x5() {
+
+        SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                { 0.0, 0.0, 3.0, 0.0, 0.0 },
+        });
+
+        assertEquals(0.0, a.getOrElse(0, 2, 0.0));
+        assertEquals(3.0, a.getOrElse(1, 2, 3.14));
+        assertEquals(4.2, a.getOrElse(1, 3, 4.2));
+    }
 }

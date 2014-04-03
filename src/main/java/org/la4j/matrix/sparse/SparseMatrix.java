@@ -133,4 +133,16 @@ public interface SparseMatrix extends Matrix {
      * @return the accumulated vector
      */
     Vector foldNonZeroInRows(MatrixAccumulator accumulator);
+
+    /**
+     * Gets the specified element, or a {@code defaultValue} if there
+     * is no actual element at ({@code i}, {@code j}) in this sparse matrix.
+     *
+     * @param i the element's row index
+     * @param j the element's column index
+     * @param defaultValue the default value
+     *
+     * @return the element of this vector or a default value
+     */
+    double getOrElse(int i, int j, double defaultValue);
 }

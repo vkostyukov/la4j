@@ -48,6 +48,11 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
         return cardinality / (double) (rows * columns);
     }
 
+    @Override
+    public double get(int i, int j) {
+        return getOrElse(i, j, 0.0);
+    }
+
     protected long capacity() {
         return ((long) rows) * columns;
     }

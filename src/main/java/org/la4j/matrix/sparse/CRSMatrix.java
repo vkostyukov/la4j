@@ -120,7 +120,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     @Override
-    public double get(int i, int j) {
+    public double getOrElse(int i, int j, double defaultValue) {
 
         int k = searchForColumnIndex(j, rowPointers[i], rowPointers[i + 1]);
 
@@ -128,7 +128,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
             return values[k];
         }
 
-        return 0.0;
+        return defaultValue;
     }
 
     @Override
