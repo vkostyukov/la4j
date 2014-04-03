@@ -24,11 +24,6 @@ Samples
 **Building the matrix**
 ```java
 // We will use a CRS (Compressed Row Storage) matrix builder
-Matrix a = Matrices.asBuilder(LinearAlgebra.CRS_FACTORY)
-           .shape(10, 20)        // We want a 10x20 matrix
-           .source(new Random()) // ... with random elements
-           .build();             // ... and it should be a simple matrix
-
 // We will use a 2D array matrix builder
 Matrix b = Matrices.asBuilder(LinearAlgebra.BASIC2D_FACTORY)
            .shape(25, 25)    // We want a 25x25 matrix
@@ -40,6 +35,20 @@ Matrix c = Matrices.asBuilder(LinearAlgebra.CCS_FACTORY)
            .shape(14, 14)         // We want a 14x14 matrix
            .source(new Random())  // ... with random elements
            .buildSymmetric();     // ... and it should be a symmetric matrix
+```
+
+**Building the vector**
+```java
+// We will use a dense vector builder
+Vector a = Vectors.asBuilder(LinearAlgebra.DENSE_FACTORY)
+           .length(10)            // We want 10 elements vector
+           .source(new Random())  // ... with random values
+           .build();
+
+Vector a = Vectors.asBuilder(LinearAlgebra.DENSE_FACTORY)
+           .length(10)                    // We want 10 elements vector
+           .source(new double[] { 1.0 })  // ... with the values from an array
+           .build();                      // ... and it should be extended to a requested size
 ```
 
 **Matrix inversion**
