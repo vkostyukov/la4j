@@ -38,7 +38,6 @@ import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.source.Array1DMatrixSource;
 import org.la4j.matrix.source.Array2DMatrixSource;
-import org.la4j.matrix.source.DiagonalMatrixSource;
 import org.la4j.matrix.source.IdentityMatrixSource;
 import org.la4j.matrix.source.LoopbackMatrixSource;
 import org.la4j.matrix.source.MatrixSource;
@@ -862,18 +861,6 @@ public final class Matrices {
     @Deprecated
     public static MatrixSource asRandomSymmetricSource(int size) {
         return new RandomSymmetricMatrixSource(size);
-    }
-
-    /**
-     * Creates a diagonal matrix source of given {@code diagonal} array.
-     *
-     * @param diagonal the diagonal array
-     *
-     * @return a diagonal matrix source
-     */
-    @Deprecated
-    public static MatrixSource asDiagonalSource(double diagonal[]) {
-        return new DiagonalMatrixSource(diagonal);
     }
 
     /**
