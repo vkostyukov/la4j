@@ -109,7 +109,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     @Override
     public double getOrElse(int i, double defaultValue) {
 
-        int k = searchForIndex(i, 0, cardinality);
+        int k = searchForIndex(i);
 
         if (k < cardinality && indices[k] == i) {
             return values[k];
@@ -121,7 +121,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     @Override
     public void set(int i, double value) {
 
-        int k = searchForIndex(i, 0, cardinality);
+        int k = searchForIndex(i);
 
         if (k < cardinality && indices[k] == i) {
             // if (Math.abs(value) > Vectors.EPS || value < 0.0) {
@@ -142,8 +142,8 @@ public class CompressedVector extends AbstractVector implements SparseVector {
             return;
         }
 
-        int ii = searchForIndex(i, 0, cardinality);
-        int jj = searchForIndex(j, 0, cardinality);
+        int ii = searchForIndex(i);
+        int jj = searchForIndex(j);
 
         boolean iiNotZero = ii < cardinality && i == indices[ii];
         boolean jjNotZero = jj < cardinality && j == indices[jj];
@@ -218,7 +218,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         ensureLengthIsCorrect(length);
 
         int $cardinality = (length > this.length) ?
-                           cardinality : searchForIndex(length, 0, cardinality);
+                           cardinality : searchForIndex(length);
 
         double $values[] = new double[align(length, $cardinality)];
         int $indices[] = new int[align(length, $cardinality)];
@@ -246,7 +246,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     @Override
     public void update(int i, VectorFunction function) {
 
-        int k = searchForIndex(i, 0, cardinality);
+        int k = searchForIndex(i);
 
         if (k < cardinality && indices[k] == i) {
 
@@ -300,7 +300,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     @Override
     public boolean nonZeroAt(int i) {
-        int k = searchForIndex(i, 0, cardinality);
+        int k = searchForIndex(i);
         return k < cardinality && indices[k] == i;
     }
 
@@ -310,31 +310,23 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         return accumulator.accumulate();
     }
 
-    private int searchForIndex(int i, int left, int right) {
+    private int searchForIndex(int i) {
 
-        if (left == right) {
-            return left;
-        }
+        int left = 0;
+        int right = cardinality;
 
-        if (right - left < 8) {
-
-            int ii = left;
-            while (ii < right && indices[ii] < i) {
-                ii++;
+        while (left < right) {
+            int p = (left + right) / 2;
+            if (indices[p] > i) {
+                right = p;
+            } else if (indices[p] < i) {
+                left = p + 1;
+            } else {
+                return p;
             }
-
-            return ii;
         }
 
-        int p = (left + right) / 2;
-
-        if (indices[p] > i) {
-            return searchForIndex(i, left, p);
-        } else if (indices[p] < i) {
-            return searchForIndex(i, p + 1, right);
-        } else {
-            return p;
-        }
+        return left;
     }
 
     private void insert(int k, int i, double value) {
