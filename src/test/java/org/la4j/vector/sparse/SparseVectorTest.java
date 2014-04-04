@@ -24,7 +24,6 @@ package org.la4j.vector.sparse;
 import org.la4j.vector.AbstractVectorTest;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
-import org.la4j.vector.functor.VectorProcedure;
 
 public abstract class SparseVectorTest extends AbstractVectorTest {
 

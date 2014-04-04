@@ -217,25 +217,14 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     public Vector resize(int length) {
         ensureLengthIsCorrect(length);
 
-        int $cardinality = 0;
-        double $values[] = new double[align(length, 0)];
-        int $indices[] = new int[align(length, 0)];
+        int $cardinality = (length > this.length) ?
+                           cardinality : searchForIndex(length, 0, cardinality);
 
-        if (length >= this.length) {
+        double $values[] = new double[align(length, $cardinality)];
+        int $indices[] = new int[align(length, $cardinality)];
 
-            $cardinality = cardinality; 
-            System.arraycopy(values, 0, $values, 0, cardinality);
-            System.arraycopy(indices, 0, $indices, 0, cardinality);
-
-        } else {
-
-            $cardinality = searchForIndex(length, 0, cardinality);
-            for (int i = 0; i < $cardinality; i++) {
-                $values[i] = values[i];
-                $indices[i] = indices[i];
-            }
-
-        }
+        System.arraycopy(values, 0, $values, 0, $cardinality);
+        System.arraycopy(indices, 0, $indices, 0, $cardinality);
 
         return new CompressedVector(length, $cardinality, $values, $indices);
     }

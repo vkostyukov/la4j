@@ -11,6 +11,7 @@ la4j-0.5.0 `Apr 2014`
  * New sparse methods: `isZeroAt()` and `nonZeroAt()`
  * Method `eachNonZero` is available only for sparse entities
  * New sparse method: `getOrElse()`
+ * Bug fix in `resize()` method of sparse vector (reported by Leonid Ilyevsky)
 
 la4j-0.4.9 `Jan 2014`
  * Bug fix in `align()` method for big sparse matrices (reported by Michael Kapper)

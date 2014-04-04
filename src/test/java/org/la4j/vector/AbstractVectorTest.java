@@ -36,6 +36,7 @@ import junit.framework.TestCase;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
+import org.la4j.vector.functor.VectorPredicate;
 
 public abstract class AbstractVectorTest extends TestCase {
 
@@ -643,5 +644,62 @@ public abstract class AbstractVectorTest extends TestCase {
         assertEquals(0.0, a.fold(product));
         // check whether the accumulator were flushed
         assertEquals(0.0, a.fold(product));
+    }
+
+    public void testIssue162_0() {
+
+         VectorPredicate pi = new VectorPredicate() {
+             @Override
+             public boolean test(int i, double value) {
+                 return value == 3.14;
+             }
+         };
+
+         Vector a = factory().createVector();
+         Vector b = a.resize(31);
+
+         assertEquals(0, a.length());
+         assertEquals(31, b.length());
+
+         b.assign(3.14);
+         assertTrue(b.is(pi));
+
+         Vector c = b.resize(42);
+         c.assign(3.14);
+         assertTrue(c.is(pi));
+
+         Vector d = c.resize(54);
+         d.assign(3.14);
+         assertTrue(d.is(pi));
+    }
+
+    public void testResize_32_to_110_to_1076_to_31() {
+
+        VectorPredicate fortyTwo = new VectorPredicate() {
+            @Override
+            public boolean test(int i, double value) {
+                return value == 42.0;
+            }
+        };
+
+        Vector a = factory().createVector();
+        Vector b = a.resize(32);
+
+        assertEquals(32, b.length());
+
+        b.assign(42.0);
+        assertTrue(b.is(fortyTwo));
+
+        Vector c = b.resize(110);
+        c.assign(42.0);
+        assertTrue(c.is(fortyTwo));
+
+        Vector d = c.resize(1076);
+        d.assign(42.0);
+        assertTrue(d.is(fortyTwo));
+
+        Vector e = d.resize(31);
+        e.assign(42.0);
+        assertTrue(e.is(fortyTwo));
     }
 }
