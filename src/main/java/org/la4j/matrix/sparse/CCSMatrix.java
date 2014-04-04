@@ -407,29 +407,18 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     private int searchForRowIndex(int i, int left, int right) {
 
-        if (left == right) {
-            return left;
-        }
-
-        if (right - left < 8) {
-
-            int ii = left;
-            while (ii < right && rowIndices[ii] < i) {
-                ii++;
+        while (left < right) {
+            int p = (left + right) / 2;
+            if (rowIndices[p] > i) {
+                right = p;
+            } else if (rowIndices[p] < i) {
+                left = p + 1;
+            } else {
+                return p;
             }
-
-            return ii;
         }
 
-        int p = (left + right) / 2;
-
-        if (rowIndices[p] > i) {
-            return searchForRowIndex(i, left, p);
-        } else if (rowIndices[p] < i) {
-            return searchForRowIndex(i, p + 1, right);
-        } else {
-            return p;
-        }
+        return left;
     }
 
     private void insert(int k, int i, int j, double value) {

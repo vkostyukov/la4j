@@ -416,29 +416,18 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     private int searchForColumnIndex(int j, int left, int right) {
 
-        if (left == right) {
-            return left;
-        }
-
-        if (right - left < 8) {
-
-            int jj = left;
-            while (jj < right && columnIndices[jj] < j) {
-                jj++;
+        while (left < right) {
+            int p = (left + right) / 2;
+            if (columnIndices[p] > j) {
+                right = p;
+            } else if (columnIndices[p] < j) {
+                left = p + 1;
+            } else {
+                return p;
             }
-
-            return jj;
         }
 
-        int p = (left + right) / 2;
-
-        if (columnIndices[p] > j) {
-            return searchForColumnIndex(j, left, p);
-        } else if (columnIndices[p] < j) {
-            return searchForColumnIndex(j, p + 1, right);
-        } else {
-            return p;
-        }
+        return left;
     }
 
     private void insert(int k, int i, int j, double value) {
