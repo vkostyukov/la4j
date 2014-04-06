@@ -1986,4 +1986,78 @@ public abstract class AbstractMatrixTest extends TestCase {
         s = d.foldRows(Matrices.asSumAccumulator(0.0));
         assertEquals(s, rowSums);
     }
+
+    public void testDiagonalMatrixPredicate() {
+        Matrix a = factory().createMatrix(new double[][] {
+            { 1.0, 0.0, 0.0 },
+            { 0.0, 1.0, 0.0 },
+            { 0.0, 0.0, 1.0 }
+        });
+
+        assertTrue(a.is(Matrices.DIAGONAL_MATRIX));
+
+        Matrix b = factory().createMatrix(new double[][] {
+                { 0.0, 0.0, 0.0 },
+                { 2.0, 1.0, 0.0 },
+                { 0.0, 0.0, 1.0 }
+        });
+
+        assertFalse(b.is(Matrices.DIAGONAL_MATRIX));
+    }
+
+    public void testIdentityMatrixPredicate() {
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 0.0, 0.0 },
+                { 0.0, 1.0, 0.0 },
+                { 0.0, 0.0, 1.0 }
+        });
+
+        assertTrue(a.is(Matrices.IDENTITY_MATRIX));
+
+        Matrix b = factory().createMatrix(new double[][] {
+                { 0.0, 0.0, 0.0 },
+                { 1.0, 0.0, 0.0 },
+                { 0.0, 0.0, 1.0 }
+        });
+
+        assertFalse(b.is(Matrices.IDENTITY_MATRIX));
+    }
+
+    public void testZeroMatrixPredicate() {
+        Matrix a = factory().createMatrix(new double[][] {
+                { 0.0, 0.0, 0.0 },
+                { 0.0, 0.0, 0.0 }
+        });
+
+        assertTrue(a.is(Matrices.ZERO_MATRIX));
+
+        Matrix b = factory().createMatrix(new double[][] {
+                { 0.0, 0.0, 0.0 },
+                { 0.0, 0.0, 0.0 },
+                { 0.0, 0.0, 1.0 }
+        });
+
+        assertFalse(b.is(Matrices.ZERO_MATRIX));
+    }
+
+    public void testTridiagonalMatrixPredicate() {
+        Matrix a = factory().createMatrix(new double[][] {
+                { 0.0, 1.0, 0.0, 0.0 },
+                { 1.0, 2.0, 3.0, 0.0 },
+                { 0.0, 1.0, 0.0, 2.0 },
+                { 0.0, 0.0, 1.0, 2.0 }
+        });
+
+        assertTrue(a.is(Matrices.TRIDIAGONAL_MATRIX));
+
+        Matrix b = factory().createMatrix(new double[][] {
+                { 0.0, 1.0, 0.0, 0.0 },
+                { 1.0, 2.0, 3.0, 0.0 },
+                { 5.0, 0.0, 0.0, 2.0 },
+                { 0.0, 0.0, 1.0, 2.0 }
+        });
+
+        assertFalse(b.is(Matrices.TRIDIAGONAL_MATRIX));
+    }
+
 }
