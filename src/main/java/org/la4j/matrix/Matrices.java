@@ -62,6 +62,173 @@ public final class Matrices {
      */
     public static final int ROUND_FACTOR = LinearAlgebra.ROUND_FACTOR;
 
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://mathworld.wolfram.com/DiagonalMatrix.html">diagonal
+     * matrix</a>.
+     */
+    public static final MatrixPredicate DIAGONAL_MATRIX = new MatrixPredicate() {
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
+        @Override
+        public boolean test(int i, int j, double value) {
+            return (i == j) || Math.abs(value) < EPS;
+        }
+    };
+
+    /**
+     * Checks whether the matrix is an
+     * <a href="http://mathworld.wolfram.com/IdentityMatrix.html">identity
+     * matrix</a>.
+     */
+    public static final MatrixPredicate IDENTITY_MATRIX = new MatrixPredicate() {
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
+        @Override
+        public boolean test(int i, int j, double value) {
+            return (i == j) ? Math.abs(1.0 - value) < EPS
+                    : Math.abs(value) < EPS;
+        }
+    };
+
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://mathworld.wolfram.com/ZeroMatrix.html">zero
+     * matrix</a>.
+     */
+    public static final MatrixPredicate ZERO_MATRIX = new MatrixPredicate() {
+        @Override
+        public boolean test(int rows, int columns) {
+            return true;
+        }
+
+        @Override
+        public boolean test(int i, int j, double value) {
+            return Math.abs(value) < EPS;
+        }
+    };
+
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://mathworld.wolfram.com/TridiagonalMatrix.html">tridiagonal
+     * matrix</a>.
+     */
+    public static final MatrixPredicate TRIDIAGONAL_MATRIX = new MatrixPredicate() {
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
+        @Override
+        public boolean test(int i, int j, double value) {
+            return Math.abs(i - j) <= 1 || Math.abs(value) < EPS;
+        }
+    };
+
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://mathworld.wolfram.com/PositiveMatrix.html">positive
+     * matrix</a>.
+     */
+    public static final MatrixPredicate POSITIVE_MATRIX = new MatrixPredicate() {
+        @Override
+        public boolean test(int rows, int columns) {
+            return true;
+        }
+
+        @Override
+        public boolean test(int i, int j, double value) {
+            return value > 0.0;
+        }
+    };
+
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://mathworld.wolfram.com/NegativeMatrix.html">negative
+     * matrix</a>.
+     */
+    public static final MatrixPredicate NEGATIVE_MATRIX = new MatrixPredicate() {
+        @Override
+        public boolean test(int rows, int columns) {
+            return true;
+        }
+
+        @Override
+        public boolean test(int i, int j, double value) {
+            return value < 0.0;
+        }
+    };
+
+    /**
+     * Checks whether the matrix is a lower bi-diagonal matrix</a>.
+     */
+    public static final MatrixPredicate LOWER_BIDIAGONAL_MATRIX = new MatrixPredicate() {
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
+        @Override
+        public boolean test(int i, int j, double value) {
+            return !((i == j) || (i == j + 1)) || Math.abs(value) < EPS;
+        }
+    };
+
+    /**
+     * Checks whether the matrix is an upper bidiagonal matrix.
+     */
+    public static final MatrixPredicate UPPER_BIDIAGONAL_MATRIX = new MatrixPredicate() {
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
+        @Override
+        public boolean test(int i, int j, double value) {
+            return !((i == j) || (i == j - 1)) || Math.abs(value) < EPS;
+        }
+    };
+
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://mathworld.wolfram.com/LowerTriangularMatrix.html">lower
+     * triangular matrix</a>.
+     */
+    public static final MatrixPredicate LOWER_TRIANGULAR_MATRIX = new MatrixPredicate() {
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
+        @Override
+        public boolean test(int i, int j, double value) {
+            return (i <= j) || Math.abs(value) < EPS;
+        }
+    };
+
+    /**
+     * Checks whether the matrix is an
+     * <a href="http://mathworld.wolfram.com/UpperTriangularMatrix.html">upper
+     * triangular matrix</a>.
+     */
+    public static final MatrixPredicate UPPER_TRIANGULAR_MATRIX = new MatrixPredicate() {
+        @Override
+        public boolean test(int rows, int columns) {
+            return rows == columns;
+        }
+
+        @Override
+        public boolean test(int i, int j, double value) {
+            return (i >= j) || Math.abs(value) < EPS;
+        }
+    };
+
     private static class SymmetricMatrixPredicate
             implements AdvancedMatrixPredicate {
 
@@ -135,6 +302,57 @@ public final class Matrices {
             return true;
         }
     }
+
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://mathworld.wolfram.com/SymmetricMatrix.html">symmetric
+     * matrix</a>.
+     */
+    public static final AdvancedMatrixPredicate SYMMETRIC_MATRIX =
+            new SymmetricMatrixPredicate();
+
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://en.wikipedia.org/wiki/Diagonally_dominant_matrix">diagonally dominant matrix</a>.
+     */
+    public static final AdvancedMatrixPredicate DIAGONALLY_DOMINANT_MATRIX =
+            new DiagonallyDominantPredicate();
+
+    /**
+     * Checks whether the matrix is positive definite.
+     */
+    public static final AdvancedMatrixPredicate POSITIVE_DEFINITE_MATRIX =
+            new PositiveDefiniteMatrixPredicate();
+
+    /**
+     * Increases each element of matrix by <code>1</code>.
+     */
+    public static final MatrixFunction INC_FUNCTION = new MatrixFunction() {
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return value + 1.0;
+        }
+    };
+
+    /**
+     * Decreases each element of matrix by <code>1</code>.
+     */
+    public static final MatrixFunction DEC_FUNCTION = new MatrixFunction() {
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return value - 1.0;
+        }
+    };
+
+    /**
+     * Inverts each element of matrix.
+     */
+    public static final MatrixFunction INV_FUNCTION = new MatrixFunction() {
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return -value;
+        }
+    };
 
     /**
      * Creates a const function that evaluates it's argument to given {@code value}.
@@ -230,400 +448,6 @@ public final class Matrices {
                 return value % arg;
             }
         };
-    }
-
-    /**
-     * Checks whether the matrix is a
-     * <a href="http://mathworld.wolfram.com/DiagonalMatrix.html">diagonal 
-     * matrix</a>.
-     */
-    public static final MatrixPredicate DIAGONAL_MATRIX = new MatrixPredicate() {
-        @Override
-        public boolean test(int rows, int columns) {
-            return rows == columns;
-        }
-
-        @Override
-        public boolean test(int i, int j, double value) {
-            return (i == j) || Math.abs(value) < EPS;
-        }
-    };
-
-    /**
-     * Checks whether the matrix is an 
-     * <a href="http://mathworld.wolfram.com/IdentityMatrix.html">identity
-     * matrix</a>.
-     */
-    public static final MatrixPredicate IDENTITY_MATRIX = new MatrixPredicate() {
-        @Override
-        public boolean test(int rows, int columns) {
-            return rows == columns;
-        }
-
-        @Override
-        public boolean test(int i, int j, double value) {
-            return (i == j) ? Math.abs(1.0 - value) < EPS
-                   : Math.abs(value) < EPS;
-        }
-    };
-
-    /**
-     * Checks whether the matrix is a
-     * <a href="http://mathworld.wolfram.com/ZeroMatrix.html">zero
-     * matrix</a>.
-     */
-    public static final MatrixPredicate ZERO_MATRIX = new MatrixPredicate() {
-        @Override
-        public boolean test(int rows, int columns) {
-            return true;
-        }
-
-        @Override
-        public boolean test(int i, int j, double value) {
-            return Math.abs(value) < EPS;
-        }
-    };
-
-    /**
-     * Checks whether the matrix is a 
-     * <a href="http://mathworld.wolfram.com/TridiagonalMatrix.html">tridiagonal
-     * matrix</a>.
-     */
-    public static final MatrixPredicate TRIDIAGONAL_MATRIX = new MatrixPredicate() {
-        @Override
-        public boolean test(int rows, int columns) {
-            return rows == columns;
-        }
-
-        @Override
-        public boolean test(int i, int j, double value) {
-            return Math.abs(i - j) <= 1 || Math.abs(value) < EPS;
-        }
-    };
-
-    /**
-     * Checks whether the matrix is a 
-     * <a href="http://mathworld.wolfram.com/PositiveMatrix.html">positive 
-     * matrix</a>.
-     */
-    public static final MatrixPredicate POSITIVE_MATRIX = new MatrixPredicate() {
-        @Override
-        public boolean test(int rows, int columns) {
-            return true;
-        }
-
-        @Override
-        public boolean test(int i, int j, double value) {
-            return value > 0.0;
-        }
-    };
-
-    /**
-     * Checks whether the matrix is a 
-     * <a href="http://mathworld.wolfram.com/NegativeMatrix.html">negative 
-     * matrix</a>.
-     */
-    public static final MatrixPredicate NEGATIVE_MATRIX = new MatrixPredicate() {
-        @Override
-        public boolean test(int rows, int columns) {
-            return true;
-        }
-
-        @Override
-        public boolean test(int i, int j, double value) {
-            return value < 0.0;
-        }
-    };
-
-    /**
-     * Checks whether the matrix is a lower bi-diagonal matrix</a>.
-     */
-    public static final MatrixPredicate LOWER_BIDIAGONAL_MATRIX = new MatrixPredicate() {
-        @Override
-        public boolean test(int rows, int columns) {
-            return rows == columns;
-        }
-
-        @Override
-        public boolean test(int i, int j, double value) {
-            return !((i == j) || (i == j + 1)) || Math.abs(value) < EPS;
-        }
-    };
-
-    /**
-     * Checks whether the matrix is an upper bidiagonal matrix. 
-     */
-    public static final MatrixPredicate UPPER_BIDIAGONAL_MATRIX = new MatrixPredicate() {
-        @Override
-        public boolean test(int rows, int columns) {
-            return rows == columns;
-        }
-
-        @Override
-        public boolean test(int i, int j, double value) {
-            return !((i == j) || (i == j - 1)) || Math.abs(value) < EPS;
-        }
-    };
-
-    /**
-     * Checks whether the matrix is a
-     * <a href="http://mathworld.wolfram.com/LowerTriangularMatrix.html">lower 
-     * triangular matrix</a>.
-     */
-    public static final MatrixPredicate LOWER_TRIANGULAR_MATRIX = new MatrixPredicate() {
-        @Override
-        public boolean test(int rows, int columns) {
-            return rows == columns;
-        }
-
-        @Override
-        public boolean test(int i, int j, double value) {
-            return (i <= j) || Math.abs(value) < EPS;
-        }
-    };
-
-    /**
-     * Checks whether the matrix is an
-     * <a href="http://mathworld.wolfram.com/UpperTriangularMatrix.html">upper 
-     * triangular matrix</a>.
-     */
-    public static final MatrixPredicate UPPER_TRIANGULAR_MATRIX = new MatrixPredicate() {
-        @Override
-        public boolean test(int rows, int columns) {
-            return rows == columns;
-        }
-
-        @Override
-        public boolean test(int i, int j, double value) {
-            return (i >= j) || Math.abs(value) < EPS;
-        }
-    };
-
-    /**
-     * Checks whether the matrix is a 
-     * <a href="http://mathworld.wolfram.com/SymmetricMatrix.html">symmetric 
-     * matrix</a>. 
-     */
-    public static final AdvancedMatrixPredicate SYMMETRIC_MATRIX = 
-            new SymmetricMatrixPredicate();
-
-    /**
-     * Checks whether the matrix is a
-     * <a href="http://en.wikipedia.org/wiki/Diagonally_dominant_matrix">diagonally dominant matrix</a>.
-     */
-    public static final AdvancedMatrixPredicate DIAGONALLY_DOMINANT_MATRIX = 
-            new DiagonallyDominantPredicate();
-
-    /**
-     * Checks whether the matrix is positive definite.
-     */
-    public static final AdvancedMatrixPredicate POSITIVE_DEFINITE_MATRIX =
-            new PositiveDefiniteMatrixPredicate();
-
-    /**
-     * Increases each element of matrix by <code>1</code>.
-     */
-    public static final MatrixFunction INC_FUNCTION = new MatrixFunction() {
-        @Override
-        public double evaluate(int i, int j, double value) {
-            return value + 1.0;
-        }
-    };
-
-    /**
-     * Decreases each element of matrix by <code>1</code>.
-     */
-    public static final MatrixFunction DEC_FUNCTION = new MatrixFunction() {
-        @Override
-        public double evaluate(int i, int j, double value) {
-            return value - 1.0;
-        }
-    };
-
-    /**
-     * Inverts each element of matrix.  
-     */
-    public static final MatrixFunction INV_FUNCTION = new MatrixFunction() {
-        @Override
-        public double evaluate(int i, int j, double value) {
-            return -value;
-        }
-    };
-
-    /**
-     * Creates a singleton 1x1 matrix of given {@code value}.
-     * 
-     * @param value the singleton value
-     *
-     * @return a singleton matrix
-     */
-    @Deprecated
-    public static Matrix asSingletonMatrix(double value) {
-        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(new double[][]{{ value }});
-    }
-
-    /**
-     * Creates a default 1x1 matrix from given {@code value}.
-     *
-     * @param value of the matrix
-     *
-     * @return a default 1x1 matrix
-     */
-    public static Matrix asMatrix1x1(double value) {
-        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(new double[][]{{ value }});
-    }
-
-    /**
-     * Creates a default 2x2 matrix from given {@code value}.
-     *
-     * @param values of the matrix
-     *
-     * @return a default 2x2 matrix
-     */
-    public static Matrix asMatrix2x2(double... values) {
-        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(unflatten(values, 2));
-    }
-
-    /**
-     * Creates a default 3x3 matrix from given {@code value}.
-     *
-     * @param values of the matrix
-     *
-     * @return a default 3x3 matrix
-     */
-    public static Matrix asMatrix3x3(double... values) {
-        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(unflatten(values, 3));
-    }
-
-    /**
-     * Creates a default 4x4 matrix from given {@code value}.
-     *
-     * @param values of the matrix
-     *
-     * @return a default 4x4 matrix
-     */
-    public static Matrix asMatrix4x4(double... values) {
-        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(unflatten(values, 4));
-    }
-
-    /**
-     * Creates a matrix source of given {@code matrix}.
-     * 
-     * @param matrix the source matrix
-     *
-     * @return a matrix source
-     */
-    public static MatrixSource asMatrixSource(Matrix matrix) {
-        return new LoopbackMatrixSource(matrix);
-    }
-
-    /**
-     * Creates a 1D-array matrix source of given {@code array} reference.
-     * 
-     * @param rows the number of rows in the source
-     * @param columns the number of columns in the source
-     * @param array the array reference
-     *
-     * @return a 1D-array matrix source
-     */
-    public static MatrixSource asArray1DSource(int rows, int columns, double[] array) {
-        return new Array1DMatrixSource(rows, columns, array);
-    }
-
-    /**
-     * Creates a 2D-array matrix source of given {@code array} reference.
-     * 
-     * @param array the array reference
-     *
-     * @return a 2D-array matrix source
-     */
-    public static MatrixSource asArray2DSource(double[][] array) {
-        return new Array2DMatrixSource(array);
-    }
-
-    /**
-     * Creates an identity matrix source of given {@code size}.
-     * 
-     * @param size the source size
-     *
-     * @return an identity matrix source
-     */
-    @Deprecated
-    public static MatrixSource asIdentitySource(int size) {
-        return new IdentityMatrixSource(size);
-    }
-
-    /**
-     * Creates a random matrix source of specified dimensions.
-     * 
-     * @param rows the number of rows in the source
-     * @param columns the number of columns in the source
-     * @param random the random generator instance
-     *
-     * @return a random matrix source
-     */
-    public static MatrixSource asRandomSource(int rows, int columns, Random random) {
-        return new RandomMatrixSource(rows, columns, random);
-    }
-
-    /**
-     * Creates a random symmetric matrix source of given {@code size}.
-     * 
-     * @param size the size of the source
-     *
-     * @return a random symmetric matrix source
-     */
-    @Deprecated
-    public static MatrixSource asRandomSymmetricSource(int size) {
-        return new RandomSymmetricMatrixSource(size);
-    }
-
-    /**
-     * Creates a MatrixMarket stream source of given input stream {@code in}.
-     *
-     * @param in the input stream
-     *
-     * @return a MatrixMarket stream source
-     */
-    @Deprecated
-    public static MatrixSource asMatrixMarketSource(InputStream in) {
-        return new StreamMatrixSource(new MatrixMarketStream(in));
-    }
-
-    /**
-     * Creates a symbol separated stream source (like CSV) of given input stream {@code in}.
-     *
-     * @param in the input stream
-     *
-     * @return a symbol separated stream source
-     */
-    @Deprecated
-    public static MatrixSource asSymbolSeparatedSource(InputStream in) {
-        return new StreamMatrixSource(new SymbolSeparatedStream(in));
-    }
-
-    /**
-     * Creates a symbol separated stream source (like CSV) of given input stream {@code in}.
-     *
-     * @param in the input stream
-     * @param separator the values' separator
-     *
-     * @return a symbol separated stream source
-     */
-    @Deprecated
-    public static MatrixSource asSymbolSeparatedSource(InputStream in, String separator) {
-        return new StreamMatrixSource(new SymbolSeparatedStream(in, separator));
-    }
-
-    /**
-     * Creates a new matrix builder instance of given {@code factory}.
-     *
-     * @param factory the builder's factory
-     *
-     * @return a factorised matrix builder
-     */
-    public static MatrixBuilder asBuilder(Factory factory) {
-        return new TerminalMatrixBuilder(factory);
     }
 
     /**
@@ -790,6 +614,182 @@ public final class Matrices {
                 accumulator.update(i, j, value);
             }
         };
+    }
+
+    /**
+     * Creates a singleton 1x1 matrix of given {@code value}.
+     *
+     * @param value the singleton value
+     *
+     * @return a singleton matrix
+     */
+    @Deprecated
+    public static Matrix asSingletonMatrix(double value) {
+        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(new double[][]{{ value }});
+    }
+
+    /**
+     * Creates a matrix source of given {@code matrix}.
+     *
+     * @param matrix the source matrix
+     *
+     * @return a matrix source
+     */
+    public static MatrixSource asMatrixSource(Matrix matrix) {
+        return new LoopbackMatrixSource(matrix);
+    }
+
+    /**
+     * Creates a 1D-array matrix source of given {@code array} reference.
+     *
+     * @param rows the number of rows in the source
+     * @param columns the number of columns in the source
+     * @param array the array reference
+     *
+     * @return a 1D-array matrix source
+     */
+    public static MatrixSource asArray1DSource(int rows, int columns, double[] array) {
+        return new Array1DMatrixSource(rows, columns, array);
+    }
+
+    /**
+     * Creates a 2D-array matrix source of given {@code array} reference.
+     *
+     * @param array the array reference
+     *
+     * @return a 2D-array matrix source
+     */
+    public static MatrixSource asArray2DSource(double[][] array) {
+        return new Array2DMatrixSource(array);
+    }
+
+    /**
+     * Creates an identity matrix source of given {@code size}.
+     *
+     * @param size the source size
+     *
+     * @return an identity matrix source
+     */
+    @Deprecated
+    public static MatrixSource asIdentitySource(int size) {
+        return new IdentityMatrixSource(size);
+    }
+
+    /**
+     * Creates a random matrix source of specified dimensions.
+     *
+     * @param rows the number of rows in the source
+     * @param columns the number of columns in the source
+     * @param random the random generator instance
+     *
+     * @return a random matrix source
+     */
+    public static MatrixSource asRandomSource(int rows, int columns, Random random) {
+        return new RandomMatrixSource(rows, columns, random);
+    }
+
+    /**
+     * Creates a random symmetric matrix source of given {@code size}.
+     *
+     * @param size the size of the source
+     *
+     * @return a random symmetric matrix source
+     */
+    @Deprecated
+    public static MatrixSource asRandomSymmetricSource(int size) {
+        return new RandomSymmetricMatrixSource(size);
+    }
+
+    /**
+     * Creates a MatrixMarket stream source of given input stream {@code in}.
+     *
+     * @param in the input stream
+     *
+     * @return a MatrixMarket stream source
+     */
+    @Deprecated
+    public static MatrixSource asMatrixMarketSource(InputStream in) {
+        return new StreamMatrixSource(new MatrixMarketStream(in));
+    }
+
+    /**
+     * Creates a symbol separated stream source (like CSV) of given input stream {@code in}.
+     *
+     * @param in the input stream
+     *
+     * @return a symbol separated stream source
+     */
+    @Deprecated
+    public static MatrixSource asSymbolSeparatedSource(InputStream in) {
+        return new StreamMatrixSource(new SymbolSeparatedStream(in));
+    }
+
+    /**
+     * Creates a symbol separated stream source (like CSV) of given input stream {@code in}.
+     *
+     * @param in the input stream
+     * @param separator the values' separator
+     *
+     * @return a symbol separated stream source
+     */
+    @Deprecated
+    public static MatrixSource asSymbolSeparatedSource(InputStream in, String separator) {
+        return new StreamMatrixSource(new SymbolSeparatedStream(in, separator));
+    }
+
+    /**
+     * Creates a new matrix builder instance of given {@code factory}.
+     *
+     * @param factory the builder's factory
+     *
+     * @return a factorised matrix builder
+     */
+    public static MatrixBuilder asBuilder(Factory factory) {
+        return new TerminalMatrixBuilder(factory);
+    }
+
+    /**
+     * Creates a default 1x1 matrix from given {@code value}.
+     *
+     * @param value of the matrix
+     *
+     * @return a default 1x1 matrix
+     */
+    public static Matrix asMatrix1x1(double value) {
+        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(new double[][]{{ value }});
+    }
+
+    /**
+     * Creates a default 2x2 matrix from given {@code value}.
+     *
+     * @param values of the matrix
+     *
+     * @return a default 2x2 matrix
+     */
+    public static Matrix asMatrix2x2(double... values) {
+        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(unflatten(values, 2));
+    }
+
+    /**
+     * Creates a default 3x3 matrix from given {@code value}.
+     *
+     * @param values of the matrix
+     *
+     * @return a default 3x3 matrix
+     */
+    public static Matrix asMatrix3x3(double... values) {
+        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(unflatten(values, 3));
+    }
+
+    /**
+     * Creates a default 4x4 matrix from given {@code value}.
+     *
+     * @param values of the matrix
+     *
+     * @return a default 4x4 matrix
+     */
+    public static Matrix asMatrix4x4(double... values) {
+        return LinearAlgebra.DEFAULT_FACTORY.createMatrix(unflatten(values, 4));
     }
 
     /**
