@@ -36,6 +36,7 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.sparse.SparseVector;
 
 public abstract class AbstractVector implements Vector {
 
@@ -237,6 +238,27 @@ public abstract class AbstractVector implements Vector {
     public double sum() {
         return fold(Vectors.asSumAccumulator(0.0));
     }
+    
+    /**
+     * Helper class for performing a sparse / dense vector product
+     */
+    private static final class SparseDot implements VectorProcedure
+    {
+        public Vector other;
+        double result;
+
+        public SparseDot(Vector other)
+        {
+            this.other = other;
+            result = 0;
+        }
+
+        @Override
+        public void apply(int i, double value)
+        {
+            result += other.get(i)*value;
+        }
+    }
 
     @Override
     public double innerProduct(Vector vector) {
@@ -246,8 +268,19 @@ public abstract class AbstractVector implements Vector {
             fail("Wong vector length: " + vector.length() + ". Should be: " + length + ".");
         }
 
+        //Check for sparse vectors. Case of sparse dot sparse not handled, but this is better than before
+        if(vector instanceof SparseVector){
+            SparseVector svector = (SparseVector) vector;
+            SparseDot sparseDot = new SparseDot(this);
+            svector.eachNonZero(sparseDot);
+            return sparseDot.result;
+        }
+        else if(this instanceof SparseVector) {
+            return vector.innerProduct(this);//lazy for less code
+        }
+        //else base case, dense dot dense
         double result = 0.0;
-
+        
         for (int i = 0; i < length; i++) {
             result += get(i) * vector.get(i);
         }
