@@ -21,20 +21,13 @@
 
 package org.la4j.vector.operation;
 
-import org.la4j.vector.Vector;
-import org.la4j.vector.dense.BasicVector;
-import org.la4j.vector.sparse.CompressedVector;
+import org.la4j.vector.operation.ooplace.InnerProduct;
 
-public abstract class CommonVectorOperation<T> implements VectorOperation<T> {
-    @Override
-    public T apply(final CompressedVector a) {
-        return applyCommon(a);
-    }
+public final class OoPlaceOperations {
 
-    @Override
-    public T apply(final BasicVector a) {
-        return applyCommon(a);
-    }
-
-    abstract T applyCommon(final Vector a);
+    /**
+     * An inner product operation.
+     */
+    public static final VectorVectorOperation<Double>
+            INNER_PRODUCT = new InnerProduct();
 }

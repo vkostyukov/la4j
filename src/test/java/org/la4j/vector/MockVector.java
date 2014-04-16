@@ -95,12 +95,12 @@ public class MockVector extends AbstractVector implements Vector {
     }
 
     @Override
-    public <T> T ooPlace(VectorOperation<T> operation) {
-        return self.ooPlace(operation);
+    public <T> T pipeTo(VectorOperation<T> operation) {
+        return self.pipeTo(operation);
     }
 
     @Override
-    public <T> T ooPlace(VectorVectorOperation<T> operation, Vector that) {
-        return self.ooPlace(operation, that);
+    public <T> T pipeTo(VectorVectorOperation<T> operation, Vector that) {
+        return self.pipeTo(operation, that);
     }
 }

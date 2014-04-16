@@ -424,7 +424,7 @@ public interface Vector extends Externalizable {
      *
      * @return the new vector with the selected elements
      */
-    public Vector select(int[] indices);
+    Vector select(int[] indices);
 
     /**
      * Returns a new vector with the selected elements.
@@ -433,7 +433,7 @@ public interface Vector extends Externalizable {
      *
      * @return the new vector with the selected elements
      */
-    public Vector select(int[] indices, Factory factory);
+    Vector select(int[] indices, Factory factory);
 
     /**
      * Returns the factory of this vector.
@@ -600,7 +600,25 @@ public interface Vector extends Externalizable {
      */
     String mkString(NumberFormat formatter, String delimiter);
 
-    <T> T ooPlace(VectorOperation<T> operation);
+    /**
+     * Pipes this vector to a given {@code operation}.
+     *
+     * @param operation the vector operation
+     *                  (an operation that take vector and returns {@code T})
+     * @param <T> the result type
+     *
+     * @return the result of an operation applied to this vector
+     */
+    <T> T pipeTo(VectorOperation<T> operation);
 
-    <T> T ooPlace(VectorVectorOperation<T> operation, Vector that);
+    /**
+     * Pipes this vector to a given {@code operation}.
+     *
+     * @param operation the vector-vector operation
+     *                  (an operation that takes two vectors and returns {@code T})
+     * @param <T> the result type
+     *
+     * @return the result of an operation applied to this and {@code that} vector
+     */
+    <T> T pipeTo(VectorVectorOperation<T> operation, Vector that);
 }

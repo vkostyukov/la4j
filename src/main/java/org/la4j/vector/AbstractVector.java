@@ -36,7 +36,8 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.operation.ooplace.InnerProductVectorOperation;
+import org.la4j.vector.operation.OoPlaceOperations;
+import org.la4j.vector.operation.ooplace.InnerProduct;
 
 public abstract class AbstractVector implements Vector {
 
@@ -247,7 +248,7 @@ public abstract class AbstractVector implements Vector {
             fail("Wong vector length: " + vector.length() + ". Should be: " + length + ".");
         }
 
-        return ooPlace(new InnerProductVectorOperation(), vector);
+        return pipeTo(OoPlaceOperations.INNER_PRODUCT, vector);
     }
 
     @Override

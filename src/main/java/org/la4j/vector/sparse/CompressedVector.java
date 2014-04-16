@@ -450,12 +450,12 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     @Override
-    public <T> T ooPlace(VectorOperation<T> operation) {
+    public <T> T pipeTo(VectorOperation<T> operation) {
         return operation.apply(this);
     }
 
     @Override
-    public <T> T ooPlace(VectorVectorOperation<T> operation, Vector that) {
-        return that.ooPlace(operation.curry(this));
+    public <T> T pipeTo(VectorVectorOperation<T> operation, Vector that) {
+        return that.pipeTo(operation.curry(this));
     }
 }
