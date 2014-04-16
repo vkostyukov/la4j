@@ -33,6 +33,8 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.operation.VectorOperation;
+import org.la4j.vector.operation.VectorVectorOperation;
 
 /**
  * The real vector interface.
@@ -597,4 +599,8 @@ public interface Vector extends Externalizable {
      * @return the vector converted to a string
      */
     String mkString(NumberFormat formatter, String delimiter);
+
+    <T> T ooPlace(VectorOperation<T> operation);
+
+    <T> T ooPlace(VectorVectorOperation<T> operation, Vector that);
 }

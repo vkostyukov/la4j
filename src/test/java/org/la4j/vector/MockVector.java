@@ -21,6 +21,9 @@
 
 package org.la4j.vector;
 
+import org.la4j.vector.operation.VectorOperation;
+import org.la4j.vector.operation.VectorVectorOperation;
+
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
@@ -88,10 +91,16 @@ public class MockVector extends AbstractVector implements Vector {
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
-        // TODO Auto-generated method stub
-
         self.writeExternal(out);
     }
 
-    
+    @Override
+    public <T> T ooPlace(VectorOperation<T> operation) {
+        return self.ooPlace(operation);
+    }
+
+    @Override
+    public <T> T ooPlace(VectorVectorOperation<T> operation, Vector that) {
+        return self.ooPlace(operation, that);
+    }
 }

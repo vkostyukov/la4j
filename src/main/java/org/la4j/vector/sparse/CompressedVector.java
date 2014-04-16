@@ -34,6 +34,8 @@ import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.operation.VectorOperation;
+import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.source.VectorSource;
 
 public class CompressedVector extends AbstractVector implements SparseVector {
@@ -419,5 +421,41 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         }
 
         return (min < 0.0) ? min : 0.0;
+    }
+
+    public CompressedSpecific specific() {
+        return new CompressedSpecific() {
+            @Override
+            public int[] indices() {
+                return indices;
+            }
+
+            @Override
+            public double[] values() {
+                return values;
+            }
+
+            @Override
+            public int cardinality() {
+                return cardinality;
+            }
+
+            @Override
+            public void mutate(int[] indices, double[] values, int cardinality) {
+                CompressedVector.this.indices = indices;
+                CompressedVector.this.values = values;
+                CompressedVector.this.cardinality = cardinality;
+            }
+        };
+    }
+
+    @Override
+    public <T> T ooPlace(VectorOperation<T> operation) {
+        return operation.apply(this);
+    }
+
+    @Override
+    public <T> T ooPlace(VectorVectorOperation<T> operation, Vector that) {
+        return that.ooPlace(operation.curry(this));
     }
 }
