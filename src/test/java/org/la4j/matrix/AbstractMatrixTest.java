@@ -2060,4 +2060,25 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertFalse(b.is(Matrices.TRIDIAGONAL_MATRIX));
     }
 
+    public void testSymmetricMatrixPredicate() {
+
+        Matrix a = factory().createMatrix(new double[][] {
+                { 0.0, 1.0, 0.0, 0.0 },
+                { 1.0, 2.0, 3.0, 5.0 },
+                { 0.0, 3.0, 0.0, 0.0 },
+                { 0.0, 5.0, 0.0, 2.0 }
+        });
+
+        assertTrue(a.is(Matrices.SYMMETRIC_MATRIX));
+
+        Matrix b = factory().createMatrix(new double[][] {
+                { 0.0, 0.0, 0.0, 0.0 },
+                { 0.0, 2.0, 3.0, 0.0 },
+                { 3.0, 3.0, 0.0, 0.0 },
+                { 0.0, 0.0, 0.0, 2.0 }
+        });
+
+        assertFalse(b.is(Matrices.SYMMETRIC_MATRIX));
+
+    }
 }
