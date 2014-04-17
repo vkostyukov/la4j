@@ -95,6 +95,11 @@ public class MockVector extends AbstractVector implements Vector {
     }
 
     @Override
+    public VectorIterator every() {
+        return self.every();
+    }
+
+    @Override
     public <T> T pipeTo(VectorOperation<T> operation) {
         return self.pipeTo(operation);
     }

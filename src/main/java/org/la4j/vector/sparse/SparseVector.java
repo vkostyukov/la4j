@@ -22,6 +22,7 @@
 package org.la4j.vector.sparse;
 
 import org.la4j.vector.Vector;
+import org.la4j.vector.VectorIterator;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
 
@@ -87,4 +88,10 @@ public interface SparseVector extends Vector {
      * @return the element of this vector or a default value
      */
     double getOrElse(int i, double defaultValue);
+
+    /**
+     *
+     * @return
+     */
+    VectorIterator everyNonZero();
 }

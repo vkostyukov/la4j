@@ -28,6 +28,7 @@ import java.io.ObjectOutput;
 import org.la4j.LinearAlgebra;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
+import org.la4j.vector.VectorIterator;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
@@ -126,6 +127,48 @@ public class BasicVector extends AbstractVector implements DenseVector {
         for (int i = 0; i < length; i++) {
             self[i] = in.readDouble();
         }
+    }
+
+    @Override
+    public VectorIterator every() {
+        return new VectorIterator() {
+            private int i = -1;
+
+            @Override
+            public int index() {
+                return i;
+            }
+
+            @Override
+            public double value() {
+                return self[i];
+            }
+
+            @Override
+            public void mutate(double value) {
+                self[i] = value;
+            }
+
+            @Override
+            public void jump(int index) {
+                i = index;
+            }
+
+            @Override
+            public boolean hasNext() {
+                return i + 1 < length;
+            }
+
+            @Override
+            public Double next() {
+                return self[++i];
+            }
+
+            @Override
+            public void remove() {
+                mutate(0.0);
+            }
+        };
     }
 
     @Override

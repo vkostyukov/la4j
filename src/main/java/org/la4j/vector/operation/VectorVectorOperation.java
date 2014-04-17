@@ -22,38 +22,40 @@
 package org.la4j.vector.operation;
 
 import org.la4j.vector.dense.BasicVector;
+import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.sparse.CompressedVector;
+import org.la4j.vector.sparse.SparseVector;
 
 public abstract class VectorVectorOperation<T> {
 
-    public abstract T apply(final CompressedVector a, final CompressedVector b);
-    public abstract T apply(final CompressedVector a, final BasicVector b);
-    public abstract T apply(final BasicVector a, final BasicVector b);
-    public abstract T apply(final BasicVector a, final CompressedVector b);
+    public abstract T apply(final SparseVector a, final SparseVector b);
+    public abstract T apply(final SparseVector a, final DenseVector b);
+    public abstract T apply(final DenseVector a, final DenseVector b);
+    public abstract T apply(final DenseVector a, final SparseVector b);
 
-    public VectorOperation<T> curry(final CompressedVector a) {
+    public VectorOperation<T> curry(final SparseVector a) {
         return new VectorOperation<T>() {
             @Override
-            public T apply(CompressedVector b) {
+            public T apply(final SparseVector b) {
                 return VectorVectorOperation.this.apply(a, b);
             }
 
             @Override
-            public T apply(BasicVector b) {
+            public T apply(final DenseVector b) {
                 return VectorVectorOperation.this.apply(a, b);
             }
         };
     }
 
-    public VectorOperation<T> curry(final BasicVector a) {
+    public VectorOperation<T> curry(final DenseVector a) {
         return new VectorOperation<T>() {
             @Override
-            public T apply(CompressedVector b) {
+            public T apply(final SparseVector b) {
                 return VectorVectorOperation.this.apply(a, b);
             }
 
             @Override
-            public T apply(BasicVector b) {
+            public T apply(final DenseVector b) {
                 return VectorVectorOperation.this.apply(a, b);
             }
         };

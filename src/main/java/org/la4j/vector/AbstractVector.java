@@ -27,6 +27,7 @@ package org.la4j.vector;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Iterator;
 import java.util.Random;
 
 import org.la4j.factory.Factory;
@@ -590,6 +591,11 @@ public abstract class AbstractVector implements Vector {
         }
 
         return sb.toString();
+    }
+
+    @Override
+    public Iterator<Double> iterator() {
+        return every();
     }
 
     protected void ensureFactoryIsNotNull(Factory factory) {

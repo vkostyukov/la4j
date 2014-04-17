@@ -22,51 +22,55 @@
 package org.la4j.vector.operation.ooplace;
 
 import org.la4j.vector.Vector;
+import org.la4j.vector.VectorIterator;
 import org.la4j.vector.Vectors;
-import org.la4j.vector.dense.BasicVector;
+import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.operation.VectorVectorOperation;
-import org.la4j.vector.sparse.CompressedSpecific;
-import org.la4j.vector.sparse.CompressedVector;
+import org.la4j.vector.sparse.SparseVector;
 
 public class InnerProduct extends VectorVectorOperation<Double> {
 
     @Override
-    public Double apply(final CompressedVector a, final CompressedVector b) {
-        CompressedSpecific aa = a.specific();
-        CompressedSpecific bb = b.specific();
+    public Double apply(final SparseVector a, final SparseVector b) {
+
+        VectorIterator aa = a.everyNonZero();
+        VectorIterator bb = b.everyNonZero();
 
         double result = 0.0;
 
-        int i = 0, j = 0;
-        while (i < aa.cardinality() && j < bb.cardinality()) {
-            int ii = aa.indices()[i];
-            int jj = bb.indices()[j];
+        while (aa.hasNext() && bb.hasNext()) {
+            aa.next();
+            bb.next();
 
-            if (ii == jj) {
-                result += aa.values()[i++] * bb.values()[j++];
-            } else if (ii < jj) {
-                i++;
-            } else {
-                j++;
+            while (aa.index() != bb.index()) {
+                if (aa.hasNext() && aa.index() < bb.index()) {
+                    aa.next();
+                } else if (bb.hasNext() && bb.index() < aa.index()) {
+                    bb.next();
+                } else {
+                    return result;
+                }
             }
+
+            result += aa.value() * bb.value();
         }
 
         return result;
     }
 
     @Override
-    public Double apply(final CompressedVector a, final BasicVector b) {
+    public Double apply(final SparseVector a, final DenseVector b) {
         return a.foldNonZero(Vectors.asSumFunctionAccumulator(0.0, dot(b)));
     }
 
     @Override
-    public Double apply(final BasicVector a, final BasicVector b) {
+    public Double apply(final DenseVector a, final DenseVector b) {
         return a.fold(Vectors.asSumFunctionAccumulator(0.0, dot(b)));
     }
 
     @Override
-    public Double apply(final BasicVector a, final CompressedVector b) {
+    public Double apply(final DenseVector a, final SparseVector b) {
         return b.foldNonZero(Vectors.asSumFunctionAccumulator(0.0, dot(a)));
     }
 

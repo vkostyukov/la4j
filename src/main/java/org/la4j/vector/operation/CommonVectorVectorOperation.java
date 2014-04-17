@@ -22,27 +22,27 @@
 package org.la4j.vector.operation;
 
 import org.la4j.vector.Vector;
-import org.la4j.vector.dense.BasicVector;
-import org.la4j.vector.sparse.CompressedVector;
+import org.la4j.vector.dense.DenseVector;
+import org.la4j.vector.sparse.SparseVector;
 
 public abstract class CommonVectorVectorOperation<T> extends VectorVectorOperation<T> {
     @Override
-    public T apply(final CompressedVector a, final CompressedVector b) {
+    public T apply(final SparseVector a, final SparseVector b) {
         return applyCommon(a, b);
     }
 
     @Override
-    public T apply(final CompressedVector a, final BasicVector b) {
+    public T apply(final SparseVector a, final DenseVector b) {
         return applyCommon(a, b);
     }
 
     @Override
-    public T apply(final BasicVector a, final BasicVector b) {
+    public T apply(final DenseVector a, final DenseVector b) {
         return applyCommon(a, b);
     }
 
     @Override
-    public T apply(final BasicVector a, final CompressedVector b) {
+    public T apply(final DenseVector a, final SparseVector b) {
         return applyCommon(a, b);
     }
 

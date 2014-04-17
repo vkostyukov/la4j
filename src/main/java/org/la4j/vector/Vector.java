@@ -39,7 +39,7 @@ import org.la4j.vector.operation.VectorVectorOperation;
 /**
  * The real vector interface.
  */
-public interface Vector extends Externalizable {
+public interface Vector extends Externalizable, Iterable<Double> {
 
     /**
      * Gets the specified element of this vector.
@@ -599,6 +599,12 @@ public interface Vector extends Externalizable {
      * @return the vector converted to a string
      */
     String mkString(NumberFormat formatter, String delimiter);
+
+    /**
+     *
+     * @return
+     */
+    VectorIterator every();
 
     /**
      * Pipes this vector to a given {@code operation}.

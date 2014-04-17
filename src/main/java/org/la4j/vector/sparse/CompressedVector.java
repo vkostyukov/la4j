@@ -30,6 +30,7 @@ import java.io.ObjectOutput;
 import org.la4j.LinearAlgebra;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
+import org.la4j.vector.VectorIterator;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
@@ -314,6 +315,10 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     private int searchForIndex(int i) {
 
+        if (cardinality == 0 || i > indices[cardinality - 1]) {
+            return cardinality;
+        }
+
         int left = 0;
         int right = cardinality;
 
@@ -342,8 +347,11 @@ public class CompressedVector extends AbstractVector implements SparseVector {
             growup();
         }
 
-        System.arraycopy(values, k, values, k + 1, cardinality - k);
-        System.arraycopy(indices, k, indices, k + 1, cardinality - k);
+        // TODO: revise other system.arraycopy() calls
+        if (cardinality - k > 0) {
+            System.arraycopy(values, k, values, k + 1, cardinality - k);
+            System.arraycopy(indices, k, indices, k + 1, cardinality - k);
+        }
 
 //        for (int kk = cardinality; kk > k; kk--) {
 //            values[kk] = values[kk - 1];
@@ -423,28 +431,113 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         return (min < 0.0) ? min : 0.0;
     }
 
-    public CompressedSpecific specific() {
-        return new CompressedSpecific() {
+    @Override
+    public VectorIterator everyNonZero() {
+        return new VectorIterator() {
+            private int k = -1;
+
             @Override
-            public int[] indices() {
-                return indices;
+            public int index() {
+                return indices[k];
             }
 
             @Override
-            public double[] values() {
-                return values;
+            public double value() {
+                return values[k];
             }
 
             @Override
-            public int cardinality() {
-                return cardinality;
+            public void mutate(double value) {
+                if (value == 0.0) {
+                    remove();
+                } else {
+                    values[k] = value;
+                }
             }
 
             @Override
-            public void mutate(int[] indices, double[] values, int cardinality) {
-                CompressedVector.this.indices = indices;
-                CompressedVector.this.values = values;
-                CompressedVector.this.cardinality = cardinality;
+            public void jump(int index) {
+                int kk = searchForIndex(index);
+                if (kk < cardinality && index == indices[kk]) {
+                    k = kk;
+                } else {
+                    next();
+                }
+            }
+
+            @Override
+            public boolean hasNext() {
+                return k + 1 < cardinality;
+            }
+
+            @Override
+            public Double next() {
+                return values[++k];
+            }
+
+            @Override
+            public void remove() {
+                CompressedVector.this.remove(k);
+            }
+        };
+    }
+
+    @Override
+    public VectorIterator every() {
+        return new VectorIterator() {
+            private int k = 0;
+            private int i = -1;
+
+            @Override
+            public int index() {
+                return i;
+            }
+
+            @Override
+            public double value() {
+                if (k < cardinality && indices[k] == i) {
+                    return values[k];
+                }
+                return 0.0;
+            }
+
+            @Override
+            public void mutate(double value) {
+                if (k < cardinality && indices[k] == i) {
+                    if (value == 0.0) {
+                        remove();
+                    } else {
+                        values[k] = value;
+                    }
+                } else {
+                    CompressedVector.this.insert(k, i, value);
+                }
+            }
+
+            @Override
+            public void jump(int index) {
+                i = index;
+                k = searchForIndex(index);
+            }
+
+            @Override
+            public boolean hasNext() {
+                return i + 1 < length;
+            }
+
+            @Override
+            public Double next() {
+                if (k < cardinality && indices[k] == i++) {
+                    k++;
+                }
+                return value();
+            }
+
+            @Override
+            public void remove() {
+                if (k < cardinality && indices[k] == i) {
+                    CompressedVector.this.remove(k);
+                }
             }
         };
     }

@@ -21,10 +21,10 @@
 
 package org.la4j.vector.operation;
 
-import org.la4j.vector.dense.BasicVector;
-import org.la4j.vector.sparse.CompressedVector;
+import org.la4j.vector.dense.DenseVector;
+import org.la4j.vector.sparse.SparseVector;
 
 public interface VectorOperation<T> {
-    T apply(final CompressedVector a);
-    T apply(final BasicVector a);
+    T apply(final SparseVector a);
+    T apply(final DenseVector a);
 }
