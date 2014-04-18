@@ -21,5 +21,20 @@
 
 package org.la4j.vector.operation;
 
-public final class InPlaceOperations {
+import org.la4j.factory.Factory;
+import org.la4j.vector.Vector;
+
+public final class VectorOperations {
+
+    public static VectorVectorOperation<Double> ooPlaceInnerProduct() {
+        return new org.la4j.vector.operation.ooplace.InnerProduct();
+    }
+
+    public static VectorVectorOperation<Void> inPlaceAddition() {
+        return new org.la4j.vector.operation.inplace.Addition();
+    }
+
+    public static VectorVectorOperation<Vector> ooPlaceAddition(Factory factory) {
+        return new org.la4j.vector.operation.ooplace.Addition(factory);
+    }
 }

@@ -36,7 +36,7 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.operation.OoPlaceOperations;
+import org.la4j.vector.operation.VectorOperations;
 
 public abstract class AbstractVector implements Vector {
 
@@ -105,13 +105,20 @@ public abstract class AbstractVector implements Vector {
             fail("Wrong vector length: " + vector.length() + ". Should be: " + length + ".");
         }
 
-        Vector result = blank(factory);
+        return pipeTo(VectorOperations.ooPlaceAddition(factory), vector);
+    }
 
-        for (int i = 0; i < length; i++) {
-            result.set(i, get(i) + vector.get(i));
+    @Override
+    public void addInPlace(Vector vector) {
+        // TODO: Don't repeat checks
+        ensureFactoryIsNotNull(factory);
+        ensureArgumentIsNotNull(vector, "vector");
+
+        if (length != vector.length()) {
+            fail("Wrong vector length: " + vector.length() + ". Should be: " + length + ".");
         }
 
-        return result;
+        pipeTo(VectorOperations.inPlaceAddition(), vector);
     }
 
     @Override
@@ -247,7 +254,7 @@ public abstract class AbstractVector implements Vector {
             fail("Wong vector length: " + vector.length() + ". Should be: " + length + ".");
         }
 
-        return pipeTo(OoPlaceOperations.INNER_PRODUCT, vector);
+        return pipeTo(VectorOperations.ooPlaceInnerProduct(), vector);
     }
 
     @Override
@@ -290,6 +297,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector copy(Factory factory) {
+        // TODO: optimized copy when factory is the same
         ensureFactoryIsNotNull(factory);
 
         return factory.createVector(this);

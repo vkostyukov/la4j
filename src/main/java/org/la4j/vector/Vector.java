@@ -110,6 +110,13 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector add(Vector vector, Factory factory);
 
     /**
+     * Adds given {@code vector} (X) to this vector (Y) in-place.
+     *
+     * @param vector the right hand vector for addition
+     */
+    void addInPlace(Vector vector);
+
+    /**
      * Multiplies this vector (X) by given {@code value} (v).
      * 
      * @param value the right hand value for multiplication
