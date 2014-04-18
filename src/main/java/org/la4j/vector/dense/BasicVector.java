@@ -130,7 +130,7 @@ public class BasicVector extends AbstractVector implements DenseVector {
     }
 
     @Override
-    public VectorIterator every() {
+    public VectorIterator iterator() {
         return new VectorIterator() {
             private int i = -1;
 
@@ -145,16 +145,6 @@ public class BasicVector extends AbstractVector implements DenseVector {
             }
 
             @Override
-            public void mutate(double value) {
-                self[i] = value;
-            }
-
-            @Override
-            public void jump(int index) {
-                i = index;
-            }
-
-            @Override
             public boolean hasNext() {
                 return i + 1 < length;
             }
@@ -166,7 +156,7 @@ public class BasicVector extends AbstractVector implements DenseVector {
 
             @Override
             public void remove() {
-                mutate(0.0);
+                throw new UnsupportedOperationException();
             }
         };
     }

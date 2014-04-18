@@ -95,8 +95,8 @@ public class MockVector extends AbstractVector implements Vector {
     }
 
     @Override
-    public VectorIterator every() {
-        return self.every();
+    public VectorIterator iterator() {
+        return self.iterator();
     }
 
     @Override

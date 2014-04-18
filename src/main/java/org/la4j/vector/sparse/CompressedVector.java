@@ -432,7 +432,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     @Override
-    public VectorIterator everyNonZero() {
+    public VectorIterator nonZeroIterator() {
         return new VectorIterator() {
             private int k = -1;
 
@@ -447,25 +447,6 @@ public class CompressedVector extends AbstractVector implements SparseVector {
             }
 
             @Override
-            public void mutate(double value) {
-                if (value == 0.0) {
-                    remove();
-                } else {
-                    values[k] = value;
-                }
-            }
-
-            @Override
-            public void jump(int index) {
-                int kk = searchForIndex(index);
-                if (kk < cardinality && index == indices[kk]) {
-                    k = kk;
-                } else {
-                    next();
-                }
-            }
-
-            @Override
             public boolean hasNext() {
                 return k + 1 < cardinality;
             }
@@ -477,13 +458,13 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
             @Override
             public void remove() {
-                CompressedVector.this.remove(k);
+                throw new UnsupportedOperationException();
             }
         };
     }
 
     @Override
-    public VectorIterator every() {
+    public VectorIterator iterator() {
         return new VectorIterator() {
             private int k = 0;
             private int i = -1;
@@ -502,25 +483,6 @@ public class CompressedVector extends AbstractVector implements SparseVector {
             }
 
             @Override
-            public void mutate(double value) {
-                if (k < cardinality && indices[k] == i) {
-                    if (value == 0.0) {
-                        remove();
-                    } else {
-                        values[k] = value;
-                    }
-                } else {
-                    CompressedVector.this.insert(k, i, value);
-                }
-            }
-
-            @Override
-            public void jump(int index) {
-                i = index;
-                k = searchForIndex(index);
-            }
-
-            @Override
             public boolean hasNext() {
                 return i + 1 < length;
             }
@@ -535,9 +497,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
             @Override
             public void remove() {
-                if (k < cardinality && indices[k] == i) {
-                    CompressedVector.this.remove(k);
-                }
+                throw new UnsupportedOperationException();
             }
         };
     }

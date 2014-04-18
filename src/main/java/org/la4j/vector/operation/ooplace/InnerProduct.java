@@ -34,8 +34,8 @@ public class InnerProduct extends VectorVectorOperation<Double> {
     @Override
     public Double apply(final SparseVector a, final SparseVector b) {
 
-        VectorIterator aa = a.everyNonZero();
-        VectorIterator bb = b.everyNonZero();
+        VectorIterator aa = a.nonZeroIterator();
+        VectorIterator bb = b.nonZeroIterator();
 
         double result = 0.0;
 

@@ -90,8 +90,9 @@ public interface SparseVector extends Vector {
     double getOrElse(int i, double defaultValue);
 
     /**
+     * Returns a non-zero iterator.
      *
-     * @return
+     * @return a non-zero iterator
      */
-    VectorIterator everyNonZero();
+    VectorIterator nonZeroIterator();
 }

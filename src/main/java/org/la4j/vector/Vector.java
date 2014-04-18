@@ -601,10 +601,12 @@ public interface Vector extends Externalizable, Iterable<Double> {
     String mkString(NumberFormat formatter, String delimiter);
 
     /**
+     * Returns a vector iterator.
      *
-     * @return
+     * @return a vector iterator.
      */
-    VectorIterator every();
+    @Override
+    VectorIterator iterator();
 
     /**
      * Pipes this vector to a given {@code operation}.
