@@ -91,6 +91,13 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector add(double value, Factory factory);
 
     /**
+     * Adds given {@code value} (v) to this vector (X) in-place.
+     *
+     * @param value the right hand value for addition
+     */
+    void addInPlace(double value);
+
+    /**
      * Adds given {@code vector} (X) to this vector (Y).
      * 
      * @param vector the right hand vector for addition
@@ -134,6 +141,15 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @return X * v
      */
     Vector multiply(double value, Factory factory);
+
+    /**
+     * Multiplies this vector (X) by given {@code value} (v) in-place.
+     *
+     * @param value the right hand value for multiplication
+     *
+     * @return X * v
+     */
+    void multiplyInPlace(double value);
 
     /**
      * Calculates the Hadamard (element-wise) product of this vector and given {@code vector}.

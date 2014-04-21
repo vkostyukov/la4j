@@ -29,7 +29,7 @@ import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
-public class InnerProduct extends VectorVectorOperation<Double> {
+public class OoPlaceInnerProduct extends VectorVectorOperation<Double> {
 
     @Override
     public Double apply(final SparseVector a, final SparseVector b) {

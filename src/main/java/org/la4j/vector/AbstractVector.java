@@ -92,6 +92,13 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public void addInPlace(double value) {
+        for (int i = 0; i < length; i++) {
+            update(i, Vectors.asPlusFunction(value));
+        }
+    }
+
+    @Override
     public Vector add(Vector vector) {
         return add(vector, factory);
     }
@@ -100,25 +107,17 @@ public abstract class AbstractVector implements Vector {
     public Vector add(Vector vector, Factory factory) {
         ensureFactoryIsNotNull(factory);
         ensureArgumentIsNotNull(vector, "vector");
+        ensureVectorIsSimilar(vector);
 
-        if (length != vector.length()) {
-            fail("Wrong vector length: " + vector.length() + ". Should be: " + length + ".");
-        }
-
-        return pipeTo(VectorOperations.ooPlaceAddition(factory), vector);
+        return pipeTo(VectorOperations.ooPlaceVectorToVectorAddition(factory), vector);
     }
 
     @Override
     public void addInPlace(Vector vector) {
-        // TODO: Don't repeat checks
-        ensureFactoryIsNotNull(factory);
         ensureArgumentIsNotNull(vector, "vector");
+        ensureVectorIsSimilar(vector);
 
-        if (length != vector.length()) {
-            fail("Wrong vector length: " + vector.length() + ". Should be: " + length + ".");
-        }
-
-        pipeTo(VectorOperations.inPlaceAddition(), vector);
+        pipeTo(VectorOperations.inPlaceVectorToVectorAddition(), vector);
     }
 
     @Override
@@ -130,13 +129,12 @@ public abstract class AbstractVector implements Vector {
     public Vector multiply(double value, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
-        Vector result = blank(factory);
+        return pipeTo(VectorOperations.ooPlaceVectorByValueMultiplication(value, factory));
+    }
 
-        for (int i = 0; i < length; i++) {
-            result.set(i, get(i) * value);
-        }
-
-        return result;
+    @Override
+    public void multiplyInPlace(double value) {
+        pipeTo(VectorOperations.inPlaceVectorByValueMultiplication(value));
     }
 
     @Override
@@ -148,10 +146,7 @@ public abstract class AbstractVector implements Vector {
     public Vector hadamardProduct(Vector vector, Factory factory) {
         ensureFactoryIsNotNull(factory);
         ensureArgumentIsNotNull(vector,  "vector");
-
-        if (length != vector.length()) {
-            fail("Wrong vector length: " + vector.length() + ". Should be: " + length + ".");
-        }
+        ensureVectorIsSimilar(vector);
 
         Vector result = blank(factory);
 
@@ -212,10 +207,7 @@ public abstract class AbstractVector implements Vector {
     public Vector subtract(Vector vector, Factory factory) {
         ensureFactoryIsNotNull(factory);
         ensureArgumentIsNotNull(vector, "vector");
-
-        if (length != vector.length()) {
-            fail("Wrong vector length: " + vector.length() + ". Should be: " + length + ".");
-        }
+        ensureVectorIsSimilar(vector);
 
         Vector result = blank(factory);
 
@@ -249,10 +241,7 @@ public abstract class AbstractVector implements Vector {
     @Override
     public double innerProduct(Vector vector) {
         ensureArgumentIsNotNull(vector, "vector");
-
-        if (length != vector.length()) {
-            fail("Wong vector length: " + vector.length() + ". Should be: " + length + ".");
-        }
+        ensureVectorIsSimilar(vector);
 
         return pipeTo(VectorOperations.ooPlaceInnerProduct(), vector);
     }
@@ -297,8 +286,11 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector copy(Factory factory) {
-        // TODO: optimized copy when factory is the same
         ensureFactoryIsNotNull(factory);
+
+        if (factory == this.factory) {
+            return copy();
+        }
 
         return factory.createVector(this);
     }
@@ -609,6 +601,12 @@ public abstract class AbstractVector implements Vector {
         }
         if (length == Integer.MAX_VALUE) {
             fail("Wrong vector length: use 'Integer.MAX_VALUE - 1' instead.");
+        }
+    }
+
+    protected void ensureVectorIsSimilar(Vector that) {
+        if (length != that.length()) {
+            fail("Wong vector length: " + that.length() + ". Should be: " + length + ".");
         }
     }
 
