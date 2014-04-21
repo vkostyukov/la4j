@@ -58,7 +58,71 @@ public abstract class VectorIterator implements Iterator<Double> {
 
     public VectorIterator and(final VectorIterator those, final VectorAccumulator accumulator) {
         final VectorIterator these = this;
-        return null;
+        return new VectorIterator() {
+            private boolean hasNext;
+            private double prevValue, currValue;
+            private int prevIndex, currIndex;
+
+            {
+                doNext();
+            }
+
+            private void doNext() {
+                hasNext = false;
+
+                prevValue = currValue;
+                prevIndex = currIndex;
+
+                if (these.hasNext() && those.hasNext()) {
+                    these.next();
+                    those.next();
+
+                    while (these.index() != those.index()) {
+                        if (these.hasNext() && these.index() < those.index()) {
+                            these.next();
+                        } else if (those.hasNext() && those.index() < these.index()) {
+                            those.next();
+                        } else {
+                            return;
+                        }
+                    }
+
+                    hasNext = true;
+
+                    accumulator.update(these.index(), these.value());
+                    accumulator.update(those.index(), those.value());
+
+                    currValue = accumulator.accumulate();
+                    currIndex = these.index();
+                }
+            }
+
+            @Override
+            public int index() {
+                return prevIndex;
+            }
+
+            @Override
+            public double value() {
+                return prevValue;
+            }
+
+            @Override
+            public boolean hasNext() {
+                return hasNext;
+            }
+
+            @Override
+            public Double next() {
+                doNext();
+                return value();
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
     public VectorIterator or(final VectorIterator those, final VectorAccumulator accumulator) {

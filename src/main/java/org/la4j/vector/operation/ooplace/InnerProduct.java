@@ -39,21 +39,11 @@ public class InnerProduct extends VectorVectorOperation<Double> {
 
         double result = 0.0;
 
-        while (these.hasNext() && those.hasNext()) {
-            these.next();
-            those.next();
+        VectorIterator both = these.and(those, Vectors.asProductAccumulator(1.0));
 
-            while (these.index() != those.index()) {
-                if (these.hasNext() && these.index() < those.index()) {
-                    these.next();
-                } else if (those.hasNext() && those.index() < these.index()) {
-                    those.next();
-                } else {
-                    return result;
-                }
-            }
-
-            result += these.value() * those.value();
+        while (both.hasNext()) {
+            both.next();
+            result += both.value();
         }
 
         return result;
@@ -66,7 +56,11 @@ public class InnerProduct extends VectorVectorOperation<Double> {
 
     @Override
     public Double apply(final DenseVector a, final DenseVector b) {
-        return a.fold(Vectors.asSumFunctionAccumulator(0.0, dot(b)));
+        double result = 0.0;
+        for (int i = 0; i < a.length(); i++) {
+            result += a.get(i) * b.get(i);
+        }
+        return result;
     }
 
     @Override

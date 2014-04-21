@@ -38,7 +38,6 @@ public class Addition extends VectorVectorOperation<Vector> {
 
     @Override
     public Vector apply(SparseVector a, DenseVector b) {
-        // TODO: base class for associative operations
         return apply(b, a);
     }
 
