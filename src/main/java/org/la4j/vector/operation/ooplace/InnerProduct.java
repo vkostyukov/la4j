@@ -34,26 +34,26 @@ public class InnerProduct extends VectorVectorOperation<Double> {
     @Override
     public Double apply(final SparseVector a, final SparseVector b) {
 
-        VectorIterator aa = a.nonZeroIterator();
-        VectorIterator bb = b.nonZeroIterator();
+        VectorIterator these = a.nonZeroIterator();
+        VectorIterator those = b.nonZeroIterator();
 
         double result = 0.0;
 
-        while (aa.hasNext() && bb.hasNext()) {
-            aa.next();
-            bb.next();
+        while (these.hasNext() && those.hasNext()) {
+            these.next();
+            those.next();
 
-            while (aa.index() != bb.index()) {
-                if (aa.hasNext() && aa.index() < bb.index()) {
-                    aa.next();
-                } else if (bb.hasNext() && bb.index() < aa.index()) {
-                    bb.next();
+            while (these.index() != those.index()) {
+                if (these.hasNext() && these.index() < those.index()) {
+                    these.next();
+                } else if (those.hasNext() && those.index() < these.index()) {
+                    those.next();
                 } else {
                     return result;
                 }
             }
 
-            result += aa.value() * bb.value();
+            result += these.value() * those.value();
         }
 
         return result;
