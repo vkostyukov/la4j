@@ -43,16 +43,18 @@ public abstract class MatrixIterator extends CursorIterator<MatrixIterator.Matri
     public abstract int row();
     public abstract int column();
 
-    public MatrixIterator or(final MatrixIterator those, final MergeFunction function) {
-        return new CursorToMatrixIterator(super.or(those, function));
+/*
+    public MatrixIterator or(final MatrixIterator those, final JoinFunction function) {
+        return new CursorToMatrixIterator(super.orElse(those, function));
     }
 
-    public MatrixIterator and(final MatrixIterator those, final MergeFunction function) {
-        return new CursorToMatrixIterator(super.and(those, function));
+    public MatrixIterator and(final MatrixIterator those, final JoinFunction function) {
+        return new CursorToMatrixIterator(super.andAlso(those, function));
     }
-
+*/
     @Override
     protected MatrixCursor cursor() {
+        // TODO: this is a bottleneck
         return new MatrixCursor(row(), column());
     }
 }

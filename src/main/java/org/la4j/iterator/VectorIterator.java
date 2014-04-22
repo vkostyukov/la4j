@@ -51,16 +51,33 @@ public abstract class VectorIterator extends CursorIterator<VectorIterator.Vecto
      */
     public abstract double value();
 
-    public VectorIterator and(final VectorIterator those, final MergeFunction function) {
-        return new CursorToVectorIterator(super.and(those, function));
+    public VectorIterator andAlsoAdd(final VectorIterator those) {
+        return new CursorToVectorIterator(super.andAlso(those, JoinFunction.ADD));
     }
 
-    public VectorIterator or(final VectorIterator those, final MergeFunction function) {
-        return new CursorToVectorIterator(super.or(those, function));
+    public VectorIterator orElseAdd(final VectorIterator those) {
+        return new CursorToVectorIterator(super.orElse(those, JoinFunction.ADD));
+    }
+
+    public VectorIterator andAlsoSub(final VectorIterator those) {
+        return new CursorToVectorIterator(super.andAlso(those, JoinFunction.SUB));
+    }
+
+    public VectorIterator orElseSub(final VectorIterator those) {
+        return new CursorToVectorIterator(super.orElse(those, JoinFunction.SUB));
+    }
+
+    public VectorIterator andAlsoMul(final VectorIterator those) {
+        return new CursorToVectorIterator(super.andAlso(those, JoinFunction.MUL));
+    }
+
+    public VectorIterator orElseMul(final VectorIterator those) {
+        return new CursorToVectorIterator(super.orElse(those, JoinFunction.MUL));
     }
 
     @Override
     protected VectorCursor cursor() {
+        // TODO: this is a bottleneck
         return new VectorCursor(index());
     }
 }

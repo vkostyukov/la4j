@@ -43,7 +43,7 @@ abstract class CursorIterator<T extends Comparable<T>> implements Iterator<Doubl
     public abstract double value();
     protected abstract T cursor();
 
-    protected CursorIterator<T> or(final CursorIterator<T> those, final MergeFunction function) {
+    protected CursorIterator<T> orElse(final CursorIterator<T> those, final JoinFunction function) {
         final CursorIterator<T> these = this;
         return new CursorIterator<T>() {
             private EnumSet<IteratorState> state = EnumSet.copyOf(TAKEN_FROM_BOTH);
@@ -126,7 +126,7 @@ abstract class CursorIterator<T extends Comparable<T>> implements Iterator<Doubl
         };
     }
 
-    protected CursorIterator<T> and(final CursorIterator<T> those, final MergeFunction function) {
+    protected CursorIterator<T> andAlso(final CursorIterator<T> those, final JoinFunction function) {
         final CursorIterator<T> these = this;
         return new CursorIterator<T>() {
             private boolean hasNext;

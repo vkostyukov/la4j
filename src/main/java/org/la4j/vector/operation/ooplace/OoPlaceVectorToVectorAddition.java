@@ -22,7 +22,6 @@
 package org.la4j.vector.operation.ooplace;
 
 import org.la4j.factory.Factory;
-import org.la4j.iterator.MergeFunction;
 import org.la4j.vector.Vector;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vectors;
@@ -45,7 +44,7 @@ public class OoPlaceVectorToVectorAddition extends VectorVectorOperation<Vector>
 
         Vector result = factory.createVector(a.length());
 
-        VectorIterator both  = these.or(those, MergeFunction.ADD);
+        VectorIterator both  = these.orElseAdd(those);
 
         while (both.hasNext()) {
             both.next();

@@ -21,39 +21,39 @@
 
 package org.la4j.iterator;
 
-public abstract class MergeFunction {
+abstract class JoinFunction {
 
     public abstract double evaluate(double a, double b);
 
-    public static final MergeFunction ADD = new MergeFunction() {
+    public static final JoinFunction ADD = new JoinFunction() {
         @Override
         public double evaluate(double a, double b) {
             return a + b;
         }
     };
 
-    public static final MergeFunction SUB = new MergeFunction() {
+    public static final JoinFunction SUB = new JoinFunction() {
         @Override
         public double evaluate(double a, double b) {
             return a - b;
         }
     };
 
-    public static final MergeFunction MUL = new MergeFunction() {
+    public static final JoinFunction MUL = new JoinFunction() {
         @Override
         public double evaluate(double a, double b) {
             return a * b;
         }
     };
 
-    public static final MergeFunction DIV = new MergeFunction() {
+    public static final JoinFunction DIV = new JoinFunction() {
         @Override
         public double evaluate(double a, double b) {
             return a / b;
         }
     };
 
-    public static final MergeFunction MOD = new MergeFunction() {
+    public static final JoinFunction MOD = new JoinFunction() {
         @Override
         public double evaluate(double a, double b) {
             return a % b;
