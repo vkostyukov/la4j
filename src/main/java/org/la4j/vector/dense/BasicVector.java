@@ -28,7 +28,7 @@ import java.io.ObjectOutput;
 import org.la4j.LinearAlgebra;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
-import org.la4j.vector.VectorIterator;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;

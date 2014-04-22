@@ -19,16 +19,14 @@
  *
  */
 
-package org.la4j.vector;
-
-import org.la4j.vector.functor.VectorAccumulator;
+package org.la4j.iterator;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Iterator;
 
-public abstract class VectorIterator implements Iterator<Double> {
+abstract class CursorIterator<T extends Comparable<T>> implements Iterator<Double> {
 
     private enum IteratorState {
         TAKEN_FROM_THESE,
@@ -42,111 +40,29 @@ public abstract class VectorIterator implements Iterator<Double> {
             IteratorState.TAKEN_FROM_THOSE
     );
 
-    /**
-     * Returns an index of the current cell.
-     *
-     * @return an index
-     */
-    public abstract int index();
-
-    /**
-     * Returns a values of the current cell
-     *
-     * @return
-     */
     public abstract double value();
+    protected abstract T cursor();
 
-    public VectorIterator and(final VectorIterator those, final VectorAccumulator accumulator) {
-        final VectorIterator these = this;
-        return new VectorIterator() {
-            private boolean hasNext;
-            private double prevValue, currValue;
-            private int prevIndex, currIndex;
-
-            {
-                doNext();
-            }
-
-            private void doNext() {
-                hasNext = false;
-
-                prevValue = currValue;
-                prevIndex = currIndex;
-
-                if (these.hasNext() && those.hasNext()) {
-                    these.next();
-                    those.next();
-
-                    while (these.index() != those.index()) {
-                        if (these.hasNext() && these.index() < those.index()) {
-                            these.next();
-                        } else if (those.hasNext() && those.index() < these.index()) {
-                            those.next();
-                        } else {
-                            return;
-                        }
-                    }
-
-                    hasNext = true;
-
-                    accumulator.update(these.index(), these.value());
-                    accumulator.update(those.index(), those.value());
-
-                    currValue = accumulator.accumulate();
-                    currIndex = these.index();
-                }
-            }
-
-            @Override
-            public int index() {
-                return prevIndex;
-            }
-
-            @Override
-            public double value() {
-                return prevValue;
-            }
-
-            @Override
-            public boolean hasNext() {
-                return hasNext;
-            }
-
-            @Override
-            public Double next() {
-                doNext();
-                return value();
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
-    }
-
-    public VectorIterator or(final VectorIterator those, final VectorAccumulator accumulator) {
-        final VectorIterator these = this;
-        return new VectorIterator() {
+    protected CursorIterator<T> or(final CursorIterator<T> those, final MergeFunction function) {
+        final CursorIterator<T> these = this;
+        return new CursorIterator<T>() {
             private EnumSet<IteratorState> state = EnumSet.copyOf(TAKEN_FROM_BOTH);
 
             @Override
-            public int index() {
+            public T cursor() {
                 if (state.contains(IteratorState.TAKEN_FROM_THESE)) {
-                    return these.index();
+                    return these.cursor();
                 } else {
-                    return those.index();
+                    return those.cursor();
                 }
             }
 
             @Override
             public double value() {
                 if (state.contains(IteratorState.TAKEN_FROM_THESE) &&
-                    state.contains(IteratorState.TAKEN_FROM_THOSE)) {
+                        state.contains(IteratorState.TAKEN_FROM_THOSE)) {
 
-                    accumulator.update(these.index(), these.value());
-                    accumulator.update(those.index(), those.value());
-                    return accumulator.accumulate();
+                    return function.evaluate(these.value(), those.value());
                 } else if (state.contains(IteratorState.TAKEN_FROM_THESE)) {
                     return these.value();
                 } else {
@@ -163,7 +79,7 @@ public abstract class VectorIterator implements Iterator<Double> {
                     return false;
                 }
                 return !state.contains(IteratorState.THESE_ARE_EMPTY) ||
-                       !state.contains(IteratorState.THOSE_ARE_EMPTY);
+                        !state.contains(IteratorState.THOSE_ARE_EMPTY);
             }
 
             @Override
@@ -188,10 +104,12 @@ public abstract class VectorIterator implements Iterator<Double> {
                 state.remove(IteratorState.TAKEN_FROM_THOSE);
 
                 if (!state.contains(IteratorState.THESE_ARE_EMPTY) &&
-                    !state.contains(IteratorState.THOSE_ARE_EMPTY)) {
-                    if (these.index() < those.index()) {
+                        !state.contains(IteratorState.THOSE_ARE_EMPTY)) {
+                    int compare = these.cursor().compareTo(those.cursor());
+
+                    if (compare < 0) {
                         state.add(IteratorState.TAKEN_FROM_THESE);
-                    } else if (these.index() > those.index()) {
+                    } else if (compare > 0) {
                         state.add(IteratorState.TAKEN_FROM_THOSE);
                     } else {
                         state.add(IteratorState.TAKEN_FROM_THESE);
@@ -205,11 +123,79 @@ public abstract class VectorIterator implements Iterator<Double> {
 
                 return value();
             }
+        };
+    }
+
+    protected CursorIterator<T> and(final CursorIterator<T> those, final MergeFunction function) {
+        final CursorIterator<T> these = this;
+        return new CursorIterator<T>() {
+            private boolean hasNext;
+            private double prevValue, currValue;
+            private T prevCursor, currCursor;
+
+            {
+                doNext();
+            }
 
             @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
+            public T cursor() {
+                return prevCursor;
+            }
+
+            private void doNext() {
+                hasNext = false;
+
+                prevValue = currValue;
+                prevCursor = currCursor;
+
+                if (these.hasNext() && those.hasNext()) {
+                    these.next();
+                    those.next();
+
+                    T theseCursor = these.cursor();
+                    T thoseCursor = those.cursor();
+                    int compare = theseCursor.compareTo(thoseCursor);
+
+                    while (compare != 0) {
+                        if (these.hasNext() && compare < 0) {
+                            these.next();
+                            theseCursor = these.cursor();
+                        } else if (those.hasNext() && compare > 0) {
+                            those.next();
+                            thoseCursor = those.cursor();
+                        } else {
+                            return;
+                        }
+                        compare = theseCursor.compareTo(thoseCursor);
+                    }
+
+                    hasNext = true;
+
+                    currValue = function.evaluate(these.value(), those.value());
+                    currCursor = theseCursor;
+                }
+            }
+
+            @Override
+            public double value() {
+                return prevValue;
+            }
+
+            @Override
+            public boolean hasNext() {
+                return hasNext;
+            }
+
+            @Override
+            public Double next() {
+                doNext();
+                return value();
             }
         };
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
     }
 }

@@ -21,6 +21,7 @@
 
 package org.la4j.vector;
 
+import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 

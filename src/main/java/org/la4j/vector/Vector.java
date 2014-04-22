@@ -28,6 +28,7 @@ import java.io.Externalizable;
 import java.text.NumberFormat;
 
 import org.la4j.factory.Factory;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;

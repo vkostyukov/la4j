@@ -22,8 +22,9 @@
 package org.la4j.vector.operation.ooplace;
 
 import org.la4j.factory.Factory;
+import org.la4j.iterator.MergeFunction;
 import org.la4j.vector.Vector;
-import org.la4j.vector.VectorIterator;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;
@@ -44,10 +45,7 @@ public class OoPlaceVectorToVectorAddition extends VectorVectorOperation<Vector>
 
         Vector result = factory.createVector(a.length());
 
-        // Accumulator is used for accumulating the contented values
-        // (values with the same index).
-        // TODO: revise accumulator performance
-        VectorIterator both  = these.or(those, Vectors.asSumAccumulator(0.0));
+        VectorIterator both  = these.or(those, MergeFunction.ADD);
 
         while (both.hasNext()) {
             both.next();

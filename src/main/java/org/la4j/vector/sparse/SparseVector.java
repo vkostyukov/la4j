@@ -22,7 +22,7 @@
 package org.la4j.vector.sparse;
 
 import org.la4j.vector.Vector;
-import org.la4j.vector.VectorIterator;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
 

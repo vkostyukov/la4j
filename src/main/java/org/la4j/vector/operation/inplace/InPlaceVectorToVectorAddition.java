@@ -21,7 +21,7 @@
 
 package org.la4j.vector.operation.inplace;
 
-import org.la4j.vector.VectorIterator;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;

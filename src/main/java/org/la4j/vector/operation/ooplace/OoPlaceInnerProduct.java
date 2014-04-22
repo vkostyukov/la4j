@@ -21,8 +21,9 @@
 
 package org.la4j.vector.operation.ooplace;
 
+import org.la4j.iterator.MergeFunction;
 import org.la4j.vector.Vector;
-import org.la4j.vector.VectorIterator;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorFunction;
@@ -39,7 +40,7 @@ public class OoPlaceInnerProduct extends VectorVectorOperation<Double> {
 
         double result = 0.0;
 
-        VectorIterator both = these.and(those, Vectors.asProductAccumulator(1.0));
+        VectorIterator both = these.and(those, MergeFunction.MUL);
 
         while (both.hasNext()) {
             both.next();
