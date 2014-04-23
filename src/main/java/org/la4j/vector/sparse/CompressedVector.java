@@ -26,6 +26,7 @@ package org.la4j.vector.sparse;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Iterator;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.vector.AbstractVector;
@@ -498,6 +499,16 @@ public class CompressedVector extends AbstractVector implements SparseVector {
             @Override
             public void remove() {
                 throw new UnsupportedOperationException();
+            }
+        };
+    }
+
+    @Override
+    public Iterable<Double> nonZero() {
+        return new Iterable<Double>() {
+            @Override
+            public Iterator<Double> iterator() {
+                return nonZeroIterator();
             }
         };
     }

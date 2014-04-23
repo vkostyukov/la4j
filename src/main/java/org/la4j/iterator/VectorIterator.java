@@ -21,6 +21,9 @@
 
 package org.la4j.iterator;
 
+import org.la4j.factory.Factory;
+import org.la4j.vector.Vector;
+
 public abstract class VectorIterator extends CursorIterator {
 
     protected final int length;
@@ -36,16 +39,8 @@ public abstract class VectorIterator extends CursorIterator {
      */
     public abstract int index();
 
-    public VectorIterator andAlsoAdd(final VectorIterator those) {
-        return new CursorToVectorIterator(super.andAlso(those, JoinFunction.ADD), length);
-    }
-
     public VectorIterator orElseAdd(final VectorIterator those) {
         return new CursorToVectorIterator(super.orElse(those, JoinFunction.ADD), length);
-    }
-
-    public VectorIterator andAlsoSubtract(final VectorIterator those) {
-        return new CursorToVectorIterator(super.andAlso(those, JoinFunction.SUB), length);
     }
 
     public VectorIterator orElseSubtract(final VectorIterator those) {
@@ -56,12 +51,31 @@ public abstract class VectorIterator extends CursorIterator {
         return new CursorToVectorIterator(super.andAlso(those, JoinFunction.MUL), length);
     }
 
-    public VectorIterator orElseMultiply(final VectorIterator those) {
-        return new CursorToVectorIterator(super.orElse(those, JoinFunction.MUL), length);
+    public VectorIterator andAlsoDivide(final VectorIterator those) {
+        return new CursorToVectorIterator(super.andAlso(those, JoinFunction.DIV), length);
     }
 
     @Override
     protected int cursor() {
         return index();
+    }
+
+    /**
+     * Converts this iterator into a vector.
+     *
+     * @param factory that creates a new vector
+     *
+     * @return a new vector
+     */
+    public Vector toVector(Factory factory) {
+        // TODO: this method eats the iterator
+        Vector result = factory.createVector(length);
+
+        while (hasNext()) {
+            next();
+            result.set(index(), value());
+        }
+
+        return result;
     }
 }

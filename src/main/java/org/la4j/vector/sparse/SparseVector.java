@@ -95,4 +95,11 @@ public interface SparseVector extends Vector {
      * @return a non-zero iterator
      */
     VectorIterator nonZeroIterator();
+
+    /**
+     * Returns a non-zero iterable instance. This method is useful in for-each loops.
+     *
+     * @return a non-zero iterable instance
+     */
+    Iterable<Double> nonZero();
 }

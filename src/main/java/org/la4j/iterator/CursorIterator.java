@@ -64,9 +64,9 @@ abstract class CursorIterator implements Iterator<Double> {
 
                     return function.evaluate(these.value(), those.value());
                 } else if (state.contains(IteratorState.TAKEN_FROM_THESE)) {
-                    return these.value();
+                    return function.evaluate(these.value(), 0.0);
                 } else {
-                    return those.value();
+                    return function.evaluate(0.0, those.value());
                 }
             }
 
