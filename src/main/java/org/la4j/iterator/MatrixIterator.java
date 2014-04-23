@@ -21,40 +21,46 @@
 
 package org.la4j.iterator;
 
-public abstract class MatrixIterator extends CursorIterator<MatrixIterator.MatrixCursor> {
+public abstract class MatrixIterator extends CursorIterator {
 
-    public final class MatrixCursor implements Comparable<MatrixCursor> {
+    protected final int rows;
+    protected final int columns;
 
-        public final int row;
-        public final int column;
-
-        public MatrixCursor(int row, int column) {
-            this.row = row;
-            this.column = column;
-        }
-
-        @Override
-        public int compareTo(MatrixCursor that) {
-            return (this.row < that.row) ? -1 :
-                   (this.row > that.row) ? 1 : this.column - that.column;
-        }
+    public MatrixIterator(int rows, int columns) {
+        this.rows = rows;
+        this.columns = columns;
     }
 
-    public abstract int row();
-    public abstract int column();
+    public abstract int rowIndex();
+    public abstract int columnIndex();
 
-/*
-    public MatrixIterator or(final MatrixIterator those, final JoinFunction function) {
-        return new CursorToMatrixIterator(super.orElse(those, function));
+
+    public MatrixIterator andAlsoAdd(final MatrixIterator those) {
+        return new CursorToMatrixIterator(super.andAlso(those, JoinFunction.ADD), rows, columns);
     }
 
-    public MatrixIterator and(final MatrixIterator those, final JoinFunction function) {
-        return new CursorToMatrixIterator(super.andAlso(those, function));
+    public MatrixIterator orElseAdd(final MatrixIterator those) {
+        return new CursorToMatrixIterator(super.orElse(those, JoinFunction.ADD), rows, columns);
     }
-*/
+
+    public MatrixIterator andAlsoSubtract(final MatrixIterator those) {
+        return new CursorToMatrixIterator(super.andAlso(those, JoinFunction.SUB), rows, columns);
+    }
+
+    public MatrixIterator orElseSubtract(final MatrixIterator those) {
+        return new CursorToMatrixIterator(super.orElse(those, JoinFunction.SUB), rows, columns);
+    }
+
+    public MatrixIterator andAlsoMultiply(final MatrixIterator those) {
+        return new CursorToMatrixIterator(super.andAlso(those, JoinFunction.MUL), rows, columns);
+    }
+
+    public MatrixIterator orElseMultiply(final MatrixIterator those) {
+        return new CursorToMatrixIterator(super.orElse(those, JoinFunction.MUL), rows, columns);
+    }
+
     @Override
-    protected MatrixCursor cursor() {
-        // TODO: this is a bottleneck
-        return new MatrixCursor(row(), column());
+    protected int cursor() {
+        return rowIndex() * columns + columnIndex();
     }
 }

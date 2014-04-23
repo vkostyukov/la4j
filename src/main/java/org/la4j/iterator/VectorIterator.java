@@ -21,20 +21,12 @@
 
 package org.la4j.iterator;
 
-public abstract class VectorIterator extends CursorIterator<VectorIterator.VectorCursor> {
+public abstract class VectorIterator extends CursorIterator {
 
-    public final class VectorCursor implements Comparable<VectorCursor> {
+    protected final int length;
 
-        public final int index;
-
-        public VectorCursor(int index) {
-            this.index = index;
-        }
-
-        @Override
-        public int compareTo(VectorCursor that) {
-            return this.index - that.index;
-        }
+    public VectorIterator(int length) {
+        this.length = length;
     }
 
     /**
@@ -44,40 +36,32 @@ public abstract class VectorIterator extends CursorIterator<VectorIterator.Vecto
      */
     public abstract int index();
 
-    /**
-     * Returns a value of the current cell
-     *
-     * @return a value of the current cell
-     */
-    public abstract double value();
-
     public VectorIterator andAlsoAdd(final VectorIterator those) {
-        return new CursorToVectorIterator(super.andAlso(those, JoinFunction.ADD));
+        return new CursorToVectorIterator(super.andAlso(those, JoinFunction.ADD), length);
     }
 
     public VectorIterator orElseAdd(final VectorIterator those) {
-        return new CursorToVectorIterator(super.orElse(those, JoinFunction.ADD));
+        return new CursorToVectorIterator(super.orElse(those, JoinFunction.ADD), length);
     }
 
     public VectorIterator andAlsoSubtract(final VectorIterator those) {
-        return new CursorToVectorIterator(super.andAlso(those, JoinFunction.SUB));
+        return new CursorToVectorIterator(super.andAlso(those, JoinFunction.SUB), length);
     }
 
     public VectorIterator orElseSubtract(final VectorIterator those) {
-        return new CursorToVectorIterator(super.orElse(those, JoinFunction.SUB));
+        return new CursorToVectorIterator(super.orElse(those, JoinFunction.SUB), length);
     }
 
     public VectorIterator andAlsoMultiply(final VectorIterator those) {
-        return new CursorToVectorIterator(super.andAlso(those, JoinFunction.MUL));
+        return new CursorToVectorIterator(super.andAlso(those, JoinFunction.MUL), length);
     }
 
     public VectorIterator orElseMultiply(final VectorIterator those) {
-        return new CursorToVectorIterator(super.orElse(those, JoinFunction.MUL));
+        return new CursorToVectorIterator(super.orElse(those, JoinFunction.MUL), length);
     }
 
     @Override
-    protected VectorCursor cursor() {
-        // TODO: this is a bottleneck
-        return new VectorCursor(index());
+    protected int cursor() {
+        return index();
     }
 }

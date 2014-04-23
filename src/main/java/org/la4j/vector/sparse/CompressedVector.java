@@ -433,7 +433,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     @Override
     public VectorIterator nonZeroIterator() {
-        return new VectorIterator() {
+        return new VectorIterator(length) {
             private int k = -1;
 
             @Override
@@ -465,7 +465,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     @Override
     public VectorIterator iterator() {
-        return new VectorIterator() {
+        return new VectorIterator(length) {
             private int k = 0;
             private int i = -1;
 

@@ -23,15 +23,16 @@ package org.la4j.iterator;
 
 class CursorToVectorIterator extends VectorIterator {
 
-    private CursorIterator<VectorCursor> underlying;
+    private CursorIterator underlying;
 
-    public CursorToVectorIterator(CursorIterator<VectorCursor> underlying) {
+    public CursorToVectorIterator(CursorIterator underlying, int length) {
+        super(length);
         this.underlying = underlying;
     }
 
     @Override
     public int index() {
-        return underlying.cursor().index;
+        return underlying.cursor();
     }
 
     @Override

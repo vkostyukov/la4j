@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Iterator;
 
-abstract class CursorIterator<T extends Comparable<T>> implements Iterator<Double> {
+abstract class CursorIterator implements Iterator<Double> {
 
     private enum IteratorState {
         TAKEN_FROM_THESE,
@@ -41,15 +41,15 @@ abstract class CursorIterator<T extends Comparable<T>> implements Iterator<Doubl
     );
 
     public abstract double value();
-    protected abstract T cursor();
+    protected abstract int cursor();
 
-    protected CursorIterator<T> orElse(final CursorIterator<T> those, final JoinFunction function) {
-        final CursorIterator<T> these = this;
-        return new CursorIterator<T>() {
+    protected CursorIterator orElse(final CursorIterator those, final JoinFunction function) {
+        final CursorIterator these = this;
+        return new CursorIterator() {
             private EnumSet<IteratorState> state = EnumSet.copyOf(TAKEN_FROM_BOTH);
 
             @Override
-            public T cursor() {
+            public int cursor() {
                 if (state.contains(IteratorState.TAKEN_FROM_THESE)) {
                     return these.cursor();
                 } else {
@@ -105,11 +105,10 @@ abstract class CursorIterator<T extends Comparable<T>> implements Iterator<Doubl
 
                 if (!state.contains(IteratorState.THESE_ARE_EMPTY) &&
                         !state.contains(IteratorState.THOSE_ARE_EMPTY)) {
-                    int compare = these.cursor().compareTo(those.cursor());
 
-                    if (compare < 0) {
+                    if (these.cursor() < those.cursor()) {
                         state.add(IteratorState.TAKEN_FROM_THESE);
-                    } else if (compare > 0) {
+                    } else if (these.cursor() > those.cursor()) {
                         state.add(IteratorState.TAKEN_FROM_THOSE);
                     } else {
                         state.add(IteratorState.TAKEN_FROM_THESE);
@@ -126,19 +125,19 @@ abstract class CursorIterator<T extends Comparable<T>> implements Iterator<Doubl
         };
     }
 
-    protected CursorIterator<T> andAlso(final CursorIterator<T> those, final JoinFunction function) {
-        final CursorIterator<T> these = this;
-        return new CursorIterator<T>() {
+    protected CursorIterator andAlso(final CursorIterator those, final JoinFunction function) {
+        final CursorIterator these = this;
+        return new CursorIterator() {
             private boolean hasNext;
             private double prevValue, currValue;
-            private T prevCursor, currCursor;
+            private int prevCursor, currCursor;
 
             {
                 doNext();
             }
 
             @Override
-            public T cursor() {
+            public int cursor() {
                 return prevCursor;
             }
 
@@ -152,27 +151,20 @@ abstract class CursorIterator<T extends Comparable<T>> implements Iterator<Doubl
                     these.next();
                     those.next();
 
-                    T theseCursor = these.cursor();
-                    T thoseCursor = those.cursor();
-                    int compare = theseCursor.compareTo(thoseCursor);
-
-                    while (compare != 0) {
-                        if (these.hasNext() && compare < 0) {
+                    while (these.cursor() != those.cursor()) {
+                        if (these.hasNext() && these.cursor() < those.cursor()) {
                             these.next();
-                            theseCursor = these.cursor();
-                        } else if (those.hasNext() && compare > 0) {
+                        } else if (those.hasNext() && these.cursor() > those.cursor()) {
                             those.next();
-                            thoseCursor = those.cursor();
                         } else {
                             return;
                         }
-                        compare = theseCursor.compareTo(thoseCursor);
                     }
 
                     hasNext = true;
 
                     currValue = function.evaluate(these.value(), those.value());
-                    currCursor = theseCursor;
+                    currCursor = these.cursor();
                 }
             }
 

@@ -131,7 +131,7 @@ public class BasicVector extends AbstractVector implements DenseVector {
 
     @Override
     public VectorIterator iterator() {
-        return new VectorIterator() {
+        return new VectorIterator(length) {
             private int i = -1;
 
             @Override

@@ -23,20 +23,21 @@ package org.la4j.iterator;
 
 class CursorToMatrixIterator extends MatrixIterator {
 
-    private CursorIterator<MatrixCursor> underlying;
+    private CursorIterator underlying;
 
-    public CursorToMatrixIterator(CursorIterator<MatrixCursor> underlying) {
+    public CursorToMatrixIterator(CursorIterator underlying, int rows, int columns) {
+        super(rows, columns);
         this.underlying = underlying;
     }
 
     @Override
-    public int row() {
-        return underlying.cursor().row;
+    public int rowIndex() {
+        return underlying.cursor() / columns;
     }
 
     @Override
-    public int column() {
-        return underlying.cursor().column;
+    public int columnIndex() {
+        return underlying.cursor() - rowIndex() * columns;
     }
 
     @Override
