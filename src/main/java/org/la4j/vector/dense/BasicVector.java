@@ -28,7 +28,10 @@ import java.io.ObjectOutput;
 import org.la4j.LinearAlgebra;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vectors;
+import org.la4j.vector.operation.VectorOperation;
+import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.source.VectorSource;
 
 public class BasicVector extends AbstractVector implements DenseVector {
@@ -124,5 +127,47 @@ public class BasicVector extends AbstractVector implements DenseVector {
         for (int i = 0; i < length; i++) {
             self[i] = in.readDouble();
         }
+    }
+
+    @Override
+    public VectorIterator iterator() {
+        return new VectorIterator(length) {
+            private int i = -1;
+
+            @Override
+            public int index() {
+                return i;
+            }
+
+            @Override
+            public double value() {
+                return self[i];
+            }
+
+            @Override
+            public boolean hasNext() {
+                return i + 1 < length;
+            }
+
+            @Override
+            public Double next() {
+                return self[++i];
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+    }
+
+    @Override
+    public <T> T pipeTo(VectorOperation<T> operation) {
+        return operation.apply(this);
+    }
+
+    @Override
+    public <T> T pipeTo(VectorVectorOperation<T> operation, Vector that) {
+        return that.pipeTo(operation.curry(this));
     }
 }

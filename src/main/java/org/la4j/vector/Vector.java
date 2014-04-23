@@ -28,16 +28,19 @@ import java.io.Externalizable;
 import java.text.NumberFormat;
 
 import org.la4j.factory.Factory;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.operation.VectorOperation;
+import org.la4j.vector.operation.VectorVectorOperation;
 
 /**
  * The real vector interface.
  */
-public interface Vector extends Externalizable {
+public interface Vector extends Externalizable, Iterable<Double> {
 
     /**
      * Gets the specified element of this vector.
@@ -89,6 +92,13 @@ public interface Vector extends Externalizable {
     Vector add(double value, Factory factory);
 
     /**
+     * Adds given {@code value} (v) to this vector (X) in-place.
+     *
+     * @param value the right hand value for addition
+     */
+    void addInPlace(double value);
+
+    /**
      * Adds given {@code vector} (X) to this vector (Y).
      * 
      * @param vector the right hand vector for addition
@@ -108,6 +118,13 @@ public interface Vector extends Externalizable {
     Vector add(Vector vector, Factory factory);
 
     /**
+     * Adds given {@code vector} (X) to this vector (Y) in-place.
+     *
+     * @param vector the right hand vector for addition
+     */
+    void addInPlace(Vector vector);
+
+    /**
      * Multiplies this vector (X) by given {@code value} (v).
      * 
      * @param value the right hand value for multiplication
@@ -125,6 +142,15 @@ public interface Vector extends Externalizable {
      * @return X * v
      */
     Vector multiply(double value, Factory factory);
+
+    /**
+     * Multiplies this vector (X) by given {@code value} (v) in-place.
+     *
+     * @param value the right hand value for multiplication
+     *
+     * @return X * v
+     */
+    void multiplyInPlace(double value);
 
     /**
      * Calculates the Hadamard (element-wise) product of this vector and given {@code vector}.
@@ -422,7 +448,7 @@ public interface Vector extends Externalizable {
      *
      * @return the new vector with the selected elements
      */
-    public Vector select(int[] indices);
+    Vector select(int[] indices);
 
     /**
      * Returns a new vector with the selected elements.
@@ -431,7 +457,7 @@ public interface Vector extends Externalizable {
      *
      * @return the new vector with the selected elements
      */
-    public Vector select(int[] indices, Factory factory);
+    Vector select(int[] indices, Factory factory);
 
     /**
      * Returns the factory of this vector.
@@ -597,4 +623,34 @@ public interface Vector extends Externalizable {
      * @return the vector converted to a string
      */
     String mkString(NumberFormat formatter, String delimiter);
+
+    /**
+     * Returns a vector iterator.
+     *
+     * @return a vector iterator.
+     */
+    @Override
+    VectorIterator iterator();
+
+    /**
+     * Pipes this vector to a given {@code operation}.
+     *
+     * @param operation the vector operation
+     *                  (an operation that take vector and returns {@code T})
+     * @param <T> the result type
+     *
+     * @return the result of an operation applied to this vector
+     */
+    <T> T pipeTo(VectorOperation<T> operation);
+
+    /**
+     * Pipes this vector to a given {@code operation}.
+     *
+     * @param operation the vector-vector operation
+     *                  (an operation that takes two vectors and returns {@code T})
+     * @param <T> the result type
+     *
+     * @return the result of an operation applied to this and {@code that} vector
+     */
+    <T> T pipeTo(VectorVectorOperation<T> operation, Vector that);
 }

@@ -317,6 +317,15 @@ public abstract class AbstractVectorTest extends TestCase {
         assertEquals(d, a.add(b));
     }
 
+    public void testAdd_4() {
+
+        Vector a = factory().createVector(new double[]{ 1.0, 0.0, 0.0, 3.0 });
+        Vector b = factory().createVector(new double[]{ 0.0, 1.0, 0.0, 6.0 });
+        Vector c = factory().createVector(new double[]{ 1.0, 1.0, 0.0, 9.0 });
+
+        assertEquals(c, a.add(b));
+    }
+ 
     public void testSubtract_3() {
 
         Vector a = factory().createVector(new double[] 

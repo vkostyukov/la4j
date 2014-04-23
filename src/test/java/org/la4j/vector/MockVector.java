@@ -21,6 +21,10 @@
 
 package org.la4j.vector;
 
+import org.la4j.iterator.VectorIterator;
+import org.la4j.vector.operation.VectorOperation;
+import org.la4j.vector.operation.VectorVectorOperation;
+
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
@@ -88,10 +92,21 @@ public class MockVector extends AbstractVector implements Vector {
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
-        // TODO Auto-generated method stub
-
         self.writeExternal(out);
     }
 
-    
+    @Override
+    public VectorIterator iterator() {
+        return self.iterator();
+    }
+
+    @Override
+    public <T> T pipeTo(VectorOperation<T> operation) {
+        return self.pipeTo(operation);
+    }
+
+    @Override
+    public <T> T pipeTo(VectorVectorOperation<T> operation, Vector that) {
+        return self.pipeTo(operation, that);
+    }
 }

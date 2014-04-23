@@ -30,10 +30,13 @@ import java.io.ObjectOutput;
 import org.la4j.LinearAlgebra;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.operation.VectorOperation;
+import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.source.VectorSource;
 
 public class CompressedVector extends AbstractVector implements SparseVector {
@@ -312,6 +315,10 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     private int searchForIndex(int i) {
 
+        if (cardinality == 0 || i > indices[cardinality - 1]) {
+            return cardinality;
+        }
+
         int left = 0;
         int right = cardinality;
 
@@ -340,8 +347,11 @@ public class CompressedVector extends AbstractVector implements SparseVector {
             growup();
         }
 
-        System.arraycopy(values, k, values, k + 1, cardinality - k);
-        System.arraycopy(indices, k, indices, k + 1, cardinality - k);
+        // TODO: revise other system.arraycopy() calls
+        if (cardinality - k > 0) {
+            System.arraycopy(values, k, values, k + 1, cardinality - k);
+            System.arraycopy(indices, k, indices, k + 1, cardinality - k);
+        }
 
 //        for (int kk = cardinality; kk > k; kk--) {
 //            values[kk] = values[kk - 1];
@@ -419,5 +429,86 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         }
 
         return (min < 0.0) ? min : 0.0;
+    }
+
+    @Override
+    public VectorIterator nonZeroIterator() {
+        return new VectorIterator(length) {
+            private int k = -1;
+
+            @Override
+            public int index() {
+                return indices[k];
+            }
+
+            @Override
+            public double value() {
+                return values[k];
+            }
+
+            @Override
+            public boolean hasNext() {
+                return k + 1 < cardinality;
+            }
+
+            @Override
+            public Double next() {
+                return values[++k];
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+    }
+
+    @Override
+    public VectorIterator iterator() {
+        return new VectorIterator(length) {
+            private int k = 0;
+            private int i = -1;
+
+            @Override
+            public int index() {
+                return i;
+            }
+
+            @Override
+            public double value() {
+                if (k < cardinality && indices[k] == i) {
+                    return values[k];
+                }
+                return 0.0;
+            }
+
+            @Override
+            public boolean hasNext() {
+                return i + 1 < length;
+            }
+
+            @Override
+            public Double next() {
+                if (k < cardinality && indices[k] == i++) {
+                    k++;
+                }
+                return value();
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+    }
+
+    @Override
+    public <T> T pipeTo(VectorOperation<T> operation) {
+        return operation.apply(this);
+    }
+
+    @Override
+    public <T> T pipeTo(VectorVectorOperation<T> operation, Vector that) {
+        return that.pipeTo(operation.curry(this));
     }
 }
