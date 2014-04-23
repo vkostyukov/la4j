@@ -59,19 +59,19 @@ public abstract class VectorIterator extends CursorIterator<VectorIterator.Vecto
         return new CursorToVectorIterator(super.orElse(those, JoinFunction.ADD));
     }
 
-    public VectorIterator andAlsoSub(final VectorIterator those) {
+    public VectorIterator andAlsoSubtract(final VectorIterator those) {
         return new CursorToVectorIterator(super.andAlso(those, JoinFunction.SUB));
     }
 
-    public VectorIterator orElseSub(final VectorIterator those) {
+    public VectorIterator orElseSubtract(final VectorIterator those) {
         return new CursorToVectorIterator(super.orElse(those, JoinFunction.SUB));
     }
 
-    public VectorIterator andAlsoMul(final VectorIterator those) {
+    public VectorIterator andAlsoMultiply(final VectorIterator those) {
         return new CursorToVectorIterator(super.andAlso(those, JoinFunction.MUL));
     }
 
-    public VectorIterator orElseMul(final VectorIterator those) {
+    public VectorIterator orElseMultiply(final VectorIterator those) {
         return new CursorToVectorIterator(super.orElse(those, JoinFunction.MUL));
     }
 
