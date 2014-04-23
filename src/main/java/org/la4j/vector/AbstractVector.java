@@ -237,6 +237,27 @@ public abstract class AbstractVector implements Vector {
     public double sum() {
         return fold(Vectors.asSumAccumulator(0.0));
     }
+    
+    /**
+     * Helper class for performing a sparse / dense vector product
+     */
+    private static final class SparseDot implements VectorProcedure
+    {
+        public Vector other;
+        double result;
+
+        public SparseDot(Vector other)
+        {
+            this.other = other;
+            result = 0;
+        }
+
+        @Override
+        public void apply(int i, double value)
+        {
+            result += other.get(i)*value;
+        }
+    }
 
     @Override
     public double innerProduct(Vector vector) {
