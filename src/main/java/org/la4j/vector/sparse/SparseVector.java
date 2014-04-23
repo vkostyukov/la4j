@@ -101,5 +101,5 @@ public interface SparseVector extends Vector {
      *
      * @return a non-zero iterable instance
      */
-    Iterable<Double> nonZero();
+    Iterable<Double> skipZeros();
 }

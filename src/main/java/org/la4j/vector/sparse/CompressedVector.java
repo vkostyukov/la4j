@@ -235,8 +235,13 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     @Override
     public void each(VectorProcedure procedure) {
-        for (int i = 0; i < cardinality; i++) {
-            procedure.apply(indices[i], values[i]);
+        int k = 0;
+        for (int i = 0; i < length; i++) {
+            if (k < cardinality && indices[k] == i) {
+                procedure.apply(i, values[k++]);
+            } else {
+                procedure.apply(i, 0.0);
+            }
         }
     }
 
@@ -316,6 +321,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     private int searchForIndex(int i) {
 
+        // TODO: add the same check for CRS/CCS matrices
         if (cardinality == 0 || i > indices[cardinality - 1]) {
             return cardinality;
         }
@@ -366,7 +372,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     private void remove(int k) {
-
+        // TODO: https://github.com/vkostyukov/la4j/issues/87
         cardinality--;
 
         System.arraycopy(values, k + 1, values, k, cardinality - k);
@@ -408,6 +414,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     public double max() {
+        // TODO: use foldNonZero instead
         double max = Double.NEGATIVE_INFINITY;
 
         for (int i = 0; i < cardinality; i++) {
@@ -420,7 +427,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     public double min() {
-
+        // TODO: use foldNonZero instead
         double min = Double.POSITIVE_INFINITY;
 
         for (int i = 0; i < cardinality; i++) {
@@ -504,7 +511,7 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     @Override
-    public Iterable<Double> nonZero() {
+    public Iterable<Double> skipZeros() {
         return new Iterable<Double>() {
             @Override
             public Iterator<Double> iterator() {
