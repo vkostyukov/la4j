@@ -34,7 +34,7 @@ import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.source.VectorSource;
 
-public class BasicVector extends AbstractVector implements DenseVector {
+public class BasicVector extends DenseVector {
 
     private static final long serialVersionUID = 4071505L;
 
@@ -61,7 +61,7 @@ public class BasicVector extends AbstractVector implements DenseVector {
     }
 
     public BasicVector(double array[]) {
-        super(LinearAlgebra.DENSE_FACTORY, array.length);
+        super(array.length);
         this.self = array;
     }
 
@@ -159,15 +159,5 @@ public class BasicVector extends AbstractVector implements DenseVector {
                 throw new UnsupportedOperationException();
             }
         };
-    }
-
-    @Override
-    public <T> T pipeTo(VectorOperation<T> operation) {
-        return operation.apply(this);
-    }
-
-    @Override
-    public <T> T pipeTo(VectorVectorOperation<T> operation, Vector that) {
-        return that.pipeTo(operation.curry(this));
     }
 }

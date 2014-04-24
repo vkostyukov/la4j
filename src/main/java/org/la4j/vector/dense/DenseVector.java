@@ -21,14 +21,32 @@
 
 package org.la4j.vector.dense;
 
+import org.la4j.LinearAlgebra;
+import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
+import org.la4j.vector.operation.VectorOperation;
+import org.la4j.vector.operation.VectorVectorOperation;
 
-public interface DenseVector extends Vector {
+public abstract class DenseVector extends AbstractVector {
+
+    public DenseVector(int length) {
+        super(LinearAlgebra.DENSE_FACTORY, length);
+    }
+
+    @Override
+    public <T> T pipeTo(VectorOperation<T> operation) {
+        return operation.apply(this);
+    }
+
+    @Override
+    public <T> T pipeTo(VectorVectorOperation<T> operation, Vector that) {
+        return that.pipeTo(operation.curry(this));
+    }
 
     /**
      * Converts this dense vector to a double array.
-     * 
+     *
      * @return an array representation of this vector
      */
-    double[] toArray();
+    public abstract double[] toArray();
 }
