@@ -26,21 +26,15 @@ package org.la4j.vector.sparse;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.util.Iterator;
 
-import org.la4j.LinearAlgebra;
-import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vectors;
-import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.operation.VectorOperation;
-import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.source.VectorSource;
 
-public class CompressedVector extends AbstractVector implements SparseVector {
+public class CompressedVector extends SparseVector {
 
     private static final long serialVersionUID = 4071505L;
 
@@ -48,8 +42,6 @@ public class CompressedVector extends AbstractVector implements SparseVector {
 
     private double values[];
     private int indices[];
-
-    private int cardinality;
 
     public CompressedVector() {
         this(0);
@@ -86,28 +78,17 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         }
     }
 
-    public CompressedVector(int length, int cardinality) {
-        super(LinearAlgebra.SPARSE_FACTORY, length);
-
-        int alignedSize = align(length, cardinality);
-
-        this.cardinality = cardinality;
+    public CompressedVector(int length, int capacity) {
+        super(length, 0);
+        int alignedSize = align(length, capacity);
         this.values = new double[alignedSize];
         this.indices = new int[alignedSize];
     }
 
     public CompressedVector(int length, int cardinality, double values[], int indices[]) {
-        super(LinearAlgebra.SPARSE_FACTORY, length);
-
-        this.cardinality = cardinality;
-
+        super(length, cardinality);
         this.values = values;
         this.indices = indices;
-    }
-
-    @Override
-    public double get(int i) {
-        return getOrElse(i, 0.0);
     }
 
     @Override
@@ -203,21 +184,6 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     @Override
-    public int cardinality() {
-        return cardinality;
-    }
-
-    @Override
-    public double density() {
-        return cardinality / (double) length;
-    }
-
-    @Override
-    public Vector copy() {
-        return resize(length);
-    }
-
-    @Override
     public Vector resize(int length) {
         ensureLengthIsCorrect(length);
 
@@ -303,20 +269,9 @@ public class CompressedVector extends AbstractVector implements SparseVector {
     }
 
     @Override
-    public boolean isZeroAt(int i) {
-        return !nonZeroAt(i);
-    }
-
-    @Override
     public boolean nonZeroAt(int i) {
         int k = searchForIndex(i);
         return k < cardinality && indices[k] == i;
-    }
-
-    @Override
-    public double foldNonZero(VectorAccumulator accumulator) {
-        eachNonZero(Vectors.asAccumulatorProcedure(accumulator));
-        return accumulator.accumulate();
     }
 
     private int searchForIndex(int i) {
@@ -403,40 +358,14 @@ public class CompressedVector extends AbstractVector implements SparseVector {
         indices = $indices;
     }
 
-    private int align(int length, int cardinality) {
-        if (cardinality < 0) {
-            fail("Cardinality should be positive: " + cardinality + ".");
+    private int align(int length, int capacity) {
+        if (capacity < 0) {
+            fail("Cardinality should be positive: " + capacity + ".");
         }
-        if (cardinality > length) {
-            fail("Cardinality should be less then or equal to capacity: " + cardinality + ".");
+        if (capacity > length) {
+            fail("Cardinality should be less then or equal to capacity: " + capacity + ".");
         }
-        return Math.min(length, ((cardinality / MINIMUM_SIZE) + 1) * MINIMUM_SIZE);
-    }
-
-    public double max() {
-        // TODO: use foldNonZero instead
-        double max = Double.NEGATIVE_INFINITY;
-
-        for (int i = 0; i < cardinality; i++) {
-            if (values[i] > max) {
-                max = values[i];
-            }
-        }
-
-        return (max > 0.0) ? max : 0.0;
-    }
-
-    public double min() {
-        // TODO: use foldNonZero instead
-        double min = Double.POSITIVE_INFINITY;
-
-        for (int i = 0; i < cardinality; i++) {
-            if (values[i] < min) {
-                min = values[i];
-            }
-        }
-
-        return (min < 0.0) ? min : 0.0;
+        return Math.min(length, ((capacity / MINIMUM_SIZE) + 1) * MINIMUM_SIZE);
     }
 
     @Override
@@ -508,25 +437,5 @@ public class CompressedVector extends AbstractVector implements SparseVector {
                 throw new UnsupportedOperationException();
             }
         };
-    }
-
-    @Override
-    public Iterable<Double> skipZeros() {
-        return new Iterable<Double>() {
-            @Override
-            public Iterator<Double> iterator() {
-                return nonZeroIterator();
-            }
-        };
-    }
-
-    @Override
-    public <T> T pipeTo(VectorOperation<T> operation) {
-        return operation.apply(this);
-    }
-
-    @Override
-    public <T> T pipeTo(VectorVectorOperation<T> operation, Vector that) {
-        return that.pipeTo(operation.curry(this));
     }
 }

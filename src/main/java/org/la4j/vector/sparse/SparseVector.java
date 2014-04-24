@@ -21,12 +21,26 @@
 
 package org.la4j.vector.sparse;
 
+import org.la4j.LinearAlgebra;
+import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.iterator.VectorIterator;
+import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.operation.VectorOperation;
+import org.la4j.vector.operation.VectorVectorOperation;
 
-public interface SparseVector extends Vector {
+import java.util.Iterator;
+
+public abstract class SparseVector extends AbstractVector {
+
+    protected int cardinality;
+
+    public SparseVector(int length, int cardinality) {
+        super(LinearAlgebra.SPARSE_FACTORY, length);
+        this.cardinality = cardinality;
+    }
 
     /**
      * Returns the cardinality (the number of non-zero elements)
@@ -34,7 +48,9 @@ public interface SparseVector extends Vector {
      *
      * @return the cardinality of this vector
      */
-    int cardinality();
+    public int cardinality() {
+        return cardinality;
+    }
 
     /**
      * Returns the density (non-zero elements divided by total elements)
@@ -42,41 +58,14 @@ public interface SparseVector extends Vector {
      *
      * @return the density of this vector
      */
-    double density();
+     public double density() {
+        return cardinality / (double) length;
+     }
 
-    /**
-     * Whether or not the specified element is zero.
-     *
-     * @param i element's index
-     *
-     * @return {@code true} if specified element is zero, {@code false} otherwise
-     */
-    boolean isZeroAt(int i);
-
-    /**
-     * * Whether or not the specified element is not zero.
-     *
-     * @param i element's index
-     *
-     * @return {@code true} if specified element is zero, {@code false} otherwise
-     */
-    boolean nonZeroAt(int i);
-
-    /**
-     * Folds non-zero elements of this vector with given {@code accumulator}.
-     *
-     * @param accumulator the vector accumulator
-     *
-     * @return the accumulated value
-     */
-    double foldNonZero(VectorAccumulator accumulator);
-
-    /**
-     * Applies given {@code procedure} to each non-zero element of this vector.
-     *
-     * @param procedure the vector procedure
-     */
-    void eachNonZero(VectorProcedure procedure);
+    @Override
+    public double get(int i) {
+        return getOrElse(i, 0.0);
+    }
 
     /**
      * Gets the specified element, or a {@code defaultValue} if there
@@ -87,19 +76,92 @@ public interface SparseVector extends Vector {
      *
      * @return the element of this vector or a default value
      */
-    double getOrElse(int i, double defaultValue);
+    public abstract double getOrElse(int i, double defaultValue);
+
+    /**
+     * Whether or not the specified element is zero.
+     *
+     * @param i element's index
+     *
+     * @return {@code true} if specified element is zero, {@code false} otherwise
+     */
+    public boolean isZeroAt(int i) {
+        return !nonZeroAt(i);
+    }
+
+    /**
+     * * Whether or not the specified element is not zero.
+     *
+     * @param i element's index
+     *
+     * @return {@code true} if specified element is zero, {@code false} otherwise
+     */
+    public abstract boolean nonZeroAt(int i);
+
+    /**
+     * Folds non-zero elements of this vector with given {@code accumulator}.
+     *
+     * @param accumulator the vector accumulator
+     *
+     * @return the accumulated value
+     */
+    public double foldNonZero(VectorAccumulator accumulator) {
+        eachNonZero(Vectors.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
+    }
+
+    /**
+     * Applies given {@code procedure} to each non-zero element of this vector.
+     *
+     * @param procedure the vector procedure
+     */
+    public abstract void eachNonZero(VectorProcedure procedure);
+
+    @Override
+    public double max() {
+        double max = foldNonZero(Vectors.mkMaxAccumulator());
+        return (max > 0.0) ? max : 0.0;
+    }
+
+    @Override
+    public double min() {
+        double min = foldNonZero(Vectors.mkMinAccumulator());
+        return (min < 0.0) ? min : 0.0;
+    }
 
     /**
      * Returns a non-zero iterator.
      *
      * @return a non-zero iterator
      */
-    VectorIterator nonZeroIterator();
+    public abstract VectorIterator nonZeroIterator();
 
     /**
      * Returns a non-zero iterable instance. This method is useful in for-each loops.
      *
      * @return a non-zero iterable instance
      */
-    Iterable<Double> skipZeros();
+    public Iterable<Double> skipZeros() {
+        return new Iterable<Double>() {
+            @Override
+            public Iterator<Double> iterator() {
+                return nonZeroIterator();
+            }
+        };
+    }
+
+    @Override
+    public Vector copy() {
+        return resize(length);
+    }
+
+    @Override
+    public <T> T pipeTo(VectorOperation<T> operation) {
+        return operation.apply(this);
+    }
+
+    @Override
+    public <T> T pipeTo(VectorVectorOperation<T> operation, Vector that) {
+        return that.pipeTo(operation.curry(this));
+    }
 }
