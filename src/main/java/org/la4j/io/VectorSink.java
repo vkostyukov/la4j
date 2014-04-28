@@ -18,7 +18,7 @@
  * Contributor(s): -
  */
 
-package org.la4j.vector;
+package org.la4j.io;
 
 /**
  * A write-only stream for vectors.

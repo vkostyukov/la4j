@@ -22,7 +22,7 @@
 package org.la4j.vector.operation.inplace;
 
 import org.la4j.iterator.VectorIterator;
-import org.la4j.vector.VectorSink;
+import org.la4j.io.VectorSink;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
