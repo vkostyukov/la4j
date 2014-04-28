@@ -19,7 +19,7 @@
  *
  */
 
-package org.la4j.iterator;
+package org.la4j.io;
 
 public abstract class MatrixIterator extends CursorIterator {
 

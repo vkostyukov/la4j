@@ -23,7 +23,7 @@ package org.la4j.vector.operation.ooplace;
 
 import org.la4j.factory.Factory;
 import org.la4j.vector.Vector;
-import org.la4j.iterator.VectorIterator;
+import org.la4j.io.VectorIterator;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;

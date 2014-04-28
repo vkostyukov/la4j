@@ -19,7 +19,7 @@
  *
  */
 
-package org.la4j.iterator;
+package org.la4j.io;
 
 import org.la4j.factory.Factory;
 import org.la4j.vector.Vector;
