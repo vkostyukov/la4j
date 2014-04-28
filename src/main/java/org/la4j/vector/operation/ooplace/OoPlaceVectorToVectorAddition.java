@@ -66,7 +66,7 @@ public class OoPlaceVectorToVectorAddition extends VectorVectorOperation<Vector>
         VectorIterator it = b.nonZeroIterator();
         while (it.hasNext()) {
             it.next();
-            result.update(it.index(), Vectors.asPlusFunction(it.value()));
+            result.update(it.index(), Vectors.asPlusFunction(it.get()));
         }
         return result;
     }

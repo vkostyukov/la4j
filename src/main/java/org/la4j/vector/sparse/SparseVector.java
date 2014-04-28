@@ -149,7 +149,7 @@ public abstract class SparseVector extends AbstractVector {
 
         while (it.hasNext()) {
             it.next();
-            result.set(it.index(), it.value() * value);
+            result.set(it.index(), it.get() * value);
         }
 
         return result;
@@ -158,12 +158,10 @@ public abstract class SparseVector extends AbstractVector {
     @Override
     public void multiplyInPlace(double value) {
         VectorIterator it = nonZeroIterator();
-        VectorFunction mul = Vectors.asMulFunction(value);
 
         while (it.hasNext()) {
-            // TODO: use in-place operation 'set' from iterator
             it.next();
-            update(it.index(), mul);
+            it.set(it.get() * value);
         }
     }
 

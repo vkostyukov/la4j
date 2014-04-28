@@ -36,8 +36,13 @@ class CursorToVectorIterator extends VectorIterator {
     }
 
     @Override
-    public double value() {
-        return underlying.value();
+    public double get() {
+        return underlying.get();
+    }
+
+    @Override
+    public void set(double value) {
+        underlying.set(value);
     }
 
     @Override

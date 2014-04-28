@@ -130,7 +130,6 @@ public abstract class AbstractVector implements Vector {
         return multiply(value, factory);
     }
 
-    // OPS: Current operation.
     @Override
     public Vector hadamardProduct(Vector vector) {
         return hadamardProduct(vector, factory);
@@ -142,15 +141,6 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(vector,  "vector");
         ensureVectorIsSimilar(vector);
 
-/*
-        Vector result = blank(factory);
-
-        for (int i = 0; i < length; i++) {
-            result.set(i, get(i) * vector.get(i));
-        }
-
-        return result;
-*/
         return pipeTo(VectorOperations.ooPlaceHadamardProduct(factory), vector);
     }
 

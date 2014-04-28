@@ -379,8 +379,14 @@ public class CompressedVector extends SparseVector {
             }
 
             @Override
-            public double value() {
+            public double get() {
                 return values[k];
+            }
+
+            @Override
+            public void set(double value) {
+                // TODO: check for zero and remove k-cell if necessary
+                values[k] = value;
             }
 
             @Override
@@ -391,11 +397,6 @@ public class CompressedVector extends SparseVector {
             @Override
             public Double next() {
                 return values[++k];
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
             }
         };
     }
@@ -412,11 +413,21 @@ public class CompressedVector extends SparseVector {
             }
 
             @Override
-            public double value() {
+            public double get() {
                 if (k < cardinality && indices[k] == i) {
                     return values[k];
                 }
                 return 0.0;
+            }
+
+            @Override
+            public void set(double value) {
+                if (k < cardinality && indices[k] == i) {
+                    // TODO: check for zero and remove k-cell if necessary
+                    values[k] = value;
+                } else {
+                    CompressedVector.this.insert(k, i, value);
+                }
             }
 
             @Override
@@ -429,12 +440,7 @@ public class CompressedVector extends SparseVector {
                 if (k < cardinality && indices[k] == i++) {
                     k++;
                 }
-                return value();
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
+                return get();
             }
         };
     }

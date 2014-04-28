@@ -33,7 +33,7 @@ public class InPlaceVectorToVectorAddition extends VectorVectorOperation<Void> {
         VectorIterator it = b.nonZeroIterator();
         while (it.hasNext()) {
             it.next();
-            a.update(it.index(), Vectors.asPlusFunction(it.value()));
+            a.update(it.index(), Vectors.asPlusFunction(it.get()));
         }
         return null;
     }
@@ -59,7 +59,7 @@ public class InPlaceVectorToVectorAddition extends VectorVectorOperation<Void> {
         VectorIterator it = b.nonZeroIterator();
         while (it.hasNext()) {
             it.next();
-            a.set(it.index(), a.get(it.index()) + it.value());
+            a.set(it.index(), a.get(it.index()) + it.get());
         }
         return null;
     }

@@ -68,7 +68,7 @@ public class OoPlaceHadamardProduct extends VectorVectorOperation<Vector> {
 
         while (it.hasNext()) {
             it.next();
-            result.set(it.index(), it.value() * a.get(it.index()));
+            result.set(it.index(), it.get() * a.get(it.index()));
         }
 
         return result;

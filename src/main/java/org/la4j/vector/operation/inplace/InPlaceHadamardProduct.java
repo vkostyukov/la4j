@@ -37,7 +37,7 @@ public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
         VectorRecorder recorder = a.recorder();
         while (both.hasNext()) {
             both.next();
-            recorder.set(both.index(), both.value());
+            recorder.set(both.index(), both.get());
         }
         recorder.record();
 
@@ -51,7 +51,7 @@ public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
         VectorRecorder rec = a.recorder();
         while (it.hasNext()) {
             it.next();
-            rec.set(it.index(), it.value() * b.get(it.index()));
+            rec.set(it.index(), it.get() * b.get(it.index()));
         }
         rec.record();
 
@@ -73,7 +73,7 @@ public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
 
         while (it.hasNext()) {
             it.next();
-            recorder.set(it.index(), a.get(it.index()) * it.value());
+            recorder.set(it.index(), a.get(it.index()) * it.get());
         }
         return null;
     }

@@ -41,8 +41,13 @@ class CursorToMatrixIterator extends MatrixIterator {
     }
 
     @Override
-    public double value() {
-        return underlying.value();
+    public double get() {
+        return underlying.get();
+    }
+
+    @Override
+    public void set(double value) {
+        underlying.set(value);
     }
 
     @Override

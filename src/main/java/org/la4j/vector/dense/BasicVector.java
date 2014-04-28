@@ -140,8 +140,13 @@ public class BasicVector extends DenseVector {
             }
 
             @Override
-            public double value() {
+            public double get() {
                 return self[i];
+            }
+
+            @Override
+            public void set(double value) {
+                self[i] = value;
             }
 
             @Override
@@ -152,11 +157,6 @@ public class BasicVector extends DenseVector {
             @Override
             public Double next() {
                 return self[++i];
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
             }
         };
     }

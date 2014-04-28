@@ -68,12 +68,11 @@ public abstract class VectorIterator extends CursorIterator {
      * @return a new vector
      */
     public Vector toVector(Factory factory) {
-        // TODO: this method eats the iterator
         Vector result = factory.createVector(length);
 
         while (hasNext()) {
             next();
-            result.set(index(), value());
+            result.set(index(), get());
         }
 
         return result;

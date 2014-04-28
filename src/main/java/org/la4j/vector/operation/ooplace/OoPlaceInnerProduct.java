@@ -43,7 +43,7 @@ public class OoPlaceInnerProduct extends VectorVectorOperation<Double> {
 
         while (both.hasNext()) {
             both.next();
-            result += both.value();
+            result += both.get();
         }
 
         return result;

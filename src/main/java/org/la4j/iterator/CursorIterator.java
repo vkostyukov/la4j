@@ -40,7 +40,8 @@ abstract class CursorIterator implements Iterator<Double> {
             IteratorState.TAKEN_FROM_THOSE
     );
 
-    public abstract double value();
+    public abstract double get();
+    public abstract void set(double value);
     protected abstract int cursor();
 
     protected CursorIterator orElse(final CursorIterator those, final JoinFunction function) {
@@ -58,16 +59,21 @@ abstract class CursorIterator implements Iterator<Double> {
             }
 
             @Override
-            public double value() {
+            public double get() {
                 if (state.contains(IteratorState.TAKEN_FROM_THESE) &&
                         state.contains(IteratorState.TAKEN_FROM_THOSE)) {
 
-                    return function.evaluate(these.value(), those.value());
+                    return function.evaluate(these.get(), those.get());
                 } else if (state.contains(IteratorState.TAKEN_FROM_THESE)) {
-                    return function.evaluate(these.value(), 0.0);
+                    return function.evaluate(these.get(), 0.0);
                 } else {
-                    return function.evaluate(0.0, those.value());
+                    return function.evaluate(0.0, those.get());
                 }
+            }
+
+            @Override
+            public void set(double value) {
+                throw new UnsupportedOperationException("Composed iterators are read-only for now.");
             }
 
             @Override
@@ -120,7 +126,7 @@ abstract class CursorIterator implements Iterator<Double> {
                     state.add(IteratorState.TAKEN_FROM_THESE);
                 }
 
-                return value();
+                return get();
             }
         };
     }
@@ -163,14 +169,19 @@ abstract class CursorIterator implements Iterator<Double> {
 
                     hasNext = true;
 
-                    currValue = function.evaluate(these.value(), those.value());
+                    currValue = function.evaluate(these.get(), those.get());
                     currCursor = these.cursor();
                 }
             }
 
             @Override
-            public double value() {
+            public double get() {
                 return prevValue;
+            }
+
+            @Override
+            public void set(double value) {
+                throw new UnsupportedOperationException("Composed iterators are read-only for now.");
             }
 
             @Override
@@ -181,13 +192,13 @@ abstract class CursorIterator implements Iterator<Double> {
             @Override
             public Double next() {
                 doNext();
-                return value();
+                return get();
             }
         };
     }
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("This will be supported in 0.6.0.");
     }
 }

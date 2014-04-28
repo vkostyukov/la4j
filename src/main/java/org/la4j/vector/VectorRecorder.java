@@ -20,7 +20,18 @@
 
 package org.la4j.vector;
 
+// TODO: rename to VectorWriterator?
 public interface VectorRecorder {
+
+    /**
+     *
+     * @param i
+     * @param value
+     */
     void set(int i, double value);
+
+    /**
+     *
+     */
     void record();
 }
