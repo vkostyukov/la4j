@@ -157,6 +157,7 @@ public abstract class SparseVector extends AbstractVector {
 
     @Override
     public void multiplyInPlace(double value) {
+        // TODO: multiply by 0 = clear()
         VectorIterator it = nonZeroIterator();
 
         while (it.hasNext()) {

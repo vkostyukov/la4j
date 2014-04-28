@@ -371,22 +371,32 @@ public class CompressedVector extends SparseVector {
     @Override
     public VectorIterator nonZeroIterator() {
         return new VectorIterator(length) {
+            private boolean currentIsRemoved = false;
             private int k = -1;
+            private int removedIndex = -1;
 
             @Override
             public int index() {
-                return indices[k];
+                return currentIsRemoved ? removedIndex : indices[k];
             }
 
             @Override
             public double get() {
-                return values[k];
+                return currentIsRemoved ? 0.0 : values[k];
             }
 
             @Override
             public void set(double value) {
-                // TODO: check for zero and remove k-cell if necessary
-                values[k] = value;
+                if (value == 0.0 && !currentIsRemoved) {
+                    currentIsRemoved = true;
+                    removedIndex = indices[k];
+                    CompressedVector.this.remove(k--);
+                } else if (value != 0.0 && !currentIsRemoved) {
+                    values[k] = value;
+                } else {
+                    currentIsRemoved = false;
+                    CompressedVector.this.insert(++k, removedIndex, value);
+                }
             }
 
             @Override
@@ -396,6 +406,7 @@ public class CompressedVector extends SparseVector {
 
             @Override
             public Double next() {
+                currentIsRemoved = false;
                 return values[++k];
             }
         };
@@ -423,8 +434,11 @@ public class CompressedVector extends SparseVector {
             @Override
             public void set(double value) {
                 if (k < cardinality && indices[k] == i) {
-                    // TODO: check for zero and remove k-cell if necessary
-                    values[k] = value;
+                    if (value == 0.0) {
+                        CompressedVector.this.remove(k);
+                    } else {
+                        values[k] = value;
+                    }
                 } else {
                     CompressedVector.this.insert(k, i, value);
                 }

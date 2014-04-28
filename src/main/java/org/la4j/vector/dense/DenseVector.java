@@ -66,6 +66,7 @@ public abstract class DenseVector extends AbstractVector {
 
     @Override
     public void multiplyInPlace(double value) {
+        // TODO: multiply by 0 = clear()
         for (int i = 0; i < length; i++) {
             set(i, get(i) * value);
         }
