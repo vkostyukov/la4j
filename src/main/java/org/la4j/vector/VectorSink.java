@@ -20,18 +20,22 @@
 
 package org.la4j.vector;
 
-// TODO: rename to VectorWriterator?
-public interface VectorRecorder {
+/**
+ * A write-only stream for vectors.
+ */
+public interface VectorSink {
 
     /**
+     * Writes given {@code value} to a destination vector at given {@code index}.
      *
-     * @param i
-     * @param value
+     * @param i the element's index
+     * @param value the element's value
      */
     void set(int i, double value);
 
     /**
-     *
+     * Flushes this sink (makes sure that all the written data is delivered
+     * to a destination vector)
      */
-    void record();
+    void flush();
 }

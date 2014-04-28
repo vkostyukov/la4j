@@ -646,11 +646,11 @@ public interface Vector extends Externalizable, Iterable<Double> {
     VectorIterator iterator();
 
     /**
-     * Returns a vector linear recorder.
+     * Returns a new sink that has this vector as a destination.
      *
-     * @return a vector linear recorder
+     * @return a new vector sink
      */
-    VectorRecorder recorder();
+    VectorSink sink();
 
     /**
      * Pipes this vector to a given {@code operation}.

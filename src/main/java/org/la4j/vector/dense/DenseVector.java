@@ -25,7 +25,7 @@ import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
-import org.la4j.vector.VectorRecorder;
+import org.la4j.vector.VectorSink;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 
@@ -73,8 +73,8 @@ public abstract class DenseVector extends AbstractVector {
     }
 
     @Override
-    public VectorRecorder recorder() {
-        return new VectorRecorder() {
+    public VectorSink sink() {
+        return new VectorSink() {
             private int innerIndex = 0;
             @Override
             public void set(int i, double value) {
@@ -86,7 +86,7 @@ public abstract class DenseVector extends AbstractVector {
             }
 
             @Override
-            public void record() {
+            public void flush() {
                 for (int j = innerIndex; j < length; j++) {
                     DenseVector.this.set(j, 0.0);
                 }

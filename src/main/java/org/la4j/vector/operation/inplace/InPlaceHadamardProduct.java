@@ -22,10 +22,10 @@
 package org.la4j.vector.operation.inplace;
 
 import org.la4j.iterator.VectorIterator;
+import org.la4j.vector.VectorSink;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
-import org.la4j.vector.VectorRecorder;
 
 public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
     @Override
@@ -34,12 +34,12 @@ public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
         VectorIterator those = b.nonZeroIterator();
         VectorIterator both = these.andAlsoMultiply(those);
 
-        VectorRecorder recorder = a.recorder();
+        VectorSink recorder = a.sink();
         while (both.hasNext()) {
             both.next();
             recorder.set(both.index(), both.get());
         }
-        recorder.record();
+        recorder.flush();
 
         return null;
     }
@@ -48,12 +48,12 @@ public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
     public Void apply(SparseVector a, DenseVector b) {
         VectorIterator it = a.nonZeroIterator();
 
-        VectorRecorder rec = a.recorder();
+        VectorSink rec = a.sink();
         while (it.hasNext()) {
             it.next();
             rec.set(it.index(), it.get() * b.get(it.index()));
         }
-        rec.record();
+        rec.flush();
 
         return null;
     }
@@ -69,7 +69,7 @@ public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
     @Override
     public Void apply(DenseVector a, SparseVector b) {
         VectorIterator it = b.nonZeroIterator();
-        VectorRecorder recorder = a.recorder();
+        VectorSink recorder = a.sink();
 
         while (it.hasNext()) {
             it.next();

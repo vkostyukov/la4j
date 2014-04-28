@@ -26,10 +26,9 @@ import org.la4j.factory.Factory;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.vector.VectorRecorder;
+import org.la4j.vector.VectorSink;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
-import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
@@ -188,9 +187,9 @@ public abstract class SparseVector extends AbstractVector {
     }
 
     @Override
-    public VectorRecorder recorder() {
+    public VectorSink sink() {
         final int outerCardinality = cardinality;
-        return new VectorRecorder() {
+        return new VectorSink() {
             private int innerCardinality = 0;
             @Override
             public void set(int i, double value) {
@@ -201,7 +200,7 @@ public abstract class SparseVector extends AbstractVector {
             }
 
             @Override
-            public void record() {
+            public void flush() {
                 SparseVector.this.cardinality = innerCardinality;
             }
         };
