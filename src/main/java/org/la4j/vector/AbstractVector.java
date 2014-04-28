@@ -64,6 +64,11 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public void clear() {
+        assign(0.0);
+    }
+
+    @Override
     public void assign(double value) {
         update(Vectors.asConstFunction(value));
     }
@@ -125,6 +130,7 @@ public abstract class AbstractVector implements Vector {
         return multiply(value, factory);
     }
 
+    // OPS: Current operation.
     @Override
     public Vector hadamardProduct(Vector vector) {
         return hadamardProduct(vector, factory);
@@ -136,6 +142,7 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(vector,  "vector");
         ensureVectorIsSimilar(vector);
 
+/*
         Vector result = blank(factory);
 
         for (int i = 0; i < length; i++) {
@@ -143,6 +150,16 @@ public abstract class AbstractVector implements Vector {
         }
 
         return result;
+*/
+        return pipeTo(VectorOperations.ooPlaceHadamardProduct(factory), vector);
+    }
+
+    @Override
+    public void hadamardProductInPlace(Vector vector) {
+        ensureArgumentIsNotNull(vector,  "vector");
+        ensureVectorIsSimilar(vector);
+
+        pipeTo(VectorOperations.inPlaceHadamardProduct(), vector);
     }
 
     @Override

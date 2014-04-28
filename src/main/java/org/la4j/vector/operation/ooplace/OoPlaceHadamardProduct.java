@@ -22,18 +22,17 @@
 package org.la4j.vector.operation.ooplace;
 
 import org.la4j.factory.Factory;
-import org.la4j.vector.Vector;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.vector.Vectors;
+import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
-public class OoPlaceVectorToVectorAddition extends VectorVectorOperation<Vector> {
+public class OoPlaceHadamardProduct extends VectorVectorOperation<Vector> {
 
     private Factory factory;
 
-    public OoPlaceVectorToVectorAddition(Factory factory) {
+    public OoPlaceHadamardProduct(Factory factory) {
         this.factory = factory;
     }
 
@@ -41,7 +40,7 @@ public class OoPlaceVectorToVectorAddition extends VectorVectorOperation<Vector>
     public Vector apply(SparseVector a, SparseVector b) {
         VectorIterator these = a.nonZeroIterator();
         VectorIterator those = b.nonZeroIterator();
-        VectorIterator both  = these.orElseAdd(those);
+        VectorIterator both = these.andAlsoMultiply(those);
 
         return both.toVector(factory);
     }
@@ -53,21 +52,25 @@ public class OoPlaceVectorToVectorAddition extends VectorVectorOperation<Vector>
 
     @Override
     public Vector apply(DenseVector a, DenseVector b) {
-        Vector result = factory.createVector(a.length());
+        Vector result = a.blank(factory);
+
         for (int i = 0; i < a.length(); i++) {
-            result.set(i, a.get(i) + b.get(i));
+            result.set(i, a.get(i) * b.get(i));
         }
+
         return result;
     }
 
     @Override
     public Vector apply(DenseVector a, SparseVector b) {
-        Vector result = a.copy(factory);
+        Vector result = a.blank(factory);
         VectorIterator it = b.nonZeroIterator();
+
         while (it.hasNext()) {
             it.next();
-            result.update(it.index(), Vectors.asPlusFunction(it.value()));
+            result.set(it.index(), it.value() * a.get(it.index()));
         }
+
         return result;
     }
 }

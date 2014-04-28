@@ -22,6 +22,7 @@
 package org.la4j.vector;
 
 import org.la4j.iterator.VectorIterator;
+import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 
@@ -29,13 +30,13 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-public class MockVector extends AbstractVector implements Vector {
+public class MockVector extends DenseVector {
 
     private final static double MOCK_EPS = 1e-3;
     private Vector self;
 
     public MockVector(Vector vector) {
-        super(vector.factory(), vector.length());
+        super(vector.length());
         this.self = vector;
     }
 
@@ -84,6 +85,16 @@ public class MockVector extends AbstractVector implements Vector {
     }
 
     @Override
+    public double[] toArray() {
+        return null;
+    }
+
+    @Override
+    public VectorIterator iterator() {
+        return null;
+    }
+
+    @Override
     public void readExternal(ObjectInput in) throws IOException,
             ClassNotFoundException {
 
@@ -93,20 +104,5 @@ public class MockVector extends AbstractVector implements Vector {
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         self.writeExternal(out);
-    }
-
-    @Override
-    public VectorIterator iterator() {
-        return self.iterator();
-    }
-
-    @Override
-    public <T> T pipeTo(VectorOperation<T> operation) {
-        return self.pipeTo(operation);
-    }
-
-    @Override
-    public <T> T pipeTo(VectorVectorOperation<T> operation, Vector that) {
-        return self.pipeTo(operation, that);
     }
 }

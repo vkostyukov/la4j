@@ -16,33 +16,11 @@
  * limitations under the License.
  *
  * Contributor(s): -
- *
  */
 
-package org.la4j.vector.operation.inplace;
+package org.la4j.vector;
 
-import org.la4j.vector.dense.DenseVector;
-import org.la4j.vector.operation.VectorVectorOperation;
-import org.la4j.vector.sparse.SparseVector;
-
-public class InPlaceVectorByVectorMultiplication extends VectorVectorOperation<Void> {
-    @Override
-    public Void apply(SparseVector a, SparseVector b) {
-        return null;
-    }
-
-    @Override
-    public Void apply(SparseVector a, DenseVector b) {
-        return null;
-    }
-
-    @Override
-    public Void apply(DenseVector a, DenseVector b) {
-        return null;
-    }
-
-    @Override
-    public Void apply(DenseVector a, SparseVector b) {
-        return null;
-    }
+public interface VectorRecorder {
+    void set(int i, double value);
+    void record();
 }

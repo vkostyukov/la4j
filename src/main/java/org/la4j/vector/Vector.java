@@ -59,6 +59,11 @@ public interface Vector extends Externalizable, Iterable<Double> {
     void set(int i, double value);
 
     /**
+     * Assigns all the elements of this vector to zero.
+     */
+    void clear();
+
+    /**
      * Assigns all elements of this vector to given {@code value}.
      * 
      * @param value the elements' new value
@@ -170,6 +175,14 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @return the Hadamard product of two vectors
      */
     Vector hadamardProduct(Vector vector, Factory factory);
+
+    /**
+     * Calculates the Hadamard (element-wise) product of this vector and given {@code vector}
+     * in-place.
+     *
+     * @param vector the right hand vector for Hadamard product
+     */
+    void hadamardProductInPlace(Vector vector);
 
     /**
      * Multiples this vector (X) by given {@code matrix} (A).
@@ -631,6 +644,13 @@ public interface Vector extends Externalizable, Iterable<Double> {
      */
     @Override
     VectorIterator iterator();
+
+    /**
+     * Returns a vector linear recorder.
+     *
+     * @return a vector linear recorder
+     */
+    VectorRecorder recorder();
 
     /**
      * Pipes this vector to a given {@code operation}.

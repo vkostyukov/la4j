@@ -26,6 +26,7 @@ import org.la4j.factory.Factory;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.iterator.VectorIterator;
+import org.la4j.vector.VectorRecorder;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
@@ -60,9 +61,19 @@ public abstract class SparseVector extends AbstractVector {
      *
      * @return the density of this vector
      */
-     public double density() {
+    public double density() {
         return cardinality / (double) length;
-     }
+    }
+
+    @Override
+    public void assign(double value) {
+        // fast clear
+        if (value == 0.0) {
+            cardinality = 0;
+        } else {
+            super.assign(value);
+        }
+    }
 
     @Override
     public double get(int i) {
@@ -150,6 +161,7 @@ public abstract class SparseVector extends AbstractVector {
         VectorFunction mul = Vectors.asMulFunction(value);
 
         while (it.hasNext()) {
+            // TODO: use in-place operation 'set' from iterator
             it.next();
             update(it.index(), mul);
         }
@@ -172,6 +184,26 @@ public abstract class SparseVector extends AbstractVector {
             @Override
             public Iterator<Double> iterator() {
                 return nonZeroIterator();
+            }
+        };
+    }
+
+    @Override
+    public VectorRecorder recorder() {
+        final int outerCardinality = cardinality;
+        return new VectorRecorder() {
+            private int innerCardinality = 0;
+            @Override
+            public void set(int i, double value) {
+                SparseVector.this.cardinality = innerCardinality;
+                SparseVector.this.set(i, value);
+                innerCardinality = SparseVector.this.cardinality;
+                SparseVector.this.cardinality = outerCardinality;
+            }
+
+            @Override
+            public void record() {
+                SparseVector.this.cardinality = innerCardinality;
             }
         };
     }

@@ -23,8 +23,9 @@ package org.la4j.vector.operation;
 
 import org.la4j.factory.Factory;
 import org.la4j.vector.Vector;
-import org.la4j.vector.operation.inplace.InPlaceVectorByVectorMultiplication;
+import org.la4j.vector.operation.inplace.InPlaceHadamardProduct;
 import org.la4j.vector.operation.inplace.InPlaceVectorToVectorAddition;
+import org.la4j.vector.operation.ooplace.OoPlaceHadamardProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceInnerProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorToVectorAddition;
 
@@ -42,7 +43,11 @@ public final class VectorOperations {
         return new OoPlaceVectorToVectorAddition(factory);
     }
 
-    public static VectorVectorOperation<Void> inPlaceVectorByVectorMultiplication() {
-        return new InPlaceVectorByVectorMultiplication();
+    public static VectorVectorOperation<Void> inPlaceHadamardProduct() {
+        return new InPlaceHadamardProduct();
+    }
+
+    public static VectorVectorOperation<Vector> ooPlaceHadamardProduct(Factory factory) {
+        return new OoPlaceHadamardProduct(factory);
     }
 }

@@ -19,55 +19,62 @@
  *
  */
 
-package org.la4j.vector.operation.ooplace;
+package org.la4j.vector.operation.inplace;
 
-import org.la4j.factory.Factory;
-import org.la4j.vector.Vector;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
+import org.la4j.vector.VectorRecorder;
 
-public class OoPlaceVectorToVectorAddition extends VectorVectorOperation<Vector> {
-
-    private Factory factory;
-
-    public OoPlaceVectorToVectorAddition(Factory factory) {
-        this.factory = factory;
-    }
-
+public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
     @Override
-    public Vector apply(SparseVector a, SparseVector b) {
+    public Void apply(SparseVector a, SparseVector b) {
         VectorIterator these = a.nonZeroIterator();
         VectorIterator those = b.nonZeroIterator();
-        VectorIterator both  = these.orElseAdd(those);
+        VectorIterator both = these.andAlsoMultiply(those);
 
-        return both.toVector(factory);
-    }
-
-    @Override
-    public Vector apply(SparseVector a, DenseVector b) {
-        return apply(b, a);
-    }
-
-    @Override
-    public Vector apply(DenseVector a, DenseVector b) {
-        Vector result = factory.createVector(a.length());
-        for (int i = 0; i < a.length(); i++) {
-            result.set(i, a.get(i) + b.get(i));
+        VectorRecorder recorder = a.recorder();
+        while (both.hasNext()) {
+            both.next();
+            recorder.set(both.index(), both.value());
         }
-        return result;
+        recorder.record();
+
+        return null;
     }
 
     @Override
-    public Vector apply(DenseVector a, SparseVector b) {
-        Vector result = a.copy(factory);
-        VectorIterator it = b.nonZeroIterator();
+    public Void apply(SparseVector a, DenseVector b) {
+        VectorIterator it = a.nonZeroIterator();
+
+        VectorRecorder rec = a.recorder();
         while (it.hasNext()) {
             it.next();
-            result.update(it.index(), Vectors.asPlusFunction(it.value()));
+            rec.set(it.index(), it.value() * b.get(it.index()));
         }
-        return result;
+        rec.record();
+
+        return null;
+    }
+
+    @Override
+    public Void apply(DenseVector a, DenseVector b) {
+        for (int i = 0; i < a.length(); i++) {
+            a.set(i, a.get(i) * b.get(i));
+        }
+        return null;
+    }
+
+    @Override
+    public Void apply(DenseVector a, SparseVector b) {
+        VectorIterator it = b.nonZeroIterator();
+        VectorRecorder recorder = a.recorder();
+
+        while (it.hasNext()) {
+            it.next();
+            recorder.set(it.index(), a.get(it.index()) * it.value());
+        }
+        return null;
     }
 }
