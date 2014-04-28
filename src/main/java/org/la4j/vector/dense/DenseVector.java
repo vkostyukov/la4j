@@ -22,6 +22,7 @@
 package org.la4j.vector.dense;
 
 import org.la4j.LinearAlgebra;
+import org.la4j.factory.Factory;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.operation.VectorOperation;
@@ -49,4 +50,23 @@ public abstract class DenseVector extends AbstractVector {
      * @return an array representation of this vector
      */
     public abstract double[] toArray();
+
+    @Override
+    public Vector multiply(double value, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        Vector result = blank(factory);
+
+        for (int i = 0; i < length(); i++) {
+            result.set(i, get(i) * value);
+        }
+
+        return result;
+    }
+
+    @Override
+    public void multiplyInPlace(double value) {
+        for (int i = 0; i < length; i++) {
+            set(i, get(i) * value);
+        }
+    }
 }

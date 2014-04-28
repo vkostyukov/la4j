@@ -23,11 +23,9 @@ package org.la4j.vector.operation;
 
 import org.la4j.factory.Factory;
 import org.la4j.vector.Vector;
-import org.la4j.vector.operation.inplace.InPlaceVectorByValueMultiplication;
 import org.la4j.vector.operation.inplace.InPlaceVectorByVectorMultiplication;
 import org.la4j.vector.operation.inplace.InPlaceVectorToVectorAddition;
 import org.la4j.vector.operation.ooplace.OoPlaceInnerProduct;
-import org.la4j.vector.operation.ooplace.OoPlaceVectorByValueMultiplication;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorToVectorAddition;
 
 public final class VectorOperations {
@@ -46,13 +44,5 @@ public final class VectorOperations {
 
     public static VectorVectorOperation<Void> inPlaceVectorByVectorMultiplication() {
         return new InPlaceVectorByVectorMultiplication();
-    }
-
-    public static VectorOperation<Void> inPlaceVectorByValueMultiplication(double value) {
-        return new InPlaceVectorByValueMultiplication(value);
-    }
-
-    public static VectorOperation<Vector> ooPlaceVectorByValueMultiplication(double value, Factory factory) {
-        return new OoPlaceVectorByValueMultiplication(value, factory);
     }
 }

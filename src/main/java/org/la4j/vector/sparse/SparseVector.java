@@ -22,11 +22,13 @@
 package org.la4j.vector.sparse;
 
 import org.la4j.LinearAlgebra;
+import org.la4j.factory.Factory;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
+import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
@@ -127,6 +129,30 @@ public abstract class SparseVector extends AbstractVector {
     public double min() {
         double min = foldNonZero(Vectors.mkMinAccumulator());
         return (min < 0.0) ? min : 0.0;
+    }
+
+    @Override
+    public Vector multiply(double value, Factory factory) {
+        Vector result = blank(factory);
+        VectorIterator it = nonZeroIterator();
+
+        while (it.hasNext()) {
+            it.next();
+            result.set(it.index(), it.value() * value);
+        }
+
+        return result;
+    }
+
+    @Override
+    public void multiplyInPlace(double value) {
+        VectorIterator it = nonZeroIterator();
+        VectorFunction mul = Vectors.asMulFunction(value);
+
+        while (it.hasNext()) {
+            it.next();
+            update(it.index(), mul);
+        }
     }
 
     /**

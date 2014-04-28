@@ -126,18 +126,6 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public Vector multiply(double value, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
-        return pipeTo(VectorOperations.ooPlaceVectorByValueMultiplication(value, factory));
-    }
-
-    @Override
-    public void multiplyInPlace(double value) {
-        pipeTo(VectorOperations.inPlaceVectorByValueMultiplication(value));
-    }
-
-    @Override
     public Vector hadamardProduct(Vector vector) {
         return hadamardProduct(vector, factory);
     }
