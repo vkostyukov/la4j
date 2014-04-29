@@ -33,29 +33,22 @@ public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
         VectorIterator these = a.nonZeroIterator();
         VectorIterator those = b.nonZeroIterator();
         VectorIterator both = these.andAlsoMultiply(those);
-
-        // TODO: think how sinks are working when paired with writable iterators
-        VectorSink recorder = a.sink();
+        VectorSink sink = a.sink();
         while (both.hasNext()) {
             both.next();
-            recorder.set(both.index(), both.get());
+            sink.set(both.index(), both.get());
         }
-        recorder.flush();
-
+        sink.flush();
         return null;
     }
 
     @Override
     public Void apply(SparseVector a, DenseVector b) {
         VectorIterator it = a.nonZeroIterator();
-
-        VectorSink rec = a.sink();
         while (it.hasNext()) {
             it.next();
-            rec.set(it.index(), it.get() * b.get(it.index()));
+            it.set(it.get() * b.get(it.index()));
         }
-        rec.flush();
-
         return null;
     }
 
@@ -70,12 +63,12 @@ public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
     @Override
     public Void apply(DenseVector a, SparseVector b) {
         VectorIterator it = b.nonZeroIterator();
-        VectorSink recorder = a.sink();
-
+        VectorSink sink = a.sink();
         while (it.hasNext()) {
             it.next();
-            recorder.set(it.index(), a.get(it.index()) * it.get());
+            sink.set(it.index(), a.get(it.index()) * it.get());
         }
+        sink.flush();
         return null;
     }
 }

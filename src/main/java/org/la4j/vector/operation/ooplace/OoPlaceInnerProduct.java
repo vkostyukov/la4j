@@ -33,7 +33,6 @@ public class OoPlaceInnerProduct extends VectorVectorOperation<Double> {
 
     @Override
     public Double apply(final SparseVector a, final SparseVector b) {
-
         VectorIterator these = a.nonZeroIterator();
         VectorIterator those = b.nonZeroIterator();
 
