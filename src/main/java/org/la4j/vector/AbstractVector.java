@@ -30,6 +30,7 @@ import java.text.NumberFormat;
 import java.util.Random;
 
 import org.la4j.factory.Factory;
+import org.la4j.io.VectorIterator;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
@@ -86,11 +87,12 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector add(double value, Factory factory) {
         ensureFactoryIsNotNull(factory);
-
         Vector result = blank(factory);
+        VectorIterator it = iterator();
 
-        for (int i = 0; i < length; i++) {
-            result.set(i, get(i) + value);
+        while (it.hasNext()) {
+            it.next();
+            result.set(it.index(), it.get() + value);
         }
 
         return result;
@@ -98,8 +100,10 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public void addInPlace(double value) {
-        for (int i = 0; i < length; i++) {
-            update(i, Vectors.asPlusFunction(value));
+        VectorIterator it = iterator();
+        while (it.hasNext()) {
+            it.next();
+            it.set(it.get() + value);
         }
     }
 
@@ -548,6 +552,7 @@ public abstract class AbstractVector implements Vector {
 
         boolean result = true;
 
+        // TODO: export as operation
         for (int i = 0; result && i < length; i++) {
             double a = get(i);
             double b = vector.get(i);
@@ -574,13 +579,13 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public String mkString(NumberFormat formatter, String delimiter) {
-
         StringBuilder sb = new StringBuilder();
+        VectorIterator it = iterator();
 
-        for (int i = 0; i < length; i++) {
-
-            sb.append(formatter.format(get(i)));
-            sb.append((i < length - 1 ? delimiter : ""));
+        while (it.hasNext()) {
+            it.next();
+            sb.append(formatter.format(it.get()));
+            sb.append((it.index() < length - 1 ? delimiter : ""));
         }
 
         return sb.toString();
