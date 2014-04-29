@@ -24,9 +24,11 @@ package org.la4j.vector.operation;
 import org.la4j.factory.Factory;
 import org.la4j.vector.Vector;
 import org.la4j.vector.operation.inplace.InPlaceHadamardProduct;
+import org.la4j.vector.operation.inplace.InPlaceVectorFromVectorSubtraction;
 import org.la4j.vector.operation.inplace.InPlaceVectorToVectorAddition;
 import org.la4j.vector.operation.ooplace.OoPlaceHadamardProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceInnerProduct;
+import org.la4j.vector.operation.ooplace.OoPlaceVectorFromVectorSubtraction;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorToVectorAddition;
 
 public final class VectorOperations {
@@ -52,10 +54,10 @@ public final class VectorOperations {
     }
 
     public static VectorVectorOperation<Vector> ooPlaceVectorFromVectorSubtraction(Factory factory) {
-        return null;
+        return new OoPlaceVectorFromVectorSubtraction(factory);
     }
 
-    public static VectorVectorOperation<Vector> inPlaceVectorFromVectorSubtraction() {
-        return null;
+    public static VectorVectorOperation<Void> inPlaceVectorFromVectorSubtraction() {
+        return new InPlaceVectorFromVectorSubtraction();
     }
 }

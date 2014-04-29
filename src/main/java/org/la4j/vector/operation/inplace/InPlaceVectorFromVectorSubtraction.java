@@ -27,15 +27,13 @@ import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
-public class InPlaceVectorToVectorAddition extends VectorVectorOperation<Void> {
+public class InPlaceVectorFromVectorSubtraction extends VectorVectorOperation<Void> {
     @Override
     public Void apply(SparseVector a, SparseVector b) {
         VectorIterator it = b.nonZeroIterator();
-        // TODO:  these.andAlsoAdd(those)
-        //        these.andAlsoSubtract(those);
         while (it.hasNext()) {
             it.next();
-            a.update(it.index(), Vectors.asPlusFunction(it.get()));
+            a.update(it.index(), Vectors.asMinusFunction(it.get()));
         }
         return null;
     }
@@ -44,7 +42,7 @@ public class InPlaceVectorToVectorAddition extends VectorVectorOperation<Void> {
     public Void apply(SparseVector a, DenseVector b) {
         VectorIterator it = a.iterator();
         while (it.hasNext()) {
-            it.set(it.get() + b.get(it.index()));
+            it.set(it.get() - b.get(it.index()));
         }
         return null;
     }
@@ -52,7 +50,7 @@ public class InPlaceVectorToVectorAddition extends VectorVectorOperation<Void> {
     @Override
     public Void apply(DenseVector a, DenseVector b) {
         for (int i = 0; i < a.length(); i++) {
-            a.set(i, a.get(i) + b.get(i));
+            a.set(i, a.get(i) - b.get(i));
         }
         return null;
     }
@@ -62,7 +60,7 @@ public class InPlaceVectorToVectorAddition extends VectorVectorOperation<Void> {
         VectorIterator it = b.nonZeroIterator();
         while (it.hasNext()) {
             it.next();
-            a.set(it.index(), a.get(it.index()) + it.get());
+            a.set(it.index(), a.get(it.index()) - it.get());
         }
         return null;
     }

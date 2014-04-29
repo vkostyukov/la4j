@@ -69,12 +69,19 @@ public abstract class VectorIterator extends CursorIterator {
      */
     public Vector toVector(Factory factory) {
         Vector result = factory.createVector(length);
+        alterVector(result);
+        return result;
+    }
 
+    /**
+     * Alters given {@code vector} with values from this iterator.
+     *
+     * @param vector the vector to alter
+     */
+    public void alterVector(Vector vector) {
         while (hasNext()) {
             next();
-            result.set(index(), get());
+            vector.set(index(), get());
         }
-
-        return result;
     }
 }

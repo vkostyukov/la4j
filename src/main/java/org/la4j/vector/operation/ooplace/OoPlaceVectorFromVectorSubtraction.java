@@ -19,63 +19,61 @@
  *
  */
 
-package org.la4j.vector.operation.inplace;
+package org.la4j.vector.operation.ooplace;
 
+import org.la4j.factory.Factory;
 import org.la4j.io.VectorIterator;
-import org.la4j.io.VectorSink;
+import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
-public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
+public class OoPlaceVectorFromVectorSubtraction extends VectorVectorOperation<Vector> {
+
+    private Factory factory;
+
+    public OoPlaceVectorFromVectorSubtraction(Factory factory) {
+        this.factory = factory;
+    }
+
     @Override
-    public Void apply(SparseVector a, SparseVector b) {
+    public Vector apply(SparseVector a, SparseVector b) {
         VectorIterator these = a.nonZeroIterator();
         VectorIterator those = b.nonZeroIterator();
-        VectorIterator both = these.andAlsoMultiply(those);
+        VectorIterator both = these.orElseSubtract(those);
 
-        // TODO: think how sinks are working when paired with writable iterators
-        VectorSink recorder = a.sink();
-        while (both.hasNext()) {
-            both.next();
-            recorder.set(both.index(), both.get());
-        }
-        recorder.flush();
-
-        return null;
+        return both.toVector(factory);
     }
 
     @Override
-    public Void apply(SparseVector a, DenseVector b) {
+    public Vector apply(SparseVector a, DenseVector b) {
+        Vector result = b.multiply(-1.0, factory);
         VectorIterator it = a.nonZeroIterator();
-
-        VectorSink rec = a.sink();
         while (it.hasNext()) {
             it.next();
-            rec.set(it.index(), it.get() * b.get(it.index()));
+            result.update(it.index(), Vectors.asPlusFunction(it.get()));
         }
-        rec.flush();
-
-        return null;
+        return result;
     }
 
     @Override
-    public Void apply(DenseVector a, DenseVector b) {
-        for (int i = 0; i < a.length(); i++) {
-            a.set(i, a.get(i) * b.get(i));
+    public Vector apply(DenseVector a, DenseVector b) {
+        Vector result = factory.createVector(a.length());
+        for (int i = 0; i < b.length(); i++) {
+            result.set(i, a.get(i) - b.get(i));
         }
-        return null;
+        return result;
     }
 
     @Override
-    public Void apply(DenseVector a, SparseVector b) {
+    public Vector apply(DenseVector a, SparseVector b) {
+        Vector result = a.copy(factory);
         VectorIterator it = b.nonZeroIterator();
-        VectorSink recorder = a.sink();
-
         while (it.hasNext()) {
             it.next();
-            recorder.set(it.index(), a.get(it.index()) * it.get());
+            result.update(it.index(), Vectors.asMinusFunction(it.get()));
         }
-        return null;
+        return result;
     }
 }
