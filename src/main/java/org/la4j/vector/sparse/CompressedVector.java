@@ -451,7 +451,8 @@ public class CompressedVector extends SparseVector {
 
             @Override
             public Double next() {
-                if (k < cardinality && indices[k] == i++) {
+                i++;
+                if (k < cardinality && indices[k] == i - 1) {
                     k++;
                 }
                 return get();

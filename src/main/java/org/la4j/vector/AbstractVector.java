@@ -163,6 +163,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector multiply(Matrix matrix, Factory factory) {
+        // TODO: export as operation (blocked by no-support of matrices)
         ensureFactoryIsNotNull(factory);
         ensureArgumentIsNotNull(matrix, "matrix");
 
@@ -208,13 +209,15 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(vector, "vector");
         ensureVectorIsSimilar(vector);
 
-        Vector result = blank(factory);
+        return pipeTo(VectorOperations.ooPlaceVectorFromVectorSubtraction(factory), vector);
+    }
 
-        for (int i = 0; i < length; i++) {
-            result.set(i, get(i) - vector.get(i));
-        }
+    @Override
+    public void subtractInPlace(Vector vector) {
+        ensureArgumentIsNotNull(vector, "vector");
+        ensureVectorIsSimilar(vector);
 
-        return result;
+        pipeTo(VectorOperations.inPlaceVectorFromVectorSubtraction(), vector);
     }
 
     @Override
@@ -252,6 +255,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Matrix outerProduct(Vector vector, Factory factory) {
+        // TODO: export as operation (blocked by no-support of matrices)
         ensureFactoryIsNotNull(factory);
         ensureArgumentIsNotNull(vector, "vector");
 
@@ -408,8 +412,10 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public void each(VectorProcedure procedure) {
-        for (int i = 0; i < length; i++) {
-            procedure.apply(i, get(i));
+        VectorIterator it = iterator();
+        while (it.hasNext()) {
+            it.next();
+            procedure.apply(it.index(), it.get());
         }
     }
 
@@ -430,11 +436,12 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector transform(VectorFunction function, Factory factory) {
-
         Vector result = blank(factory);
+        VectorIterator it = iterator();
 
-        for (int i = 0; i < length; i++) {
-            result.set(i, function.evaluate(i, get(i)));
+        while (it.hasNext()) {
+            it.next();
+            result.set(it.index(), function.evaluate(it.index(), it.get()));
         }
 
         return result;
@@ -456,8 +463,10 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public void update(VectorFunction function) {
-        for (int i = 0; i < length; i++) {
-            set(i, function.evaluate(i, get(i)));
+        VectorIterator it = iterator();
+        while (it.hasNext()) {
+            it.next();
+            it.set(function.evaluate(it.index(), it.get()));
         }
     }
 
@@ -468,21 +477,18 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public double fold(VectorAccumulator accumulator) {
-
-        for (int i = 0; i < length; i++) {
-            accumulator.update(i, get(i));
-        }
-
+        each(Vectors.asAccumulatorProcedure(accumulator));
         return accumulator.accumulate();
     }
 
     @Override
     public boolean is(VectorPredicate predicate) {
-
         boolean result = true;
+        VectorIterator it = iterator();
 
-        for (int i = 0; i < length; i++) {
-            result = result && predicate.test(i, get(i)); 
+        while (it.hasNext()) {
+            it.next();
+            result = result && predicate.test(it.index(), it.get());
         }
 
         return result;
@@ -519,11 +525,12 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public int hashCode() {
-
         int result = 17;
+        VectorIterator it = iterator();
 
-        for (int i = 0; i < length; i++) {
-            long value = (long) get(i);
+        while (it.hasNext()) {
+            it.next();
+            long value = (long) it.get();
             result = 37 * result + (int) (value ^ (value >>> 32));
         }
 

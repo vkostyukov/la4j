@@ -153,8 +153,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * Multiplies this vector (X) by given {@code value} (v) in-place.
      *
      * @param value the right hand value for multiplication
-     *
-     * @return X * v
      */
     void multiplyInPlace(double value);
 
@@ -241,6 +239,13 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @return X - Y
      */
     Vector subtract(Vector vector, Factory factory);
+
+    /**
+     * Subtracts given {@code vector} (Y) from this vector (X) in-place.
+     *
+     * @param vector the right hand vector for subtraction
+     */
+    void subtractInPlace(Vector vector);
 
     /**
      * Divides this vector (X) by given {@code value} (v).

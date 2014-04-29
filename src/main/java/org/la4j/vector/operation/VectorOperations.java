@@ -50,4 +50,12 @@ public final class VectorOperations {
     public static VectorVectorOperation<Vector> ooPlaceHadamardProduct(Factory factory) {
         return new OoPlaceHadamardProduct(factory);
     }
+
+    public static VectorVectorOperation<Vector> ooPlaceVectorFromVectorSubtraction(Factory factory) {
+        return null;
+    }
+
+    public static VectorVectorOperation<Vector> inPlaceVectorFromVectorSubtraction() {
+        return null;
+    }
 }

@@ -127,7 +127,13 @@ public abstract class SparseVector extends AbstractVector {
      *
      * @param procedure the vector procedure
      */
-    public abstract void eachNonZero(VectorProcedure procedure);
+    public void eachNonZero(VectorProcedure procedure) {
+        VectorIterator it = nonZeroIterator();
+        while (it.hasNext()) {
+            it.next();
+            procedure.apply(it.index(), it.get());
+        }
+    }
 
     @Override
     public double max() {
