@@ -66,7 +66,9 @@ public interface Vector extends Externalizable, Iterable<Double> {
 
     /**
      * Assigns all elements of this vector to given {@code value}.
-     * 
+     *
+     * TODO (NC): assignTo
+     *
      * @param value the elements' new value
      */
     void assign(double value);
@@ -480,6 +482,8 @@ public interface Vector extends Externalizable, Iterable<Double> {
 
     /**
      * Returns the factory of this vector.
+     *
+     * TODO: remove?
      * 
      * @return the factory of this vector
      */
@@ -509,7 +513,9 @@ public interface Vector extends Externalizable, Iterable<Double> {
     /**
      * Builds a new vector by applying given {@code function} to each element 
      * of this vector.
-     * 
+     *
+     * TODO (NC): update
+     *
      * @param function the vector function
      *
      * @return the transformed vector
@@ -519,6 +525,8 @@ public interface Vector extends Externalizable, Iterable<Double> {
     /**
      * Builds a new vector by applying given {@code function} to each element 
      * of this vector.
+     *
+     * TODO (NC): update
      *
      * @param function the vector function
      * @param factory the factory of result vector
@@ -531,6 +539,8 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * Builds a new vector by applying given {@code function} to the specified element
      * of this vector.
      *
+     * TODO (NC): updateAt
+     *
      * @param i element's index
      * @param function the vector function
      *
@@ -542,6 +552,8 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * Builds a new vector by applying given {@code function} to the specified element
      * of this vector.
      *
+     * TODO (NC): updateAt
+     *
      * @param i element's index
      * @param function the vector function
      * @param factory the factory of result vector
@@ -552,6 +564,8 @@ public interface Vector extends Externalizable, Iterable<Double> {
 
     /**
      * Updates all elements of this vector by applying given {@code function}.
+     *
+     * TODO (NC): updateInPlace
      * 
      * @param function the the vector function
      */
@@ -559,6 +573,8 @@ public interface Vector extends Externalizable, Iterable<Double> {
 
     /**
      * Updates the specified element of this vector by applying given {@code function}.
+     *
+     * TODO (NC): updateInPlaceAt
      * 
      * @param i element's index
      * @param function the vector function
@@ -650,6 +666,13 @@ public interface Vector extends Externalizable, Iterable<Double> {
      */
     @Override
     VectorIterator iterator();
+
+    /**
+     * Returns a burning vector iterator.
+     *
+     * @return a burning vector iterator
+     */
+    VectorIterator burningIterator();
 
     /**
      * Returns a new sink that has this vector as a destination.

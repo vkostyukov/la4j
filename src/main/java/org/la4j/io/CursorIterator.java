@@ -201,4 +201,13 @@ abstract class CursorIterator implements Iterator<Double> {
     public void remove() {
         throw new UnsupportedOperationException("This will be supported in 0.6.0.");
     }
+
+    /**
+     * Flushes this iterator.
+     */
+    public void flush() {
+       while (hasNext()) {
+           next();
+       }
+    }
 }
