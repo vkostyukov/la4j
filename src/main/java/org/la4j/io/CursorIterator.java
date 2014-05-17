@@ -42,7 +42,12 @@ abstract class CursorIterator implements Iterator<Double> {
 
     public abstract double get();
     public abstract void set(double value);
+
     protected abstract int cursor();
+
+    protected int innerCursor() {
+        return cursor();
+    }
 
     protected CursorIterator orElse(final CursorIterator those, final JoinFunction function) {
         final CursorIterator these = this;

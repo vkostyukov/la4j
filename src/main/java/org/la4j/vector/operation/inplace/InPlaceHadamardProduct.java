@@ -22,7 +22,6 @@
 package org.la4j.vector.operation.inplace;
 
 import org.la4j.io.VectorIterator;
-import org.la4j.io.VectorSink;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
@@ -30,15 +29,17 @@ import org.la4j.vector.sparse.SparseVector;
 public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
     @Override
     public Void apply(SparseVector a, SparseVector b) {
-        VectorIterator these = a.nonZeroIterator();
+        VectorIterator these = a.nonZeroBurningIterator();
         VectorIterator those = b.nonZeroIterator();
         VectorIterator both = these.andAlsoMultiply(those);
-        VectorSink sink = a.sink();
+
+        // TODO: Wrap within a method in iterator
         while (both.hasNext()) {
             both.next();
-            sink.set(both.index(), both.get());
+            these.set(both.get());
         }
-        sink.flush();
+        these.flush();
+
         return null;
     }
 
@@ -62,13 +63,17 @@ public class InPlaceHadamardProduct extends VectorVectorOperation<Void> {
 
     @Override
     public Void apply(DenseVector a, SparseVector b) {
-        VectorIterator it = b.nonZeroIterator();
-        VectorSink sink = a.sink();
-        while (it.hasNext()) {
-            it.next();
-            sink.set(it.index(), a.get(it.index()) * it.get());
+        VectorIterator these = a.burningIterator();
+        VectorIterator those = b.nonZeroIterator();
+        VectorIterator both = these.andAlsoMultiply(those);
+
+        // TODO: Wrap within a method in iterator
+        while (both.hasNext()) {
+            both.next();
+            these.set(both.get());
         }
-        sink.flush();
+        these.flush();
+
         return null;
     }
 }

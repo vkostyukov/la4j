@@ -28,7 +28,6 @@ import java.io.Externalizable;
 import java.text.NumberFormat;
 
 import org.la4j.factory.Factory;
-import org.la4j.io.VectorSink;
 import org.la4j.io.VectorIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
@@ -673,13 +672,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @return a burning vector iterator
      */
     VectorIterator burningIterator();
-
-    /**
-     * Returns a new sink that has this vector as a destination.
-     *
-     * @return a new vector sink
-     */
-    VectorSink sink();
 
     /**
      * Pipes this vector to a given {@code operation}.

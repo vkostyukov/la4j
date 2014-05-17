@@ -23,9 +23,10 @@ package org.la4j.vector.dense;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
+import org.la4j.io.VectorIterator;
+import org.la4j.io.VectorToBurningIterator;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
-import org.la4j.io.VectorSink;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 
@@ -73,22 +74,13 @@ public abstract class DenseVector extends AbstractVector {
     }
 
     @Override
-    public VectorSink sink() {
-        return new VectorSink() {
-            private int innerIndex = 0;
-            @Override
-            public void set(int i, double value) {
-                for (int j = innerIndex; j < i; j++) {
-                    DenseVector.this.set(j, 0.0);
-                }
-                DenseVector.this.set(i, value);
-                innerIndex = i + 1;
-            }
-
+    public VectorIterator burningIterator() {
+        return new VectorToBurningIterator(iterator()) {
             @Override
             public void flush() {
-                for (int j = innerIndex; j < length; j++) {
-                    DenseVector.this.set(j, 0.0);
+                // fast flush
+                for (int i = innerCursor() + 1; i < length; i++) {
+                    DenseVector.this.set(i, 0.0);
                 }
             }
         };

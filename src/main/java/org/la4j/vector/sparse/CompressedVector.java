@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import org.la4j.io.VectorToBurningIterator;
 import org.la4j.vector.Vector;
 import org.la4j.io.VectorIterator;
 import org.la4j.vector.Vectors;
@@ -339,6 +340,7 @@ public class CompressedVector extends SparseVector {
 //        }
     }
 
+    // TODO: better name
     private void growup() {
 
         if (values.length == length) {
@@ -409,6 +411,11 @@ public class CompressedVector extends SparseVector {
                 currentIsRemoved = false;
                 return values[++k];
             }
+
+            @Override
+            protected int innerCursor() {
+                return k;
+            }
         };
     }
 
@@ -456,6 +463,11 @@ public class CompressedVector extends SparseVector {
                     k++;
                 }
                 return get();
+            }
+
+            @Override
+            protected int innerCursor() {
+                return k;
             }
         };
     }

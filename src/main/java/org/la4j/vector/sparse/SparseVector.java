@@ -23,10 +23,10 @@ package org.la4j.vector.sparse;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
+import org.la4j.io.VectorToBurningIterator;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.io.VectorIterator;
-import org.la4j.io.VectorSink;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
@@ -192,22 +192,21 @@ public abstract class SparseVector extends AbstractVector {
         };
     }
 
-    @Override
-    public VectorSink sink() {
-        final int outerCardinality = cardinality;
-        return new VectorSink() {
-            private int innerCardinality = 0;
-            @Override
-            public void set(int i, double value) {
-                SparseVector.this.cardinality = innerCardinality;
-                SparseVector.this.set(i, value);
-                innerCardinality = SparseVector.this.cardinality;
-                SparseVector.this.cardinality = outerCardinality;
-            }
+    public VectorIterator nonZeroBurningIterator() {
+        return iteratorToBurning(nonZeroIterator());
+    }
 
+    @Override
+    public VectorIterator burningIterator() {
+        return iteratorToBurning(iterator());
+    }
+
+    private VectorIterator iteratorToBurning(final VectorIterator iterator) {
+        return new VectorToBurningIterator(iterator) {
             @Override
             public void flush() {
-                SparseVector.this.cardinality = innerCardinality;
+                // fast flush
+                SparseVector.this.cardinality = innerCursor() + 1;
             }
         };
     }
