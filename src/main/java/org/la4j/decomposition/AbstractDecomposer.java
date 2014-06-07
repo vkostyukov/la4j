@@ -23,13 +23,13 @@ package org.la4j.decomposition;
 
 import org.la4j.matrix.Matrix;
 
-public abstract class AbstractDecompositor implements MatrixDecompositor {
+public abstract class AbstractDecomposer implements MatrixDecomposer {
 
     protected Matrix matrix;
 
-    public AbstractDecompositor(Matrix matrix) {
+    public AbstractDecomposer(Matrix matrix) {
         if (!applicableTo(matrix)) {
-            fail("Given matrix can not be used with this decompositor.");
+            fail("Given matrix can not be used with this decomposer.");
         }
 
         this.matrix = matrix;

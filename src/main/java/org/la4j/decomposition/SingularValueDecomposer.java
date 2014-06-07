@@ -32,9 +32,9 @@ import org.la4j.vector.Vectors;
  * <p><a href="http://mathworld.wolfram.com/SingularValueDecomposition.html">
  * here.</a> </p>
  */
-public class SingularValueDecompositor extends AbstractDecompositor implements MatrixDecompositor {
+public class SingularValueDecomposer extends AbstractDecomposer implements MatrixDecomposer {
 
-    public SingularValueDecompositor(Matrix matrix) {
+    public SingularValueDecomposer(Matrix matrix) {
         super(matrix);
     }
 

@@ -25,9 +25,9 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 
-public class RawLUDecompositor extends AbstractDecompositor implements MatrixDecompositor {
+public class RawLUDecomposer extends AbstractDecomposer implements MatrixDecomposer {
 
-    public RawLUDecompositor(Matrix matrix) {
+    public RawLUDecomposer(Matrix matrix) {
         super(matrix);
     }
 

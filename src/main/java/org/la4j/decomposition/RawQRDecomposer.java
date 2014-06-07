@@ -25,9 +25,9 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 
-public class RawQRDecompositor extends AbstractDecompositor implements MatrixDecompositor {
+public class RawQRDecomposer extends AbstractDecomposer implements MatrixDecomposer {
 
-    public RawQRDecompositor(Matrix matrix) {
+    public RawQRDecomposer(Matrix matrix) {
         super(matrix);
     }
 

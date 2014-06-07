@@ -34,9 +34,9 @@ import org.la4j.vector.functor.VectorAccumulator;
  * <a href="http://mathworld.wolfram.com/EigenDecomposition.html"> here.</a>
  * </p>
  */
-public class EigenDecompositor extends AbstractDecompositor implements MatrixDecompositor {
+public class EigenDecomposer extends AbstractDecomposer implements MatrixDecomposer {
 
-    public EigenDecompositor(Matrix matrix) {
+    public EigenDecomposer(Matrix matrix) {
         super(matrix);
     }
 

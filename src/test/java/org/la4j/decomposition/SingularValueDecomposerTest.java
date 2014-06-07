@@ -23,7 +23,7 @@ package org.la4j.decomposition;
 
 import org.la4j.LinearAlgebra;
 
-public class SingularValueDecompositorTest extends AbstractDecompositorTest {
+public class SingularValueDecomposerTest extends AbstractDecomposerTest {
 
     public void testDecompose_1x1() {
 

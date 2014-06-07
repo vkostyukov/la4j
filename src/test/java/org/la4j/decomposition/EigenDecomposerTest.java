@@ -23,7 +23,7 @@ package org.la4j.decomposition;
 
 import org.la4j.LinearAlgebra;
 
-public class EigenDecompositorTest extends AbstractDecompositorTest {
+public class EigenDecomposerTest extends AbstractDecomposerTest {
 
     public void testDecompose_1x1_symmetric_1() {
         double[][] input = new double[][] {

@@ -39,7 +39,7 @@ la4j-0.4.5 `Sep 2013`
  * Bug fix in `Vector.density()` and `Matrix.density()` (contributed by Ewald Grusk)
  * Bug fix in `Matrix.determinant()` method (contributed by Yuriy Drozd)
  * Minor improvement of `SymmetricMatrixPredicate` (contributed by Ewald Grusk)
- * Bug fix in `EigenDecompositor` (reported by Ewald Grusk)
+ * Bug fix in `EigenDecomposer` (reported by Ewald Grusk)
  * Bug fix in `CompressedVector.swap()` (reported by Ewald Grusk, contributed by Yuriy Drozd)
  * Typo fix in `IdentityMattixSource` (reported by Ewald Grusk, contributed by Yuriy Drozd)
  * Renamed `Matrix.product()` to `Matrix.diagonalProduct()` (contributed by Julia Kostyukova)
@@ -47,8 +47,8 @@ la4j-0.4.5 `Sep 2013`
  * New vector methods: `sum()` and `product()` (contributed by Julia Kostyukova)
  * Renamed `Matrix.kronecker()` to `Matrix.kroneckerProduct()` (contributed by Julia Kostyukova)
  * New matrix method `hadamardProduct()` (contributed by Julia Kostyukova)
- * Bug fix in `EigenDecompositor` (contributed by Maxim Samoylov)
- * Improved stability of `EigenDecompositor` (contributed by Maxim Samoylov)
+ * Bug fix in `EigenDecomposer` (contributed by Maxim Samoylov)
+ * Improved stability of `EigenDecomposer` (contributed by Maxim Samoylov)
  * New vector method `eachNonZero` (contributed by Maxim Samoylov)
  * New matrix method `power` (contributed by Jakob Moellers)
  * New matrix methods `eachInRow`, `eachInColumn`(contributed by Maxim Samoylov)
@@ -57,7 +57,7 @@ la4j-0.4.5 `Sep 2013`
  * New fast and stable algorithm for determinant calculation (contributed by Maxim Samoylov)
  * Improved stability of accumulators (contributed by Maxim Samoylov)
  * Bug fix in `Matrix.rank()` method (contributed by Ewald Grusk)
- * Bug fix in `SingularValueDecompositor` class (reported by Jonathan Edwards)
+ * Bug fix in `SingularValueDecomposer` class (reported by Jonathan Edwards)
  * Fixed a typo in `MatrixInvertor` -> `MatrixInverter`
  * New function `Mod` (requested by Luc Trudeau)
  * Bug fix in `GaussianSolver`
@@ -71,7 +71,7 @@ la4j-0.4.5 `Sep 2013`
  * New matrix to vector converters: `toRowVector()`, `toColumnVector()`
  * New vector to matrix converters: `toRowMatrix()`, `toColumnMatrix()`
  * New API for solving system of linear equations: `withSolver(SolverFactory)`
- * New API for decomposing: `withDecompositor(DecompositorFactory)`
+ * New API for decomposing: `withDecomposer(DecomposerFactory)`
  * New API for inverting: `withInverter(InverterFactory)`
 
 la4j-0.4.0 `Jun 2013`
@@ -93,7 +93,7 @@ la4j-0.4.0 `Jun 2013`
  * Bug fix in `MatrixMarketStream` (contributed by Alessio Placitelli)
  * Bug fix in matrix-to-vector multiplication (contributed by Pavel Kalaidin)
  * Bug fix in `align()` method (contributed by Chandler May)
- * Bug fix in `QRDecompositor`
+ * Bug fix in `QRDecomposer`
  
 la4j-0.3.0 `Dec 2012`
  * New API and new package naming (starting with "org.la4j.*")

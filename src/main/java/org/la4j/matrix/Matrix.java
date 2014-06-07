@@ -25,20 +25,16 @@
 
 package org.la4j.matrix;
 
-import java.io.Externalizable;
-import java.text.NumberFormat;
-
 import org.la4j.LinearAlgebra;
-import org.la4j.decomposition.MatrixDecompositor;
+import org.la4j.decomposition.MatrixDecomposer;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.LinearSystemSolver;
-import org.la4j.matrix.functor.AdvancedMatrixPredicate;
-import org.la4j.matrix.functor.MatrixAccumulator;
-import org.la4j.matrix.functor.MatrixFunction;
-import org.la4j.matrix.functor.MatrixPredicate;
-import org.la4j.matrix.functor.MatrixProcedure;
+import org.la4j.matrix.functor.*;
 import org.la4j.vector.Vector;
+
+import java.io.Externalizable;
+import java.text.NumberFormat;
 
 /**
  * This interface represents real matrix.
@@ -1055,13 +1051,13 @@ public interface Matrix extends Externalizable {
     MatrixInverter withInverter(LinearAlgebra.InverterFactory factory);
 
     /**
-     * Creates a new decompositor by given {@code factory} of this matrix.
+     * Creates a new decomposer by given {@code factory} of this matrix.
      *
-     * @param factory the decompositor factory
+     * @param factory the decomposer factory
      *
-     * @return the decompositor of this matrix
+     * @return the decomposer of this matrix
      */
-    MatrixDecompositor withDecompositor(LinearAlgebra.DecompositorFactory factory);
+    MatrixDecomposer withDecomposer(LinearAlgebra.DecomposerFactory factory);
 
     /**
      * Converts this matrix into the string representation.

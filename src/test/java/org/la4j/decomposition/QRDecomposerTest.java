@@ -23,7 +23,7 @@ package org.la4j.decomposition;
 
 import org.la4j.LinearAlgebra;
 
-public class QRDecompositorTest extends AbstractDecompositorTest {
+public class QRDecomposerTest extends AbstractDecomposerTest {
 
     public void testDecompose_1x1() {
 
