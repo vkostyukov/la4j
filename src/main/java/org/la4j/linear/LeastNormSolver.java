@@ -27,6 +27,14 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
+/**
+ * This class provides solution of "fat" linear system with least euclidean norm.
+ * See details
+ * <p>
+ * <a href="http://see.stanford.edu/materials/lsoeldsee263/08-min-norm.pdf">here.</a>
+ * </p>
+ */
+
 public class LeastNormSolver extends AbstractSolver implements LinearSystemSolver {
 
     protected LeastNormSolver(Matrix a) {
@@ -36,9 +44,11 @@ public class LeastNormSolver extends AbstractSolver implements LinearSystemSolve
     @Override
     public Vector solve(Vector b, Factory factory) {
         ensureRHSIsCorrect(b);
+
         Matrix temp = self().multiply(self().rotate(factory), factory);
         Matrix pseudoInverse = self().rotate(factory).
                 multiply(temp.withInverter(LinearAlgebra.InverterFactory.GAUSS_JORDAN).inverse(factory));
+
         return pseudoInverse.multiply(b);
     }
 
