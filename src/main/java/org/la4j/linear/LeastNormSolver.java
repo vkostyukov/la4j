@@ -54,6 +54,8 @@ public class LeastNormSolver extends AbstractSolver implements LinearSystemSolve
 
     @Override
     public boolean applicableTo(Matrix matrix) {
+        //TODO: we need to think about how to improve the speed here.
+        //Note: Matrix.rank() works for O(N^3) which is quite slow.
         int r = matrix.rank();
         return (r == matrix.rows() || r == matrix.columns());
     }
