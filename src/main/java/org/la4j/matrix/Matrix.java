@@ -475,6 +475,36 @@ public interface Matrix extends Externalizable {
     void setColumn(int j, Vector vector);
 
     /**
+     * Removes one row from matrix.
+     * @param i
+     * @return
+     */
+    Matrix removeRow(int i);
+
+    /**
+     * Removes one row from matrix using specified factory.
+     * @param i
+     * @param factory
+     * @return
+     */
+    Matrix removeRow(int i, Factory factory);
+
+    /**
+     * Removes one column from matrix.
+     * @param j
+     * @return
+     */
+    Matrix removeColumn(int j);
+
+    /**
+     * Removes one column from matrix using specified factory.
+     * @param j
+     * @param factory
+     * @return
+     */
+    Matrix removeColumn(int j, Factory factory);
+
+    /**
      * Converts this matrix into the triangle matrix.
      *
      * @return tirangularized matrix
