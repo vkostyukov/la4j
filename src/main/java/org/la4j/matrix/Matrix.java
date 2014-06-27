@@ -477,7 +477,7 @@ public interface Matrix extends Externalizable {
     /**
      * Removes one row from matrix.
      * @param i
-     * @return
+     * @return matrix without row.
      */
     Matrix removeRow(int i);
 
@@ -485,14 +485,14 @@ public interface Matrix extends Externalizable {
      * Removes one row from matrix using specified factory.
      * @param i
      * @param factory
-     * @return
+     * @return matrix without row.
      */
     Matrix removeRow(int i, Factory factory);
 
     /**
      * Removes one column from matrix.
      * @param j
-     * @return
+     * @return matrix without column.
      */
     Matrix removeColumn(int j);
 
@@ -500,7 +500,7 @@ public interface Matrix extends Externalizable {
      * Removes one column from matrix using specified factory.
      * @param j
      * @param factory
-     * @return
+     * @return matrix without column.
      */
     Matrix removeColumn(int j, Factory factory);
 

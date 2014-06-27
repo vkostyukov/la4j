@@ -205,8 +205,6 @@ public abstract class AbstractMatrix implements Matrix {
         return that;
     }
 
-
-
     @Override
     public void swapRows(int i, int j) {
         if (i != j) {
