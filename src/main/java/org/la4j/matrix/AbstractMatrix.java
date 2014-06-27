@@ -166,6 +166,48 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public Matrix removeRow(int i) {
+        return removeRow(i, this.factory);
+    }
+
+    @Override
+    public Matrix removeRow(int i, Factory factory) {
+        if (i >= this.rows || i < 0) {
+            throw new IllegalArgumentException("Illegal row number, must be 0.." + (this.rows - 1));
+        }
+        Matrix that = factory.createMatrix(this.rows - 1, this.columns);
+        for (int ii = 0; ii < i; ii++) {
+            that.setRow(ii, this.getRow(ii));
+        }
+        for (int ii = i + 1; ii < this.rows; ii++) {
+            that.setRow(ii - 1, this.getRow(ii));
+        }
+        return that;
+    }
+
+    @Override
+    public Matrix removeColumn(int j) {
+        return removeColumn(j, this.factory);
+    }
+
+    @Override
+    public Matrix removeColumn(int j, Factory factory) {
+        if (j >= this.columns || j < 0) {
+            throw new IllegalArgumentException("Illegal row number, must be 0.." + (this.columns - 1));
+        }
+        Matrix that = factory.createMatrix(this.rows, this.columns - 1);
+        for (int jj = 0; jj < j; jj++) {
+            that.setColumn(jj, this.getColumn(jj));
+        }
+        for (int jj = j + 1; jj < this.columns; jj++) {
+            that.setRow(jj - 1, this.getRow(jj));
+        }
+        return that;
+    }
+
+
+
+    @Override
     public void swapRows(int i, int j) {
         if (i != j) {
             Vector ii = getRow(i);
