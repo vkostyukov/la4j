@@ -505,6 +505,58 @@ public interface Matrix extends Externalizable {
     Matrix removeColumn(int j, Factory factory);
 
     /**
+     * Removes first row from matrix.
+     * @return matrix without first row.
+     */
+    Matrix removeFirstRow();
+
+    /**
+     * Removes first row from matrix using specified factory.
+     * @param factory
+     * @return matrix without first row.
+     */
+    Matrix removeFirstRow(Factory factory);
+
+    /**
+     * Removes first column from matrix.
+     * @return matrix without first column
+     */
+    Matrix removeFirstColumn();
+
+    /**
+     * Removes first column from matrix using specified factory.
+     * @param factory
+     * @return matrix without first column
+     */
+    Matrix removeFirstColumn(Factory factory);
+
+    /**
+     * Removes last row from matrix.
+     * @return matrix without last row
+     */
+    Matrix removeLastRow();
+
+    /**
+     * Removes last row from matrix using specified factory.
+     * @param factory
+     * @return matrix without last row
+     */
+    Matrix removeLastRow(Factory factory);
+
+    /**
+     * Removes last column from matrix.
+     * @return matrix without last column
+     */
+    Matrix removeLastColumn();
+
+    /**
+     * Removes last column from matrix using specified factory.
+     * @param factory
+     * @return matrix without last column
+     */
+    Matrix removeLastColumn(Factory factory);
+
+    /**
      * Converts this matrix into the triangle matrix.
      *
      * @return tirangularized matrix

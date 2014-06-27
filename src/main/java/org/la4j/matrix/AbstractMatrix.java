@@ -206,6 +206,46 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public Matrix removeFirstRow() {
+        return removeFirstRow(this.factory);
+    }
+
+    @Override
+    public Matrix removeFirstRow(Factory factory) {
+        return removeRow(0, factory);
+    }
+
+    @Override
+    public Matrix removeFirstColumn() {
+        return removeFirstColumn(this.factory);
+    }
+
+    @Override
+    public Matrix removeFirstColumn(Factory factory) {
+        return removeColumn(0, factory);
+    }
+
+    @Override
+    public Matrix removeLastRow() {
+        return removeFirstRow(this.factory);
+    }
+
+    @Override
+    public Matrix removeLastRow(Factory factory) {
+        return removeRow(this.rows - 1, factory);
+    }
+
+    @Override
+    public Matrix removeLastColumn() {
+        return removeFirstColumn(this.factory);
+    }
+
+    @Override
+    public Matrix removeLastColumn(Factory factory) {
+        return removeColumn(this.columns - 1, factory);
+    }
+
+    @Override
     public void swapRows(int i, int j) {
         if (i != j) {
             Vector ii = getRow(i);
