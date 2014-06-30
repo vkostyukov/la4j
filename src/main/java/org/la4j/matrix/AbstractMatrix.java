@@ -173,7 +173,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix removeRow(int i, Factory factory) {
         if (i >= rows || i < 0) {
-            throw new IllegalArgumentException("Illegal row number, must be 0.." + (rows - 1));
+            throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (rows - 1));
         }
         Matrix result = factory.createMatrix(rows - 1, columns);
         for (int ii = 0; ii < i; ii++) {
@@ -193,7 +193,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix removeColumn(int j, Factory factory) {
         if (j >= columns || j < 0) {
-            throw new IllegalArgumentException("Illegal row number, must be 0.." + (columns - 1));
+            throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (columns - 1));
         }
         Matrix result = factory.createMatrix(rows, columns - 1);
         for (int jj = 0; jj < j; jj++) {

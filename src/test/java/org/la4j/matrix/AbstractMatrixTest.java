@@ -1212,6 +1212,84 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertEquals(b, a);
     }
 
+    public void testRemoveRow_3x3() {
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 0.0, 4.0 },
+                { 0.0, 5.0, 3.0 },
+                { 9.0, 0.0, 0.0 }
+        });
+        Matrix b = factory().createMatrix(new double[][] {
+                { 1.0, 0.0, 4.0 },
+                { 9.0, 0.0, 0.0 }
+        });
+        assertEquals(b, a.removeRow(1));
+    }
+
+    public void testRemoveColumn_3x3() {
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 0.0, 4.0 },
+                { 0.0, 5.0, 3.0 },
+                { 9.0, 0.0, 0.0 }
+        });
+        Matrix b = factory().createMatrix(new double[][] {
+                { 1.0, 4.0 },
+                { 0.0, 3.0 },
+                { 9.0, 0.0 }
+
+        });
+        assertEquals(b, a.removeColumn(1));
+    }
+
+    public void testRemoveRow_3x3_Exception() {
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 0.0, 4.0 },
+                { 0.0, 5.0, 3.0 },
+                { 9.0, 0.0, 0.0 }
+        });
+        try {
+            a.removeRow(3);
+            fail("Exception in RemoveRow does not throw");
+        } catch (IndexOutOfBoundsException e) {
+            // do nothing
+        }
+        try {
+            a.removeRow(-1);
+            fail("Exception in RemoveRow does not throw");
+        } catch (IndexOutOfBoundsException e) {
+            // do nothing
+        }
+    }
+
+    public void testRemoveColumn_3x3_Exception() {
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1.0, 0.0, 4.0 },
+                { 0.0, 5.0, 3.0 },
+                { 9.0, 0.0, 0.0 }
+        });
+        try {
+            a.removeColumn(3);
+            fail("Exception in RemoveColumn does not throw");
+        } catch (IndexOutOfBoundsException e) {
+            // do nothing
+        }
+        try {
+            a.removeColumn(-1);
+            fail("Exception in RemoveColumn does not throw");
+        } catch (IndexOutOfBoundsException e) {
+            // do nothing
+        }
+    }
+
+    public void testRemoveRow_empty() {
+        Matrix a = factory().createMatrix();
+        try {
+            a.removeFirstRow();
+            fail("Exception from RemoveRow does not throw");
+        } catch (IndexOutOfBoundsException e) {
+            // do nothing
+        }
+    }
+
     /**
      * Returns true if both matrices contain the same elements and have equal
      * dimensions.
