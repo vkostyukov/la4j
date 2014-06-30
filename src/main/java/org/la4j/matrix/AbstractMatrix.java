@@ -167,47 +167,47 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix removeRow(int i) {
-        return removeRow(i, this.factory);
+        return removeRow(i, factory);
     }
 
     @Override
     public Matrix removeRow(int i, Factory factory) {
-        if (i >= this.rows || i < 0) {
-            throw new IllegalArgumentException("Illegal row number, must be 0.." + (this.rows - 1));
+        if (i >= rows || i < 0) {
+            throw new IllegalArgumentException("Illegal row number, must be 0.." + (rows - 1));
         }
-        Matrix that = factory.createMatrix(this.rows - 1, this.columns);
+        Matrix result = factory.createMatrix(rows - 1, columns);
         for (int ii = 0; ii < i; ii++) {
-            that.setRow(ii, this.getRow(ii));
+            result.setRow(ii, getRow(ii));
         }
-        for (int ii = i + 1; ii < this.rows; ii++) {
-            that.setRow(ii - 1, this.getRow(ii));
+        for (int ii = i + 1; ii < rows; ii++) {
+            result.setRow(ii - 1, getRow(ii));
         }
-        return that;
+        return result;
     }
 
     @Override
     public Matrix removeColumn(int j) {
-        return removeColumn(j, this.factory);
+        return removeColumn(j, factory);
     }
 
     @Override
     public Matrix removeColumn(int j, Factory factory) {
-        if (j >= this.columns || j < 0) {
-            throw new IllegalArgumentException("Illegal row number, must be 0.." + (this.columns - 1));
+        if (j >= columns || j < 0) {
+            throw new IllegalArgumentException("Illegal row number, must be 0.." + (columns - 1));
         }
-        Matrix that = factory.createMatrix(this.rows, this.columns - 1);
+        Matrix result = factory.createMatrix(rows, columns - 1);
         for (int jj = 0; jj < j; jj++) {
-            that.setColumn(jj, this.getColumn(jj));
+            result.setColumn(jj, getColumn(jj));
         }
-        for (int jj = j + 1; jj < this.columns; jj++) {
-            that.setRow(jj - 1, this.getRow(jj));
+        for (int jj = j + 1; jj < columns; jj++) {
+            result.setRow(jj - 1, getRow(jj));
         }
-        return that;
+        return result;
     }
 
     @Override
     public Matrix removeFirstRow() {
-        return removeFirstRow(this.factory);
+        return removeFirstRow(factory);
     }
 
     @Override
@@ -217,7 +217,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix removeFirstColumn() {
-        return removeFirstColumn(this.factory);
+        return removeFirstColumn(factory);
     }
 
     @Override
@@ -227,22 +227,22 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix removeLastRow() {
-        return removeFirstRow(this.factory);
+        return removeFirstRow(factory);
     }
 
     @Override
     public Matrix removeLastRow(Factory factory) {
-        return removeRow(this.rows - 1, factory);
+        return removeRow(rows - 1, factory);
     }
 
     @Override
     public Matrix removeLastColumn() {
-        return removeFirstColumn(this.factory);
+        return removeFirstColumn(factory);
     }
 
     @Override
     public Matrix removeLastColumn(Factory factory) {
-        return removeColumn(this.columns - 1, factory);
+        return removeColumn(columns - 1, factory);
     }
 
     @Override
