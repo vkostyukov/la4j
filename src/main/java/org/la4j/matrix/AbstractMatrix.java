@@ -200,7 +200,7 @@ public abstract class AbstractMatrix implements Matrix {
             result.setColumn(jj, getColumn(jj));
         }
         for (int jj = j + 1; jj < columns; jj++) {
-            result.setRow(jj - 1, getRow(jj));
+            result.setColumn(jj - 1, getColumn(jj));
         }
         return result;
     }
