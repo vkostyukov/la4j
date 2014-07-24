@@ -475,6 +475,88 @@ public interface Matrix extends Externalizable {
     void setColumn(int j, Vector vector);
 
     /**
+     * Removes one row from matrix.
+     * @param i
+     * @return matrix without row.
+     */
+    Matrix removeRow(int i);
+
+    /**
+     * Removes one row from matrix using specified factory.
+     * @param i
+     * @param factory
+     * @return matrix without row.
+     */
+    Matrix removeRow(int i, Factory factory);
+
+    /**
+     * Removes one column from matrix.
+     * @param j
+     * @return matrix without column.
+     */
+    Matrix removeColumn(int j);
+
+    /**
+     * Removes one column from matrix using specified factory.
+     * @param j
+     * @param factory
+     * @return matrix without column.
+     */
+    Matrix removeColumn(int j, Factory factory);
+
+    /**
+     * Removes first row from matrix.
+     * @return matrix without first row.
+     */
+    Matrix removeFirstRow();
+
+    /**
+     * Removes first row from matrix using specified factory.
+     * @param factory
+     * @return matrix without first row.
+     */
+    Matrix removeFirstRow(Factory factory);
+
+    /**
+     * Removes first column from matrix.
+     * @return matrix without first column
+     */
+    Matrix removeFirstColumn();
+
+    /**
+     * Removes first column from matrix using specified factory.
+     * @param factory
+     * @return matrix without first column
+     */
+    Matrix removeFirstColumn(Factory factory);
+
+    /**
+     * Removes last row from matrix.
+     * @return matrix without last row
+     */
+    Matrix removeLastRow();
+
+    /**
+     * Removes last row from matrix using specified factory.
+     * @param factory
+     * @return matrix without last row
+     */
+    Matrix removeLastRow(Factory factory);
+
+    /**
+     * Removes last column from matrix.
+     * @return matrix without last column
+     */
+    Matrix removeLastColumn();
+
+    /**
+     * Removes last column from matrix using specified factory.
+     * @param factory
+     * @return matrix without last column
+     */
+    Matrix removeLastColumn(Factory factory);
+
+    /**
      * Converts this matrix into the triangle matrix.
      *
      * @return tirangularized matrix

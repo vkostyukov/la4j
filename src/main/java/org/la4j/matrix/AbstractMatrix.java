@@ -166,6 +166,86 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public Matrix removeRow(int i) {
+        return removeRow(i, factory);
+    }
+
+    @Override
+    public Matrix removeRow(int i, Factory factory) {
+        if (i >= rows || i < 0) {
+            throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (rows - 1));
+        }
+        Matrix result = factory.createMatrix(rows - 1, columns);
+        for (int ii = 0; ii < i; ii++) {
+            result.setRow(ii, getRow(ii));
+        }
+        for (int ii = i + 1; ii < rows; ii++) {
+            result.setRow(ii - 1, getRow(ii));
+        }
+        return result;
+    }
+
+    @Override
+    public Matrix removeColumn(int j) {
+        return removeColumn(j, factory);
+    }
+
+    @Override
+    public Matrix removeColumn(int j, Factory factory) {
+        if (j >= columns || j < 0) {
+            throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (columns - 1));
+        }
+        Matrix result = factory.createMatrix(rows, columns - 1);
+        for (int jj = 0; jj < j; jj++) {
+            result.setColumn(jj, getColumn(jj));
+        }
+        for (int jj = j + 1; jj < columns; jj++) {
+            result.setColumn(jj - 1, getColumn(jj));
+        }
+        return result;
+    }
+
+    @Override
+    public Matrix removeFirstRow() {
+        return removeFirstRow(factory);
+    }
+
+    @Override
+    public Matrix removeFirstRow(Factory factory) {
+        return removeRow(0, factory);
+    }
+
+    @Override
+    public Matrix removeFirstColumn() {
+        return removeFirstColumn(factory);
+    }
+
+    @Override
+    public Matrix removeFirstColumn(Factory factory) {
+        return removeColumn(0, factory);
+    }
+
+    @Override
+    public Matrix removeLastRow() {
+        return removeFirstRow(factory);
+    }
+
+    @Override
+    public Matrix removeLastRow(Factory factory) {
+        return removeRow(rows - 1, factory);
+    }
+
+    @Override
+    public Matrix removeLastColumn() {
+        return removeFirstColumn(factory);
+    }
+
+    @Override
+    public Matrix removeLastColumn(Factory factory) {
+        return removeColumn(columns - 1, factory);
+    }
+
+    @Override
     public void swapRows(int i, int j) {
         if (i != j) {
             Vector ii = getRow(i);
