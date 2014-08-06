@@ -26,21 +26,12 @@
 
 package org.la4j.matrix;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-
 import junit.framework.TestCase;
-
 import org.la4j.factory.Factory;
-import org.la4j.matrix.functor.MatrixAccumulator;
-import org.la4j.vector.MockVector;
 import org.la4j.vector.Vector;
+
+import java.io.*;
+import java.util.ArrayList;
 
 public abstract class AbstractMatrixTest extends TestCase {
 
@@ -711,6 +702,49 @@ public abstract class AbstractMatrixTest extends TestCase {
         });
 
         assertEquals(c, a.multiply(b));
+    }
+
+
+    public void testMultiplyByItsTranspose_2x2() {
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1, 2 },
+                { 0, 1 }
+        });
+        Matrix b = factory().createMatrix(new double[][] {
+                { 5, 2 },
+                { 2, 1 }
+        });
+        assertEquals(a.multiplyByItsTranspose(), b);
+    }
+
+    public void testMultiplyByItsTranspose_4x4() {
+        Matrix a = factory().createMatrix(new double[][]{
+                {3, 6, 7, 11},
+                {5, 2, 4, 7},
+                {1, -6, 2, 9},
+                {10, -3, -7, 9}
+        });
+        Matrix b = factory().createMatrix(new double[][]{
+                {215, 132, 80, 62},
+                {132, 94, 64, 79},
+                {80, 64, 122, 95},
+                {62, 79, 95, 239}
+        });
+        assertEquals(a.multiplyByItsTranspose(), b);
+    }
+
+
+    public void testMultiplyByItsTranspose_nonsquare() {
+        Matrix a = factory().createMatrix(new double[][] {
+                { 1, 2, 3 },
+                { 0, 1, 2 }
+        });
+        try {
+            a.multiplyByItsTranspose();
+            fail();
+        } catch (IllegalArgumentException ex) {
+            // do nothing
+        }
     }
 
     public void testDivide_3x3() {
@@ -2159,4 +2193,5 @@ public abstract class AbstractMatrixTest extends TestCase {
         assertFalse(b.is(Matrices.SYMMETRIC_MATRIX));
 
     }
+
 }

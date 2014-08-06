@@ -25,20 +25,16 @@
 
 package org.la4j.matrix;
 
-import java.io.Externalizable;
-import java.text.NumberFormat;
-
 import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.LinearSystemSolver;
-import org.la4j.matrix.functor.AdvancedMatrixPredicate;
-import org.la4j.matrix.functor.MatrixAccumulator;
-import org.la4j.matrix.functor.MatrixFunction;
-import org.la4j.matrix.functor.MatrixPredicate;
-import org.la4j.matrix.functor.MatrixProcedure;
+import org.la4j.matrix.functor.*;
 import org.la4j.vector.Vector;
+
+import java.io.Externalizable;
+import java.text.NumberFormat;
 
 /**
  * This interface represents real matrix.
@@ -229,6 +225,10 @@ public interface Matrix extends Externalizable {
      * @return A * B
      */
     Matrix multiply(Matrix matrix, Factory factory);
+
+    Matrix multiplyByItsTranspose();
+
+    Matrix multiplyByItsTranspose(Factory factory);
 
     /**
      * Subtracts given {@code value} (v) from every element of this matrix (A).
