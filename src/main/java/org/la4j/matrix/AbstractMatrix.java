@@ -28,23 +28,19 @@
 
 package org.la4j.matrix;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Random;
-
 import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.LinearSystemSolver;
-import org.la4j.matrix.functor.AdvancedMatrixPredicate;
-import org.la4j.matrix.functor.MatrixAccumulator;
-import org.la4j.matrix.functor.MatrixFunction;
-import org.la4j.matrix.functor.MatrixPredicate;
-import org.la4j.matrix.functor.MatrixProcedure;
+import org.la4j.matrix.functor.*;
 import org.la4j.vector.Vector;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Random;
 
 public abstract class AbstractMatrix implements Matrix {
 
@@ -492,6 +488,33 @@ public abstract class AbstractMatrix implements Matrix {
             }
         }
 
+        return result;
+    }
+
+    public Matrix multiplyByItsTranspose() {
+        return multiplyByItsTranspose(factory);
+    }
+
+    public Matrix multiplyByItsTranspose(Factory factory) {
+        ensureFactoryIsNotNull(factory);
+
+        if (rows != columns) {
+            fail("Unapplyable to non-square matrix");
+        }
+
+        Matrix result = factory.createMatrix(rows, columns);
+
+        for (int j = 0; j < columns; j++) {
+            for (int i = 0; i < rows; i++) {
+
+                double acc = 0.0;
+                for (int k = 0; k < columns; k++) {
+                    acc += get(i, k) * get(j, k);
+                }
+                result.set(i, j, acc);
+
+            }
+        }
         return result;
     }
 
