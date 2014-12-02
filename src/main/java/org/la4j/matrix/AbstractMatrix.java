@@ -277,21 +277,21 @@ public abstract class AbstractMatrix implements Matrix {
         final Matrix that = this;
         return factory.createMatrix(new MatrixSource() {
 
-			@Override
-			public double get(int i, int j) {
-				return that.get(j, i);
-			}
+            @Override
+            public double get(int i, int j) {
+                return that.get(j, i);
+            }
 
-			@Override
-			public int columns() {
-				return that.rows();
-			}
+            @Override
+            public int columns() {
+                return that.rows();
+            }
 
-			@Override
-			public int rows() {
-				return that.columns();
-			}
-        	
+            @Override
+            public int rows() {
+                return that.columns();
+            }
+            
         });
     }
 
