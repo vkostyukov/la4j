@@ -34,6 +34,7 @@ import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.*;
+import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
 
 import java.math.BigDecimal;
@@ -271,16 +272,27 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix transpose(Factory factory) {
         ensureFactoryIsNotNull(factory);
+        
+        // 'transposed proxy' of the original Matrix
+        final Matrix that = this;
+        return factory.createMatrix(new MatrixSource() {
 
-        Matrix result = factory.createMatrix(columns, rows);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                result.set(j, i, get(i, j));
+            @Override
+            public double get(int i, int j) {
+                return that.get(j, i);
             }
-        }
 
-        return result;
+            @Override
+            public int columns() {
+                return that.rows();
+            }
+
+            @Override
+            public int rows() {
+                return that.columns();
+            }
+            
+        });
     }
 
     public Matrix rotate() {
