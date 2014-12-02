@@ -23,9 +23,6 @@ package org.la4j.inversion;
 
 import org.la4j.LinearAlgebra;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 public class GaussJordanInverterTest extends AbstractInverterTest {
 
     @Override
@@ -33,7 +30,4 @@ public class GaussJordanInverterTest extends AbstractInverterTest {
         return LinearAlgebra.GAUSS_JORDAN;
     }
 
-    public static Test suite() {
-        return new TestSuite(GaussJordanInverterTest.class);
-    }
 }

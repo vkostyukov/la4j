@@ -21,14 +21,19 @@
 
 package org.la4j.matrix.sparse;
 
+import org.junit.Test;
 import org.la4j.matrix.AbstractMatrixTest;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.functor.MatrixAccumulator;
-import org.la4j.vector.MockVector;
 import org.la4j.vector.Vector;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public abstract class SparseMatrixTest extends AbstractMatrixTest {
 
+    @Test
     public void testCardinality() {
 
         double array[][] = new double[][] {
@@ -42,6 +47,7 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         assertEquals(3, a.cardinality());
     }
 
+    @Test
     public void testLargeMatrix()
     {
         int i = 1000000;
@@ -65,6 +71,7 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         }
     }
 
+    @Test
     public void testCapacityOverflow() {
         int i = 65536;
         int j = 65536;
@@ -78,10 +85,10 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         assertEquals(j, a.columns());
 
         a.set(0, 0, 42.0);
-        assertEquals(42.0, a.get(0, 0));
+        assertEquals(42.0, a.get(0, 0), Matrices.EPS);
 
         a.set(i-1, j-1, 7.0);
-        assertEquals(7.0, a.get(i-1, j-1));
+        assertEquals(7.0, a.get(i-1, j-1), Matrices.EPS);
 
         // Since values and Indices array sizes are align'd with CCSMatrix and
         //  CRSMatrix.MINIMUM_SIZE (=32), we need to set more than 32 values.
@@ -90,6 +97,7 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         }
     }
 
+    @Test
     public void testIssue141() {
         int i = 5000000;
         int j = 7340;
@@ -107,6 +115,7 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         }
     }
 
+    @Test
     public void testFoldNonZero_3x3() {
 
         SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
@@ -118,26 +127,27 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         MatrixAccumulator sum = Matrices.asSumAccumulator(0.0);
         MatrixAccumulator product = Matrices.asProductAccumulator(1.0);
 
-        assertEquals(12.0, a.foldNonZero(sum));
+        assertEquals(12.0, a.foldNonZero(sum), Matrices.EPS);
         // check whether the accumulator were flushed or not
-        assertEquals(12.0, a.foldNonZero(sum));
+        assertEquals(12.0, a.foldNonZero(sum), Matrices.EPS);
 
-        assertEquals(40.0, a.foldNonZero(product));
+        assertEquals(40.0, a.foldNonZero(product), Matrices.EPS);
         // check whether the accumulator were flushed or not
-        assertEquals(40.0, a.foldNonZero(product));
+        assertEquals(40.0, a.foldNonZero(product), Matrices.EPS);
 
-        assertEquals(20.0, a.foldNonZeroInRow(1, product));
-        assertEquals(10.0, a.foldNonZeroInColumn(2, product));
+        assertEquals(20.0, a.foldNonZeroInRow(1, product), Matrices.EPS);
+        assertEquals(10.0, a.foldNonZeroInColumn(2, product), Matrices.EPS);
 
         Vector nonZeroInColumns = a.foldNonZeroInColumns(product);
-        assertEquals(new MockVector(factory().createVector(new double[] { 4.0, 1.0, 10.0})),
-                nonZeroInColumns);
+        assertTrue(factory().createVector(new double[] { 4.0, 1.0, 10.0}).equals(
+                nonZeroInColumns, 1e-9));
 
         Vector nonZeroInRows = a.foldNonZeroInRows(product);
-        assertEquals(new MockVector(factory().createVector(new double[] { 2.0, 20.0, 1.0})),
-                nonZeroInRows);
+        assertTrue(factory().createVector(new double[] { 2.0, 20.0, 1.0}).equals(
+                nonZeroInRows, 1e-9));
     }
 
+    @Test
     public void testIsZeroAt_5x3() {
 
         SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
@@ -152,6 +162,7 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         assertFalse(a.isZeroAt(3, 1));
     }
 
+    @Test
     public void testNonZeroAt_3x4() {
 
         SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
@@ -164,6 +175,7 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         assertFalse(a.nonZeroAt(0, 3));
     }
 
+    @Test
     public void testGetOrElse_2x5() {
 
         SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
@@ -171,8 +183,8 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
         });
 
-        assertEquals(0.0, a.getOrElse(0, 2, 0.0));
-        assertEquals(3.0, a.getOrElse(1, 2, 3.14));
-        assertEquals(4.2, a.getOrElse(1, 3, 4.2));
+        assertEquals(0.0, a.getOrElse(0, 2, 0.0), Matrices.EPS);
+        assertEquals(3.0, a.getOrElse(1, 2, 3.14), Matrices.EPS);
+        assertEquals(4.2, a.getOrElse(1, 3, 4.2), Matrices.EPS);
     }
 }

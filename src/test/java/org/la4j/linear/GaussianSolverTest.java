@@ -21,10 +21,17 @@
 
 package org.la4j.linear;
 
+import org.junit.Test;
 import org.la4j.LinearAlgebra;
 
 public class GaussianSolverTest extends AbstractSolverTest {
 
+    @Override
+    public LinearAlgebra.SolverFactory solverFactory() {
+        return LinearAlgebra.GAUSSIAN;
+    }
+    
+    @Test
     public void testSolve_1x1() {
 
         double a[][] = new double[][] {
@@ -33,9 +40,10 @@ public class GaussianSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -33.0 };
 
-        performTest(LinearAlgebra.GAUSSIAN, a, b);
+        performTest(a, b);
     }
 
+    @Test
     public void testSolve_2x2() {
 
         double a[][] = new double[][] {
@@ -45,9 +53,10 @@ public class GaussianSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 21.0, -37.0 };
 
-        performTest(LinearAlgebra.SolverFactory.GAUSSIAN, a, b);
+        performTest(a, b);
     }
 
+    @Test
     public void testSolve_3x3() {
 
         double a[][] = new double[][] {
@@ -58,9 +67,10 @@ public class GaussianSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 7.0, -85.5, 0.5 };
 
-        performTest(LinearAlgebra.GAUSSIAN, a, b);
+        performTest(a, b);
     }
 
+    @Test
     public void testSolve_4x4() {
 
         double a[][] = new double[][] {
@@ -72,9 +82,10 @@ public class GaussianSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.0, 2.0, 0.0, 3.0 };
 
-        performTest(LinearAlgebra.GAUSSIAN, a, b);
+        performTest(a, b);
     }
 
+    @Test
     public void testSolve_5x5() {
 
         double a[][] = new double[][] {
@@ -87,6 +98,6 @@ public class GaussianSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 146.0, 486.0, 77.0, 282.0, -157.0 };
 
-        performTest(LinearAlgebra.GAUSSIAN, a, b);
+        performTest(a, b);
     }
 }

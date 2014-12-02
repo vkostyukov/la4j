@@ -1146,6 +1146,16 @@ public interface Matrix extends Externalizable {
     MatrixDecompositor withDecompositor(LinearAlgebra.DecompositorFactory factory);
 
     /**
+     * Returns true when matrix is equal to given {@code matrix} with given {@code precision}
+     *
+     * @param matrix matrix
+     * @param precision given precision
+     *
+     * @return equals of this matrix to that
+     */
+    public boolean equals(Matrix matrix, double precision);
+
+    /**
      * Converts this matrix into the string representation.
      *
      * @param formatter the number formatter
