@@ -21,10 +21,12 @@
 
 package org.la4j.decomposition;
 
+import org.junit.Test;
 import org.la4j.LinearAlgebra;
 
 public class QRDecompositorTest extends AbstractDecompositorTest {
 
+    @Test
     public void testDecompose_1x1() {
 
         double[][] input = new double[][] {
@@ -43,6 +45,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.QR, input, output);
     }
 
+    @Test
     public void testDecompose_2x2() {
 
         double[][] input = new double[][] {
@@ -64,6 +67,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.QR, input, output);
     }
 
+    @Test
     public void testDecompose_4x1() {
 
         double[][] input = new double[][] {
@@ -88,6 +92,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.QR, input, output);
     }
 
+    @Test
     public void testDecompose_3x2() {
 
         double[][] input = new double[][] {
@@ -111,6 +116,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.QR, input, output);
     }
 
+    @Test
     public void testDecompose_3x3() {
 
         double[][] input = new double[][] {
@@ -135,6 +141,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.QR, input, output);
     }
 
+    @Test
     public void testDecompose_3x3_2() {
 
         double[][] input = new double[][] {
@@ -159,6 +166,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.QR, input, output);
     }
 
+    @Test
     public void testDecompose_4x3() {
 
         double[][] input = new double[][] {
@@ -185,6 +193,7 @@ public class QRDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.QR, input, output);
     }
 
+    @Test
     public void testDecompose_5x5() {
 
         double[][] input = new double[][] {

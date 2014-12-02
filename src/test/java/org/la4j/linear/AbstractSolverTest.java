@@ -21,15 +21,15 @@
 
 package org.la4j.linear;
 
-import junit.framework.TestCase;
-
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.MockVector;
 import org.la4j.vector.Vector;
 
-public abstract class AbstractSolverTest extends TestCase {
+import static org.junit.Assert.assertEquals;
+
+public abstract class AbstractSolverTest {
 
     public void performTest(LinearAlgebra.SolverFactory solverFactory,
                             double coefficientMatrix[][], 

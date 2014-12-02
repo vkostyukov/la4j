@@ -21,10 +21,12 @@
 
 package org.la4j.linear;
 
+import org.junit.Test;
 import org.la4j.LinearAlgebra;
 
 public class GaussianSolverTest extends AbstractSolverTest {
 
+    @Test
     public void testSolve_1x1() {
 
         double a[][] = new double[][] {
@@ -36,6 +38,7 @@ public class GaussianSolverTest extends AbstractSolverTest {
         performTest(LinearAlgebra.GAUSSIAN, a, b);
     }
 
+    @Test
     public void testSolve_2x2() {
 
         double a[][] = new double[][] {
@@ -48,6 +51,7 @@ public class GaussianSolverTest extends AbstractSolverTest {
         performTest(LinearAlgebra.SolverFactory.GAUSSIAN, a, b);
     }
 
+    @Test
     public void testSolve_3x3() {
 
         double a[][] = new double[][] {
@@ -61,6 +65,7 @@ public class GaussianSolverTest extends AbstractSolverTest {
         performTest(LinearAlgebra.GAUSSIAN, a, b);
     }
 
+    @Test
     public void testSolve_4x4() {
 
         double a[][] = new double[][] {
@@ -75,6 +80,7 @@ public class GaussianSolverTest extends AbstractSolverTest {
         performTest(LinearAlgebra.GAUSSIAN, a, b);
     }
 
+    @Test
     public void testSolve_5x5() {
 
         double a[][] = new double[][] {

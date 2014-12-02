@@ -21,10 +21,12 @@
 
 package org.la4j.decomposition;
 
+import org.junit.Test;
 import org.la4j.LinearAlgebra;
 
 public class CholeskyDecompositorTest extends AbstractDecompositorTest {
 
+    @Test
     public void testDecompose_1x1() {
 
         double[][] input = new double[][] {
@@ -40,6 +42,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.CHOLESKY, input, output);
     }
 
+    @Test
     public void testDecompose_2x2() {
 
         double[][] input = new double[][] {
@@ -57,6 +60,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.CHOLESKY, input, output);
     }
 
+    @Test
     public void testDecompose_3x3() {
 
         double[][] input = new double[][] {
@@ -76,6 +80,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.CHOLESKY, input, output);
     }
 
+    @Test
     public void testDecompose_4x4() {
 
         double[][] input = new double[][] {
@@ -97,6 +102,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.CHOLESKY, input, output);
     }
 
+    @Test
     public void  testDecompose_5x5() {
 
         double[][] input = new double[][] {

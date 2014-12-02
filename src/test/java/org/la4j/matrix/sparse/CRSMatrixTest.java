@@ -20,10 +20,6 @@
  */
 
 package org.la4j.matrix.sparse;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.la4j.factory.CRSFactory;
 import org.la4j.factory.Factory;
 
@@ -34,7 +30,4 @@ public class CRSMatrixTest extends SparseMatrixTest {
         return new CRSFactory();
     }
 
-    public static Test suite() {
-        return new TestSuite(CRSMatrixTest.class);
-    }
 }

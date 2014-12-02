@@ -21,11 +21,13 @@
 
 package org.la4j.linear;
 
+import org.junit.Test;
 import org.la4j.LinearAlgebra;
 import org.la4j.matrix.Matrices;
 
 public class SweepSolverTest extends AbstractSolverTest {
 
+    @Test
     public void testSolve_3x3() {
 
         double a[][] = new double[][] { 
@@ -39,6 +41,7 @@ public class SweepSolverTest extends AbstractSolverTest {
         performTest(LinearAlgebra.SWEEP, a, b);
     }
 
+    @Test
     public void testSolve_3x3_2() {
 
         double a[][] = new double[][] { 
@@ -52,6 +55,7 @@ public class SweepSolverTest extends AbstractSolverTest {
         performTest(LinearAlgebra.SWEEP, a, b);
     }
 
+    @Test
     public void testSolve_4x4() {
 
         double a[][] = new double[][] { 
@@ -66,6 +70,7 @@ public class SweepSolverTest extends AbstractSolverTest {
         performTest(LinearAlgebra.SWEEP, a, b);
     }
 
+    @Test
     public void testSolve_5x5() {
 
         double a[][] = new double[][] { 
