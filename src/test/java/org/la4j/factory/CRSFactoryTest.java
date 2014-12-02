@@ -21,18 +21,11 @@
 
 package org.la4j.factory;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 public class CRSFactoryTest extends AbstractFactoryTest {
 
     @Override
     public Factory factory() {
         return new CRSFactory();
-    }
-
-    public static Test suite() {
-        return new TestSuite(CRSFactoryTest.class);
     }
 
 }

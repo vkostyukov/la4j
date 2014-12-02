@@ -21,10 +21,12 @@
 
 package org.la4j.decomposition;
 
+import org.junit.Test;
 import org.la4j.LinearAlgebra;
 
 public class EigenDecompositorTest extends AbstractDecompositorTest {
 
+    @Test
     public void testDecompose_1x1_symmetric_1() {
         double[][] input = new double[][] {
                 { 76.0 }
@@ -42,6 +44,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_1x1_symmetric_2() {
         double[][] input = new double[][] {
                 { -10.0 }
@@ -59,6 +62,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_2x2_symmetric_1() {
         double[][] input = new double[][] {
                 { -5.0, 12.0 },
@@ -79,6 +83,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_2x2_symmetric_2() {
         double[][] input = new double[][] {
                 { 25.0, 0 },
@@ -99,6 +104,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_3x3_symmetric_1() {
         double[][] input = new double[][] {
                 {  1.5, 13.0, 9.4 },
@@ -122,6 +128,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_3x3_symmetric_2() {
         double[][] input = new double[][] {
                 { 1.0, 0.0, 0.0 },
@@ -145,6 +152,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_4x4_symmetric_1() {
         double[][] input = new double[][] {
                 { 1.0, 5.0, 7.0, 9.0 },
@@ -171,6 +179,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_4x4_symmetric_2() {
         double[][] input = new double[][] {
                 { -8.0, 7.0, 2.0, -3.0 },
@@ -198,6 +207,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_5x5_symmetric_1() {
         double[][] input = new double[][] {
                 { 1.0, 0.0, 0.0, 0.0, 0.0 },
@@ -227,6 +237,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_5x5_symmetric_2() {
         double[][] input = new double[][] {
                 { 6.2,  4.7,  6.2, 45.9,  8.7 },
@@ -256,6 +267,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_2x2_nonSymmetric_1() {
         double[][] input = new double[][] {
             { 1.0, 2.0},
@@ -276,6 +288,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_2x2_nonSymmetric_2() {
         double[][] input = new double[][] {
                 { 6.0, 99.0},
@@ -296,6 +309,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_3x3_nonSymmetric() {
         double[][] input = new double[][] {
                 { 16.0, -11.0, 99.0 },
@@ -319,6 +333,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_4x4_nonSymmetric() {
         double[][] input = new double[][] {
                 { -1.0, -4.0, 4.0, 8.0 },
@@ -345,6 +360,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
         performTest(LinearAlgebra.EIGEN, input, output);
     }
 
+    @Test
     public void testDecompose_5x5_nonSymmetric() {
         double[][] input = new double[][] {
                 { 26.0, -1.0, 2.0, 15.0, -3.0 },

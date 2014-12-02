@@ -21,9 +21,6 @@
 
 package org.la4j.matrix.dense;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.Factory;
 
@@ -34,7 +31,4 @@ public class Basic2DMatrixTest extends DenseMatrixTest {
         return new Basic2DFactory();
     }
 
-    public static Test suite() {
-        return new TestSuite(Basic2DMatrixTest.class);
-    }
 }

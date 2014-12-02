@@ -23,10 +23,14 @@ package org.la4j.matrix.dense;
 
 import java.util.Arrays;
 
+import org.junit.Test;
 import org.la4j.matrix.AbstractMatrixTest;
+
+import static org.junit.Assert.assertTrue;
 
 public abstract class DenseMatrixTest extends AbstractMatrixTest {
 
+    @Test
     public void testToArray() {
         double array[][] = new double[][] { 
                 { 1.0, 0.0, 0.0 },

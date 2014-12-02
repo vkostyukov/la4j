@@ -27,8 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import junit.framework.TestCase;
-
+import org.junit.Test;
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.CCSFactory;
@@ -37,7 +36,9 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
-public abstract class AbstractStreamTest extends TestCase {
+import static org.junit.Assert.assertEquals;
+
+public abstract class AbstractStreamTest {
 
     public Factory[] factories() {
         return new Factory[] { 
@@ -48,6 +49,7 @@ public abstract class AbstractStreamTest extends TestCase {
         };
     }
 
+    @Test
     public void testMatrix_3x3() throws IOException {
         for (Factory factory: factories()) {
 
@@ -72,6 +74,7 @@ public abstract class AbstractStreamTest extends TestCase {
         }
     }
 
+    @Test
     public void testMatrix_2x5() throws IOException {
         for (Factory factory: factories()) {
 
@@ -95,6 +98,7 @@ public abstract class AbstractStreamTest extends TestCase {
         }
     }
 
+    @Test
     public void testMatrix_3x1() throws IOException {
         for (Factory factory: factories()) {
 
@@ -119,6 +123,7 @@ public abstract class AbstractStreamTest extends TestCase {
         }
     }
 
+    @Test
     public void testMatrix_1x1() throws IOException {
         for (Factory factory: factories()) {
 
@@ -139,6 +144,7 @@ public abstract class AbstractStreamTest extends TestCase {
         }
     }
 
+    @Test
     public void testMatrix_0x0() throws IOException {
         for (Factory factory: factories()) {
 
@@ -159,6 +165,7 @@ public abstract class AbstractStreamTest extends TestCase {
         }
     }
 
+    @Test
     public void testVector_3() throws IOException {
         for (Factory factory: factories()) {
 
@@ -179,6 +186,7 @@ public abstract class AbstractStreamTest extends TestCase {
         }
     }
 
+    @Test
     public void testVector_1() throws IOException {
         for (Factory factory: factories()) {
 
@@ -199,6 +207,7 @@ public abstract class AbstractStreamTest extends TestCase {
         }
     }
 
+    @Test
     public void testVector_0() throws IOException {
         for (Factory factory: factories()) {
 

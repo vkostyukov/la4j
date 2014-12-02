@@ -21,9 +21,6 @@
 
 package org.la4j.factory;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 public class Basic1DFactoryTest extends AbstractFactoryTest {
 
     @Override
@@ -31,7 +28,4 @@ public class Basic1DFactoryTest extends AbstractFactoryTest {
         return new Basic1DFactory();
     }
 
-    public static Test suite() {
-        return new TestSuite(Basic1DFactoryTest.class);
-    }
 }

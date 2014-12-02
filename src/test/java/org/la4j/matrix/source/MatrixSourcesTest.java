@@ -21,10 +21,7 @@
 
 package org.la4j.matrix.source;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
+import org.junit.Test;
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.CCSFactory;
@@ -33,17 +30,16 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 
-public class MatrixSourcesTest extends TestCase {
+import static org.junit.Assert.assertEquals;
 
-    public static Test suite() {
-        return new TestSuite(MatrixSourcesTest.class);
-    }
+public class MatrixSourcesTest {
 
     public static final Factory[] FACTORIES = { 
         new Basic1DFactory(), new Basic2DFactory(),
         new CRSFactory(), new CCSFactory()
     };
 
+    @Test
     public void testRandomSymmetricSource() {
         for (Factory factory: FACTORIES) {
             Matrix a = factory.createMatrix(new RandomSymmetricMatrixSource(5));
@@ -53,13 +49,13 @@ public class MatrixSourcesTest extends TestCase {
 
             for (int i = 0; i < a.rows(); i++) {
                 for (int j = i + 1; j < a.columns(); j++) {
-                    assertTrue(Math.abs(a.get(i, j) - a.get(j, i)) 
-                               < Matrices.EPS);
+                    assertEquals(a.get(i, j), a.get(j, i), Matrices.EPS);
                 }
             }
         }
     }
 
+    @Test
     public void testIdentityMatrixSource() {
         for (Factory factory: FACTORIES) {
             Matrix a = factory.createMatrix(new IdentityMatrixSource(5));
@@ -70,9 +66,9 @@ public class MatrixSourcesTest extends TestCase {
             for (int i = 0; i < a.rows(); i++) {
                 for (int j = 0; j < a.columns(); j++) {
                     if (i == j) {
-                        assertEquals(1.0, a.get(i, j));
+                        assertEquals(1.0, a.get(i, j), Matrices.EPS);
                     } else {
-                        assertEquals(0.0, a.get(i, j));
+                        assertEquals(0.0, a.get(i, j), Matrices.EPS);
                     }
                 }
             }

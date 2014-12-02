@@ -21,14 +21,14 @@
 
 package org.la4j.decomposition;
 
-import junit.framework.TestCase;
-
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.MockMatrix;
 
-public abstract class AbstractDecompositorTest extends TestCase {
+import static org.junit.Assert.assertEquals;
+
+public abstract class AbstractDecompositorTest {
 
     protected void performTest(LinearAlgebra.DecompositorFactory decompositorFactory,
                                double[][] input, double[][][] output) {

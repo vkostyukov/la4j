@@ -24,8 +24,6 @@ package org.la4j.io;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 public class SymbolSeparatedStreamTest extends AbstractStreamTest {
 
@@ -39,7 +37,4 @@ public class SymbolSeparatedStreamTest extends AbstractStreamTest {
         return new SymbolSeparatedStream(out);
     }
 
-    public static Test suite() {
-        return new TestSuite(SymbolSeparatedStreamTest.class);
-    }
 }
