@@ -532,6 +532,19 @@ public abstract class AbstractVector implements Vector {
     public Vector normalize(VectorAccumulator acc) {
     	return divide(fold(acc));
     }
+    
+    @Override
+    public void normalizeInPlace() {
+    	normalizeInPlace(Vectors.mkEuclideanNormAccumulator());
+    }
+    
+    @Override
+    public void normalizeInPlace(VectorAccumulator acc) {
+    	Vector normalized = normalize(acc);
+    	for (int i = 0; i < this.length; i++) {
+    		this.set(i, normalized.get(i));
+    	}
+    }
 
     @Override
     public int hashCode() {

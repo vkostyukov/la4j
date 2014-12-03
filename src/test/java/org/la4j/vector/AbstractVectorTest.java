@@ -770,4 +770,63 @@ public abstract class AbstractVectorTest extends TestCase {
     	// Verify b is a unit vector
     	assertEquals(1.0, b.fold(acc));
     }
+    
+    public void testNormalizeInPlace_Default() {
+    	Vector a = factory().createVector(new double[] {3, 0, -4});
+    	a.normalizeInPlace();;
+    	
+    	assertEquals(3, a.length());
+    	double epsilon = 0.00001;
+    	assertEquals(0.6, a.get(0), epsilon);
+    	assertEquals(0.0, a.get(1), epsilon);
+    	assertEquals(-0.8, a.get(2), epsilon);
+    	// Verify a is a unit vector
+    	// The default normalize() uses Euclidean as the accumulator
+    	assertEquals(1.0, a.fold(Vectors.mkEuclideanNormAccumulator()));
+    }
+    
+    public void testNormalizeInPlace_EuclideanNormAccumulator() {
+    	VectorAccumulator acc = Vectors.mkEuclideanNormAccumulator();
+    	
+    	Vector a = factory().createVector(new double[] {3, 0, -4});
+    	a.normalizeInPlace(acc);
+    	
+    	assertEquals(3, a.length());
+    	double epsilon = 0.00001;
+    	assertEquals(0.6, a.get(0), epsilon);
+    	assertEquals(0.0, a.get(1), epsilon);
+    	assertEquals(-0.8, a.get(2), epsilon);
+    	// Verify a is a unit vector
+    	assertEquals(1.0, a.fold(acc));
+    }
+    
+    public void testNormalizeInPlace_ManhattanNormAccumulator() {
+    	VectorAccumulator acc = Vectors.mkManhattanNormAccumulator();
+    	
+    	Vector a = factory().createVector(new double[] {3, 0, -4});
+    	a.normalizeInPlace(acc);
+    	
+    	assertEquals(3, a.length());
+    	double epsilon = 0.00001;
+    	assertEquals(0.42857, a.get(0), epsilon);
+    	assertEquals(0.0, a.get(1), epsilon);
+    	assertEquals(-0.57142, a.get(2), epsilon);
+    	// Verify a is a unit vector
+    	assertEquals(1.0, a.fold(acc));
+    }
+    
+    public void testNormalizeInPlace_InfinityNormAccumulator() {
+    	VectorAccumulator acc = Vectors.mkInfinityNormAccumulator();
+    	
+    	Vector a = factory().createVector(new double[] {3, 0, -4});
+    	a.normalizeInPlace(acc);
+    	
+    	assertEquals(3, a.length());
+    	double epsilon = 0.00001;
+    	assertEquals(0.75, a.get(0), epsilon);
+    	assertEquals(0.0, a.get(1), epsilon);
+    	assertEquals(-1.0, a.get(2), epsilon);
+    	// Verify a is a unit vector
+    	assertEquals(1.0, a.fold(acc));
+    }
 }
