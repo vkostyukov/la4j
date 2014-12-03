@@ -525,7 +525,6 @@ public abstract class AbstractVector implements Vector {
     
     @Override
     public Vector normalize(VectorAccumulator acc) {
-    	// TODO
     	double[] normalizedValues = new double[this.length];
     	double totalSquared = 0;
     	for (int i = 0; i < this.length; i++) {
