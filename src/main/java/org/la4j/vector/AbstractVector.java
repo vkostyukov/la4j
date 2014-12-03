@@ -522,6 +522,16 @@ public abstract class AbstractVector implements Vector {
         result.setColumn(0, this);
         return result;
     }
+    
+    @Override
+    public Vector normalize() {
+    	return normalize(Vectors.mkEuclideanNormAccumulator());
+    }
+    
+    @Override
+    public Vector normalize(VectorAccumulator acc) {
+    	return divide(fold(acc));
+    }
 
     @Override
     public int hashCode() {
