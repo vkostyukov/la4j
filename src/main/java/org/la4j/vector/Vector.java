@@ -709,4 +709,15 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @return the normalized vector.
      */
     Vector normalize(VectorAccumulator acc);
+    
+    /**
+     * Normalizes this vector using the Euclidean accumulator.
+     */
+    void normalizeInPlace();
+    
+    /**
+     * Normalizes this vector using the provided accumulator.
+     * @param acc the vector accumulator to use.
+     */
+    void normalizeInPlace(VectorAccumulator acc);
 }
