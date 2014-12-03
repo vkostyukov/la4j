@@ -33,6 +33,7 @@ import org.la4j.factory.Factory;
 import org.la4j.io.VectorIterator;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.vector.dense.BasicVector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
@@ -521,6 +522,14 @@ public abstract class AbstractVector implements Vector {
         Matrix result = factory.createMatrix(length, 1);
         result.setColumn(0, this);
         return result;
+    }
+    
+    @Override
+    public Vector normalize(VectorAccumulator acc) {
+    	// TODO
+    	double[] normalizedValues = new double[this.length];
+    	
+    	return new BasicVector(normalizedValues);
     }
 
     @Override
