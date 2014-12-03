@@ -525,21 +525,7 @@ public abstract class AbstractVector implements Vector {
     
     @Override
     public Vector normalize(VectorAccumulator acc) {
-    	double[] normalizedValues = new double[this.length];
-    	double totalSquared = 0;
-    	for (int i = 0; i < this.length; i++) {
-    		totalSquared += Math.pow(this.get(i), 2.0);
-    	}
-    	double magnitude = Math.sqrt(totalSquared);
-    	for (int i = 0; i < this.length; i++) {
-    		if (magnitude != 0.0) {
-    			normalizedValues[i] = this.get(i) / magnitude;
-    		} else {
-    			// Dealing with the zero vector and don't want to divide by zero
-    			normalizedValues[i] = this.get(i);
-    		}
-    	}
-    	return Vectors.asVector(normalizedValues);
+    	return divide(fold(acc));
     }
 
     @Override

@@ -712,37 +712,48 @@ public abstract class AbstractVectorTest extends TestCase {
         assertTrue(e.is(fortyTwo));
     }
     
-    public void testNormalize() {
+    public void testNormalize_EuclideanNormAccumulator() {
+    	VectorAccumulator acc = Vectors.mkEuclideanNormAccumulator();
+    	
     	Vector a = factory().createVector(new double[] {3, 0, -4});
-    	Vector b = a.normalize(null);
+    	Vector b = a.normalize(acc);
     	
     	assertEquals(3, b.length());
-    	assertEquals(0.6, b.get(0));
-    	assertEquals(0.0, b.get(1));
-    	assertEquals(-0.8, b.get(2));
-    	
-    	double totalSquared = 0;
-    	for (int i = 0; i < b.length(); i++) {
-    		totalSquared += Math.pow(b.get(i), 2.0);
-    	}
-    	double magnitude = Math.sqrt(totalSquared);
-    	assertEquals(1.0, magnitude);
+    	double epsilon = 0.00001;
+    	assertEquals(0.6, b.get(0), epsilon);
+    	assertEquals(0.0, b.get(1), epsilon);
+    	assertEquals(-0.8, b.get(2), epsilon);
+    	// Verify b is a unit vector
+    	assertEquals(1.0, b.fold(acc));
     }
     
-    public void testNormalize_ZeroVector() {
-    	Vector a = factory().createVector(new double[] {0, 0, 0});
-    	Vector b = a.normalize(null);
+    public void testNormalize_ManhattanNormAccumulator() {
+    	VectorAccumulator acc = Vectors.mkManhattanNormAccumulator();
+    	
+    	Vector a = factory().createVector(new double[] {3, 0, -4});
+    	Vector b = a.normalize(acc);
     	
     	assertEquals(3, b.length());
-    	assertEquals(0.0, b.get(0));
-    	assertEquals(0.0, b.get(1));
-    	assertEquals(0.0, b.get(2));
+    	double epsilon = 0.00001;
+    	assertEquals(0.42857, b.get(0), epsilon);
+    	assertEquals(0.0, b.get(1), epsilon);
+    	assertEquals(-0.57142, b.get(2), epsilon);
+    	// Verify b is a unit vector
+    	assertEquals(1.0, b.fold(acc));
+    }
+    
+    public void testNormalize_InfinityNormAccumulator() {
+    	VectorAccumulator acc = Vectors.mkInfinityNormAccumulator();
     	
-    	double totalSquared = 0;
-    	for (int i = 0; i < b.length(); i++) {
-    		totalSquared += Math.pow(b.get(i), 2.0);
-    	}
-    	double magnitude = Math.sqrt(totalSquared);
-    	assertEquals(0.0, magnitude);
+    	Vector a = factory().createVector(new double[] {3, 0, -4});
+    	Vector b = a.normalize(acc);
+    	
+    	assertEquals(3, b.length());
+    	double epsilon = 0.00001;
+    	assertEquals(0.75, b.get(0), epsilon);
+    	assertEquals(0.0, b.get(1), epsilon);
+    	assertEquals(-1.0, b.get(2), epsilon);
+    	// Verify b is a unit vector
+    	assertEquals(1.0, b.fold(acc));
     }
 }
