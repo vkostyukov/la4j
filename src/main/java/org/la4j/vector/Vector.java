@@ -696,8 +696,15 @@ public interface Vector extends Externalizable, Iterable<Double> {
     <T> T pipeTo(VectorVectorOperation<T> operation, Vector that);
     
     /**
-     * Returns the normalized version of this vector.
-     * @param acc the vector accumulator. 
+     * Returns the Euclidean normalized version of this vector.
+     * 
+     * @return the normalized vector.
+     */
+    Vector normalize();
+    
+    /**
+     * Returns the normalized version of this vector using the provided accumulator.
+     * @param acc the vector accumulator to use. 
      * 
      * @return the normalized vector.
      */
