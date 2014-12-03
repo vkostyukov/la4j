@@ -713,13 +713,13 @@ public abstract class AbstractVectorTest extends TestCase {
     }
     
     public void testNormalize() {
-    	Vector a = factory().createVector(new double[] {3, 0, 4});
+    	Vector a = factory().createVector(new double[] {3, 0, -4});
     	Vector b = a.normalize(null);
     	
     	assertEquals(3, b.length());
     	assertEquals(0.6, b.get(0));
     	assertEquals(0.0, b.get(1));
-    	assertEquals(0.8, b.get(2));
+    	assertEquals(-0.8, b.get(2));
     	
     	double totalSquared = 0;
     	for (int i = 0; i < b.length(); i++) {
@@ -727,5 +727,22 @@ public abstract class AbstractVectorTest extends TestCase {
     	}
     	double magnitude = Math.sqrt(totalSquared);
     	assertEquals(1.0, magnitude);
+    }
+    
+    public void testNormalize_ZeroVector() {
+    	Vector a = factory().createVector(new double[] {0, 0, 0});
+    	Vector b = a.normalize(null);
+    	
+    	assertEquals(3, b.length());
+    	assertEquals(0.0, b.get(0));
+    	assertEquals(0.0, b.get(1));
+    	assertEquals(0.0, b.get(2));
+    	
+    	double totalSquared = 0;
+    	for (int i = 0; i < b.length(); i++) {
+    		totalSquared += Math.pow(b.get(i), 2.0);
+    	}
+    	double magnitude = Math.sqrt(totalSquared);
+    	assertEquals(0.0, magnitude);
     }
 }

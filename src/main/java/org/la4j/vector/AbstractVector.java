@@ -532,7 +532,12 @@ public abstract class AbstractVector implements Vector {
     	}
     	double magnitude = Math.sqrt(totalSquared);
     	for (int i = 0; i < this.length; i++) {
-    		normalizedValues[i] = this.get(i) / magnitude;
+    		if (magnitude != 0.0) {
+    			normalizedValues[i] = this.get(i) / magnitude;
+    		} else {
+    			// Dealing with the zero vector and don't want to divide by zero
+    			normalizedValues[i] = this.get(i);
+    		}
     	}
     	return Vectors.asVector(normalizedValues);
     }
