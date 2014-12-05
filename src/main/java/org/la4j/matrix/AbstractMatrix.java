@@ -1184,6 +1184,7 @@ public abstract class AbstractMatrix implements Matrix {
         return result;
     }
 
+    @Override
     public boolean equals(Object object, double precision) {
 
         if (this == object) {
