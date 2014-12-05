@@ -24,7 +24,7 @@ import org.la4j.vector.Vector;
 
 public class VectorSourcedVectorBuilder extends NonTerminalVectorBuilder {
 
-    private Vector vector;
+    private final Vector vector;
 
     public VectorSourcedVectorBuilder(UnderlyingVectorBuilder underlying, Vector vector) {
         super(underlying);

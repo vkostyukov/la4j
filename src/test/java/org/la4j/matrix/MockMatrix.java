@@ -28,7 +28,7 @@ import java.io.ObjectOutput;
 public class MockMatrix extends AbstractMatrix implements Matrix {
 
     private final static double MOCK_EPS = 1e-3;
-    private Matrix self;
+    private final Matrix self;
 
     public MockMatrix(Matrix matrix) {
         super(matrix.factory(), matrix.rows(), matrix.columns());

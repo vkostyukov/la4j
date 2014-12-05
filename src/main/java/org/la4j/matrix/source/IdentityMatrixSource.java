@@ -24,7 +24,7 @@ package org.la4j.matrix.source;
 @Deprecated
 public class IdentityMatrixSource implements MatrixSource {
 
-    private int size;
+    private final int size;
 
     public IdentityMatrixSource(int size) {
         this.size = size;

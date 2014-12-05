@@ -52,7 +52,7 @@ abstract class CursorIterator implements Iterator<Double> {
     protected CursorIterator orElse(final CursorIterator those, final JoinFunction function) {
         final CursorIterator these = this;
         return new CursorIterator() {
-            private EnumSet<IteratorState> state = EnumSet.copyOf(TAKEN_FROM_BOTH);
+            private final EnumSet<IteratorState> state = EnumSet.copyOf(TAKEN_FROM_BOTH);
 
             @Override
             public int cursor() {

@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class RandomSourcedVectorBuilder extends NonTerminalVectorBuilder {
 
-    private Random random;
+    private final Random random;
 
     public RandomSourcedVectorBuilder(UnderlyingVectorBuilder underlying, Random random) {
         super(underlying);

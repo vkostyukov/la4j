@@ -23,7 +23,7 @@ package org.la4j.io;
 
 class CursorToVectorIterator extends VectorIterator {
 
-    private CursorIterator underlying;
+    private final CursorIterator underlying;
 
     public CursorToVectorIterator(CursorIterator underlying, int length) {
         super(length);

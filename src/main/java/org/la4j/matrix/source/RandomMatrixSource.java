@@ -25,8 +25,8 @@ import java.util.Random;
 
 public class RandomMatrixSource implements MatrixSource {
 
-    private int rows, columns;
-    private Random random;
+    private final int rows, columns;
+    private final Random random;
 
     public RandomMatrixSource(int rows, int columns, Random random) {
         this.rows = rows;

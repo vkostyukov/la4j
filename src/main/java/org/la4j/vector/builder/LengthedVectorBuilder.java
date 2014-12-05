@@ -27,7 +27,7 @@ import java.util.Random;
 
 public class LengthedVectorBuilder extends NonTerminalVectorBuilder {
 
-    private int length;
+    private final int length;
 
     public LengthedVectorBuilder(UnderlyingVectorBuilder underlying, int length) {
         super(underlying);

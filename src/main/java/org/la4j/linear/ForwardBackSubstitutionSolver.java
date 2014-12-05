@@ -34,8 +34,8 @@ public class ForwardBackSubstitutionSolver extends AbstractSolver implements Lin
     private static final long serialVersionUID = 4071505L;
 
     // Matrices from RAW_LU decomposition
-    private Matrix lu;
-    private Matrix p;
+    private final Matrix lu;
+    private final Matrix p;
 
     public ForwardBackSubstitutionSolver(Matrix a) {
         super(a);

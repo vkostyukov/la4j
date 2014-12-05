@@ -30,7 +30,7 @@ import org.la4j.vector.sparse.SparseVector;
 
 public class OoPlaceHadamardProduct extends VectorVectorOperation<Vector> {
 
-    private Factory factory;
+    private final Factory factory;
 
     public OoPlaceHadamardProduct(Factory factory) {
         this.factory = factory;

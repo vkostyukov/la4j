@@ -42,7 +42,7 @@ import org.la4j.vector.dense.DenseVector;
 public class MockVector extends DenseVector {
 
     private final static double MOCK_EPS = 1e-3;
-    private Vector self;
+    private final Vector self;
 
     public MockVector(Vector vector) {
         super(vector.length());

@@ -23,8 +23,8 @@ package org.la4j.matrix.source;
 
 public class Array1DMatrixSource implements MatrixSource {
 
-    private int rows, columns;
-    private double array[];
+    private final int rows, columns;
+    private final double array[];
 
     public Array1DMatrixSource(int rows, int columns, double array[]) {
         this.rows = rows;
