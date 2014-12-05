@@ -21,10 +21,17 @@
 
 package org.la4j.linear;
 
+import org.junit.Test;
 import org.la4j.LinearAlgebra;
 
 public class SquareRootSolverTest extends AbstractSolverTest {
 
+    @Override
+    public LinearAlgebra.SolverFactory solverFactory() {
+        return LinearAlgebra.SQUARE_ROOT;
+    }
+
+    @Test
     public void testSolve_1x1() {
 
         double a[][] = new double[][] { 
@@ -33,9 +40,10 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -22.0 };
 
-        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
+        performTest(a, b);
     }
 
+    @Test
     public void testSolve_2x2() {
 
         double a[][] = new double[][] { 
@@ -45,9 +53,10 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -77.0, 768.6 };
 
-        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
+        performTest(a, b);
     }
 
+    @Test
     public void testSolve_3x3() {
 
         double a[][] = new double[][] { 
@@ -58,9 +67,10 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.0, 2.0, 0.0 };
 
-        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
+        performTest(a, b);
     }
 
+    @Test
     public void testSolve_3x3_2() {
 
         double a[][] = new double[][] { 
@@ -71,9 +81,10 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -45.0, -10.0, 81.0 };
 
-        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
+        performTest(a, b);
     }
 
+    @Test
     public void testSolve_4x4() {
 
         double a[][] = new double[][] { 
@@ -85,9 +96,10 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -276.0, 29.0, -439.0, -89.0 };
 
-        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
+        performTest(a, b);
     }
 
+    @Test
     public void testSolve_5x5() {
 
         double a[][] = new double[][] { 
@@ -100,6 +112,6 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 104.0, -256.0, -45.0, 54.0, -143.8 };
 
-        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
+        performTest(a, b);
     }
 }
