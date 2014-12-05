@@ -38,13 +38,19 @@ import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.operation.VectorOperations;
 
+/**
+ * An abstract wrapper around {@code Vector} to make it easier to implement.
+ * 
+ * A vector represents an array of elements. It will automatically resize to
+ * handle dynamically adding and removing elements.
+ */
 public abstract class AbstractVector implements Vector {
 
     private static final String DEFAULT_DELIMITER = ", ";
     private static final NumberFormat DEFAULT_FORMATTER = new DecimalFormat("0.000");
 
     protected int length;
-
+    
     protected Factory factory;
 
     protected AbstractVector(Factory factory, int length) {
@@ -548,7 +554,6 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public boolean equals(Object object) {
-
         if (this == object) {
             return true;
         }
@@ -615,6 +620,7 @@ public abstract class AbstractVector implements Vector {
         if (length < 0) {
             fail("Wrong vector length: " + length);
         }
+        // TODO What?? Is there a reason for this? Can we compensate?
         if (length == Integer.MAX_VALUE) {
             fail("Wrong vector length: use 'Integer.MAX_VALUE - 1' instead.");
         }
@@ -622,7 +628,7 @@ public abstract class AbstractVector implements Vector {
 
     protected void ensureVectorIsSimilar(Vector that) {
         if (length != that.length()) {
-            fail("Wong vector length: " + that.length() + ". Should be: " + length + ".");
+            fail("Wrong vector length: " + that.length() + ". Should be: " + length + ".");
         }
     }
 

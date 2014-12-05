@@ -38,6 +38,9 @@ import org.la4j.vector.operation.VectorVectorOperation;
 
 /**
  * The real vector interface.
+ * 
+ * A vector represents an array of elements. It will automatically resize to
+ * handle dynamically adding and removing elements.
  */
 public interface Vector extends Externalizable, Iterable<Double> {
 

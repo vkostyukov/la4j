@@ -21,20 +21,30 @@
 
 package org.la4j.vector.sparse;
 
+import java.util.Iterator;
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
+import org.la4j.io.VectorIterator;
 import org.la4j.io.VectorToBurningIterator;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
-import org.la4j.io.VectorIterator;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 
-import java.util.Iterator;
-
+/**
+ * A sparse vector.
+ * 
+ * A sparse data structure does not store blank elements, and instead just stores
+ * elements with values. A sparse data structure can be initialized with a large
+ * length but take up no storage until the space is filled with non-zero elements.
+ * 
+ * However, there is a performance cost. Fetch/store operations take O(log n)
+ * time instead of the O(1) time of a dense data structure.
+ * 
+ */
 public abstract class SparseVector extends AbstractVector {
 
     protected int cardinality;
