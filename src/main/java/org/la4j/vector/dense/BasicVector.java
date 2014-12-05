@@ -24,10 +24,8 @@ package org.la4j.vector.dense;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
-import org.la4j.io.VectorToBurningIterator;
-import org.la4j.vector.Vector;
 import org.la4j.io.VectorIterator;
+import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.source.VectorSource;
 
@@ -105,7 +103,6 @@ public class BasicVector extends DenseVector {
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
-
         out.writeInt(length);
 
         for (int i = 0; i < length; i++) {
