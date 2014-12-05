@@ -28,10 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.junit.Test;
-import org.la4j.factory.Basic1DFactory;
-import org.la4j.factory.Basic2DFactory;
-import org.la4j.factory.CCSFactory;
-import org.la4j.factory.CRSFactory;
+import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
@@ -40,18 +37,10 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStreamTest {
 
-    public Factory[] factories() {
-        return new Factory[] { 
-                new Basic1DFactory(), 
-                new Basic2DFactory(),
-                new CRSFactory(), 
-                new CCSFactory() 
-        };
-    }
 
     @Test
     public void testMatrix_3x3() throws IOException {
-        for (Factory factory: factories()) {
+        for (Factory factory: LinearAlgebra.FACTORIES) {
 
             Matrix a = factory.createMatrix(new double[][] {
                     { 1.0, 0.0, 3.0 },
@@ -76,7 +65,7 @@ public abstract class AbstractStreamTest {
 
     @Test
     public void testMatrix_2x5() throws IOException {
-        for (Factory factory: factories()) {
+        for (Factory factory: LinearAlgebra.FACTORIES) {
 
             Matrix a = factory.createMatrix(new double[][] {
                     { 1.0, 0.0, 3.0, 0.0, 5.0 },
@@ -100,7 +89,7 @@ public abstract class AbstractStreamTest {
 
     @Test
     public void testMatrix_3x1() throws IOException {
-        for (Factory factory: factories()) {
+        for (Factory factory: LinearAlgebra.FACTORIES) {
 
             Matrix a = factory.createMatrix(new double[][] {
                     { 1.0 },
@@ -125,7 +114,7 @@ public abstract class AbstractStreamTest {
 
     @Test
     public void testMatrix_1x1() throws IOException {
-        for (Factory factory: factories()) {
+        for (Factory factory: LinearAlgebra.FACTORIES) {
 
             Matrix a = factory.createMatrix(new double[][] {{ 1.0 }});
 
@@ -146,7 +135,7 @@ public abstract class AbstractStreamTest {
 
     @Test
     public void testMatrix_0x0() throws IOException {
-        for (Factory factory: factories()) {
+        for (Factory factory: LinearAlgebra.FACTORIES) {
 
             Matrix a = factory.createMatrix(new double[][] {{}});
 
@@ -167,7 +156,7 @@ public abstract class AbstractStreamTest {
 
     @Test
     public void testVector_3() throws IOException {
-        for (Factory factory: factories()) {
+        for (Factory factory: LinearAlgebra.FACTORIES) {
 
             Vector a = factory.createVector(new double[] { 1.0, 0.0, 3.0 });
 
@@ -188,7 +177,7 @@ public abstract class AbstractStreamTest {
 
     @Test
     public void testVector_1() throws IOException {
-        for (Factory factory: factories()) {
+        for (Factory factory: LinearAlgebra.FACTORIES) {
 
             Vector a = factory.createVector(new double[] { 1.0 });
 
@@ -209,7 +198,7 @@ public abstract class AbstractStreamTest {
 
     @Test
     public void testVector_0() throws IOException {
-        for (Factory factory: factories()) {
+        for (Factory factory: LinearAlgebra.FACTORIES) {
 
             Vector a = factory.createVector(new double[] {});
 
