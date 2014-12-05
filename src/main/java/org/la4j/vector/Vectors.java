@@ -26,7 +26,6 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Random;
-
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.io.MatrixMarketStream;

@@ -34,6 +34,7 @@ import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.*;
+import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 
@@ -272,16 +273,27 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix transpose(Factory factory) {
         ensureFactoryIsNotNull(factory);
+        
+        // 'transposed proxy' of the original Matrix
+        final Matrix that = this;
+        return factory.createMatrix(new MatrixSource() {
 
-        Matrix result = factory.createMatrix(columns, rows);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                result.set(j, i, get(i, j));
+            @Override
+            public double get(int i, int j) {
+                return that.get(j, i);
             }
-        }
 
-        return result;
+            @Override
+            public int columns() {
+                return that.rows();
+            }
+
+            @Override
+            public int rows() {
+                return that.columns();
+            }
+            
+        });
     }
 
     public Matrix rotate() {
@@ -1185,20 +1197,7 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public boolean equals(Object object, double precision) {
-
-        if (this == object) {
-            return true;
-        }
-        if (object == null) {
-            return false;
-        }
-
-        if (!(object instanceof Matrix)) {
-            return false;
-        }
-
-        Matrix matrix = (Matrix) object;
+    public boolean equals(Matrix matrix, double precision) {
 
         if (rows != matrix.rows() || columns != matrix.columns()) {
             return false;
@@ -1221,7 +1220,21 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public boolean equals(Object o) {
-        return equals(o, Matrices.EPS);
+
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof Matrix)) {
+            return false;
+        }
+
+        Matrix matrix = (Matrix) o;
+
+        return equals(matrix, Matrices.EPS);
     }
 
     @Override

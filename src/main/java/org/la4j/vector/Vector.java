@@ -26,7 +26,6 @@ package org.la4j.vector;
 
 import java.io.Externalizable;
 import java.text.NumberFormat;
-
 import org.la4j.factory.Factory;
 import org.la4j.io.VectorIterator;
 import org.la4j.matrix.Matrix;
@@ -39,6 +38,8 @@ import org.la4j.vector.operation.VectorVectorOperation;
 
 /**
  * The real vector interface.
+ * 
+ * A vector represents an array of elements. It can be resized.
  */
 public interface Vector extends Externalizable, Iterable<Double> {
 
@@ -68,7 +69,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * TODO (NC): assignTo
      *
-     * @param value the elements' new value
+     * @param value the element's new value
      */
     void assign(double value);
 
@@ -108,28 +109,28 @@ public interface Vector extends Externalizable, Iterable<Double> {
     /**
      * Adds given {@code vector} (X) to this vector (Y).
      * 
-     * @param vector the right hand vector for addition
+     * @param that the right hand vector for addition
      *
      * @return X + Y
      */
-    Vector add(Vector vector);
+    Vector add(Vector that);
 
     /**
      * Adds given {@code vector} (X) to this vector (Y).
      *
-     * @param vector the right hand vector for addition
+     * @param that the right hand vector for addition
      * @param factory the factory of result vector
      *
      * @return X + Y
      */
-    Vector add(Vector vector, Factory factory);
+    Vector add(Vector that, Factory factory);
 
     /**
      * Adds given {@code vector} (X) to this vector (Y) in-place.
      *
-     * @param vector the right hand vector for addition
+     * @param that the right hand vector for addition
      */
-    void addInPlace(Vector vector);
+    void addInPlace(Vector that);
 
     /**
      * Multiplies this vector (X) by given {@code value} (v).
@@ -158,50 +159,50 @@ public interface Vector extends Externalizable, Iterable<Double> {
     void multiplyInPlace(double value);
 
     /**
-     * Calculates the Hadamard (element-wise) product of this vector and given {@code vector}.
+     * Calculates the Hadamard (element-wise) product of this vector and given {@code that}.
      * 
-     * @param vector the right hand vector for Hadamard product
+     * @param that the right hand vector for Hadamard product
      *
      * @return the Hadamard product of two vectors
      */
-    Vector hadamardProduct(Vector vector);
+    Vector hadamardProduct(Vector that);
 
     /**
-     * Calculates the Hadamard (element-wise) product of this vector and given {@code vector}.
+     * Calculates the Hadamard (element-wise) product of this vector and given {@code that}.
      *
-     * @param vector the right hand vector for Hadamard product
+     * @param that the right hand vector for Hadamard product
      * @param factory the factory of result vector
      *
      * @return the Hadamard product of two vectors
      */
-    Vector hadamardProduct(Vector vector, Factory factory);
+    Vector hadamardProduct(Vector that, Factory factory);
 
     /**
-     * Calculates the Hadamard (element-wise) product of this vector and given {@code vector}
+     * Calculates the Hadamard (element-wise) product of this vector and given {@code that}
      * in-place.
      *
-     * @param vector the right hand vector for Hadamard product
+     * @param that the right hand vector for Hadamard product
      */
-    void hadamardProductInPlace(Vector vector);
+    void hadamardProductInPlace(Vector that);
 
     /**
-     * Multiples this vector (X) by given {@code matrix} (A).
+     * Multiples this vector (X) by given {@code that} (A).
      * 
-     * @param matrix the right hand matrix for multiplication
+     * @param that the right hand matrix for multiplication
      *
      * @return X * A
      */
-    Vector multiply(Matrix matrix);
+    Vector multiply(Matrix that);
 
     /**
-     * Multiples this vector (X) by given {@code matrix} (A).
+     * Multiples this vector (X) by given {@code that} (A).
      *
-     * @param matrix the right hand matrix for multiplication
+     * @param that the right hand matrix for multiplication
      * @param factory the factory of result vector
      *
      * @return X * A
      */
-    Vector multiply(Matrix matrix, Factory factory);
+    Vector multiply(Matrix that, Factory factory);
 
     /**
      * Subtracts given {@code value} (v) from this vector (X).
@@ -223,30 +224,30 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector subtract(double value, Factory factory);
 
     /**
-     * Subtracts given {@code vector} (Y) from this vector (X).
+     * Subtracts given {@code that} (Y) from this vector (X).
      * 
-     * @param vector the right hand vector for subtraction
+     * @param that the right hand vector for subtraction
      *
      * @return X - Y
      */
-    Vector subtract(Vector vector);
+    Vector subtract(Vector that);
 
     /**
      * Subtracts given {@code vector} (Y) from this vector (X).
      *
-     * @param vector the right hand vector for subtraction
+     * @param that the right hand vector for subtraction
      * @param factory the factory of result vector
      *
      * @return X - Y
      */
-    Vector subtract(Vector vector, Factory factory);
+    Vector subtract(Vector that, Factory factory);
 
     /**
-     * Subtracts given {@code vector} (Y) from this vector (X) in-place.
+     * Subtracts given {@code that} (Y) from this vector (X) in-place.
      *
-     * @param vector the right hand vector for subtraction
+     * @param that the right hand vector for subtraction
      */
-    void subtractInPlace(Vector vector);
+    void subtractInPlace(Vector that);
 
     /**
      * Divides this vector (X) by given {@code value} (v).
@@ -282,32 +283,32 @@ public interface Vector extends Externalizable, Iterable<Double> {
     double sum();
 
     /**
-     * Calculates the inner product of this vector and given {@code vector}.
+     * Calculates the inner product of this vector and given {@code that}.
      * 
-     * @param vector the right hand vector for inner product
+     * @param that the right hand vector for inner product
      *
      * @return the inner product of two vectors
      */
-    double innerProduct(Vector vector);
+    double innerProduct(Vector that);
 
     /**
-     * Calculates the outer product of this vector and given {@code vector}.
+     * Calculates the outer product of this vector and given {@code that}.
      * 
-     * @param vector the the right hand vector for outer product
+     * @param that the the right hand vector for outer product
      *
      * @return the outer product of two vectors
      */
-    Matrix outerProduct(Vector vector);
+    Matrix outerProduct(Vector that);
 
     /**
-     * Calculates the outer product of this vector and given {@code vector}.
+     * Calculates the outer product of this vector and given {@code that}.
      *
-     * @param vector the the right hand vector for outer product
+     * @param that the the right hand vector for outer product
      * @param factory the factory of result vector
      *
      * @return the outer product of two vectors
      */
-    Matrix outerProduct(Vector vector, Factory factory);
+    Matrix outerProduct(Vector that, Factory factory);
 
     /**
      * Swaps the specified elements of this vector.
@@ -384,11 +385,9 @@ public interface Vector extends Externalizable, Iterable<Double> {
     /**
      * Shuffles this vector.
      *
-     * <p>
      * Copies this vector in the new vector that contains the same elements but with
-     * the elements shuffled around (which might also result in the same vector
-     * (all outcomes are equally probable)).
-     * </p>
+     * the elements shuffled around (which might also result in the same vector,
+     * since all outcomes are equally probable).
      *
      * @param factory the factory of result vector
      *
@@ -474,6 +473,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * Returns a new vector with the selected elements.
      *
      * @param indices the array of indices
+     * @param factory the factory of the result vector
      *
      * @return the new vector with the selected elements
      */
@@ -662,7 +662,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * Converts this vector into the string representation.
      *
      * @param formatter the number formatter
-     * @param delimiter the elements' delimiter
+     * @param delimiter the element's delimiter
      *
      * @return the vector converted to a string
      */
@@ -700,8 +700,24 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @param operation the vector-vector operation
      *                  (an operation that takes two vectors and returns {@code T})
      * @param <T> the result type
+     * @param that
      *
      * @return the result of an operation applied to this and {@code that} vector
      */
     <T> T pipeTo(VectorVectorOperation<T> operation, Vector that);
+    
+    /**
+     * Returns the Euclidean normalized version of this vector.
+     * 
+     * @return the normalized vector.
+     */
+    Vector normalize();
+    
+    /**
+     * Returns the normalized version of this vector using the provided accumulator.
+     * @param acc the vector accumulator to use. 
+     * 
+     * @return the normalized vector.
+     */
+    Vector normalize(VectorAccumulator acc);
 }

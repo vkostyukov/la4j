@@ -24,13 +24,23 @@ package org.la4j.vector.dense;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
-import org.la4j.io.VectorToBurningIterator;
-import org.la4j.vector.Vector;
 import org.la4j.io.VectorIterator;
+import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.source.VectorSource;
 
+/**
+ * A basic dense vector implementation using an array.
+ * 
+ * A dense data structure stores data in an underlying array. Even zero elements
+ * take up memory space. If you want a data structure that will not have zero
+ * elements take up memory space, try a sparse structure.
+ * 
+ * However, fetch/store operations on dense data structures only take O(1) time,
+ * instead of the O(log n) time on sparse structures.
+ * 
+ * {@code BasicVector} stores the underlying data in a standard array.
+ */
 public class BasicVector extends DenseVector {
 
     private static final long serialVersionUID = 4071505L;
@@ -105,7 +115,6 @@ public class BasicVector extends DenseVector {
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
-
         out.writeInt(length);
 
         for (int i = 0; i < length; i++) {
