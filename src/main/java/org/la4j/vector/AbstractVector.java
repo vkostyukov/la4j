@@ -28,6 +28,7 @@ package org.la4j.vector;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
+
 import org.la4j.factory.Factory;
 import org.la4j.io.VectorIterator;
 import org.la4j.matrix.Matrices;
@@ -649,5 +650,11 @@ public abstract class AbstractVector implements Vector {
 
     protected void fail(String message) {
         throw new IllegalArgumentException(message);
+    }
+    
+    protected void ensureIndex(int index) {
+    	if (index < 0 || index > this.length) {
+    		throw new IndexOutOfBoundsException("Index '" + index + "' is invalid.");
+    	}
     }
 }

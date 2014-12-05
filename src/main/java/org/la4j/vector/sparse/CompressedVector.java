@@ -295,7 +295,7 @@ public class CompressedVector extends SparseVector {
      * @return the position in the value array
      */
     private int searchForIndex(int i) {
-        // TODO: add the same check for CRS/CCS matrices
+    	ensureIndex(i);
         if (cardinality == 0 || i > indices[cardinality - 1]) {
             return cardinality;
         }

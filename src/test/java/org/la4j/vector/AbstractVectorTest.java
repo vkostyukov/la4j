@@ -770,4 +770,27 @@ public abstract class AbstractVectorTest extends TestCase {
     	// Verify b is a unit vector
     	assertEquals(1.0, b.fold(acc));
     }
+    
+    public void testEnsureIndex() {
+    	AbstractVector a = (AbstractVector) factory().createVector(new double[] {3, 0, -4});
+    	
+    	// Test negative index
+    	try {
+    		a.ensureIndex(-1);
+    		fail("Expected IndexOutOfBoundsException to be thrown.");
+    	} catch (IndexOutOfBoundsException e) {
+    		// Intended behavior
+    	}
+    	
+    	// Test too large of an index
+    	try {
+    		a.ensureIndex(4);
+    		fail("Expected IndexOutOfBoundsException to be thrown.");
+    	} catch (IndexOutOfBoundsException e) {
+    		// Intended behavior
+    	}
+    	
+    	// Test valid index
+    	a.ensureIndex(2);
+    }
 }
