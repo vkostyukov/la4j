@@ -26,6 +26,12 @@ import org.la4j.LinearAlgebra;
 
 public class EigenDecompositorTest extends AbstractDecompositorTest {
 
+
+    @Override
+    public LinearAlgebra.DecompositorFactory decompositorFactory() {
+        return LinearAlgebra.EIGEN;
+    }
+
     @Test
     public void testDecompose_1x1_symmetric_1() {
         double[][] input = new double[][] {
@@ -41,7 +47,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -59,7 +65,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -80,7 +86,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -101,7 +107,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -125,7 +131,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -149,7 +155,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -176,7 +182,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -204,7 +210,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -234,7 +240,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -264,7 +270,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -285,7 +291,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -306,7 +312,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -330,7 +336,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -357,7 +363,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -387,6 +393,7 @@ public class EigenDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.EIGEN, input, output);
+        performTest(input, output);
     }
+
 }

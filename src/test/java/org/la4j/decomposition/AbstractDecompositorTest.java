@@ -30,13 +30,14 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractDecompositorTest {
 
-    protected void performTest(LinearAlgebra.DecompositorFactory decompositorFactory,
-                               double[][] input, double[][][] output) {
+    public abstract LinearAlgebra.DecompositorFactory decompositorFactory();
+
+    protected void performTest(double[][] input, double[][][] output) {
 
         for (Factory factory: LinearAlgebra.FACTORIES) {
 
             Matrix a = factory.createMatrix(input);
-            MatrixDecompositor decompositor = a.withDecompositor(decompositorFactory);
+            MatrixDecompositor decompositor = a.withDecompositor(decompositorFactory());
             Matrix[] decomposition = decompositor.decompose(factory);
 
             assertEquals(output.length, decomposition.length);
