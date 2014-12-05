@@ -25,9 +25,8 @@ import org.junit.Test;
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
-import org.la4j.matrix.MockMatrix;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractInverterTest {
 
@@ -45,7 +44,7 @@ public abstract class AbstractInverterTest {
             Matrix c = a.multiply(b);
             Matrix e = factory.createIdentityMatrix(a.rows());
 
-            assertEquals(new MockMatrix(e), new MockMatrix(c));
+            assertTrue(e.equals(c, 1e-9));
         }
     }
 

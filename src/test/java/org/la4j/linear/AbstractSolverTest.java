@@ -24,10 +24,8 @@ package org.la4j.linear;
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
-import org.la4j.vector.MockVector;
 import org.la4j.vector.Vector;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractSolverTest {
 
@@ -44,7 +42,9 @@ public abstract class AbstractSolverTest {
             LinearSystemSolver solver = a.withSolver(solverFactory());
             Vector x = solver.solve(b, factory);
 
-            assertEquals(new MockVector(b), new MockVector(a.multiply(x)));
+            Vector ax = a.multiply(x);
+
+            assertTrue(b.equals(ax, 1e-9));
         }
     }
 }

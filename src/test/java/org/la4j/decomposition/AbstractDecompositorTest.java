@@ -21,14 +21,12 @@
 
 package org.la4j.decomposition;
 
-import org.junit.After;
-import org.junit.Test;
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
-import org.la4j.matrix.MockMatrix;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractDecompositorTest {
 
@@ -45,8 +43,8 @@ public abstract class AbstractDecompositorTest {
             assertEquals(output.length, decomposition.length);
 
             for (int i = 0; i < decomposition.length; i++) {
-                assertEquals(new MockMatrix(factory.createMatrix(output[i])),
-                             new MockMatrix(decomposition[i]));
+                assertTrue(factory.createMatrix(output[i]).equals(
+                             decomposition[i], 1e-3));
             }
         }
     }

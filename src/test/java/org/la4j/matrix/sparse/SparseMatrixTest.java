@@ -25,7 +25,6 @@ import org.junit.Test;
 import org.la4j.matrix.AbstractMatrixTest;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.functor.MatrixAccumulator;
-import org.la4j.vector.MockVector;
 import org.la4j.vector.Vector;
 
 import static org.junit.Assert.assertEquals;
@@ -140,12 +139,12 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         assertEquals(10.0, a.foldNonZeroInColumn(2, product), Matrices.EPS);
 
         Vector nonZeroInColumns = a.foldNonZeroInColumns(product);
-        assertEquals(new MockVector(factory().createVector(new double[] { 4.0, 1.0, 10.0})),
-                nonZeroInColumns);
+        assertTrue(factory().createVector(new double[] { 4.0, 1.0, 10.0}).equals(
+                nonZeroInColumns, 1e-9));
 
         Vector nonZeroInRows = a.foldNonZeroInRows(product);
-        assertEquals(new MockVector(factory().createVector(new double[] { 2.0, 20.0, 1.0})),
-                nonZeroInRows);
+        assertTrue(factory().createVector(new double[] { 2.0, 20.0, 1.0}).equals(
+                nonZeroInRows, 1e-9));
     }
 
     @Test
