@@ -537,6 +537,7 @@ public abstract class AbstractVector implements Vector {
         return result;
     }
 
+    @Override
     public boolean equals(Vector vector, double precision) {
 
         if (length != vector.length()) {
