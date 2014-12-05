@@ -537,7 +537,8 @@ public abstract class AbstractVector implements Vector {
         return result;
     }
 
-    public boolean equals(Object object, double precision) {
+    @Override
+    public boolean equals(Object object) {
 
         if (this == object) {
             return true;
@@ -565,15 +566,10 @@ public abstract class AbstractVector implements Vector {
 
             double diff = Math.abs(a - b);
 
-            result = (a == b) || (diff < precision || diff / Math.max(Math.abs(a), Math.abs(b)) < precision);
+            result = (a == b) || (diff < Matrices.EPS || diff / Math.max(Math.abs(a), Math.abs(b)) < Vectors.EPS);
         }
 
         return result;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return equals(o, Vectors.EPS);
     }
 
     @Override
