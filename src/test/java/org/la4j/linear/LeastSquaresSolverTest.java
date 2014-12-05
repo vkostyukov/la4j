@@ -25,7 +25,12 @@ import org.junit.Test;
 import org.la4j.LinearAlgebra;
 
 public class LeastSquaresSolverTest extends AbstractSolverTest {
-
+    
+    @Override
+    public LinearAlgebra.SolverFactory solverFactory() {
+        return LinearAlgebra.LEAST_SQUARES;
+    }
+    
     @Test
     public void testSolve_1x1() {
 
@@ -35,7 +40,7 @@ public class LeastSquaresSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -5.0 };
 
-        performTest(LinearAlgebra.LEAST_SQUARES, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -48,7 +53,7 @@ public class LeastSquaresSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 5.0, 21.0 };
 
-        performTest(LinearAlgebra.LEAST_SQUARES, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -61,7 +66,7 @@ public class LeastSquaresSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -10.0, 12.0 };
 
-        performTest(LinearAlgebra.LEAST_SQUARES, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -75,7 +80,7 @@ public class LeastSquaresSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -98.9, -34.0, -56.0 };
 
-        performTest(LinearAlgebra.LEAST_SQUARES, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -89,7 +94,7 @@ public class LeastSquaresSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 4.4, -0.4, 44.4 };
 
-        performTest(LinearAlgebra.LEAST_SQUARES, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -103,7 +108,7 @@ public class LeastSquaresSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 90.0, -20.0, 120.0 };
 
-        performTest(LinearAlgebra.LEAST_SQUARES, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -118,7 +123,7 @@ public class LeastSquaresSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 708.0, 405.0, 319.0, -230.0 };
 
-        performTest(LinearAlgebra.LEAST_SQUARES, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -133,7 +138,7 @@ public class LeastSquaresSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 1.0, -8.0, 16.0, 4.0 };
 
-        performTest(LinearAlgebra.LEAST_SQUARES, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -148,7 +153,7 @@ public class LeastSquaresSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -870.0, -196.0, 4.95, 1.1 };
 
-        performTest(LinearAlgebra.LEAST_SQUARES, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -163,7 +168,7 @@ public class LeastSquaresSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -36.5, 116.9, 1633.5, -540.0 };
 
-        performTest(LinearAlgebra.LEAST_SQUARES, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -179,6 +184,6 @@ public class LeastSquaresSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 42.5, -71.0, 117.75, 107.5, 41.0 };
 
-        performTest(LinearAlgebra.LEAST_SQUARES, a, b);
+        performTest(a, b);
     }
 }

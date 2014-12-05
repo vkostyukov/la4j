@@ -31,8 +31,9 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractSolverTest {
 
-    public void performTest(LinearAlgebra.SolverFactory solverFactory,
-                            double coefficientMatrix[][], 
+    public abstract LinearAlgebra.SolverFactory solverFactory();
+
+    public void performTest(double coefficientMatrix[][],
                             double rightHandVector[]) {
 
         for (Factory factory: LinearAlgebra.FACTORIES) {
@@ -40,7 +41,7 @@ public abstract class AbstractSolverTest {
             Matrix a = factory.createMatrix(coefficientMatrix);
             Vector b = factory.createVector(rightHandVector);
 
-            LinearSystemSolver solver = a.withSolver(solverFactory);
+            LinearSystemSolver solver = a.withSolver(solverFactory());
             Vector x = solver.solve(b, factory);
 
             assertEquals(new MockVector(b), new MockVector(a.multiply(x)));
