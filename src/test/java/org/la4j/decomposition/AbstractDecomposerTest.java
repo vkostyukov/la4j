@@ -28,16 +28,16 @@ import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.MockMatrix;
 
-public abstract class AbstractDecompositorTest extends TestCase {
+public abstract class AbstractDecomposerTest extends TestCase {
 
-    protected void performTest(LinearAlgebra.DecompositorFactory decompositorFactory,
+    protected void performTest(LinearAlgebra.DecomposerFactory decomposerFactory,
                                double[][] input, double[][][] output) {
 
         for (Factory factory: LinearAlgebra.FACTORIES) {
 
             Matrix a = factory.createMatrix(input);
-            MatrixDecompositor decompositor = a.withDecompositor(decompositorFactory);
-            Matrix[] decomposition = decompositor.decompose(factory);
+            MatrixDecomposer decomposer = a.withDecomposer(decomposerFactory);
+            Matrix[] decomposition = decomposer.decompose(factory);
 
             assertEquals(output.length, decomposition.length);
 

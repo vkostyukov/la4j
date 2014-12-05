@@ -32,7 +32,7 @@ import java.io.Serializable;
  * here.</a>
  * </p>
  */
-public interface MatrixDecompositor extends Serializable {
+public interface MatrixDecomposer extends Serializable {
 
     /**
      * Decomposes the wrapped matrix.
@@ -49,14 +49,14 @@ public interface MatrixDecompositor extends Serializable {
     Matrix[] decompose(Factory factory);
 
     /**
-     * Returns the self matrix of this decompositor.
+     * Returns the self matrix of this decomposer.
      *
      * @return
      */
     Matrix self();
 
     /**
-     * Checks whether this decompositor is applicable to given matrix or not.
+     * Checks whether this decomposer is applicable to given matrix or not.
      *
      * @param matrix
      * @return

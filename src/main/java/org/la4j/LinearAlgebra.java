@@ -20,14 +20,14 @@
 
 package org.la4j;
 
-import org.la4j.decomposition.CholeskyDecompositor;
-import org.la4j.decomposition.EigenDecompositor;
-import org.la4j.decomposition.LUDecompositor;
-import org.la4j.decomposition.MatrixDecompositor;
-import org.la4j.decomposition.QRDecompositor;
-import org.la4j.decomposition.RawLUDecompositor;
-import org.la4j.decomposition.RawQRDecompositor;
-import org.la4j.decomposition.SingularValueDecompositor;
+import org.la4j.decomposition.CholeskyDecomposer;
+import org.la4j.decomposition.EigenDecomposer;
+import org.la4j.decomposition.LUDecomposer;
+import org.la4j.decomposition.MatrixDecomposer;
+import org.la4j.decomposition.QRDecomposer;
+import org.la4j.decomposition.RawLUDecomposer;
+import org.la4j.decomposition.RawQRDecomposer;
+import org.la4j.decomposition.SingularValueDecomposer;
 import org.la4j.factory.Basic1DFactory;
 import org.la4j.factory.Basic2DFactory;
 import org.la4j.factory.CCSFactory;
@@ -220,87 +220,87 @@ public final class LinearAlgebra {
      */
     public static final InverterFactory INVERTER = InverterFactory.SMART;
 
-    public static enum DecompositorFactory {
+    public static enum DecomposerFactory {
           CHOLESKY {
               @Override
-              public MatrixDecompositor create(Matrix matrix) {
-                  return new CholeskyDecompositor(matrix);
+              public MatrixDecomposer create(Matrix matrix) {
+                  return new CholeskyDecomposer(matrix);
               }
           },
           EIGEN {
               @Override
-              public MatrixDecompositor create(Matrix matrix) {
-                  return new EigenDecompositor(matrix);
+              public MatrixDecomposer create(Matrix matrix) {
+                  return new EigenDecomposer(matrix);
               }
           },
           RAW_LU {
               @Override
-              public MatrixDecompositor create(Matrix matrix) {
-                  return new RawLUDecompositor(matrix);
+              public MatrixDecomposer create(Matrix matrix) {
+                  return new RawLUDecomposer(matrix);
               }
           },
           LU {
               @Override
-              public MatrixDecompositor create(Matrix matrix) {
-                  return new LUDecompositor(matrix);
+              public MatrixDecomposer create(Matrix matrix) {
+                  return new LUDecomposer(matrix);
               }
           },
           RAW_QR {
               @Override
-              public MatrixDecompositor create(Matrix matrix) {
-                  return new RawQRDecompositor(matrix);
+              public MatrixDecomposer create(Matrix matrix) {
+                  return new RawQRDecomposer(matrix);
               }
           },
           QR {
               @Override
-              public MatrixDecompositor create(Matrix matrix) {
-                  return new QRDecompositor(matrix);
+              public MatrixDecomposer create(Matrix matrix) {
+                  return new QRDecomposer(matrix);
               }
           },
           SVD {
               @Override
-              public MatrixDecompositor create(Matrix matrix) {
-                  return new SingularValueDecompositor(matrix);
+              public MatrixDecomposer create(Matrix matrix) {
+                  return new SingularValueDecomposer(matrix);
               }
           };
 
-        public abstract MatrixDecompositor create(Matrix matrix);
+        public abstract MatrixDecomposer create(Matrix matrix);
     }
 
     /**
-     * Reference to Cholesky decompositor factory.
+     * Reference to Cholesky decomposer factory.
      */
-    public static final DecompositorFactory CHOLESKY = DecompositorFactory.CHOLESKY;
+    public static final DecomposerFactory CHOLESKY = DecomposerFactory.CHOLESKY;
 
     /**
-     * Reference to Eigen decompositor factory.
+     * Reference to Eigen decomposer factory.
      */
-    public static final DecompositorFactory EIGEN = DecompositorFactory.EIGEN;
+    public static final DecomposerFactory EIGEN = DecomposerFactory.EIGEN;
 
     /**
-     * Reference to Raw LU decompositor factory.
+     * Reference to Raw LU decomposer factory.
      */
-    public static final DecompositorFactory RAW_LU = DecompositorFactory.RAW_LU;
+    public static final DecomposerFactory RAW_LU = DecomposerFactory.RAW_LU;
 
     /**
-     * Reference to LU decompositor factory.
+     * Reference to LU decomposer factory.
      */
-    public static final DecompositorFactory LU = DecompositorFactory.LU;
+    public static final DecomposerFactory LU = DecomposerFactory.LU;
 
     /**
-     * Reference to Raw QR decompositor factory.
+     * Reference to Raw QR decomposer factory.
      */
-    public static final DecompositorFactory RAW_QR = DecompositorFactory.RAW_QR;
+    public static final DecomposerFactory RAW_QR = DecomposerFactory.RAW_QR;
 
     /**
-     * Reference to QR decompositor factory.
+     * Reference to QR decomposer factory.
      */
-     public static final DecompositorFactory QR = DecompositorFactory.QR;
+     public static final DecomposerFactory QR = DecomposerFactory.QR;
 
     /**
-     * Reference to SVD decompositor factory.
+     * Reference to SVD decomposer factory.
      */
-    public static final DecompositorFactory SVD = DecompositorFactory.SVD;
+    public static final DecomposerFactory SVD = DecomposerFactory.SVD;
 
     /**
      * The {@link org.la4j.factory.Basic1DFactory} singleton instance.

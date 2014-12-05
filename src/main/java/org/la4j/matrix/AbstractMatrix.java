@@ -29,7 +29,7 @@
 package org.la4j.matrix;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.decomposition.MatrixDecompositor;
+import org.la4j.decomposition.MatrixDecomposer;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.LinearSystemSolver;
@@ -335,8 +335,8 @@ public abstract class AbstractMatrix implements Matrix {
                    get(0, 0) * get(1, 2) * get(2, 1);
         }
 
-        MatrixDecompositor decompositor = withDecompositor(LinearAlgebra.LU);
-        Matrix lup[] = decompositor.decompose(factory);
+        MatrixDecomposer decomposer = withDecomposer(LinearAlgebra.LU);
+        Matrix lup[] = decomposer.decompose(factory);
         // TODO: Why Java doesn't support pattern matching?
         Matrix u = lup[1];
         Matrix p = lup[2];
@@ -377,8 +377,8 @@ public abstract class AbstractMatrix implements Matrix {
         // handle small (1x1, 1xn, nx1, 2x2, 2xn, nx2, 3x3, 3xn, nx3) 
         // matrices without SVD
 
-        MatrixDecompositor decompositor = withDecompositor(LinearAlgebra.SVD);
-        Matrix usv[] = decompositor.decompose(factory);
+        MatrixDecomposer decomposer = withDecomposer(LinearAlgebra.SVD);
+        Matrix usv[] = decomposer.decompose(factory);
         // TODO: Where is my pattern matching?
         Matrix s = usv[1];
         double tolerance = Math.max(rows, columns) * s.get(0, 0) * Matrices.EPS;
@@ -1176,7 +1176,7 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public MatrixDecompositor withDecompositor(LinearAlgebra.DecompositorFactory factory) {
+    public MatrixDecomposer withDecomposer(LinearAlgebra.DecomposerFactory factory) {
         return factory.create(this);
     }
 

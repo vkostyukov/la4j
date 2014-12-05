@@ -31,9 +31,9 @@ import org.la4j.matrix.Matrix;
  * <a href="http://mathworld.wolfram.com/QRDecomposition.html"> here.</a>
  * </p>
  */
-public class QRDecompositor extends RawQRDecompositor implements MatrixDecompositor {
+public class QRDecomposer extends RawQRDecomposer implements MatrixDecomposer {
 
-    public QRDecompositor(Matrix matrix) {
+    public QRDecomposer(Matrix matrix) {
         super(matrix);
     }
 

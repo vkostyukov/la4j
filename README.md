@@ -94,10 +94,10 @@ Matrix a = new Basic1DMatrix(new double[][] {
    { 7.0, 8.0, 9.0 }
 });
 
-// We will use LU decompositor
-MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.LU);
+// We will use LU decomposer
+MatrixDecomposer decomposer = a.withDecomposer(LinearAlgebra.LU);
 // The result should be treated as: L = lup[0], U = lup[1], P = lup[2]
-Matrix[] lup = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+Matrix[] lup = decomposer.decompose(LinearAlgebra.DENSE_FACTORY);
 ```
 
 Changelog

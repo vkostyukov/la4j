@@ -22,7 +22,7 @@
 package org.la4j.linear;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.decomposition.MatrixDecompositor;
+import org.la4j.decomposition.MatrixDecomposer;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
@@ -41,8 +41,8 @@ public class ForwardBackSubstitutionSolver extends AbstractSolver implements Lin
         super(a);
 
         // we use Raw LU for this
-        MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.RAW_LU);
-        Matrix[] lup = decompositor.decompose();
+        MatrixDecomposer decomposer = a.withDecomposer(LinearAlgebra.RAW_LU);
+        Matrix[] lup = decomposer.decompose();
 
         // TODO: it doesn't look safe.
         this.lu = lup[0];

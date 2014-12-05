@@ -22,7 +22,7 @@
 package org.la4j.linear;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.decomposition.MatrixDecompositor;
+import org.la4j.decomposition.MatrixDecomposer;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
@@ -40,8 +40,8 @@ public class LeastSquaresSolver extends AbstractSolver implements LinearSystemSo
         super(a);
 
         // we use QR for this
-        MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.RAW_QR);
-        Matrix[] qrr = decompositor.decompose();
+        MatrixDecomposer decomposer = a.withDecomposer(LinearAlgebra.RAW_QR);
+        Matrix[] qrr = decomposer.decompose();
 
         // TODO: Do something with it.
         this.qr = qrr[0];
