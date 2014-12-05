@@ -26,6 +26,11 @@ import org.la4j.LinearAlgebra;
 
 public class CholeskyDecompositorTest extends AbstractDecompositorTest {
 
+    @Override
+    public LinearAlgebra.DecompositorFactory decompositorFactory() {
+        return LinearAlgebra.CHOLESKY;
+    }
+
     @Test
     public void testDecompose_1x1() {
 
@@ -39,7 +44,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.CHOLESKY, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -57,7 +62,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
                 }
         };
 
-        performTest(LinearAlgebra.CHOLESKY, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -77,7 +82,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.CHOLESKY, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -99,7 +104,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.CHOLESKY, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -123,6 +128,7 @@ public class CholeskyDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.CHOLESKY, input, output);
+        performTest(input, output);
     }
+
 }

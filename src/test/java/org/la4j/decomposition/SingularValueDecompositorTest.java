@@ -26,6 +26,11 @@ import org.la4j.LinearAlgebra;
 
 public class SingularValueDecompositorTest extends AbstractDecompositorTest {
 
+    @Override
+    public LinearAlgebra.DecompositorFactory decompositorFactory() {
+        return LinearAlgebra.SVD;
+    }
+    
     @Test
     public void testDecompose_1x1() {
 
@@ -45,7 +50,7 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.SVD, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -71,7 +76,7 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.SVD, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -101,7 +106,7 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.SVD, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -127,7 +132,7 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.SVD, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -161,7 +166,7 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.SVD, input, output);
+        performTest(input, output);
     }
 
     @Test
@@ -199,6 +204,6 @@ public class SingularValueDecompositorTest extends AbstractDecompositorTest {
             }
         };
 
-        performTest(LinearAlgebra.SVD, input, output);
+        performTest(input, output);
     }
 }
