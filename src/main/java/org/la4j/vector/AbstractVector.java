@@ -537,20 +537,7 @@ public abstract class AbstractVector implements Vector {
         return result;
     }
 
-    public boolean equals(Object object, double precision) {
-
-        if (this == object) {
-            return true;
-        }
-        if (object == null) {
-            return false;
-        }
-
-        if (!(object instanceof Vector)) {
-            return false;
-        }
-
-        Vector vector = (Vector) object;
+    public boolean equals(Vector vector, double precision) {
 
         if (length != vector.length()) {
             return false;
@@ -573,7 +560,21 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public boolean equals(Object o) {
-        return equals(o, Vectors.EPS);
+
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof Vector)) {
+            return false;
+        }
+
+        Vector vector = (Vector) o;
+
+        return equals(vector, Vectors.EPS);
     }
 
     @Override
