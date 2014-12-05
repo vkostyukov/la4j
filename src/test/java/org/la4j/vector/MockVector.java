@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+@Deprecated
 public class MockVector extends DenseVector {
 
     private final static double MOCK_EPS = 1e-3;
