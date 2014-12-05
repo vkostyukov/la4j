@@ -1197,20 +1197,7 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public boolean equals(Object object, double precision) {
-
-        if (this == object) {
-            return true;
-        }
-        if (object == null) {
-            return false;
-        }
-
-        if (!(object instanceof Matrix)) {
-            return false;
-        }
-
-        Matrix matrix = (Matrix) object;
+    public boolean equals(Matrix matrix, double precision) {
 
         if (rows != matrix.rows() || columns != matrix.columns()) {
             return false;
@@ -1233,7 +1220,21 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public boolean equals(Object o) {
-        return equals(o, Matrices.EPS);
+
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof Matrix)) {
+            return false;
+        }
+
+        Matrix matrix = (Matrix) o;
+
+        return equals(matrix, Matrices.EPS);
     }
 
     @Override
