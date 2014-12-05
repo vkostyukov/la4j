@@ -640,6 +640,16 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Matrix toColumnMatrix(Factory factory);
 
     /**
+     * Returns true when vector is equal to given vector with given {@code precision}
+     *
+     * @param object vector
+     * @param precision given precision
+     *
+     * @return equals of this matrix to that
+     */
+    public boolean equals(Object object, double precision);
+
+    /**
      * Converts this vector into the string representation.
      *
      * @param formatter the number formatter
