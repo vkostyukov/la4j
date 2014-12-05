@@ -31,7 +31,6 @@ import java.util.Random;
 
 import org.la4j.factory.Factory;
 import org.la4j.io.VectorIterator;
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
@@ -39,13 +38,18 @@ import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.operation.VectorOperations;
 
+/**
+ * An abstract wrapper around {@code Vector} to make it easier to implement.
+ * 
+ * A vector represents an array of elements. It can be resized.
+ */
 public abstract class AbstractVector implements Vector {
 
     private static final String DEFAULT_DELIMITER = ", ";
     private static final NumberFormat DEFAULT_FORMATTER = new DecimalFormat("0.000");
 
     protected int length;
-
+    
     protected Factory factory;
 
     protected AbstractVector(Factory factory, int length) {
@@ -108,25 +112,25 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public Vector add(Vector vector) {
-        return add(vector, factory);
+    public Vector add(Vector that) {
+        return add(that, factory);
     }
 
     @Override
-    public Vector add(Vector vector, Factory factory) {
+    public Vector add(Vector that, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureArgumentIsNotNull(vector, "vector");
-        ensureVectorIsSimilar(vector);
+        ensureArgumentIsNotNull(that, "vector");
+        ensureVectorIsSimilar(that);
 
-        return pipeTo(VectorOperations.ooPlaceVectorToVectorAddition(factory), vector);
+        return pipeTo(VectorOperations.ooPlaceVectorToVectorAddition(factory), that);
     }
 
     @Override
-    public void addInPlace(Vector vector) {
-        ensureArgumentIsNotNull(vector, "vector");
-        ensureVectorIsSimilar(vector);
+    public void addInPlace(Vector that) {
+        ensureArgumentIsNotNull(that, "vector");
+        ensureVectorIsSimilar(that);
 
-        pipeTo(VectorOperations.inPlaceVectorToVectorAddition(), vector);
+        pipeTo(VectorOperations.inPlaceVectorToVectorAddition(), that);
     }
 
     @Override
@@ -135,25 +139,25 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public Vector hadamardProduct(Vector vector) {
-        return hadamardProduct(vector, factory);
+    public Vector hadamardProduct(Vector that) {
+        return hadamardProduct(that, factory);
     }
 
     @Override
-    public Vector hadamardProduct(Vector vector, Factory factory) {
+    public Vector hadamardProduct(Vector that, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureArgumentIsNotNull(vector,  "vector");
-        ensureVectorIsSimilar(vector);
+        ensureArgumentIsNotNull(that,  "vector");
+        ensureVectorIsSimilar(that);
 
-        return pipeTo(VectorOperations.ooPlaceHadamardProduct(factory), vector);
+        return pipeTo(VectorOperations.ooPlaceHadamardProduct(factory), that);
     }
 
     @Override
-    public void hadamardProductInPlace(Vector vector) {
-        ensureArgumentIsNotNull(vector,  "vector");
-        ensureVectorIsSimilar(vector);
+    public void hadamardProductInPlace(Vector that) {
+        ensureArgumentIsNotNull(that,  "vector");
+        ensureVectorIsSimilar(that);
 
-        pipeTo(VectorOperations.inPlaceHadamardProduct(), vector);
+        pipeTo(VectorOperations.inPlaceHadamardProduct(), that);
     }
 
     @Override
@@ -199,25 +203,25 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public Vector subtract(Vector vector) {
-        return subtract(vector, factory);
+    public Vector subtract(Vector that) {
+        return subtract(that, factory);
     }
 
     @Override
-    public Vector subtract(Vector vector, Factory factory) {
+    public Vector subtract(Vector that, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureArgumentIsNotNull(vector, "vector");
-        ensureVectorIsSimilar(vector);
+        ensureArgumentIsNotNull(that, "vector");
+        ensureVectorIsSimilar(that);
 
-        return pipeTo(VectorOperations.ooPlaceVectorFromVectorSubtraction(factory), vector);
+        return pipeTo(VectorOperations.ooPlaceVectorFromVectorSubtraction(factory), that);
     }
 
     @Override
-    public void subtractInPlace(Vector vector) {
-        ensureArgumentIsNotNull(vector, "vector");
-        ensureVectorIsSimilar(vector);
+    public void subtractInPlace(Vector that) {
+        ensureArgumentIsNotNull(that, "vector");
+        ensureVectorIsSimilar(that);
 
-        pipeTo(VectorOperations.inPlaceVectorFromVectorSubtraction(), vector);
+        pipeTo(VectorOperations.inPlaceVectorFromVectorSubtraction(), that);
     }
 
     @Override
@@ -241,29 +245,29 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public double innerProduct(Vector vector) {
-        ensureArgumentIsNotNull(vector, "vector");
-        ensureVectorIsSimilar(vector);
+    public double innerProduct(Vector that) {
+        ensureArgumentIsNotNull(that, "vector");
+        ensureVectorIsSimilar(that);
 
-        return pipeTo(VectorOperations.ooPlaceInnerProduct(), vector);
+        return pipeTo(VectorOperations.ooPlaceInnerProduct(), that);
     }
 
     @Override
-    public Matrix outerProduct(Vector vector) {
-        return outerProduct(vector, factory);
+    public Matrix outerProduct(Vector that) {
+        return outerProduct(that, factory);
     }
 
     @Override
-    public Matrix outerProduct(Vector vector, Factory factory) {
+    public Matrix outerProduct(Vector that, Factory factory) {
         // TODO: export as operation (blocked by no-support of matrices)
         ensureFactoryIsNotNull(factory);
-        ensureArgumentIsNotNull(vector, "vector");
+        ensureArgumentIsNotNull(that, "vector");
 
-        Matrix result = factory.createMatrix(length, vector.length());
+        Matrix result = factory.createMatrix(length, that.length());
 
         for (int i = 0; i < length; i++) {
-            for (int j = 0; j < vector.length(); j++) {
-                result.set(i, j, get(i) * vector.get(j));
+            for (int j = 0; j < that.length(); j++) {
+                result.set(i, j, get(i) * that.get(j));
             }
         }
 
@@ -320,7 +324,18 @@ public abstract class AbstractVector implements Vector {
     public Vector shuffle() {
         return shuffle(factory);
     }
-
+    
+    /**
+     * Shuffles this vector, using a Fisher-Yates shuffle.
+     * 
+     * Copies this vector in the new vector that contains the same elements but with
+     * the elements shuffled around (which might also result in the same vector,
+     * since all outcomes are equally probable).
+     *
+     * @param factory the factory of result vector
+     *
+     * @return the shuffled vector
+     */
     @Override
     public Vector shuffle(Factory factory) {
         ensureFactoryIsNotNull(factory);
@@ -522,6 +537,16 @@ public abstract class AbstractVector implements Vector {
         result.setColumn(0, this);
         return result;
     }
+    
+    @Override
+    public Vector normalize() {
+    	return normalize(Vectors.mkEuclideanNormAccumulator());
+    }
+    
+    @Override
+    public Vector normalize(VectorAccumulator acc) {
+    	return divide(fold(acc));
+    }
 
     @Override
     public int hashCode() {
@@ -537,6 +562,7 @@ public abstract class AbstractVector implements Vector {
         return result;
     }
 
+    @Override
     public boolean equals(Vector vector, double precision) {
 
         if (length != vector.length()) {
@@ -618,7 +644,7 @@ public abstract class AbstractVector implements Vector {
 
     protected void ensureVectorIsSimilar(Vector that) {
         if (length != that.length()) {
-            fail("Wong vector length: " + that.length() + ". Should be: " + length + ".");
+            fail("Wrong vector length: " + that.length() + ". Should be: " + length + ".");
         }
     }
 
