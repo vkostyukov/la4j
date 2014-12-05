@@ -21,24 +21,14 @@
 
 package org.la4j.vector;
 
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import org.la4j.io.VectorIterator;
 import org.la4j.vector.dense.DenseVector;
 
-/**
- * A dense vector.
- * 
- * A dense data structure stores data in an underlying array. Even zero elements
- * take up memory space. If you want a data structure that will not have zero
- * elements take up memory space, try a sparse structure.
- * 
- * However, fetch/store operations on dense data structures only take O(1) time,
- * instead of the O(log n) time on sparse structures.
- * 
- * This class is used for testing.
- */
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
+@Deprecated
 public class MockVector extends DenseVector {
 
     private final static double MOCK_EPS = 1e-3;
@@ -61,6 +51,7 @@ public class MockVector extends DenseVector {
 
     @Override
     public boolean equals(Object object) {
+
         if (this == object) {
             return true;
         }
