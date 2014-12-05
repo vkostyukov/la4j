@@ -26,15 +26,30 @@ package org.la4j.vector.sparse;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
-import org.la4j.io.VectorToBurningIterator;
-import org.la4j.vector.Vector;
 import org.la4j.io.VectorIterator;
+import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.source.VectorSource;
 
+/**
+ * A basic sparse vector implementation using underlying value and index arrays.
+ * 
+ * A sparse data structure does not store blank elements, and instead just stores
+ * elements with values. A sparse data structure can be initialized with a large
+ * length but take up no storage until the space is filled with non-zero elements.
+ * 
+ * However, there is a performance cost. Fetch/store operations take O(log n)
+ * time instead of the O(1) time of a dense data structure.
+ * 
+ * {@code CompressedVector} stores the underlying data in a two arrays: A values
+ * array and a indices array. The values array matches the indices array, and
+ * they're both sorted by the indices array. To get a value at an index, the
+ * index is found in the indices array with a binary search and the respective
+ * value is obtained from the values array.
+ * 
+ */
 public class CompressedVector extends SparseVector {
 
     private static final long serialVersionUID = 4071505L;
@@ -94,7 +109,6 @@ public class CompressedVector extends SparseVector {
 
     @Override
     public double getOrElse(int i, double defaultValue) {
-
         int k = searchForIndex(i);
 
         if (k < cardinality && indices[k] == i) {
@@ -106,7 +120,6 @@ public class CompressedVector extends SparseVector {
 
     @Override
     public void set(int i, double value) {
-
         int k = searchForIndex(i);
 
         if (k < cardinality && indices[k] == i) {
@@ -123,7 +136,6 @@ public class CompressedVector extends SparseVector {
 
     @Override
     public void swap(int i, int j) {
-
         if (i == j) {
             return;
         }
@@ -274,9 +286,15 @@ public class CompressedVector extends SparseVector {
         int k = searchForIndex(i);
         return k < cardinality && indices[k] == i;
     }
-
+    
+    /**
+     * Does the binary searching to find the position in the value array given
+     * it's index.
+     * 
+     * @param i the index to search for
+     * @return the position in the value array
+     */
     private int searchForIndex(int i) {
-
         // TODO: add the same check for CRS/CCS matrices
         if (cardinality == 0 || i > indices[cardinality - 1]) {
             return cardinality;
@@ -300,7 +318,6 @@ public class CompressedVector extends SparseVector {
     }
 
     private void insert(int k, int i, double value) {
-
         // if (Math.abs(value) < Vectors.EPS && value >= 0.0) {
         if (value == 0.0) {
             return;
@@ -342,7 +359,6 @@ public class CompressedVector extends SparseVector {
 
     // TODO: better name
     private void growup() {
-
         if (values.length == length) {
             // This should never happen
             throw new IllegalStateException("This vector can't grow up.");
