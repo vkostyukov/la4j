@@ -27,8 +27,8 @@ import java.util.Random;
 
 public class ShapedMatrixBuilder extends NonTerminalMatrixBuilder {
 
-    private int rows;
-    private int columns;
+    private final int rows;
+    private final int columns;
 
     public ShapedMatrixBuilder(UnderlyingMatrixBuilder underlying, int rows, int columns) {
         super(underlying);

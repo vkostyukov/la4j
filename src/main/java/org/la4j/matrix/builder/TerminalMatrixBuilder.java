@@ -32,7 +32,7 @@ import java.util.Random;
 
 public class TerminalMatrixBuilder extends UnderlyingMatrixBuilder {
 
-    private Factory factory;
+    private final Factory factory;
 
     public TerminalMatrixBuilder(Factory factory) {
         this.factory = factory;

@@ -24,7 +24,7 @@ import org.la4j.vector.Vector;
 
 public class ConstantSourcedVectorBuilder extends NonTerminalVectorBuilder {
 
-    private double value;
+    private final double value;
 
     public ConstantSourcedVectorBuilder(UnderlyingVectorBuilder underlying, double value) {
         super(underlying);

@@ -24,7 +24,7 @@ import org.la4j.vector.Vector;
 
 public class ArraySourcedVectorBuilder extends NonTerminalVectorBuilder {
 
-    private double array[];
+    private final double array[];
 
     public ArraySourcedVectorBuilder(UnderlyingVectorBuilder underlying, double array[]) {
         super(underlying);

@@ -37,7 +37,7 @@ public class JacobiSolver extends AbstractSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 
-    private Matrix aa;
+    private final Matrix aa;
 
     public JacobiSolver(Matrix a) {
         super(a);

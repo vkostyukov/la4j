@@ -23,7 +23,7 @@ package org.la4j.vector.source;
 
 public class ArrayVectorSource implements VectorSource {
 
-    private double array[];
+    private final double array[];
 
     public ArrayVectorSource(double array[]) {
         this.array = array;

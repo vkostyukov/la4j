@@ -29,7 +29,7 @@ import java.util.Random;
 
 public class TerminalVectorBuilder extends UnderlyingVectorBuilder {
 
-    private Factory factory;
+    private final Factory factory;
 
     public TerminalVectorBuilder(Factory factory) {
         this.factory = factory;

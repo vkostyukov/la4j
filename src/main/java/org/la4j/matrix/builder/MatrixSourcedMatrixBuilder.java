@@ -24,7 +24,7 @@ import org.la4j.matrix.Matrix;
 
 public class MatrixSourcedMatrixBuilder extends NonTerminalMatrixBuilder {
 
-    private Matrix matrix;
+    private final Matrix matrix;
 
     public MatrixSourcedMatrixBuilder(UnderlyingMatrixBuilder underlying, Matrix matrix) {
         super(underlying);

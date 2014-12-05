@@ -45,7 +45,7 @@ public class MatrixMarketStream extends AbstractStream
 
     private static class SparseVectorWriteProcedure implements VectorProcedure {
 
-        private BufferedWriter writer;
+        private final BufferedWriter writer;
 
         public SparseVectorWriteProcedure(BufferedWriter writer) {
             this.writer = writer;
@@ -65,7 +65,7 @@ public class MatrixMarketStream extends AbstractStream
 
     private static class SparseMatrixWriteProcedure implements MatrixProcedure {
 
-        private BufferedWriter writer;
+        private final BufferedWriter writer;
 
         public SparseMatrixWriteProcedure(BufferedWriter writer) {
             this.writer = writer;

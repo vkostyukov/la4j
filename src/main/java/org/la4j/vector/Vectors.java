@@ -389,7 +389,7 @@ public final class Vectors {
     public static VectorAccumulator asSumFunctionAccumulator(final double neutral,
                                                              final VectorFunction function) {
         return new VectorAccumulator() {
-            private VectorAccumulator sumAccumulator = Vectors.asSumAccumulator(neutral);
+            private final VectorAccumulator sumAccumulator = Vectors.asSumAccumulator(neutral);
 
             @Override
             public void update(int i, double value) {
@@ -416,7 +416,7 @@ public final class Vectors {
     public static VectorAccumulator asProductFunctionAccumulator(final double neutral,
                                                                  final VectorFunction function) {
         return new VectorAccumulator() {
-            private VectorAccumulator productAccumulator = Vectors.asProductAccumulator(neutral);
+            private final VectorAccumulator productAccumulator = Vectors.asProductAccumulator(neutral);
 
             @Override
             public void update(int i, double value) {
