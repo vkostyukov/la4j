@@ -590,7 +590,7 @@ public abstract class AbstractVector implements Vector {
 
             double diff = Math.abs(a - b);
 
-            result = (a == b) || (diff < Matrices.EPS || diff / Math.max(Math.abs(a), Math.abs(b)) < Vectors.EPS);
+            result = (a == b) || (diff < Vectors.EPS || diff / Math.max(Math.abs(a), Math.abs(b)) < Vectors.EPS);
         }
 
         return result;
