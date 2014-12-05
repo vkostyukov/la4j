@@ -630,7 +630,6 @@ public abstract class AbstractVector implements Vector {
         if (length < 0) {
             fail("Wrong vector length: " + length);
         }
-        // TODO What?? Is there a reason for this? Can we compensate?
         if (length == Integer.MAX_VALUE) {
             fail("Wrong vector length: use 'Integer.MAX_VALUE - 1' instead.");
         }
