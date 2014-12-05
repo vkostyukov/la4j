@@ -27,6 +27,11 @@ import org.la4j.matrix.Matrices;
 
 public class SweepSolverTest extends AbstractSolverTest {
 
+    @Override
+    public LinearAlgebra.SolverFactory solverFactory() {
+        return LinearAlgebra.SWEEP;
+    }
+
     @Test
     public void testSolve_3x3() {
 
@@ -38,7 +43,7 @@ public class SweepSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.0, 2.0, 0.0 };
 
-        performTest(LinearAlgebra.SWEEP, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -52,7 +57,7 @@ public class SweepSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -356.0, 497.0, -209.0 };
 
-        performTest(LinearAlgebra.SWEEP, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -67,7 +72,7 @@ public class SweepSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -180.0, -394.7, -215.3, -10.6 };
 
-        performTest(LinearAlgebra.SWEEP, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -83,6 +88,6 @@ public class SweepSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -1.0, -111.0, -16.0, 185.0, -16.0 };
 
-        performTest(LinearAlgebra.SWEEP, a, b);
+        performTest(a, b);
     }
 }

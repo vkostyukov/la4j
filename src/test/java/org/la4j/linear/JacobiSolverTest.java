@@ -25,6 +25,11 @@ import org.junit.Test;
 import org.la4j.LinearAlgebra;
 
 public class JacobiSolverTest extends AbstractSolverTest {
+    
+    @Override
+    public LinearAlgebra.SolverFactory solverFactory() {
+        return LinearAlgebra.JACOBI;
+    }
 
     @Test
     public void testSolve_1x1() {
@@ -35,7 +40,7 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 12.0 };
 
-        performTest(LinearAlgebra.JACOBI, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -48,7 +53,7 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 257.0, 212.0 };
 
-        performTest(LinearAlgebra.JACOBI, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -62,7 +67,7 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.0, 2.0, 0.0 };
 
-        performTest(LinearAlgebra.JACOBI, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -76,7 +81,7 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 4.6, 3.3, -38.9 };
 
-        performTest(LinearAlgebra.JACOBI, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -91,7 +96,7 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -3.9, -5.4, 2.1, 18.4 };
 
-        performTest(LinearAlgebra.JACOBI, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -107,6 +112,6 @@ public class JacobiSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.07, -13.29, -12.45, -41.8, -32.8 };
 
-        performTest(LinearAlgebra.JACOBI, a, b);
+        performTest(a, b);
     }
 }

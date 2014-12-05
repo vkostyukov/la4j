@@ -26,6 +26,11 @@ import org.la4j.LinearAlgebra;
 
 public class ForwardBackSubstitutionSolverTest extends AbstractSolverTest {
 
+    @Override
+    public LinearAlgebra.SolverFactory solverFactory() {
+        return LinearAlgebra.FORWARD_BACK_SUBSTITUTION;
+    }
+    
     @Test
     public void testSolve_1x1() {
 
@@ -35,7 +40,7 @@ public class ForwardBackSubstitutionSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -31.0 };
 
-        performTest(LinearAlgebra.FORWARD_BACK_SUBSTITUTION, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -48,7 +53,7 @@ public class ForwardBackSubstitutionSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 11.0, 4.0 };
 
-        performTest(LinearAlgebra.FORWARD_BACK_SUBSTITUTION, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -62,7 +67,7 @@ public class ForwardBackSubstitutionSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -146.0, 16.5, 7.5 };
 
-        performTest(LinearAlgebra.FORWARD_BACK_SUBSTITUTION, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -76,7 +81,7 @@ public class ForwardBackSubstitutionSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 8.0, 115.2, 20.0 };
 
-        performTest(LinearAlgebra.FORWARD_BACK_SUBSTITUTION, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -91,7 +96,7 @@ public class ForwardBackSubstitutionSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 52.3, -32.6, -29.0, 37.1 };
 
-        performTest(LinearAlgebra.FORWARD_BACK_SUBSTITUTION, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -106,7 +111,7 @@ public class ForwardBackSubstitutionSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -41.5, 63.0, -1533.0, 155.0 };
 
-        performTest(LinearAlgebra.FORWARD_BACK_SUBSTITUTION, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -122,6 +127,7 @@ public class ForwardBackSubstitutionSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -110.44, -79.2, 862.8, 221.0, -3.1 };
 
-        performTest(LinearAlgebra.FORWARD_BACK_SUBSTITUTION, a, b);
+        performTest(a, b);
     }
+
 }

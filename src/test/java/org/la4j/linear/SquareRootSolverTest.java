@@ -26,6 +26,11 @@ import org.la4j.LinearAlgebra;
 
 public class SquareRootSolverTest extends AbstractSolverTest {
 
+    @Override
+    public LinearAlgebra.SolverFactory solverFactory() {
+        return LinearAlgebra.SQUARE_ROOT;
+    }
+
     @Test
     public void testSolve_1x1() {
 
@@ -35,7 +40,7 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -22.0 };
 
-        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -48,7 +53,7 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -77.0, 768.6 };
 
-        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -62,7 +67,7 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.0, 2.0, 0.0 };
 
-        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -76,7 +81,7 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -45.0, -10.0, 81.0 };
 
-        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -91,7 +96,7 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -276.0, 29.0, -439.0, -89.0 };
 
-        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -107,6 +112,6 @@ public class SquareRootSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 104.0, -256.0, -45.0, 54.0, -143.8 };
 
-        performTest(LinearAlgebra.SQUARE_ROOT, a, b);
+        performTest(a, b);
     }
 }

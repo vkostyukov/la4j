@@ -26,6 +26,11 @@ import org.la4j.LinearAlgebra;
 
 public class SeidelSolverTest extends AbstractSolverTest {
 
+    @Override
+    public LinearAlgebra.SolverFactory solverFactory() {
+        return LinearAlgebra.SEIDEL;
+    }
+    
     @Test
     public void testSolve_1x1() {
 
@@ -35,7 +40,7 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 11.0 };
 
-        performTest(LinearAlgebra.SEIDEL, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -48,7 +53,7 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -20.0, -10.0 };
 
-        performTest(LinearAlgebra.SEIDEL, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -62,7 +67,7 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.0, 2.0, 0.0 };
 
-        performTest(LinearAlgebra.SEIDEL, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -76,7 +81,7 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 6.8, -10.1, -36.9 };
 
-        performTest(LinearAlgebra.SEIDEL, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -91,7 +96,7 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { -3.9, -5.4, 2.1, 18.4 };
 
-        performTest(LinearAlgebra.SEIDEL, a, b);
+        performTest(a, b);
     }
 
     @Test
@@ -107,6 +112,6 @@ public class SeidelSolverTest extends AbstractSolverTest {
 
         double b[] = new double[] { 0.07, -13.29, -12.45, -41.8, -32.8 };
 
-        performTest(LinearAlgebra.SEIDEL, a, b);
+        performTest(a, b);
     }
 }
