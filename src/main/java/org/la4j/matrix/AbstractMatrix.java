@@ -36,6 +36,7 @@ import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.*;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -1195,8 +1196,7 @@ public abstract class AbstractMatrix implements Matrix {
         return result;
     }
 
-    @Override
-    public boolean equals(Object object) {
+    public boolean equals(Object object, double precision) {
 
         if (this == object) {
             return true;
@@ -1223,11 +1223,16 @@ public abstract class AbstractMatrix implements Matrix {
                 double b = matrix.get(i, j);
                 double diff = Math.abs(a - b);
 
-                result = (a == b) || (diff < Matrices.EPS || diff / Math.max(Math.abs(a), Math.abs(b)) < Matrices.EPS);
+                result = (a == b) || (diff < precision || diff / Math.max(Math.abs(a), Math.abs(b)) < precision);
             }
         }
 
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return equals(o, Matrices.EPS);
     }
 
     @Override
