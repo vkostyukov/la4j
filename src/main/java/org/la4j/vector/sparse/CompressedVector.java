@@ -51,7 +51,7 @@ import org.la4j.vector.source.VectorSource;
  * 
  */
 public class CompressedVector extends SparseVector {
-
+	// TODO: Add range checks
     private static final long serialVersionUID = 4071505L;
 
     private static final int MINIMUM_SIZE = 32;
