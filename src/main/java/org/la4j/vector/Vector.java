@@ -39,8 +39,7 @@ import org.la4j.vector.operation.VectorVectorOperation;
 /**
  * The real vector interface.
  * 
- * A vector represents an array of elements. It will automatically resize to
- * handle dynamically adding and removing elements.
+ * A vector represents an array of elements. It can be resized.
  */
 public interface Vector extends Externalizable, Iterable<Double> {
 
@@ -70,7 +69,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * TODO (NC): assignTo
      *
-     * @param value the elements' new value
+     * @param value the element's new value
      */
     void assign(double value);
 
@@ -386,11 +385,9 @@ public interface Vector extends Externalizable, Iterable<Double> {
     /**
      * Shuffles this vector.
      *
-     * <p>
      * Copies this vector in the new vector that contains the same elements but with
-     * the elements shuffled around (which might also result in the same vector
-     * (all outcomes are equally probable)).
-     * </p>
+     * the elements shuffled around (which might also result in the same vector,
+     * since all outcomes are equally probable).
      *
      * @param factory the factory of result vector
      *

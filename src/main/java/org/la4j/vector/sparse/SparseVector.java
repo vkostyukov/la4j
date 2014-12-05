@@ -37,6 +37,8 @@ import org.la4j.vector.operation.VectorVectorOperation;
 /**
  * A sparse vector.
  * 
+ * A vector represents an array of elements. It can be resized.
+ * 
  * A sparse data structure does not store blank elements, and instead just stores
  * elements with values. A sparse data structure can be initialized with a large
  * length but take up no storage until the space is filled with non-zero elements.

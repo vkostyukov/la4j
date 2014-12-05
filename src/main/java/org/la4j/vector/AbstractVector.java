@@ -41,8 +41,7 @@ import org.la4j.vector.operation.VectorOperations;
 /**
  * An abstract wrapper around {@code Vector} to make it easier to implement.
  * 
- * A vector represents an array of elements. It will automatically resize to
- * handle dynamically adding and removing elements.
+ * A vector represents an array of elements. It can be resized.
  */
 public abstract class AbstractVector implements Vector {
 
@@ -325,7 +324,18 @@ public abstract class AbstractVector implements Vector {
     public Vector shuffle() {
         return shuffle(factory);
     }
-
+    
+    /**
+     * Shuffles this vector, using a Fisher-Yates shuffle.
+     * 
+     * Copies this vector in the new vector that contains the same elements but with
+     * the elements shuffled around (which might also result in the same vector,
+     * since all outcomes are equally probable).
+     *
+     * @param factory the factory of result vector
+     *
+     * @return the shuffled vector
+     */
     @Override
     public Vector shuffle(Factory factory) {
         ensureFactoryIsNotNull(factory);

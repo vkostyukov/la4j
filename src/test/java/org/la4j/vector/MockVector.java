@@ -37,7 +37,7 @@ import org.la4j.vector.dense.DenseVector;
  * However, fetch/store operations on dense data structures only take O(1) time,
  * instead of the O(log n) time on sparse structures.
  * 
- * This class is used for testing other Vector classes.
+ * This class is used for testing.
  */
 public class MockVector extends DenseVector {
 

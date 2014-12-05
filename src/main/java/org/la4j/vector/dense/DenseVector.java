@@ -33,6 +33,8 @@ import org.la4j.vector.operation.VectorVectorOperation;
 /**
  * A dense vector.
  * 
+ * A vector represents an array of elements. It can be resized.
+ * 
  * A dense data structure usually stores data in an underlying array. Zero elements
  * take up memory space. If you want a data structure that will not have zero
  * elements take up memory space, try a sparse structure.
