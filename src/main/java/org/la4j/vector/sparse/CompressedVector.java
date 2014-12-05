@@ -34,7 +34,7 @@ import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.source.VectorSource;
 
 /**
- * A basic sparse vector implantation using underlying value and index arrays.
+ * A basic sparse vector implementation using underlying value and index arrays.
  * 
  * A sparse data structure does not store blank elements, and instead just stores
  * elements with values. A sparse data structure can be initialized with a large
