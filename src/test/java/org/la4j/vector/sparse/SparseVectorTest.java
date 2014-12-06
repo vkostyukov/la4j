@@ -128,7 +128,7 @@ public abstract class SparseVectorTest extends AbstractVectorTest {
                 new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
         );
         
-        a.get(-1);
+        a.getOrElse(-1, 0.0);
     }
     
     @Test(expected=IndexOutOfBoundsException.class)
@@ -137,7 +137,7 @@ public abstract class SparseVectorTest extends AbstractVectorTest {
                 new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
         );
         
-        a.get(a.length());
+        a.getOrElse(a.length(), 0.0);
     }
     
     @Test
@@ -146,7 +146,7 @@ public abstract class SparseVectorTest extends AbstractVectorTest {
                 new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
         );
 
-        assertEquals(1.0, a.get(2), 0.0);
+        assertEquals(1.0, a.getOrElse(2, 0.0), 0.0);
     }
     
     @Test(expected = IndexOutOfBoundsException.class)

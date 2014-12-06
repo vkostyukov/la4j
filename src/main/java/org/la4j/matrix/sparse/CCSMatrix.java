@@ -43,7 +43,7 @@ import org.la4j.vector.sparse.CompressedVector;
  * This is a CCS (Compressed Column Storage) matrix class.
  */
 public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix {
-	// TODO: Add range checks
+	
     private static final long serialVersionUID = 4071505L;
 
     private static final int MINIMUM_SIZE = 32;
@@ -122,7 +122,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public double getOrElse(int i, int j, double defaultValue) {
-
+    	ensureIndexesAreInBounds(i, j);
         int k = searchForRowIndex(i, columnPointers[j], columnPointers[j + 1]);
 
         if (k < columnPointers[j + 1] && rowIndices[k] == i) {
@@ -134,7 +134,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public void set(int i, int j, double value) {
-
+    	ensureIndexesAreInBounds(i, j);
         int k = searchForRowIndex(i, columnPointers[j], columnPointers[j + 1]);
 
         if (k < columnPointers[j + 1] && rowIndices[k] == i) {

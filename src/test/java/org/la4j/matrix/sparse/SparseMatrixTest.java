@@ -187,4 +187,155 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         assertEquals(3.0, a.getOrElse(1, 2, 3.14), Matrices.EPS);
         assertEquals(4.2, a.getOrElse(1, 3, 4.2), Matrices.EPS);
     }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGet_IndexCheck_RowNegative() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.get(-1, 1);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGet_IndexCheck_ColumnNegative() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.get(1, -1);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGet_IndexCheck_RowTooLarge() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.get(a.rows(), 1);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGet_IndexCheck_ColumnTooLarge() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.get(1, a.columns());
+    }
+    
+    @Test
+    public void testGet_IndexCheck_Valid() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 assertEquals(0.0, a.get(1, 1), 0.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetOrElse_IndexCheck_RowNegative() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.getOrElse(-1, 1, 0.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetOrElse_IndexCheck_ColumnNegative() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.getOrElse(1, -1, 0.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetOrElse_IndexCheck_RowTooLarge() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.getOrElse(a.rows(), 1, 0.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetOrElse_IndexCheck_ColumnTooLarge() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.getOrElse(1, a.columns(), 0.0);
+    }
+    
+    @Test
+    public void testGetOrElse_IndexCheck_Valid() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 assertEquals(0.0, a.get(1, 1), 0.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSet_IndexCheck_RowNegative() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.set(-1, 1, 1.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSet_IndexCheck_ColumnNegative() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.set(1, -1, 1.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSet_IndexCheck_RowTooLarge() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.set(a.rows(), 1, 1.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSet_IndexCheck_ColumnTooLarge() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.set(1, a.columns(), 1.0);
+    }
+    
+    @Test
+    public void testSet_IndexCheck_Valid() {
+    	 SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.set(1, 1, 1.0);
+    	 assertEquals(1.0, a.get(1, 1), 0.0);
+    }
 }
