@@ -19,35 +19,33 @@
  *
  */
 
-package org.la4j.io;
+package org.la4j.iterator;
 
-class CursorToMatrixIterator extends MatrixIterator {
+public class VectorToBurningIterator extends VectorIterator {
 
-    private final CursorIterator underlying;
+    private final VectorIterator underlying;
+    private int currentIndex;
+    private double currentValue;
 
-    public CursorToMatrixIterator(CursorIterator underlying, int rows, int columns) {
-        super(rows, columns);
+    public VectorToBurningIterator(VectorIterator underlying) {
+        super(underlying.length);
         this.underlying = underlying;
     }
 
     @Override
-    public int rowIndex() {
-        return underlying.cursor() / columns;
-    }
-
-    @Override
-    public int columnIndex() {
-        return underlying.cursor() - rowIndex() * columns;
+    public int index() {
+        return currentIndex;
     }
 
     @Override
     public double get() {
-        return underlying.get();
+        return currentValue;
     }
 
     @Override
     public void set(double value) {
         underlying.set(value);
+        currentValue = value;
     }
 
     @Override
@@ -57,6 +55,15 @@ class CursorToMatrixIterator extends MatrixIterator {
 
     @Override
     public Double next() {
-        return underlying.next();
+        double result = underlying.next();
+        currentIndex = underlying.index();
+        currentValue = underlying.get();
+        underlying.set(0.0); // burn
+        return result;
+    }
+
+    @Override
+    public void flush() {
+        underlying.flush();
     }
 }

@@ -24,7 +24,7 @@ package org.la4j.vector;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import org.la4j.io.VectorIterator;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.dense.DenseVector;
 
 /**
