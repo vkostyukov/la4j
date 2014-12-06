@@ -19,7 +19,7 @@
  *
  */
 
-package org.la4j.io;
+package org.la4j.iterator;
 
 import java.util.Arrays;
 import java.util.Collection;

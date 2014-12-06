@@ -19,7 +19,7 @@
  *
  */
 
-package org.la4j.io;
+package org.la4j.iterator;
 
 abstract class JoinFunction {
 
