@@ -2082,34 +2082,24 @@ public abstract class AbstractMatrixTest {
         });
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     @Ignore
-    public void xtestSelect1() {
+    public void testSelect1() {
         // Throw exception when row indices are invalid
         Matrix a = matrixA();
         int[] rowInd = new int[]{3, 4, 10};
         int[] colInd = new int[]{0, 1, 2}; // all columns
-        try {
-            a.select(rowInd, colInd);
-            fail();
-        } catch (IndexOutOfBoundsException ex) {
-            // Do nothing
-        }
+        a.select(rowInd, colInd);
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     @Ignore
-    public void xtestSelect2() {
+    public void testSelect2() {
         // Throw exception when column indices are invalid
         Matrix a = matrixA();
         int[] rowInd = new int[]{0, 1, 2};
         int[] colInd = new int[]{-1, 1, 2}; // all columns
-        try {
-            a.select(rowInd, colInd);
-            fail();
-        } catch (IndexOutOfBoundsException ex) {
-            // Do nothing
-        }
+        a.select(rowInd, colInd);
     }
 
     @Test
@@ -2311,4 +2301,59 @@ public abstract class AbstractMatrixTest {
 
     }
 
+    @Test
+    public void testEqualsWithPrecision() throws Exception {
+        Matrix a = factory().createMatrix();
+        assertTrue(a.equals(a, Matrices.EPS));
+        assertTrue(a.equals(a.copy(), Matrices.EPS));
+
+        Matrix b = factory().createConstantMatrix(2, 2, 0.0);
+        Matrix c = factory().createConstantMatrix(2, 2, 0.0);
+        assertTrue(b.equals(c, Matrices.EPS));
+        assertTrue(c.equals(b, Matrices.EPS));
+        assertFalse(b.equals(a, Matrices.EPS));
+        assertFalse(c.equals(a, Matrices.EPS));
+
+        Matrix d = factory().createIdentityMatrix(2);
+        assertFalse(d.equals(b, Matrices.EPS));
+        assertFalse(d.equals(a, Matrices.EPS));
+        
+        Matrix e = factory().createConstantMatrix(2, 2, Double.MIN_VALUE);
+        assertTrue(e.equals(b, Matrices.EPS));
+        
+        Matrix f = factory().createConstantMatrix(2, 2, Double.MIN_NORMAL);
+        assertTrue(f.equals(b, Matrices.EPS));
+        assertTrue(f.equals(e, Matrices.EPS));
+        assertTrue(b.equals(f, Matrices.EPS));
+        assertTrue(e.equals(f, Matrices.EPS));
+        
+    }
+
+    @Test
+    public void testEquals() throws Exception {
+        Matrix a = factory().createMatrix();
+        assertTrue(a.equals(a));
+        assertTrue(a.copy().equals(a));
+
+        Matrix b = factory().createConstantMatrix(2, 2, 0.0);
+        Matrix c = factory().createConstantMatrix(2, 2, 0.0);
+        assertTrue(b.equals(c));
+        assertTrue(c.equals(b));
+        assertFalse(b.equals(a));
+        assertFalse(c.equals(a));
+
+        Matrix d = factory().createIdentityMatrix(2);
+        assertFalse(d.equals(b));
+        assertFalse(d.equals(a));
+
+        Matrix e = factory().createConstantMatrix(2, 2, Double.MIN_VALUE);
+        assertTrue(e.equals(b));
+
+        Matrix f = factory().createConstantMatrix(2, 2, Double.MIN_NORMAL);
+        assertTrue(f.equals(b));
+        assertTrue(f.equals(e));
+        assertTrue(b.equals(f));
+        assertTrue(e.equals(f));
+
+    }
 }
