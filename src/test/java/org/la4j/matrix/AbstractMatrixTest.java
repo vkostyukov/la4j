@@ -2438,7 +2438,6 @@ public abstract class AbstractMatrixTest {
         assertTrue(c.equals(b));
         assertFalse(b.equals(a));
         assertFalse(c.equals(a));
-
         Matrix d = factory().createIdentityMatrix(2);
         assertFalse(d.equals(b));
         assertFalse(d.equals(a));
