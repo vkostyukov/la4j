@@ -25,7 +25,7 @@ import org.la4j.vector.Vector;
 
 public class StreamSourcedVectorBuilder extends NonTerminalVectorBuilder {
 
-    private VectorStream stream;
+    private final VectorStream stream;
 
     public StreamSourcedVectorBuilder(UnderlyingVectorBuilder underlying, VectorStream stream) {
         super(underlying);

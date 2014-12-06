@@ -27,10 +27,10 @@ import java.util.Random;
 @Deprecated
 public class RandomSymmetricMatrixSource implements MatrixSource {
 
-    private int size;
-    private Random random;
+    private final int size;
+    private final Random random;
 
-    private double values[];
+    private final double values[];
 
     public RandomSymmetricMatrixSource(int size) {
         this.size = size;

@@ -23,7 +23,7 @@ package org.la4j.io;
 
 class CursorToMatrixIterator extends MatrixIterator {
 
-    private CursorIterator underlying;
+    private final CursorIterator underlying;
 
     public CursorToMatrixIterator(CursorIterator underlying, int rows, int columns) {
         super(rows, columns);

@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class RandomSourcedMatrixBuilder extends NonTerminalMatrixBuilder {
 
-    private Random random;
+    private final Random random;
 
     public RandomSourcedMatrixBuilder(UnderlyingMatrixBuilder underlying, Random random) {
         super(underlying);

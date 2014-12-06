@@ -25,7 +25,7 @@ import org.la4j.vector.Vector;
 
 public class LoopbackVectorSource implements VectorSource {
 
-    private Vector vector;
+    private final Vector vector;
 
     public LoopbackVectorSource(Vector vector) {
         this.vector = vector;

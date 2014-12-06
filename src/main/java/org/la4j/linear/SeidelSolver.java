@@ -36,7 +36,7 @@ public class SeidelSolver extends AbstractSolver implements LinearSystemSolver {
 
     private static final long serialVersionUID = 4071505L;
 
-    private Matrix aa;
+    private final Matrix aa;
 
     public SeidelSolver(Matrix a) {
         super(a);

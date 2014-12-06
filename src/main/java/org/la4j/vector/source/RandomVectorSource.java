@@ -25,8 +25,8 @@ import java.util.Random;
 
 public class RandomVectorSource implements VectorSource {
 
-    private int length;
-    private Random random;
+    private final int length;
+    private final Random random;
 
     public RandomVectorSource(int length, Random random) {
         this.length = length;

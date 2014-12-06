@@ -24,7 +24,7 @@ import org.la4j.matrix.Matrix;
 
 public class ConstantSourcedMatrixBuilder extends NonTerminalMatrixBuilder {
 
-    private double value;
+    private final double value;
 
     public ConstantSourcedMatrixBuilder(UnderlyingMatrixBuilder underlying, double value) {
         super(underlying);

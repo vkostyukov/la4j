@@ -23,7 +23,7 @@ package org.la4j.matrix.source;
 
 public class Array2DMatrixSource implements MatrixSource {
 
-    private double array[][];
+    private final double array[][];
 
     public Array2DMatrixSource(double array[][]) {
         this.array = array;

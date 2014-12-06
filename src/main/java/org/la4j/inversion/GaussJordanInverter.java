@@ -29,7 +29,7 @@ import org.la4j.vector.Vector;
 
 public class GaussJordanInverter implements MatrixInverter {
 
-    private Matrix matrix;
+    private final Matrix matrix;
 
     public GaussJordanInverter(Matrix matrix) {
         this.matrix = matrix;

@@ -25,7 +25,7 @@ import org.la4j.matrix.Matrix;
 
 public class LoopbackMatrixSource implements MatrixSource {
 
-    private Matrix matrix;
+    private final Matrix matrix;
 
     public LoopbackMatrixSource(Matrix matrix) {
         this.matrix = matrix;

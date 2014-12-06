@@ -31,7 +31,7 @@ import org.la4j.vector.sparse.SparseVector;
 
 public class OoPlaceVectorToVectorAddition extends VectorVectorOperation<Vector> {
 
-    private Factory factory;
+    private final Factory factory;
 
     public OoPlaceVectorToVectorAddition(Factory factory) {
         this.factory = factory;

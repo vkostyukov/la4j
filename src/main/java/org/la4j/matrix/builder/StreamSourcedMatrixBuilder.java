@@ -25,7 +25,7 @@ import org.la4j.matrix.Matrix;
 
 public class StreamSourcedMatrixBuilder extends NonTerminalMatrixBuilder {
 
-    private MatrixStream stream;
+    private final MatrixStream stream;
 
     public StreamSourcedMatrixBuilder(UnderlyingMatrixBuilder underlying, MatrixStream stream) {
         super(underlying);

@@ -24,7 +24,7 @@ import org.la4j.matrix.Matrix;
 
 public class Array2DSourcedMatrixBuilder extends NonTerminalMatrixBuilder {
 
-    private double array[][];
+    private final double array[][];
 
     public Array2DSourcedMatrixBuilder(UnderlyingMatrixBuilder underlying, double array[][]) {
         super(underlying);

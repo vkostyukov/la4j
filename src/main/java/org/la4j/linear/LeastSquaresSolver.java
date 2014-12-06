@@ -24,7 +24,6 @@ package org.la4j.linear;
 import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
@@ -34,8 +33,8 @@ public class LeastSquaresSolver extends AbstractSolver implements LinearSystemSo
     private static final long serialVersionUID = 4071505L;
 
     // Matrices from RAW_QR decomposition
-    private Matrix qr;
-    private Matrix r;
+    private final Matrix qr;
+    private final Matrix r;
 
     public LeastSquaresSolver(Matrix a) {
         super(a);

@@ -23,7 +23,7 @@ package org.la4j.io;
 
 public class VectorToBurningIterator extends VectorIterator {
 
-    private VectorIterator underlying;
+    private final VectorIterator underlying;
     private int currentIndex;
     private double currentValue;
 

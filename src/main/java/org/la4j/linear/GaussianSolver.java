@@ -37,7 +37,7 @@ public class GaussianSolver extends AbstractSolver implements LinearSystemSolver
     private static final long serialVersionUID = 4071505L;
 
     // augmented matrix
-    private Matrix aa;
+    private final Matrix aa;
 
     public GaussianSolver(Matrix a) {
         super(a);
