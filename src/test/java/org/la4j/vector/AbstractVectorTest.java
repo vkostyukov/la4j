@@ -18,6 +18,7 @@
 * Contributor(s): Daniel Renshaw
 *                 Jakob Moellers
 *                 Yuriy Drozd
+*                 Maxim Samoylov
 *
 */
 
@@ -49,7 +50,7 @@ public abstract class AbstractVectorTest {
     public void testAccess_4() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 0.0, 3.0, 0.0, 0.0}
+                        {0.0, 0.0, 3.0, 0.0, 0.0}
         );
 
         assertEquals(5, a.length());
@@ -77,15 +78,15 @@ public abstract class AbstractVectorTest {
     public void testResize_3_to_5_to_2() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 0.0, 1.0}
+                        {0.0, 0.0, 1.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {0.0, 0.0, 1.0, 0.0, 0.0}
+                        {0.0, 0.0, 1.0, 0.0, 0.0}
         );
 
         Vector c = factory().createVector(new double[]
-                {0.0, 0.0}
+                        {0.0, 0.0}
         );
 
         a = a.resize(5);
@@ -99,13 +100,13 @@ public abstract class AbstractVectorTest {
     public void testResize_5_to_0_to_4() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 1.0, 2.0, 3.0, 0.0}
+                        {0.0, 1.0, 2.0, 3.0, 0.0}
         );
 
         Vector b = factory().createVector(new double[0]);
 
         Vector c = factory().createVector(new double[]
-                {0.0, 0.0, 0.0, 0.0}
+                        {0.0, 0.0, 0.0, 0.0}
         );
 
         a = a.resize(0);
@@ -119,15 +120,15 @@ public abstract class AbstractVectorTest {
     public void testSlice_5_to_2_and_3() {
 
         Vector a = factory().createVector(new double[]
-                {1.0, 2.0, 3.0, 4.0, 5.0}
+                        {1.0, 2.0, 3.0, 4.0, 5.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {2.0, 3.0}
+                        {2.0, 3.0}
         );
 
         Vector c = factory().createVector(new double[]
-                {3.0, 4.0, 5.0}
+                        {3.0, 4.0, 5.0}
         );
 
         assertEquals(b, a.slice(1, 3));
@@ -138,15 +139,15 @@ public abstract class AbstractVectorTest {
     public void testSliceLeftRight_5_to_1_and_4() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 2.0, 0.0, 4.0, 0.0}
+                        {0.0, 2.0, 0.0, 4.0, 0.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {0.0}
+                        {0.0}
         );
 
         Vector c = factory().createVector(new double[]
-                {2.0, 0.0, 4.0, 0.0}
+                        {2.0, 0.0, 4.0, 0.0}
         );
 
         assertEquals(b, a.sliceLeft(1));
@@ -156,15 +157,15 @@ public abstract class AbstractVectorTest {
     @Test
     public void testSelect_4() {
         Vector a = factory().createVector(new double[]
-                {0.0, 3.0, 7.0, 0.0}
+                        {0.0, 3.0, 7.0, 0.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {3.0, 0.0, 0.0, 7.0}
+                        {3.0, 0.0, 0.0, 7.0}
         );
 
         Vector c = factory().createVector(new double[]
-                {7.0, 7.0, 0.0, 0.0}
+                        {7.0, 7.0, 0.0, 0.0}
         );
 
         assertEquals(b, a.select(new int[]{1, 0, 3, 2}));
@@ -174,15 +175,15 @@ public abstract class AbstractVectorTest {
     @Test
     public void testSelect_5() {
         Vector a = factory().createVector(new double[]
-                {1.0, 6.0, 0.0, 0.0, 8.0}
+                        {1.0, 6.0, 0.0, 0.0, 8.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {1.0, 1.0, 1.0}
+                        {1.0, 1.0, 1.0}
         );
 
         Vector c = factory().createVector(new double[]
-                {0.0, 0.0, 8.0, 8.0, 1.0, 0.0}
+                        {0.0, 0.0, 8.0, 8.0, 1.0, 0.0}
         );
 
         assertEquals(b, a.select(new int[]{0, 0, 0}));
@@ -192,15 +193,15 @@ public abstract class AbstractVectorTest {
     @Test
     public void testSelect_3() {
         Vector a = factory().createVector(new double[]
-                {1.0, 0.0, 0.0}
+                        {1.0, 0.0, 0.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {0.0, 0.0, 0.0, 0.0}
+                        {0.0, 0.0, 0.0, 0.0}
         );
 
         Vector c = factory().createVector(new double[]
-                {1.0}
+                        {1.0}
         );
 
         assertEquals(b, a.select(new int[]{1, 2, 2, 1}));
@@ -211,11 +212,11 @@ public abstract class AbstractVectorTest {
     public void testSwap_5() {
 
         Vector a = factory().createVector(new double[]
-                {1.0, 0.0, 0.0, 0.0, 3.0}
+                        {1.0, 0.0, 0.0, 0.0, 3.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {3.0, 0.0, 0.0, 0.0, 1.0}
+                        {3.0, 0.0, 0.0, 0.0, 1.0}
         );
 
         a.swap(0, 4);
@@ -226,11 +227,11 @@ public abstract class AbstractVectorTest {
     public void testSwap_4() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 1.0, 0.0, 0.0}
+                        {0.0, 1.0, 0.0, 0.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {0.0, 0.0, 1.0, 0.0}
+                        {0.0, 0.0, 1.0, 0.0}
         );
 
         a.swap(1, 2);
@@ -241,11 +242,11 @@ public abstract class AbstractVectorTest {
     public void testSwap_4_2() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 1.0, 0.0, 2.0}
+                        {0.0, 1.0, 0.0, 2.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {0.0, 0.0, 1.0, 2.0}
+                        {0.0, 0.0, 1.0, 2.0}
         );
 
         a.swap(1, 2);
@@ -256,11 +257,11 @@ public abstract class AbstractVectorTest {
     public void testSwap_6() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 0.0, 0.0, 0.0, 0.0, -5.0}
+                        {0.0, 0.0, 0.0, 0.0, 0.0, -5.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {0.0, 0.0, 0.0, -5.0, 0.0, 0.0}
+                        {0.0, 0.0, 0.0, -5.0, 0.0, 0.0}
         );
 
         a.swap(3, 5);
@@ -271,11 +272,11 @@ public abstract class AbstractVectorTest {
     public void testSwap_2() {
 
         Vector a = factory().createVector(new double[]
-                {1.0, 2.0}
+                        {1.0, 2.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {2.0, 1.0}
+                        {2.0, 1.0}
         );
 
         a.swap(0, 1);
@@ -322,19 +323,19 @@ public abstract class AbstractVectorTest {
     public void testAdd_3() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 0.0, 3.0}
+                        {0.0, 0.0, 3.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {0.0, 5.0, 0.0}
+                        {0.0, 5.0, 0.0}
         );
 
         Vector c = factory().createVector(new double[]
-                {7.0, 7.0, 10.0}
+                        {7.0, 7.0, 10.0}
         );
 
         Vector d = factory().createVector(new double[]
-                {0.0, 5.0, 3.0}
+                        {0.0, 5.0, 3.0}
         );
 
         assertEquals(c, a.add(7.0));
@@ -355,19 +356,19 @@ public abstract class AbstractVectorTest {
     public void testSubtract_3() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 0.0, 3.0}
+                        {0.0, 0.0, 3.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {4.0, 0.0, 0.0}
+                        {4.0, 0.0, 0.0}
         );
 
         Vector c = factory().createVector(new double[]
-                {-7.0, -7.0, -4.0}
+                        {-7.0, -7.0, -4.0}
         );
 
         Vector d = factory().createVector(new double[]
-                {-4.0, 0.0, 3.0}
+                        {-4.0, 0.0, 3.0}
         );
 
         assertEquals(c, a.subtract(7.0));
@@ -378,19 +379,19 @@ public abstract class AbstractVectorTest {
     public void testMultiply_3() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 0.0, 1.0}
+                        {0.0, 0.0, 1.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {0.0, 5.0, 0.0}
+                        {0.0, 5.0, 0.0}
         );
 
         Vector c = factory().createVector(new double[]
-                {0.0, 0.0, 10.0}
+                        {0.0, 0.0, 10.0}
         );
 
         Vector d = factory().createVector(new double[]
-                {0.0, 0.0, 0.0}
+                        {0.0, 0.0, 0.0}
         );
 
         assertEquals(c, a.multiply(10.0));
@@ -401,15 +402,15 @@ public abstract class AbstractVectorTest {
     public void testHadamardProduct_3() {
 
         Vector a = factory().createVector(new double[]
-                {1.0, 0.0, 2.0}
+                        {1.0, 0.0, 2.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {3.0, 0.0, 0.0}
+                        {3.0, 0.0, 0.0}
         );
 
         Vector c = factory().createVector(new double[]
-                {3.0, 0.0, 0.0}
+                        {3.0, 0.0, 0.0}
         );
 
         assertEquals(c, a.hadamardProduct(b));
@@ -419,7 +420,7 @@ public abstract class AbstractVectorTest {
     public void testMultiply_2_2x4() {
 
         Vector a = factory().createVector(new double[]
-                {1.0, 2.0}
+                        {1.0, 2.0}
         );
 
         Matrix b = factory().createMatrix(new double[][]{
@@ -428,7 +429,7 @@ public abstract class AbstractVectorTest {
         });
 
         Vector c = factory().createVector(new double[]
-                {2.0, 5.0, 16.0, 6.0}
+                        {2.0, 5.0, 16.0, 6.0}
         );
 
         assertEquals(c, a.multiply(b));
@@ -438,7 +439,7 @@ public abstract class AbstractVectorTest {
     public void testMultiply_3_3x1() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 2.0, 0.0}
+                        {0.0, 2.0, 0.0}
         );
 
         Matrix b = factory().createMatrix(new double[][]{
@@ -448,7 +449,7 @@ public abstract class AbstractVectorTest {
         });
 
         Vector c = factory().createVector(new double[]
-                {6.0}
+                        {6.0}
         );
 
         assertEquals(c, a.multiply(b));
@@ -458,7 +459,7 @@ public abstract class AbstractVectorTest {
     public void testProduct_3() {
 
         Vector a = factory().createVector(new double[]
-                {2.0, 4.0, 6.0}
+                        {2.0, 4.0, 6.0}
         );
 
         assertEquals(a.product(), 48.0, Vectors.EPS);
@@ -468,7 +469,7 @@ public abstract class AbstractVectorTest {
     public void testSum_3() {
 
         Vector a = factory().createVector(new double[]
-                {2.0, 4.0, 6.0}
+                        {2.0, 4.0, 6.0}
         );
 
         assertEquals(a.sum(), 12.0, Vectors.EPS);
@@ -478,11 +479,11 @@ public abstract class AbstractVectorTest {
     public void testDivide_3() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 0.0, 3.0}
+                        {0.0, 0.0, 3.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {0.0, 0.0, 0.3}
+                        {0.0, 0.0, 0.3}
         );
 
         assertEquals(b, a.divide(10));
@@ -492,7 +493,7 @@ public abstract class AbstractVectorTest {
     public void testCopy_5() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 0.0, 0.0, 0.0, 1.0}
+                        {0.0, 0.0, 0.0, 0.0, 1.0}
         );
 
         assertEquals(a, a.copy());
@@ -502,11 +503,11 @@ public abstract class AbstractVectorTest {
     public void testBlank_5() {
 
         Vector a = factory().createVector(new double[]
-                {0.0, 0.0, 0.0, 0.0, 1.0}
+                        {0.0, 0.0, 0.0, 0.0, 1.0}
         );
 
         Vector b = factory().createVector(new double[]
-                {0.0, 0.0, 0.0, 0.0, 0.0}
+                        {0.0, 0.0, 0.0, 0.0, 0.0}
         );
 
         assertEquals(b, a.blank());
@@ -759,63 +760,138 @@ public abstract class AbstractVectorTest {
         e.assign(42.0);
         assertTrue(e.is(fortyTwo));
     }
-    
+
+    @Test
     public void testNormalize_Default() {
-    	Vector a = factory().createVector(new double[] {3, 0, -4});
-    	Vector b = a.normalize();
-    	
-    	assertEquals(3, b.length());
-    	double epsilon = 0.00001;
-    	assertEquals(0.6, b.get(0), epsilon);
-    	assertEquals(0.0, b.get(1), epsilon);
-    	assertEquals(-0.8, b.get(2), epsilon);
-    	// Verify b is a unit vector
-    	// The default normalize() uses Euclidean as the accumulator
-    	assertEquals(1.0, b.fold(Vectors.mkEuclideanNormAccumulator()));
+        Vector a = factory().createVector(new double[]{3, 0, -4});
+        Vector b = a.normalize();
+
+        assertEquals(3, b.length());
+
+        assertEquals(0.6, b.get(0), Vectors.EPS);
+        assertEquals(0.0, b.get(1), Vectors.EPS);
+        assertEquals(-0.8, b.get(2), Vectors.EPS);
+        // Verify b is a unit vector
+        // The default normalize() uses Euclidean as the accumulator
+        assertEquals(1.0, b.fold(Vectors.mkEuclideanNormAccumulator()), Vectors.EPS);
     }
-    
+
+    @Test
     public void testNormalize_EuclideanNormAccumulator() {
-    	VectorAccumulator acc = Vectors.mkEuclideanNormAccumulator();
-    	
-    	Vector a = factory().createVector(new double[] {3, 0, -4});
-    	Vector b = a.normalize(acc);
-    	
-    	assertEquals(3, b.length());
-    	double epsilon = 0.00001;
-    	assertEquals(0.6, b.get(0), epsilon);
-    	assertEquals(0.0, b.get(1), epsilon);
-    	assertEquals(-0.8, b.get(2), epsilon);
-    	// Verify b is a unit vector
-    	assertEquals(1.0, b.fold(acc));
+        VectorAccumulator acc = Vectors.mkEuclideanNormAccumulator();
+
+        Vector a = factory().createVector(new double[]{3, 0, -4});
+        Vector b = a.normalize(acc);
+
+        assertEquals(3, b.length());
+
+        assertEquals(0.6, b.get(0), Vectors.EPS);
+        assertEquals(0.0, b.get(1), Vectors.EPS);
+        assertEquals(-0.8, b.get(2), Vectors.EPS);
+        // Verify b is a unit vector
+        assertEquals(1.0, b.fold(acc), Vectors.EPS);
     }
-    
+
+    @Test
     public void testNormalize_ManhattanNormAccumulator() {
-    	VectorAccumulator acc = Vectors.mkManhattanNormAccumulator();
-    	
-    	Vector a = factory().createVector(new double[] {3, 0, -4});
-    	Vector b = a.normalize(acc);
-    	
-    	assertEquals(3, b.length());
-    	double epsilon = 0.00001;
-    	assertEquals(0.42857, b.get(0), epsilon);
-    	assertEquals(0.0, b.get(1), epsilon);
-    	assertEquals(-0.57142, b.get(2), epsilon);
-    	// Verify b is a unit vector
-    	assertEquals(1.0, b.fold(acc));
+        VectorAccumulator acc = Vectors.mkManhattanNormAccumulator();
+
+        Vector a = factory().createVector(new double[]{3, 0, -4});
+        Vector b = a.normalize(acc);
+
+        assertEquals(3, b.length());
+
+        assertEquals(0.42857, b.get(0), 0.00001);
+        assertEquals(0.0, b.get(1), Vectors.EPS);
+        assertEquals(-0.57142, b.get(2), 0.00001);
+        // Verify b is a unit vector
+        assertEquals(1.0, b.fold(acc), Vectors.EPS);
     }
-    
+
+    @Test
     public void testNormalize_InfinityNormAccumulator() {
-    	VectorAccumulator acc = Vectors.mkInfinityNormAccumulator();
-    	
-    	Vector a = factory().createVector(new double[] {3, 0, -4});
-    	Vector b = a.normalize(acc);
-    	
-    	assertEquals(3, b.length());
-    	double epsilon = 0.00001;
-    	assertEquals(0.75, b.get(0), epsilon);
-    	assertEquals(0.0, b.get(1), epsilon);
-    	assertEquals(-1.0, b.get(2), epsilon);
-    	// Verify b is a unit vector
-    	assertEquals(1.0, b.fold(acc));
+        VectorAccumulator acc = Vectors.mkInfinityNormAccumulator();
+
+        Vector a = factory().createVector(new double[]{3, 0, -4});
+        Vector b = a.normalize(acc);
+
+        assertEquals(3, b.length());
+
+        assertEquals(0.75, b.get(0), Vectors.EPS);
+        assertEquals(0.0, b.get(1), Vectors.EPS);
+        assertEquals(-1.0, b.get(2), Vectors.EPS);
+        // Verify b is a unit vector
+        assertEquals(1.0, b.fold(acc), Vectors.EPS);
+    }
+
+    @Test
+    public void testEqualsWithPrecision() throws Exception {
+        Vector a = factory().createConstantVector(1000, 1.0);
+        assertTrue(a.equals(a, Vectors.EPS));
+
+        Vector b = factory().createConstantVector(1000, 0.0);
+        assertFalse(a.equals(b, Vectors.EPS));
+        assertFalse(b.equals(a, Vectors.EPS));
+
+        Vector c = factory().createConstantVector(100, 0.0);
+        assertFalse(c.equals(a, Vectors.EPS));
+        assertFalse(c.equals(b, Vectors.EPS));
+
+        Vector d = factory().createConstantVector(1000, 0.0);
+        assertFalse(d.equals(a, Vectors.EPS));
+        assertTrue(d.equals(b, Vectors.EPS));
+        assertFalse(d.equals(c, Vectors.EPS));
+        assertTrue(d.equals(d, Vectors.EPS));
+
+        Vector e = factory().createVector(new double[]{});
+        assertTrue(e.equals(e, Vectors.EPS));
+
+        Vector f = factory().createConstantVector(2, Double.MIN_VALUE);
+        Vector g = factory().createConstantVector(2, 0.0);
+        assertTrue(f.equals(g, Vectors.EPS));
+        assertTrue(g.equals(f, Vectors.EPS));
+
+        Vector i = factory().createConstantVector(2, Double.MIN_NORMAL);
+        assertTrue(i.equals(g, Vectors.EPS));
+        assertTrue(i.equals(f, Vectors.EPS));
+        assertTrue(g.equals(i, Vectors.EPS));
+        assertTrue(f.equals(i, Vectors.EPS));
+
+    }
+
+    @Test
+    public void testEquals() throws Exception {
+        Vector a = factory().createConstantVector(1000, 1.0);
+        assertTrue(a.equals(a));
+        assertTrue(a.copy().equals(a));
+
+        Vector b = factory().createConstantVector(1000, 0.0);
+        assertFalse(a.equals(b));
+        assertFalse(b.equals(a));
+
+        Vector c = factory().createConstantVector(100, 0.0);
+        assertFalse(c.equals(a));
+        assertFalse(c.equals(b));
+
+        Vector d = factory().createConstantVector(1000, 0.0);
+        assertFalse(d.equals(a));
+        assertTrue(d.equals(b));
+        assertFalse(d.equals(c));
+        assertTrue(d.equals(d.copy()));
+
+        Vector e = factory().createVector(new double[]{});
+        assertTrue(e.equals(e.copy()));
+
+        Vector f = factory().createConstantVector(2, Double.MIN_VALUE);
+        Vector g = factory().createConstantVector(2, 0.0);
+        assertTrue(f.equals(g));
+        assertTrue(g.equals(f));
+
+        Vector i = factory().createConstantVector(2, Double.MIN_NORMAL);
+        assertTrue(i.equals(g));
+        assertTrue(i.equals(f));
+        assertTrue(g.equals(i));
+        assertTrue(f.equals(i));
+
     }
 }
