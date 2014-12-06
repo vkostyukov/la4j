@@ -33,7 +33,7 @@ import org.la4j.vector.Vector;
 import org.la4j.vector.dense.BasicVector;
 
 public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
-	// TODO: Add range checks
+	
     private static final long serialVersionUID = 4071505L;
 
     private double self[];
@@ -78,11 +78,13 @@ public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
 
     @Override
     public double get(int i, int j) {
+        ensureIndexesAreInBounds(i, j);
         return self[i * columns + j];
     }
 
     @Override
     public void set(int i, int j, double value) {
+        ensureIndexesAreInBounds(i, j);
         self[i * columns + j] = value;
     }
 

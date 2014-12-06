@@ -35,8 +35,8 @@ import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.*;
 import org.la4j.matrix.source.MatrixSource;
+import org.la4j.matrix.sparse.AbstractCompressedMatrix;
 import org.la4j.vector.Vector;
-import org.la4j.vector.Vectors;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -1314,6 +1314,22 @@ public abstract class AbstractMatrix implements Matrix {
         if (rows == Integer.MAX_VALUE || columns == Integer.MAX_VALUE) {
             fail("Wrong matrix dimensions: use 'Integer.MAX_VALUE - 1' instead.");
         }
+    }
+    
+    /**
+     * Ensures the provided row and column are in the bounds of this {@link AbstractCompressedMatrix}.
+     * 
+     * @param i The row to check.
+     * @param j The column to check
+     */
+    protected void ensureIndexesAreInBounds(int i, int j) {
+    	if (i < 0 || i >= this.rows) {
+        	throw new IndexOutOfBoundsException("Row '" + i + "' is invalid.");
+    	}
+    	
+    	if (j < 0 || j >= this.columns) {
+        	throw new IndexOutOfBoundsException("Column '" + j + "' is invalid.");
+    	}
     }
 
     protected void fail(String message) {

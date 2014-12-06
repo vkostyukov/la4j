@@ -49,7 +49,7 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
 
     @Override
     public double get(int i, int j) {
-    	ensureIndexesAreInBounds(i, j);
+        ensureIndexesAreInBounds(i, j);
         return getOrElse(i, j, 0.0);
     }
 
@@ -143,21 +143,5 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
         }
 
         return result;
-    }
-    
-    /**
-     * Ensures the provided row and column are in the bounds of this {@link AbstractCompressedMatrix}.
-     * 
-     * @param row The row to check.
-     * @param column The column to check
-     */
-    protected void ensureIndexesAreInBounds(int row, int column) {
-    	if (row < 0 || row >= this.rows) {
-        	throw new IndexOutOfBoundsException("Row '" + row + "' is invalid.");
-    	}
-    	
-    	if (column < 0 || column >= this.columns) {
-        	throw new IndexOutOfBoundsException("Column '" + column + "' is invalid.");
-    	}
     }
 }
