@@ -122,7 +122,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public double getOrElse(int i, int j, double defaultValue) {
-    	ensureIndexesAreInBounds(i, j);
+        ensureIndexesAreInBounds(i, j);
         int k = searchForRowIndex(i, columnPointers[j], columnPointers[j + 1]);
 
         if (k < columnPointers[j + 1] && rowIndices[k] == i) {
@@ -134,7 +134,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
 
     @Override
     public void set(int i, int j, double value) {
-    	ensureIndexesAreInBounds(i, j);
+        ensureIndexesAreInBounds(i, j);
         int k = searchForRowIndex(i, columnPointers[j], columnPointers[j + 1]);
 
         if (k < columnPointers[j + 1] && rowIndices[k] == i) {

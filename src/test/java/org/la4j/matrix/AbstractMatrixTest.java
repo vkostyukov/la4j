@@ -2297,7 +2297,107 @@ public abstract class AbstractMatrixTest {
         assertFalse(b.is(Matrices.SYMMETRIC_MATRIX));
 
     }
-
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGet_IndexCheck_RowNegative() {
+        Matrix a = factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.get(-1, 1);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGet_IndexCheck_ColumnNegative() {
+   	    Matrix a = factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.get(1, -1);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGet_IndexCheck_RowTooLarge() {
+    	Matrix a = factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.get(a.rows(), 1);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGet_IndexCheck_ColumnTooLarge() {
+    	Matrix a = factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.get(1, a.columns());
+    }
+    
+    @Test
+    public void testGet_IndexCheck_Valid() {
+    	Matrix a = factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 assertEquals(0.0, a.get(1, 1), 0.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSet_IndexCheck_RowNegative() {
+    	 Matrix a = factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.set(-1, 1, 1.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSet_IndexCheck_ColumnNegative() {
+    	 Matrix a = factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.set(1, -1, 1.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSet_IndexCheck_RowTooLarge() {
+    	Matrix a = factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.set(a.rows(), 1, 1.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSet_IndexCheck_ColumnTooLarge() {
+    	Matrix a = factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.set(1, a.columns(), 1.0);
+    }
+    
+    @Test
+    public void testSet_IndexCheck_Valid() {
+    	Matrix a = factory().createMatrix(new double[][] {
+                 { 0.0, 0.0, 0.0, 1.0, 0.0 },
+                 { 0.0, 0.0, 3.0, 0.0, 0.0 },
+         });
+    	 
+    	 a.set(1, 1, 1.0);
+    	 assertEquals(1.0, a.get(1, 1), 0.0);
+    }
     @Test
     public void testEqualsWithPrecision() throws Exception {
         Matrix a = factory().createMatrix();
