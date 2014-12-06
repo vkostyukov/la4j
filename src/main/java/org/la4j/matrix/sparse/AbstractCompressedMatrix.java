@@ -24,7 +24,6 @@ package org.la4j.matrix.sparse;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.AbstractMatrix;
 import org.la4j.matrix.Matrices;
-import org.la4j.matrix.Matrix;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.vector.Vector;
@@ -50,6 +49,7 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
 
     @Override
     public double get(int i, int j) {
+    	ensureIndexesAreInBounds(i, j);
         return getOrElse(i, j, 0.0);
     }
 
@@ -143,5 +143,21 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
         }
 
         return result;
+    }
+    
+    /**
+     * Ensures the provided row and column are in the bounds of this {@link AbstractCompressedMatrix}.
+     * 
+     * @param row The row to check.
+     * @param column The column to check
+     */
+    protected void ensureIndexesAreInBounds(int row, int column) {
+    	if (row < 0 || row >= this.rows) {
+        	throw new IndexOutOfBoundsException("Row '" + row + "' is invalid.");
+    	}
+    	
+    	if (column < 0 || column >= this.columns) {
+        	throw new IndexOutOfBoundsException("Column '" + column + "' is invalid.");
+    	}
     }
 }
