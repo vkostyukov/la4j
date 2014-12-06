@@ -621,46 +621,58 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public Matrix insert(Matrix matrix) {
-        return insert(matrix, 0, 0, 0, 0, matrix.columns(), matrix.rows());
+        return insert(matrix, 0, 0, 0, 0, matrix.rows(), matrix.columns());
     }
     
     @Override
-    public Matrix insert(Matrix matrix, int width, int height) {
-        return insert(matrix, 0, 0, 0, 0, width, height);
+    public Matrix insert(Matrix matrix, int numRows, int numCols) {
+        return insert(matrix, 0, 0, 0, 0, numRows, numCols);
     }
     
     @Override
-    public Matrix insert(Matrix matrix, int dx, int dy, int width, int height) {
-        return insert(matrix, 0, 0, dx, dy, width, height);
+    public Matrix insert(Matrix matrix, int destRow, int destCol, int numRows, int numCols) {
+        return insert(matrix, 0, 0, destRow, destCol, numRows, numCols);
     }
     
     @Override
-    public Matrix insert(Matrix matrix, int sx, int sy, int dx, int dy, int width, int height) {
+    public Matrix insert(Matrix matrix, int srcRow, int srcCol, int destRow, int destCol, int numRows, int numCols) {
         ensureArgumentIsNotNull(matrix, "matrix");
         
-        if (dx < 0 || dy < 0) {
-            fail("Cannot have negative destination position: " + dx + ", " + dy);
+        if (numRows < 0 || numCols < 0) {
+            fail("Cannot have negative rows or columns: " + numRows + "x" + numCols);
         }
         
-        if (sx < 0 || sy < 0) {
-            fail("Cannot have negative source position: " + dx + ", " + dy);
+        if (destRow < 0 || destCol < 0) {
+            fail("Cannot have negative destination position: " + destRow + ", " + destCol);
         }
         
-        if (dx + width > columns || dy + height > rows) {
-            fail("Out of bounds: Cannot add " + width + " rows and " + height + " cols at " 
-                    + dx + ", " + dy + " in a " + rows + "x" + columns + " matrix.");
+        if (destRow > matrix.rows() || destCol > matrix.columns()) {
+            fail("Destination position out of bounds: " + destRow + ", " + destCol);
         }
         
-        if (sx + width > matrix.columns() || sy + height > matrix.rank()) {
-            fail("Out of bounds: Cannot get " + width + " rows and " + height + " cols at " 
-                    + sx + ", " + sy + " from a " + matrix.rows() + "x" + matrix.columns() + " matrix.");
+        if (srcRow < 0 || srcCol < 0) {
+            fail("Cannot have negative source position: " + destRow + ", " + destCol);
+        }
+        
+        if (srcRow > rows || srcCol > columns) {
+            fail("Destination position out of bounds: " + srcRow + ", " + srcCol);
+        }
+        
+        if (destRow + numRows > columns || destCol + numCols > rows) {
+            fail("Out of bounds: Cannot add " + numRows + " rows and " + numCols + " cols at " 
+                    + destRow + ", " + destCol + " in a " + rows + "x" + columns + " matrix.");
+        }
+        
+        if (srcRow + numRows > matrix.rows() || srcCol + numCols > matrix.columns()) {
+            fail("Out of bounds: Cannot get " + numRows + " rows and " + numCols + " cols at " 
+                    + srcRow + ", " + srcCol + " from a " + matrix.rows() + "x" + matrix.columns() + " matrix.");
         }
         
         Matrix result = this.copy();
         
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                result.set(i+dx, j+dy, matrix.get(i+sx, j+dy));
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
+                result.set(i+destRow, j+destCol, matrix.get(i+srcRow, j+destCol));
             }
         }
         
