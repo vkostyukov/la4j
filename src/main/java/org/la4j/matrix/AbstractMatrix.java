@@ -296,10 +296,12 @@ public abstract class AbstractMatrix implements Matrix {
         });
     }
 
+    @Override
     public Matrix rotate() {
         return rotate(factory);
     }
 
+    @Override
     public Matrix rotate(Factory factory) {
         ensureFactoryIsNotNull(factory);
 
@@ -394,10 +396,12 @@ public abstract class AbstractMatrix implements Matrix {
        return result;
     }
 
+    @Override
     public Matrix power(int n) {
         return power(n, factory);
     }
 
+    @Override
     public Matrix power(int n, Factory factory) {
         if (n < 0) {
             fail("The exponent should be positive: " + n + ".");
@@ -504,10 +508,12 @@ public abstract class AbstractMatrix implements Matrix {
         return result;
     }
 
+    @Override
     public Matrix multiplyByItsTranspose() {
         return multiplyByItsTranspose(factory);
     }
 
+    @Override
     public Matrix multiplyByItsTranspose(Factory factory) {
         ensureFactoryIsNotNull(factory);
 
@@ -612,7 +618,55 @@ public abstract class AbstractMatrix implements Matrix {
 
         return result;
     }
-
+    
+    @Override
+    public Matrix insert(Matrix matrix) {
+        return insert(matrix, 0, 0, 0, 0, matrix.columns(), matrix.rows());
+    }
+    
+    @Override
+    public Matrix insert(Matrix matrix, int width, int height) {
+        return insert(matrix, 0, 0, 0, 0, width, height);
+    }
+    
+    @Override
+    public Matrix insert(Matrix matrix, int dx, int dy, int width, int height) {
+        return insert(matrix, 0, 0, dx, dy, width, height);
+    }
+    
+    @Override
+    public Matrix insert(Matrix matrix, int sx, int sy, int dx, int dy, int width, int height) {
+        ensureArgumentIsNotNull(matrix, "matrix");
+        
+        if (dx < 0 || dy < 0) {
+            fail("Cannot have negative destination position: " + dx + ", " + dy);
+        }
+        
+        if (sx < 0 || sy < 0) {
+            fail("Cannot have negative source position: " + dx + ", " + dy);
+        }
+        
+        if (dx + width > columns || dy + height > rows) {
+            fail("Out of bounds: Cannot add " + width + " rows and " + height + " cols at " 
+                    + dx + ", " + dy + " in a " + rows + "x" + columns + " matrix.");
+        }
+        
+        if (sx + width > matrix.columns() || sy + height > matrix.rank()) {
+            fail("Out of bounds: Cannot get " + width + " rows and " + height + " cols at " 
+                    + sx + ", " + sy + " from a " + matrix.rows() + "x" + matrix.columns() + " matrix.");
+        }
+        
+        Matrix result = this.copy();
+        
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                result.set(i+dx, j+dy, matrix.get(i+sx, j+dy));
+            }
+        }
+        
+        return result;
+    }
+    
     @Override
     public Matrix divide(double value) {
         return divide(value, factory);
@@ -810,10 +864,12 @@ public abstract class AbstractMatrix implements Matrix {
         return result;
     }
     
+    @Override
     public Matrix shuffle() {
         return shuffle(factory);
     }
 
+    @Override
     public Matrix shuffle(Factory factory) {
         ensureFactoryIsNotNull(factory);
 

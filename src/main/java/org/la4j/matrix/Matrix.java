@@ -68,7 +68,7 @@ public interface Matrix extends Externalizable {
     /**
      * Assigns all elements of this matrix to given {@code value}.
      * 
-     * @param value the elements' new value
+     * @param value the element's new value
      */
     void assign(double value);
 
@@ -76,7 +76,7 @@ public interface Matrix extends Externalizable {
      * Assigns all elements of the specified row of this matrix to given {@code value}.
      *
      * @param i the row index
-     * @param value the elements' new value
+     * @param value the element's new value
      */
     void assignRow(int i, double value);
 
@@ -84,7 +84,7 @@ public interface Matrix extends Externalizable {
      * Assigns all elements of the specified column of this matrix to given {@code value}.
      *
      * @param j the column index
-     * @param value the elements' new value
+     * @param value the element's new value
      */
     void assignColumn(int j, double value);
 
@@ -305,6 +305,54 @@ public interface Matrix extends Externalizable {
      * @return A + B
      */
     Matrix add(Matrix matrix, Factory factory);
+    
+    /**
+     * Inserts a given {@code matrix} (B) into this matrix (A). The original
+     * values are overwritten by the new ones.
+     * 
+     * @param matrix the matrix to insert, from the first row and column
+     * @return a matrix with the parameter inserted into it
+     */
+    Matrix insert(Matrix matrix);
+    
+    /**
+     * Inserts a given {@code matrix} (B) into this matrix (A). The original
+     * values are overwritten by the new ones.
+     * 
+     * @param matrix the matrix to insert
+     * @param width number of rows to insert
+     * @param height number of columns to insert
+     * @return a matrix with the parameter inserted into it
+     */
+    Matrix insert(Matrix matrix, int width, int height);
+    
+    /**
+     * Inserts a given {@code matrix} (B) into this matrix (A). The original
+     * values are overwritten by the new ones.
+     * 
+     * @param matrix the matrix to insert
+     * @param dx the row to insert at in the destination matrix
+     * @param dy the column to insert at in the destination matrix
+     * @param width number of rows to insert
+     * @param height number of columns to insert
+     * @return a matrix with the parameter inserted into it
+     */
+    Matrix insert(Matrix matrix, int dx, int dy, int width, int height);
+    
+    /**
+     * Inserts a given {@code matrix} (B) into this matrix (A). The original
+     * values are overwritten by the new ones.
+     * 
+     * @param matrix the matrix to insert
+     * @param sx the row to start at in the source matrix
+     * @param sy the column to start at in the source matrix
+     * @param dx the row to insert at in the destination matrix
+     * @param dy the column to insert at in the destination matrix
+     * @param width number of rows to insert
+     * @param height number of columns to insert
+     * @return a matrix with the parameter inserted into it
+     */
+    Matrix insert(Matrix matrix, int sx, int sy, int dx, int dy, int width, int height);
 
     /**
      * Divides every element of this matrix (A) by given {@code value} (v).
