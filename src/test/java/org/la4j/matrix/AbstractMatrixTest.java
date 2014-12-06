@@ -26,7 +26,6 @@
 
 package org.la4j.matrix;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.la4j.factory.Factory;
 import org.la4j.vector.Vector;
@@ -2083,22 +2082,20 @@ public abstract class AbstractMatrixTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    @Ignore
     public void testSelect1() {
         // Throw exception when row indices are invalid
         Matrix a = matrixA();
-        int[] rowInd = new int[]{3, 4, 10};
-        int[] colInd = new int[]{0, 1, 2}; // all columns
+        int[] rowInd = new int[]{3, 4, 10}; // 10 is too large of a row index
+        int[] colInd = new int[]{0, 1, 2};
         a.select(rowInd, colInd);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    @Ignore
     public void testSelect2() {
         // Throw exception when column indices are invalid
         Matrix a = matrixA();
         int[] rowInd = new int[]{0, 1, 2};
-        int[] colInd = new int[]{-1, 1, 2}; // all columns
+        int[] colInd = new int[]{-1, 1, 2}; // -1 is a negative column index
         a.select(rowInd, colInd);
     }
 
