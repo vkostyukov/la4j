@@ -651,10 +651,4 @@ public abstract class AbstractVector implements Vector {
     protected void fail(String message) {
         throw new IllegalArgumentException(message);
     }
-    
-    protected void ensureIndex(int index) {
-    	if (index < 0 || index > this.length) {
-    		throw new IndexOutOfBoundsException("Index '" + index + "' is invalid.");
-    	}
-    }
 }

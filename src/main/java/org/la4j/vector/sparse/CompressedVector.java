@@ -26,6 +26,7 @@ package org.la4j.vector.sparse;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
 import org.la4j.io.VectorIterator;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
@@ -51,7 +52,7 @@ import org.la4j.vector.source.VectorSource;
  * 
  */
 public class CompressedVector extends SparseVector {
-	// TODO: Add range checks
+	
     private static final long serialVersionUID = 4071505L;
 
     private static final int MINIMUM_SIZE = 32;
@@ -109,6 +110,7 @@ public class CompressedVector extends SparseVector {
 
     @Override
     public double getOrElse(int i, double defaultValue) {
+    	ensureIndexIsInBounds(i);
         int k = searchForIndex(i);
 
         if (k < cardinality && indices[k] == i) {
@@ -120,6 +122,7 @@ public class CompressedVector extends SparseVector {
 
     @Override
     public void set(int i, double value) {
+    	ensureIndexIsInBounds(i);
         int k = searchForIndex(i);
 
         if (k < cardinality && indices[k] == i) {
@@ -295,7 +298,7 @@ public class CompressedVector extends SparseVector {
      * @return the position in the value array
      */
     private int searchForIndex(int i) {
-    	ensureIndex(i);
+    	// TODO: add the same check for CRS/CCS matrices
         if (cardinality == 0 || i > indices[cardinality - 1]) {
             return cardinality;
         }
