@@ -95,79 +95,85 @@ public abstract class SparseVectorTest extends AbstractVectorTest {
         assertEquals(4.2, a.getOrElse(3, 4.2), Vectors.EPS);
     }
     
-    public void testGet_IndexChecks() {
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGet_IndexCheck_Negative() {
         SparseVector a = (SparseVector) factory().createVector(
                 new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
         );
         
-        // Test negative index
-        try {
-        	a.get(-1);
-        	fail("Expected IndexOutOfBoundsException to be thrown.");
-        } catch (IndexOutOfBoundsException e) {
-        	// Intended behavior
-        }
-        
-        // Test too large of an index
-        try {
-        	a.get(a.length());
-        	fail("Expected IndexOutOfBoundsException to be thrown.");
-        } catch (IndexOutOfBoundsException e) {
-        	// Intended behavior
-        }
-        
-        // Test valid index
-        assertEquals(1.0, a.get(2));
+        a.get(-1);
     }
     
-    public void testGetOrElse_IndexChecks() {
-        SparseVector a = (SparseVector) factory().createVector(
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGet_IndexCheck_TooLarge() {
+    	SparseVector a = (SparseVector) factory().createVector(
                 new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
         );
         
-        // Test negative index
-        try {
-        	a.get(-1);
-        	fail("Expected IndexOutOfBoundsException to be thrown.");
-        } catch (IndexOutOfBoundsException e) {
-        	// Intended behavior
-        }
-        
-        // Test too large of an index
-        try {
-        	a.get(a.length());
-        	fail("Expected IndexOutOfBoundsException to be thrown.");
-        } catch (IndexOutOfBoundsException e) {
-        	// Intended behavior
-        }
-        
-        // Test valid index
-        assertEquals(1.0, a.get(2));
+        a.get(a.length());
     }
     
-    public void testSet_IndexChecks() {
+    @Test
+    public void testGet_IndexCheck_Valid() {
+    	SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
+        );
+
+        assertEquals(1.0, a.get(2), 0.0);
+    }
+    
+    @Test(expected=IndexOutOfBoundsException.class)
+    public void testGetOrElse_IndexCheck_Negative() {
         SparseVector a = (SparseVector) factory().createVector(
                 new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
         );
         
-        // Test negative index
-        try {
-        	a.set(-1, 1.0);
-        	fail("Expected IndexOutOfBoundsException to be thrown.");
-        } catch (IndexOutOfBoundsException e) {
-        	// Intended behavior
-        }
+        a.get(-1);
+    }
+    
+    @Test(expected=IndexOutOfBoundsException.class)
+    public void testGetOrElse_IndexCheck_TooLarge() {
+        SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
+        );
         
-        // Test too large of an index
-        try {
-        	a.set(a.length(), 1.0);
-        	fail("Expected IndexOutOfBoundsException to be thrown.");
-        } catch (IndexOutOfBoundsException e) {
-        	// Intended behavior
-        }
+        a.get(a.length());
+    }
+    
+    @Test
+    public void testGetOrElse_IndexCheck_Valid() {
+        SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
+        );
+
+        assertEquals(1.0, a.get(2), 0.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSet_IndexCheck_Negative() {
+        SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
+        );
         
-        // Test valid index
+       	a.set(-1, 1.0);
+    }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSet_IndexCheck_TooLarge() {
+        SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
+        );
+
+    	a.set(a.length(), 1.0);
+    }
+    
+    @Test
+    public void testSet_IndexCheck_Valid() {
+        SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
+        );
+
         a.set(0, 1.0);
-        assertEquals(1.0, a.get(0));
+        assertEquals(1.0, a.get(0), 0.0);
     }
 }

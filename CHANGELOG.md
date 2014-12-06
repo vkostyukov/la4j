@@ -16,6 +16,9 @@ la4j-0.5.0 `Apr 2014`
  * Tests migrated to latest junit version, removed `MockVector` and `MockMatrix` classes (contributed by Maxim Samoylov)
  * New vector method `equals(vector, precision)`
  * New matrix method `equals(matrix, precision)`
+ * New vector method `normalize(vectorAccumulator`
+ * New vector method `normalize()`
+ * Added index range checks for `SparseVector`
 
 la4j-0.4.9 `Jan 2014`
  * Bug fix in `align()` method for big sparse matrices (reported by Michael Kapper)
