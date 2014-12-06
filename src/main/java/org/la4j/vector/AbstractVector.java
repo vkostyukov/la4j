@@ -28,9 +28,9 @@ package org.la4j.vector;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
+
 import org.la4j.factory.Factory;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
@@ -563,19 +563,7 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (object == null) {
-            return false;
-        }
-
-        if (!(object instanceof Vector)) {
-            return false;
-        }
-
-        Vector vector = (Vector) object;
+    public boolean equals(Vector vector, double precision) {
 
         if (length != vector.length()) {
             return false;
@@ -590,10 +578,29 @@ public abstract class AbstractVector implements Vector {
 
             double diff = Math.abs(a - b);
 
-            result = (a == b) || (diff < Matrices.EPS || diff / Math.max(Math.abs(a), Math.abs(b)) < Vectors.EPS);
+            result = (a == b) || (diff < precision || diff / Math.max(Math.abs(a), Math.abs(b)) < precision);
         }
 
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof Vector)) {
+            return false;
+        }
+
+        Vector vector = (Vector) o;
+
+        return equals(vector, Vectors.EPS);
     }
 
     @Override

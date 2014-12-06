@@ -21,9 +21,6 @@
 
 package org.la4j.factory;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 public class CCSFactoryTest extends AbstractFactoryTest {
 
     @Override
@@ -31,7 +28,4 @@ public class CCSFactoryTest extends AbstractFactoryTest {
         return new CCSFactory();
     }
 
-    public static Test suite() {
-        return new TestSuite(CCSFactoryTest.class);
-    }
 }

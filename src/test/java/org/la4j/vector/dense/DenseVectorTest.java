@@ -23,10 +23,14 @@ package org.la4j.vector.dense;
 
 import java.util.Arrays;
 
+import org.junit.Test;
 import org.la4j.vector.AbstractVectorTest;
+
+import static org.junit.Assert.assertTrue;
 
 public abstract class DenseVectorTest extends AbstractVectorTest {
 
+    @Test
     public void testToArray() {
 
         double array[] = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0 };

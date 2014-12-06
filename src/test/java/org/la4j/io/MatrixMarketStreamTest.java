@@ -24,9 +24,6 @@ package org.la4j.io;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 public class MatrixMarketStreamTest extends AbstractStreamTest {
 
     @Override
@@ -39,7 +36,4 @@ public class MatrixMarketStreamTest extends AbstractStreamTest {
         return new MatrixMarketStream(out);
     }
 
-    public static Test suite() {
-        return new TestSuite(MatrixMarketStreamTest.class);
-    }
 }

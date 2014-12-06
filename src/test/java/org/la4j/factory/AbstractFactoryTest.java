@@ -21,16 +21,19 @@
 
 package org.la4j.factory;
 
-import junit.framework.TestCase;
-
+import org.junit.Test;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 
-public abstract class AbstractFactoryTest extends TestCase {
+import static org.junit.Assert.assertEquals;
+
+public abstract class AbstractFactoryTest {
 
     public abstract Factory factory();
-    
+
+    @Test
     public void testCreateMatrix() {
         Matrix a = factory().createMatrix();
         Matrix b = factory().createMatrix(5, 5);
@@ -49,12 +52,13 @@ public abstract class AbstractFactoryTest extends TestCase {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++)
             {
-                assertEquals(0.0, b.get(i, j));
-                assertEquals(0.0, d.get(i, j));
+                assertEquals(0.0, b.get(i, j), Matrices.EPS);
+                assertEquals(0.0, d.get(i, j), Matrices.EPS);
             }
         }
     }
 
+    @Test
     public void testCreateMatrixFromArray() {
         double array[][] = new double[][] {
                 { 1.0, 0.0, 3.0 },
@@ -69,11 +73,12 @@ public abstract class AbstractFactoryTest extends TestCase {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                assertEquals(array[i][j], a.get(i, j));
+                assertEquals(array[i][j], a.get(i, j), Matrices.EPS);
             }
         }
     }
 
+    @Test
     public void testCreateConstantMatrix_3x3() {
 
         Matrix a = factory().createConstantMatrix(3, 3, 10.0);
@@ -83,11 +88,12 @@ public abstract class AbstractFactoryTest extends TestCase {
 
         for (int i = 0; i < a.rows(); i++) {
             for (int j = 0; j < a.columns(); j++) {
-                assertEquals(10.0, a.get(i, j));
+                assertEquals(10.0, a.get(i, j), Matrices.EPS);
             }
         }
     }
 
+    @Test
     public void testCreateConstantMatrix_2x5() {
 
         Matrix a = factory().createConstantMatrix(2, 5, 20.0);
@@ -97,11 +103,12 @@ public abstract class AbstractFactoryTest extends TestCase {
 
         for (int i = 0; i < a.rows(); i++) {
             for (int j = 0; j < a.columns(); j++) {
-                assertEquals(20.0, a.get(i, j));
+                assertEquals(20.0, a.get(i, j), Matrices.EPS);
             }
         }
     }
 
+    @Test
     public void testCreateConstantMatrix_4x1() {
 
         Matrix a = factory().createConstantMatrix(4, 1, 30.0);
@@ -111,21 +118,23 @@ public abstract class AbstractFactoryTest extends TestCase {
 
         for (int i = 0; i < a.rows(); i++) {
             for (int j = 0; j < a.columns(); j++) {
-                assertEquals(30.0, a.get(i, j));
+                assertEquals(30.0, a.get(i, j), Matrices.EPS);
             }
         }
     }
 
+    @Test
     public void testCreateRandomSymmetricMatrix() {
         Matrix a = factory().createRandomSymmetricMatrix(5);
 
         for (int i = 0; i < a.rows(); i++) {
             for (int j = i; j < a.columns(); j++) {
-                assertTrue(Math.abs(a.get(i, j) - a.get(j, i)) < Matrices.EPS);
+                assertEquals(a.get(i, j), a.get(j, i), Matrices.EPS);
             }
         }
     }
 
+    @Test
     public void testCreateIdentityMatrix() {
 
         Matrix a = factory().createIdentityMatrix(3);
@@ -136,14 +145,15 @@ public abstract class AbstractFactoryTest extends TestCase {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (i == j) {
-                    assertEquals(1.0, a.get(i, j));
+                    assertEquals(1.0, a.get(i, j), Matrices.EPS);
                 } else {
-                    assertEquals(0.0, a.get(i, j));
+                    assertEquals(0.0, a.get(i, j), Matrices.EPS);
                 }
             }
         }
     }
 
+    @Test
     public void testCreateDiagonalMatrix_3x3() {
 
         double diagonal[] = new double[] { 1.0, 2.0, 3.0 };
@@ -155,14 +165,15 @@ public abstract class AbstractFactoryTest extends TestCase {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (i == j) {
-                    assertEquals(diagonal[i], a.get(i, j));
+                    assertEquals(diagonal[i], a.get(i, j), Matrices.EPS);
                 } else {
-                    assertEquals(0.0, a.get(i, j));
+                    assertEquals(0.0, a.get(i, j), Matrices.EPS);
                 }
             }
         }
     }
 
+    @Test
     public void testCreateVector() {
         Vector a = factory().createVector();
         Vector b = factory().createVector(5);
@@ -173,10 +184,11 @@ public abstract class AbstractFactoryTest extends TestCase {
         assertEquals(5, c.length());
 
         for (int i = 0; i < b.length(); i++) {
-            assertEquals(0.0, b.get(i));
+            assertEquals(0.0, b.get(i), Matrices.EPS);
         }
     }
 
+    @Test
     public void testCreateConstantVector_3() {
         Vector a = factory().createConstantVector(3, 3.14);
         Vector b = factory().createConstantVector(1, 3.14);
@@ -184,13 +196,14 @@ public abstract class AbstractFactoryTest extends TestCase {
         assertEquals(3, a.length());
         assertEquals(1, b.length());
 
-        assertEquals(b.get(0), 3.14);
+        assertEquals(b.get(0), 3.14, Vectors.EPS);
 
         for (int i = 0; i < 3; i++) {
-            assertEquals(3.14, a.get(i));
+            assertEquals(3.14, a.get(i), Vectors.EPS);
         }
     }
 
+    @Test
     public void testCreateVectorFromArray() {
         double array[] = new double[] { 1.0, 0.0, 2.0, 0.0, 3.0 };
         Vector a = factory().createVector(array);
@@ -198,7 +211,7 @@ public abstract class AbstractFactoryTest extends TestCase {
         assertEquals(5, a.length());
 
         for (int i = 0; i < 5; i++) {
-            assertEquals(array[i], a.get(i));
+            assertEquals(array[i], a.get(i), Vectors.EPS);
         }
     }
 }
