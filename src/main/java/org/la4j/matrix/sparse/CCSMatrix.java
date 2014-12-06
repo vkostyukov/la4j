@@ -43,7 +43,7 @@ import org.la4j.vector.sparse.CompressedVector;
  * This is a CCS (Compressed Column Storage) matrix class.
  */
 public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix {
-
+	// TODO: Add range checks
     private static final long serialVersionUID = 4071505L;
 
     private static final int MINIMUM_SIZE = 32;

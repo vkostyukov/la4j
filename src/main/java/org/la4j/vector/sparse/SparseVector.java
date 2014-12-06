@@ -22,6 +22,7 @@
 package org.la4j.vector.sparse;
 
 import java.util.Iterator;
+
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.io.VectorIterator;
@@ -88,6 +89,7 @@ public abstract class SparseVector extends AbstractVector {
 
     @Override
     public double get(int i) {
+    	ensureIndexIsInBounds(i);
         return getOrElse(i, 0.0);
     }
 
@@ -236,5 +238,16 @@ public abstract class SparseVector extends AbstractVector {
     @Override
     public <T> T pipeTo(VectorVectorOperation<T> operation, Vector that) {
         return that.pipeTo(operation.curry(this));
+    }
+    
+    /**
+     * Ensures the provided index is in the bounds of this {@link SparseVector}.
+     * 
+     * @param index The index to check.
+     */
+    protected void ensureIndexIsInBounds(int index) {
+        if (index < 0 || index >= this.length) {
+        	throw new IndexOutOfBoundsException("Index '" + index + "' is invalid.");
+        }
     }
 }

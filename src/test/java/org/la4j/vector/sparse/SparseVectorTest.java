@@ -94,4 +94,80 @@ public abstract class SparseVectorTest extends AbstractVectorTest {
         assertEquals(1.0, a.getOrElse(2, 3.14), Vectors.EPS);
         assertEquals(4.2, a.getOrElse(3, 4.2), Vectors.EPS);
     }
+    
+    public void testGet_IndexChecks() {
+        SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
+        );
+        
+        // Test negative index
+        try {
+        	a.get(-1);
+        	fail("Expected IndexOutOfBoundsException to be thrown.");
+        } catch (IndexOutOfBoundsException e) {
+        	// Intended behavior
+        }
+        
+        // Test too large of an index
+        try {
+        	a.get(a.length());
+        	fail("Expected IndexOutOfBoundsException to be thrown.");
+        } catch (IndexOutOfBoundsException e) {
+        	// Intended behavior
+        }
+        
+        // Test valid index
+        assertEquals(1.0, a.get(2));
+    }
+    
+    public void testGetOrElse_IndexChecks() {
+        SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
+        );
+        
+        // Test negative index
+        try {
+        	a.get(-1);
+        	fail("Expected IndexOutOfBoundsException to be thrown.");
+        } catch (IndexOutOfBoundsException e) {
+        	// Intended behavior
+        }
+        
+        // Test too large of an index
+        try {
+        	a.get(a.length());
+        	fail("Expected IndexOutOfBoundsException to be thrown.");
+        } catch (IndexOutOfBoundsException e) {
+        	// Intended behavior
+        }
+        
+        // Test valid index
+        assertEquals(1.0, a.get(2));
+    }
+    
+    public void testSet_IndexChecks() {
+        SparseVector a = (SparseVector) factory().createVector(
+                new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
+        );
+        
+        // Test negative index
+        try {
+        	a.set(-1, 1.0);
+        	fail("Expected IndexOutOfBoundsException to be thrown.");
+        } catch (IndexOutOfBoundsException e) {
+        	// Intended behavior
+        }
+        
+        // Test too large of an index
+        try {
+        	a.set(a.length(), 1.0);
+        	fail("Expected IndexOutOfBoundsException to be thrown.");
+        } catch (IndexOutOfBoundsException e) {
+        	// Intended behavior
+        }
+        
+        // Test valid index
+        a.set(0, 1.0);
+        assertEquals(1.0, a.get(0));
+    }
 }
