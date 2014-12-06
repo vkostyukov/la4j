@@ -21,12 +21,18 @@
 
 package org.la4j.vector.sparse;
 
+import org.junit.Test;
 import org.la4j.vector.AbstractVectorTest;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 public abstract class SparseVectorTest extends AbstractVectorTest {
 
+    @Test
     public void testCardinality() {
 
         SparseVector a = (SparseVector) factory().createVector(
@@ -36,6 +42,7 @@ public abstract class SparseVectorTest extends AbstractVectorTest {
         assertEquals(1, a.cardinality());
     }
 
+    @Test
     public void testFoldNonZero_5() {
 
         SparseVector a = (SparseVector) factory().createVector(
@@ -45,15 +52,16 @@ public abstract class SparseVectorTest extends AbstractVectorTest {
         VectorAccumulator sum = Vectors.asSumAccumulator(0.0);
         VectorAccumulator product = Vectors.asProductAccumulator(1.0);
 
-        assertEquals(9.0, a.foldNonZero(sum));
+        assertEquals(9.0, a.foldNonZero(sum), Vectors.EPS);
         // check whether the accumulator were flushed
-        assertEquals(9.0, a.foldNonZero(sum));
+        assertEquals(9.0, a.foldNonZero(sum), Vectors.EPS);
 
-        assertEquals(20.0, a.foldNonZero(product));
+        assertEquals(20.0, a.foldNonZero(product), Vectors.EPS);
         // check whether the accumulator were flushed
-        assertEquals(20.0, a.foldNonZero(product));
+        assertEquals(20.0, a.foldNonZero(product), Vectors.EPS);
     }
 
+    @Test
     public void testIsZeroAt_4() {
 
         SparseVector a = (SparseVector) factory().createVector(
@@ -64,6 +72,7 @@ public abstract class SparseVectorTest extends AbstractVectorTest {
         assertFalse(a.isZeroAt(3));
     }
 
+    @Test
     public void testNonZeroAt_6() {
 
         SparseVector a = (SparseVector) factory().createVector(
@@ -74,14 +83,15 @@ public abstract class SparseVectorTest extends AbstractVectorTest {
         assertFalse(a.nonZeroAt(3));
     }
 
+    @Test
     public void testGetOrElse_5() {
 
         SparseVector a = (SparseVector) factory().createVector(
                 new double[] { 0.0, 0.0, 1.0, 0.0, 0.0 }
         );
 
-        assertEquals(0.0, a.getOrElse(1, 0.0));
-        assertEquals(1.0, a.getOrElse(2, 3.14));
-        assertEquals(4.2, a.getOrElse(3, 4.2));
+        assertEquals(0.0, a.getOrElse(1, 0.0), Vectors.EPS);
+        assertEquals(1.0, a.getOrElse(2, 3.14), Vectors.EPS);
+        assertEquals(4.2, a.getOrElse(3, 4.2), Vectors.EPS);
     }
 }

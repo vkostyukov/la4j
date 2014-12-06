@@ -36,6 +36,7 @@ import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.*;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -1196,20 +1197,7 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public boolean equals(Object object) {
-
-        if (this == object) {
-            return true;
-        }
-        if (object == null) {
-            return false;
-        }
-
-        if (!(object instanceof Matrix)) {
-            return false;
-        }
-
-        Matrix matrix = (Matrix) object;
+    public boolean equals(Matrix matrix, double precision) {
 
         if (rows != matrix.rows() || columns != matrix.columns()) {
             return false;
@@ -1223,11 +1211,30 @@ public abstract class AbstractMatrix implements Matrix {
                 double b = matrix.get(i, j);
                 double diff = Math.abs(a - b);
 
-                result = (a == b) || (diff < Matrices.EPS || diff / Math.max(Math.abs(a), Math.abs(b)) < Matrices.EPS);
+                result = (a == b) || (diff < precision || diff / Math.max(Math.abs(a), Math.abs(b)) < precision);
             }
         }
 
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof Matrix)) {
+            return false;
+        }
+
+        Matrix matrix = (Matrix) o;
+
+        return equals(matrix, Matrices.EPS);
     }
 
     @Override

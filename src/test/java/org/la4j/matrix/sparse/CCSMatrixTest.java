@@ -21,9 +21,6 @@
 
 package org.la4j.matrix.sparse;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.la4j.factory.CCSFactory;
 import org.la4j.factory.Factory;
 
@@ -34,7 +31,4 @@ public class CCSMatrixTest extends SparseMatrixTest {
         return new CCSFactory();
     }
 
-    public static Test suite() {
-        return new TestSuite(CCSMatrixTest.class);
-    }
 }

@@ -21,14 +21,14 @@
 
 package org.la4j.inversion;
 
-import junit.framework.TestCase;
-
+import org.junit.Test;
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
-import org.la4j.matrix.MockMatrix;
 
-public abstract class AbstractInverterTest extends TestCase {
+import static org.junit.Assert.assertTrue;
+
+public abstract class AbstractInverterTest {
 
     public abstract LinearAlgebra.InverterFactory inverterFactory();
 
@@ -44,10 +44,11 @@ public abstract class AbstractInverterTest extends TestCase {
             Matrix c = a.multiply(b);
             Matrix e = factory.createIdentityMatrix(a.rows());
 
-            assertEquals(new MockMatrix(e), new MockMatrix(c));
+            assertTrue(e.equals(c, 1e-9));
         }
     }
 
+    @Test
     public void testInverse_1x1 () {
 
         double input[][] = new double[][] {
@@ -57,6 +58,7 @@ public abstract class AbstractInverterTest extends TestCase {
         performTest(input, inverterFactory());
     }
 
+    @Test
     public void testInverse_2x2 () {
 
         double input[][] = new double[][] {
@@ -67,6 +69,7 @@ public abstract class AbstractInverterTest extends TestCase {
         performTest(input, inverterFactory());
     }
 
+    @Test
     public void testInverse_4x4() {
 
         double input[][] = new double[][] {
@@ -80,6 +83,7 @@ public abstract class AbstractInverterTest extends TestCase {
         performTest(input, inverterFactory());
     }
 
+    @Test
     public void testInverseInverse_5x5 () {
 
         double input[][] = new double[][] {
@@ -94,6 +98,7 @@ public abstract class AbstractInverterTest extends TestCase {
         performTest(input, inverterFactory());
     }
 
+    @Test
     public void testInverseInverse_6x6 () {
 
         double input[][] = new double[][] {
