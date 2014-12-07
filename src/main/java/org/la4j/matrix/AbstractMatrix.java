@@ -625,21 +625,21 @@ public abstract class AbstractMatrix implements Matrix {
     }
     
     @Override
-    public Matrix insert(Matrix matrix, int numRows, int numCols) {
-        return insert(matrix, 0, 0, 0, 0, numRows, numCols);
+    public Matrix insert(Matrix matrix, int rows, int columns) {
+        return insert(matrix, 0, 0, 0, 0, rows, columns);
     }
     
     @Override
-    public Matrix insert(Matrix matrix, int destRow, int destCol, int numRows, int numCols) {
-        return insert(matrix, 0, 0, destRow, destCol, numRows, numCols);
+    public Matrix insert(Matrix matrix, int destRow, int destCol, int rows, int columns) {
+        return insert(matrix, 0, 0, destRow, destCol, rows, columns);
     }
     
     @Override
-    public Matrix insert(Matrix matrix, int srcRow, int srcCol, int destRow, int destCol, int numRows, int numCols) {
+    public Matrix insert(Matrix matrix, int srcRow, int srcCol, int destRow, int destCol, int rows, int columns) {
         ensureArgumentIsNotNull(matrix, "matrix");
         
-        if (numRows < 0 || numCols < 0) {
-            fail("Cannot have negative rows or columns: " + numRows + "x" + numCols);
+        if (rows < 0 || columns < 0) {
+            fail("Cannot have negative rows or columns: " + rows + "x" + columns);
         }
         
         if (destRow < 0 || destCol < 0) {
@@ -654,24 +654,24 @@ public abstract class AbstractMatrix implements Matrix {
             fail("Cannot have negative source position: " + destRow + ", " + destCol);
         }
         
-        if (srcRow > rows || srcCol > columns) {
+        if (srcRow > this.rows || srcCol > this.columns) {
             fail("Destination position out of bounds: " + srcRow + ", " + srcCol);
         }
         
-        if (destRow + numRows > columns || destCol + numCols > rows) {
-            fail("Out of bounds: Cannot add " + numRows + " rows and " + numCols + " cols at " 
-                    + destRow + ", " + destCol + " in a " + rows + "x" + columns + " matrix.");
+        if (destRow + rows > this.columns || destCol + columns > this.rows) {
+            fail("Out of bounds: Cannot add " + rows + " rows and " + columns + " cols at " 
+                    + destRow + ", " + destCol + " in a " + this.rows + "x" + this.columns + " matrix.");
         }
         
-        if (srcRow + numRows > matrix.rows() || srcCol + numCols > matrix.columns()) {
-            fail("Out of bounds: Cannot get " + numRows + " rows and " + numCols + " cols at " 
+        if (srcRow + rows > matrix.rows() || srcCol + columns > matrix.columns()) {
+            fail("Out of bounds: Cannot get " + rows + " rows and " + columns + " cols at " 
                     + srcRow + ", " + srcCol + " from a " + matrix.rows() + "x" + matrix.columns() + " matrix.");
         }
         
         Matrix result = this.copy();
         
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < numCols; j++) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
                 result.set(i+destRow, j+destCol, matrix.get(i+srcRow, j+destCol));
             }
         }
