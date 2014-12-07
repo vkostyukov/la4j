@@ -89,7 +89,6 @@ public abstract class SparseVector extends AbstractVector {
 
     @Override
     public double get(int i) {
-    	ensureIndexIsInBounds(i);
         return getOrElse(i, 0.0);
     }
 

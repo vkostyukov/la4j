@@ -49,7 +49,6 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
 
     @Override
     public double get(int i, int j) {
-        ensureIndexesAreInBounds(i, j);
         return getOrElse(i, j, 0.0);
     }
 
