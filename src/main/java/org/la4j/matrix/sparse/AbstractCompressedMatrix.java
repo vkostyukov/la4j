@@ -24,7 +24,6 @@ package org.la4j.matrix.sparse;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.AbstractMatrix;
 import org.la4j.matrix.Matrices;
-import org.la4j.matrix.Matrix;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.vector.Vector;

@@ -89,7 +89,6 @@ public abstract class SparseVector extends AbstractVector {
 
     @Override
     public double get(int i) {
-    	ensureIndexIsInBounds(i);
         return getOrElse(i, 0.0);
     }
 
@@ -243,11 +242,11 @@ public abstract class SparseVector extends AbstractVector {
     /**
      * Ensures the provided index is in the bounds of this {@link SparseVector}.
      * 
-     * @param index The index to check.
+     * @param i The index to check.
      */
-    protected void ensureIndexIsInBounds(int index) {
-        if (index < 0 || index >= this.length) {
-        	throw new IndexOutOfBoundsException("Index '" + index + "' is invalid.");
+    protected void ensureIndexIsInBounds(int i) {
+        if (i < 0 || i >= this.length) {
+        	throw new IndexOutOfBoundsException("Index '" + i + "' is invalid.");
         }
     }
 }
