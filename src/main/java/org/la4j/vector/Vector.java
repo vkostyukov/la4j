@@ -39,7 +39,7 @@ import org.la4j.vector.operation.VectorVectorOperation;
 /**
  * The real vector interface.
  * 
- * A vector represents an array of elements. It can be resized.
+ * A vector represents an array of elements. It can be re-sized.
  */
 public interface Vector extends Externalizable, Iterable<Double> {
 
@@ -100,13 +100,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector add(double value, Factory factory);
 
     /**
-     * Adds given {@code value} (v) to this vector (X) in-place.
-     *
-     * @param value the right hand value for addition
-     */
-    void addInPlace(double value);
-
-    /**
      * Adds given {@code vector} (X) to this vector (Y).
      * 
      * @param that the right hand vector for addition
@@ -124,13 +117,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @return X + Y
      */
     Vector add(Vector that, Factory factory);
-
-    /**
-     * Adds given {@code vector} (X) to this vector (Y) in-place.
-     *
-     * @param that the right hand vector for addition
-     */
-    void addInPlace(Vector that);
 
     /**
      * Multiplies this vector (X) by given {@code value} (v).
@@ -152,13 +138,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector multiply(double value, Factory factory);
 
     /**
-     * Multiplies this vector (X) by given {@code value} (v) in-place.
-     *
-     * @param value the right hand value for multiplication
-     */
-    void multiplyInPlace(double value);
-
-    /**
      * Calculates the Hadamard (element-wise) product of this vector and given {@code that}.
      * 
      * @param that the right hand vector for Hadamard product
@@ -176,14 +155,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @return the Hadamard product of two vectors
      */
     Vector hadamardProduct(Vector that, Factory factory);
-
-    /**
-     * Calculates the Hadamard (element-wise) product of this vector and given {@code that}
-     * in-place.
-     *
-     * @param that the right hand vector for Hadamard product
-     */
-    void hadamardProductInPlace(Vector that);
 
     /**
      * Multiples this vector (X) by given {@code that} (A).
@@ -241,13 +212,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @return X - Y
      */
     Vector subtract(Vector that, Factory factory);
-
-    /**
-     * Subtracts given {@code that} (Y) from this vector (X) in-place.
-     *
-     * @param that the right hand vector for subtraction
-     */
-    void subtractInPlace(Vector that);
 
     /**
      * Divides this vector (X) by given {@code value} (v).
@@ -675,13 +639,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
      */
     @Override
     VectorIterator iterator();
-
-    /**
-     * Returns a burning vector iterator.
-     *
-     * @return a burning vector iterator
-     */
-    VectorIterator burningIterator();
 
     /**
      * Pipes this vector to a given {@code operation}.

@@ -41,7 +41,7 @@ import org.la4j.vector.operation.VectorOperations;
 /**
  * An abstract wrapper around {@code Vector} to make it easier to implement.
  * 
- * A vector represents an array of elements. It can be resized.
+ * A vector represents an array of elements. It can be re-sized.
  */
 public abstract class AbstractVector implements Vector {
 
@@ -103,15 +103,6 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public void addInPlace(double value) {
-        VectorIterator it = iterator();
-        while (it.hasNext()) {
-            it.next();
-            it.set(it.get() + value);
-        }
-    }
-
-    @Override
     public Vector add(Vector that) {
         return add(that, factory);
     }
@@ -123,14 +114,6 @@ public abstract class AbstractVector implements Vector {
         ensureVectorIsSimilar(that);
 
         return pipeTo(VectorOperations.ooPlaceVectorToVectorAddition(factory), that);
-    }
-
-    @Override
-    public void addInPlace(Vector that) {
-        ensureArgumentIsNotNull(that, "vector");
-        ensureVectorIsSimilar(that);
-
-        pipeTo(VectorOperations.inPlaceVectorToVectorAddition(), that);
     }
 
     @Override
@@ -150,14 +133,6 @@ public abstract class AbstractVector implements Vector {
         ensureVectorIsSimilar(that);
 
         return pipeTo(VectorOperations.ooPlaceHadamardProduct(factory), that);
-    }
-
-    @Override
-    public void hadamardProductInPlace(Vector that) {
-        ensureArgumentIsNotNull(that,  "vector");
-        ensureVectorIsSimilar(that);
-
-        pipeTo(VectorOperations.inPlaceHadamardProduct(), that);
     }
 
     @Override
@@ -214,14 +189,6 @@ public abstract class AbstractVector implements Vector {
         ensureVectorIsSimilar(that);
 
         return pipeTo(VectorOperations.ooPlaceVectorFromVectorSubtraction(factory), that);
-    }
-
-    @Override
-    public void subtractInPlace(Vector that) {
-        ensureArgumentIsNotNull(that, "vector");
-        ensureVectorIsSimilar(that);
-
-        pipeTo(VectorOperations.inPlaceVectorFromVectorSubtraction(), that);
     }
 
     @Override

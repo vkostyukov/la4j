@@ -23,9 +23,6 @@ package org.la4j.vector.operation;
 
 import org.la4j.factory.Factory;
 import org.la4j.vector.Vector;
-import org.la4j.vector.operation.inplace.InPlaceHadamardProduct;
-import org.la4j.vector.operation.inplace.InPlaceVectorFromVectorSubtraction;
-import org.la4j.vector.operation.inplace.InPlaceVectorToVectorAddition;
 import org.la4j.vector.operation.ooplace.OoPlaceHadamardProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceInnerProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorFromVectorSubtraction;
@@ -37,16 +34,8 @@ public final class VectorOperations {
         return new OoPlaceInnerProduct();
     }
 
-    public static VectorVectorOperation<Void> inPlaceVectorToVectorAddition() {
-        return new InPlaceVectorToVectorAddition();
-    }
-
     public static VectorVectorOperation<Vector> ooPlaceVectorToVectorAddition(Factory factory) {
         return new OoPlaceVectorToVectorAddition(factory);
-    }
-
-    public static VectorVectorOperation<Void> inPlaceHadamardProduct() {
-        return new InPlaceHadamardProduct();
     }
 
     public static VectorVectorOperation<Vector> ooPlaceHadamardProduct(Factory factory) {
@@ -55,9 +44,5 @@ public final class VectorOperations {
 
     public static VectorVectorOperation<Vector> ooPlaceVectorFromVectorSubtraction(Factory factory) {
         return new OoPlaceVectorFromVectorSubtraction(factory);
-    }
-
-    public static VectorVectorOperation<Void> inPlaceVectorFromVectorSubtraction() {
-        return new InPlaceVectorFromVectorSubtraction();
     }
 }
