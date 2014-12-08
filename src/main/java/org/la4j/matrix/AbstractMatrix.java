@@ -28,21 +28,24 @@
 
 package org.la4j.matrix;
 
-import org.la4j.LinearAlgebra;
-import org.la4j.decomposition.MatrixDecompositor;
-import org.la4j.factory.Factory;
-import org.la4j.inversion.MatrixInverter;
-import org.la4j.linear.LinearSystemSolver;
-import org.la4j.matrix.functor.*;
-import org.la4j.matrix.source.MatrixSource;
-import org.la4j.matrix.sparse.AbstractCompressedMatrix;
-import org.la4j.vector.Vector;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
+import org.la4j.LinearAlgebra;
+import org.la4j.decomposition.MatrixDecompositor;
+import org.la4j.factory.Factory;
+import org.la4j.inversion.MatrixInverter;
+import org.la4j.linear.LinearSystemSolver;
+import org.la4j.matrix.functor.AdvancedMatrixPredicate;
+import org.la4j.matrix.functor.MatrixAccumulator;
+import org.la4j.matrix.functor.MatrixFunction;
+import org.la4j.matrix.functor.MatrixPredicate;
+import org.la4j.matrix.functor.MatrixProcedure;
+import org.la4j.matrix.source.MatrixSource;
+import org.la4j.matrix.sparse.AbstractCompressedMatrix;
+import org.la4j.vector.Vector;
 
 public abstract class AbstractMatrix implements Matrix {
 
@@ -225,7 +228,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix removeLastRow() {
-        return removeFirstRow(factory);
+        return removeLastRow(factory);
     }
 
     @Override
@@ -235,7 +238,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix removeLastColumn() {
-        return removeFirstColumn(factory);
+        return removeLastColumn(factory);
     }
 
     @Override
@@ -672,7 +675,7 @@ public abstract class AbstractMatrix implements Matrix {
         
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                result.set(i+destRow, j+destCol, matrix.get(i+srcRow, j+destCol));
+                result.set(i+destRow, j+destCol, matrix.get(i+srcRow, j+srcCol));
             }
         }
         
