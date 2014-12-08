@@ -27,6 +27,7 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.vector.Vector;
+import org.la4j.vector.functor.VectorFunction;
 
 public abstract class AbstractCompressedMatrix extends AbstractMatrix 
     implements SparseMatrix {
@@ -92,6 +93,11 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
             }
         }
     }
+    
+    @Override
+    public void eachNonZeroInRow(int i, VectorFunction function) {
+    	// FIXME
+    }
 
     @Override
     public void eachNonZeroInColumn(int j, MatrixProcedure procedure) {
@@ -100,6 +106,11 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
                 procedure.apply(i, j, get(i, j));
             }
         }
+    }
+    
+    @Override
+    public void eachNonZeroInColumn(int j, VectorFunction function) {
+    	// FIXME
     }
 
     @Override
@@ -113,11 +124,23 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
         eachNonZeroInRow(i, Matrices.asAccumulatorProcedure(accumulator));
         return accumulator.accumulate();
     }
+    
+    @Override
+    public double foldNonZeroInRow(int i, VectorFunction function) {
+    	// FIXME
+    	return 0.0;
+    }
 
     @Override
     public double foldNonZeroInColumn(int j, MatrixAccumulator accumulator) {
         eachNonZeroInColumn(j, Matrices.asAccumulatorProcedure(accumulator));
         return accumulator.accumulate();
+    }
+    
+    @Override
+    public double foldNonZeroInColumn(int j, VectorFunction function) {
+    	// FIXME
+    	return 0.0;
     }
 
     @Override
