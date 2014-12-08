@@ -97,6 +97,11 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     @Override
     public void eachNonZeroInRow(int i, VectorFunction function) {
     	// FIXME
+    	for (int j = 0; j < columns; j++) {
+    		if (Math.abs(get(i, j)) > Matrices.EPS) {
+    			function.evaluate(j, get(i, j));
+    		}
+    	}
     }
 
     @Override
@@ -128,6 +133,12 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     @Override
     public double foldNonZeroInRow(int i, VectorFunction function) {
     	// FIXME
+    	double value = 0.0;
+    	for (int j = 0; j < columns; j++) {
+    		if (Math.abs(get(i, j)) > Matrices.EPS) {
+    			function.evaluate(j, get(i, j));
+    		}
+    	}
     	return 0.0;
     }
 
