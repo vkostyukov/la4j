@@ -25,6 +25,7 @@ import org.la4j.matrix.Matrix;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.vector.Vector;
+import org.la4j.vector.functor.VectorFunction;
 
 public interface SparseMatrix extends Matrix {
 
@@ -72,20 +73,42 @@ public interface SparseMatrix extends Matrix {
     void eachNonZero(MatrixProcedure procedure);
 
     /**
+     * Deprecated. Use {@link #eachNonZeroInRow(int, VectorFunction)} instead.
+     * <p/>
      * Applies given {@code procedure} to each non-zero element of specified row of this matrix.
      *
      * @param i the row index
      * @param procedure the matrix procedure
      */
+    @Deprecated
     void eachNonZeroInRow(int i, MatrixProcedure procedure);
+    
+    /**
+     * Applies the given {@code function} to each non-zero element of the specified row of this matrix.
+     * 
+     * @param i the row index. 
+     * @param function the {@link VectorFunction}. 
+     */
+    void eachNonZeroInRow(int i, VectorFunction function);
 
     /**
+     * Deprecated. Use {@link #eachNonZeroInColumn(int, VectorFunction)} instead.
+     * <p/>
      * Applies given {@code procedure} to each non-zero element of specified column of this matrix.
      *
      * @param j the column index
      * @param procedure the matrix procedure
      */
+    @Deprecated
     void eachNonZeroInColumn(int j, MatrixProcedure procedure);
+    
+    /**
+     * Applies the given {@code function} to each non-zero element of the specified column of this matrix.
+     * 
+     * @param j the column index.
+     * @param function the {@link VectorFunction}.
+     */
+    void eachNonZeroInColumn(int j, VectorFunction function);
 
     /**
      * Folds non-zero elements of this matrix with given {@code accumulator}.
@@ -97,6 +120,8 @@ public interface SparseMatrix extends Matrix {
     double foldNonZero(MatrixAccumulator accumulator);
 
     /**
+     * Deprecated. Use {@link #foldNonZeroInRow(int, VectorFunction)} instead.
+     * <p/>
      * Folds non-zero elements of specified row in this matrix with given {@code accumulator}.
      *
      * @param i the row index
@@ -104,9 +129,22 @@ public interface SparseMatrix extends Matrix {
      *
      * @return the accumulated value
      */
+    @Deprecated
     double foldNonZeroInRow(int i, MatrixAccumulator accumulator);
+    
+    /**
+     * Folds non-zero elements of the specified row in this matrix with the given {@code function}.
+     * 
+     * @param i the row index.
+     * @param function the {@link VectorFunction}.
+     * 
+     * @return the accumulated value.
+     */
+    double foldNonZeroInRow(int i, VectorFunction function);
 
     /**
+     * Deprecated. Use {@link #foldNonZeroInColumn(int, VectorFunction)} instead.
+     * <p/>
      * Folds non-zero elements of specified column in this matrix with given {@code accumulator}.
      *
      * @param j the column index
@@ -114,7 +152,18 @@ public interface SparseMatrix extends Matrix {
      *
      * @return the accumulated value
      */
+    @Deprecated
     double foldNonZeroInColumn(int j, MatrixAccumulator accumulator);
+    
+    /**
+     * Folds non-zero elements of the specified column in this matrix with the given {@code function}.
+     * 
+     * @param j the column index.
+     * @param function the {@link VectorFunction}.
+     * 
+     * @return the accumulated value.
+     */
+    double foldNonZeroInColumn(int j, VectorFunction function);
 
     /**
      * Folds non-zero elements (in a column-by-column manner) of this matrix with given {@code accumulator}.
