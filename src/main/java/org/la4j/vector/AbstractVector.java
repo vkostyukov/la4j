@@ -36,7 +36,6 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.operation.VectorOperations;
 
 /**
  * An abstract wrapper around {@code Vector} to make it easier to implement.
@@ -113,7 +112,7 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(that, "vector");
         ensureVectorIsSimilar(that);
 
-        return pipeTo(VectorOperations.ooPlaceVectorToVectorAddition(factory), that);
+        return pipeTo(Vectors.ooPlaceVectorToVectorAddition(factory), that);
     }
 
     @Override
@@ -132,7 +131,7 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(that,  "vector");
         ensureVectorIsSimilar(that);
 
-        return pipeTo(VectorOperations.ooPlaceHadamardProduct(factory), that);
+        return pipeTo(Vectors.ooPlaceHadamardProduct(factory), that);
     }
 
     @Override
@@ -188,7 +187,7 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(that, "vector");
         ensureVectorIsSimilar(that);
 
-        return pipeTo(VectorOperations.ooPlaceVectorFromVectorSubtraction(factory), that);
+        return pipeTo(Vectors.ooPlaceVectorFromVectorSubtraction(factory), that);
     }
 
     @Override
@@ -216,7 +215,7 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(that, "vector");
         ensureVectorIsSimilar(that);
 
-        return pipeTo(VectorOperations.ooPlaceInnerProduct(), that);
+        return pipeTo(Vectors.ooPlaceInnerProduct(), that);
     }
 
     @Override

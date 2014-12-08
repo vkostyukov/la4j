@@ -36,6 +36,11 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.operation.VectorVectorOperation;
+import org.la4j.vector.operation.ooplace.OoPlaceHadamardProduct;
+import org.la4j.vector.operation.ooplace.OoPlaceInnerProduct;
+import org.la4j.vector.operation.ooplace.OoPlaceVectorFromVectorSubtraction;
+import org.la4j.vector.operation.ooplace.OoPlaceVectorToVectorAddition;
 import org.la4j.vector.source.ArrayVectorSource;
 import org.la4j.vector.source.LoopbackVectorSource;
 import org.la4j.vector.source.RandomVectorSource;
@@ -552,5 +557,44 @@ public final class Vectors {
      */
     public static Vector asVector(double... values) {
         return LinearAlgebra.DEFAULT_FACTORY.createVector(values);
+    }
+
+    /**
+     * TODO:
+     *
+     * @return
+     */
+    public static VectorVectorOperation<Double> ooPlaceInnerProduct() {
+        return new OoPlaceInnerProduct();
+    }
+
+    /**
+     * TODO:
+     *
+     * @param factory
+     * @return
+     */
+    public static VectorVectorOperation<Vector> ooPlaceVectorToVectorAddition(Factory factory) {
+        return new OoPlaceVectorToVectorAddition(factory);
+    }
+
+    /**
+     * TODO:
+     *
+     * @param factory
+     * @return
+     */
+    public static VectorVectorOperation<Vector> ooPlaceHadamardProduct(Factory factory) {
+        return new OoPlaceHadamardProduct(factory);
+    }
+
+    /**
+     * TODO:
+     *
+     * @param factory
+     * @return
+     */
+    public static VectorVectorOperation<Vector> ooPlaceVectorFromVectorSubtraction(Factory factory) {
+        return new OoPlaceVectorFromVectorSubtraction(factory);
     }
 }
