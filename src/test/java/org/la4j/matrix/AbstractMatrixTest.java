@@ -85,7 +85,20 @@ public abstract class AbstractMatrixTest {
     }
     
     @Test
-    public void testInsert_2x2_into_3x3_offset() {
+    public void testInsert_3x3_slice_into_4x4_offset() {
+        Matrix a = factory().createMatrix(new double[][]{
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}
+        });
+        
+        Matrix b = factory().createMatrix(4, 4);
+        
+        assertEquals(a.slice(1, 1, 3, 3), b.insert(a, 1, 1, 1, 1, 2, 2).slice(1, 1, 3, 3));
+    }
+    
+    @Test
+    public void testInsert_2x2_into_4x4_offset() {
         Matrix a = factory().createMatrix(new double[][]{
                 {1, 2},
                 {3, 4},
