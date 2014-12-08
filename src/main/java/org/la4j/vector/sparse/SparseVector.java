@@ -26,7 +26,6 @@ import java.util.Iterator;
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.iterator.VectorToBurningIterator;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
@@ -38,7 +37,7 @@ import org.la4j.vector.operation.VectorVectorOperation;
 /**
  * A sparse vector.
  * 
- * A vector represents an array of elements. It can be resized.
+ * A vector represents an array of elements. It can be re-sized.
  * 
  * A sparse data structure does not store blank elements, and instead just stores
  * elements with values. A sparse data structure can be initialized with a large
@@ -173,17 +172,6 @@ public abstract class SparseVector extends AbstractVector {
         return result;
     }
 
-    @Override
-    public void multiplyInPlace(double value) {
-        // TODO: multiply by 0 = clear()
-        VectorIterator it = nonZeroIterator();
-
-        while (it.hasNext()) {
-            it.next();
-            it.set(it.get() * value);
-        }
-    }
-
     /**
      * Returns a non-zero iterator.
      *
@@ -201,25 +189,6 @@ public abstract class SparseVector extends AbstractVector {
             @Override
             public Iterator<Double> iterator() {
                 return nonZeroIterator();
-            }
-        };
-    }
-
-    public VectorIterator nonZeroBurningIterator() {
-        return iteratorToBurning(nonZeroIterator());
-    }
-
-    @Override
-    public VectorIterator burningIterator() {
-        return iteratorToBurning(iterator());
-    }
-
-    private VectorIterator iteratorToBurning(final VectorIterator iterator) {
-        return new VectorToBurningIterator(iterator) {
-            @Override
-            public void flush() {
-                // fast flush
-                SparseVector.this.cardinality = innerCursor() + 1;
             }
         };
     }
@@ -246,7 +215,7 @@ public abstract class SparseVector extends AbstractVector {
      */
     protected void ensureIndexIsInBounds(int i) {
         if (i < 0 || i >= this.length) {
-        	throw new IndexOutOfBoundsException("Index '" + i + "' is invalid.");
+            throw new IndexOutOfBoundsException("Index '" + i + "' is invalid.");
         }
     }
 }

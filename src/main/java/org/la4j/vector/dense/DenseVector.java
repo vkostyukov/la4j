@@ -23,8 +23,6 @@ package org.la4j.vector.dense;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
-import org.la4j.iterator.VectorIterator;
-import org.la4j.iterator.VectorToBurningIterator;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.operation.VectorOperation;
@@ -33,7 +31,7 @@ import org.la4j.vector.operation.VectorVectorOperation;
 /**
  * A dense vector.
  * 
- * A vector represents an array of elements. It can be resized.
+ * A vector represents an array of elements. It can be re-sized.
  * 
  * A dense data structure usually stores data in an underlying array. Zero elements
  * take up memory space. If you want a data structure that will not have zero
@@ -76,26 +74,5 @@ public abstract class DenseVector extends AbstractVector {
         }
 
         return result;
-    }
-
-    @Override
-    public void multiplyInPlace(double value) {
-        // TODO: multiply by 0 = clear()
-        for (int i = 0; i < length; i++) {
-            set(i, get(i) * value);
-        }
-    }
-
-    @Override
-    public VectorIterator burningIterator() {
-        return new VectorToBurningIterator(iterator()) {
-            @Override
-            public void flush() {
-                // fast flush
-                for (int i = innerCursor() + 1; i < length; i++) {
-                    DenseVector.this.set(i, 0.0);
-                }
-            }
-        };
     }
 }
