@@ -28,21 +28,24 @@
 
 package org.la4j.matrix;
 
-import org.la4j.LinearAlgebra;
-import org.la4j.decomposition.MatrixDecompositor;
-import org.la4j.factory.Factory;
-import org.la4j.inversion.MatrixInverter;
-import org.la4j.linear.LinearSystemSolver;
-import org.la4j.matrix.functor.*;
-import org.la4j.matrix.source.MatrixSource;
-import org.la4j.matrix.sparse.AbstractCompressedMatrix;
-import org.la4j.vector.Vector;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
+import org.la4j.LinearAlgebra;
+import org.la4j.decomposition.MatrixDecompositor;
+import org.la4j.factory.Factory;
+import org.la4j.inversion.MatrixInverter;
+import org.la4j.linear.LinearSystemSolver;
+import org.la4j.matrix.functor.AdvancedMatrixPredicate;
+import org.la4j.matrix.functor.MatrixAccumulator;
+import org.la4j.matrix.functor.MatrixFunction;
+import org.la4j.matrix.functor.MatrixPredicate;
+import org.la4j.matrix.functor.MatrixProcedure;
+import org.la4j.matrix.source.MatrixSource;
+import org.la4j.matrix.sparse.AbstractCompressedMatrix;
+import org.la4j.vector.Vector;
 
 public abstract class AbstractMatrix implements Matrix {
 
@@ -225,7 +228,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix removeLastRow() {
-        return removeFirstRow(factory);
+        return removeLastRow(factory);
     }
 
     @Override
@@ -235,7 +238,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix removeLastColumn() {
-        return removeFirstColumn(factory);
+        return removeLastColumn(factory);
     }
 
     @Override
@@ -296,10 +299,12 @@ public abstract class AbstractMatrix implements Matrix {
         });
     }
 
+    @Override
     public Matrix rotate() {
         return rotate(factory);
     }
 
+    @Override
     public Matrix rotate(Factory factory) {
         ensureFactoryIsNotNull(factory);
 
@@ -394,10 +399,12 @@ public abstract class AbstractMatrix implements Matrix {
        return result;
     }
 
+    @Override
     public Matrix power(int n) {
         return power(n, factory);
     }
 
+    @Override
     public Matrix power(int n, Factory factory) {
         if (n < 0) {
             fail("The exponent should be positive: " + n + ".");
@@ -504,10 +511,12 @@ public abstract class AbstractMatrix implements Matrix {
         return result;
     }
 
+    @Override
     public Matrix multiplyByItsTranspose() {
         return multiplyByItsTranspose(factory);
     }
 
+    @Override
     public Matrix multiplyByItsTranspose(Factory factory) {
         ensureFactoryIsNotNull(factory);
 
@@ -612,7 +621,67 @@ public abstract class AbstractMatrix implements Matrix {
 
         return result;
     }
-
+    
+    @Override
+    public Matrix insert(Matrix matrix) {
+        return insert(matrix, 0, 0, 0, 0, matrix.rows(), matrix.columns());
+    }
+    
+    @Override
+    public Matrix insert(Matrix matrix, int rows, int columns) {
+        return insert(matrix, 0, 0, 0, 0, rows, columns);
+    }
+    
+    @Override
+    public Matrix insert(Matrix matrix, int destRow, int destCol, int rows, int columns) {
+        return insert(matrix, 0, 0, destRow, destCol, rows, columns);
+    }
+    
+    @Override
+    public Matrix insert(Matrix matrix, int srcRow, int srcCol, int destRow, int destCol, int rows, int columns) {
+        ensureArgumentIsNotNull(matrix, "matrix");
+        
+        if (rows < 0 || columns < 0) {
+            fail("Cannot have negative rows or columns: " + rows + "x" + columns);
+        }
+        
+        if (destRow < 0 || destCol < 0) {
+            fail("Cannot have negative destination position: " + destRow + ", " + destCol);
+        }
+        
+        if (destRow > matrix.rows() || destCol > matrix.columns()) {
+            fail("Destination position out of bounds: " + destRow + ", " + destCol);
+        }
+        
+        if (srcRow < 0 || srcCol < 0) {
+            fail("Cannot have negative source position: " + destRow + ", " + destCol);
+        }
+        
+        if (srcRow > this.rows || srcCol > this.columns) {
+            fail("Destination position out of bounds: " + srcRow + ", " + srcCol);
+        }
+        
+        if (destRow + rows > this.columns || destCol + columns > this.rows) {
+            fail("Out of bounds: Cannot add " + rows + " rows and " + columns + " cols at " 
+                    + destRow + ", " + destCol + " in a " + this.rows + "x" + this.columns + " matrix.");
+        }
+        
+        if (srcRow + rows > matrix.rows() || srcCol + columns > matrix.columns()) {
+            fail("Out of bounds: Cannot get " + rows + " rows and " + columns + " cols at " 
+                    + srcRow + ", " + srcCol + " from a " + matrix.rows() + "x" + matrix.columns() + " matrix.");
+        }
+        
+        Matrix result = this.copy();
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                result.set(i+destRow, j+destCol, matrix.get(i+srcRow, j+srcCol));
+            }
+        }
+        
+        return result;
+    }
+    
     @Override
     public Matrix divide(double value) {
         return divide(value, factory);
@@ -810,10 +879,12 @@ public abstract class AbstractMatrix implements Matrix {
         return result;
     }
     
+    @Override
     public Matrix shuffle() {
         return shuffle(factory);
     }
 
+    @Override
     public Matrix shuffle(Factory factory) {
         ensureFactoryIsNotNull(factory);
 

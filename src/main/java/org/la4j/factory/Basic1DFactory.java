@@ -57,6 +57,7 @@ public class Basic1DFactory extends BasicFactory {
         return new Basic1DMatrix(matrix);
     }
 
+    @Override
     public Matrix createMatrix(MatrixSource source) {
         return new Basic1DMatrix(source);
     }

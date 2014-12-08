@@ -26,23 +26,89 @@
 
 package org.la4j.matrix;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.la4j.factory.Factory;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 
-import java.io.*;
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 public abstract class AbstractMatrixTest {
 
     public abstract Factory factory();
-
+    
+    @Test
+    public void testInsert_3x3_into_3x3() {
+        Matrix a = factory().createMatrix(new double[][]{
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}
+        });
+        
+        Matrix b = factory().createMatrix(3, 3);
+        
+        assertEquals(a, b.insert(a));
+    }
+    
+    @Test
+    public void testInsert_2x2_into_3x3() {
+        Matrix a = factory().createMatrix(new double[][]{
+                {1, 2},
+                {3, 4},
+        });
+        
+        Matrix b = factory().createMatrix(3, 3);
+        
+        assertEquals(a, b.insert(a).slice(0, 0, 2, 2));
+    }
+    
+    @Test
+    public void testInsert_2x2_into_3x3_partial() {
+        Matrix a = factory().createMatrix(new double[][]{
+                {1, 2},
+                {3, 4},
+        });
+        
+        Matrix b = factory().createMatrix(3, 3);
+        
+        assertEquals(a.slice(0, 0, 1, 2), b.insert(a, 1, 2).slice(0, 0, 1, 2));
+    }
+    
+    @Test
+    public void testInsert_3x3_slice_into_4x4_offset() {
+        Matrix a = factory().createMatrix(new double[][]{
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}
+        });
+        
+        Matrix b = factory().createMatrix(4, 4);
+        
+        assertEquals(a.slice(1, 1, 3, 3), b.insert(a, 1, 1, 1, 1, 2, 2).slice(1, 1, 3, 3));
+    }
+    
+    @Test
+    public void testInsert_2x2_into_4x4_offset() {
+        Matrix a = factory().createMatrix(new double[][]{
+                {1, 2},
+                {3, 4},
+        });
+        
+        Matrix b = factory().createMatrix(3, 3);
+        
+        assertEquals(a, b.insert(a, 1, 1, a.rows(), a.columns()).slice(1, 1, 3, 3));
+    }
+    
     @Test
     public void testAccess_3x3() {
 
