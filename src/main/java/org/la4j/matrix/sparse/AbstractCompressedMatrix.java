@@ -27,7 +27,8 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.vector.Vector;
-import org.la4j.vector.functor.VectorFunction;
+import org.la4j.vector.Vectors;
+import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
 
 public abstract class AbstractCompressedMatrix extends AbstractMatrix 
@@ -139,16 +140,10 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     }
     
     @Override
-    public double foldNonZeroInRow(int i, VectorFunction function) {
+    public double foldNonZeroInRow(int i, VectorAccumulator accumulator) {
     	// FIXME
-    	double sum = 0.0;
-    	for (int j = 0; j < columns; j++) {
-    		double value = get(i, j);
-    		if (Math.abs(value) > Matrices.EPS) {
-    			sum += function.evaluate(j, value);
-    		}
-    	}
-    	return sum;
+    	eachNonZeroInRow(i, Vectors.asAccumulatorProcedure(accumulator));
+    	return accumulator.accumulate();
     }
 
     @Override
@@ -158,16 +153,10 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     }
     
     @Override
-    public double foldNonZeroInColumn(int j, VectorFunction function) {
+    public double foldNonZeroInColumn(int j, VectorAccumulator accumulator) {
     	// FIXME
-    	double sum = 0.0;
-    	for (int i = 0; i < rows; i++) {
-    		double value = get(i, j);
-    		if (Math.abs(value) > Matrices.EPS) {
-    			sum += function.evaluate(i, value);
-    		}
-    	}
-    	return sum;
+    	eachNonZeroInColumn(j, Vectors.asAccumulatorProcedure(accumulator));
+    	return accumulator.accumulate();
     }
 
     @Override
@@ -181,6 +170,16 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
 
         return result;
     }
+    
+    @Override
+    public Vector foldNonZeroInColumns(VectorAccumulator accumulator) {
+    	// FIXME
+    	Vector result = factory.createVector(columns);
+    	for (int i = 0; i < columns; i++) {
+    		result.set(i, foldNonZeroInColumn(i, accumulator));
+    	}
+    	return result;
+    }
 
     @Override
     public Vector foldNonZeroInRows(MatrixAccumulator accumulator) {
@@ -192,5 +191,15 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
         }
 
         return result;
+    }
+    
+    @Override
+    public Vector foldNonZeroInRows(VectorAccumulator accumulator) {
+    	// FIXME
+    	Vector result = factory.createVector(rows);
+    	for (int i = 0; i < rows; i++) {
+    		result.set(i, foldNonZeroInRow(i, accumulator));
+    	}
+    	return result;
     }
 }
