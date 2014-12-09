@@ -98,6 +98,12 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     @Override
     public void eachNonZeroInRow(int i, VectorProcedure procedure) {
     	// FIXME
+    	for (int j = 0; j < columns; j++) {
+    		double value = get(i, j);
+    		if (Math.abs(value) > Matrices.EPS) {
+    			procedure.apply(j, value);
+    		}
+    	}
     }
 
     @Override
@@ -112,6 +118,12 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     @Override
     public void eachNonZeroInColumn(int j, VectorProcedure procedure) {
     	// FIXME
+    	for (int i = 0; i < rows; i++) {
+    		double value = get(i, j);
+    		if (Math.abs(value) > Matrices.EPS) {
+    			procedure.apply(i, value);
+    		}
+    	}
     }
 
     @Override
@@ -129,13 +141,14 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     @Override
     public double foldNonZeroInRow(int i, VectorFunction function) {
     	// FIXME
-    	double value = 0.0;
+    	double sum = 0.0;
     	for (int j = 0; j < columns; j++) {
-    		if (Math.abs(get(i, j)) > Matrices.EPS) {
-    			function.evaluate(j, get(i, j));
+    		double value = get(i, j);
+    		if (Math.abs(value) > Matrices.EPS) {
+    			sum += function.evaluate(j, value);
     		}
     	}
-    	return 0.0;
+    	return sum;
     }
 
     @Override
@@ -147,7 +160,14 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     @Override
     public double foldNonZeroInColumn(int j, VectorFunction function) {
     	// FIXME
-    	return 0.0;
+    	double sum = 0.0;
+    	for (int i = 0; i < rows; i++) {
+    		double value = get(i, j);
+    		if (Math.abs(value) > Matrices.EPS) {
+    			sum += function.evaluate(i, value);
+    		}
+    	}
+    	return sum;
     }
 
     @Override
