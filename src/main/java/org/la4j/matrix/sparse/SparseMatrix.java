@@ -26,6 +26,7 @@ import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.vector.Vector;
 import org.la4j.vector.functor.VectorFunction;
+import org.la4j.vector.functor.VectorProcedure;
 
 public interface SparseMatrix extends Matrix {
 
@@ -84,12 +85,12 @@ public interface SparseMatrix extends Matrix {
     void eachNonZeroInRow(int i, MatrixProcedure procedure);
     
     /**
-     * Applies the given {@code function} to each non-zero element of the specified row of this matrix.
+     * Applies the given {@code procedure} to each non-zero element of the specified row of this matrix.
      * 
      * @param i the row index. 
-     * @param function the {@link VectorFunction}. 
+     * @param procedure the {@link VectorProcedure}. 
      */
-    void eachNonZeroInRow(int i, VectorFunction function);
+    void eachNonZeroInRow(int i, VectorProcedure procedure);
 
     /**
      * Deprecated. Use {@link #eachNonZeroInColumn(int, VectorFunction)} instead.
@@ -103,12 +104,12 @@ public interface SparseMatrix extends Matrix {
     void eachNonZeroInColumn(int j, MatrixProcedure procedure);
     
     /**
-     * Applies the given {@code function} to each non-zero element of the specified column of this matrix.
+     * Applies the given {@code procedure} to each non-zero element of the specified column of this matrix.
      * 
      * @param j the column index.
-     * @param function the {@link VectorFunction}.
+     * @param procedure the {@link VectorProcedure}.
      */
-    void eachNonZeroInColumn(int j, VectorFunction function);
+    void eachNonZeroInColumn(int j, VectorProcedure procedure);
 
     /**
      * Folds non-zero elements of this matrix with given {@code accumulator}.

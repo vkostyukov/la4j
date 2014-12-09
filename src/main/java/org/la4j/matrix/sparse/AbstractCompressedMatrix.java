@@ -28,6 +28,7 @@ import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.vector.Vector;
 import org.la4j.vector.functor.VectorFunction;
+import org.la4j.vector.functor.VectorProcedure;
 
 public abstract class AbstractCompressedMatrix extends AbstractMatrix 
     implements SparseMatrix {
@@ -95,13 +96,8 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     }
     
     @Override
-    public void eachNonZeroInRow(int i, VectorFunction function) {
+    public void eachNonZeroInRow(int i, VectorProcedure procedure) {
     	// FIXME
-    	for (int j = 0; j < columns; j++) {
-    		if (Math.abs(get(i, j)) > Matrices.EPS) {
-    			function.evaluate(j, get(i, j));
-    		}
-    	}
     }
 
     @Override
@@ -114,7 +110,7 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     }
     
     @Override
-    public void eachNonZeroInColumn(int j, VectorFunction function) {
+    public void eachNonZeroInColumn(int j, VectorProcedure procedure) {
     	// FIXME
     }
 
