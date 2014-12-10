@@ -61,13 +61,15 @@ public interface Vector extends Externalizable, Iterable<Double> {
 
     /**
      * Assigns all the elements of this vector to zero.
+     *
+     * TODO: deprecate it
      */
     void clear();
 
     /**
      * Assigns all elements of this vector to given {@code value}.
      *
-     * TODO (NC): assignTo
+     * TODO (NC): assignAll
      *
      * @param value the element's new value
      */
@@ -291,6 +293,8 @@ public interface Vector extends Externalizable, Iterable<Double> {
 
     /**
      * Swaps the specified elements of this vector.
+     *
+     * TODO (NC): swapElements
      * 
      * @param i element's index
      * @param j element's index
