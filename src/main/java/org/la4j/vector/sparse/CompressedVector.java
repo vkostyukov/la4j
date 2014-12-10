@@ -201,10 +201,15 @@ public class CompressedVector extends SparseVector {
 
     @Override
     public Vector resize(int length) {
+        return resizeTo(length);
+    }
+
+    @Override
+    public Vector resizeTo(int length) {
         ensureLengthIsCorrect(length);
 
         int $cardinality = (length > this.length) ?
-                           cardinality : searchForIndex(length);
+            cardinality : searchForIndex(length);
 
         double $values[] = new double[align(length, $cardinality)];
         int $indices[] = new int[align(length, $cardinality)];

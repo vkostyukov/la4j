@@ -93,17 +93,22 @@ public class BasicVector extends DenseVector {
 
     @Override
     public Vector copy() {
-        return resize(length);
+        return resizeTo(length);
     }
 
     @Override
     public Vector resize(int length) {
-        ensureLengthIsCorrect(length);
+       return resizeTo(length);
+    }
 
-        double $self[] = new double[length];
-        System.arraycopy(self, 0, $self, 0, Math.min($self.length, self.length));
+    @Override
+    public Vector resizeTo(int length) {
+      ensureLengthIsCorrect(length);
 
-        return new BasicVector($self);
+      double $self[] = new double[length];
+      System.arraycopy(self, 0, $self, 0, Math.min($self.length, self.length));
+
+      return new BasicVector($self);
     }
 
     @Override

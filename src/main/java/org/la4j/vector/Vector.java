@@ -69,7 +69,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
     /**
      * Assigns all elements of this vector to given {@code value}.
      *
-     * TODO (NC): assignAll
+     * TODO (NC): assignAllTo
      *
      * @param value the element's new value
      */
@@ -334,13 +334,38 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector copy(Factory factory);
 
     /**
+     * This method is deprecated, use {@link Vector#resizeTo(int)} instead.
+     *
      * Copies this vector into the new vector with specified {@code length}.
      * 
      * @param length the length of new vector
      *
      * @return the copy of this vector with new length
      */
+    @Deprecated
     Vector resize(int length);
+
+    /**
+     * This method is deprecated, use {@link Vector#resizeTo(int)} instead.
+     *
+     * Copies this vector into the new vector with specified {@code length}.
+     *
+     * @param length the length of new vector
+     * @param factory the factory of result vector
+     *
+     * @return the copy of this vector with new length
+     */
+    @Deprecated
+    Vector resize(int length, Factory factory);
+
+    /**
+     * Copies this vector into the new vector with specified {@code length}.
+     *
+     * @param length the length of new vector
+     *
+     * @return the copy of this vector with new length
+     */
+    Vector resizeTo(int length);
 
     /**
      * Copies this vector into the new vector with specified {@code length}.
@@ -350,7 +375,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the copy of this vector with new length
      */
-    Vector resize(int length, Factory factory);
+    Vector resizeTo(int length, Factory factory);
 
     /**
      * Shuffles this vector.

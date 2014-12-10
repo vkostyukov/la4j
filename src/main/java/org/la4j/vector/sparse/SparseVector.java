@@ -195,7 +195,7 @@ public abstract class SparseVector extends AbstractVector {
 
     @Override
     public Vector copy() {
-        return resize(length);
+        return resizeTo(length);
     }
 
     @Override

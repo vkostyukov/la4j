@@ -89,10 +89,10 @@ public abstract class AbstractVectorTest {
                         {0.0, 0.0}
         );
 
-        a = a.resize(5);
+        a = a.resizeTo(5);
         assertEquals(b, a);
 
-        a = a.resize(2);
+        a = a.resizeTo(2);
         assertEquals(c, a);
     }
 
@@ -109,10 +109,10 @@ public abstract class AbstractVectorTest {
                         {0.0, 0.0, 0.0, 0.0}
         );
 
-        a = a.resize(0);
+        a = a.resizeTo(0);
         assertEquals(b, a);
 
-        a = a.resize(4);
+        a = a.resizeTo(4);
         assertEquals(c, a);
     }
 
@@ -713,7 +713,7 @@ public abstract class AbstractVectorTest {
         };
 
         Vector a = factory().createVector();
-        Vector b = a.resize(31);
+        Vector b = a.resizeTo(31);
 
         assertEquals(0, a.length());
         assertEquals(31, b.length());
@@ -721,11 +721,11 @@ public abstract class AbstractVectorTest {
         b.assign(3.14);
         assertTrue(b.is(pi));
 
-        Vector c = b.resize(42);
+        Vector c = b.resizeTo(42);
         c.assign(3.14);
         assertTrue(c.is(pi));
 
-        Vector d = c.resize(54);
+        Vector d = c.resizeTo(54);
         d.assign(3.14);
         assertTrue(d.is(pi));
     }
@@ -741,22 +741,22 @@ public abstract class AbstractVectorTest {
         };
 
         Vector a = factory().createVector();
-        Vector b = a.resize(32);
+        Vector b = a.resizeTo(32);
 
         assertEquals(32, b.length());
 
         b.assign(42.0);
         assertTrue(b.is(fortyTwo));
 
-        Vector c = b.resize(110);
+        Vector c = b.resizeTo(110);
         c.assign(42.0);
         assertTrue(c.is(fortyTwo));
 
-        Vector d = c.resize(1076);
+        Vector d = c.resizeTo(1076);
         d.assign(42.0);
         assertTrue(d.is(fortyTwo));
 
-        Vector e = d.resize(31);
+        Vector e = d.resizeTo(31);
         e.assign(42.0);
         assertTrue(e.is(fortyTwo));
     }

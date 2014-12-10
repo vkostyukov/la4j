@@ -269,12 +269,24 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    @Deprecated
     public Vector resize(int length) {
-        return resize(length, factory);
+        return resizeTo(length, factory);
     }
 
     @Override
+    @Deprecated
     public Vector resize(int length, Factory factory) {
+        return resizeTo(length, factory);
+    }
+
+    @Override
+    public Vector resizeTo(int length) {
+       return resizeTo(length, factory);
+    }
+
+  @Override
+    public Vector resizeTo(int length, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
         Vector result = factory.createVector(length);
