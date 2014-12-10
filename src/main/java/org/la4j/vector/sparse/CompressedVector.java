@@ -430,11 +430,6 @@ public class CompressedVector extends SparseVector {
                 currentIsRemoved = false;
                 return values[++k];
             }
-
-            @Override
-            protected int innerCursor() {
-                return k;
-            }
         };
     }
 
@@ -482,11 +477,6 @@ public class CompressedVector extends SparseVector {
                     k++;
                 }
                 return get();
-            }
-
-            @Override
-            protected int innerCursor() {
-                return k;
             }
         };
     }
