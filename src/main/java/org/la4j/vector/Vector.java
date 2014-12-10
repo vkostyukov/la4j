@@ -275,6 +275,21 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Matrix outerProduct(Vector that, Factory factory);
 
     /**
+     * Returns the Euclidean normalized version of this vector.
+     *
+     * @return the normalized vector.
+     */
+    Vector normalize();
+
+    /**
+     * Returns the normalized version of this vector using the provided accumulator.
+     * @param acc the vector accumulator to use.
+     *
+     * @return the normalized vector.
+     */
+    Vector normalize(VectorAccumulator acc);
+
+    /**
      * Swaps the specified elements of this vector.
      * 
      * @param i element's index
@@ -444,15 +459,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector select(int[] indices, Factory factory);
 
     /**
-     * Returns the factory of this vector.
-     *
-     * TODO: remove?
-     * 
-     * @return the factory of this vector
-     */
-    Factory factory();
-
-    /**
      * Applies given {@code procedure} to each element of this vector.
      *
      * @param procedure the vector procedure
@@ -604,14 +610,14 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Matrix toColumnMatrix(Factory factory);
 
     /**
-     * Returns true when vector is equal to given {@code vector} with given {@code precision}
+     * Returns true when vector is equal to given {@code that} vector with given {@code precision}.
      *
-     * @param vector vector
+     * @param that vector
      * @param precision given precision
      *
      * @return equals of this matrix to that
      */
-    public boolean equals(Vector vector, double precision);
+    public boolean equals(Vector that, double precision);
 
     /**
      * Converts this vector into the string representation.
@@ -657,24 +663,14 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @param operation the vector-vector operation
      *                  (an operation that takes two vectors and returns {@code T})
      * @param <T> the result type
-     * @param that
+     * @param that the right hand vector for the given operation
      *
      * @return the result of an operation applied to this and {@code that} vector
      */
     <T> T pipeTo(VectorVectorOperation<T> operation, Vector that);
-    
+
     /**
-     * Returns the Euclidean normalized version of this vector.
-     * 
-     * @return the normalized vector.
+     * @return the factory of this vector
      */
-    Vector normalize();
-    
-    /**
-     * Returns the normalized version of this vector using the provided accumulator.
-     * @param acc the vector accumulator to use. 
-     * 
-     * @return the normalized vector.
-     */
-    Vector normalize(VectorAccumulator acc);
+    Factory factory();
 }

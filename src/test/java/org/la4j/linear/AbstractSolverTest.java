@@ -35,7 +35,6 @@ public abstract class AbstractSolverTest {
                             double rightHandVector[]) {
 
         for (Factory factory: LinearAlgebra.FACTORIES) {
-
             Matrix a = factory.createMatrix(coefficientMatrix);
             Vector b = factory.createVector(rightHandVector);
 

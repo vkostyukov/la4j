@@ -41,6 +41,7 @@ import org.la4j.vector.operation.ooplace.OoPlaceHadamardProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceInnerProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorFromVectorSubtraction;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorToVectorAddition;
+import org.la4j.vector.operation.ooplace.OoPlaceVectorToVectorComparison;
 import org.la4j.vector.source.ArrayVectorSource;
 import org.la4j.vector.source.LoopbackVectorSource;
 import org.la4j.vector.source.RandomVectorSource;
@@ -596,5 +597,9 @@ public final class Vectors {
      */
     public static VectorVectorOperation<Vector> ooPlaceVectorFromVectorSubtraction(Factory factory) {
         return new OoPlaceVectorFromVectorSubtraction(factory);
+    }
+
+    public static VectorVectorOperation<Boolean> ooPlaceVectorToVectorComparison(double precision) {
+        return new OoPlaceVectorToVectorComparison(precision);
     }
 }
