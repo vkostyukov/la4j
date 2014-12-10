@@ -43,7 +43,7 @@ import org.la4j.vector.sparse.CompressedVector;
  * This is a CCS (Compressed Column Storage) matrix class.
  */
 public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix {
-	
+
     private static final long serialVersionUID = 4071505L;
 
     private static final int MINIMUM_SIZE = 32;
@@ -83,7 +83,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                 if (value != 0.0) {
 
                     if (values.length < cardinality + 1) {
-                        growup();
+                        growUp();
                     }
 
                     values[cardinality] = value;
@@ -406,6 +406,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     private int searchForRowIndex(int i, int left, int right) {
+        // TODO: https://github.com/vkostyukov/la4j/issues/227
 
         while (left < right) {
             int p = (left + right) / 2;
@@ -429,9 +430,10 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
 
         if (values.length < cardinality + 1) {
-            growup();
+            growUp();
         }
 
+        // TODO: https://github.com/vkostyukov/la4j/issues/235
         System.arraycopy(values, k, values, k + 1, cardinality - k);
         System.arraycopy(rowIndices, k, rowIndices, k + 1, cardinality - k);
 
@@ -467,7 +469,7 @@ public class CCSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
     }
 
-    private void growup() {
+    private void growUp() {
 
         if (values.length == capacity()) {
             // This should never happen
