@@ -85,7 +85,7 @@ public class CompressedVector extends SparseVector {
             if (value != 0.0) {
 
                 if (values.length < cardinality + 1) {
-                    growup();
+                    growUp();
                 }
 
                 values[cardinality] = value;
@@ -298,7 +298,6 @@ public class CompressedVector extends SparseVector {
      * @return the position in the value array
      */
     private int searchForIndex(int i) {
-        // TODO: add the same check for CRS/CCS matrices
         if (cardinality == 0 || i > indices[cardinality - 1]) {
             return cardinality;
         }
@@ -327,10 +326,9 @@ public class CompressedVector extends SparseVector {
         }
 
         if (values.length < cardinality + 1) {
-            growup();
+            growUp();
         }
 
-        // TODO: revise other system.arraycopy() calls
         if (cardinality - k > 0) {
             System.arraycopy(values, k, values, k + 1, cardinality - k);
             System.arraycopy(indices, k, indices, k + 1, cardinality - k);
@@ -360,8 +358,7 @@ public class CompressedVector extends SparseVector {
 //        }
     }
 
-    // TODO: better name
-    private void growup() {
+    private void growUp() {
         if (values.length == length) {
             // This should never happen
             throw new IllegalStateException("This vector can't grow up.");
@@ -430,11 +427,6 @@ public class CompressedVector extends SparseVector {
                 currentIsRemoved = false;
                 return values[++k];
             }
-
-            @Override
-            protected int innerCursor() {
-                return k;
-            }
         };
     }
 
@@ -482,11 +474,6 @@ public class CompressedVector extends SparseVector {
                     k++;
                 }
                 return get();
-            }
-
-            @Override
-            protected int innerCursor() {
-                return k;
             }
         };
     }

@@ -83,7 +83,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
                 if (value != 0.0) {
 
                     if (values.length < cardinality + 1) {
-                        growup();
+                        growUp();
                     }
 
                     values[cardinality] = value;
@@ -415,6 +415,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
     }
 
     private int searchForColumnIndex(int j, int left, int right) {
+        // TODO: https://github.com/vkostyukov/la4j/issues/227
 
         while (left < right) {
             int p = (left + right) / 2;
@@ -438,9 +439,10 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
 
         if (values.length < cardinality + 1) {
-            growup();
+            growUp();
         }
 
+        // TODO: https://github.com/vkostyukov/la4j/issues/235
         System.arraycopy(values, k, values, k + 1, cardinality - k);
         System.arraycopy(columnIndices, k, columnIndices, k + 1, 
                          cardinality - k);
@@ -478,7 +480,7 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         }
     }
 
-    private void growup() {
+    private void growUp() {
 
         if (values.length == capacity()) {
             // This should never happen

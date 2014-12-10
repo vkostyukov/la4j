@@ -21,9 +21,7 @@
 
 package org.la4j.vector.operation;
 
-import org.la4j.vector.dense.BasicVector;
 import org.la4j.vector.dense.DenseVector;
-import org.la4j.vector.sparse.CompressedVector;
 import org.la4j.vector.sparse.SparseVector;
 
 public abstract class VectorVectorOperation<T> {

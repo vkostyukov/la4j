@@ -309,14 +309,11 @@ public abstract class AbstractVector implements Vector {
         Vector result = copy(factory);
 
         // Conduct Fisher-Yates shuffle
-        Random rnd = new Random();
+        Random random = new Random();
 
         for (int i = 0; i < length; i++) {
-            int ii = rnd.nextInt(length - i) + i;
-
-            double a = result.get(ii);
-            result.set(ii, result.get(i));
-            result.set(i, a);
+            int j = random.nextInt(length - i) + i;
+            swap(i, j);
         }
 
         return result;
@@ -384,11 +381,6 @@ public abstract class AbstractVector implements Vector {
         }
 
         return result;
-    }
-
-    @Override
-    public Factory factory() {
-        return factory;
     }
 
     @Override
@@ -516,57 +508,17 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public int hashCode() {
-        int result = 17;
-        VectorIterator it = iterator();
-
-        while (it.hasNext()) {
-            it.next();
-            long value = (long) it.get();
-            result = 37 * result + (int) (value ^ (value >>> 32));
-        }
-
-        return result;
+        return pipeTo(Vectors.ooPlaceHashCode());
     }
 
     @Override
-    public boolean equals(Vector vector, double precision) {
-
-        if (length != vector.length()) {
-            return false;
-        }
-
-        boolean result = true;
-
-        // TODO: export as operation
-        for (int i = 0; result && i < length; i++) {
-            double a = get(i);
-            double b = vector.get(i);
-
-            double diff = Math.abs(a - b);
-
-            result = (a == b) || (diff < precision || diff / Math.max(Math.abs(a), Math.abs(b)) < precision);
-        }
-
-        return result;
+    public boolean equals(Vector that, double precision) {
+        return pipeTo(Vectors.ooPlaceVectorToVectorComparison(precision), that);
     }
 
     @Override
     public boolean equals(Object o) {
-
-        if (this == o) {
-            return true;
-        }
-        if (o == null) {
-            return false;
-        }
-
-        if (!(o instanceof Vector)) {
-            return false;
-        }
-
-        Vector vector = (Vector) o;
-
-        return equals(vector, Vectors.EPS);
+        return o != null && (o instanceof Vector) && equals((Vector) o, Vectors.EPS);
     }
 
     @Override
@@ -593,6 +545,11 @@ public abstract class AbstractVector implements Vector {
         }
 
         return sb.toString();
+    }
+
+    @Override
+    public Factory factory() {
+        return factory;
     }
 
     protected void ensureFactoryIsNotNull(Factory factory) {

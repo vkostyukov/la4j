@@ -45,10 +45,6 @@ abstract class CursorIterator implements Iterator<Double> {
 
     protected abstract int cursor();
 
-    protected int innerCursor() {
-        return cursor();
-    }
-
     protected CursorIterator orElse(final CursorIterator those, final JoinFunction function) {
         final CursorIterator these = this;
         return new CursorIterator() {
@@ -205,14 +201,5 @@ abstract class CursorIterator implements Iterator<Double> {
     @Override
     public void remove() {
         throw new UnsupportedOperationException("This will be supported in 0.6.0.");
-    }
-
-    /**
-     * Flushes this iterator.
-     */
-    public void flush() {
-       while (hasNext()) {
-           next();
-       }
     }
 }
