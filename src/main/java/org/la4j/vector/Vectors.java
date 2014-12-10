@@ -36,8 +36,10 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.operation.ooplace.OoPlaceHadamardProduct;
+import org.la4j.vector.operation.ooplace.OoPlaceHashCode;
 import org.la4j.vector.operation.ooplace.OoPlaceInnerProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorFromVectorSubtraction;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorToVectorAddition;
@@ -599,7 +601,17 @@ public final class Vectors {
         return new OoPlaceVectorFromVectorSubtraction(factory);
     }
 
+    /**
+     * TODO:
+     *
+     * @param precision
+     * @return
+     */
     public static VectorVectorOperation<Boolean> ooPlaceVectorToVectorComparison(double precision) {
         return new OoPlaceVectorToVectorComparison(precision);
+    }
+
+    public static VectorOperation<Integer> ooPlaceHashCode() {
+        return new OoPlaceHashCode();
     }
 }

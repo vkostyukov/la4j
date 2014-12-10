@@ -511,16 +511,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public int hashCode() {
-        int result = 17;
-        VectorIterator it = iterator();
-
-        while (it.hasNext()) {
-            it.next();
-            long value = (long) it.get();
-            result = 37 * result + (int) (value ^ (value >>> 32));
-        }
-
-        return result;
+        return pipeTo(Vectors.ooPlaceHashCode());
     }
 
     @Override
