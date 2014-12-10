@@ -309,14 +309,11 @@ public abstract class AbstractVector implements Vector {
         Vector result = copy(factory);
 
         // Conduct Fisher-Yates shuffle
-        Random rnd = new Random();
+        Random random = new Random();
 
         for (int i = 0; i < length; i++) {
-            int ii = rnd.nextInt(length - i) + i;
-
-            double a = result.get(ii);
-            result.set(ii, result.get(i));
-            result.set(i, a);
+            int j = random.nextInt(length - i) + i;
+            swap(i, j);
         }
 
         return result;
