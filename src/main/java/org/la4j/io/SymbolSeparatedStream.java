@@ -72,13 +72,13 @@ public class SymbolSeparatedStream extends AbstractStream
         int length = 0;
         while (tokenizer.hasMoreTokens()) {
             if (length == vector.length()) {
-                vector = vector.resizeTo((vector.length() * 3) / 2 + 1);
+                vector = vector.resizeLength((vector.length() * 3) / 2 + 1);
             }
 
             vector.set(length++, Double.valueOf(tokenizer.nextToken()));
         }
 
-        vector = vector.resizeTo(length);
+        vector = vector.resizeLength(length);
 
         closeReader();
         return vector;

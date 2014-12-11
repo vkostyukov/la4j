@@ -62,7 +62,7 @@ public class TerminalVectorBuilder extends UnderlyingVectorBuilder {
 
     @Override
     public Vector build(int length, double[] array) {
-        return build(array).resizeTo(length);
+        return build(array).resizeLength(length);
     }
 
     @Override
@@ -72,12 +72,12 @@ public class TerminalVectorBuilder extends UnderlyingVectorBuilder {
 
     @Override
     public Vector build(int length, VectorStream stream) {
-        return build(stream).resizeTo(length);
+        return build(stream).resizeLength(length);
     }
 
     @Override
     public Vector build(int length, Vector vector) {
-        return build(vector).resizeTo(length);
+        return build(vector).resizeLength(length);
     }
 
     @Override

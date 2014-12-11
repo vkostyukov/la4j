@@ -195,17 +195,17 @@ public abstract class SparseVector extends AbstractVector {
 
     @Override
     public Vector copy() {
-        return resizeTo(length);
+        return resizeLength(length);
     }
 
     @Override
-    public <T> T pipeTo(VectorOperation<T> operation) {
+    public <T> T apply(VectorOperation<T> operation) {
         return operation.apply(this);
     }
 
     @Override
-    public <T> T pipeTo(VectorVectorOperation<T> operation, Vector that) {
-        return that.pipeTo(operation.curry(this));
+    public <T> T apply(VectorVectorOperation<T> operation, Vector that) {
+        return that.apply(operation.curry(this));
     }
     
     /**

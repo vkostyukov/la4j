@@ -69,7 +69,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
     /**
      * Assigns all elements of this vector to given {@code value}.
      *
-     * TODO (NC): assignAllTo
+     * TODO (NC): assignAll
      *
      * @param value the element's new value
      */
@@ -334,7 +334,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector copy(Factory factory);
 
     /**
-     * This method is deprecated, use {@link Vector#resizeTo(int)} instead.
+     * This method is deprecated, use {@link Vector#resizeLength(int)} instead.
      *
      * Copies this vector into the new vector with specified {@code length}.
      * 
@@ -346,7 +346,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector resize(int length);
 
     /**
-     * This method is deprecated, use {@link Vector#resizeTo(int)} instead.
+     * This method is deprecated, use {@link Vector#resizeLength(int)} instead.
      *
      * Copies this vector into the new vector with specified {@code length}.
      *
@@ -365,7 +365,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the copy of this vector with new length
      */
-    Vector resizeTo(int length);
+    Vector resizeLength(int length);
 
     /**
      * Copies this vector into the new vector with specified {@code length}.
@@ -375,7 +375,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the copy of this vector with new length
      */
-    Vector resizeTo(int length, Factory factory);
+    Vector resizeLength(int length, Factory factory);
 
     /**
      * Shuffles this vector.
@@ -684,7 +684,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the result of an operation applied to this vector
      */
-    <T> T pipeTo(VectorOperation<T> operation);
+    <T> T apply(VectorOperation<T> operation);
 
     /**
      * Pipes this vector to a given {@code operation}.
@@ -696,7 +696,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the result of an operation applied to this and {@code that} vector
      */
-    <T> T pipeTo(VectorVectorOperation<T> operation, Vector that);
+    <T> T apply(VectorVectorOperation<T> operation, Vector that);
 
     /**
      * @return the factory of this vector

@@ -112,7 +112,7 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(that, "vector");
         ensureVectorIsSimilar(that);
 
-        return pipeTo(Vectors.ooPlaceVectorToVectorAddition(factory), that);
+        return apply(Vectors.ooPlaceVectorToVectorAddition(factory), that);
     }
 
     @Override
@@ -131,7 +131,7 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(that,  "vector");
         ensureVectorIsSimilar(that);
 
-        return pipeTo(Vectors.ooPlaceHadamardProduct(factory), that);
+        return apply(Vectors.ooPlaceHadamardProduct(factory), that);
     }
 
     @Override
@@ -187,7 +187,7 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(that, "vector");
         ensureVectorIsSimilar(that);
 
-        return pipeTo(Vectors.ooPlaceVectorFromVectorSubtraction(factory), that);
+        return apply(Vectors.ooPlaceVectorFromVectorSubtraction(factory), that);
     }
 
     @Override
@@ -215,7 +215,7 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(that, "vector");
         ensureVectorIsSimilar(that);
 
-        return pipeTo(Vectors.ooPlaceInnerProduct(), that);
+        return apply(Vectors.ooPlaceInnerProduct(), that);
     }
 
     @Override
@@ -271,22 +271,22 @@ public abstract class AbstractVector implements Vector {
     @Override
     @Deprecated
     public Vector resize(int length) {
-        return resizeTo(length, factory);
+        return resizeLength(length, factory);
     }
 
     @Override
     @Deprecated
     public Vector resize(int length, Factory factory) {
-        return resizeTo(length, factory);
+        return resizeLength(length, factory);
     }
 
     @Override
-    public Vector resizeTo(int length) {
-       return resizeTo(length, factory);
+    public Vector resizeLength(int length) {
+       return resizeLength(length, factory);
     }
 
   @Override
-    public Vector resizeTo(int length, Factory factory) {
+    public Vector resizeLength(int length, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
         Vector result = factory.createVector(length);
@@ -520,12 +520,12 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public int hashCode() {
-        return pipeTo(Vectors.ooPlaceHashCode());
+        return apply(Vectors.ooPlaceHashCode());
     }
 
     @Override
     public boolean equals(Vector that, double precision) {
-        return pipeTo(Vectors.ooPlaceVectorToVectorComparison(precision), that);
+        return apply(Vectors.ooPlaceVectorToVectorComparison(precision), that);
     }
 
     @Override
@@ -536,7 +536,7 @@ public abstract class AbstractVector implements Vector {
     @Override
     public String toString() {
         return mkString(DEFAULT_FORMATTER,
-                        DEFAULT_DELIMITER);
+                DEFAULT_DELIMITER);
     }
 
     @Override

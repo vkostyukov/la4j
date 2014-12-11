@@ -201,11 +201,11 @@ public class CompressedVector extends SparseVector {
 
     @Override
     public Vector resize(int length) {
-        return resizeTo(length);
+        return resizeLength(length);
     }
 
     @Override
-    public Vector resizeTo(int length) {
+    public Vector resizeLength(int length) {
         ensureLengthIsCorrect(length);
 
         int $cardinality = (length > this.length) ?
