@@ -13,5 +13,4 @@ public class ColumnVectorToMatrixFunction implements MatrixFunction {
 	public double evaluate(int i, int j, double value) {
 		return underlying.evaluate(i, value);
 	}
-
 }
