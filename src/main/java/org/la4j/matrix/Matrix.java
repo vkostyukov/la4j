@@ -67,6 +67,8 @@ public interface Matrix extends Externalizable {
 
     /**
      * Assigns all elements of this matrix to given {@code value}.
+     *
+     * TODO (NC): assignAll
      * 
      * @param value the element's new value
      */
@@ -190,7 +192,7 @@ public interface Matrix extends Externalizable {
 
     /**
      * Multiplies this matrix (A) by given {@code vector} (x).
-     * 
+     *
      * @param vector the vector
      *
      * @return A * x
@@ -226,8 +228,18 @@ public interface Matrix extends Externalizable {
      */
     Matrix multiply(Matrix matrix, Factory factory);
 
+    /**
+     * Multiplies this matrix by its transpose.
+     *
+     * @return this matrix multiplied by its transpose
+     */
     Matrix multiplyByItsTranspose();
 
+    /**
+     * Multiplies this matrix by its transpose.
+     *
+     * @return this matrix multiplied by its transpose
+     */
     Matrix multiplyByItsTranspose(Factory factory);
 
     /**
@@ -604,24 +616,6 @@ public interface Matrix extends Externalizable {
      * @return matrix without last column
      */
     Matrix removeLastColumn(Factory factory);
-
-    /**
-     * Converts this matrix into the triangle matrix.
-     *
-     * @return tirangularized matrix
-     */
-    @Deprecated
-    Matrix triangularize();
-
-    /**
-     * Converts this matrix into the triangle matrix.
-     *
-     * @param factory the factory of result matrix
-     *
-     * @return tirangularized matrix
-     */
-    @Deprecated
-    Matrix triangularize(Factory factory);
 
     /**
      * Creates the blank (an empty matrix with same size) matrix of this matrix.

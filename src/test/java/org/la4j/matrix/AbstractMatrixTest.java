@@ -1753,34 +1753,6 @@ public abstract class AbstractMatrixTest {
     }
 
     @Test
-    public void testTriangularize_3x3() {
-
-        Matrix a = factory().createMatrix(new double[][]{
-                {1.0, 0.0, 0.0},
-                {4.0, 3.0, 6.0},
-                {0.0, 0.0, 9.0}
-        });
-
-        Matrix b = factory().createMatrix(new double[][]{
-                {1.0, 0.0, 3.0},
-                {0.0, 5.0, 0.0},
-                {0.0, 0.0, 9.0}
-        });
-
-        Matrix c = a.triangularize();
-        Matrix d = b.triangularize();
-
-        Matrix e = factory().createMatrix(new double[][]{
-                {0.0, 0.0, 0.0},
-                {0.0, 3.0, 6.0},
-                {0.0, 0.0, 9.0}
-        });
-
-        assertEquals(e, c);
-        assertEquals(b, d);
-    }
-
-    @Test
     public void testCopy_3x3() {
 
         Matrix a = factory().createMatrix(new double[][]{

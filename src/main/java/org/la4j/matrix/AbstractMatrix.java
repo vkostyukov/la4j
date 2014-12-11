@@ -781,41 +781,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix triangularize() {
-        return triangularize(factory);
-    }
-
-    @Override
-    public Matrix triangularize(Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
-        if (is(Matrices.UPPER_TRIANGULAR_MATRIX) 
-                || is(Matrices.LOWER_TRIANGULAR_MATRIX)) {
-
-            return copy(factory);
-        }
-
-        Matrix result = factory.createMatrix(rows, columns);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = i + 1; j < rows; j++) {
-
-                double c = get(j, i) / get(i, i);
-
-                for (int k = i; k < columns; k++) {
-                    if (k == i) {
-                        result.set(j, k, 0.0);
-                    } else {
-                        result.set(j, k, get(j, k) - (get(i, k) * c));
-                    }
-                }
-            }
-        }
-
-        return result;
-    }
-
-    @Override
     public Matrix blank() {
         return blank(factory);
     }
@@ -1394,13 +1359,13 @@ public abstract class AbstractMatrix implements Matrix {
      * @param j The column to check
      */
     protected void ensureIndexesAreInBounds(int i, int j) {
-    	if (i < 0 || i >= this.rows) {
-        	throw new IndexOutOfBoundsException("Row '" + i + "' is invalid.");
-    	}
-    	
-    	if (j < 0 || j >= this.columns) {
-        	throw new IndexOutOfBoundsException("Column '" + j + "' is invalid.");
-    	}
+        if (i < 0 || i >= this.rows) {
+            throw new IndexOutOfBoundsException("Row '" + i + "' is invalid.");
+        }
+
+        if (j < 0 || j >= this.columns) {
+            throw new IndexOutOfBoundsException("Column '" + j + "' is invalid.");
+        }
     }
 
     protected void fail(String message) {
