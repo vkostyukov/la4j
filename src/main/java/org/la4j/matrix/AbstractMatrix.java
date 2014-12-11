@@ -40,10 +40,12 @@ import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
+import org.la4j.matrix.functor.ColumnVectorToMatrixFunction;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
+import org.la4j.matrix.functor.RowVectorToMatrixFunction;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.sparse.AbstractCompressedMatrix;
 import org.la4j.vector.Vector;
@@ -1174,6 +1176,10 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public void updateRow(int i, VectorFunction function) {
     	// FIXME
+    	MatrixFunction underlying = new RowVectorToMatrixFunction(function);
+    	for (int j = 0; j < columns; j++) {
+    		update(i, j, underlying);
+    	}
     }
     
     @Override
@@ -1186,6 +1192,10 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public void updateColumn(int j, VectorFunction function) {
     	// FIXME
+    	MatrixFunction underlying = new ColumnVectorToMatrixFunction(function);
+    	for (int i = 0; i < rows; i++) {
+    		update(i, j, underlying);
+    	}
     }
 
     @Override
