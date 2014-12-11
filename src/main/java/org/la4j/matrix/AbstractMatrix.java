@@ -1007,7 +1007,9 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public void eachInRow(int i, VectorProcedure procedure) {
-    	// FIXME
+    	for (int j = 0; j < columns; j++) {
+    		procedure.apply(j, get(i, j));
+    	}
     }
 
     @Override
@@ -1019,7 +1021,9 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public void eachInColumn(int j, VectorProcedure procedure) {
-    	// FIXME
+        for (int i = 0; i < rows; i++) {
+            procedure.apply(i, get(i, j));
+        }
     }
 
     @Override
@@ -1091,8 +1095,7 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public Matrix transformRow(int i, VectorFunction function) {
-    	// FIXME
-    	return null;
+    	return transformRow(i, function, factory);
     }
 
     @Override
@@ -1109,8 +1112,11 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public Matrix transformRow(int i, VectorFunction function, Factory factory) {
-    	// FIXME
-    	return null;
+    	Matrix result = copy(factory);
+    	for (int j = 0; j < columns; j++) {
+    		result.set(i, j, function.evaluate(j, result.get(i, j)));
+    	}
+    	return result;
     }
 
     @Override
@@ -1120,8 +1126,7 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public Matrix transformColumn(int j, VectorFunction function) {
-    	// FIXME
-    	return null;
+    	return transformColumn(j, function, factory);
     }
 
     @Override
@@ -1138,8 +1143,11 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public Matrix transformColumn(int j, VectorFunction function, Factory factory) {
-    	// FIXME
-    	return null;
+    	Matrix result = copy(factory);
+    	for (int i = 0; i < rows; i++) {
+    		result.set(i, j, function.evaluate(i, result.get(i, j)));
+    	}
+    	return result;
     }
 
     @Override
@@ -1204,8 +1212,10 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public double foldRow(int i, VectorAccumulator accumulator) {
-    	// FIXME
-    	return 0.0;
+    	for (int j = 0; j < columns; j++) {
+    		accumulator.update(j, get(i, j));
+    	}
+    	return accumulator.accumulate();
     }
 
     @Override
@@ -1222,8 +1232,11 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public Vector foldRows(VectorAccumulator accumulator) {
-    	// FIXME
-    	return null;
+    	Vector result = factory.createVector(rows);
+    	for (int i = 0; i < rows; i++) {
+    		result.set(i, foldRow(i, accumulator));
+    	}
+    	return result;
     }
 
     @Override
@@ -1238,8 +1251,10 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public double foldColumn(int j, VectorAccumulator accumulator) {
-    	// FIXME
-    	return 0.0;
+    	for (int i = 0; i < rows; i++) {
+    		accumulator.update(i, get(i, j));
+    	}
+    	return accumulator.accumulate();
     }
 
     @Override
@@ -1256,8 +1271,11 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public Vector foldColumns(VectorAccumulator accumulator) {
-    	// FIXME
-    	return null;
+    	Vector result = factory.createVector(columns);
+    	for (int i = 0; i < columns; i++) {
+    		result.set(i, foldColumn(i, accumulator));
+    	}
+    	return result;
     }
 
     @Override

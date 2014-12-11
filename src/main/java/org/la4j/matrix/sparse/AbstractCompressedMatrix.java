@@ -98,7 +98,6 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     
     @Override
     public void eachNonZeroInRow(int i, VectorProcedure procedure) {
-    	// FIXME
     	for (int j = 0; j < columns; j++) {
     		double value = get(i, j);
     		if (Math.abs(value) > Matrices.EPS) {
@@ -118,7 +117,6 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     
     @Override
     public void eachNonZeroInColumn(int j, VectorProcedure procedure) {
-    	// FIXME
     	for (int i = 0; i < rows; i++) {
     		double value = get(i, j);
     		if (Math.abs(value) > Matrices.EPS) {
@@ -141,7 +139,6 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     
     @Override
     public double foldNonZeroInRow(int i, VectorAccumulator accumulator) {
-    	// FIXME
     	eachNonZeroInRow(i, Vectors.asAccumulatorProcedure(accumulator));
     	return accumulator.accumulate();
     }
@@ -154,7 +151,6 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     
     @Override
     public double foldNonZeroInColumn(int j, VectorAccumulator accumulator) {
-    	// FIXME
     	eachNonZeroInColumn(j, Vectors.asAccumulatorProcedure(accumulator));
     	return accumulator.accumulate();
     }
@@ -173,7 +169,6 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     
     @Override
     public Vector foldNonZeroInColumns(VectorAccumulator accumulator) {
-    	// FIXME
     	Vector result = factory.createVector(columns);
     	for (int i = 0; i < columns; i++) {
     		result.set(i, foldNonZeroInColumn(i, accumulator));
@@ -195,7 +190,6 @@ public abstract class AbstractCompressedMatrix extends AbstractMatrix
     
     @Override
     public Vector foldNonZeroInRows(VectorAccumulator accumulator) {
-    	// FIXME
     	Vector result = factory.createVector(rows);
     	for (int i = 0; i < rows; i++) {
     		result.set(i, foldNonZeroInRow(i, accumulator));
