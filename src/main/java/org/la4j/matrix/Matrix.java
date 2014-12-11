@@ -894,7 +894,7 @@ public interface Matrix extends Externalizable {
      * Applies given {@code procedure} to each element of specified column of this matrix.
      *
      * @param j the column index
-     * @param procedure the vector procedure
+     * @param procedure the matrix procedure
      */
     @Deprecated
     void eachInColumn(int j, MatrixProcedure procedure);
@@ -903,7 +903,7 @@ public interface Matrix extends Externalizable {
      * Applies given {@code procedure} to each element of specified column of this matrix.
      *
      * @param j the column index
-     * @param procedure the matrix procedure
+     * @param procedure the vector procedure
      */
     void eachInColumn(int j, VectorProcedure procedure);
 
