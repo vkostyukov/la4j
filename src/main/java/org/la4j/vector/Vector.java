@@ -62,14 +62,14 @@ public interface Vector extends Externalizable, Iterable<Double> {
     /**
      * Assigns all the elements of this vector to zero.
      *
-     * TODO: deprecate it
+     * TODO: deprecate it in favour of Factory.createVector()
      */
     void clear();
 
     /**
      * Assigns all elements of this vector to given {@code value}.
      *
-     * TODO (NC): assignAll
+     * TODO: deprecate in in favour of Factory.createConstantVector()
      *
      * @param value the element's new value
      */

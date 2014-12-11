@@ -43,7 +43,7 @@ import org.la4j.vector.sparse.CompressedVector;
  * This is a CRS (Compressed Row Storage) matrix class.
  */
 public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix {
-	
+
     private static final long serialVersionUID = 4071505L;
 
     private static final int MINIMUM_SIZE = 32;

@@ -68,7 +68,7 @@ public interface Matrix extends Externalizable {
     /**
      * Assigns all elements of this matrix to given {@code value}.
      *
-     * TODO (NC): assignAll
+     * TODO: deprecate it in favour of Factory.createConstantMatrix()
      * 
      * @param value the element's new value
      */
@@ -77,6 +77,8 @@ public interface Matrix extends Externalizable {
     /**
      * Assigns all elements of the specified row of this matrix to given {@code value}.
      *
+     * TODO: deprecate
+     *
      * @param i the row index
      * @param value the element's new value
      */
@@ -84,6 +86,8 @@ public interface Matrix extends Externalizable {
 
     /**
      * Assigns all elements of the specified column of this matrix to given {@code value}.
+     *
+     * TODO: deprecate
      *
      * @param j the column index
      * @param value the element's new value
