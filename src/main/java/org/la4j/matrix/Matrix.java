@@ -32,6 +32,9 @@ import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.*;
 import org.la4j.vector.Vector;
+import org.la4j.vector.functor.VectorAccumulator;
+import org.la4j.vector.functor.VectorFunction;
+import org.la4j.vector.functor.VectorProcedure;
 
 import java.io.Externalizable;
 import java.text.NumberFormat;
@@ -865,20 +868,42 @@ public interface Matrix extends Externalizable {
     void each(MatrixProcedure procedure);
 
     /**
+     * Deprecated. Use {@link #eachInRow(int, VectorProcedure)} instead.
+     * <p/>
      * Applies given {@code procedure} to each element of specified row of this matrix.
      *
      * @param i the row index
      * @param procedure the matrix procedure
      */
+    @Deprecated
     void eachInRow(int i, MatrixProcedure procedure);
 
     /**
+     * Applies given {@code procedure} to each element of specified row of this matrix.
+     *
+     * @param i the row index
+     * @param procedure the vector procedure
+     */
+    void eachInRow(int i, VectorProcedure procedure);
+
+    /**
+     * Deprecated. Use {@link #eachInColumn(int, VectorProcedure)} instead.
+     * <p/>.
      * Applies given {@code procedure} to each element of specified column of this matrix.
      *
      * @param j the column index
      * @param procedure the matrix procedure
      */
+    @Deprecated
     void eachInColumn(int j, MatrixProcedure procedure);
+
+    /**
+     * Applies given {@code procedure} to each element of specified column of this matrix.
+     *
+     * @param j the column index
+     * @param procedure the vector procedure
+     */
+    void eachInColumn(int j, VectorProcedure procedure);
 
     /**
      * Searches for the maximum value of the elements of this matrix.
@@ -973,6 +998,8 @@ public interface Matrix extends Externalizable {
     Matrix transform(int i, int j, MatrixFunction function, Factory factory);
 
     /**
+     * Deprecated. Use {@link #transformRow(int, VectorFunction)} instead.
+     * <p/>
      * Builds a new matrix by applying given {@code function} to each element of specified
      * row in this matrix.
      *
@@ -981,6 +1008,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the transformed matrix
      */
+    @Deprecated
     Matrix transformRow(int i, MatrixFunction function);
 
     /**
@@ -988,14 +1016,41 @@ public interface Matrix extends Externalizable {
      * row in this matrix.
      *
      * @param i the row index
+     * @param function the vector function
+     *
+     * @return the transformed matrix
+     */
+    Matrix transformRow(int i, VectorFunction function);
+
+    /**
+     * Deprecated. Use {@link #transformRow(int, VectorFunction, Factory)} instead.
+     * Builds a new matrix by applying given {@code function} to each element of specified
+     * row in this matrix.
+     *
+     * @param i the row index
      * @param function the matrix function
      * @param factory the factory of result matrix
      *
      * @return the transformed matrix
      */
+    @Deprecated
     Matrix transformRow(int i, MatrixFunction function, Factory factory);
 
     /**
+     * Builds a new matrix by applying given {@code function} to each element of specified
+     * row in this matrix.
+     *
+     * @param i the row index
+     * @param function the vector function
+     * @param factory the factory of result matrix
+     *
+     * @return the transformed matrix
+     */
+    Matrix transformRow(int i, VectorFunction function, Factory factory);
+
+    /**
+     * Deprecated. Use {@link #transformColumn(int, VectorFunction)} instead.
+     * <p/>
      * Builds a new matrix by applying given {@code function} to each element of specified
      * column in this matrix.
      *
@@ -1004,6 +1059,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the transformed matrix
      */
+    @Deprecated
     Matrix transformColumn(int j, MatrixFunction function);
 
     /**
@@ -1011,12 +1067,37 @@ public interface Matrix extends Externalizable {
      * column in this matrix.
      *
      * @param j the column index
+     * @param function the vector function
+     *
+     * @return the transformed matrix
+     */
+    Matrix transformColumn(int j, VectorFunction function);
+
+    /**
+     * Deprecated. Use {@link #transformColumn(int, VectorFunction, Factory)} instead.
+     * Builds a new matrix by applying given {@code function} to each element of specified
+     * column in this matrix.
+     *
+     * @param j the column index
      * @param function the matrix function
      * @param factory the factory of result matrix
      *
      * @return the transformed matrix
      */
+    @Deprecated
     Matrix transformColumn(int j, MatrixFunction function, Factory factory);
+
+    /**
+     * Builds a new matrix by applying given {@code function} to each element of specified
+     * column in this matrix.
+     *
+     * @param j the column index
+     * @param function the vector function
+     * @param factory the factory of result matrix
+     *
+     * @return the transformed matrix
+     */
+    Matrix transformColumn(int j, VectorFunction function, Factory factory);
 
     /**
      * Updates all elements of this matrix by applying given {@code function}.
@@ -1035,20 +1116,42 @@ public interface Matrix extends Externalizable {
     void update(int i, int j, MatrixFunction function);
 
     /**
+     * Deprecated. Use {@link #updateRow(int, VectorFunction)} instead.
+     * <p/>
      * Updates all elements of the specified row in this matrix by applying given {@code function}.
      *
      * @param i the row index
      * @param function the matrix function
      */
+    @Deprecated
     void updateRow(int i, MatrixFunction function);
 
     /**
+     * Updates all elements of the specified row in this matrix by applying given {@code function}.
+     *
+     * @param i the row index
+     * @param function the vector function
+     */
+    void updateRow(int i, VectorFunction function);
+
+    /**
+     * Deprecated. Use {@link #updateColumn(int, VectorFunction)} instead.
+     * <p/>
      * Updates all elements of the specified column in this matrix by applying given {@code function}.
      *
      * @param j the column index
      * @param function the matrix function
      */
+    @Deprecated
     void updateColumn(int j, MatrixFunction function);
+
+    /**
+     * Updates all elements of the specified column in this matrix by applying given {@code function}.
+     *
+     * @param j the column index
+     * @param function the vector function
+     */
+    void updateColumn(int j, VectorFunction function);
 
     /**
      * Folds all elements of this matrix with given {@code accumulator}.
@@ -1060,6 +1163,8 @@ public interface Matrix extends Externalizable {
     double fold(MatrixAccumulator accumulator);
 
     /**
+     * Deprecated. Use {@link #foldRow(int, VectorAccumulator)} instead.
+     * <p/>
      * Folds all elements of specified row in this matrix with given {@code accumulator}.
      *
      * @param i the row index
@@ -1067,18 +1172,43 @@ public interface Matrix extends Externalizable {
      *
      * @return the accumulated value
      */
+    @Deprecated
     double foldRow(int i, MatrixAccumulator accumulator);
 
     /**
+     * Folds all elements of specified row in this matrix with given {@code accumulator}.
+     *
+     * @param i the row index
+     * @param accumulator the vector accumulator
+     *
+     * @return the accumulated value
+     */
+    double foldRow(int i, VectorAccumulator accumulator);
+
+    /**
+     * Deprecated. Use {@link #foldRows(VectorAccumulator)} instead.
+     * <p/>
      * Folds all elements (in row-by-row manner) of this matrix with given {@code accumulator}.
      *
      * @param accumulator the matrix accumulator
      *
      * @return the accumulated vector
      */
+    @Deprecated
     Vector foldRows(MatrixAccumulator accumulator);
 
     /**
+     * Folds all elements (in row-by-row manner) of this matrix with given {@code accumulator}.
+     *
+     * @param accumulator the vector accumulator
+     *
+     * @return the accumulated vector
+     */
+    Vector foldRows(VectorAccumulator accumulator);
+
+    /**
+     * Deprecated. Use {@link #foldColumn(int, VectorAccumulator)} instead.
+     * <p/>
      * Folds all elements of specified column in this matrix with given {@code accumulator}.
      *
      * @param j the column index
@@ -1086,16 +1216,39 @@ public interface Matrix extends Externalizable {
      *
      * @return the accumulated value
      */
+    @Deprecated
     double foldColumn(int j, MatrixAccumulator accumulator);
 
     /**
+     * Folds all elements of specified column in this matrix with given {@code accumulator}.
+     *
+     * @param j the column index
+     * @param accumulator the vector accumulator
+     *
+     * @return the accumulated value
+     */
+    double foldColumn(int j, VectorAccumulator accumulator);
+
+    /**
+     * Deprecated. Use {@link #foldColumns(VectorAccumulator)} instead.
+     * <p/>.
      * Folds all elements (in a column-by-column manner) of this matrix with given {@code accumulator}.
      *
      * @param accumulator the matrix accumulator
      *
      * @return the accumulated vector
      */
+    @Deprecated
     Vector foldColumns(MatrixAccumulator accumulator);
+
+    /**
+     * Folds all elements (in a column-by-column manner) of this matrix with given {@code accumulator}.
+     *
+     * @param accumulator the vector accumulator
+     *
+     * @return the accumulated vector
+     */
+    Vector foldColumns(VectorAccumulator accumulator);
 
     /**
      * Checks whether this matrix compiles with given {@code predicate} or not.
