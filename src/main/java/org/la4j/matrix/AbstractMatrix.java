@@ -1010,7 +1010,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public void eachInRow(int i, VectorProcedure procedure) {
     	for (int j = 0; j < columns; j++) {
-    		procedure.apply(j, get(i, j));
+    	    procedure.apply(j, get(i, j));
     	}
     }
 
