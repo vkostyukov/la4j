@@ -1116,7 +1116,7 @@ public abstract class AbstractMatrix implements Matrix {
     public Matrix transformRow(int i, VectorFunction function, Factory factory) {
     	Matrix result = copy(factory);
     	for (int j = 0; j < columns; j++) {
-    		result.set(i, j, function.evaluate(j, result.get(i, j)));
+    	    result.set(i, j, function.evaluate(j, result.get(i, j)));
     	}
     	return result;
     }
@@ -1147,7 +1147,7 @@ public abstract class AbstractMatrix implements Matrix {
     public Matrix transformColumn(int j, VectorFunction function, Factory factory) {
     	Matrix result = copy(factory);
     	for (int i = 0; i < rows; i++) {
-    		result.set(i, j, function.evaluate(i, result.get(i, j)));
+    	    result.set(i, j, function.evaluate(i, result.get(i, j)));
     	}
     	return result;
     }
@@ -1175,10 +1175,9 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public void updateRow(int i, VectorFunction function) {
-    	// FIXME
     	MatrixFunction underlying = new RowVectorToMatrixFunction(function);
     	for (int j = 0; j < columns; j++) {
-    		update(i, j, underlying);
+    	    update(i, j, underlying);
     	}
     }
     
@@ -1191,10 +1190,9 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public void updateColumn(int j, VectorFunction function) {
-    	// FIXME
     	MatrixFunction underlying = new ColumnVectorToMatrixFunction(function);
     	for (int i = 0; i < rows; i++) {
-    		update(i, j, underlying);
+    	    update(i, j, underlying);
     	}
     }
 
