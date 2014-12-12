@@ -86,11 +86,21 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public void assignRow(int i, double value) {
-        updateRow(i, Matrices.asConstFunction(value));
+       setRow(i, value);
     }
 
     @Override
     public void assignColumn(int j, double value) {
+        setColumn(j, value);
+    }
+
+    @Override
+    public void setRow(int i, double value) {
+        updateRow(i, Matrices.asConstFunction(value));
+    }
+
+    @Override
+    public void setColumn(int j, double value) {
         updateColumn(j, Matrices.asConstFunction(value));
     }
 

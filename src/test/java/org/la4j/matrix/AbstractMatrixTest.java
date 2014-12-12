@@ -157,22 +157,6 @@ public abstract class AbstractMatrixTest {
     }
 
     @Test
-    public void testAssign_3x3() {
-
-        Matrix a = factory().createMatrix(new double[][]{
-                {5.0, 5.0, 5.0},
-                {5.0, 5.0, 5.0},
-                {5.0, 5.0, 5.0}
-        });
-
-        Matrix b = factory().createMatrix(3, 3);
-
-        b.assign(5.0);
-
-        assertEquals(a, b);
-    }
-
-    @Test
     public void testResize_3x3_to_4x4_to_2x2() {
 
         Matrix a = factory().createMatrix(new double[][]{

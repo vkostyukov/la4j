@@ -33,7 +33,7 @@ import org.la4j.vector.Vector;
 import org.la4j.vector.dense.BasicVector;
 
 public class Basic1DMatrix extends AbstractBasicMatrix implements DenseMatrix {
-	
+
     private static final long serialVersionUID = 4071505L;
 
     private double self[];

@@ -66,33 +66,56 @@ public interface Matrix extends Externalizable {
     void set(int i, int j, double value);
 
     /**
-     * Assigns all elements of this matrix to given {@code value}.
+     * This method is deprecated. Use {@link Factory#createConstantMatrix(int, int, double)} instead.
      *
-     * TODO: deprecate it in favour of Factory.createConstantMatrix()
+     * Assigns all elements of this matrix to given {@code value}.
      * 
      * @param value the element's new value
      */
+    @Deprecated
     void assign(double value);
 
     /**
-     * Assigns all elements of the specified row of this matrix to given {@code value}.
+     * This method is deprecated. Use {@link Matrix#setRow(int, double)} instead.
      *
-     * TODO: deprecate
+     * Assigns all elements of the specified row of this matrix to given {@code value}.
      *
      * @param i the row index
      * @param value the element's new value
      */
+    @Deprecated
     void assignRow(int i, double value);
 
     /**
-     * Assigns all elements of the specified column of this matrix to given {@code value}.
+     * <p>
+     * Sets all elements of the specified row of this matrix to given {@code value}.
+     * </p>
      *
-     * TODO: deprecate
+     * @param i the row index
+     * @param value the element's new value
+     */
+    void setRow(int i, double value);
+
+    /**
+     * This method is deprecated. Use {@link Matrix#setColumn(int, double)} instead.
+     *
+     * Assigns all elements of the specified column of this matrix to given {@code value}.
      *
      * @param j the column index
      * @param value the element's new value
      */
+    @Deprecated
     void assignColumn(int j, double value);
+
+    /**
+     * <p>
+     * Sets all elements of the specified column of this matrix to given {@code value}.
+     * </p>
+     *
+     * @param j the column index
+     * @param value the element's new value
+     */
+    void setColumn(int j, double value);
 
     /**
      * Swaps the specified rows of this matrix.
