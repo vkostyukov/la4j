@@ -33,19 +33,25 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
+
 import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
+import org.la4j.matrix.functor.ColumnVectorToMatrixFunction;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
+import org.la4j.matrix.functor.RowVectorToMatrixFunction;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.sparse.AbstractCompressedMatrix;
 import org.la4j.vector.Vector;
+import org.la4j.vector.functor.VectorAccumulator;
+import org.la4j.vector.functor.VectorFunction;
+import org.la4j.vector.functor.VectorProcedure;
 
 public abstract class AbstractMatrix implements Matrix {
 
@@ -975,11 +981,25 @@ public abstract class AbstractMatrix implements Matrix {
             procedure.apply(i, j, get(i, j));
         }
     }
+    
+    @Override
+    public void eachInRow(int i, VectorProcedure procedure) {
+    	for (int j = 0; j < columns; j++) {
+    	    procedure.apply(j, get(i, j));
+    	}
+    }
 
     @Override
     public void eachInColumn(int j,MatrixProcedure procedure) {
         for (int i = 0; i < rows; i++) {
             procedure.apply(i, j, get(i, j));
+        }
+    }
+    
+    @Override
+    public void eachInColumn(int j, VectorProcedure procedure) {
+        for (int i = 0; i < rows; i++) {
+            procedure.apply(i, get(i, j));
         }
     }
 
@@ -1049,6 +1069,11 @@ public abstract class AbstractMatrix implements Matrix {
     public Matrix transformRow(int i, MatrixFunction function) {
         return transformRow(i, function, factory);
     }
+    
+    @Override
+    public Matrix transformRow(int i, VectorFunction function) {
+    	return transformRow(i, function, factory);
+    }
 
     @Override
     public Matrix transformRow(int i, MatrixFunction function, Factory factory) {
@@ -1061,10 +1086,24 @@ public abstract class AbstractMatrix implements Matrix {
 
         return result;
     }
+    
+    @Override
+    public Matrix transformRow(int i, VectorFunction function, Factory factory) {
+    	Matrix result = copy(factory);
+    	for (int j = 0; j < columns; j++) {
+    	    result.set(i, j, function.evaluate(j, result.get(i, j)));
+    	}
+    	return result;
+    }
 
     @Override
     public Matrix transformColumn(int j, MatrixFunction function) {
         return transformColumn(j, function, factory);
+    }
+    
+    @Override
+    public Matrix transformColumn(int j, VectorFunction function) {
+    	return transformColumn(j, function, factory);
     }
 
     @Override
@@ -1077,6 +1116,15 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
+    }
+    
+    @Override
+    public Matrix transformColumn(int j, VectorFunction function, Factory factory) {
+    	Matrix result = copy(factory);
+    	for (int i = 0; i < rows; i++) {
+    	    result.set(i, j, function.evaluate(i, result.get(i, j)));
+    	}
+    	return result;
     }
 
     @Override
@@ -1101,10 +1149,26 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
+    public void updateRow(int i, VectorFunction function) {
+    	MatrixFunction underlying = new RowVectorToMatrixFunction(function);
+    	for (int j = 0; j < columns; j++) {
+    	    update(i, j, underlying);
+    	}
+    }
+    
+    @Override
     public void updateColumn(int j, MatrixFunction function) {
         for (int i = 0; i < rows; i++) {
             update(i, j, function);
         }
+    }
+    
+    @Override
+    public void updateColumn(int j, VectorFunction function) {
+    	MatrixFunction underlying = new ColumnVectorToMatrixFunction(function);
+    	for (int i = 0; i < rows; i++) {
+    	    update(i, j, underlying);
+    	}
     }
 
     @Override
@@ -1128,6 +1192,14 @@ public abstract class AbstractMatrix implements Matrix {
 
         return accumulator.accumulate();
     }
+    
+    @Override
+    public double foldRow(int i, VectorAccumulator accumulator) {
+    	for (int j = 0; j < columns; j++) {
+    		accumulator.update(j, get(i, j));
+    	}
+    	return accumulator.accumulate();
+    }
 
     @Override
     public Vector foldRows(MatrixAccumulator accumulator) {
@@ -1140,6 +1212,15 @@ public abstract class AbstractMatrix implements Matrix {
 
         return result;
     }
+    
+    @Override
+    public Vector foldRows(VectorAccumulator accumulator) {
+    	Vector result = factory.createVector(rows);
+    	for (int i = 0; i < rows; i++) {
+    		result.set(i, foldRow(i, accumulator));
+    	}
+    	return result;
+    }
 
     @Override
     public double foldColumn(int j, MatrixAccumulator accumulator) {
@@ -1149,6 +1230,14 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return accumulator.accumulate();
+    }
+    
+    @Override
+    public double foldColumn(int j, VectorAccumulator accumulator) {
+    	for (int i = 0; i < rows; i++) {
+    		accumulator.update(i, get(i, j));
+    	}
+    	return accumulator.accumulate();
     }
 
     @Override
@@ -1161,6 +1250,15 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
+    }
+    
+    @Override
+    public Vector foldColumns(VectorAccumulator accumulator) {
+    	Vector result = factory.createVector(columns);
+    	for (int i = 0; i < columns; i++) {
+    		result.set(i, foldColumn(i, accumulator));
+    	}
+    	return result;
     }
 
     @Override
