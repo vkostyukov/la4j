@@ -73,6 +73,16 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public void setAll(double value) {
+        VectorIterator it = iterator();
+
+        while (it.hasNext()) {
+            it.next();
+            it.set(value);
+        }
+    }
+
+    @Override
     public void assign(double value) {
         update(Vectors.asConstFunction(value));
     }

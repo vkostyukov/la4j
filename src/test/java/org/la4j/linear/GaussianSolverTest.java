@@ -71,9 +71,7 @@ public class GaussianSolverTest extends AbstractSolverTest {
         performTest(a, b);
     }
 
-    // TODO: Enable this test
     @Test
-    @Ignore
     public void testSolve_4x4() {
 
         double a[][] = new double[][] {

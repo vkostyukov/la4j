@@ -69,10 +69,17 @@ public abstract class DenseVector extends AbstractVector {
         ensureFactoryIsNotNull(factory);
         Vector result = blank(factory);
 
-        for (int i = 0; i < length(); i++) {
+        for (int i = 0; i < length; i++) {
             result.set(i, get(i) * value);
         }
 
         return result;
+    }
+
+    @Override
+    public void setAll(double value) {
+        for (int i = 0; i < length; i++) {
+            set(i, value);
+        }
     }
 }

@@ -138,6 +138,25 @@ public class CompressedVector extends SparseVector {
     }
 
     @Override
+    public void setAll(double value) {
+        if (value == 0.0) {
+            cardinality = 0;
+        } else {
+            double $values[] = new double[length];
+            int $indices[] = new int[length];
+
+            for (int i = 0; i < length; i++) {
+                $indices[i] = i;
+                $values[i] = value;
+            }
+
+            this.values = $values;
+            this.indices = $indices;
+            this.cardinality = length;
+        }
+    }
+
+    @Override
     public void swap(int i, int j) {
         if (i == j) {
             return;

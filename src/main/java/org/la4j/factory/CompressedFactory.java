@@ -63,16 +63,9 @@ public abstract class CompressedFactory extends Factory {
 
     @Override
     public Vector createConstantVector(int length, double value) {
-
-        double values[] = new double[length];
-        int indices[] = new int[length];
-
-        for (int i = 0; i < length; i++) {
-            indices[i] = i;
-            values[i] = value;
-        }
-
-        return new CompressedVector(length, length, values, indices);
+        Vector result = new CompressedVector(length, 0, new double[0], new int[0]);
+        result.setAll(value);
+        return result;
     }
 
     @Override

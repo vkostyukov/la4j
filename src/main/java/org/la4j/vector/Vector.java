@@ -60,7 +60,14 @@ public interface Vector extends Externalizable, Iterable<Double> {
     void set(int i, double value);
 
     /**
-     * This method is deprecated. Use {@link Factory#createConstantVector(int, double)} instead.
+     * Sets all elements of this vector to given {@code value}.
+     *
+     * @param value the element's new value
+     */
+    void setAll(double value);
+
+    /**
+     * This method is deprecated. Use {@link Vector#setAll(double)} (double)} instead.
      *
      * Assigns all the elements of this vector to zero.
      */

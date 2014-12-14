@@ -21,7 +21,7 @@
 
 package org.la4j.iterator;
 
-abstract class JoinFunction {
+public abstract class JoinFunction {
 
     public abstract double evaluate(double a, double b);
 

@@ -79,14 +79,20 @@ abstract class CursorIterator implements Iterator<Double> {
 
             @Override
             public boolean hasNext() {
+
                 if (these.hasNext() || those.hasNext()) {
                     return true;
                 }
-                if (state.containsAll(TAKEN_FROM_BOTH)) {
+
+                if (state.contains(IteratorState.TAKEN_FROM_THESE) && state.contains(IteratorState.THOSE_ARE_EMPTY)) {
                     return false;
                 }
-                return !state.contains(IteratorState.THESE_ARE_EMPTY) ||
-                        !state.contains(IteratorState.THOSE_ARE_EMPTY);
+
+                if (state.contains(IteratorState.TAKEN_FROM_THOSE) && state.contains(IteratorState.THESE_ARE_EMPTY)) {
+                    return false;
+                }
+
+                return !state.containsAll(TAKEN_FROM_BOTH);
             }
 
             @Override

@@ -62,14 +62,14 @@ public abstract class AbstractVectorTest {
     }
 
     @Test
-    public void testAssign_4() {
+    public void testSetAll_4() {
 
         Vector a = factory().createVector(4);
         Vector b = factory().createVector(new double[]{
                 10.0, 10.0, 10.0, 10.0
         });
 
-        a.assign(10.0);
+        a.setAll(10.0);
 
         assertEquals(b, a);
     }
@@ -892,6 +892,5 @@ public abstract class AbstractVectorTest {
         assertTrue(i.equals(f));
         assertTrue(g.equals(i));
         assertTrue(f.equals(i));
-
     }
 }

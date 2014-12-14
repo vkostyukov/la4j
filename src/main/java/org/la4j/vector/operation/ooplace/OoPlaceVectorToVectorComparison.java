@@ -21,6 +21,7 @@
 
 package org.la4j.vector.operation.ooplace;
 
+import org.la4j.iterator.JoinFunction;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;
@@ -45,20 +46,20 @@ public class OoPlaceVectorToVectorComparison extends VectorVectorOperation<Boole
             return false;
         }
 
-        if (a.cardinality() != b.cardinality()) {
-            return false;
-        }
-
         VectorIterator these = a.nonZeroIterator();
         VectorIterator those = b.nonZeroIterator();
+        VectorIterator both = these.orElse(those, new JoinFunction() {
+            @Override
+            public double evaluate(double a, double b) {
+                return isSimilar(a, b) ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY;
+            }
+        });
 
         boolean result = true;
 
-        while (result && these.hasNext() && those.hasNext()) {
-            these.next();
-            those.next();
-
-            result = (these.index() == those.index()) && isSimilar(these.get(), those.get());
+        while (result && both.hasNext()) {
+            both.next();
+            result = both.get() > 0.0;
         }
 
         return result;
