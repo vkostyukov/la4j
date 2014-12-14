@@ -142,17 +142,17 @@ public class CompressedVector extends SparseVector {
         if (value == 0.0) {
             cardinality = 0;
         } else {
-            double $values[] = new double[length];
-            int $indices[] = new int[length];
-
-            for (int i = 0; i < length; i++) {
-                $indices[i] = i;
-                $values[i] = value;
+            if (values.length < length) {
+                values = new double[length];
+                indices = new int[length];
             }
 
-            this.values = $values;
-            this.indices = $indices;
-            this.cardinality = length;
+            for (int i = 0; i < length; i++) {
+                indices[i] = i;
+                values[i] = value;
+            }
+
+            cardinality = length;
         }
     }
 
