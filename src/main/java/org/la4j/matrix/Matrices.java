@@ -410,6 +410,10 @@ public final class Matrices {
      */
     public static final MatrixConverter SPARSE = COMPRESSED_ROWS;
 
+    public static final MatrixConverter[] CONVERTERS = {
+            BASIC_2D, BASIC_1D, COMPRESSED_ROWS, COMPRESSED_COLUMNS
+    };
+
     /**
      * Increases each element of matrix by <code>1</code>.
      */
