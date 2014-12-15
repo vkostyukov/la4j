@@ -83,7 +83,7 @@ public class BasicVector extends DenseVector {
     }
 
     @Override
-    public void swap(int i, int j) {
+    public void swapElements(int i, int j) {
         if (i != j) {
             double d = self[i];
             self[i] = self[j];
@@ -94,11 +94,6 @@ public class BasicVector extends DenseVector {
     @Override
     public Vector copy() {
         return resizeLength(length);
-    }
-
-    @Override
-    public Vector resize(int length) {
-       return resizeLength(length);
     }
 
     @Override

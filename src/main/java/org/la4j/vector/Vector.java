@@ -301,14 +301,23 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector normalize(VectorAccumulator acc);
 
     /**
+     * This method is deprecated. Use {@link Vector} instead.
+     *
      * Swaps the specified elements of this vector.
      *
-     * TODO (NC): swapElements
-     * 
      * @param i element's index
      * @param j element's index
      */
+    @Deprecated
     void swap(int i, int j);
+
+    /**
+     * Swaps the specified elements of this vector.
+     *
+     * @param i element's index
+     * @param j element's index
+     */
+    void swapElements(int i, int j);
 
     /**
      * Creates a blank (an empty vector with same length) copy of this vector.

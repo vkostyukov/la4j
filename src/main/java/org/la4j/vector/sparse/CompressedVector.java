@@ -157,7 +157,7 @@ public class CompressedVector extends SparseVector {
     }
 
     @Override
-    public void swap(int i, int j) {
+    public void swapElements(int i, int j) {
         if (i == j) {
             return;
         }
@@ -216,11 +216,6 @@ public class CompressedVector extends SparseVector {
                 indices[leftIndex] = jjNotZero ? i : j;
             }
         }
-    }
-
-    @Override
-    public Vector resize(int length) {
-        return resizeLength(length);
     }
 
     @Override

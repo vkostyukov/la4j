@@ -209,7 +209,7 @@ public abstract class AbstractVectorTest {
     }
 
     @Test
-    public void testSwap_5() {
+    public void testSwapElements_5() {
 
         Vector a = factory().createVector(new double[]
                         {1.0, 0.0, 0.0, 0.0, 3.0}
@@ -219,12 +219,12 @@ public abstract class AbstractVectorTest {
                         {3.0, 0.0, 0.0, 0.0, 1.0}
         );
 
-        a.swap(0, 4);
+        a.swapElements(0, 4);
         assertEquals(b, a);
     }
 
     @Test
-    public void testSwap_4() {
+    public void testSwapElements_4() {
 
         Vector a = factory().createVector(new double[]
                         {0.0, 1.0, 0.0, 0.0}
@@ -234,12 +234,12 @@ public abstract class AbstractVectorTest {
                         {0.0, 0.0, 1.0, 0.0}
         );
 
-        a.swap(1, 2);
+        a.swapElements(1, 2);
         assertEquals(b, a);
     }
 
     @Test
-    public void testSwap_4_2() {
+    public void testSwapElements_4_2() {
 
         Vector a = factory().createVector(new double[]
                         {0.0, 1.0, 0.0, 2.0}
@@ -249,12 +249,12 @@ public abstract class AbstractVectorTest {
                         {0.0, 0.0, 1.0, 2.0}
         );
 
-        a.swap(1, 2);
+        a.swapElements(1, 2);
         assertEquals(a, b);
     }
 
     @Test
-    public void testSwap_6() {
+    public void testSwapElements_6() {
 
         Vector a = factory().createVector(new double[]
                         {0.0, 0.0, 0.0, 0.0, 0.0, -5.0}
@@ -264,12 +264,12 @@ public abstract class AbstractVectorTest {
                         {0.0, 0.0, 0.0, -5.0, 0.0, 0.0}
         );
 
-        a.swap(3, 5);
+        a.swapElements(3, 5);
         assertEquals(a, b);
     }
 
     @Test
-    public void testSwap_2() {
+    public void testSwapElements_2() {
 
         Vector a = factory().createVector(new double[]
                         {1.0, 2.0}
@@ -279,7 +279,7 @@ public abstract class AbstractVectorTest {
                         {2.0, 1.0}
         );
 
-        a.swap(0, 1);
+        a.swapElements(0, 1);
         assertEquals(b, a);
     }
 

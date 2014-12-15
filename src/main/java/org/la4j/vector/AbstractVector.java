@@ -59,12 +59,17 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public void swap(int i, int j) {
+    public void swapElements(int i, int j) {
         if (i != j) {
             double s = get(i);
             set(i, get(j));
             set(j, s);
         }
+    }
+
+    @Override
+    public void swap(int i, int j) {
+      swapElements(i, j);
     }
 
     @Override
@@ -335,7 +340,7 @@ public abstract class AbstractVector implements Vector {
 
         for (int i = 0; i < length; i++) {
             int j = random.nextInt(length - i) + i;
-            swap(i, j);
+            swapElements(i, j);
         }
 
         return result;

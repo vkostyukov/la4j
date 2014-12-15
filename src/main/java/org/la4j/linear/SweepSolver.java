@@ -65,7 +65,7 @@ public class SweepSolver extends AbstractSolver implements LinearSystemSolver {
 
             if (maxIndex != i) {
                 aa.swapRows(maxIndex, i);
-                bb.swap(i, maxIndex);
+                bb.swapElements(i, maxIndex);
             }
 
             for (int j = i + 1; j < aa.columns(); j++) {
