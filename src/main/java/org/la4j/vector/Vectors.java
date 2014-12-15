@@ -32,6 +32,8 @@ import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
 import org.la4j.vector.builder.TerminalVectorBuilder;
 import org.la4j.vector.builder.VectorBuilder;
+import org.la4j.vector.dense.BasicVector;
+import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
@@ -49,11 +51,30 @@ import org.la4j.vector.source.LoopbackVectorSource;
 import org.la4j.vector.source.RandomVectorSource;
 import org.la4j.vector.source.StreamVectorSource;
 import org.la4j.vector.source.VectorSource;
+import org.la4j.vector.sparse.CompressedVector;
 
 public final class Vectors {
 
     public static final double EPS = LinearAlgebra.EPS;
     public static final int ROUND_FACTOR = LinearAlgebra.ROUND_FACTOR;
+
+    public static final VectorConverter<BasicVector> DENSE = new VectorConverter<BasicVector>() {
+        @Override
+        public BasicVector convert(Vector vector) {
+            return (BasicVector) LinearAlgebra.DENSE_FACTORY.createVector(vector);
+        }
+    };
+
+    public static final VectorConverter<CompressedVector> SPARSE = new VectorConverter<CompressedVector>() {
+        @Override
+        public CompressedVector convert(Vector vector) {
+            return (CompressedVector) LinearAlgebra.SPARSE_FACTORY.createVector(vector);
+        }
+    };
+
+    public static final VectorConverter[] CONVERTERS = {
+            DENSE, SPARSE
+    };
 
     /**
      * Checks whether the vector is a

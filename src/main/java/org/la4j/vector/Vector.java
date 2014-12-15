@@ -720,4 +720,13 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @return the factory of this vector
      */
     Factory factory();
+
+    /**
+     * Converts vector to vector of another type
+     *
+     * @param converter converter which is used for vector convertion
+     * @param <T> type of aim matrix
+     * @return converted matrix
+     */
+    <T extends Vector> T to(VectorConverter<T> converter);
 }
