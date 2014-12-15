@@ -31,6 +31,8 @@ import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
 import org.la4j.matrix.builder.TerminalMatrixBuilder;
 import org.la4j.matrix.builder.MatrixBuilder;
+import org.la4j.matrix.dense.Basic1DMatrix;
+import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -44,6 +46,8 @@ import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.source.RandomMatrixSource;
 import org.la4j.matrix.source.RandomSymmetricMatrixSource;
 import org.la4j.matrix.source.StreamMatrixSource;
+import org.la4j.matrix.sparse.CCSMatrix;
+import org.la4j.matrix.sparse.CRSMatrix;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -323,6 +327,88 @@ public final class Matrices {
      */
     public static final AdvancedMatrixPredicate POSITIVE_DEFINITE_MATRIX =
             new PositiveDefiniteMatrixPredicate();
+
+    /**
+     * Link to {@link org.la4j.factory.Basic2DFactory} located in {@link org.la4j.LinearAlgebra}
+     */
+    public static final Factory BASIC2D_FACTORY =
+            LinearAlgebra.BASIC2D_FACTORY;
+
+    /**
+     * Link to {@link org.la4j.factory.Basic1DFactory} located in {@link org.la4j.LinearAlgebra}
+     */
+    public static final Factory BASIC1D_FACTORY =
+            LinearAlgebra.BASIC1D_FACTORY;
+
+    /**
+     * Link to {@link org.la4j.factory.CCSFactory} located in {@link org.la4j.LinearAlgebra}
+     */
+    public static final Factory CCS_FACTORY =
+            LinearAlgebra.CCS_FACTORY;
+
+    /**
+     * Link to {@link org.la4j.factory.CRSFactory} located in {@link org.la4j.LinearAlgebra}
+     */
+    public static final Factory CRS_FACTORY =
+            LinearAlgebra.CRS_FACTORY;
+
+    /**
+     * Converter to {@link org.la4j.matrix.dense.Basic2DMatrix}.
+     * See {@link org.la4j.matrix.Matrix} method <code>to(MatrixConverter)</code>
+     */
+    public static final MatrixConverter<Basic2DMatrix> BASIC_2D =
+            new MatrixConverter<Basic2DMatrix>() {
+                @Override
+                public Basic2DMatrix convert(Matrix matrix) {
+                    return (Basic2DMatrix) BASIC2D_FACTORY.createMatrix(matrix);
+                }
+            };
+
+    /**
+     * Converter to {@link org.la4j.matrix.dense.Basic1DMatrix}.
+     * See {@link org.la4j.matrix.Matrix} method <code>to(MatrixConverter)</code>
+     */
+    public static final MatrixConverter<Basic1DMatrix> BASIC_1D =
+            new MatrixConverter<Basic1DMatrix>() {
+                @Override
+                public Basic1DMatrix convert(Matrix matrix) {
+                    return (Basic1DMatrix) BASIC1D_FACTORY.createMatrix(matrix);
+                }
+            };
+
+    /**
+     * Default converter to dense matrices
+     */
+    public static final MatrixConverter DENSE = BASIC_2D;
+
+    /**
+     * Converter to {@link org.la4j.matrix.sparse.CCSMatrix}.
+     * See {@link org.la4j.matrix.Matrix} method <code>to(MatrixConverter)</code>
+     */
+    public static final MatrixConverter<CCSMatrix> COMPRESSED_COLUMNS =
+            new MatrixConverter<CCSMatrix>() {
+                @Override
+                public CCSMatrix convert(Matrix matrix) {
+                    return (CCSMatrix) CCS_FACTORY.createMatrix(matrix);
+                }
+            };
+
+    /**
+     * Converter to {@link org.la4j.matrix.sparse.CRSMatrix}.
+     * See {@link org.la4j.matrix.Matrix} method <code>to(MatrixConverter)</code>
+     */
+    public static final MatrixConverter<CRSMatrix> COMPRESSED_ROWS =
+            new MatrixConverter<CRSMatrix>() {
+                @Override
+                public CRSMatrix convert(Matrix matrix) {
+                    return (CRSMatrix) CRS_FACTORY.createMatrix(matrix);
+                }
+            };
+
+    /**
+     * Default converter to sparse matrices
+     */
+    public static final MatrixConverter SPARSE = COMPRESSED_ROWS;
 
     /**
      * Increases each element of matrix by <code>1</code>.

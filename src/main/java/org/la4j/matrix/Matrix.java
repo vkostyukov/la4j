@@ -1419,4 +1419,13 @@ public interface Matrix extends Externalizable {
      * @return the matrix converted to a string
      */
     String mkString(NumberFormat formatter, String rowsDelimiter, String columnsDelimiter);
+
+    /**
+     * Converts matrix to matrix of another type
+     *
+     * @param converter converter which is used for matrix convertion
+     * @param <T> type of aim matrix
+     * @return converted matrix
+     */
+    <T extends Matrix> T to(MatrixConverter<T> converter);
 }
