@@ -89,10 +89,10 @@ public abstract class AbstractVectorTest {
                         {0.0, 0.0}
         );
 
-        a = a.resizeLength(5);
+        a = a.copyOfLength(5);
         assertEquals(b, a);
 
-        a = a.resizeLength(2);
+        a = a.copyOfLength(2);
         assertEquals(c, a);
     }
 
@@ -109,10 +109,10 @@ public abstract class AbstractVectorTest {
                         {0.0, 0.0, 0.0, 0.0}
         );
 
-        a = a.resizeLength(0);
+        a = a.copyOfLength(0);
         assertEquals(b, a);
 
-        a = a.resizeLength(4);
+        a = a.copyOfLength(4);
         assertEquals(c, a);
     }
 
@@ -713,7 +713,7 @@ public abstract class AbstractVectorTest {
         };
 
         Vector a = factory().createVector();
-        Vector b = a.resizeLength(31);
+        Vector b = a.copyOfLength(31);
 
         assertEquals(0, a.length());
         assertEquals(31, b.length());
@@ -721,11 +721,11 @@ public abstract class AbstractVectorTest {
         b.assign(3.14);
         assertTrue(b.is(pi));
 
-        Vector c = b.resizeLength(42);
+        Vector c = b.copyOfLength(42);
         c.assign(3.14);
         assertTrue(c.is(pi));
 
-        Vector d = c.resizeLength(54);
+        Vector d = c.copyOfLength(54);
         d.assign(3.14);
         assertTrue(d.is(pi));
     }
@@ -741,22 +741,22 @@ public abstract class AbstractVectorTest {
         };
 
         Vector a = factory().createVector();
-        Vector b = a.resizeLength(32);
+        Vector b = a.copyOfLength(32);
 
         assertEquals(32, b.length());
 
         b.assign(42.0);
         assertTrue(b.is(fortyTwo));
 
-        Vector c = b.resizeLength(110);
+        Vector c = b.copyOfLength(110);
         c.assign(42.0);
         assertTrue(c.is(fortyTwo));
 
-        Vector d = c.resizeLength(1076);
+        Vector d = c.copyOfLength(1076);
         d.assign(42.0);
         assertTrue(d.is(fortyTwo));
 
-        Vector e = d.resizeLength(31);
+        Vector e = d.copyOfLength(31);
         e.assign(42.0);
         assertTrue(e.is(fortyTwo));
     }

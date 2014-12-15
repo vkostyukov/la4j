@@ -93,11 +93,11 @@ public class BasicVector extends DenseVector {
 
     @Override
     public Vector copy() {
-        return resizeLength(length);
+        return copyOfLength(length);
     }
 
     @Override
-    public Vector resizeLength(int length) {
+    public Vector copyOfLength(int length) {
       ensureLengthIsCorrect(length);
 
       double $self[] = new double[length];

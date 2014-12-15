@@ -682,6 +682,8 @@ public interface Matrix extends Externalizable {
     /**
      * Copies this matrix into the new matrix with specified dimensions: {@code rows} and {@code columns}.
      *
+     * TODO (NC): Rename to copyOfShape
+     *
      * @param rows the number of rows in new matrix
      * @param columns the number of columns in new matrix
      *
@@ -691,6 +693,8 @@ public interface Matrix extends Externalizable {
 
     /**
      * Copies this matrix into the new matrix with specified dimensions: {@code rows} and {@code columns}.
+     *
+     * TODO (NC): Rename to copyOfShape
      *
      * @param rows the number of rows in new matrix
      * @param columns the number of columns in new matrix
@@ -703,6 +707,8 @@ public interface Matrix extends Externalizable {
     /**
      * Copies this matrix into the new matrix with specified row dimension: {@code rows}.
      *
+     * TODO (NC): Rename to copyOfRows
+     *
      * @param rows the number of rows in new matrix
      *
      * @return the copy of this matrix with new size
@@ -711,6 +717,8 @@ public interface Matrix extends Externalizable {
 
     /**
      * Copies this matrix into the new matrix with specified row dimension: {@code rows}.
+     *
+     * TODO (NC): Rename to copyOfRows
      *
      * @param rows the number of rows in new matrix
      * @param factory the factory of result matrix
@@ -722,6 +730,8 @@ public interface Matrix extends Externalizable {
     /**
      * Copies this matrix into the new matrix with specified column dimension: {@code columns}.
      *
+     * TODO (NC): Rename to copyOfColumns
+     *
      * @param columns the number of columns in new matrix
      *
      * @return the copy of this matrix with new size
@@ -730,6 +740,8 @@ public interface Matrix extends Externalizable {
 
     /**
      * Copies this matrix into the new matrix with specified column dimension: {@code columns}.
+     *
+     * TODO (NC): Rename to copyOfColumns
      *
      * @param columns the number of columns in new matrix
      * @param factory the factory of result matrix

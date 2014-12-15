@@ -219,7 +219,7 @@ public class CompressedVector extends SparseVector {
     }
 
     @Override
-    public Vector resizeLength(int length) {
+    public Vector copyOfLength(int length) {
         ensureLengthIsCorrect(length);
 
         int $cardinality = (length > this.length) ?

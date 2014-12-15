@@ -352,7 +352,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector copy(Factory factory);
 
     /**
-     * This method is deprecated, use {@link Vector#resizeLength(int)} instead.
+     * This method is deprecated, use {@link Vector#copyOfLength(int)} instead.
      *
      * Copies this vector into the new vector with specified {@code length}.
      * 
@@ -364,7 +364,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector resize(int length);
 
     /**
-     * This method is deprecated, use {@link Vector#resizeLength(int)} instead.
+     * This method is deprecated, use {@link Vector#copyOfLength(int)} instead.
      *
      * Copies this vector into the new vector with specified {@code length}.
      *
@@ -383,7 +383,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the copy of this vector with new length
      */
-    Vector resizeLength(int length);
+    Vector copyOfLength(int length);
 
     /**
      * Copies this vector into the new vector with specified {@code length}.
@@ -393,7 +393,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the copy of this vector with new length
      */
-    Vector resizeLength(int length, Factory factory);
+    Vector copyOfLength(int length, Factory factory);
 
     /**
      * Shuffles this vector.
