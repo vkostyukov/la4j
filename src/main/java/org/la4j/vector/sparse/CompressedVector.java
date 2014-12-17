@@ -108,6 +108,7 @@ public class CompressedVector extends SparseVector {
     public static CompressedVector constant(int length, double value) {
         CompressedVector result = new CompressedVector(length, 0, new double[0], new int[0]);
         result.setAll(value);
+
         return result;
     }
 

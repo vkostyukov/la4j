@@ -35,47 +35,36 @@ public abstract class BasicFactory extends Factory {
 
     @Override
     public Vector createVector() {
-        return new BasicVector();
+        return BasicVector.empty();
     }
 
     @Override
     public Vector createVector(int length) {
-        return new BasicVector(length);
+        return BasicVector.ofLength(length);
     }
 
     @Override
     public Vector createVector(double[] array) {
-        return new BasicVector(array);
+        return BasicVector.fromArray(array);
     }
 
     @Override
     public Vector createVector(Vector vector) {
-        return new BasicVector(vector);
+        return BasicVector.fromVector(vector);
     }
 
     @Override
     public Vector createVector(VectorSource source) {
-        return new BasicVector(source);
+        return BasicVector.fromSource(source);
     }
 
     @Override
     public Vector createConstantVector(int length, double value) {
-
-        double array[] = new double[length];
-        Arrays.fill(array, value);
-
-        return new BasicVector(array);
+        return BasicVector.constant(length, value);
     }
-
 
     @Override
     public Vector createRandomVector(int length, Random random) {
-
-        double array[] = new double[length];
-        for (int i = 0; i < length; i++) {
-            array[i] = random.nextDouble();
-        }
-
-        return new BasicVector(array);
+        return BasicVector.random(length, random);
     }
 }

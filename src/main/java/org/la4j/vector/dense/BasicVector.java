@@ -24,6 +24,9 @@ package org.la4j.vector.dense;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Arrays;
+import java.util.Random;
+
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
@@ -44,6 +47,72 @@ import org.la4j.vector.source.VectorSource;
 public class BasicVector extends DenseVector {
 
     private static final long serialVersionUID = 4071505L;
+
+    /**
+     * Creates an empty {@link BasicVector}.
+     */
+    public static BasicVector empty() {
+        return new BasicVector();
+    }
+
+    /**
+     * Creates a new {@link BasicVector} of the given {@code length}.
+     */
+    public static BasicVector ofLength(int length) {
+        return new BasicVector(length);
+    }
+
+    /**
+     * Creates a new {@link BasicVector} from the given {@code values}.
+     */
+    public static BasicVector of(double... values) {
+        return BasicVector.fromArray(values);
+    }
+
+    /**
+     * Creates a new {@link BasicVector} from the given {@code values}.
+     */
+    public static BasicVector fromArray(double[] array) {
+        return new BasicVector(array);
+    }
+
+    /**
+     * Creates a new {@link BasicVector} from the given other {@code vector}.
+     */
+    public static BasicVector fromVector(Vector vector) {
+        return new BasicVector(vector);
+    }
+
+    /**
+     * Creates a new {@link BasicVector} from the given {@code source}.
+     */
+    public static BasicVector fromSource(VectorSource source) {
+        return new BasicVector(source);
+    }
+
+    /**
+     * Creates a constant {@link BasicVector} of the given {@code length} with
+     * the given {@code value}.
+     */
+    public static BasicVector constant(int length, double value) {
+        double array[] = new double[length];
+        Arrays.fill(array, value);
+
+        return new BasicVector(array);
+    }
+
+    /**
+     * Creates a random {@link BasicVector} of the given {@code length} with
+     * the given {@code Random}.
+     */
+    public static BasicVector random(int length, Random random) {
+        double array[] = new double[length];
+        for (int i = 0; i < length; i++) {
+            array[i] = random.nextDouble();
+        }
+
+        return new BasicVector(array);
+    }
 
     private double self[];
 
