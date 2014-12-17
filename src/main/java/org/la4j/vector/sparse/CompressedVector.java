@@ -26,6 +26,8 @@ package org.la4j.vector.sparse;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Arrays;
+import java.util.Random;
 
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vector;
@@ -56,6 +58,78 @@ public class CompressedVector extends SparseVector {
     private static final long serialVersionUID = 4071505L;
 
     private static final int MINIMUM_SIZE = 32;
+
+    /**
+     * Creates an empty {@link CompressedVector}.
+     */
+    public static CompressedVector empty() {
+        return new CompressedVector();
+    }
+
+    /**
+     * Creates a new {@link CompressedVector} of the given {@code length}.
+     */
+    public static CompressedVector ofLength(int length) {
+        return new CompressedVector(length);
+    }
+
+    /**
+     * Creates a new {@link CompressedVector} from the given {@code values}.
+     */
+    public static CompressedVector of(double... values) {
+        return CompressedVector.fromArray(values);
+    }
+
+    /**
+     * Creates a new {@link CompressedVector} from the given {@code values}.
+     */
+    public static CompressedVector fromArray(double[] array) {
+        return new CompressedVector(array);
+    }
+
+    /**
+     * Creates a new {@link CompressedVector} from the given other {@code vector}.
+     */
+    public static CompressedVector fromVector(Vector vector) {
+        return new CompressedVector(vector);
+    }
+
+    /**
+     * Creates a new {@link CompressedVector} from the given {@code source}.
+     */
+    public static CompressedVector fromSource(VectorSource source) {
+        return new CompressedVector(source);
+    }
+
+    /**
+     * Creates a constant {@link CompressedVector} of the given {@code length} with
+     * the given {@code value}.
+     */
+    public static CompressedVector constant(int length, double value) {
+        CompressedVector result = new CompressedVector(length, 0, new double[0], new int[0]);
+        result.setAll(value);
+        return result;
+    }
+
+    /**
+     * Creates a random {@link CompressedVector} of the given {@code length} with
+     * the given {@code Random}.
+     */
+    public static CompressedVector random(int length, Random random) {
+        int cardinality = length / 4; // density factor
+
+        double values[] = new double[cardinality];
+        int indices[] = new int[cardinality];
+
+        for (int i = 0; i < cardinality; i++) {
+            values[i] = random.nextDouble();
+            indices[i] = random.nextInt(length);
+        }
+
+        Arrays.sort(indices);
+
+        return new CompressedVector(length, cardinality, values, indices);
+    }
 
     private double values[];
     private int indices[];

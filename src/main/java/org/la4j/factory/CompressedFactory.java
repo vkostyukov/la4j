@@ -38,51 +38,36 @@ public abstract class CompressedFactory extends Factory {
 
     @Override
     public Vector createVector() {
-        return new CompressedVector();
+        return CompressedVector.empty();
     }
 
     @Override
     public Vector createVector(int length) {
-        return new CompressedVector(length);
+        return CompressedVector.ofLength(length);
     }
 
     @Override
     public Vector createVector(double[] array) {
-        return new CompressedVector(array);
+        return CompressedVector.fromArray(array);
     }
 
     @Override
     public Vector createVector(Vector vector) {
-        return new CompressedVector(vector);
+        return CompressedVector.fromVector(vector);
     }
 
     @Override
     public Vector createVector(VectorSource source) {
-        return new CompressedVector(source);
+        return CompressedVector.fromSource(source);
     }
 
     @Override
     public Vector createConstantVector(int length, double value) {
-        Vector result = new CompressedVector(length, 0, new double[0], new int[0]);
-        result.setAll(value);
-        return result;
+        return CompressedVector.constant(length, value);
     }
 
     @Override
     public Vector createRandomVector(int length, Random random) {
-
-        int cardinality = length / DENSITY;
-
-        double values[] = new double[cardinality];
-        int indices[] = new int[cardinality];
-
-        for (int i = 0; i < cardinality; i++) {
-            values[i] = random.nextDouble();
-            indices[i] = random.nextInt(length);
-        }
-
-        Arrays.sort(indices);
-
-        return new CompressedVector(length, cardinality, values, indices);
+        return CompressedVector.random(length, random);
     }
 }
