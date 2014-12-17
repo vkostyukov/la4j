@@ -22,6 +22,7 @@
 package org.la4j.vector.sparse;
 
 import java.util.Iterator;
+import java.util.Random;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
@@ -33,6 +34,7 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
+import org.la4j.vector.source.VectorSource;
 
 /**
  * A sparse vector.
@@ -48,6 +50,64 @@ import org.la4j.vector.operation.VectorVectorOperation;
  * 
  */
 public abstract class SparseVector extends AbstractVector {
+
+    /**
+     * Creates an empty {@link SparseVector}.
+     */
+    public static SparseVector empty() {
+        return CompressedVector.empty();
+    }
+
+    /**
+     * Creates a new {@link SparseVector} of the given {@code length}.
+     */
+    public static SparseVector ofLength(int length) {
+        return CompressedVector.ofLength(length);
+    }
+
+    /**
+     * Creates a new {@link SparseVector} from the given {@code values}.
+     */
+    public static SparseVector of(double... values) {
+        return CompressedVector.of(values);
+    }
+
+    /**
+     * Creates a new {@link SparseVector} from the given {@code values}.
+     */
+    public static SparseVector fromArray(double[] array) {
+        return CompressedVector.fromArray(array);
+    }
+
+    /**
+     * Creates a new {@link SparseVector} from the given other {@code vector}.
+     */
+    public static SparseVector fromVector(Vector vector) {
+        return CompressedVector.fromVector(vector);
+    }
+
+    /**
+     * Creates a new {@link SparseVector} from the given {@code source}.
+     */
+    public static SparseVector fromSource(VectorSource source) {
+        return CompressedVector.fromSource(source);
+    }
+
+    /**
+     * Creates a constant {@link SparseVector} of the given {@code length} with
+     * the given {@code value}.
+     */
+    public static SparseVector constant(int length, double value) {
+        return CompressedVector.constant(length, value);
+    }
+
+    /**
+     * Creates a constant {@link SparseVector} of the given {@code length} with
+     * the given {@code value}.
+     */
+    public static SparseVector random(int length, Random random) {
+        return CompressedVector.random(length, random);
+    }
 
     protected int cardinality;
 
