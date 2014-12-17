@@ -39,7 +39,7 @@ import org.la4j.vector.functor.VectorProcedure;
 
 /**
  * An abstract wrapper around {@code Vector} to make it easier to implement.
- * 
+ * <p/>
  * A vector represents an array of elements. It can be re-sized.
  */
 public abstract class AbstractVector implements Vector {
@@ -48,7 +48,7 @@ public abstract class AbstractVector implements Vector {
     private static final NumberFormat DEFAULT_FORMATTER = new DecimalFormat("0.000");
 
     protected int length;
-    
+
     protected Factory factory;
 
     protected AbstractVector(Factory factory, int length) {
@@ -69,7 +69,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public void swap(int i, int j) {
-      swapElements(i, j);
+        swapElements(i, j);
     }
 
     @Override
@@ -143,7 +143,7 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector hadamardProduct(Vector that, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureArgumentIsNotNull(that,  "vector");
+        ensureArgumentIsNotNull(that, "vector");
         ensureVectorIsSimilar(that);
 
         return apply(Vectors.ooPlaceHadamardProduct(factory), that);
@@ -162,7 +162,7 @@ public abstract class AbstractVector implements Vector {
 
         if (length != matrix.rows()) {
             fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
-                 ". Should be: " + length + "x_.");
+                    ". Should be: " + length + "x_.");
         }
 
         Vector result = factory.createVector(matrix.columns());
@@ -297,10 +297,10 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector copyOfLength(int length) {
-       return copyOfLength(length, factory);
+        return copyOfLength(length, factory);
     }
 
-  @Override
+    @Override
     public Vector copyOfLength(int length, Factory factory) {
         ensureFactoryIsNotNull(factory);
 
@@ -317,16 +317,15 @@ public abstract class AbstractVector implements Vector {
     public Vector shuffle() {
         return shuffle(factory);
     }
-    
+
     /**
      * Shuffles this vector, using a Fisher-Yates shuffle.
-     * 
+     * <p/>
      * Copies this vector in the new vector that contains the same elements but with
      * the elements shuffled around (which might also result in the same vector,
      * since all outcomes are equally probable).
      *
      * @param factory the factory of result vector
-     *
      * @return the shuffled vector
      */
     @Override
@@ -522,15 +521,15 @@ public abstract class AbstractVector implements Vector {
         result.setColumn(0, this);
         return result;
     }
-    
+
     @Override
     public Vector normalize() {
-    	return normalize(Vectors.mkEuclideanNormAccumulator());
+        return normalize(Vectors.mkEuclideanNormAccumulator());
     }
-    
+
     @Override
     public Vector normalize(VectorAccumulator acc) {
-    	return divide(fold(acc));
+        return divide(fold(acc));
     }
 
     @Override
@@ -557,7 +556,7 @@ public abstract class AbstractVector implements Vector {
     @Override
     public String mkString(NumberFormat formatter) {
         return mkString(formatter,
-                        DEFAULT_DELIMITER);
+                DEFAULT_DELIMITER);
     }
 
     @Override
@@ -577,6 +576,11 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Factory factory() {
         return factory;
+    }
+
+    @Override
+    public <T extends Vector> T to(VectorConverter<T> converter) {
+        return converter.convert(this);
     }
 
     protected void ensureFactoryIsNotNull(Factory factory) {

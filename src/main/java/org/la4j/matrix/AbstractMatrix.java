@@ -1486,4 +1486,9 @@ public abstract class AbstractMatrix implements Matrix {
             howMany--;
         }
     }
+
+    @Override
+    public <T extends Matrix> T to(MatrixConverter<T> converter) {
+        return converter.convert(this);
+    }
 }
