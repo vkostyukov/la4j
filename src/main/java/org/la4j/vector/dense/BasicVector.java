@@ -70,7 +70,7 @@ public class BasicVector extends DenseVector {
     }
 
     /**
-     * Creates a new {@link BasicVector} from the given {@code values}.
+     * Creates a new {@link BasicVector} from the given {@code array}.
      */
     public static BasicVector fromArray(double[] array) {
         return new BasicVector(array);

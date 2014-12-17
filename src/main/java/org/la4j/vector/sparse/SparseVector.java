@@ -73,7 +73,7 @@ public abstract class SparseVector extends AbstractVector {
     }
 
     /**
-     * Creates a new {@link SparseVector} from the given {@code values}.
+     * Creates a new {@link SparseVector} from the given {@code array}.
      */
     public static SparseVector fromArray(double[] array) {
         return CompressedVector.fromArray(array);

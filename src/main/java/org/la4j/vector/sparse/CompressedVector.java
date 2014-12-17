@@ -81,7 +81,7 @@ public class CompressedVector extends SparseVector {
     }
 
     /**
-     * Creates a new {@link CompressedVector} from the given {@code values}.
+     * Creates a new {@link CompressedVector} from the given {@code array}.
      */
     public static CompressedVector fromArray(double[] array) {
         return new CompressedVector(array);

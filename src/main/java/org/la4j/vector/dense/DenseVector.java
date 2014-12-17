@@ -27,6 +27,9 @@ import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
+import org.la4j.vector.source.VectorSource;
+
+import java.util.Random;
 
 /**
  * A dense vector.
@@ -42,6 +45,65 @@ import org.la4j.vector.operation.VectorVectorOperation;
  * 
  */
 public abstract class DenseVector extends AbstractVector {
+
+    /**
+     * Creates an empty {@link DenseVector}.
+     */
+    public static DenseVector empty() {
+        return BasicVector.empty();
+    }
+
+    /**
+     * Creates a new {@link DenseVector} of the given {@code length}.
+     */
+    public static DenseVector ofLength(int length) {
+        return BasicVector.ofLength(length);
+    }
+
+    /**
+     * Creates a new {@link BasicVector} from the given {@code values}.
+     */
+    public static DenseVector of(double... values) {
+        return BasicVector.of(values);
+    }
+
+
+    /**
+     * Creates a new {@link DenseVector} from the given {@code array}.
+     */
+    public static DenseVector fromArray(double[] array) {
+        return BasicVector.fromArray(array);
+    }
+
+    /**
+     * Creates a new {@link DenseVector} from the given other {@code vector}.
+     */
+    public static DenseVector fromVector(Vector vector) {
+        return BasicVector.fromVector(vector);
+    }
+
+    /**
+     * Creates a new {@link DenseVector} from the given {@code source}.
+     */
+    public static DenseVector fromSource(VectorSource source) {
+        return BasicVector.fromSource(source);
+    }
+
+    /**
+     * Creates a constant {@link DenseVector} of the given {@code length} with
+     * the given {@code value}.
+     */
+    public static DenseVector constant(int length, double value) {
+        return BasicVector.constant(length, value);
+    }
+
+    /**
+     * Creates a random {@link DenseVector} of the given {@code length} with
+     * the given {@code Random}.
+     */
+    public static DenseVector random(int length, Random random) {
+        return BasicVector.random(length, random);
+    }
 
     public DenseVector(int length) {
         super(LinearAlgebra.DENSE_FACTORY, length);
