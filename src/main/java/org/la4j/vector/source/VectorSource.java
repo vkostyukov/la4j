@@ -21,6 +21,7 @@
 
 package org.la4j.vector.source;
 
+@Deprecated
 public interface VectorSource {
 
     /**

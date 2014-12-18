@@ -481,6 +481,7 @@ public final class Vectors {
      *
      * @return a vector source
      */
+    @Deprecated
     public static VectorSource asVectorSource(Vector vector) {
         return new LoopbackVectorSource(vector);
     }
@@ -492,17 +493,21 @@ public final class Vectors {
      *
      * @return an array vector source
      */
+    @Deprecated
     public static VectorSource asArraySource(double[] array) {
         return new ArrayVectorSource(array);
     }
 
     /**
      * Creates a random vector source of given {@code length}.
+     *
+     * This method is deprecated. Use {@link org.la4j.vector.dense.DenseVector#random(int, java.util.Random)} instead.
      * 
      * @param length the length of the source
      *
      * @return a random vector source
      */
+    @Deprecated
     public static VectorSource asRandomSource(int length, Random random) {
         return new RandomVectorSource(length, random);
     }
@@ -547,7 +552,7 @@ public final class Vectors {
     /**
      * Creates a singleton 1-length vector of given {@code value}.
      *
-     * This method is deprecated. Use the {@link org.la4j.vector.Vectors#asVector(double...)}
+     * This method is deprecated. Use {@link org.la4j.vector.dense.DenseVector#of(double...)} instead.
      *
      * @param value the vector's singleton value
      *
@@ -561,10 +566,13 @@ public final class Vectors {
     /**
      * Creates a default vector from given vararg {@code values}.
      *
+     * This method is deprecated. Use {@link org.la4j.vector.dense.DenseVector#of(double...)} instead.
+     *
      * @param values of the vector
      *
      * @return a default vector
      */
+    @Deprecated
     public static Vector asVector(double... values) {
         return LinearAlgebra.DEFAULT_FACTORY.createVector(values);
     }

@@ -87,13 +87,6 @@ public abstract class SparseVector extends AbstractVector {
     }
 
     /**
-     * Creates a new {@link SparseVector} from the given {@code source}.
-     */
-    public static SparseVector fromSource(VectorSource source) {
-        return CompressedVector.fromSource(source);
-    }
-
-    /**
      * Creates a constant {@link SparseVector} of the given {@code length} with
      * the given {@code value}.
      */

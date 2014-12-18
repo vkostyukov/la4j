@@ -23,6 +23,7 @@ package org.la4j.vector.source;
 
 import org.la4j.vector.Vector;
 
+@Deprecated
 public class LoopbackVectorSource implements VectorSource {
 
     private final Vector vector;

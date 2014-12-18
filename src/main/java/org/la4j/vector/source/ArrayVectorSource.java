@@ -21,6 +21,7 @@
 
 package org.la4j.vector.source;
 
+@Deprecated
 public class ArrayVectorSource implements VectorSource {
 
     private final double array[];

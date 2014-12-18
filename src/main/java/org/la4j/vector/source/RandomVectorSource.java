@@ -23,6 +23,7 @@ package org.la4j.vector.source;
 
 import java.util.Random;
 
+@Deprecated
 public class RandomVectorSource implements VectorSource {
 
     private final int length;

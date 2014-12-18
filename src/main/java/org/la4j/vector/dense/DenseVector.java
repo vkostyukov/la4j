@@ -83,13 +83,6 @@ public abstract class DenseVector extends AbstractVector {
     }
 
     /**
-     * Creates a new {@link DenseVector} from the given {@code source}.
-     */
-    public static DenseVector fromSource(VectorSource source) {
-        return BasicVector.fromSource(source);
-    }
-
-    /**
      * Creates a constant {@link DenseVector} of the given {@code length} with
      * the given {@code value}.
      */

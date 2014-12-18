@@ -84,13 +84,6 @@ public class BasicVector extends DenseVector {
     }
 
     /**
-     * Creates a new {@link BasicVector} from the given {@code source}.
-     */
-    public static BasicVector fromSource(VectorSource source) {
-        return new BasicVector(source);
-    }
-
-    /**
      * Creates a constant {@link BasicVector} of the given {@code length} with
      * the given {@code value}.
      */
@@ -124,6 +117,7 @@ public class BasicVector extends DenseVector {
         this(Vectors.asVectorSource(vector));
     }
 
+    @Deprecated
     public BasicVector(VectorSource source) {
         this(source.length());
 

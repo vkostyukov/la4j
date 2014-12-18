@@ -95,13 +95,6 @@ public class CompressedVector extends SparseVector {
     }
 
     /**
-     * Creates a new {@link CompressedVector} from the given {@code source}.
-     */
-    public static CompressedVector fromSource(VectorSource source) {
-        return new CompressedVector(source);
-    }
-
-    /**
      * Creates a constant {@link CompressedVector} of the given {@code length} with
      * the given {@code value}.
      */
@@ -151,6 +144,7 @@ public class CompressedVector extends SparseVector {
         this(Vectors.asArraySource(array));
     }
 
+    @Deprecated
     public CompressedVector(VectorSource source) {
         this(source.length(), 0);
 
