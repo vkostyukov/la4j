@@ -30,10 +30,7 @@ import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
-import org.la4j.vector.builder.TerminalVectorBuilder;
-import org.la4j.vector.builder.VectorBuilder;
 import org.la4j.vector.dense.BasicVector;
-import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
@@ -545,17 +542,6 @@ public final class Vectors {
     @Deprecated
     public static VectorSource asSymbolSeparatedSource(InputStream in, String separator) {
         return new StreamVectorSource(new SymbolSeparatedStream(in, separator));
-    }
-
-    /**
-     * Creates a new vector builder instance of given {@code factory}.
-     *
-     * @param factory the builder's factory
-     *
-     * @return a factorised vector builder
-     */
-    public static VectorBuilder asBuilder(Factory factory) {
-        return new TerminalVectorBuilder(factory);
     }
 
     /**
