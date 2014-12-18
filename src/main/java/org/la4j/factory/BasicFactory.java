@@ -55,7 +55,7 @@ public abstract class BasicFactory extends Factory {
 
     @Override
     public Vector createVector(VectorSource source) {
-        return BasicVector.fromSource(source);
+        return new BasicVector(source);
     }
 
     @Override
