@@ -29,12 +29,12 @@ import org.la4j.factory.Factory;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
+import org.la4j.vector.VectorFactory;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
-import org.la4j.vector.source.VectorSource;
 
 /**
  * A sparse vector.
@@ -249,6 +249,19 @@ public abstract class SparseVector extends AbstractVector {
     @Override
     public Vector copy() {
         return copyOfLength(length);
+    }
+
+    @Override
+    public <T extends Vector> T to(VectorFactory<T> factory) {
+        T result = factory.vectorOfLength(length);
+        VectorIterator it = nonZeroIterator();
+
+        while (it.hasNext()) {
+            it.next();
+            result.set(it.index(), it.get());
+        }
+
+        return result;
     }
 
     @Override

@@ -29,6 +29,7 @@ import java.util.Random;
 
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vector;
+import org.la4j.vector.VectorFactory;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.source.VectorSource;
 
@@ -174,6 +175,15 @@ public class BasicVector extends DenseVector {
         double result[] = new double[length];
         System.arraycopy(self, 0, result, 0, length);
         return result;
+    }
+
+    @Override
+    public <T extends Vector> T to(VectorFactory<T> factory) {
+        if (factory.outputClass == BasicVector.class) {
+            return factory.outputClass.cast(this);
+        }
+
+        return super.to(factory);
     }
 
     @Override

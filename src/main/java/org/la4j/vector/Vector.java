@@ -29,12 +29,14 @@ import java.text.NumberFormat;
 import org.la4j.factory.Factory;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
+import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
+import org.la4j.vector.sparse.SparseVector;
 
 /**
  * The real vector interface.
@@ -722,11 +724,26 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Factory factory();
 
     /**
-     * Converts vector to vector of another type
+     * Converts this vector using the given {@code factory}.
      *
-     * @param converter converter which is used for vector convertion
-     * @param <T> type of aim matrix
-     * @return converted matrix
+     * @param factory factory which is used for vector conversion
+     * @param <T> type of the result vector
+     *
+     * @return a converted vector
      */
-    <T extends Vector> T to(VectorConverter<T> converter);
+    <T extends Vector> T to(VectorFactory<T> factory);
+
+    /**
+     * Converts this vector into a {@link org.la4j.vector.dense.DenseVector}.
+     *
+     * @return a dense vector
+     */
+    DenseVector toDenseVector();
+
+    /**
+     * Converts this vector into a {@link org.la4j.vector.sparse.SparseVector}.
+     *
+     * @return a sparse vector
+     */
+    SparseVector toSparseVector();
 }

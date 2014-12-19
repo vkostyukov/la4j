@@ -31,6 +31,7 @@ import java.util.Random;
 
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vector;
+import org.la4j.vector.VectorFactory;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
@@ -377,7 +378,16 @@ public class CompressedVector extends SparseVector {
         int k = searchForIndex(i);
         return k < cardinality && indices[k] == i;
     }
-    
+
+    @Override
+    public <T extends Vector> T to(VectorFactory<T> factory) {
+        if (factory.outputClass == CompressedVector.class) {
+            return factory.outputClass.cast(this);
+        }
+
+        return super.to(factory);
+    }
+
     /**
      * Does the binary searching to find the position in the value array given
      * it's index.

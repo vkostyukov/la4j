@@ -55,21 +55,23 @@ public final class Vectors {
     public static final double EPS = LinearAlgebra.EPS;
     public static final int ROUND_FACTOR = LinearAlgebra.ROUND_FACTOR;
 
-    public static final VectorConverter<BasicVector> DENSE = new VectorConverter<BasicVector>() {
-        @Override
-        public BasicVector convert(Vector vector) {
-            return (BasicVector) LinearAlgebra.DENSE_FACTORY.createVector(vector);
-        }
-    };
+    public static final VectorFactory<BasicVector> DENSE =
+        new VectorFactory<BasicVector>(BasicVector.class) {
+            @Override
+            public BasicVector vectorOfLength(int length) {
+                return BasicVector.ofLength(length);
+            }
+        };
 
-    public static final VectorConverter<CompressedVector> SPARSE = new VectorConverter<CompressedVector>() {
-        @Override
-        public CompressedVector convert(Vector vector) {
-            return (CompressedVector) LinearAlgebra.SPARSE_FACTORY.createVector(vector);
-        }
-    };
+    public static final VectorFactory<CompressedVector> SPARSE =
+        new VectorFactory<CompressedVector>(CompressedVector.class) {
+            @Override
+            public CompressedVector vectorOfLength(int length) {
+                return CompressedVector.ofLength(length);
+            }
+        };
 
-    public static final VectorConverter[] CONVERTERS = {
+    public static final VectorFactory[] FACTORIES = {
             DENSE, SPARSE
     };
 

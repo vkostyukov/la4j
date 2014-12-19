@@ -3,7 +3,7 @@ package org.la4j.vector.converter;
 import org.junit.Test;
 import org.la4j.LinearAlgebra;
 import org.la4j.vector.Vector;
-import org.la4j.vector.VectorConverter;
+import org.la4j.vector.VectorFactory;
 import org.la4j.vector.Vectors;
 
 import static org.junit.Assert.assertTrue;
@@ -51,7 +51,7 @@ public class VectorConverterTest {
     }
 
     private void performTest(Vector vector) {
-        for (VectorConverter converter : Vectors.CONVERTERS) {
+        for (VectorFactory converter : Vectors.FACTORIES) {
             assertTrue(vector.to(converter).equals(vector));
         }
     }

@@ -25,6 +25,7 @@ import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
+import org.la4j.vector.VectorFactory;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.source.VectorSource;
@@ -118,6 +119,17 @@ public abstract class DenseVector extends AbstractVector {
      * @return an array representation of this vector
      */
     public abstract double[] toArray();
+
+    @Override
+    public <T extends Vector> T to(VectorFactory<T> factory) {
+        T result = factory.vectorOfLength(length);
+
+        for (int i = 0; i < length; i++) {
+            result.set(i, get(i));
+        }
+
+        return result;
+    }
 
     @Override
     public Vector multiply(double value, Factory factory) {

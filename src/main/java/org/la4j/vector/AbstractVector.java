@@ -32,10 +32,12 @@ import java.util.Random;
 import org.la4j.factory.Factory;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
+import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.sparse.SparseVector;
 
 /**
  * An abstract wrapper around {@code Vector} to make it easier to implement.
@@ -579,8 +581,13 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public <T extends Vector> T to(VectorConverter<T> converter) {
-        return converter.convert(this);
+    public DenseVector toDenseVector() {
+        return to(Vectors.DENSE);
+    }
+
+    @Override
+    public SparseVector toSparseVector() {
+        return to(Vectors.SPARSE);
     }
 
     protected void ensureFactoryIsNotNull(Factory factory) {
