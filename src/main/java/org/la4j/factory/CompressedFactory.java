@@ -68,6 +68,6 @@ public abstract class CompressedFactory extends Factory {
 
     @Override
     public Vector createRandomVector(int length, Random random) {
-        return CompressedVector.random(length, random);
+        return CompressedVector.random(length, 1.0 / DENSITY, random);
     }
 }

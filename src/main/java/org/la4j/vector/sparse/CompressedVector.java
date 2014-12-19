@@ -108,10 +108,14 @@ public class CompressedVector extends SparseVector {
 
     /**
      * Creates a random {@link CompressedVector} of the given {@code length} with
-     * the given {@code Random}.
+     * the given {@code density} and {@code Random}.
      */
-    public static CompressedVector random(int length, Random random) {
-        int cardinality = length / 4; // density factor
+    public static CompressedVector random(int length, double density, Random random) {
+        if (density < 0.0 || density > 1.0) {
+            throw new IllegalArgumentException("The density value should be between 0 and 1.0");
+        }
+
+        int cardinality = (int) (length * density);
 
         double values[] = new double[cardinality];
         int indices[] = new int[cardinality];

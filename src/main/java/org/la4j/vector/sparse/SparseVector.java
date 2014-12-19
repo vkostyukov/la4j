@@ -98,8 +98,8 @@ public abstract class SparseVector extends AbstractVector {
      * Creates a constant {@link SparseVector} of the given {@code length} with
      * the given {@code value}.
      */
-    public static SparseVector random(int length, Random random) {
-        return CompressedVector.random(length, random);
+    public static SparseVector random(int length, double density, Random random) {
+        return CompressedVector.random(length, density, random);
     }
 
     protected int cardinality;
