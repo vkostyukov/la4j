@@ -53,7 +53,7 @@ public abstract class CompressedFactory extends Factory {
 
     @Override
     public Vector createVector(Vector vector) {
-        return CompressedVector.fromVector(vector);
+        return new CompressedVector(vector);
     }
 
     @Override

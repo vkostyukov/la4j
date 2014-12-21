@@ -89,13 +89,6 @@ public class CompressedVector extends SparseVector {
     }
 
     /**
-     * Creates a new {@link CompressedVector} from the given other {@code vector}.
-     */
-    public static CompressedVector fromVector(Vector vector) {
-        return new CompressedVector(vector);
-    }
-
-    /**
      * Creates a constant {@link CompressedVector} of the given {@code length} with
      * the given {@code value}.
      */
@@ -141,12 +134,39 @@ public class CompressedVector extends SparseVector {
         this(length, 0);
     }
 
+    /**
+     * This constructor is deprecated. Use {@link Vector#to(VectorFactory)}
+     * instead.
+     *
+     * <p />
+     *
+     * Creates a new {@link CompressedVector} as a copy of the given {@code vector}.
+     *
+     *
+     * @param vector the vector to copy
+     */
+    @Deprecated
     public CompressedVector(Vector vector) {
         this(Vectors.asVectorSource(vector));
     }
 
     public CompressedVector(double array[]) {
-        this(Vectors.asArraySource(array));
+        this(array.length, 0);
+
+        for (int i = 0; i < length; i++) {
+            double value = array[i];
+            //if (Math.abs(value) > Vectors.EPS || value < 0.0) {
+            if (value != 0.0) {
+
+                if (values.length < cardinality + 1) {
+                    growUp();
+                }
+
+                values[cardinality] = value;
+                indices[cardinality] = i;
+                cardinality++;
+            }
+        }
     }
 
     @Deprecated

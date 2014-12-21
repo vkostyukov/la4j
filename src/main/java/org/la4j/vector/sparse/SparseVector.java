@@ -80,13 +80,6 @@ public abstract class SparseVector extends AbstractVector {
     }
 
     /**
-     * Creates a new {@link SparseVector} from the given other {@code vector}.
-     */
-    public static SparseVector fromVector(Vector vector) {
-        return CompressedVector.fromVector(vector);
-    }
-
-    /**
      * Creates a constant {@link SparseVector} of the given {@code length} with
      * the given {@code value}.
      */

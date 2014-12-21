@@ -78,13 +78,6 @@ public class BasicVector extends DenseVector {
     }
 
     /**
-     * Creates a new {@link BasicVector} from the given other {@code vector}.
-     */
-    public static BasicVector fromVector(Vector vector) {
-        return new BasicVector(vector);
-    }
-
-    /**
      * Creates a constant {@link BasicVector} of the given {@code length} with
      * the given {@code value}.
      */
@@ -114,6 +107,17 @@ public class BasicVector extends DenseVector {
         this(0);
     }
 
+    /**
+     * This constructor is deprecated. Use {@link Vector#to(VectorFactory)}
+     * instead.
+     *
+     * <p />
+     *
+     * Creates a new {@link BasicVector} as a copy of the given {@code vector}.
+     *
+     * @param vector the vector to copy
+     */
+    @Deprecated
     public BasicVector(Vector vector) {
         this(Vectors.asVectorSource(vector));
     }
