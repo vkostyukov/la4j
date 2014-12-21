@@ -20,6 +20,8 @@
 
 package org.la4j.vector;
 
+import java.lang.reflect.ParameterizedType;
+
 /**
  * An abstract vector factory.
  *
@@ -27,11 +29,9 @@ package org.la4j.vector;
  */
 public abstract class VectorFactory<T extends Vector> {
 
-    public final Class<T> outputClass;
-
-    public VectorFactory(Class<T> outputClass) {
-        this.outputClass = outputClass;
-    }
+    @SuppressWarnings("unchecked cast")
+    public final Class<T> outputClass = (Class<T>) ((ParameterizedType)
+            getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
     /**
      *
