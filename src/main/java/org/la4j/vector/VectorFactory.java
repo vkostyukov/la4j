@@ -36,12 +36,5 @@ public abstract class VectorFactory<T extends Vector> {
     /**
      *
      */
-    public abstract T vectorOfLength(int length);
-
-    /**
-     *
-     */
-    public T emptyVector() {
-        return vectorOfLength(0);
-    }
+    public abstract T apply(int length);
 }

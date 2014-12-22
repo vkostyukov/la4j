@@ -38,7 +38,6 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.sparse.CompressedVector;
 import org.la4j.vector.sparse.SparseVector;
 
 /**
@@ -502,7 +501,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public <T extends Vector> T to(VectorFactory<T> factory) {
-        T result = factory.vectorOfLength(length);
+        T result = factory.apply(length);
 
         for (int i = 0; i < length; i++) {
             result.set(i, get(i));

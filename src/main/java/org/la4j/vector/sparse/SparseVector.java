@@ -243,7 +243,7 @@ public abstract class SparseVector extends AbstractVector {
 
     @Override
     public <T extends Vector> T to(VectorFactory<T> factory) {
-        T result = factory.vectorOfLength(length);
+        T result = factory.apply(length);
         VectorIterator it = nonZeroIterator();
 
         while (it.hasNext()) {
