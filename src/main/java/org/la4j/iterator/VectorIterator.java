@@ -69,19 +69,6 @@ public abstract class VectorIterator extends CursorIterator {
     }
 
     /**
-     * Converts this iterator into a vector.
-     *
-     * @param factory that creates a new vector
-     *
-     * @return a new vector
-     */
-    public Vector toVector(Factory factory) {
-        Vector result = factory.createVector(length);
-        alterVector(result);
-        return result;
-    }
-
-    /**
      * Alters given {@code vector} with values from this iterator.
      *
      * @param vector the vector to alter

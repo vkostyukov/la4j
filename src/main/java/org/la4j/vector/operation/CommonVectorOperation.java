@@ -25,16 +25,16 @@ import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.sparse.SparseVector;
 
-public abstract class CommonVectorOperation<T> implements VectorOperation<T> {
+public abstract class CommonVectorOperation<R> implements VectorOperation<R> {
     @Override
-    public T apply(final SparseVector a) {
+    public R apply(final SparseVector a) {
         return applyCommon(a);
     }
 
     @Override
-    public T apply(final DenseVector a) {
+    public R apply(final DenseVector a) {
         return applyCommon(a);
     }
 
-    abstract T applyCommon(final Vector a);
+    abstract R applyCommon(final Vector a);
 }

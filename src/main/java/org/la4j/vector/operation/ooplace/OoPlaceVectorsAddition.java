@@ -29,13 +29,7 @@ import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
-public class OoPlaceVectorToVectorAddition extends VectorVectorOperation<Vector> {
-
-    private final Factory factory;
-
-    public OoPlaceVectorToVectorAddition(Factory factory) {
-        this.factory = factory;
-    }
+public class OoPlaceVectorsAddition extends VectorVectorOperation<Vector> {
 
     @Override
     public Vector apply(SparseVector a, SparseVector b) {
@@ -43,7 +37,9 @@ public class OoPlaceVectorToVectorAddition extends VectorVectorOperation<Vector>
         VectorIterator those = b.nonZeroIterator();
         VectorIterator both  = these.orElseAdd(those);
 
-        return both.toVector(factory);
+        Vector result = a.blank();
+        both.alterVector(result);
+        return result;
     }
 
     @Override
@@ -53,7 +49,7 @@ public class OoPlaceVectorToVectorAddition extends VectorVectorOperation<Vector>
 
     @Override
     public Vector apply(DenseVector a, DenseVector b) {
-        Vector result = factory.createVector(a.length());
+        Vector result = a.blank();
         for (int i = 0; i < a.length(); i++) {
             result.set(i, a.get(i) + b.get(i));
         }
@@ -62,7 +58,7 @@ public class OoPlaceVectorToVectorAddition extends VectorVectorOperation<Vector>
 
     @Override
     public Vector apply(DenseVector a, SparseVector b) {
-        Vector result = a.copy(factory);
+        Vector result = a.copy();
         VectorIterator it = b.nonZeroIterator();
         while (it.hasNext()) {
             it.next();

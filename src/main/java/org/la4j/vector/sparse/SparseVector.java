@@ -27,6 +27,8 @@ import java.util.Random;
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.iterator.VectorIterator;
+import org.la4j.matrix.Matrix;
+import org.la4j.matrix.sparse.CRSMatrix;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.VectorFactory;
@@ -240,11 +242,6 @@ public abstract class SparseVector extends AbstractVector {
     }
 
     @Override
-    public Vector copy() {
-        return copyOfLength(length);
-    }
-
-    @Override
     public <T extends Vector> T to(VectorFactory<T> factory) {
         T result = factory.vectorOfLength(length);
         VectorIterator it = nonZeroIterator();
@@ -252,6 +249,22 @@ public abstract class SparseVector extends AbstractVector {
         while (it.hasNext()) {
             it.next();
             result.set(it.index(), it.get());
+        }
+
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        VectorIterator it = nonZeroIterator();
+
+        while (it.hasNext()) {
+            it.next();
+            long value = (long) it.get();
+            long index = (long) it.index();
+            result = 37 * result + (int) (value ^ (value >>> 32));
+            result = 37 * result + (int) (index ^ (index >>> 32));
         }
 
         return result;
@@ -266,7 +279,23 @@ public abstract class SparseVector extends AbstractVector {
     public <T> T apply(VectorVectorOperation<T> operation, Vector that) {
         return that.apply(operation.curry(this));
     }
-    
+
+    @Override
+    public Matrix toRowMatrix() {
+        // TODO: use SparseMatrix.ofShape()
+        Matrix result = new CRSMatrix(1, length);
+        result.setRow(0, this);
+        return result;
+    }
+
+    @Override
+    public Matrix toColumnMatrix() {
+        // TODO: use SparseMatrix.ofShape()
+        Matrix result = new CRSMatrix(length, 1);
+        result.setColumn(0, this);
+        return result;
+    }
+
     /**
      * Ensures the provided index is in the bounds of this {@link SparseVector}.
      * 

@@ -21,7 +21,6 @@
 
 package org.la4j.vector.operation.ooplace;
 
-import org.la4j.factory.Factory;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
@@ -29,13 +28,7 @@ import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
-public class OoPlaceVectorFromVectorSubtraction extends VectorVectorOperation<Vector> {
-
-    private final Factory factory;
-
-    public OoPlaceVectorFromVectorSubtraction(Factory factory) {
-        this.factory = factory;
-    }
+public class OoPlaceVectorsSubtraction extends VectorVectorOperation<Vector> {
 
     @Override
     public Vector apply(SparseVector a, SparseVector b) {
@@ -43,12 +36,14 @@ public class OoPlaceVectorFromVectorSubtraction extends VectorVectorOperation<Ve
         VectorIterator those = b.nonZeroIterator();
         VectorIterator both = these.orElseSubtract(those);
 
-        return both.toVector(factory);
+        Vector result = a.blank();
+        both.alterVector(result);
+        return result;
     }
 
     @Override
     public Vector apply(SparseVector a, DenseVector b) {
-        Vector result = b.multiply(-1.0, factory);
+        Vector result = b.multiply(-1.0);
         VectorIterator it = a.nonZeroIterator();
         while (it.hasNext()) {
             it.next();
@@ -59,7 +54,7 @@ public class OoPlaceVectorFromVectorSubtraction extends VectorVectorOperation<Ve
 
     @Override
     public Vector apply(DenseVector a, DenseVector b) {
-        Vector result = factory.createVector(a.length());
+        Vector result = a.blank();
         for (int i = 0; i < b.length(); i++) {
             result.set(i, a.get(i) - b.get(i));
         }
@@ -68,7 +63,7 @@ public class OoPlaceVectorFromVectorSubtraction extends VectorVectorOperation<Ve
 
     @Override
     public Vector apply(DenseVector a, SparseVector b) {
-        Vector result = a.copy(factory);
+        Vector result = a.copy();
         VectorIterator it = b.nonZeroIterator();
         while (it.hasNext()) {
             it.next();

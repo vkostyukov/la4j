@@ -44,6 +44,12 @@ import org.la4j.linear.SeidelSolver;
 import org.la4j.linear.SquareRootSolver;
 import org.la4j.linear.SweepSolver;
 import org.la4j.matrix.Matrix;
+import org.la4j.vector.Vector;
+import org.la4j.vector.operation.VectorVectorOperation;
+import org.la4j.vector.operation.ooplace.OoPlaceHadamardProduct;
+import org.la4j.vector.operation.ooplace.OoPlaceInnerProduct;
+import org.la4j.vector.operation.ooplace.OoPlaceVectorsSubtraction;
+import org.la4j.vector.operation.ooplace.OoPlaceVectorsAddition;
 
 /**
  * Tiny class for common things.
@@ -352,4 +358,16 @@ public final class LinearAlgebra {
     public static final Factory FACTORIES[] = {
             BASIC1D_FACTORY, BASIC2D_FACTORY, CRS_FACTORY, CCS_FACTORY
     };
+
+    public final static VectorVectorOperation<Double> OO_PLACE_INNER_PRODUCT =
+        new OoPlaceInnerProduct();
+
+    public final static VectorVectorOperation<Vector> OO_PLACE_VECTORS_ADDITION =
+        new OoPlaceVectorsAddition();
+
+    public final static VectorVectorOperation<Vector> OO_PLACE_HADAMARD_PRODUCT =
+        new OoPlaceHadamardProduct();
+
+    public final static VectorVectorOperation<Vector> OO_PLACE_VECTORS_SUBTRACTION =
+        new OoPlaceVectorsSubtraction();
 }

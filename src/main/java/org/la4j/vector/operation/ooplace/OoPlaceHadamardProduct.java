@@ -21,7 +21,6 @@
 
 package org.la4j.vector.operation.ooplace;
 
-import org.la4j.factory.Factory;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;
@@ -30,19 +29,15 @@ import org.la4j.vector.sparse.SparseVector;
 
 public class OoPlaceHadamardProduct extends VectorVectorOperation<Vector> {
 
-    private final Factory factory;
-
-    public OoPlaceHadamardProduct(Factory factory) {
-        this.factory = factory;
-    }
-
     @Override
     public Vector apply(SparseVector a, SparseVector b) {
         VectorIterator these = a.nonZeroIterator();
         VectorIterator those = b.nonZeroIterator();
         VectorIterator both = these.andAlsoMultiply(those);
 
-        return both.toVector(factory);
+        Vector result = a.blank();
+        both.alterVector(result);
+        return result;
     }
 
     @Override
@@ -52,7 +47,7 @@ public class OoPlaceHadamardProduct extends VectorVectorOperation<Vector> {
 
     @Override
     public Vector apply(DenseVector a, DenseVector b) {
-        Vector result = a.blank(factory);
+        Vector result = a.blank();
 
         for (int i = 0; i < a.length(); i++) {
             result.set(i, a.get(i) * b.get(i));
@@ -63,7 +58,7 @@ public class OoPlaceHadamardProduct extends VectorVectorOperation<Vector> {
 
     @Override
     public Vector apply(DenseVector a, SparseVector b) {
-        Vector result = a.blank(factory);
+        Vector result = a.blank();
         VectorIterator it = b.nonZeroIterator();
 
         while (it.hasNext()) {

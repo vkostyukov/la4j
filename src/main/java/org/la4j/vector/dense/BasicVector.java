@@ -160,11 +160,6 @@ public class BasicVector extends DenseVector {
     }
 
     @Override
-    public Vector copy() {
-        return copyOfLength(length);
-    }
-
-    @Override
     public Vector copyOfLength(int length) {
       ensureLengthIsCorrect(length);
 
@@ -188,6 +183,11 @@ public class BasicVector extends DenseVector {
         }
 
         return super.to(factory);
+    }
+
+    @Override
+    public Vector blankOfLength(int length) {
+        return BasicVector.ofLength(length);
     }
 
     @Override

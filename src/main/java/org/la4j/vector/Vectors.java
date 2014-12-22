@@ -27,7 +27,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Random;
 import org.la4j.LinearAlgebra;
-import org.la4j.factory.Factory;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
 import org.la4j.vector.dense.BasicVector;
@@ -35,13 +34,7 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
-import org.la4j.vector.operation.ooplace.OoPlaceHadamardProduct;
-import org.la4j.vector.operation.ooplace.OoPlaceHashCode;
-import org.la4j.vector.operation.ooplace.OoPlaceInnerProduct;
-import org.la4j.vector.operation.ooplace.OoPlaceVectorFromVectorSubtraction;
-import org.la4j.vector.operation.ooplace.OoPlaceVectorToVectorAddition;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorToVectorComparison;
 import org.la4j.vector.source.ArrayVectorSource;
 import org.la4j.vector.source.LoopbackVectorSource;
@@ -580,53 +573,10 @@ public final class Vectors {
     /**
      * TODO:
      *
-     * @return
-     */
-    public static VectorVectorOperation<Double> ooPlaceInnerProduct() {
-        return new OoPlaceInnerProduct();
-    }
-
-    /**
-     * TODO:
-     *
-     * @param factory
-     * @return
-     */
-    public static VectorVectorOperation<Vector> ooPlaceVectorToVectorAddition(Factory factory) {
-        return new OoPlaceVectorToVectorAddition(factory);
-    }
-
-    /**
-     * TODO:
-     *
-     * @param factory
-     * @return
-     */
-    public static VectorVectorOperation<Vector> ooPlaceHadamardProduct(Factory factory) {
-        return new OoPlaceHadamardProduct(factory);
-    }
-
-    /**
-     * TODO:
-     *
-     * @param factory
-     * @return
-     */
-    public static VectorVectorOperation<Vector> ooPlaceVectorFromVectorSubtraction(Factory factory) {
-        return new OoPlaceVectorFromVectorSubtraction(factory);
-    }
-
-    /**
-     * TODO:
-     *
      * @param precision
      * @return
      */
     public static VectorVectorOperation<Boolean> ooPlaceVectorToVectorComparison(double precision) {
         return new OoPlaceVectorToVectorComparison(precision);
-    }
-
-    public static VectorOperation<Integer> ooPlaceHashCode() {
-        return new OoPlaceHashCode();
     }
 }

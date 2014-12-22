@@ -29,6 +29,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
 
+import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
@@ -37,6 +38,7 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.sparse.CompressedVector;
 import org.la4j.vector.sparse.SparseVector;
 
 /**
@@ -76,22 +78,19 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public void clear() {
-        assign(0.0);
+        setAll(0.0);
     }
 
     @Override
     public void setAll(double value) {
-        VectorIterator it = iterator();
-
-        while (it.hasNext()) {
-            it.next();
-            it.set(value);
+        for (int i = 0; i < length; i++) {
+            set(i, value);
         }
     }
 
     @Override
     public void assign(double value) {
-        update(Vectors.asConstFunction(value));
+        setAll(value);
     }
 
     @Override
@@ -101,13 +100,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector add(double value) {
-        return add(value, factory);
-    }
-
-    @Override
-    public Vector add(double value, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-        Vector result = blank(factory);
+        Vector result = blank();
         VectorIterator it = iterator();
 
         while (it.hasNext()) {
@@ -119,36 +112,53 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public Vector add(double value, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return add(value).to(Factory.asVectorFactory(factory));
+    }
+
+    @Override
     public Vector add(Vector that) {
-        return add(that, factory);
+        ensureArgumentIsNotNull(that, "vector");
+        ensureVectorIsSimilar(that);
+
+        return apply(LinearAlgebra.OO_PLACE_VECTORS_ADDITION, that);
     }
 
     @Override
     public Vector add(Vector that, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureArgumentIsNotNull(that, "vector");
-        ensureVectorIsSimilar(that);
-
-        return apply(Vectors.ooPlaceVectorToVectorAddition(factory), that);
+        return add(that).to(Factory.asVectorFactory(factory));
     }
 
     @Override
     public Vector multiply(double value) {
-        return multiply(value, factory);
+        Vector result = blank();
+
+        for (int i = 0; i < length; i++) {
+            result.set(i, get(i) * value);
+        }
+
+        return result;
+    }
+
+    @Override
+    public Vector multiply(double value, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return multiply(value).to(Factory.asVectorFactory(factory));
     }
 
     @Override
     public Vector hadamardProduct(Vector that) {
-        return hadamardProduct(that, factory);
+        ensureArgumentIsNotNull(that, "vector");
+        ensureVectorIsSimilar(that);
+        return apply(LinearAlgebra.OO_PLACE_HADAMARD_PRODUCT, that);
     }
 
     @Override
     public Vector hadamardProduct(Vector that, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureArgumentIsNotNull(that, "vector");
-        ensureVectorIsSimilar(that);
-
-        return apply(Vectors.ooPlaceHadamardProduct(factory), that);
+        return hadamardProduct(that).to(Factory.asVectorFactory(factory));
     }
 
     @Override
@@ -195,16 +205,16 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector subtract(Vector that) {
-        return subtract(that, factory);
+        ensureArgumentIsNotNull(that, "vector");
+        ensureVectorIsSimilar(that);
+
+        return apply(LinearAlgebra.OO_PLACE_VECTORS_SUBTRACTION, that);
     }
 
     @Override
     public Vector subtract(Vector that, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        ensureArgumentIsNotNull(that, "vector");
-        ensureVectorIsSimilar(that);
-
-        return apply(Vectors.ooPlaceVectorFromVectorSubtraction(factory), that);
+        return subtract(that).to(Factory.asVectorFactory(factory));
     }
 
     @Override
@@ -232,7 +242,7 @@ public abstract class AbstractVector implements Vector {
         ensureArgumentIsNotNull(that, "vector");
         ensureVectorIsSimilar(that);
 
-        return apply(Vectors.ooPlaceInnerProduct(), that);
+        return apply(LinearAlgebra.OO_PLACE_INNER_PRODUCT, that);
     }
 
     @Override
@@ -259,7 +269,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector blank() {
-        return blank(factory);
+        return blankOfLength(length);
     }
 
     @Override
@@ -271,7 +281,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector copy() {
-        return copy(factory);
+        return copyOfLength(length);
     }
 
     @Override
@@ -288,36 +298,28 @@ public abstract class AbstractVector implements Vector {
     @Override
     @Deprecated
     public Vector resize(int length) {
-        return copyOfLength(length, factory);
+        return copyOfLength(length);
     }
 
     @Override
     @Deprecated
     public Vector resize(int length, Factory factory) {
-        return copyOfLength(length, factory);
-    }
-
-    @Override
-    public Vector copyOfLength(int length) {
-        return copyOfLength(length, factory);
-    }
-
-    @Override
-    public Vector copyOfLength(int length, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
-        Vector result = factory.createVector(length);
-
-        for (int i = 0; i < Math.min(length, this.length); i++) {
-            result.set(i, get(i));
-        }
-
-        return result;
+        return copyOfLength(length).to(Factory.asVectorFactory(factory));
     }
 
     @Override
     public Vector shuffle() {
-        return shuffle(factory);
+        Vector result = copy();
+
+        // Conduct Fisher-Yates shuffle
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            int j = random.nextInt(length - i) + i;
+            swapElements(i, j);
+        }
+
+        return result;
     }
 
     /**
@@ -333,23 +335,12 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector shuffle(Factory factory) {
         ensureFactoryIsNotNull(factory);
-
-        Vector result = copy(factory);
-
-        // Conduct Fisher-Yates shuffle
-        Random random = new Random();
-
-        for (int i = 0; i < length; i++) {
-            int j = random.nextInt(length - i) + i;
-            swapElements(i, j);
-        }
-
-        return result;
+        return shuffle().to(Factory.asVectorFactory(factory));
     }
 
     @Override
     public Vector sliceLeft(int until) {
-        return slice(0, until, factory);
+        return slice(0, until);
     }
 
     @Override
@@ -359,7 +350,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector sliceRight(int from) {
-        return slice(from, length, factory);
+        return slice(from, length);
     }
 
     @Override
@@ -369,18 +360,11 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector slice(int from, int until) {
-        return slice(from, until, factory);
-    }
-
-    @Override
-    public Vector slice(int from, int until, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
         if (until - from < 0) {
             fail("Wrong slice range: [" + from + ".." + until + "].");
         }
 
-        Vector result = factory.createVector(until - from);
+        Vector result = blankOfLength(until - from);
 
         for (int i = from; i < until; i++) {
             result.set(i - from, get(i));
@@ -390,25 +374,31 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public Vector select(int[] indices) {
-        return select(indices, factory);
+    public Vector slice(int from, int until, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return slice(from, until).to(Factory.asVectorFactory(factory));
     }
 
     @Override
-    public Vector select(int[] indices, Factory factory) {
+    public Vector select(int[] indices) {
         int newLength = indices.length;
 
         if (newLength == 0) {
             fail("No elements selected.");
         }
 
-        Vector result = factory.createVector(newLength);
+        Vector result = blankOfLength(newLength);
 
         for (int i = 0; i < newLength; i++) {
             result.set(i, get(indices[i]));
         }
 
         return result;
+    }
+
+    @Override
+    public Vector select(int[] indices, Factory factory) {
+        return select(indices).to(Factory.asVectorFactory(factory));
     }
 
     @Override
@@ -432,20 +422,18 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector transform(VectorFunction function) {
-        return transform(function, factory);
+        Vector result = blank();
+
+        for (int i = 0; i < length; i++) {
+            result.set(i, function.evaluate(i, get(i)));
+        }
+
+        return result;
     }
 
     @Override
     public Vector transform(VectorFunction function, Factory factory) {
-        Vector result = blank(factory);
-        VectorIterator it = iterator();
-
-        while (it.hasNext()) {
-            it.next();
-            result.set(it.index(), function.evaluate(it.index(), it.get()));
-        }
-
-        return result;
+        return transform(function).to(Factory.asVectorFactory(factory));
     }
 
     @Override
@@ -464,10 +452,8 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public void update(VectorFunction function) {
-        VectorIterator it = iterator();
-        while (it.hasNext()) {
-            it.next();
-            it.set(function.evaluate(it.index(), it.get()));
+        for (int i = 0; i < length; i++) {
+            set(i, function.evaluate(i, get(i)));
         }
     }
 
@@ -501,11 +487,6 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public Matrix toRowMatrix() {
-        return toRowMatrix(factory);
-    }
-
-    @Override
     public Matrix toRowMatrix(Factory factory) {
         Matrix result = factory.createMatrix(1, length);
         result.setRow(0, this);
@@ -513,14 +494,20 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public Matrix toColumnMatrix() {
-        return toColumnMatrix(factory);
-    }
-
-    @Override
     public Matrix toColumnMatrix(Factory factory) {
         Matrix result = factory.createMatrix(length, 1);
         result.setColumn(0, this);
+        return result;
+    }
+
+    @Override
+    public <T extends Vector> T to(VectorFactory<T> factory) {
+        T result = factory.vectorOfLength(length);
+
+        for (int i = 0; i < length; i++) {
+            result.set(i, get(i));
+        }
+
         return result;
     }
 
@@ -536,7 +523,14 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public int hashCode() {
-        return apply(Vectors.ooPlaceHashCode());
+        int result = 17;
+
+        for (int i = 0; i < length; i++) {
+            long value = (long) get(i);
+            result = 37 * result + (int) (value ^ (value >>> 32));
+        }
+
+        return result;
     }
 
     @Override

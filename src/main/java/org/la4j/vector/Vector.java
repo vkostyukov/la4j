@@ -110,6 +110,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return X + v
      */
+    @Deprecated
     Vector add(double value, Factory factory);
 
     /**
@@ -129,6 +130,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return X + Y
      */
+    @Deprecated
     Vector add(Vector that, Factory factory);
 
     /**
@@ -148,6 +150,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return X * v
      */
+    @Deprecated
     Vector multiply(double value, Factory factory);
 
     /**
@@ -167,6 +170,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the Hadamard product of two vectors
      */
+    @Deprecated
     Vector hadamardProduct(Vector that, Factory factory);
 
     /**
@@ -186,6 +190,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return X * A
      */
+    @Deprecated
     Vector multiply(Matrix that, Factory factory);
 
     /**
@@ -205,6 +210,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return X - v
      */
+    @Deprecated
     Vector subtract(double value, Factory factory);
 
     /**
@@ -224,6 +230,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return X - Y
      */
+    @Deprecated
     Vector subtract(Vector that, Factory factory);
 
     /**
@@ -243,6 +250,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return X / v
      */
+    @Deprecated
     Vector divide(double value, Factory factory);
 
     /**
@@ -285,6 +293,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the outer product of two vectors
      */
+    @Deprecated
     Matrix outerProduct(Vector that, Factory factory);
 
     /**
@@ -329,12 +338,23 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector blank();
 
     /**
+     * Creates a blank (an empty vector) copy of this vector with the given
+     * {@code length}.
+     *
+     * @param length the length of the blank vector
+     *
+     * @return blank vector
+     */
+    Vector blankOfLength(int length);
+
+    /**
      * Creates a blank (an empty vector with same length) copy of this vector.
      *
      * @param factory the factory of result vector
      *
      * @return blank vector
      */
+    @Deprecated
     Vector blank(Factory factory);
 
     /**
@@ -351,6 +371,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the copy of this vector
      */
+    @Deprecated
     Vector copy(Factory factory);
 
     /**
@@ -388,16 +409,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector copyOfLength(int length);
 
     /**
-     * Copies this vector into the new vector with specified {@code length}.
-     *
-     * @param length the length of new vector
-     * @param factory the factory of result vector
-     *
-     * @return the copy of this vector with new length
-     */
-    Vector copyOfLength(int length, Factory factory);
-
-    /**
      * Shuffles this vector.
      *
      * <p>
@@ -421,6 +432,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the shuffled vector
      */
+    @Deprecated
     Vector shuffle(Factory factory);
 
     /**
@@ -444,6 +456,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the sub-vector of this vector
      */
+    @Deprecated
     Vector slice(int from, int until, Factory factory);
 
     /**
@@ -465,6 +478,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the sub-vector of this vector
      */
+    @Deprecated
     Vector sliceLeft(int until, Factory factory);
 
     /**
@@ -486,6 +500,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the sub-vector of this vector
      */
+    @Deprecated
     Vector sliceRight(int from, Factory factory);
 
     /**
@@ -505,6 +520,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the new vector with the selected elements
      */
+    @Deprecated
     Vector select(int[] indices, Factory factory);
 
     /**
@@ -532,7 +548,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * Builds a new vector by applying given {@code function} to each element 
      * of this vector.
      *
-     * TODO (NC): update
+     * TODO (NC): map
      *
      * @param function the vector function
      *
@@ -544,26 +560,24 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * Builds a new vector by applying given {@code function} to each element 
      * of this vector.
      *
-     * TODO (NC): update
-     *
      * @param function the vector function
      * @param factory the factory of result vector
      *
      * @return the transformed vector
      */
+    @Deprecated
     Vector transform(VectorFunction function, Factory factory);
 
     /**
      * Builds a new vector by applying given {@code function} to the specified element
      * of this vector.
      *
-     * TODO (NC): updateAt
-     *
      * @param i element's index
      * @param function the vector function
      *
      * @return the transformed vector
      */
+    @Deprecated
     Vector transform(int i, VectorFunction function);
 
     /**
@@ -578,6 +592,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the transformed vector
      */
+    @Deprecated
     Vector transform(int i, VectorFunction function, Factory factory);
 
     /**
@@ -597,6 +612,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @param i element's index
      * @param function the vector function
      */
+    @Deprecated
     void update(int i, VectorFunction function);
 
     /**
@@ -640,6 +656,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the row matrix
      */
+    @Deprecated
     Matrix toRowMatrix(Factory factory);
 
     /**
@@ -656,6 +673,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
      *
      * @return the column matrix
      */
+    @Deprecated
     Matrix toColumnMatrix(Factory factory);
 
     /**
@@ -721,6 +739,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
     /**
      * @return the factory of this vector
      */
+    @Deprecated
     Factory factory();
 
     /**

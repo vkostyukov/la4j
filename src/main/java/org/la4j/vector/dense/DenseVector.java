@@ -23,6 +23,8 @@ package org.la4j.vector.dense;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrix;
+import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.VectorFactory;
@@ -113,32 +115,18 @@ public abstract class DenseVector extends AbstractVector {
     public abstract double[] toArray();
 
     @Override
-    public <T extends Vector> T to(VectorFactory<T> factory) {
-        T result = factory.vectorOfLength(length);
-
-        for (int i = 0; i < length; i++) {
-            result.set(i, get(i));
-        }
-
+    public Matrix toRowMatrix() {
+        // TODO: use DenseMatrix.ofShape()
+        Matrix result = new Basic2DMatrix(1, length);
+        result.setRow(0, this);
         return result;
     }
 
     @Override
-    public Vector multiply(double value, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-        Vector result = blank(factory);
-
-        for (int i = 0; i < length; i++) {
-            result.set(i, get(i) * value);
-        }
-
+    public Matrix toColumnMatrix() {
+        // TODO: use SparseMatrix.ofShape()
+        Matrix result = new Basic2DMatrix(length, 1);
+        result.setColumn(0, this);
         return result;
-    }
-
-    @Override
-    public void setAll(double value) {
-        for (int i = 0; i < length; i++) {
-            set(i, value);
-        }
     }
 }

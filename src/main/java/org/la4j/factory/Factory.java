@@ -27,6 +27,8 @@ import java.util.Random;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
+import org.la4j.vector.VectorFactory;
+import org.la4j.vector.Vectors;
 import org.la4j.vector.source.VectorSource;
 
 public abstract class Factory implements Serializable {
@@ -261,4 +263,19 @@ public abstract class Factory implements Serializable {
      * @return a random vector
      */
     public abstract Vector createRandomVector(int length, Random random);
+
+    /**
+     * A method for internal needs to make the factory deprecation as smooth
+     * as possible.
+     */
+    @SuppressWarnings("unchecked cast")
+    public static <T extends Vector> VectorFactory<T> asVectorFactory(Factory factory) {
+        if (factory instanceof CompressedFactory) {
+            return (VectorFactory<T>) Vectors.SPARSE;
+        } else if (factory instanceof BasicFactory) {
+            return (VectorFactory<T>) Vectors.DENSE;
+        } else {
+            throw new IllegalArgumentException("You have the factory I don't know about.");
+        }
+    }
 }

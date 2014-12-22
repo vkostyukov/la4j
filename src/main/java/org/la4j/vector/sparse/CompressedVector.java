@@ -412,6 +412,11 @@ public class CompressedVector extends SparseVector {
         return super.to(factory);
     }
 
+    @Override
+    public Vector blankOfLength(int length) {
+        return CompressedVector.ofLength(length);
+    }
+
     /**
      * Does the binary searching to find the position in the value array given
      * it's index.

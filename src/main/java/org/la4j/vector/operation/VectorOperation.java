@@ -24,7 +24,7 @@ package org.la4j.vector.operation;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.sparse.SparseVector;
 
-public interface VectorOperation<T> {
-    T apply(final SparseVector a);
-    T apply(final DenseVector a);
+public interface VectorOperation<R> {
+    R apply(final SparseVector a);
+    R apply(final DenseVector a);
 }

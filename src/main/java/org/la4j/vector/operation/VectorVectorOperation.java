@@ -24,36 +24,36 @@ package org.la4j.vector.operation;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.sparse.SparseVector;
 
-public abstract class VectorVectorOperation<T> {
+public abstract class VectorVectorOperation<R> {
 
-    public abstract T apply(final SparseVector a, final SparseVector b);
-    public abstract T apply(final SparseVector a, final DenseVector b);
-    public abstract T apply(final DenseVector a, final DenseVector b);
-    public abstract T apply(final DenseVector a, final SparseVector b);
+    public abstract R apply(final SparseVector a, final SparseVector b);
+    public abstract R apply(final SparseVector a, final DenseVector b);
+    public abstract R apply(final DenseVector a, final DenseVector b);
+    public abstract R apply(final DenseVector a, final SparseVector b);
 
-    public VectorOperation<T> curry(final SparseVector a) {
-        return new VectorOperation<T>() {
+    public VectorOperation<R> curry(final SparseVector a) {
+        return new VectorOperation<R>() {
             @Override
-            public T apply(final SparseVector b) {
+            public R apply(final SparseVector b) {
                 return VectorVectorOperation.this.apply(a, b);
             }
 
             @Override
-            public T apply(final DenseVector b) {
+            public R apply(final DenseVector b) {
                 return VectorVectorOperation.this.apply(a, b);
             }
         };
     }
 
-    public VectorOperation<T> curry(final DenseVector a) {
-        return new VectorOperation<T>() {
+    public VectorOperation<R> curry(final DenseVector a) {
+        return new VectorOperation<R>() {
             @Override
-            public T apply(final SparseVector b) {
+            public R apply(final SparseVector b) {
                 return VectorVectorOperation.this.apply(a, b);
             }
 
             @Override
-            public T apply(final DenseVector b) {
+            public R apply(final DenseVector b) {
                 return VectorVectorOperation.this.apply(a, b);
             }
         };

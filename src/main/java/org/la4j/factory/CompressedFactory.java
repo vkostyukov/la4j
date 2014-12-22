@@ -27,6 +27,7 @@ import java.util.Random;
 
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
+import org.la4j.vector.VectorFactory;
 import org.la4j.vector.source.VectorSource;
 import org.la4j.vector.sparse.CompressedVector;
 
