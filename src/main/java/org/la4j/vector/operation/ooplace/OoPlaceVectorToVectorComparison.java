@@ -50,7 +50,7 @@ public class OoPlaceVectorToVectorComparison extends VectorVectorOperation<Boole
         VectorIterator those = b.nonZeroIterator();
         VectorIterator both = these.orElse(those, new JoinFunction() {
             @Override
-            public double evaluate(double a, double b) {
+            public double apply(double a, double b) {
                 return isSimilar(a, b) ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY;
             }
         });

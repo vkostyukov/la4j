@@ -28,6 +28,7 @@ import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.matrix.source.MatrixSource;
 
+@Deprecated
 public class Basic2DFactory extends BasicFactory {
 
     private static final long serialVersionUID = 4071505L;

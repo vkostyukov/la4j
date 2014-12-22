@@ -30,6 +30,7 @@ import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.sparse.CRSMatrix;
 
+@Deprecated
 public class CRSFactory extends CompressedFactory {
 
     private static final long serialVersionUID = 4071505L;

@@ -31,6 +31,7 @@ import org.la4j.vector.VectorFactory;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.source.VectorSource;
 
+@Deprecated
 public abstract class Factory implements Serializable {
 
     /**

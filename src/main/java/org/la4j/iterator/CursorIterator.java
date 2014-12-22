@@ -64,11 +64,11 @@ abstract class CursorIterator implements Iterator<Double> {
                 if (state.contains(IteratorState.TAKEN_FROM_THESE) &&
                         state.contains(IteratorState.TAKEN_FROM_THOSE)) {
 
-                    return function.evaluate(these.get(), those.get());
+                    return function.apply(these.get(), those.get());
                 } else if (state.contains(IteratorState.TAKEN_FROM_THESE)) {
-                    return function.evaluate(these.get(), 0.0);
+                    return function.apply(these.get(), 0.0);
                 } else {
-                    return function.evaluate(0.0, those.get());
+                    return function.apply(0.0, those.get());
                 }
             }
 
@@ -176,7 +176,7 @@ abstract class CursorIterator implements Iterator<Double> {
 
                     hasNext = true;
 
-                    currValue = function.evaluate(these.get(), those.get());
+                    currValue = function.apply(these.get(), those.get());
                     currCursor = these.cursor();
                 }
             }

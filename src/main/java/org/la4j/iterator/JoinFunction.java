@@ -23,39 +23,39 @@ package org.la4j.iterator;
 
 public abstract class JoinFunction {
 
-    public abstract double evaluate(double a, double b);
+    public abstract double apply(double a, double b);
 
     public static final JoinFunction ADD = new JoinFunction() {
         @Override
-        public double evaluate(double a, double b) {
+        public double apply(double a, double b) {
             return a + b;
         }
     };
 
     public static final JoinFunction SUB = new JoinFunction() {
         @Override
-        public double evaluate(double a, double b) {
+        public double apply(double a, double b) {
             return a - b;
         }
     };
 
     public static final JoinFunction MUL = new JoinFunction() {
         @Override
-        public double evaluate(double a, double b) {
+        public double apply(double a, double b) {
             return a * b;
         }
     };
 
     public static final JoinFunction DIV = new JoinFunction() {
         @Override
-        public double evaluate(double a, double b) {
+        public double apply(double a, double b) {
             return a / b;
         }
     };
 
     public static final JoinFunction MOD = new JoinFunction() {
         @Override
-        public double evaluate(double a, double b) {
+        public double apply(double a, double b) {
             return a % b;
         }
     };

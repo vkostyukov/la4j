@@ -21,14 +21,13 @@
 
 package org.la4j.factory;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.BasicVector;
 import org.la4j.vector.source.VectorSource;
 
-
+@Deprecated
 public abstract class BasicFactory extends Factory {
 
     private static final long serialVersionUID = 4071505L;

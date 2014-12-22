@@ -31,6 +31,7 @@ import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.sparse.CCSMatrix;
 import org.la4j.matrix.sparse.CRSMatrix;
 
+@Deprecated
 public class CCSFactory extends CompressedFactory {
 
     private static final long serialVersionUID = 4071505L;
