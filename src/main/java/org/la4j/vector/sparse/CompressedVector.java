@@ -61,17 +61,17 @@ public class CompressedVector extends SparseVector {
     private static final int MINIMUM_SIZE = 32;
 
     /**
-     * Creates an empty {@link CompressedVector}.
+     * Creates a zero {@link CompressedVector} of the given {@code length}.
      */
-    public static CompressedVector empty() {
-        return new CompressedVector();
+    public static CompressedVector zero(int length) {
+        return new CompressedVector(length);
     }
 
     /**
-     * Creates a new {@link CompressedVector} of the given {@code length}.
+     * Creates an unit {@link CompressedVector} of the given {@code length}.
      */
-    public static CompressedVector ofLength(int length) {
-        return new CompressedVector(length);
+    public static CompressedVector unit(int length) {
+        return CompressedVector.constant(length, 1.0);
     }
 
     /**
@@ -414,7 +414,7 @@ public class CompressedVector extends SparseVector {
 
     @Override
     public Vector blankOfLength(int length) {
-        return CompressedVector.ofLength(length);
+        return CompressedVector.zero(length);
     }
 
     /**

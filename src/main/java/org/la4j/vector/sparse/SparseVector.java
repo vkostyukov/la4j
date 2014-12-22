@@ -54,17 +54,17 @@ import org.la4j.vector.operation.VectorVectorOperation;
 public abstract class SparseVector extends AbstractVector {
 
     /**
-     * Creates an empty {@link SparseVector}.
+     * Creates a zero {@link SparseVector} of the given {@code length}.
      */
-    public static SparseVector empty() {
-        return CompressedVector.empty();
+    public static SparseVector zero(int length) {
+        return CompressedVector.zero(length);
     }
 
     /**
-     * Creates a new {@link SparseVector} of the given {@code length}.
+     * Creates an unit {@link SparseVector} of the given {@code length}.
      */
-    public static SparseVector ofLength(int length) {
-        return CompressedVector.ofLength(length);
+    public static SparseVector unit(int length) {
+        return SparseVector.constant(length, 1.0);
     }
 
     /**

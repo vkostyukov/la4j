@@ -50,17 +50,17 @@ public class BasicVector extends DenseVector {
     private static final long serialVersionUID = 4071505L;
 
     /**
-     * Creates an empty {@link BasicVector}.
+     * Creates a zero {@link BasicVector} of the given {@code length}.
      */
-    public static BasicVector empty() {
-        return new BasicVector();
+    public static BasicVector zero(int length) {
+        return new BasicVector(length);
     }
 
     /**
-     * Creates a new {@link BasicVector} of the given {@code length}.
+     * Creates an unit {@link BasicVector} of the given {@code length}.
      */
-    public static BasicVector ofLength(int length) {
-        return new BasicVector(length);
+    public static BasicVector unit(int length) {
+        return BasicVector.constant(length, 1.0);
     }
 
     /**
@@ -187,7 +187,7 @@ public class BasicVector extends DenseVector {
 
     @Override
     public Vector blankOfLength(int length) {
-        return BasicVector.ofLength(length);
+        return BasicVector.zero(length);
     }
 
     @Override

@@ -37,12 +37,12 @@ public abstract class CompressedFactory extends Factory {
 
     @Override
     public Vector createVector() {
-        return CompressedVector.empty();
+        return new CompressedVector();
     }
 
     @Override
     public Vector createVector(int length) {
-        return CompressedVector.ofLength(length);
+        return CompressedVector.zero(length);
     }
 
     @Override

@@ -34,12 +34,12 @@ public abstract class BasicFactory extends Factory {
 
     @Override
     public Vector createVector() {
-        return BasicVector.empty();
+        return new BasicVector();
     }
 
     @Override
     public Vector createVector(int length) {
-        return BasicVector.ofLength(length);
+        return BasicVector.zero(length);
     }
 
     @Override

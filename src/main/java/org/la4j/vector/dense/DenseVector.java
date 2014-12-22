@@ -22,12 +22,10 @@
 package org.la4j.vector.dense;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
-import org.la4j.vector.VectorFactory;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 
@@ -49,17 +47,17 @@ import java.util.Random;
 public abstract class DenseVector extends AbstractVector {
 
     /**
-     * Creates an empty {@link DenseVector}.
+     * Creates a zero {@link DenseVector} of the given {@code length}.
      */
-    public static DenseVector empty() {
-        return BasicVector.empty();
+    public static DenseVector zero(int length) {
+        return BasicVector.zero(length);
     }
 
     /**
-     * Creates a new {@link DenseVector} of the given {@code length}.
+     * Creates an unit {@link DenseVector} of the given {@code length}.
      */
-    public static DenseVector ofLength(int length) {
-        return BasicVector.ofLength(length);
+    public static DenseVector unit(int length) {
+        return DenseVector.constant(length, 1.0);
     }
 
     /**
@@ -68,7 +66,6 @@ public abstract class DenseVector extends AbstractVector {
     public static DenseVector of(double... values) {
         return BasicVector.of(values);
     }
-
 
     /**
      * Creates a new {@link DenseVector} from the given {@code array}.

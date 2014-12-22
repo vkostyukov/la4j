@@ -51,14 +51,14 @@ public final class Vectors {
     public static final VectorFactory<BasicVector> DENSE = new VectorFactory<BasicVector>() {
         @Override
         public BasicVector vectorOfLength(int length) {
-            return BasicVector.ofLength(length);
+            return BasicVector.zero(length);
         }
     };
 
     public static final VectorFactory<CompressedVector> SPARSE = new VectorFactory<CompressedVector>() {
         @Override
         public CompressedVector vectorOfLength(int length) {
-            return CompressedVector.ofLength(length);
+            return CompressedVector.zero(length);
         }
     };
 
