@@ -28,11 +28,13 @@ import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.sparse.CCSMatrix;
 import org.la4j.matrix.sparse.CRSMatrix;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.VectorFactory;
 import org.la4j.vector.Vectors;
+import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.operation.VectorOperation;
@@ -125,16 +127,6 @@ public abstract class SparseVector extends AbstractVector {
     }
 
     @Override
-    public void assign(double value) {
-        // fast clear
-        if (value == 0.0) {
-            cardinality = 0;
-        } else {
-            super.assign(value);
-        }
-    }
-
-    @Override
     public double get(int i) {
         return getOrElse(i, 0.0);
     }
@@ -190,9 +182,38 @@ public abstract class SparseVector extends AbstractVector {
     public void eachNonZero(VectorProcedure procedure) {
         VectorIterator it = nonZeroIterator();
         while (it.hasNext()) {
-            it.next();
-            procedure.apply(it.index(), it.get());
+            double x = it.next();
+            int i = it.index();
+            procedure.apply(i, x);
         }
+    }
+
+    @Override
+    public Vector add(double value) {
+        Vector result = DenseVector.constant(length, value);
+        VectorIterator it = nonZeroIterator();
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            result.set(i, x + value);
+        }
+
+        return result;
+    }
+
+    @Override
+    public Vector multiply(double value) {
+        Vector result = blank();
+        VectorIterator it = nonZeroIterator();
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            result.set(i, x * value);
+        }
+
+        return result;
     }
 
     @Override
@@ -205,19 +226,6 @@ public abstract class SparseVector extends AbstractVector {
     public double min() {
         double min = foldNonZero(Vectors.mkMinAccumulator());
         return (min < 0.0) ? min : 0.0;
-    }
-
-    @Override
-    public Vector multiply(double value, Factory factory) {
-        Vector result = blank(factory);
-        VectorIterator it = nonZeroIterator();
-
-        while (it.hasNext()) {
-            it.next();
-            result.set(it.index(), it.get() * value);
-        }
-
-        return result;
     }
 
     /**
@@ -247,8 +255,9 @@ public abstract class SparseVector extends AbstractVector {
         VectorIterator it = nonZeroIterator();
 
         while (it.hasNext()) {
-            it.next();
-            result.set(it.index(), it.get());
+            double x = it.next();
+            int i = it.index();
+            result.set(i, x);
         }
 
         return result;
@@ -260,11 +269,10 @@ public abstract class SparseVector extends AbstractVector {
         VectorIterator it = nonZeroIterator();
 
         while (it.hasNext()) {
-            it.next();
-            long value = (long) it.get();
-            long index = (long) it.index();
-            result = 37 * result + (int) (value ^ (value >>> 32));
-            result = 37 * result + (int) (index ^ (index >>> 32));
+            long x = it.next().longValue();
+            long i = (long) it.index();
+            result = 37 * result + (int) (x ^ (x >>> 32));
+            result = 37 * result + (int) (i ^ (i >>> 32));
         }
 
         return result;
@@ -291,7 +299,7 @@ public abstract class SparseVector extends AbstractVector {
     @Override
     public Matrix toColumnMatrix() {
         // TODO: use SparseMatrix.ofShape()
-        Matrix result = new CRSMatrix(length, 1);
+        Matrix result = new CCSMatrix(length, 1);
         result.setColumn(0, this);
         return result;
     }

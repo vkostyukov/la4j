@@ -41,8 +41,7 @@ public class OoPlaceInnerProduct extends VectorVectorOperation<Double> {
         VectorIterator both = these.andAlsoMultiply(those);
 
         while (both.hasNext()) {
-            both.next();
-            result += both.get();
+            result += both.next();
         }
 
         return result;

@@ -21,7 +21,6 @@
 
 package org.la4j.vector.operation.ooplace;
 
-import org.la4j.factory.Factory;
 import org.la4j.vector.Vector;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vectors;
@@ -50,9 +49,11 @@ public class OoPlaceVectorsAddition extends VectorVectorOperation<Vector> {
     @Override
     public Vector apply(DenseVector a, DenseVector b) {
         Vector result = a.blank();
+
         for (int i = 0; i < a.length(); i++) {
             result.set(i, a.get(i) + b.get(i));
         }
+
         return result;
     }
 
@@ -60,10 +61,13 @@ public class OoPlaceVectorsAddition extends VectorVectorOperation<Vector> {
     public Vector apply(DenseVector a, SparseVector b) {
         Vector result = a.copy();
         VectorIterator it = b.nonZeroIterator();
+
         while (it.hasNext()) {
-            it.next();
-            result.update(it.index(), Vectors.asPlusFunction(it.get()));
+            double x = it.next();
+            int i = it.index();
+            result.set(i, result.get(i) + x);
         }
+
         return result;
     }
 }

@@ -100,11 +100,9 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector add(double value) {
         Vector result = blank();
-        VectorIterator it = iterator();
 
-        while (it.hasNext()) {
-            it.next();
-            result.set(it.index(), it.get() + value);
+        for (int i = 0; i < length; i++) {
+            result.set(i, get(i) + value);
         }
 
         return result;
@@ -194,7 +192,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector subtract(double value) {
-        return subtract(value, factory);
+        return add(-value);
     }
 
     @Override
@@ -404,8 +402,9 @@ public abstract class AbstractVector implements Vector {
     public void each(VectorProcedure procedure) {
         VectorIterator it = iterator();
         while (it.hasNext()) {
-            it.next();
-            procedure.apply(it.index(), it.get());
+            double x = it.next();
+            int i = it.index();
+            procedure.apply(i, x);
         }
     }
 
@@ -422,9 +421,12 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector transform(VectorFunction function) {
         Vector result = blank();
+        VectorIterator it = iterator();
 
-        for (int i = 0; i < length; i++) {
-            result.set(i, function.evaluate(i, get(i)));
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            result.set(i, function.evaluate(i, x));
         }
 
         return result;
@@ -451,8 +453,11 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public void update(VectorFunction function) {
-        for (int i = 0; i < length; i++) {
-            set(i, function.evaluate(i, get(i)));
+        VectorIterator it = iterator();
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            it.set(function.evaluate(i, x));
         }
     }
 
@@ -473,8 +478,9 @@ public abstract class AbstractVector implements Vector {
         VectorIterator it = iterator();
 
         while (it.hasNext()) {
-            it.next();
-            result = result && predicate.test(it.index(), it.get());
+            double x = it.next();
+            int i = it.index();
+            result = result && predicate.test(i, x);
         }
 
         return result;
@@ -560,9 +566,10 @@ public abstract class AbstractVector implements Vector {
         VectorIterator it = iterator();
 
         while (it.hasNext()) {
-            it.next();
-            sb.append(formatter.format(it.get()));
-            sb.append((it.index() < length - 1 ? delimiter : ""));
+            double x = it.next();
+            int i = it.index();
+            sb.append(formatter.format(x))
+              .append((i < length - 1 ? delimiter : ""));
         }
 
         return sb.toString();

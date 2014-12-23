@@ -58,12 +58,13 @@ public class OoPlaceHadamardProduct extends VectorVectorOperation<Vector> {
 
     @Override
     public Vector apply(DenseVector a, SparseVector b) {
-        Vector result = a.blank();
+        Vector result = b.blank();
         VectorIterator it = b.nonZeroIterator();
 
         while (it.hasNext()) {
-            it.next();
-            result.set(it.index(), it.get() * a.get(it.index()));
+            double x = it.next();
+            int i = it.index();
+            result.set(i, x * a.get(i));
         }
 
         return result;

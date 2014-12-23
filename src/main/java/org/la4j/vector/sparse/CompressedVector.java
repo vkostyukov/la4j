@@ -316,11 +316,12 @@ public class CompressedVector extends SparseVector {
     public Vector copyOfLength(int length) {
         ensureLengthIsCorrect(length);
 
-        int $cardinality = (length > this.length) ?
+        int $cardinality = (length >= this.length) ?
             cardinality : searchForIndex(length);
+        int capacity = align(length, $cardinality);
 
-        double $values[] = new double[align(length, $cardinality)];
-        int $indices[] = new int[align(length, $cardinality)];
+        double $values[] = new double[capacity];
+        int $indices[] = new int[capacity];
 
         System.arraycopy(values, 0, $values, 0, $cardinality);
         System.arraycopy(indices, 0, $indices, 0, $cardinality);

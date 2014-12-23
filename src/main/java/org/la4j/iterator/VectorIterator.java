@@ -75,8 +75,9 @@ public abstract class VectorIterator extends CursorIterator {
      */
     public void alterVector(Vector vector) {
         while (hasNext()) {
-            next();
-            vector.set(index(), get());
+            double x = next();
+            int i = index();
+            vector.set(i, x);
         }
     }
 }

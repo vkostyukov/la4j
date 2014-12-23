@@ -45,19 +45,24 @@ public class OoPlaceVectorsSubtraction extends VectorVectorOperation<Vector> {
     public Vector apply(SparseVector a, DenseVector b) {
         Vector result = b.multiply(-1.0);
         VectorIterator it = a.nonZeroIterator();
+
         while (it.hasNext()) {
-            it.next();
-            result.update(it.index(), Vectors.asPlusFunction(it.get()));
+            double x = it.next();
+            int i = it.index();
+            result.set(i, result.get(i) + x);
         }
+
         return result;
     }
 
     @Override
     public Vector apply(DenseVector a, DenseVector b) {
         Vector result = a.blank();
+
         for (int i = 0; i < b.length(); i++) {
             result.set(i, a.get(i) - b.get(i));
         }
+
         return result;
     }
 
@@ -65,10 +70,13 @@ public class OoPlaceVectorsSubtraction extends VectorVectorOperation<Vector> {
     public Vector apply(DenseVector a, SparseVector b) {
         Vector result = a.copy();
         VectorIterator it = b.nonZeroIterator();
+
         while (it.hasNext()) {
-            it.next();
-            result.update(it.index(), Vectors.asMinusFunction(it.get()));
+            double x = it.next();
+            int i = it.index();
+            result.set(i, result.get(i) - x);
         }
+
         return result;
     }
 }
