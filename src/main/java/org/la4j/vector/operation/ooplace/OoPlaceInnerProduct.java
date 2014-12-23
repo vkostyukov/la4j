@@ -55,9 +55,11 @@ public class OoPlaceInnerProduct extends VectorVectorOperation<Double> {
     @Override
     public Double apply(final DenseVector a, final DenseVector b) {
         double result = 0.0;
+
         for (int i = 0; i < a.length(); i++) {
             result += a.get(i) * b.get(i);
         }
+
         return result;
     }
 

@@ -34,9 +34,14 @@ public class OoPlaceHadamardProduct extends VectorVectorOperation<Vector> {
         VectorIterator these = a.nonZeroIterator();
         VectorIterator those = b.nonZeroIterator();
         VectorIterator both = these.andAlsoMultiply(those);
-
         Vector result = a.blank();
-        both.alterVector(result);
+
+        while (both.hasNext()) {
+            double x = both.next();
+            int i = both.index();
+            result.set(i, x);
+        }
+
         return result;
     }
 

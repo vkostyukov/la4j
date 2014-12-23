@@ -67,17 +67,4 @@ public abstract class VectorIterator extends CursorIterator {
     protected int cursor() {
         return index();
     }
-
-    /**
-     * Alters given {@code vector} with values from this iterator.
-     *
-     * @param vector the vector to alter
-     */
-    public void alterVector(Vector vector) {
-        while (hasNext()) {
-            double x = next();
-            int i = index();
-            vector.set(i, x);
-        }
-    }
 }
