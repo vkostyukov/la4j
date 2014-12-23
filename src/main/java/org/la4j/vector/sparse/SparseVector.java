@@ -181,6 +181,7 @@ public abstract class SparseVector extends AbstractVector {
      */
     public void eachNonZero(VectorProcedure procedure) {
         VectorIterator it = nonZeroIterator();
+
         while (it.hasNext()) {
             double x = it.next();
             int i = it.index();

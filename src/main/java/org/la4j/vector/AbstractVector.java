@@ -401,6 +401,8 @@ public abstract class AbstractVector implements Vector {
     @Override
     public void each(VectorProcedure procedure) {
         VectorIterator it = iterator();
+
+
         while (it.hasNext()) {
             double x = it.next();
             int i = it.index();
@@ -444,7 +446,6 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector transform(int i, VectorFunction function, Factory factory) {
-
         Vector result = copy(factory);
         result.set(i, function.evaluate(i, get(i)));
 
@@ -454,6 +455,7 @@ public abstract class AbstractVector implements Vector {
     @Override
     public void update(VectorFunction function) {
         VectorIterator it = iterator();
+
         while (it.hasNext()) {
             double x = it.next();
             int i = it.index();

@@ -21,36 +21,6 @@ The key features of the **la4j** are listed bellow:
 
 Samples
 -------
-**Building the matrix**
-```java
-// We will use a CRS (Compressed Row Storage) matrix builder
-// We will use a 2D array matrix builder
-Matrix b = Matrices.asBuilder(LinearAlgebra.BASIC2D_FACTORY)
-           .shape(25, 25)    // We want a 25x25 matrix
-           .source(3.14)     // ... with all the elements equal '3.14'
-           .buildDiagonal(); // ... and it should be a diagonal matrix
-
-// We wil use a CCS (Compressed Column Storage) matrix builder
-Matrix c = Matrices.asBuilder(LinearAlgebra.CCS_FACTORY)
-           .shape(14, 14)         // We want a 14x14 matrix
-           .source(new Random())  // ... with random elements
-           .buildSymmetric();     // ... and it should be a symmetric matrix
-```
-
-**Building the vector**
-```java
-// We will use a dense vector builder
-Vector a = Vectors.asBuilder(LinearAlgebra.DENSE_FACTORY)
-           .length(10)            // We want 10 elements vector
-           .source(new Random())  // ... with random values
-           .build();
-
-Vector a = Vectors.asBuilder(LinearAlgebra.DENSE_FACTORY)
-           .length(10)                    // We want 10 elements vector
-           .source(new double[] { 1.0 })  // ... with the values from an array
-           .build();                      // ... and it should be extended to a requested size
-```
-
 **Matrix inversion**
 ```java
 // We want a simple dense matrix that uses 2D array as internal representation
