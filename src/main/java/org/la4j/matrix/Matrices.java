@@ -26,11 +26,8 @@
 package org.la4j.matrix;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.factory.Factory;
 import org.la4j.io.MatrixMarketStream;
 import org.la4j.io.SymbolSeparatedStream;
-import org.la4j.matrix.builder.TerminalMatrixBuilder;
-import org.la4j.matrix.builder.MatrixBuilder;
 import org.la4j.matrix.dense.Basic1DMatrix;
 import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
