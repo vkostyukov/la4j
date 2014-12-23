@@ -35,7 +35,6 @@ import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.operation.VectorVectorOperation;
-import org.la4j.vector.operation.ooplace.OoPlaceVectorToVectorComparison;
 import org.la4j.vector.source.ArrayVectorSource;
 import org.la4j.vector.source.LoopbackVectorSource;
 import org.la4j.vector.source.RandomVectorSource;
@@ -568,15 +567,5 @@ public final class Vectors {
     @Deprecated
     public static Vector asVector(double... values) {
         return LinearAlgebra.DEFAULT_FACTORY.createVector(values);
-    }
-
-    /**
-     * TODO:
-     *
-     * @param precision
-     * @return
-     */
-    public static VectorVectorOperation<Boolean> ooPlaceVectorToVectorComparison(double precision) {
-        return new OoPlaceVectorToVectorComparison(precision);
     }
 }
