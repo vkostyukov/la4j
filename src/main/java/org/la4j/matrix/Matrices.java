@@ -804,17 +804,6 @@ public final class Matrices {
     }
 
     /**
-     * Creates a new matrix builder instance of given {@code factory}.
-     *
-     * @param factory the builder's factory
-     *
-     * @return a factorised matrix builder
-     */
-    public static MatrixBuilder asBuilder(Factory factory) {
-        return new TerminalMatrixBuilder(factory);
-    }
-
-    /**
      * Creates a default 1x1 matrix from given {@code value}.
      *
      * @param value of the matrix
