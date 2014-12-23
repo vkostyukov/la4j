@@ -229,6 +229,22 @@ public abstract class SparseVector extends AbstractVector {
         return (min < 0.0) ? min : 0.0;
     }
 
+    @Override
+    public double euclideanNorm() {
+        return foldNonZero(Vectors.mkEuclideanNormAccumulator());
+    }
+
+    @Override
+    public double manhattanNorm() {
+        return foldNonZero(Vectors.mkManhattanNormAccumulator());
+    }
+
+    @Override
+    public double infinityNorm() {
+        double norm = foldNonZero(Vectors.mkInfinityNormAccumulator());
+        return (norm > 0.0) ? norm : 0.0;
+    }
+
     /**
      * Returns a non-zero iterator.
      *

@@ -297,19 +297,32 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Matrix outerProduct(Vector that, Factory factory);
 
     /**
-     * Returns the Euclidean normalized version of this vector.
+     * Calculates an Euclidean norm of this vector.
      *
-     * @return the normalized vector.
+     * @return an Euclidean norm
      */
-    Vector normalize();
+    double norm();
 
     /**
-     * Returns the normalized version of this vector using the provided accumulator.
-     * @param acc the vector accumulator to use.
+     * Calculates an Euclidean norm of this vector.
      *
-     * @return the normalized vector.
+     * @return an Euclidean norm
      */
-    Vector normalize(VectorAccumulator acc);
+    double euclideanNorm();
+
+    /**
+     * Calculates a Manhattan norm of this vector.
+     *
+     * @return a Manhattan norm
+     */
+    double manhattanNorm();
+
+    /**
+     * Calculates an Infinity norm of this vector.
+     *
+     * @return an Infinity norm
+     */
+    double infinityNorm();
 
     /**
      * This method is deprecated. Use {@link Vector} instead.
@@ -548,8 +561,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * Builds a new vector by applying given {@code function} to each element 
      * of this vector.
      *
-     * TODO (NC): map
-     *
      * @param function the vector function
      *
      * @return the transformed vector
@@ -584,8 +595,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * Builds a new vector by applying given {@code function} to the specified element
      * of this vector.
      *
-     * TODO (NC): updateAt
-     *
      * @param i element's index
      * @param function the vector function
      * @param factory the factory of result vector
@@ -597,8 +606,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
 
     /**
      * Updates all elements of this vector by applying given {@code function}.
-     *
-     * TODO (NC): updateInPlace
      * 
      * @param function the the vector function
      */
@@ -606,8 +613,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
 
     /**
      * Updates the specified element of this vector by applying given {@code function}.
-     *
-     * TODO (NC): updateInPlaceAt
      * 
      * @param i element's index
      * @param function the vector function

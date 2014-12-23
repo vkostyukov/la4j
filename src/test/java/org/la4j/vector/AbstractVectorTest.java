@@ -764,7 +764,7 @@ public abstract class AbstractVectorTest {
     @Test
     public void testNormalize_Default() {
         Vector a = factory().createVector(new double[]{3, 0, -4});
-        Vector b = a.normalize();
+        Vector b = a.divide(a.norm());
 
         assertEquals(3, b.length());
 
@@ -773,15 +773,13 @@ public abstract class AbstractVectorTest {
         assertEquals(-0.8, b.get(2), Vectors.EPS);
         // Verify b is a unit vector
         // The default normalize() uses Euclidean as the accumulator
-        assertEquals(1.0, b.fold(Vectors.mkEuclideanNormAccumulator()), Vectors.EPS);
+        assertEquals(1.0, b.norm(), Vectors.EPS);
     }
 
     @Test
     public void testNormalize_EuclideanNormAccumulator() {
-        VectorAccumulator acc = Vectors.mkEuclideanNormAccumulator();
-
         Vector a = factory().createVector(new double[]{3, 0, -4});
-        Vector b = a.normalize(acc);
+        Vector b = a.divide(a.euclideanNorm());
 
         assertEquals(3, b.length());
 
@@ -789,15 +787,13 @@ public abstract class AbstractVectorTest {
         assertEquals(0.0, b.get(1), Vectors.EPS);
         assertEquals(-0.8, b.get(2), Vectors.EPS);
         // Verify b is a unit vector
-        assertEquals(1.0, b.fold(acc), Vectors.EPS);
+        assertEquals(1.0, b.euclideanNorm(), Vectors.EPS);
     }
 
     @Test
     public void testNormalize_ManhattanNormAccumulator() {
-        VectorAccumulator acc = Vectors.mkManhattanNormAccumulator();
-
         Vector a = factory().createVector(new double[]{3, 0, -4});
-        Vector b = a.normalize(acc);
+        Vector b = a.divide(a.manhattanNorm());
 
         assertEquals(3, b.length());
 
@@ -805,15 +801,13 @@ public abstract class AbstractVectorTest {
         assertEquals(0.0, b.get(1), Vectors.EPS);
         assertEquals(-0.57142, b.get(2), 0.00001);
         // Verify b is a unit vector
-        assertEquals(1.0, b.fold(acc), Vectors.EPS);
+        assertEquals(1.0, b.manhattanNorm(), Vectors.EPS);
     }
 
     @Test
     public void testNormalize_InfinityNormAccumulator() {
-        VectorAccumulator acc = Vectors.mkInfinityNormAccumulator();
-
         Vector a = factory().createVector(new double[]{3, 0, -4});
-        Vector b = a.normalize(acc);
+        Vector b = a.divide(a.infinityNorm());
 
         assertEquals(3, b.length());
 
@@ -821,7 +815,7 @@ public abstract class AbstractVectorTest {
         assertEquals(0.0, b.get(1), Vectors.EPS);
         assertEquals(-1.0, b.get(2), Vectors.EPS);
         // Verify b is a unit vector
-        assertEquals(1.0, b.fold(acc), Vectors.EPS);
+        assertEquals(1.0, b.infinityNorm(), Vectors.EPS);
     }
 
     @Test

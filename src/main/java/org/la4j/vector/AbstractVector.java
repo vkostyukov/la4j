@@ -519,13 +519,23 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public Vector normalize() {
-        return normalize(Vectors.mkEuclideanNormAccumulator());
+    public double norm() {
+        return euclideanNorm();
     }
 
     @Override
-    public Vector normalize(VectorAccumulator acc) {
-        return divide(fold(acc));
+    public double euclideanNorm() {
+        return fold(Vectors.mkEuclideanNormAccumulator());
+    }
+
+    @Override
+    public double manhattanNorm() {
+        return fold(Vectors.mkManhattanNormAccumulator());
+    }
+
+    @Override
+    public double infinityNorm() {
+        return fold(Vectors.mkInfinityNormAccumulator());
     }
 
     @Override
