@@ -24,6 +24,8 @@ package org.la4j.matrix.dense;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Arrays;
+import java.util.Random;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.iterator.MatrixIterator;
@@ -35,6 +37,139 @@ import org.la4j.vector.Vector;
 import org.la4j.vector.dense.BasicVector;
 
 public class Basic1DMatrix extends DenseMatrix  {
+
+    /**
+     * Creates a zero {@link Basic1DMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static Basic1DMatrix zero(int rows, int columns) {
+        return new Basic1DMatrix(rows, columns);
+    }
+
+    /**
+     * Creates an unit {@link Basic1DMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static Basic1DMatrix unit(int rows, int columns) {
+        return Basic1DMatrix.constant(rows, columns, 1.0);
+    }
+
+    /**
+     * Creates an identity {@link Basic1DMatrix} of the given {@code size}.
+     */
+    public static Basic1DMatrix identity(int size) {
+        return Basic1DMatrix.diagonal(size, 1.0);
+    }
+
+    /**
+     * Creates a diagonal {@link Basic1DMatrix} of the given {@code size} and
+     * diagonal element's {@code value}.
+     */
+    public static Basic1DMatrix diagonal(int size, double value) {
+        double array[] = new double[size * size];
+
+        for (int i = 0; i < size; i++) {
+            array[i * size + i] = value;
+        }
+
+        return new Basic1DMatrix(size, size, array);
+    }
+
+    /**
+     * Creates a random {@link Basic1DMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static Basic1DMatrix random(int rows, int columns, Random random) {
+        double array[] = new double[rows * columns];
+
+        for (int i = 0; i < rows * columns; i++) {
+            array[i] = random.nextDouble();
+        }
+
+        return new Basic1DMatrix(rows, columns, array);
+    }
+
+    /**
+     * Creates a random symmetric {@link Basic1DMatrix} of the given {@code size}.
+     */
+    public static Basic1DMatrix randomSymmetric(int size, Random random) {
+        double array[] = new double[size * size];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = i; j < size; j++) {
+                double value = random.nextDouble();
+                array[i * size + j] = value;
+                array[j * size + i] = value;
+            }
+        }
+
+        return new Basic1DMatrix(size, size, array);
+    }
+
+    /**
+     * Creates a constant {@link Basic1DMatrix} of the given shape and {@code value}.
+     */
+    public static Basic1DMatrix constant(int rows, int columns, double value) {
+        double array[] = new double[rows * columns];
+        Arrays.fill(array, value);
+
+        return new Basic1DMatrix(rows, columns, array);
+    }
+
+    /**
+     * Creates a {@link Basic1DMatrix} of the given 1D {@code array}.
+     */
+    public static Basic1DMatrix from1DArray(int rows, int columns, double[] array) {
+        return new Basic1DMatrix(rows, columns, array);
+    }
+
+    /**
+     * Creates a {@link Basic1DMatrix} of the given 2D {@code array}.
+     */
+    public static Basic1DMatrix from2DArray(double[][] array) {
+        int rows = array.length;
+        int columns = array[0].length;
+        double[] result = new double[rows * columns];
+
+        for (int i = 0; i < rows; i++) {
+            System.arraycopy(array[i], 0, result, i * columns, columns);
+        }
+
+        return new Basic1DMatrix(rows, columns, result);
+    }
+
+    /**
+     * Creates a block {@link Basic1DMatrix} of the given blocks {@code a},
+     * {@code b}, {@code c} and {@code d}.
+     */
+    public static Basic1DMatrix block(Matrix a, Matrix b, Matrix c, Matrix d) {
+        if ((a.rows() != b.rows()) || (a.columns() != c.columns()) ||
+            (c.rows() != d.rows()) || (b.columns() != d.columns())) {
+            throw new IllegalArgumentException("Sides of blocks are incompatible!");
+        }
+
+        int rows = a.rows() + c.rows(), columns = a.columns() + b.columns();
+        double blockMatrix[] = new double[rows * columns];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if ((i < a.rows()) && (j < a.columns())) {
+                    blockMatrix[i * rows + j] = a.get(i, j);
+                }
+                if ((i < a.rows()) && (j > a.columns())) {
+                    blockMatrix[i * rows + j] = b.get(i, j);
+                }
+                if ((i > a.rows()) && (j < a.columns())) {
+                    blockMatrix[i * rows + j] = c.get(i, j);
+                }
+                if ((i > a.rows()) && (j > a.columns())) {
+                    blockMatrix[i * rows + j] = d.get(i, j);
+                }
+            }
+        }
+
+        return new Basic1DMatrix(rows, columns, blockMatrix);
+    }
 
     private static final long serialVersionUID = 4071505L;
 
