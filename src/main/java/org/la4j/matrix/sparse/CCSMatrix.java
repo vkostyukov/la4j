@@ -362,27 +362,12 @@ public class CCSMatrix extends SparseMatrix {
     }
 
     @Override
-    public VectorIterator nonZeroRowIterator(int i) {
+    public VectorIterator nonZeroIteratorOfRow(int i) {
         return null;
     }
 
     @Override
-    public VectorIterator nonZeroColumnIterator(int j) {
-        return null;
-    }
-
-    @Override
-    public MatrixIterator iterator() {
-        return null;
-    }
-
-    @Override
-    public VectorIterator rowIterator(int i) {
-        return null;
-    }
-
-    @Override
-    public VectorIterator columnIterator(int j) {
+    public VectorIterator nonZeroIteratorOfColumn(int j) {
         return null;
     }
 

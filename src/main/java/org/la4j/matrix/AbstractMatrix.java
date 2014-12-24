@@ -970,7 +970,7 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public void eachInRow(int i, VectorProcedure procedure) {
-        VectorIterator it = rowIterator(i);
+        VectorIterator it = iteratorOfRow(i);
 
         while (it.hasNext()) {
             double x = it.next();
@@ -993,7 +993,7 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public void eachInColumn(int j, VectorProcedure procedure) {
-        VectorIterator it = columnIterator(j);
+        VectorIterator it = iteratorOfColumn(j);
 
         while (it.hasNext()) {
             double x = it.next();
@@ -1060,7 +1060,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix transformRow(int i, VectorFunction function) {
         Matrix result = copy();
-        VectorIterator it = result.rowIterator(i);
+        VectorIterator it = result.iteratorOfRow(i);
 
         while (it.hasNext()) {
             double x = it.next();
@@ -1090,7 +1090,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public Matrix transformColumn(int j, VectorFunction function) {
         Matrix result = copy();
-        VectorIterator it = result.columnIterator(j);
+        VectorIterator it = result.iteratorOfColumn(j);
 
         while (it.hasNext()) {
             double x = it.next();
@@ -1143,7 +1143,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public void updateRow(int i, VectorFunction function) {
-        VectorIterator it = rowIterator(i);
+        VectorIterator it = iteratorOfRow(i);
 
         while (it.hasNext()) {
             double x = it.next();
@@ -1166,7 +1166,7 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public void updateColumn(int j, VectorFunction function) {
-        VectorIterator it = columnIterator(j);
+        VectorIterator it = iteratorOfColumn(j);
 
         while (it.hasNext()) {
             double x = it.next();
@@ -1343,6 +1343,73 @@ public abstract class AbstractMatrix implements Matrix {
             @Override
             public boolean hasNext() {
                 return i + 1 < square;
+            }
+
+            @Override
+            public Double next() {
+                i++;
+                return get();
+            }
+        };
+    }
+
+    @Override
+    public VectorIterator iteratorOfRow(int i) {
+        final int ii = i;
+        return new VectorIterator(columns) {
+            private int j = -1;
+
+            @Override
+            public int index() {
+                return j;
+            }
+
+            @Override
+            public double get() {
+                return AbstractMatrix.this.get(ii, j);
+            }
+
+            @Override
+            public void set(double value) {
+                AbstractMatrix.this.set(ii, j, value);
+            }
+
+            @Override
+            public boolean hasNext() {
+                return j + 1 < columns;
+            }
+
+            @Override
+            public Double next() {
+                j++;
+                return get();
+            }
+        };
+    }
+
+    @Override
+    public VectorIterator iteratorOfColumn(int j) {
+        final int jj = j;
+        return new VectorIterator(rows) {
+            private int i = -1;
+            @Override
+            public int index() {
+                return i;
+            }
+
+            @Override
+            public double get() {
+                return AbstractMatrix.this.get(i, jj);
+            }
+
+            @Override
+            public void set(double value) {
+                AbstractMatrix.this.set(i, jj, value);
+            }
+
+            @Override
+            public boolean hasNext() {
+                return i + 1 < rows;
             }
 
             @Override

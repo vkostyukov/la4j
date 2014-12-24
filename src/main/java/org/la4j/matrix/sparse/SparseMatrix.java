@@ -149,7 +149,7 @@ public abstract class SparseMatrix extends AbstractMatrix {
      * @param procedure the {@link VectorProcedure}. 
      */
     public void eachNonZeroInRow(int i, VectorProcedure procedure) {
-        VectorIterator it = nonZeroRowIterator(i);
+        VectorIterator it = nonZeroIteratorOfRow(i);
 
         while (it.hasNext()) {
             double x = it.next();
@@ -185,7 +185,7 @@ public abstract class SparseMatrix extends AbstractMatrix {
      * @param procedure the {@link VectorProcedure}.
      */
     public void eachNonZeroInColumn(int j, VectorProcedure procedure) {
-        VectorIterator it = nonZeroColumnIterator(j);
+        VectorIterator it = nonZeroIteratorOfColumn(j);
 
         while (it.hasNext()) {
             double x = it.next();
@@ -278,14 +278,14 @@ public abstract class SparseMatrix extends AbstractMatrix {
      *
      * @return a non-zero vector iterator
      */
-    public abstract VectorIterator nonZeroRowIterator(int i);
+    public abstract VectorIterator nonZeroIteratorOfRow(int i);
 
     /**
      * Returns a non-zero vector iterator of the given column {@code j}.
      *
      * @return a non-zero vector iterator
      */
-    public abstract VectorIterator nonZeroColumnIterator(int j);
+    public abstract VectorIterator nonZeroIteratorOfColumn(int j);
 
     protected void ensureCardinalityIsCorrect(long rows, long columns, long cardinality) {
         if (cardinality < 0) {

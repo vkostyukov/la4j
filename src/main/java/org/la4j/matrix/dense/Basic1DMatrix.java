@@ -170,21 +170,6 @@ public class Basic1DMatrix extends DenseMatrix  {
     }
 
     @Override
-    public MatrixIterator iterator() {
-        return null;
-    }
-
-    @Override
-    public VectorIterator rowIterator(int i) {
-        return null;
-    }
-
-    @Override
-    public VectorIterator columnIterator(int j) {
-        return null;
-    }
-
-    @Override
     public void writeExternal(ObjectOutput out) throws IOException {
 
         out.writeInt(rows);

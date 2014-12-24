@@ -1373,14 +1373,14 @@ public interface Matrix extends Externalizable, Iterable<Double> {
      *
      * @return a vector iterator
      */
-    VectorIterator rowIterator(int i);
+    VectorIterator iteratorOfRow(int i);
 
     /**
      * Returns a vector iterator of the given column {code j}.
      *
      * @return a vector iterator
      */
-     VectorIterator columnIterator(int j);
+     VectorIterator iteratorOfColumn(int j);
 
     /**
      * Converts matrix to matrix of another type
