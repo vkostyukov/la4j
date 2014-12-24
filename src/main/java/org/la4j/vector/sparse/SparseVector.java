@@ -272,17 +272,43 @@ public abstract class SparseVector extends AbstractVector {
 
     @Override
     public Matrix toRowMatrix() {
-        // TODO: use SparseMatrix.ofShape()
-        Matrix result = new CRSMatrix(1, length);
-        result.setRow(0, this);
+        VectorIterator it = nonZeroIterator();
+        Matrix result = CRSMatrix.zero(1, length);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int j = it.index();
+            result.set(0, j, x);
+        }
+
         return result;
     }
 
     @Override
     public Matrix toColumnMatrix() {
-        // TODO: use SparseMatrix.ofShape()
-        Matrix result = new CCSMatrix(length, 1);
-        result.setColumn(0, this);
+        VectorIterator it = nonZeroIterator();
+        Matrix result = CCSMatrix.zero(length, 1);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            result.set(i, 0, x);
+        }
+
+        return result;
+    }
+
+    @Override
+    public Matrix toDiagonalMatrix() {
+        VectorIterator it = nonZeroIterator();
+        Matrix result = CRSMatrix.zero(length, length);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            result.set(i, i, x);
+        }
+
         return result;
     }
 

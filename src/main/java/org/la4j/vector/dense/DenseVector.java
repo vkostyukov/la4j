@@ -107,17 +107,34 @@ public abstract class DenseVector extends AbstractVector {
 
     @Override
     public Matrix toRowMatrix() {
-        // TODO: use DenseMatrix.ofShape()
-        Matrix result = new Basic2DMatrix(1, length);
-        result.setRow(0, this);
+        Matrix result = Basic2DMatrix.zero(1, length);
+
+        for (int j = 0; j < length; j++) {
+            result.set(0, j, get(j));
+        }
+
         return result;
     }
 
     @Override
     public Matrix toColumnMatrix() {
-        // TODO: use SparseMatrix.ofShape()
-        Matrix result = new Basic2DMatrix(length, 1);
-        result.setColumn(0, this);
+        Matrix result = Basic2DMatrix.zero(length, 1);
+
+        for (int i = 0; i < length; i++) {
+            result.set(i, 0, get(i));
+        }
+
+        return result;
+    }
+
+    @Override
+    public Matrix toDiagonalMatrix() {
+        Matrix result = Basic2DMatrix.zero(length, length);
+
+        for (int i = 0; i < length; i++) {
+            result.set(i, i, get(i));
+        }
+
         return result;
     }
 }

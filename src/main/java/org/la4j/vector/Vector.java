@@ -657,6 +657,13 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Matrix toColumnMatrix(Factory factory);
 
     /**
+     * Converts this vector to a diagonal matrix.
+     *
+     * @return a diagonal matrix
+     */
+    Matrix toDiagonalMatrix();
+
+    /**
      * Returns true when vector is equal to given {@code that} vector with given {@code precision}.
      *
      * @param that vector
