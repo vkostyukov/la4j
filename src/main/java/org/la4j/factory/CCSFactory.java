@@ -38,22 +38,22 @@ public class CCSFactory extends CompressedFactory {
 
     @Override
     public Matrix createMatrix() {
-        return new CCSMatrix();
+        return CCSMatrix.zero(0, 0);
     }
 
     @Override
     public Matrix createMatrix(int rows, int columns) {
-        return new CCSMatrix(rows, columns);
+        return CCSMatrix.zero(rows, columns);
     }
 
     @Override
     public Matrix createMatrix(int rows, int columns, double array[]) {
-        return new CCSMatrix(rows, columns, array);
+        return CCSMatrix.from1DArray(rows, columns, array);
     }
 
     @Override
     public Matrix createMatrix(double[][] array) {
-        return new CCSMatrix(array);
+        return CCSMatrix.from2DArray(array);
     }
 
     @Override
@@ -91,65 +91,12 @@ public class CCSFactory extends CompressedFactory {
 
     @Override
     public Matrix createRandomMatrix(int rows, int columns, Random random) {
-
-        int cardinality = Math.max((rows * columns) / DENSITY, columns);
-
-        double values[] = new double[cardinality];
-        int rowIndices[] = new int[cardinality];
-        int columnPointers[] = new int[columns + 1];
-
-        int kk = cardinality / columns;
-        int indices[] = new int[kk];
-
-        int k = 0;
-        for (int j = 0; j < columns; j++) {
-
-            columnPointers[j] = k;
-
-            for (int jj = 0; jj < kk; jj++) {
-                indices[jj] = random.nextInt(rows);
-            }
-
-            Arrays.sort(indices);
-
-            int previous = -1;
-            for (int jj = 0; jj < kk; jj++) {
-
-                if (indices[jj] == previous) {
-                    continue;
-                }
-
-                values[k] = random.nextDouble();
-                rowIndices[k++] = indices[jj];
-                previous = indices[jj];
-            }
-        }
-
-        columnPointers[columns] = cardinality;
-
-        return new CCSMatrix(rows, columns, cardinality, values, 
-                             rowIndices, columnPointers);
+        return CCSMatrix.random(rows, columns, 1.0 / DENSITY, random);
     }
 
     @Override
     public Matrix createRandomSymmetricMatrix(int size, Random random) {
-
-        // TODO: Issue 15
-
-        int cardinality = (size * size) / DENSITY;
-
-        Matrix matrix = new CCSMatrix(size, size, cardinality);
-
-        for (int k = 0; k < cardinality / 2; k++) {
-            int i = random.nextInt(size);
-            int j = random.nextInt(size);
-            double value = random.nextDouble();
-            
-            matrix.set(i, j, value);
-            matrix.set(j, i, value);
-        }
-
-        return matrix;
+        return CCSMatrix.randomSymmetric(size, 1.0 / DENSITY, random);
     }
 
     @Override
@@ -159,58 +106,12 @@ public class CCSFactory extends CompressedFactory {
 
     @Override
     public Matrix createIdentityMatrix(int size) {
-
-        double diagonal[] = new double[size];
-        Arrays.fill(diagonal, 1.0);
-
-        return createDiagonalMatrix(diagonal);
+        return CCSMatrix.identity(size);
     }
 
     @Override
     public Matrix createBlockMatrix(Matrix a, Matrix b, Matrix c, Matrix d) {
-        if ((a.rows() != b.rows()) || (a.columns() != c.columns()) ||
-            (c.rows() != d.rows()) || (b.columns() != d.columns())) {
-            throw new IllegalArgumentException("Sides of blocks are incompatible!");
-        }
-
-        int rows = a.rows() + c.rows(), cols = a.columns() + b.columns();
-        ArrayList <Double> values = new ArrayList <Double> ();
-        ArrayList <Integer> rowIndices = new ArrayList <Integer> ();
-        int columnPointers[] = new int[rows + 1];
-
-        int k = 0;
-        columnPointers[0] = 0;
-        double current = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if ((i < a.rows()) && (j < a.columns())) {
-                    current = a.get(i, j);
-                }
-                if ((i < a.rows()) && (j > a.columns())) {
-                    current = b.get(i, j);
-                }
-                if ((i > a.rows()) && (j < a.columns())) {
-                    current = c.get(i, j);
-                }
-                if ((i > a.rows()) && (j > a.columns())) {
-                    current = d.get(i, j);
-                }
-                if (Math.abs(current) > Matrices.EPS) {
-                    values.add(current);
-                    rowIndices.add(j);
-                    k++;
-                }
-            }
-            columnPointers[i + 1] = k;
-        }
-        double valuesArray[] = new double[values.size()];
-        int rowIndArray[] = new int[rowIndices.size()];
-        for (int i = 0; i < values.size(); i++) {
-            valuesArray[i] = values.get(i);
-            rowIndArray[i] = rowIndices.get(i);
-        }
-
-        return new CRSMatrix(rows, cols, k, valuesArray, rowIndArray, columnPointers);
+        return CCSMatrix.block(a, b, c, d);
     }
 
     @Override

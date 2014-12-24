@@ -28,8 +28,6 @@ import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.iterator.MatrixIterator;
-import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
@@ -47,6 +45,30 @@ public class Basic1DMatrix extends DenseMatrix  {
     }
 
     /**
+     * Creates a constant {@link Basic1DMatrix} of the given shape and {@code value}.
+     */
+    public static Basic1DMatrix constant(int rows, int columns, double constant) {
+        double array[] = new double[rows * columns];
+        Arrays.fill(array, constant);
+
+        return new Basic1DMatrix(rows, columns, array);
+    }
+
+    /**
+     * Creates a diagonal {@link Basic1DMatrix} of the given {@code size} whose
+     * diagonal elements are equal to {@code diagonal}.
+     */
+    public static Basic1DMatrix diagonal(int size, double diagonal) {
+        double array[] = new double[size * size];
+
+        for (int i = 0; i < size; i++) {
+            array[i * size + i] = diagonal;
+        }
+
+        return new Basic1DMatrix(size, size, array);
+    }
+
+    /**
      * Creates an unit {@link Basic1DMatrix} of the given shape:
      * {@code rows} x {@code columns}.
      */
@@ -59,20 +81,6 @@ public class Basic1DMatrix extends DenseMatrix  {
      */
     public static Basic1DMatrix identity(int size) {
         return Basic1DMatrix.diagonal(size, 1.0);
-    }
-
-    /**
-     * Creates a diagonal {@link Basic1DMatrix} of the given {@code size} and
-     * diagonal element's {@code value}.
-     */
-    public static Basic1DMatrix diagonal(int size, double value) {
-        double array[] = new double[size * size];
-
-        for (int i = 0; i < size; i++) {
-            array[i * size + i] = value;
-        }
-
-        return new Basic1DMatrix(size, size, array);
     }
 
     /**
@@ -107,35 +115,29 @@ public class Basic1DMatrix extends DenseMatrix  {
     }
 
     /**
-     * Creates a constant {@link Basic1DMatrix} of the given shape and {@code value}.
-     */
-    public static Basic1DMatrix constant(int rows, int columns, double value) {
-        double array[] = new double[rows * columns];
-        Arrays.fill(array, value);
-
-        return new Basic1DMatrix(rows, columns, array);
-    }
-
-    /**
-     * Creates a {@link Basic1DMatrix} of the given 1D {@code array}.
+     * Creates a {@link Basic1DMatrix} of the given 1D {@code array} w/o
+     * copying the underlying array.
      */
     public static Basic1DMatrix from1DArray(int rows, int columns, double[] array) {
         return new Basic1DMatrix(rows, columns, array);
     }
 
     /**
-     * Creates a {@link Basic1DMatrix} of the given 2D {@code array}.
+     * Creates a {@link Basic1DMatrix} of the given 2D {@code array} with
+     * copying the underlying array.
      */
     public static Basic1DMatrix from2DArray(double[][] array) {
         int rows = array.length;
         int columns = array[0].length;
-        double[] result = new double[rows * columns];
+        double[] array1D = new double[rows * columns];
 
+        int offset = 0;
         for (int i = 0; i < rows; i++) {
-            System.arraycopy(array[i], 0, result, i * columns, columns);
+            System.arraycopy(array[i], 0, array1D, offset, columns);
+            offset += columns;
         }
 
-        return new Basic1DMatrix(rows, columns, result);
+        return new Basic1DMatrix(rows, columns, array1D);
     }
 
     /**
@@ -149,26 +151,26 @@ public class Basic1DMatrix extends DenseMatrix  {
         }
 
         int rows = a.rows() + c.rows(), columns = a.columns() + b.columns();
-        double blockMatrix[] = new double[rows * columns];
+        double array[] = new double[rows * columns];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if ((i < a.rows()) && (j < a.columns())) {
-                    blockMatrix[i * rows + j] = a.get(i, j);
+                    array[i * rows + j] = a.get(i, j);
                 }
                 if ((i < a.rows()) && (j > a.columns())) {
-                    blockMatrix[i * rows + j] = b.get(i, j);
+                    array[i * rows + j] = b.get(i, j);
                 }
                 if ((i > a.rows()) && (j < a.columns())) {
-                    blockMatrix[i * rows + j] = c.get(i, j);
+                    array[i * rows + j] = c.get(i, j);
                 }
                 if ((i > a.rows()) && (j > a.columns())) {
-                    blockMatrix[i * rows + j] = d.get(i, j);
+                    array[i * rows + j] = d.get(i, j);
                 }
             }
         }
 
-        return new Basic1DMatrix(rows, columns, blockMatrix);
+        return new Basic1DMatrix(rows, columns, array);
     }
 
     private static final long serialVersionUID = 4071505L;
@@ -179,10 +181,12 @@ public class Basic1DMatrix extends DenseMatrix  {
         this(0, 0);
     }
 
+    @Deprecated
     public Basic1DMatrix(Matrix matrix) {
         this(Matrices.asMatrixSource(matrix));
     }
 
+    @Deprecated
     public Basic1DMatrix(MatrixSource source) {
         this(source.rows(), source.columns());
 
@@ -193,6 +197,7 @@ public class Basic1DMatrix extends DenseMatrix  {
         }
     }
 
+    @Deprecated
     public Basic1DMatrix(double array[][]) {
         this(array.length, array[0].length);
 

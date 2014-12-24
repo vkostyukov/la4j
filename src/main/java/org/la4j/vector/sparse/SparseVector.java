@@ -63,40 +63,19 @@ public abstract class SparseVector extends AbstractVector {
     }
 
     /**
-     * Creates an unit {@link SparseVector} of the given {@code length}.
-     */
-    public static SparseVector unit(int length) {
-        return SparseVector.constant(length, 1.0);
-    }
-
-    /**
-     * Creates a new {@link SparseVector} from the given {@code values}.
-     */
-    public static SparseVector of(double... values) {
-        return CompressedVector.of(values);
-    }
-
-    /**
-     * Creates a new {@link SparseVector} from the given {@code array}.
-     */
-    public static SparseVector fromArray(double[] array) {
-        return CompressedVector.fromArray(array);
-    }
-
-    /**
-     * Creates a constant {@link SparseVector} of the given {@code length} with
-     * the given {@code value}.
-     */
-    public static SparseVector constant(int length, double value) {
-        return CompressedVector.constant(length, value);
-    }
-
-    /**
      * Creates a constant {@link SparseVector} of the given {@code length} with
      * the given {@code value}.
      */
     public static SparseVector random(int length, double density, Random random) {
         return CompressedVector.random(length, density, random);
+    }
+
+    /**
+     * Creates a new {@link SparseVector} from the given {@code array} with
+     * compressing (copying) the underlying array.
+     */
+    public static SparseVector fromArray(double[] array) {
+        return CompressedVector.fromArray(array);
     }
 
     protected int cardinality;

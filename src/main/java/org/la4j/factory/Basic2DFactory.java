@@ -21,7 +21,6 @@
 
 package org.la4j.factory;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.matrix.Matrix;
@@ -35,22 +34,22 @@ public class Basic2DFactory extends BasicFactory {
 
     @Override
     public Matrix createMatrix() {
-        return new Basic2DMatrix();
+        return Basic2DMatrix.zero(0, 0);
     }
 
     @Override
     public Matrix createMatrix(int rows, int columns) {
-        return new Basic2DMatrix(rows, columns);
+        return Basic2DMatrix.zero(rows, columns);
     }
 
     @Override
     public Matrix createMatrix(int rows, int columns, double[] array) {
-        return new Basic2DMatrix(rows, columns, array);
+        return Basic2DMatrix.from1DArray(rows, columns, array);
     }
 
     @Override
     public Matrix createMatrix(double array[][]) {
-        return new Basic2DMatrix(array);
+        return Basic2DMatrix.from2DArray(array);
     }
 
     @Override
@@ -65,44 +64,17 @@ public class Basic2DFactory extends BasicFactory {
 
     @Override
     public Matrix createConstantMatrix(int rows, int columns, double value) {
-
-        double array[][] = new double[rows][columns];
-
-        for (int i = 0; i < rows; i++) {
-            Arrays.fill(array[i], value);
-        }
-
-        return new Basic2DMatrix(array);
+        return Basic2DMatrix.constant(rows, columns, value);
     }
 
     @Override
     public Matrix createRandomMatrix(int rows, int columns, Random random) {
-
-        double array[][] = new double[rows][columns];
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                array[i][j] = random.nextDouble();
-            }
-        }
-
-        return new Basic2DMatrix(array);
+        return Basic2DMatrix.random(rows, columns, random);
     }
 
     @Override
     public Matrix createRandomSymmetricMatrix(int size, Random random) {
-
-        double array[][] = new double[size][size];
-
-        for (int i = 0; i < size; i++) {
-            for (int j = i; j < size; j++) {
-                double value = random.nextDouble();
-                array[i][j] = value;
-                array[j][i] = value;
-            }
-        }
-
-        return new Basic2DMatrix(array);
+        return Basic2DMatrix.randomSymmetric(size, random);
     }
 
     @Override
@@ -112,44 +84,12 @@ public class Basic2DFactory extends BasicFactory {
 
     @Override
     public Matrix createIdentityMatrix(int size) {
-
-        double array[][] = new double[size][size];
-
-        for (int i = 0; i < size; i++) {
-            array[i][i] = 1.0;
-        }
-
-        return new Basic2DMatrix(array);
+        return Basic2DMatrix.identity(size);
     }
 
     @Override
     public Matrix createBlockMatrix(Matrix a, Matrix b, Matrix c, Matrix d) {
-        if ((a.rows() != b.rows()) || (a.columns() != c.columns()) ||
-            (c.rows() != d.rows()) || (b.columns() != d.columns())) {
-            throw new IllegalArgumentException("Sides of blocks are incompatible!");
-        }
-
-        int rows = a.rows() + c.rows(), cols = a.columns() + b.columns();
-        double blockMatrix[][] = new double[rows][cols];
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if ((i < a.rows()) && (j < a.columns())) {
-                    blockMatrix[i][j] = a.get(i, j);
-                }
-                if ((i < a.rows()) && (j > a.columns())) {
-                    blockMatrix[i][j] = b.get(i, j);
-                }
-                if ((i > a.rows()) && (j < a.columns())) {
-                    blockMatrix[i][j] = c.get(i, j);
-                }
-                if ((i > a.rows()) && (j > a.columns())) {
-                    blockMatrix[i][j] = d.get(i, j);
-                }
-            }
-        }
-
-        return new Basic2DMatrix(blockMatrix);
+        return Basic2DMatrix.block(a, b, c, d);
     }
 
     @Override

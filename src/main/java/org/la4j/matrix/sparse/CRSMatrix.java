@@ -28,6 +28,9 @@ package org.la4j.matrix.sparse;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
@@ -46,6 +49,204 @@ import org.la4j.vector.sparse.CompressedVector;
  */
 public class CRSMatrix extends SparseMatrix {
 
+    /**
+     * Creates a zero {@link CRSMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static CRSMatrix zero(int rows, int columns) {
+        return new CRSMatrix(rows, columns);
+    }
+
+    /**
+     * Creates a diagonal {@link CRSMatrix} of the given {@code size} whose
+     * diagonal elements are equal to {@code diagonal}.
+     */
+    public static CRSMatrix diagonal(int size, double diagonal) {
+        double values[] = new double[size];
+        int columnIndices[] = new int[size];
+        int rowPointers[] = new int[size + 1];
+
+        for (int i = 0; i < size; i++) {
+            columnIndices[i] = i;
+            rowPointers[i] = i;
+            values[i] = diagonal;
+        }
+
+        rowPointers[size] = size;
+
+        return new CRSMatrix(size, size, size, values, columnIndices, rowPointers);
+    }
+
+    /**
+     * Creates an identity {@link CRSMatrix} of the given {@code size}.
+     */
+    public static CRSMatrix identity(int size) {
+        return CRSMatrix.diagonal(size, 1.0);
+    }
+
+    /**
+     * Creates a random {@link CRSMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static CRSMatrix random(int rows, int columns, double density, Random random) {
+        if (density < 0.0 || density > 1.0) {
+            throw new IllegalArgumentException("The density value should be between 0 and 1.0");
+        }
+
+        int cardinality = Math.max((int) ((rows * columns) * density), rows);
+
+        double values[] = new double[cardinality];
+        int columnIndices[] = new int[cardinality];
+        int rowPointers[] = new int[rows + 1];
+
+        int kk = cardinality / rows;
+        int indices[] = new int[kk];
+
+        int k = 0;
+        for (int i = 0; i < rows; i++) {
+
+            rowPointers[i] = k;
+
+            for (int ii = 0; ii < kk; ii++) {
+                indices[ii] = random.nextInt(columns);
+            }
+
+            Arrays.sort(indices);
+
+            int previous = -1;
+            for (int ii = 0; ii < kk; ii++) {
+
+                if (indices[ii] == previous) {
+                    continue;
+                }
+
+                values[k] = random.nextDouble();
+                columnIndices[k++] = indices[ii];
+                previous = indices[ii];
+            }
+        }
+
+        rowPointers[rows] = cardinality;
+
+        return new CRSMatrix(rows, columns, cardinality, values,
+                             columnIndices, rowPointers);
+    }
+
+    /**
+     * Creates a random symmetric {@link CRSMatrix} of the given {@code size}.
+     */
+    public static CRSMatrix randomSymmetric(int size, double density, Random random) {
+        int cardinality = (int) ((size * size) * density);
+
+        // TODO: Issue 15
+        // We can do better here. All we need to is to make sure
+        // that all the writes to CRS matrix are done in a serial
+        // order (row-major). This will give us O(1) performance
+        // per write.
+
+        CRSMatrix matrix = new CRSMatrix(size, size, cardinality);
+
+        for (int k = 0; k < cardinality / 2; k++) {
+            int i = random.nextInt(size);
+            int j = random.nextInt(size);
+            double value = random.nextDouble();
+
+            matrix.set(i, j, value);
+            matrix.set(j, i, value);
+        }
+
+        return matrix;
+    }
+
+    /**
+     * Creates a new {@link CRSMatrix} from the given 1D {@code array} with
+     * compressing (copying) the underlying array.
+     */
+    public static CRSMatrix from1DArray(int rows, int columns, double[] array) {
+        CRSMatrix result = CRSMatrix.zero(rows, columns);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                int k = i * columns + j;
+                if (array[k] != 0.0) {
+                    result.set(i, j, array[k]);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Creates a new {@link CRSMatrix} from the given 2D {@code array} with
+     * compressing (copying) the underlying array.
+     */
+    public static CRSMatrix from2DArray(double[][] array) {
+        int rows = array.length;
+        int columns = array[0].length;
+        CRSMatrix result = CRSMatrix.zero(rows, columns);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (array[i][j] != 0.0) {
+                    result.set(i, j, array[i][j]);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Creates a block {@link CRSMatrix} of the given blocks {@code a},
+     * {@code b}, {@code c} and {@code d}.
+     */
+    public static CRSMatrix block(Matrix a, Matrix b, Matrix c, Matrix d) {
+        if ((a.rows() != b.rows()) || (a.columns() != c.columns()) ||
+            (c.rows() != d.rows()) || (b.columns() != d.columns())) {
+            throw new IllegalArgumentException("Sides of blocks are incompatible!");
+        }
+
+        int rows = a.rows() + c.rows(), columns = a.columns() + b.columns();
+        ArrayList<Double> values = new ArrayList<Double>();
+        ArrayList<Integer> columnIndices = new ArrayList<Integer>();
+        int rowPointers[] = new int[rows + 1];
+
+        int k = 0;
+        rowPointers[0] = 0;
+        double current = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if ((i < a.rows()) && (j < a.columns())) {
+                    current = a.get(i, j);
+                }
+                if ((i < a.rows()) && (j > a.columns())) {
+                    current = b.get(i, j);
+                }
+                if ((i > a.rows()) && (j < a.columns())) {
+                    current = c.get(i, j);
+                }
+                if ((i > a.rows()) && (j > a.columns())) {
+                    current = d.get(i, j);
+                }
+                if (Math.abs(current) > Matrices.EPS) {
+                    values.add(current);
+                    columnIndices.add(j);
+                    k++;
+                }
+            }
+            rowPointers[i + 1] = k;
+        }
+        double valuesArray[] = new double[values.size()];
+        int colIndArray[] = new int[columnIndices.size()];
+        for (int i = 0; i < values.size(); i++) {
+            valuesArray[i] = values.get(i);
+            colIndArray[i] = columnIndices.get(i);
+        }
+
+        return new CRSMatrix(rows, columns, k, valuesArray, colIndArray, rowPointers);
+    }
+
     private static final long serialVersionUID = 4071505L;
 
     private static final int MINIMUM_SIZE = 32;
@@ -62,18 +263,22 @@ public class CRSMatrix extends SparseMatrix {
         this(rows, columns, 0);
     }
 
+    @Deprecated
     public CRSMatrix(int rows, int columns, double array[]) {
         this(Matrices.asArray1DSource(rows, columns, array));
     }
 
+    @Deprecated
     public CRSMatrix(Matrix matrix) {
         this(Matrices.asMatrixSource(matrix));
     }
 
+    @Deprecated
     public CRSMatrix(double array[][]) {
         this(Matrices.asArray2DSource(array));
     }
 
+    @Deprecated
     public CRSMatrix(MatrixSource source) {
         this(source.rows(), source.columns(), 0);
 

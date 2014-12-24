@@ -28,6 +28,9 @@ package org.la4j.matrix.sparse;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
@@ -46,6 +49,204 @@ import org.la4j.vector.sparse.CompressedVector;
  */
 public class CCSMatrix extends SparseMatrix {
 
+    /**
+     * Creates a zero {@link CCSMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static CCSMatrix zero(int rows, int columns) {
+        return new CCSMatrix(rows, columns);
+    }
+
+    /**
+     * Creates a diagonal {@link CCSMatrix} of the given {@code size} whose
+     * diagonal elements are equal to {@code diagonal}.
+     */
+    public static CCSMatrix diagonal(int size, double diagonal) {
+        double values[] = new double[size];
+        int rowIndices[] = new int[size];
+        int columnPointers[] = new int[size + 1];
+
+        for (int i = 0; i < size; i++) {
+            rowIndices[i] = i;
+            columnPointers[i] = i;
+            values[i] = diagonal;
+
+        }
+        columnPointers[size] = size;
+
+        return new CCSMatrix(size, size, size, values, rowIndices, columnPointers);
+    }
+
+    /**
+     * Creates an identity {@link CCSMatrix} of the given {@code size}.
+     */
+    public static CCSMatrix identity(int size) {
+        return CCSMatrix.diagonal(size, 1.0);
+    }
+
+    /**
+     * Creates a random {@link CCSMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static CCSMatrix random(int rows, int columns, double density, Random random) {
+        if (density < 0.0 || density > 1.0) {
+            throw new IllegalArgumentException("The density value should be between 0 and 1.0");
+        }
+
+        int cardinality = Math.max((int)((rows * columns) * density), columns);
+
+        double values[] = new double[cardinality];
+        int rowIndices[] = new int[cardinality];
+        int columnPointers[] = new int[columns + 1];
+
+        int kk = cardinality / columns;
+        int indices[] = new int[kk];
+
+        int k = 0;
+        for (int j = 0; j < columns; j++) {
+
+            columnPointers[j] = k;
+
+            for (int jj = 0; jj < kk; jj++) {
+                indices[jj] = random.nextInt(rows);
+            }
+
+            Arrays.sort(indices);
+
+            int previous = -1;
+            for (int jj = 0; jj < kk; jj++) {
+
+                if (indices[jj] == previous) {
+                    continue;
+                }
+
+                values[k] = random.nextDouble();
+                rowIndices[k++] = indices[jj];
+                previous = indices[jj];
+            }
+        }
+
+        columnPointers[columns] = cardinality;
+
+        return new CCSMatrix(rows, columns, cardinality, values,
+                             rowIndices, columnPointers);
+    }
+
+    /**
+     * Creates a random symmetric {@link CCSMatrix} of the given {@code size}.
+     */
+    public static CCSMatrix randomSymmetric(int size, double density, Random random) {
+        int cardinality = (int) ((size * size) * density);
+
+        // TODO: Issue 15
+        // We can do better here. All we need to is to make sure
+        // that all the writes to CCS matrix are done in a serial
+        // order (column-major). This will give us O(1) performance
+        // per write.
+
+        CCSMatrix matrix = new CCSMatrix(size, size, cardinality);
+
+        for (int k = 0; k < cardinality / 2; k++) {
+            int i = random.nextInt(size);
+            int j = random.nextInt(size);
+            double value = random.nextDouble();
+
+            matrix.set(i, j, value);
+            matrix.set(j, i, value);
+        }
+
+        return matrix;
+    }
+
+    /**
+     * Creates a new {@link CCSMatrix} from the given 1D {@code array} with
+     * compressing (copying) the underlying array.
+     */
+    public static CCSMatrix from1DArray(int rows, int columns, double[] array) {
+        CCSMatrix result = CCSMatrix.zero(rows, columns);
+
+        for (int j = 0; j < columns; j++) {
+            for (int i = 0; i < rows; i++) {
+                int k = i * columns + j;
+                if (array[k] != 0.0) {
+                    result.set(i, j, array[k]);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Creates a new {@link CCSMatrix} from the given 2D {@code array} with
+     * compressing (copying) the underlying array.
+     */
+    public static CCSMatrix from2DArray(double[][] array) {
+        int rows = array.length;
+        int columns = array[0].length;
+        CCSMatrix result = CCSMatrix.zero(rows, columns);
+
+        for (int j = 0; j < columns; j++) {
+            for (int i = 0; i < rows; i++) {
+                if (array[i][j] != 0.0) {
+                    result.set(i, j, array[i][j]);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Creates a block {@link CCSMatrix} of the given blocks {@code a},
+     * {@code b}, {@code c} and {@code d}.
+     */
+    public static CCSMatrix block(Matrix a, Matrix b, Matrix c, Matrix d) {
+        if ((a.rows() != b.rows()) || (a.columns() != c.columns()) ||
+            (c.rows() != d.rows()) || (b.columns() != d.columns())) {
+            throw new IllegalArgumentException("Sides of blocks are incompatible!");
+        }
+
+        int rows = a.rows() + c.rows(), columns = a.columns() + b.columns();
+        ArrayList<Double> values = new ArrayList<Double>();
+        ArrayList<Integer> rowIndices = new ArrayList<Integer>();
+        int columnPointers[] = new int[rows + 1];
+
+        int k = 0;
+        columnPointers[0] = 0;
+        double current = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if ((i < a.rows()) && (j < a.columns())) {
+                    current = a.get(i, j);
+                }
+                if ((i < a.rows()) && (j > a.columns())) {
+                    current = b.get(i, j);
+                }
+                if ((i > a.rows()) && (j < a.columns())) {
+                    current = c.get(i, j);
+                }
+                if ((i > a.rows()) && (j > a.columns())) {
+                    current = d.get(i, j);
+                }
+                if (Math.abs(current) > Matrices.EPS) {
+                    values.add(current);
+                    rowIndices.add(j);
+                    k++;
+                }
+            }
+            columnPointers[i + 1] = k;
+        }
+        double valuesArray[] = new double[values.size()];
+        int rowIndArray[] = new int[rowIndices.size()];
+        for (int i = 0; i < values.size(); i++) {
+            valuesArray[i] = values.get(i);
+            rowIndArray[i] = rowIndices.get(i);
+        }
+
+        return new CCSMatrix(rows, columns, k, valuesArray, rowIndArray, columnPointers);
+    }
+
     private static final long serialVersionUID = 4071505L;
 
     private static final int MINIMUM_SIZE = 32;
@@ -62,18 +263,22 @@ public class CCSMatrix extends SparseMatrix {
         this (rows, columns, 0);
     }
 
+    @Deprecated
     public CCSMatrix(int rows, int columns, double array[]) {
         this (Matrices.asArray1DSource(rows, columns, array));
     }
 
+    @Deprecated
     public CCSMatrix(Matrix matrix) {
         this(Matrices.asMatrixSource(matrix));
     }
 
+    @Deprecated
     public CCSMatrix(double array[][]) {
         this(Matrices.asArray2DSource(array));
     }
 
+    @Deprecated
     public CCSMatrix(MatrixSource source) {
         this(source.rows(), source.columns(), 0);
 

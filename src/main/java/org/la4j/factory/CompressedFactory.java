@@ -37,7 +37,7 @@ public abstract class CompressedFactory extends Factory {
 
     @Override
     public Vector createVector() {
-        return new CompressedVector();
+        return CompressedVector.zero(0);
     }
 
     @Override
@@ -62,7 +62,10 @@ public abstract class CompressedFactory extends Factory {
 
     @Override
     public Vector createConstantVector(int length, double value) {
-        return CompressedVector.constant(length, value);
+        CompressedVector result = new CompressedVector(length, 0, new double[0], new int[0]);
+        result.setAll(value);
+
+        return result;
     }
 
     @Override

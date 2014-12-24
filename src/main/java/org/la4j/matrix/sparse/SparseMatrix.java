@@ -26,13 +26,80 @@ import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.AbstractMatrix;
 import org.la4j.matrix.Matrices;
+import org.la4j.matrix.Matrix;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+
 public abstract class SparseMatrix extends AbstractMatrix {
+
+    /**
+     * Creates a zero {@link SparseMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static SparseMatrix zero(int rows, int columns) {
+        return CRSMatrix.zero(rows, columns);
+    }
+
+    /**
+     * Creates a diagonal {@link SparseMatrix} of the given {@code size} whose
+     * diagonal elements are equal to {@code diagonal}.
+     */
+    public static SparseMatrix diagonal(int size, double diagonal) {
+        return CRSMatrix.diagonal(size, diagonal);
+    }
+
+    /**
+     * Creates an identity {@link SparseMatrix} of the given {@code size}.
+     */
+    public static SparseMatrix identity(int size) {
+        return CRSMatrix.identity(size);
+    }
+
+    /**
+     * Creates a random {@link SparseMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static SparseMatrix random(int rows, int columns, double density, Random random) {
+        return CRSMatrix.random(rows, columns, density, random);
+    }
+
+    /**
+     * Creates a random symmetric {@link SparseMatrix} of the given {@code size}.
+     */
+    public static SparseMatrix randomSymmetric(int size, double density, Random random) {
+        return CRSMatrix.randomSymmetric(size, density, random);
+    }
+
+    /**
+     * Creates a new {@link SparseMatrix} from the given 1D {@code array} with
+     * compressing (copying) the underlying array.
+     */
+    public static SparseMatrix from1DArray(int rows, int columns, double[] array) {
+        return CRSMatrix.from1DArray(rows, columns, array);
+    }
+
+    /**
+     * Creates a new {@link SparseMatrix} from the given 2D {@code array} with
+     * compressing (copying) the underlying array.
+     */
+    public static SparseMatrix from2DArray(double[][] array) {
+        return CRSMatrix.from2DArray(array);
+    }
+
+    /**
+     * Creates a block {@link SparseMatrix} of the given blocks {@code a},
+     * {@code b}, {@code c} and {@code d}.
+     */
+    public static SparseMatrix block(Matrix a, Matrix b, Matrix c, Matrix d) {
+        return CRSMatrix.block(a, b, c, d);
+    }
 
     protected int cardinality;
 

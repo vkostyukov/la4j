@@ -54,27 +54,6 @@ public abstract class DenseVector extends AbstractVector {
     }
 
     /**
-     * Creates an unit {@link DenseVector} of the given {@code length}.
-     */
-    public static DenseVector unit(int length) {
-        return DenseVector.constant(length, 1.0);
-    }
-
-    /**
-     * Creates a new {@link BasicVector} from the given {@code values}.
-     */
-    public static DenseVector of(double... values) {
-        return BasicVector.of(values);
-    }
-
-    /**
-     * Creates a new {@link DenseVector} from the given {@code array}.
-     */
-    public static DenseVector fromArray(double[] array) {
-        return BasicVector.fromArray(array);
-    }
-
-    /**
      * Creates a constant {@link DenseVector} of the given {@code length} with
      * the given {@code value}.
      */
@@ -83,11 +62,26 @@ public abstract class DenseVector extends AbstractVector {
     }
 
     /**
+     * Creates an unit {@link DenseVector} of the given {@code length}.
+     */
+    public static DenseVector unit(int length) {
+        return DenseVector.constant(length, 1.0);
+    }
+
+    /**
      * Creates a random {@link DenseVector} of the given {@code length} with
      * the given {@code Random}.
      */
     public static DenseVector random(int length, Random random) {
         return BasicVector.random(length, random);
+    }
+
+    /**
+     * Creates a new {@link DenseVector} from the given {@code array} w/o
+     * copying the underlying array.
+     */
+    public static DenseVector fromArray(double[] array) {
+        return BasicVector.fromArray(array);
     }
 
     public DenseVector(int length) {

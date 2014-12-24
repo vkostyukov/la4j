@@ -68,38 +68,6 @@ public class CompressedVector extends SparseVector {
     }
 
     /**
-     * Creates an unit {@link CompressedVector} of the given {@code length}.
-     */
-    public static CompressedVector unit(int length) {
-        return CompressedVector.constant(length, 1.0);
-    }
-
-    /**
-     * Creates a new {@link CompressedVector} from the given {@code values}.
-     */
-    public static CompressedVector of(double... values) {
-        return CompressedVector.fromArray(values);
-    }
-
-    /**
-     * Creates a new {@link CompressedVector} from the given {@code array}.
-     */
-    public static CompressedVector fromArray(double[] array) {
-        return new CompressedVector(array);
-    }
-
-    /**
-     * Creates a constant {@link CompressedVector} of the given {@code length} with
-     * the given {@code value}.
-     */
-    public static CompressedVector constant(int length, double value) {
-        CompressedVector result = new CompressedVector(length, 0, new double[0], new int[0]);
-        result.setAll(value);
-
-        return result;
-    }
-
-    /**
      * Creates a random {@link CompressedVector} of the given {@code length} with
      * the given {@code density} and {@code Random}.
      */
@@ -121,6 +89,23 @@ public class CompressedVector extends SparseVector {
         Arrays.sort(indices);
 
         return new CompressedVector(length, cardinality, values, indices);
+    }
+
+    /**
+     * Creates a new {@link CompressedVector} from the given {@code array} with
+     * compressing (copying) the underlying array.
+     */
+    public static CompressedVector fromArray(double[] array) {
+        int length  = array.length;
+        CompressedVector result = CompressedVector.zero(length);
+
+        for (int i = 0; i < length; i++) {
+            if (array[i] != 0.0) {
+                result.set(i, array[i]);
+            }
+        }
+
+        return result;
     }
 
     private double values[];
@@ -150,6 +135,7 @@ public class CompressedVector extends SparseVector {
         this(Vectors.asVectorSource(vector));
     }
 
+    @Deprecated
     public CompressedVector(double array[]) {
         this(array.length, 0);
 

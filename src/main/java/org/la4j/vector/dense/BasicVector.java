@@ -56,27 +56,6 @@ public class BasicVector extends DenseVector {
     }
 
     /**
-     * Creates an unit {@link BasicVector} of the given {@code length}.
-     */
-    public static BasicVector unit(int length) {
-        return BasicVector.constant(length, 1.0);
-    }
-
-    /**
-     * Creates a new {@link BasicVector} from the given {@code values}.
-     */
-    public static BasicVector of(double... values) {
-        return BasicVector.fromArray(values);
-    }
-
-    /**
-     * Creates a new {@link BasicVector} from the given {@code array}.
-     */
-    public static BasicVector fromArray(double[] array) {
-        return new BasicVector(array);
-    }
-
-    /**
      * Creates a constant {@link BasicVector} of the given {@code length} with
      * the given {@code value}.
      */
@@ -85,6 +64,13 @@ public class BasicVector extends DenseVector {
         Arrays.fill(array, value);
 
         return new BasicVector(array);
+    }
+
+    /**
+     * Creates an unit {@link BasicVector} of the given {@code length}.
+     */
+    public static BasicVector unit(int length) {
+        return BasicVector.constant(length, 1.0);
     }
 
     /**
@@ -97,6 +83,14 @@ public class BasicVector extends DenseVector {
             array[i] = random.nextDouble();
         }
 
+        return new BasicVector(array);
+    }
+
+    /**
+     * Creates a new {@link BasicVector} from the given {@code array} w/o
+     * copying the underlying array.
+     */
+    public static BasicVector fromArray(double[] array) {
         return new BasicVector(array);
     }
 
