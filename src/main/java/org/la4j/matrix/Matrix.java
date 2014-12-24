@@ -1389,5 +1389,5 @@ public interface Matrix extends Externalizable, Iterable<Double> {
      * @param <T> type of aim matrix
      * @return converted matrix
      */
-    <T extends Matrix> T to(MatrixConverter<T> converter);
+    <T extends Matrix> T to(MatrixFactory<T> converter);
 }

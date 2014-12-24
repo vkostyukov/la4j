@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.la4j.LinearAlgebra;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
-import org.la4j.matrix.MatrixConverter;
+import org.la4j.matrix.MatrixFactory;
 
 import static org.junit.Assert.assertTrue;
 
@@ -82,7 +82,7 @@ public class MatrixConverterTest {
     }
 
     private void performTest(Matrix m) {
-        for (MatrixConverter converter : Matrices.CONVERTERS) {
+        for (MatrixFactory converter : Matrices.CONVERTERS) {
             assertTrue(m.to(converter).equals(m));
         }
     }

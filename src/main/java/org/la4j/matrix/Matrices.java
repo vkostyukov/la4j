@@ -329,10 +329,10 @@ public final class Matrices {
      * Converter to {@link org.la4j.matrix.dense.Basic2DMatrix}.
      * See {@link org.la4j.matrix.Matrix} method <code>to(MatrixConverter)</code>
      */
-    public static final MatrixConverter<Basic2DMatrix> BASIC_2D =
-            new MatrixConverter<Basic2DMatrix>() {
+    public static final MatrixFactory<Basic2DMatrix> BASIC_2D =
+            new MatrixFactory<Basic2DMatrix>() {
                 @Override
-                public Basic2DMatrix convert(Matrix matrix) {
+                public Basic2DMatrix apply(Matrix matrix) {
                     return (Basic2DMatrix) LinearAlgebra.BASIC2D_FACTORY.createMatrix(matrix);
                 }
             };
@@ -341,10 +341,10 @@ public final class Matrices {
      * Converter to {@link org.la4j.matrix.dense.Basic1DMatrix}.
      * See {@link org.la4j.matrix.Matrix} method <code>to(MatrixConverter)</code>
      */
-    public static final MatrixConverter<Basic1DMatrix> BASIC_1D =
-            new MatrixConverter<Basic1DMatrix>() {
+    public static final MatrixFactory<Basic1DMatrix> BASIC_1D =
+            new MatrixFactory<Basic1DMatrix>() {
                 @Override
-                public Basic1DMatrix convert(Matrix matrix) {
+                public Basic1DMatrix apply(Matrix matrix) {
                     return (Basic1DMatrix) LinearAlgebra.BASIC1D_FACTORY.createMatrix(matrix);
                 }
             };
@@ -352,16 +352,16 @@ public final class Matrices {
     /**
      * Default converter to dense matrices
      */
-    public static final MatrixConverter DENSE = BASIC_2D;
+    public static final MatrixFactory DENSE = BASIC_2D;
 
     /**
      * Converter to {@link org.la4j.matrix.sparse.CCSMatrix}.
      * See {@link org.la4j.matrix.Matrix} method <code>to(MatrixConverter)</code>
      */
-    public static final MatrixConverter<CCSMatrix> CCS =
-            new MatrixConverter<CCSMatrix>() {
+    public static final MatrixFactory<CCSMatrix> CCS =
+            new MatrixFactory<CCSMatrix>() {
                 @Override
-                public CCSMatrix convert(Matrix matrix) {
+                public CCSMatrix apply(Matrix matrix) {
                     return (CCSMatrix) LinearAlgebra.CCS_FACTORY.createMatrix(matrix);
                 }
             };
@@ -370,10 +370,10 @@ public final class Matrices {
      * Converter to {@link org.la4j.matrix.sparse.CRSMatrix}.
      * See {@link org.la4j.matrix.Matrix} method <code>to(MatrixConverter)</code>
      */
-    public static final MatrixConverter<CRSMatrix> CRS =
-            new MatrixConverter<CRSMatrix>() {
+    public static final MatrixFactory<CRSMatrix> CRS =
+            new MatrixFactory<CRSMatrix>() {
                 @Override
-                public CRSMatrix convert(Matrix matrix) {
+                public CRSMatrix apply(Matrix matrix) {
                     return (CRSMatrix) LinearAlgebra.CRS_FACTORY.createMatrix(matrix);
                 }
             };
@@ -381,9 +381,9 @@ public final class Matrices {
     /**
      * Default converter to sparse matrices
      */
-    public static final MatrixConverter SPARSE = CRS;
+    public static final MatrixFactory SPARSE = CRS;
 
-    public static final MatrixConverter[] CONVERTERS = {
+    public static final MatrixFactory[] CONVERTERS = {
             BASIC_2D, BASIC_1D, CRS, CCS
     };
 

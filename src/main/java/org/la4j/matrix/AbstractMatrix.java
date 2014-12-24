@@ -1575,7 +1575,7 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public <T extends Matrix> T to(MatrixConverter<T> converter) {
-        return converter.convert(this);
+    public <T extends Matrix> T to(MatrixFactory<T> converter) {
+        return converter.apply(this);
     }
 }
