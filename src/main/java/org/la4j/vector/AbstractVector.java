@@ -82,8 +82,11 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public void setAll(double value) {
-        for (int i = 0; i < length; i++) {
-            set(i, value);
+        VectorIterator it = iterator();
+
+        while (it.hasNext()) {
+            it.next();
+            it.set(value);
         }
     }
 
@@ -99,10 +102,13 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector add(double value) {
+        VectorIterator it = iterator();
         Vector result = blank();
 
-        for (int i = 0; i < length; i++) {
-            result.set(i, get(i) + value);
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            result.set(i, x + value);
         }
 
         return result;
@@ -130,10 +136,13 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector multiply(double value) {
+        VectorIterator it = iterator();
         Vector result = blank();
 
-        for (int i = 0; i < length; i++) {
-            result.set(i, get(i) * value);
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            result.set(i, x * value);
         }
 
         return result;
@@ -402,7 +411,6 @@ public abstract class AbstractVector implements Vector {
     public void each(VectorProcedure procedure) {
         VectorIterator it = iterator();
 
-
         while (it.hasNext()) {
             double x = it.next();
             int i = it.index();
@@ -422,8 +430,8 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector transform(VectorFunction function) {
-        Vector result = blank();
         VectorIterator it = iterator();
+        Vector result = blank();
 
         while (it.hasNext()) {
             double x = it.next();
@@ -437,19 +445,6 @@ public abstract class AbstractVector implements Vector {
     @Override
     public Vector transform(VectorFunction function, Factory factory) {
         return transform(function).to(Factory.asVectorFactory(factory));
-    }
-
-    @Override
-    public Vector transform(int i, VectorFunction function) {
-        return transform(i, function, factory);
-    }
-
-    @Override
-    public Vector transform(int i, VectorFunction function, Factory factory) {
-        Vector result = copy(factory);
-        result.set(i, function.evaluate(i, get(i)));
-
-        return result;
     }
 
     @Override
@@ -509,10 +504,13 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public <T extends Vector> T to(VectorFactory<T> factory) {
+        VectorIterator it = iterator();
         T result = factory.apply(length);
 
-        for (int i = 0; i < length; i++) {
-            result.set(i, get(i));
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            result.set(i, x);
         }
 
         return result;
@@ -539,11 +537,45 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
+    public VectorIterator iterator() {
+        return new VectorIterator(length) {
+            private int i = -1;
+
+            @Override
+            public int index() {
+                return i;
+            }
+
+            @Override
+            public double get() {
+                return AbstractVector.this.get(i);
+            }
+
+            @Override
+            public void set(double value) {
+                AbstractVector.this.set(i, value);
+            }
+
+            @Override
+            public boolean hasNext() {
+                return i + 1 < length;
+            }
+
+            @Override
+            public Double next() {
+                i++;
+                return get();
+            }
+        };
+    }
+
+    @Override
     public int hashCode() {
+        VectorIterator it = iterator();
         int result = 17;
 
-        for (int i = 0; i < length; i++) {
-            long value = (long) get(i);
+        while (it.hasNext()) {
+            long value = it.next().longValue();
             result = 37 * result + (int) (value ^ (value >>> 32));
         }
 

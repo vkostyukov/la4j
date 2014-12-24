@@ -807,6 +807,7 @@ public final class Matrices {
      *
      * @return a default 1x1 matrix
      */
+    @Deprecated
     public static Matrix asMatrix1x1(double value) {
         return LinearAlgebra.DEFAULT_FACTORY.createMatrix(new double[][]{{ value }});
     }

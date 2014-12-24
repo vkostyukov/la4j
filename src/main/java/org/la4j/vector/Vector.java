@@ -580,31 +580,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
     Vector transform(VectorFunction function, Factory factory);
 
     /**
-     * Builds a new vector by applying given {@code function} to the specified element
-     * of this vector.
-     *
-     * @param i element's index
-     * @param function the vector function
-     *
-     * @return the transformed vector
-     */
-    @Deprecated
-    Vector transform(int i, VectorFunction function);
-
-    /**
-     * Builds a new vector by applying given {@code function} to the specified element
-     * of this vector.
-     *
-     * @param i element's index
-     * @param function the vector function
-     * @param factory the factory of result vector
-     *
-     * @return the transformed vector
-     */
-    @Deprecated
-    Vector transform(int i, VectorFunction function, Factory factory);
-
-    /**
      * Updates all elements of this vector by applying given {@code function}.
      * 
      * @param function the the vector function

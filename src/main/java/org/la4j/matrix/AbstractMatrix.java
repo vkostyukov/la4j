@@ -38,17 +38,17 @@ import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
+import org.la4j.iterator.MatrixIterator;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
-import org.la4j.matrix.functor.ColumnVectorToMatrixFunction;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
-import org.la4j.matrix.functor.RowVectorToMatrixFunction;
 import org.la4j.matrix.source.MatrixSource;
-import org.la4j.matrix.sparse.AbstractCompressedMatrix;
 import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
@@ -184,82 +184,60 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix removeRow(int i) {
-        return removeRow(i, factory);
-    }
-
-    @Override
-    public Matrix removeRow(int i, Factory factory) {
         if (i >= rows || i < 0) {
             throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (rows - 1));
         }
+
         Matrix result = factory.createMatrix(rows - 1, columns);
+
         for (int ii = 0; ii < i; ii++) {
             result.setRow(ii, getRow(ii));
         }
+
         for (int ii = i + 1; ii < rows; ii++) {
             result.setRow(ii - 1, getRow(ii));
         }
+
         return result;
     }
 
     @Override
     public Matrix removeColumn(int j) {
-        return removeColumn(j, factory);
-    }
-
-    @Override
-    public Matrix removeColumn(int j, Factory factory) {
         if (j >= columns || j < 0) {
             throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (columns - 1));
         }
+
         Matrix result = factory.createMatrix(rows, columns - 1);
+
         for (int jj = 0; jj < j; jj++) {
             result.setColumn(jj, getColumn(jj));
         }
+
         for (int jj = j + 1; jj < columns; jj++) {
             result.setColumn(jj - 1, getColumn(jj));
         }
+
         return result;
     }
 
     @Override
     public Matrix removeFirstRow() {
-        return removeFirstRow(factory);
-    }
-
-    @Override
-    public Matrix removeFirstRow(Factory factory) {
-        return removeRow(0, factory);
+        return removeRow(0);
     }
 
     @Override
     public Matrix removeFirstColumn() {
-        return removeFirstColumn(factory);
-    }
-
-    @Override
-    public Matrix removeFirstColumn(Factory factory) {
-        return removeColumn(0, factory);
+        return removeColumn(0);
     }
 
     @Override
     public Matrix removeLastRow() {
-        return removeLastRow(factory);
-    }
-
-    @Override
-    public Matrix removeLastRow(Factory factory) {
-        return removeRow(rows - 1, factory);
+        return removeRow(rows - 1);
     }
 
     @Override
     public Matrix removeLastColumn() {
-        return removeLastColumn(factory);
-    }
-
-    @Override
-    public Matrix removeLastColumn(Factory factory) {
-        return removeColumn(columns - 1, factory);
+        return removeColumn(columns - 1);
     }
 
     @Override
@@ -762,7 +740,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public double product() {
-        return fold(Matrices.asProductAccumulator(1));
+        return fold(Matrices.asProductAccumulator(1.0));
     }
 
     @Override
@@ -793,7 +771,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public double sum() {
-        return fold(Matrices.asSumAccumulator(0));
+        return fold(Matrices.asSumAccumulator(0.0));
     }
 
     @Override
@@ -968,38 +946,59 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public void each(MatrixProcedure procedure) {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                procedure.apply(i, j, get(i, j));
-            }
+        MatrixIterator it = iterator();
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            procedure.apply(i, j, x);
         }
     }
 
     @Override
-    public void eachInRow(int i,MatrixProcedure procedure) {
-        for (int j = 0; j < columns; j++) {
-            procedure.apply(i, j, get(i, j));
-        }
+    public void eachInRow(int i, MatrixProcedure procedure) {
+        final MatrixProcedure p = procedure;
+        final int ii = i;
+        eachInRow(i, new VectorProcedure() {
+            @Override
+            public void apply(int j, double value) {
+                p.apply(ii, j, value);
+            }
+        });
     }
     
     @Override
     public void eachInRow(int i, VectorProcedure procedure) {
-    	for (int j = 0; j < columns; j++) {
-    	    procedure.apply(j, get(i, j));
-    	}
+        VectorIterator it = rowIterator(i);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int j = it.index();
+            procedure.apply(j, x);
+        }
     }
 
     @Override
-    public void eachInColumn(int j,MatrixProcedure procedure) {
-        for (int i = 0; i < rows; i++) {
-            procedure.apply(i, j, get(i, j));
-        }
+    public void eachInColumn(int j, MatrixProcedure procedure) {
+        final MatrixProcedure p = procedure;
+        final int jj = j;
+        eachInColumn(j, new VectorProcedure() {
+            @Override
+            public void apply(int i, double value) {
+                p.apply(i, jj, value);
+            }
+        });
     }
     
     @Override
     public void eachInColumn(int j, VectorProcedure procedure) {
-        for (int i = 0; i < rows; i++) {
-            procedure.apply(i, get(i, j));
+        VectorIterator it = columnIterator(j);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            procedure.apply(i, x);
         }
     }
 
@@ -1040,27 +1039,15 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix transform(MatrixFunction function, Factory factory) {
+        MatrixIterator it = iterator();
         Matrix result = blank(factory);
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                result.set(i, j, function.evaluate(i, j, get(i, j)));
-            }
+        while (it.hasNext()) {
+            double x  = it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            result.set(i, j, function.evaluate(i, j, x));
         }
-
-        return result;
-    }
-
-    @Override
-    public Matrix transform(int i, int j, MatrixFunction function) {
-        return transform(i, j, function, factory);
-    }
-
-    @Override
-    public Matrix transform(int i, int j, MatrixFunction function, Factory factory) {
-
-        Matrix result = copy(factory);
-        result.set(i, j, function.evaluate(i, j, result.get(i, j)));
 
         return result;
     }
@@ -1072,12 +1059,20 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public Matrix transformRow(int i, VectorFunction function) {
-    	return transformRow(i, function, factory);
+        Matrix result = copy();
+        VectorIterator it = result.rowIterator(i);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int j = it.index();
+            it.set(function.evaluate(j, x));
+        }
+
+        return result;
     }
 
     @Override
     public Matrix transformRow(int i, MatrixFunction function, Factory factory) {
-
         Matrix result = copy(factory);
 
         for (int j = 0; j < columns; j++) {
@@ -1085,15 +1080,6 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
-    }
-    
-    @Override
-    public Matrix transformRow(int i, VectorFunction function, Factory factory) {
-    	Matrix result = copy(factory);
-    	for (int j = 0; j < columns; j++) {
-    	    result.set(i, j, function.evaluate(j, result.get(i, j)));
-    	}
-    	return result;
     }
 
     @Override
@@ -1103,12 +1089,20 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public Matrix transformColumn(int j, VectorFunction function) {
-    	return transformColumn(j, function, factory);
+        Matrix result = copy();
+        VectorIterator it = result.columnIterator(j);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            it.set(function.evaluate(i, x));
+        }
+
+        return result;
     }
 
     @Override
     public Matrix transformColumn(int j, MatrixFunction function, Factory factory) {
-
         Matrix result = copy(factory);
 
         for (int i = 0; i < rows; i++) {
@@ -1117,22 +1111,16 @@ public abstract class AbstractMatrix implements Matrix {
 
         return result;
     }
-    
-    @Override
-    public Matrix transformColumn(int j, VectorFunction function, Factory factory) {
-    	Matrix result = copy(factory);
-    	for (int i = 0; i < rows; i++) {
-    	    result.set(i, j, function.evaluate(i, result.get(i, j)));
-    	}
-    	return result;
-    }
 
     @Override
     public void update(MatrixFunction function) {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                set(i, j, function.evaluate(i, j, get(i, j)));
-            }
+        MatrixIterator it = iterator();
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            it.set(function.evaluate(i, j, x));
         }
     }
 
@@ -1143,67 +1131,70 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public void updateRow(int i, MatrixFunction function) {
-        for (int j = 0; j < columns; j++) {
-            update(i, j, function);
-        }
+        final int ii = i;
+        final MatrixFunction f = function;
+        updateRow(i, new VectorFunction() {
+            @Override
+            public double evaluate(int j, double value) {
+                return f.evaluate(ii, j, value);
+            }
+        });
     }
 
     @Override
     public void updateRow(int i, VectorFunction function) {
-    	MatrixFunction underlying = new RowVectorToMatrixFunction(function);
-    	for (int j = 0; j < columns; j++) {
-    	    update(i, j, underlying);
-    	}
+        VectorIterator it = rowIterator(i);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int j = it.index();
+            it.set(function.evaluate(j, x));
+        }
     }
     
     @Override
     public void updateColumn(int j, MatrixFunction function) {
-        for (int i = 0; i < rows; i++) {
-            update(i, j, function);
-        }
+        final int jj = j;
+        final MatrixFunction f = function;
+        updateColumn(j, new VectorFunction() {
+            @Override
+            public double evaluate(int i, double value) {
+                return f.evaluate(i, jj, value);
+            }
+        });
     }
     
     @Override
     public void updateColumn(int j, VectorFunction function) {
-    	MatrixFunction underlying = new ColumnVectorToMatrixFunction(function);
-    	for (int i = 0; i < rows; i++) {
-    	    update(i, j, underlying);
-    	}
+        VectorIterator it = columnIterator(j);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            it.set(function.evaluate(i, x));
+        }
     }
 
     @Override
     public double fold(MatrixAccumulator accumulator) {
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                accumulator.update(i, j, get(i, j));
-            }
-        }
-
+        each(Matrices.asAccumulatorProcedure(accumulator));
         return accumulator.accumulate();
     }
 
     @Override
     public double foldRow(int i, MatrixAccumulator accumulator) {
-
-        for (int j = 0; j < columns; j++) {
-            accumulator.update(i, j, get(i, j));
-        }
-
+        eachInRow(i, Matrices.asAccumulatorProcedure(accumulator));
         return accumulator.accumulate();
     }
     
     @Override
     public double foldRow(int i, VectorAccumulator accumulator) {
-    	for (int j = 0; j < columns; j++) {
-    		accumulator.update(j, get(i, j));
-    	}
-    	return accumulator.accumulate();
+        eachInRow(i, Vectors.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
     }
 
     @Override
     public Vector foldRows(MatrixAccumulator accumulator) {
-
         Vector result = factory.createVector(rows);
 
         for (int i = 0; i < rows; i++) {
@@ -1214,35 +1205,30 @@ public abstract class AbstractMatrix implements Matrix {
     }
     
     @Override
-    public Vector foldRows(VectorAccumulator accumulator) {
-    	Vector result = factory.createVector(rows);
-    	for (int i = 0; i < rows; i++) {
-    		result.set(i, foldRow(i, accumulator));
-    	}
-    	return result;
+    public double[] foldRows(VectorAccumulator accumulator) {
+        double[] result = new double[rows];
+
+        for (int i = 0; i < rows; i++) {
+            result[i] = foldRow(i, accumulator);
+        }
+
+        return result;
     }
 
     @Override
     public double foldColumn(int j, MatrixAccumulator accumulator) {
-
-        for (int i = 0; i < rows; i++) {
-            accumulator.update(i, j, get(i, j));
-        }
-
+        eachInColumn(j, Matrices.asAccumulatorProcedure(accumulator));
         return accumulator.accumulate();
     }
-    
+
     @Override
     public double foldColumn(int j, VectorAccumulator accumulator) {
-    	for (int i = 0; i < rows; i++) {
-    		accumulator.update(i, get(i, j));
-    	}
-    	return accumulator.accumulate();
+        eachInColumn(j, Vectors.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
     }
 
     @Override
     public Vector foldColumns(MatrixAccumulator accumulator) {
-
         Vector result = factory.createVector(columns);
 
         for (int i = 0; i < columns; i++) {
@@ -1253,23 +1239,26 @@ public abstract class AbstractMatrix implements Matrix {
     }
     
     @Override
-    public Vector foldColumns(VectorAccumulator accumulator) {
-    	Vector result = factory.createVector(columns);
-    	for (int i = 0; i < columns; i++) {
-    		result.set(i, foldColumn(i, accumulator));
-    	}
-    	return result;
+    public double[] foldColumns(VectorAccumulator accumulator) {
+        double[] result = new double[columns];
+
+        for (int i = 0; i < columns; i++) {
+            result[i] = foldColumn(i, accumulator);
+        }
+
+        return result;
     }
 
     @Override
     public boolean is(MatrixPredicate predicate) {
-
+        MatrixIterator it = iterator();
         boolean result = predicate.test(rows, columns);
 
-        for (int i = 0; result && i < rows; i++) {
-            for (int j = 0; result && j < columns; j++) {
-                result = predicate.test(i, j, get(i, j));
-            }
+        while (it.hasNext() && result) {
+            double x = it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            result = predicate.test(i, j, x);
         }
 
         return result;
@@ -1326,15 +1315,52 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public int hashCode() {
+    public MatrixIterator iterator() {
+        return new MatrixIterator(rows, columns) {
+            private long square = (long) rows * columns;
+            private int i = - 1;
 
+            @Override
+            public int rowIndex() {
+                return i / columns;
+            }
+
+            @Override
+            public int columnIndex() {
+                return i - rowIndex() * columns;
+            }
+
+            @Override
+            public double get() {
+                return AbstractMatrix.this.get(rowIndex(), columnIndex());
+            }
+
+            @Override
+            public void set(double value) {
+                AbstractMatrix.this.set(rowIndex(), columnIndex(), value);
+            }
+
+            @Override
+            public boolean hasNext() {
+                return i + 1 < square;
+            }
+
+            @Override
+            public Double next() {
+                i++;
+                return get();
+            }
+        };
+    }
+
+    @Override
+    public int hashCode() {
+        MatrixIterator it = iterator();
         int result = 17;
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                long value = (long) get(i, j);
-                result = 37 * result + (int) (value ^ (value >>> 32));
-            }
+        while (it.hasNext()) {
+            long value = it.next().longValue();
+            result = 37 * result + (int) (value ^ (value >>> 32));
         }
 
         return result;
@@ -1432,8 +1458,8 @@ public abstract class AbstractMatrix implements Matrix {
                     }
                 }
 
-                sb.append(output);
-                sb.append(columnsDelimiter);
+                sb.append(output)
+                  .append(columnsDelimiter);
             }
             sb.append(rowsDelimiter);
         }
@@ -1460,12 +1486,6 @@ public abstract class AbstractMatrix implements Matrix {
         }
     }
     
-    /**
-     * Ensures the provided row and column are in the bounds of this {@link AbstractCompressedMatrix}.
-     * 
-     * @param i The row to check.
-     * @param j The column to check
-     */
     protected void ensureIndexesAreInBounds(int i, int j) {
         if (i < 0 || i >= this.rows) {
             throw new IndexOutOfBoundsException("Row '" + i + "' is invalid.");

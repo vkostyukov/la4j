@@ -29,6 +29,8 @@ import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
+import org.la4j.iterator.MatrixIterator;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.*;
 import org.la4j.vector.Vector;
@@ -47,7 +49,7 @@ import java.text.NumberFormat;
  * </p>
  * 
  */
-public interface Matrix extends Externalizable {
+public interface Matrix extends Externalizable, Iterable<Double> {
 
     /**
      * Gets the specified element of this matrix.
@@ -164,6 +166,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the transposed matrix
      */
+    @Deprecated
     Matrix transpose(Factory factory);
 
     /**
@@ -180,6 +183,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the rotated matrix
      */
+    @Deprecated
     Matrix rotate(Factory factory);
 
     /**
@@ -199,6 +203,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the powered matrix
      */
+    @Deprecated
     Matrix power(int n, Factory factory);
 
     /**
@@ -218,6 +223,7 @@ public interface Matrix extends Externalizable {
      *
      * @return A * v
      */
+    @Deprecated
     Matrix multiply(double value, Factory factory);
 
     /**
@@ -237,6 +243,7 @@ public interface Matrix extends Externalizable {
      *
      * @return A * x
      */
+    @Deprecated
     Vector multiply(Vector vector, Factory factory);
 
     /**
@@ -256,6 +263,7 @@ public interface Matrix extends Externalizable {
      *
      * @return A * B
      */
+    @Deprecated
     Matrix multiply(Matrix matrix, Factory factory);
 
     /**
@@ -266,6 +274,8 @@ public interface Matrix extends Externalizable {
     Matrix multiplyByItsTranspose();
 
     /**
+     * TOOD: remove it
+     *
      * Multiplies this matrix by its transpose.
      *
      * @return this matrix multiplied by its transpose
@@ -289,6 +299,7 @@ public interface Matrix extends Externalizable {
      *
      * @return A - v
      */
+    @Deprecated
     Matrix subtract(double value, Factory factory);
 
     /**
@@ -308,6 +319,7 @@ public interface Matrix extends Externalizable {
      *
      * @return A - B
      */
+    @Deprecated
     Matrix subtract(Matrix matrix, Factory factory);
 
     /**
@@ -327,6 +339,7 @@ public interface Matrix extends Externalizable {
      *
      * @return A + v
      */
+    @Deprecated
     Matrix add(double value, Factory factory);
 
     /**
@@ -346,6 +359,7 @@ public interface Matrix extends Externalizable {
      *
      * @return A + B
      */
+    @Deprecated
     Matrix add(Matrix matrix, Factory factory);
     
     /**
@@ -363,10 +377,10 @@ public interface Matrix extends Externalizable {
      * 
      * @param matrix the matrix to insert
      * @param numRows number of rows to insert
-     * @param numCols number of columns to insert
+     * @param numColumns number of columns to insert
      * @return a matrix with the parameter inserted into it
      */
-    Matrix insert(Matrix matrix, int numRows, int numCols);
+    Matrix insert(Matrix matrix, int numRows, int numColumns);
     
     /**
      * Inserts a given {@code matrix} (B) into this matrix (A). The original
@@ -376,10 +390,10 @@ public interface Matrix extends Externalizable {
      * @param destRow the row to insert at in the destination matrix
      * @param destCol the column to insert at in the destination matrix
      * @param numRows number of rows to insert
-     * @param numCols number of columns to insert
+     * @param numColumns number of columns to insert
      * @return a matrix with the parameter inserted into it
      */
-    Matrix insert(Matrix matrix, int destRow, int destCol, int numRows, int numCols);
+    Matrix insert(Matrix matrix, int destRow, int destCol, int numRows, int numColumns);
     
     /**
      * Inserts a given {@code matrix} (B) into this matrix (A). The original
@@ -395,7 +409,7 @@ public interface Matrix extends Externalizable {
      * @return a matrix with the parameter inserted into it
      */
     Matrix insert(Matrix matrix, int srcRow, int srcCol, int destRow, int destCol,
-            int numRows, int numCols);
+                  int numRows, int numCols);
 
     /**
      * Divides every element of this matrix (A) by given {@code value} (v).
@@ -414,6 +428,7 @@ public interface Matrix extends Externalizable {
      *
      * @return A / v
      */
+    @Deprecated
     Matrix divide(double value, Factory factory);
 
     /**
@@ -433,6 +448,7 @@ public interface Matrix extends Externalizable {
      *
      * @return A (+) B
      */
+    @Deprecated
     Matrix kroneckerProduct(Matrix matrix, Factory factory);
 
     /**
@@ -485,6 +501,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the Hadamard product of two matrices
      */
+    @Deprecated
     Matrix hadamardProduct(Matrix matrix, Factory factory);
 
     /**
@@ -528,6 +545,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the row represented as vector
      */
+    @Deprecated
     Vector getRow(int i, Factory factory);
 
     /**
@@ -547,6 +565,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the column represented as vector
      */
+    @Deprecated
     Vector getColumn(int j, Factory factory);
 
     /**
@@ -567,18 +586,10 @@ public interface Matrix extends Externalizable {
 
     /**
      * Removes one row from matrix.
-     * @param i
+     * @param i the row index
      * @return matrix without row.
      */
     Matrix removeRow(int i);
-
-    /**
-     * Removes one row from matrix using specified factory.
-     * @param i
-     * @param factory
-     * @return matrix without row.
-     */
-    Matrix removeRow(int i, Factory factory);
 
     /**
      * Removes one column from matrix.
@@ -588,25 +599,10 @@ public interface Matrix extends Externalizable {
     Matrix removeColumn(int j);
 
     /**
-     * Removes one column from matrix using specified factory.
-     * @param j
-     * @param factory
-     * @return matrix without column.
-     */
-    Matrix removeColumn(int j, Factory factory);
-
-    /**
      * Removes first row from matrix.
      * @return matrix without first row.
      */
     Matrix removeFirstRow();
-
-    /**
-     * Removes first row from matrix using specified factory.
-     * @param factory
-     * @return matrix without first row.
-     */
-    Matrix removeFirstRow(Factory factory);
 
     /**
      * Removes first column from matrix.
@@ -615,37 +611,16 @@ public interface Matrix extends Externalizable {
     Matrix removeFirstColumn();
 
     /**
-     * Removes first column from matrix using specified factory.
-     * @param factory
-     * @return matrix without first column
-     */
-    Matrix removeFirstColumn(Factory factory);
-
-    /**
      * Removes last row from matrix.
      * @return matrix without last row
      */
     Matrix removeLastRow();
 
     /**
-     * Removes last row from matrix using specified factory.
-     * @param factory
-     * @return matrix without last row
-     */
-    Matrix removeLastRow(Factory factory);
-
-    /**
      * Removes last column from matrix.
      * @return matrix without last column
      */
     Matrix removeLastColumn();
-
-    /**
-     * Removes last column from matrix using specified factory.
-     * @param factory
-     * @return matrix without last column
-     */
-    Matrix removeLastColumn(Factory factory);
 
     /**
      * Creates the blank (an empty matrix with same size) matrix of this matrix.
@@ -661,6 +636,7 @@ public interface Matrix extends Externalizable {
      *
      * @return blank matrix
      */
+    @Deprecated
     Matrix blank(Factory factory);
 
     /**
@@ -677,6 +653,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the copy of this matrix
      */
+    @Deprecated
     Matrix copy(Factory factory);
 
     /**
@@ -694,14 +671,13 @@ public interface Matrix extends Externalizable {
     /**
      * Copies this matrix into the new matrix with specified dimensions: {@code rows} and {@code columns}.
      *
-     * TODO (NC): Rename to copyOfShape
-     *
      * @param rows the number of rows in new matrix
      * @param columns the number of columns in new matrix
      * @param factory the factory of result matrix
      *
      * @return the copy of this matrix with new size
      */
+    @Deprecated
     Matrix resize(int rows, int columns, Factory factory);
 
     /**
@@ -725,6 +701,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the copy of this matrix with new size
      */
+    @Deprecated
     Matrix resizeRows(int rows, Factory factory);
 
     /**
@@ -748,6 +725,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the copy of this matrix with new size
      */
+    @Deprecated
     Matrix resizeColumns(int columns, Factory factory);
 
     /**
@@ -774,6 +752,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the shuffled matrix
      */
+    @Deprecated
     Matrix shuffle(Factory factory);
 
     /**
@@ -801,6 +780,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the sub-matrix of this matrix
      */
+    @Deprecated
     Matrix slice(int fromRow, int fromColumn, int untilRow, int untilColumn, Factory factory);
 
     /**
@@ -826,6 +806,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the sub-matrix of this matrix
      */
+    @Deprecated
     Matrix sliceTopLeft(int untilRow, int untilColumn, Factory factory);
 
     /**
@@ -851,6 +832,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the sub-matrix of this matrix
      */
+    @Deprecated
     Matrix sliceBottomRight(int fromRow, int fromColumn, Factory factory);
 
     /**
@@ -886,6 +868,7 @@ public interface Matrix extends Externalizable {
      *
      * @throws IllegalArgumentException if invalid row or column indices are provided
      */
+    @Deprecated
     public Matrix select(int[] rowIndices, int[] columnIndices, Factory factory);
 
     /**
@@ -893,6 +876,7 @@ public interface Matrix extends Externalizable {
      * 
      * @return the factory of this matrix
      */
+    @Deprecated
     Factory factory();
 
     /**
@@ -1007,30 +991,8 @@ public interface Matrix extends Externalizable {
      *
      * @return the transformed matrix
      */
+    @Deprecated
     Matrix transform(MatrixFunction function, Factory factory);
-
-    /**
-     * Builds a new matrix by applying given {@code function} to specified element of this matrix.
-     *
-     * @param i the row index
-     * @param j the column index
-     * @param function the matrix function
-     *
-     * @return the transformed matrix
-     */
-    Matrix transform(int i, int j, MatrixFunction function);
-
-    /**
-     * Builds a new matrix by applying given {@code function} to specified element of this matrix.
-     *
-     * @param i the row index
-     * @param j the column index
-     * @param function the matrix function
-     * @param factory the factory of result matrix
-     *
-     * @return the transformed matrix
-     */
-    Matrix transform(int i, int j, MatrixFunction function, Factory factory);
 
     /**
      * Deprecated. Use {@link #transformRow(int, VectorFunction)} instead.
@@ -1058,7 +1020,6 @@ public interface Matrix extends Externalizable {
     Matrix transformRow(int i, VectorFunction function);
 
     /**
-     * Deprecated. Use {@link #transformRow(int, VectorFunction, Factory)} instead.
      * Builds a new matrix by applying given {@code function} to each element of specified
      * row in this matrix.
      *
@@ -1070,18 +1031,6 @@ public interface Matrix extends Externalizable {
      */
     @Deprecated
     Matrix transformRow(int i, MatrixFunction function, Factory factory);
-
-    /**
-     * Builds a new matrix by applying given {@code function} to each element of specified
-     * row in this matrix.
-     *
-     * @param i the row index
-     * @param function the vector function
-     * @param factory the factory of result matrix
-     *
-     * @return the transformed matrix
-     */
-    Matrix transformRow(int i, VectorFunction function, Factory factory);
 
     /**
      * Deprecated. Use {@link #transformColumn(int, VectorFunction)} instead.
@@ -1123,18 +1072,6 @@ public interface Matrix extends Externalizable {
     Matrix transformColumn(int j, MatrixFunction function, Factory factory);
 
     /**
-     * Builds a new matrix by applying given {@code function} to each element of specified
-     * column in this matrix.
-     *
-     * @param j the column index
-     * @param function the vector function
-     * @param factory the factory of result matrix
-     *
-     * @return the transformed matrix
-     */
-    Matrix transformColumn(int j, VectorFunction function, Factory factory);
-
-    /**
      * Updates all elements of this matrix by applying given {@code function}.
      * 
      * @param function the matrix function
@@ -1148,6 +1085,7 @@ public interface Matrix extends Externalizable {
      * @param j the column index
      * @param function the matrix function
      */
+    @Deprecated
     void update(int i, int j, MatrixFunction function);
 
     /**
@@ -1237,9 +1175,9 @@ public interface Matrix extends Externalizable {
      *
      * @param accumulator the vector accumulator
      *
-     * @return the accumulated vector
+     * @return the accumulated double array
      */
-    Vector foldRows(VectorAccumulator accumulator);
+    double[] foldRows(VectorAccumulator accumulator);
 
     /**
      * Deprecated. Use {@link #foldColumn(int, VectorAccumulator)} instead.
@@ -1281,9 +1219,9 @@ public interface Matrix extends Externalizable {
      *
      * @param accumulator the vector accumulator
      *
-     * @return the accumulated vector
+     * @return the accumulated double array
      */
-    Vector foldColumns(VectorAccumulator accumulator);
+    double[] foldColumns(VectorAccumulator accumulator);
 
     /**
      * Checks whether this matrix compiles with given {@code predicate} or not.
@@ -1335,6 +1273,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the row vector of this matrix
      */
+    @Deprecated
     Vector toRowVector(Factory factory);
 
     /**
@@ -1351,6 +1290,7 @@ public interface Matrix extends Externalizable {
      *
      * @return the column vector of this matrix
      */
+    @Deprecated
     Vector toColumnVector(Factory factory);
 
     /**
@@ -1388,7 +1328,7 @@ public interface Matrix extends Externalizable {
      *
      * @return equals of this matrix to that
      */
-    public boolean equals(Matrix matrix, double precision);
+    boolean equals(Matrix matrix, double precision);
 
     /**
      * Converts this matrix into the string representation.
@@ -1419,6 +1359,28 @@ public interface Matrix extends Externalizable {
      * @return the matrix converted to a string
      */
     String mkString(NumberFormat formatter, String rowsDelimiter, String columnsDelimiter);
+
+    /**
+     * Returns a matrix iterator.
+     *
+     * @return a matrix iterator
+     */
+    @Override
+    MatrixIterator iterator();
+
+    /**
+     * Returns a vector iterator of the given row {code i}.
+     *
+     * @return a vector iterator
+     */
+    VectorIterator rowIterator(int i);
+
+    /**
+     * Returns a vector iterator of the given column {code j}.
+     *
+     * @return a vector iterator
+     */
+     VectorIterator columnIterator(int j);
 
     /**
      * Converts matrix to matrix of another type

@@ -26,13 +26,15 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import org.la4j.LinearAlgebra;
+import org.la4j.iterator.MatrixIterator;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.BasicVector;
 
-public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
+public class Basic2DMatrix extends DenseMatrix {
 
     private static final long serialVersionUID = 4071505L;
 
@@ -148,6 +150,21 @@ public class Basic2DMatrix extends AbstractBasicMatrix implements DenseMatrix {
         }
 
         return result;
+    }
+
+    @Override
+    public MatrixIterator iterator() {
+        return null;
+    }
+
+    @Override
+    public VectorIterator rowIterator(int i) {
+        return null;
+    }
+
+    @Override
+    public VectorIterator columnIterator(int j) {
+        return null;
     }
 
     @Override

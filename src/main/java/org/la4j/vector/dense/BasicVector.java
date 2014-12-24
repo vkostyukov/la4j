@@ -211,36 +211,4 @@ public class BasicVector extends DenseVector {
             self[i] = in.readDouble();
         }
     }
-
-    @Override
-    public VectorIterator iterator() {
-        return new VectorIterator(length) {
-            private int i = -1;
-
-            @Override
-            public int index() {
-                return i;
-            }
-
-            @Override
-            public double get() {
-                return self[i];
-            }
-
-            @Override
-            public void set(double value) {
-                self[i] = value;
-            }
-
-            @Override
-            public boolean hasNext() {
-                return i + 1 < length;
-            }
-
-            @Override
-            public Double next() {
-                return self[++i];
-            }
-        };
-    }
 }

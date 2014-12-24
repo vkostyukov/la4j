@@ -21,14 +21,19 @@
 
 package org.la4j.matrix.dense;
 
-import org.la4j.matrix.Matrix;
+import org.la4j.factory.Factory;
+import org.la4j.matrix.AbstractMatrix;
 
-public interface DenseMatrix extends Matrix {
+public abstract class DenseMatrix extends AbstractMatrix {
+
+    protected DenseMatrix(Factory factory, int rows, int columns) {
+        super(factory, rows, columns);
+    }
 
     /**
      * Converts this dense matrix to double array.
      * 
      * @return an array representation of this matrix
      */
-    double[][] toArray();
+    public abstract double[][] toArray();
 }

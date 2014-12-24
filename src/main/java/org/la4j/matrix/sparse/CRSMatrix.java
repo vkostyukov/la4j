@@ -31,6 +31,8 @@ import java.io.ObjectOutput;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
+import org.la4j.iterator.MatrixIterator;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.functor.MatrixFunction;
@@ -42,7 +44,7 @@ import org.la4j.vector.sparse.CompressedVector;
 /**
  * This is a CRS (Compressed Row Storage) matrix class.
  */
-public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix {
+public class CRSMatrix extends SparseMatrix {
 
     private static final long serialVersionUID = 4071505L;
 
@@ -361,6 +363,36 @@ public class CRSMatrix extends AbstractCompressedMatrix implements SparseMatrix 
         } else {
             insert(k, i, j, function.evaluate(i, j, 0));
         }
+    }
+
+    @Override
+    public MatrixIterator nonZeroIterator() {
+        return null;
+    }
+
+    @Override
+    public VectorIterator nonZeroRowIterator(int i) {
+        return null;
+    }
+
+    @Override
+    public VectorIterator nonZeroColumnIterator(int j) {
+        return null;
+    }
+
+    @Override
+    public MatrixIterator iterator() {
+        return null;
+    }
+
+    @Override
+    public VectorIterator rowIterator(int i) {
+        return null;
+    }
+
+    @Override
+    public VectorIterator columnIterator(int j) {
+        return null;
     }
 
     @Override

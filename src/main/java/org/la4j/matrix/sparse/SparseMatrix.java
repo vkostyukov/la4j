@@ -21,193 +21,29 @@
 
 package org.la4j.matrix.sparse;
 
-import org.la4j.matrix.Matrix;
+import org.la4j.factory.Factory;
+import org.la4j.iterator.MatrixIterator;
+import org.la4j.iterator.VectorIterator;
+import org.la4j.matrix.AbstractMatrix;
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
-import org.la4j.vector.Vector;
+import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
-import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
 
-public interface SparseMatrix extends Matrix {
+public abstract class SparseMatrix extends AbstractMatrix {
 
-    /**
-     * Returns the cardinality (the number of non-zero elements)
-     * of this sparse matrix.
-     * 
-     * @return the cardinality of this matrix
-     */
-    int cardinality();
+    protected int cardinality;
 
-    /**
-     * Returns the density (non-zero elements divided by total elements)
-     * of this sparse matrix.
-     * 
-     * @return the density of this matrix
-     */
-    double density();
+    protected SparseMatrix(Factory factory, int rows, int columns) {
+        super(factory, rows, columns);
+    }
 
-    /**
-     * Whether or not the specified element is zero.
-     *
-     * @param i element's row index
-     * @param j element's column index
-     *
-     * @return {@code true} if specified element is zero, {@code false} otherwise
-     */
-    boolean isZeroAt(int i, int j);
-
-    /**
-     * Whether or not the specified element is not zero.
-     *
-     * @param i element's row index
-     * @param j element's column index
-     *
-     * @return {@code true} if specified element is not zero, {@code false} otherwise
-     */
-    boolean nonZeroAt(int i, int j);
-
-    /**
-     * Applies given {@code procedure} to each non-zero element of this matrix.
-     *
-     * @param procedure the matrix procedure
-     */
-    void eachNonZero(MatrixProcedure procedure);
-
-    /**
-     * Deprecated. Use {@link #eachNonZeroInRow(int, VectorFunction)} instead.
-     * <p/>
-     * Applies given {@code procedure} to each non-zero element of specified row of this matrix.
-     *
-     * @param i the row index
-     * @param procedure the matrix procedure
-     */
-    @Deprecated
-    void eachNonZeroInRow(int i, MatrixProcedure procedure);
-    
-    /**
-     * Applies the given {@code procedure} to each non-zero element of the specified row of this matrix.
-     * 
-     * @param i the row index. 
-     * @param procedure the {@link VectorProcedure}. 
-     */
-    void eachNonZeroInRow(int i, VectorProcedure procedure);
-
-    /**
-     * Deprecated. Use {@link #eachNonZeroInColumn(int, VectorFunction)} instead.
-     * <p/>
-     * Applies given {@code procedure} to each non-zero element of specified column of this matrix.
-     *
-     * @param j the column index
-     * @param procedure the matrix procedure
-     */
-    @Deprecated
-    void eachNonZeroInColumn(int j, MatrixProcedure procedure);
-    
-    /**
-     * Applies the given {@code procedure} to each non-zero element of the specified column of this matrix.
-     * 
-     * @param j the column index.
-     * @param procedure the {@link VectorProcedure}.
-     */
-    void eachNonZeroInColumn(int j, VectorProcedure procedure);
-
-    /**
-     * Folds non-zero elements of this matrix with given {@code accumulator}.
-     *
-     * @param accumulator the matrix accumulator
-     *
-     * @return the accumulated value
-     */
-    double foldNonZero(MatrixAccumulator accumulator);
-
-    /**
-     * Deprecated. Use {@link #foldNonZeroInRow(int, VectorFunction)} instead.
-     * <p/>
-     * Folds non-zero elements of specified row in this matrix with given {@code accumulator}.
-     *
-     * @param i the row index
-     * @param accumulator the matrix accumulator
-     *
-     * @return the accumulated value
-     */
-    @Deprecated
-    double foldNonZeroInRow(int i, MatrixAccumulator accumulator);
-    
-    /**
-     * Folds non-zero elements of the specified row in this matrix with the given {@code accumulator}.
-     * 
-     * @param i the row index.
-     * @param accumulator the {@link VectorAccumulator}.
-     * 
-     * @return the accumulated value.
-     */
-    double foldNonZeroInRow(int i, VectorAccumulator accumulator);
-
-    /**
-     * Deprecated. Use {@link #foldNonZeroInColumn(int, VectorFunction)} instead.
-     * <p/>
-     * Folds non-zero elements of specified column in this matrix with given {@code accumulator}.
-     *
-     * @param j the column index
-     * @param accumulator the matrix accumulator
-     *
-     * @return the accumulated value
-     */
-    @Deprecated
-    double foldNonZeroInColumn(int j, MatrixAccumulator accumulator);
-    
-    /**
-     * Folds non-zero elements of the specified column in this matrix with the given {@code accumulator}.
-     * 
-     * @param j the column index.
-     * @param accumulator the {@link VectorAccumulator}.
-     * 
-     * @return the accumulated value.
-     */
-    double foldNonZeroInColumn(int j, VectorAccumulator accumulator);
-
-    /**
-     * Deprecated. Use {@link #foldNonZeroInColumns(VectorAccumulator)} instead.
-     * <p/>
-     * Folds non-zero elements (in a column-by-column manner) of this matrix with given {@code accumulator}.
-     *
-     * @param accumulator the matrix accumulator
-     *
-     * @return the accumulated vector
-     */
-    @Deprecated
-    Vector foldNonZeroInColumns(MatrixAccumulator accumulator);
-
-    /**
-     * Folds non-zero elements (in a column-by-column manner) of this matrix with given {@code accumulator}.
-     *
-     * @param accumulator the matrix accumulator
-     *
-     * @return the accumulated vector
-     */
-    Vector foldNonZeroInColumns(VectorAccumulator accumulator);
-
-    /**
-     * Deprecated. use {@link #foldNonZeroInRows(VectorAccumulator)} instead.
-     * <p/>
-     * Folds non-zero elements (in a row-by-row manner) of this matrix with given {@code accumulator}.
-     *
-     * @param accumulator the matrix accumulator
-     *
-     * @return the accumulated vector
-     */
-    @Deprecated
-    Vector foldNonZeroInRows(MatrixAccumulator accumulator);
-
-    /**
-     * Folds non-zero elements (in a row-by-row manner) of this matrix with given {@code accumulator}.
-     *
-     * @param accumulator the matrix accumulator
-     *
-     * @return the accumulated vector
-     */
-    Vector foldNonZeroInRows(VectorAccumulator accumulator);
+    @Override
+    public double get(int i, int j) {
+        return getOrElse(i, j, 0.0);
+    }
 
     /**
      * Gets the specified element, or a {@code defaultValue} if there
@@ -219,5 +55,247 @@ public interface SparseMatrix extends Matrix {
      *
      * @return the element of this vector or a default value
      */
-    double getOrElse(int i, int j, double defaultValue);
+    public abstract double getOrElse(int i, int j, double defaultValue);
+
+    /**
+     * Returns the cardinality (the number of non-zero elements)
+     * of this sparse matrix.
+     * 
+     * @return the cardinality of this matrix
+     */
+    public int cardinality() {
+        return cardinality;
+    }
+
+    /**
+     * Returns the density (non-zero elements divided by total elements)
+     * of this sparse matrix.
+     * 
+     * @return the density of this matrix
+     */
+    public double density() {
+        return cardinality / (double) (rows * columns);
+    }
+
+    /**
+     * @return a capacity of this sparse matrix
+     */
+    protected long capacity() {
+        return ((long) rows) * columns;
+    }
+
+    /**
+     * Whether or not the specified element is zero.
+     *
+     * @param i element's row index
+     * @param j element's column index
+     *
+     * @return {@code true} if specified element is zero, {@code false} otherwise
+     */
+    public boolean isZeroAt(int i, int j) {
+        return !nonZeroAt(i, j);
+    }
+
+    /**
+     * Whether or not the specified element is not zero.
+     *
+     * @param i element's row index
+     * @param j element's column index
+     *
+     * @return {@code true} if specified element is not zero, {@code false} otherwise
+     */
+    public abstract boolean nonZeroAt(int i, int j);
+
+    /**
+     * Applies given {@code procedure} to each non-zero element of this matrix.
+     *
+     * @param procedure the matrix procedure
+     */
+    public void eachNonZero(MatrixProcedure procedure) {
+        MatrixIterator it = nonZeroIterator();
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            procedure.apply(i, j, x);
+        }
+    }
+
+    /**
+     * Deprecated. Use {@link SparseMatrix#eachNonZeroInRow(int, VectorProcedure)} instead.
+     * <p/>
+     * Applies given {@code procedure} to each non-zero element of specified row of this matrix.
+     *
+     * @param i the row index
+     * @param procedure the matrix procedure
+     */
+    @Deprecated
+    public void eachNonZeroInRow(int i, MatrixProcedure procedure) {
+        final MatrixProcedure p = procedure;
+        final int ii = i;
+        eachNonZeroInRow(i, new VectorProcedure() {
+            @Override
+            public void apply(int j, double value) {
+                p.apply(ii, j, value);
+            }
+        });
+    }
+    
+    /**
+     * Applies the given {@code procedure} to each non-zero element of the specified row of this matrix.
+     * 
+     * @param i the row index. 
+     * @param procedure the {@link VectorProcedure}. 
+     */
+    public void eachNonZeroInRow(int i, VectorProcedure procedure) {
+        VectorIterator it = nonZeroRowIterator(i);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int j = it.index();
+            procedure.apply(j, x);
+        }
+    }
+
+    /**
+     * Deprecated. Use {@link SparseMatrix#eachNonZeroInColumn(int, VectorProcedure)} instead.
+     * <p/>
+     * Applies given {@code procedure} to each non-zero element of specified column of this matrix.
+     *
+     * @param j the column index
+     * @param procedure the matrix procedure
+     */
+    @Deprecated
+    public void eachNonZeroInColumn(int j, MatrixProcedure procedure) {
+        final MatrixProcedure p = procedure;
+        final int jj = j;
+        eachNonZeroInColumn(j, new VectorProcedure() {
+            @Override
+            public void apply(int i, double value) {
+                p.apply(i, jj, value);
+            }
+        });
+    }
+    
+    /**
+     * Applies the given {@code procedure} to each non-zero element of the specified column of this matrix.
+     * 
+     * @param j the column index.
+     * @param procedure the {@link VectorProcedure}.
+     */
+    public void eachNonZeroInColumn(int j, VectorProcedure procedure) {
+        VectorIterator it = nonZeroColumnIterator(j);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            procedure.apply(i, x);
+        }
+    }
+
+    /**
+     * Folds non-zero elements of this matrix with given {@code accumulator}.
+     *
+     * @param accumulator the matrix accumulator
+     *
+     * @return the accumulated value
+     */
+    public double foldNonZero(MatrixAccumulator accumulator) {
+        eachNonZero(Matrices.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
+    }
+
+    /**
+     * Folds non-zero elements of the specified row in this matrix with the given {@code accumulator}.
+     * 
+     * @param i the row index.
+     * @param accumulator the {@link VectorAccumulator}.
+     * 
+     * @return the accumulated value.
+     */
+    public double foldNonZeroInRow(int i, VectorAccumulator accumulator) {
+        eachNonZeroInRow(i, Vectors.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
+    }
+
+    /**
+     * Folds non-zero elements of the specified column in this matrix with the given {@code accumulator}.
+     * 
+     * @param j the column index.
+     * @param accumulator the {@link VectorAccumulator}.
+     * 
+     * @return the accumulated value.
+     */
+    public double foldNonZeroInColumn(int j, VectorAccumulator accumulator) {
+        eachNonZeroInColumn(j, Vectors.asAccumulatorProcedure(accumulator));
+        return accumulator.accumulate();
+    }
+
+    /**
+     * Folds non-zero elements (in a column-by-column manner) of this matrix with given {@code accumulator}.
+     *
+     * @param accumulator the matrix accumulator
+     *
+     * @return the accumulated vector
+     */
+    public double[] foldNonZeroInColumns(VectorAccumulator accumulator) {
+        double[] result = new double[columns];
+
+        for (int j = 0; j < columns; j++) {
+            result[j] = foldNonZeroInColumn(j, accumulator);
+        }
+
+        return result;
+    }
+
+    /**
+     * Folds non-zero elements (in a row-by-row manner) of this matrix with given {@code accumulator}.
+     *
+     * @param accumulator the matrix accumulator
+     *
+     * @return the accumulated vector
+     */
+    public double[] foldNonZeroInRows(VectorAccumulator accumulator) {
+        double[] result = new double[rows];
+
+        for (int i = 0; i < rows; i++) {
+            result[i] = foldNonZeroInRow(i, accumulator);
+        }
+
+        return result;
+    }
+
+    /**
+     * Returns a non-zero matrix iterator.
+     *
+     * @return a non-zero matrix iterator
+     */
+    public abstract MatrixIterator nonZeroIterator();
+
+    /**
+     * Returns a non-zero vector iterator of the given row {@code i}.
+     *
+     * @return a non-zero vector iterator
+     */
+    public abstract VectorIterator nonZeroRowIterator(int i);
+
+    /**
+     * Returns a non-zero vector iterator of the given column {@code j}.
+     *
+     * @return a non-zero vector iterator
+     */
+    public abstract VectorIterator nonZeroColumnIterator(int j);
+
+    protected void ensureCardinalityIsCorrect(long rows, long columns, long cardinality) {
+        if (cardinality < 0) {
+            fail("Cardinality should be positive: " + cardinality + ".");
+        }
+
+        long capacity = capacity();
+
+        if (cardinality > capacity) {
+            fail("Cardinality should be less then or equal to capacity: " + capacity + ".");
+        }
+    }
 }

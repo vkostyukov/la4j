@@ -20,6 +20,8 @@ la4j-0.5.0 `Apr 2014`
  * New vector method `normalize()`
  * Added index range checks for `SparseVector`
  * Added index range checks for `Basic1DMatrix`, `CRSMatrix`, and `CCSMatrix`
+ * Removed method `Vector.transform(int, VectorFunction)`
+ * Removed methods `Matrix.transform(int, int, MatrixFunction)`
 
 la4j-0.4.9 `Jan 2014`
  * Bug fix in `align()` method for big sparse matrices (reported by Michael Kapper)

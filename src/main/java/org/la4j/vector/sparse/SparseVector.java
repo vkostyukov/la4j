@@ -246,25 +246,11 @@ public abstract class SparseVector extends AbstractVector {
     }
 
     /**
-     * Returns a non-zero iterator.
+     * Returns a non-zero vector iterator.
      *
-     * @return a non-zero iterator
+     * @return a non-zero vector iterator
      */
     public abstract VectorIterator nonZeroIterator();
-
-    /**
-     * Returns a non-zero iterable instance. This method is useful in for-each loops.
-     *
-     * @return a non-zero iterable instance
-     */
-    public Iterable<Double> skipZeros() {
-        return new Iterable<Double>() {
-            @Override
-            public Iterator<Double> iterator() {
-                return nonZeroIterator();
-            }
-        };
-    }
 
     @Override
     public <T extends Vector> T to(VectorFactory<T> factory) {
