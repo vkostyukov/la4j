@@ -628,7 +628,9 @@ public class CCSMatrix extends SparseMatrix {
     }
 
     private int searchForRowIndex(int i, int left, int right) {
-        // TODO: https://github.com/vkostyukov/la4j/issues/227
+        if (right - left == 0 || i > rowIndices[right - 1]) {
+            return right;
+        }
 
         while (left < right) {
             int p = (left + right) / 2;

@@ -638,7 +638,9 @@ public class CRSMatrix extends SparseMatrix {
     }
 
     private int searchForColumnIndex(int j, int left, int right) {
-        // TODO: https://github.com/vkostyukov/la4j/issues/227
+        if (right - left == 0 || j > columnIndices[right - 1]) {
+            return right;
+        }
 
         while (left < right) {
             int p = (left + right) / 2;
