@@ -21,11 +21,9 @@
 
 package org.la4j.vector.sparse;
 
-import java.util.Iterator;
 import java.util.Random;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.factory.Factory;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.sparse.CCSMatrix;

@@ -21,11 +21,11 @@
 
 package org.la4j.iterator;
 
-class CursorToMatrixIterator extends MatrixIterator {
+class CursorToRowMajorMatrixIterator extends RowMajorMatrixIterator {
 
     private final CursorIterator underlying;
 
-    public CursorToMatrixIterator(CursorIterator underlying, int rows, int columns) {
+    public CursorToRowMajorMatrixIterator(CursorIterator underlying, int rows, int columns) {
         super(rows, columns);
         this.underlying = underlying;
     }

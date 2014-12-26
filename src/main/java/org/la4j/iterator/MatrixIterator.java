@@ -34,24 +34,19 @@ public abstract class MatrixIterator extends CursorIterator {
     public abstract int rowIndex();
     public abstract int columnIndex();
 
-    public MatrixIterator orElseAdd(final MatrixIterator those) {
-        return new CursorToMatrixIterator(super.orElse(those, JoinFunction.ADD), rows, columns);
-    }
-
-    public MatrixIterator orElseSubtract(final MatrixIterator those) {
-        return new CursorToMatrixIterator(super.orElse(those, JoinFunction.SUB), rows, columns);
-    }
-
-    public MatrixIterator andAlsoMultiply(final MatrixIterator those) {
-        return new CursorToMatrixIterator(super.andAlso(those, JoinFunction.MUL), rows, columns);
-    }
-
-    public MatrixIterator andAlsoDivide(final MatrixIterator those) {
-        return new CursorToMatrixIterator(super.andAlso(those, JoinFunction.DIV), rows, columns);
-    }
-
-    @Override
-    protected int cursor() {
-        return rowIndex() * columns + columnIndex();
-    }
+//    public MatrixIterator orElseAdd(final MatrixIterator those) {
+//        return new CursorToMatrixIterator(super.orElse(those, JoinFunction.ADD), rows, columns);
+//    }
+//
+//    public MatrixIterator orElseSubtract(final MatrixIterator those) {
+//        return new CursorToMatrixIterator(super.orElse(those, JoinFunction.SUB), rows, columns);
+//    }
+//
+//    public MatrixIterator andAlsoMultiply(final MatrixIterator those) {
+//        return new CursorToMatrixIterator(super.andAlso(those, JoinFunction.MUL), rows, columns);
+//    }
+//
+//    public MatrixIterator andAlsoDivide(final MatrixIterator those) {
+//        return new CursorToMatrixIterator(super.andAlso(those, JoinFunction.DIV), rows, columns);
+//    }
 }

@@ -38,7 +38,9 @@ import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
+import org.la4j.iterator.ColumnMajorMatrixIterator;
 import org.la4j.iterator.MatrixIterator;
+import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
@@ -1316,8 +1318,13 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public MatrixIterator iterator() {
-        return new MatrixIterator(rows, columns) {
-            private long square = (long) rows * columns;
+        return rowMajorIterator();
+    }
+
+    @Override
+    public RowMajorMatrixIterator rowMajorIterator() {
+        return new RowMajorMatrixIterator(rows, columns) {
+            private long limit = (long) rows * columns;
             private int i = - 1;
 
             @Override
@@ -1342,7 +1349,46 @@ public abstract class AbstractMatrix implements Matrix {
 
             @Override
             public boolean hasNext() {
-                return i + 1 < square;
+                return i + 1 < limit;
+            }
+
+            @Override
+            public Double next() {
+                i++;
+                return get();
+            }
+        };
+    }
+
+    @Override
+    public ColumnMajorMatrixIterator columnMajorIterator() {
+        return new ColumnMajorMatrixIterator(rows, columns) {
+            private long limit = (long) rows * columns;
+            private int i = -1;
+
+            @Override
+            public int rowIndex() {
+                return i - columnIndex() * rows;
+            }
+
+            @Override
+            public int columnIndex() {
+                return i / columns;
+            }
+
+            @Override
+            public double get() {
+                return AbstractMatrix.this.get(rowIndex(), columnIndex());
+            }
+
+            @Override
+            public void set(double value) {
+                AbstractMatrix.this.set(rowIndex(), columnIndex(), value);
+            }
+
+            @Override
+            public boolean hasNext() {
+                return i + 1 < limit;
             }
 
             @Override

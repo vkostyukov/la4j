@@ -22,7 +22,9 @@
 package org.la4j.matrix.sparse;
 
 import org.la4j.factory.Factory;
+import org.la4j.iterator.ColumnMajorMatrixIterator;
 import org.la4j.iterator.MatrixIterator;
+import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.AbstractMatrix;
 import org.la4j.matrix.Matrices;
@@ -33,8 +35,6 @@ import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public abstract class SparseMatrix extends AbstractMatrix {
@@ -338,21 +338,192 @@ public abstract class SparseMatrix extends AbstractMatrix {
      *
      * @return a non-zero matrix iterator
      */
-    public abstract MatrixIterator nonZeroIterator();
+    public MatrixIterator nonZeroIterator() {
+        return nonZeroRowMajorIterator();
+    }
+
+    /**
+     * Returns a non-zero row-major matrix iterator.
+     *
+     * @return a non-zero row-major matrix iterator.
+     */
+    public RowMajorMatrixIterator nonZeroRowMajorIterator() {
+        return new RowMajorMatrixIterator(rows, columns) {
+            private long limit = (long) rows * columns;
+            private int i = -1;
+
+            @Override
+            public int rowIndex() {
+                return i / columns;
+            }
+
+            @Override
+            public int columnIndex() {
+                return i - rowIndex() * columns;
+            }
+
+            @Override
+            public double get() {
+                return SparseMatrix.this.get(rowIndex(), columnIndex());
+            }
+
+            @Override
+            public void set(double value) {
+                SparseMatrix.this.set(rowIndex(), columnIndex(), value);
+            }
+
+            @Override
+            public boolean hasNext() {
+                boolean hasNext = false;
+                while (i + 1 < limit && !hasNext) {
+                    i++;
+                    hasNext = SparseMatrix.this.nonZeroAt(rowIndex(), columnIndex());
+                }
+
+                return hasNext;
+            }
+
+            @Override
+            public Double next() {
+                return get();
+            }
+        };
+    }
+
+    /**
+     * Returns a non-zero column-major matrix iterator.
+     *
+     * @return a non-zero column major matrix iterator.
+     */
+    public ColumnMajorMatrixIterator nonZeroColumnMajorIterator() {
+        return new ColumnMajorMatrixIterator(rows, columns) {
+            private long limit = (long) rows * columns;
+            private int i = -1;
+
+            @Override
+            public int rowIndex() {
+                return i - columnIndex() * rows;
+            }
+
+            @Override
+            public int columnIndex() {
+                return i / columns;
+            }
+
+            @Override
+            public double get() {
+                return SparseMatrix.this.get(rowIndex(), columnIndex());
+            }
+
+            @Override
+            public void set(double value) {
+                SparseMatrix.this.set(rowIndex(), columnIndex(), value);
+            }
+
+            @Override
+            public boolean hasNext() {
+                boolean hasNext = false;
+                while (i + 1 < limit && !hasNext) {
+                    i++;
+                    hasNext = SparseMatrix.this.nonZeroAt(rowIndex(), columnIndex());
+                }
+
+                return hasNext;
+            }
+
+            @Override
+            public Double next() {
+                return get();
+            }
+        };
+    }
 
     /**
      * Returns a non-zero vector iterator of the given row {@code i}.
      *
      * @return a non-zero vector iterator
      */
-    public abstract VectorIterator nonZeroIteratorOfRow(int i);
+    public VectorIterator nonZeroIteratorOfRow(int i) {
+        final int ii = i;
+        return new VectorIterator(columns) {
+            private int j = -1;
+
+            @Override
+            public int index() {
+                return j;
+            }
+
+            @Override
+            public double get() {
+                return SparseMatrix.this.get(ii, j);
+            }
+
+            @Override
+            public void set(double value) {
+                SparseMatrix.this.set(ii, j, value);
+            }
+
+            @Override
+            public boolean hasNext() {
+                boolean hasNext = false;
+                while (j + 1 < columns && !hasNext) {
+                    j++;
+                    hasNext = SparseMatrix.this.nonZeroAt(ii, j);
+                }
+
+                return hasNext;
+            }
+
+            @Override
+            public Double next() {
+                return get();
+            }
+        };
+    }
 
     /**
      * Returns a non-zero vector iterator of the given column {@code j}.
      *
      * @return a non-zero vector iterator
      */
-    public abstract VectorIterator nonZeroIteratorOfColumn(int j);
+    public VectorIterator nonZeroIteratorOfColumn(int j) {
+        final int jj = j;
+        return new VectorIterator(rows) {
+            private int i = -1;
+
+            @Override
+            public int index() {
+                return i;
+            }
+
+            @Override
+            public double get() {
+                return SparseMatrix.this.get(i, jj);
+            }
+
+            @Override
+            public void set(double value) {
+                SparseMatrix.this.set(i, jj, value);
+            }
+
+            @Override
+            public boolean hasNext() {
+                boolean hasNext = false;
+                while (i + 1 < rows && !hasNext) {
+                    i++;
+                    hasNext = SparseMatrix.this.nonZeroAt(i, jj);
+                }
+
+                return hasNext;
+
+            }
+
+            @Override
+            public Double next() {
+                return get();
+            }
+        };
+    }
 
     protected void ensureCardinalityIsCorrect(long rows, long columns, long cardinality) {
         if (cardinality < 0) {

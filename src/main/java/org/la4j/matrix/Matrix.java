@@ -29,7 +29,9 @@ import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
+import org.la4j.iterator.ColumnMajorMatrixIterator;
 import org.la4j.iterator.MatrixIterator;
+import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.*;
@@ -1367,6 +1369,20 @@ public interface Matrix extends Externalizable, Iterable<Double> {
      */
     @Override
     MatrixIterator iterator();
+
+    /**
+     * Returns a row-major matrix iterator.
+     *
+     * @return a row-major matrix iterator.
+     */
+    RowMajorMatrixIterator rowMajorIterator();
+
+    /**
+     * Returns a column-major matrix iterator.
+     *
+     * @return a column-major matrix iterator.
+     */
+    ColumnMajorMatrixIterator columnMajorIterator();
 
     /**
      * Returns a vector iterator of the given row {code i}.
