@@ -29,9 +29,7 @@ import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public abstract class SparseMatrixTest extends AbstractMatrixTest {
 
@@ -118,38 +116,6 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
     }
 
     @Test
-    public void testFoldNonZero_3x3_deprecated() {
-
-        SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
-                { 1.0, 0.0, 2.0 },
-                { 4.0, 0.0, 5.0 },
-                { 0.0, 0.0, 0.0 }
-        });
-
-        MatrixAccumulator sum = Matrices.asSumAccumulator(0.0);
-        MatrixAccumulator product = Matrices.asProductAccumulator(1.0);
-
-        assertEquals(12.0, a.foldNonZero(sum), Matrices.EPS);
-        // check whether the accumulator were flushed or not
-        assertEquals(12.0, a.foldNonZero(sum), Matrices.EPS);
-
-        assertEquals(40.0, a.foldNonZero(product), Matrices.EPS);
-        // check whether the accumulator were flushed or not
-        assertEquals(40.0, a.foldNonZero(product), Matrices.EPS);
-
-        assertEquals(20.0, a.foldNonZeroInRow(1, product), Matrices.EPS);
-        assertEquals(10.0, a.foldNonZeroInColumn(2, product), Matrices.EPS);
-
-        Vector nonZeroInColumns = a.foldNonZeroInColumns(product);
-        assertTrue(factory().createVector(new double[] { 4.0, 1.0, 10.0}).equals(
-                nonZeroInColumns, 1e-9));
-
-        Vector nonZeroInRows = a.foldNonZeroInRows(product);
-        assertTrue(factory().createVector(new double[] { 2.0, 20.0, 1.0}).equals(
-                nonZeroInRows, 1e-9));
-    }
-
-    @Test
     public void testFoldNonZero_3x3() {
 
         SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
@@ -169,17 +135,14 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         // check whether the accumulator were flushed or not
         assertEquals(40.0, a.foldNonZero(product), Matrices.EPS);
 
-        VectorAccumulator vectorProduce = Vectors.asProductAccumulator(1.0);
-        assertEquals(20.0, a.foldNonZeroInRow(1, vectorProduce), Matrices.EPS);
-        assertEquals(10.0, a.foldNonZeroInColumn(2, vectorProduce), Matrices.EPS);
+        assertEquals(20.0, a.foldNonZeroInRow(1, Vectors.asProductAccumulator(1.0)), Matrices.EPS);
+        assertEquals(10.0, a.foldNonZeroInColumn(2, Vectors.asProductAccumulator(1.0)), Matrices.EPS);
 
-        Vector nonZeroInColumns = a.foldNonZeroInColumns(vectorProduce);
-        assertTrue(factory().createVector(new double[] { 4.0, 1.0, 10.0}).equals(
-                nonZeroInColumns, 1e-9));
+        double[] nonZeroInColumns = a.foldNonZeroInColumns(Vectors.asProductAccumulator(1.0));
+        assertArrayEquals(new double[] {4.0, 1.0, 10.0}, nonZeroInColumns, 1e-5);
 
-        Vector nonZeroInRows = a.foldNonZeroInRows(vectorProduce);
-        assertTrue(factory().createVector(new double[] { 2.0, 20.0, 1.0}).equals(
-                nonZeroInRows, 1e-9));
+        double[] nonZeroInRows = a.foldNonZeroInRows(Vectors.asProductAccumulator(1.0));
+        assertArrayEquals(new double[] { 2.0, 20.0, 1.0}, nonZeroInRows, 1e-5);
     }
 
     @Test

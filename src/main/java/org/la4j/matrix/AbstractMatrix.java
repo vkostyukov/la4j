@@ -1373,7 +1373,7 @@ public abstract class AbstractMatrix implements Matrix {
 
             @Override
             public int columnIndex() {
-                return i / columns;
+                return i / rows;
             }
 
             @Override
