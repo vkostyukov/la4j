@@ -335,7 +335,7 @@ public class CompressedVector extends SparseVector {
     }
 
     @Override
-    public void update(int i, VectorFunction function) {
+    public void updateAt(int i, VectorFunction function) {
 
         int k = searchForIndex(i);
 

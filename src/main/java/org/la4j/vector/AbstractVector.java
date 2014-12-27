@@ -459,8 +459,13 @@ public abstract class AbstractVector implements Vector {
     }
 
     @Override
-    public void update(int i, VectorFunction function) {
+    public void updateAt(int i, VectorFunction function) {
         set(i, function.evaluate(i, get(i)));
+    }
+
+    @Override
+    public void update(int i, VectorFunction function) {
+        updateAt(i, function);
     }
 
     @Override

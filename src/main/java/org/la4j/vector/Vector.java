@@ -588,12 +588,26 @@ public interface Vector extends Externalizable, Iterable<Double> {
 
     /**
      * Updates the specified element of this vector by applying given {@code function}.
+     *
+     * <p/>
+     *
+     * This method is deprecated. Use {@link Vector#updateAt(int, VectorFunction)}
+     * instead.
      * 
      * @param i element's index
      * @param function the vector function
      */
     @Deprecated
     void update(int i, VectorFunction function);
+
+    /**
+     * Updates the specified element of this vector by applying given {@code function}.
+     *
+     * @param i element's index
+     * @param function the vector function
+     */
+    @Deprecated
+    void updateAt(int i, VectorFunction function);
 
     /**
      * Folds all elements of this vector with given {@code accumulator}.
