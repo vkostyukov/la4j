@@ -49,6 +49,7 @@ import org.la4j.vector.operation.VectorMatrixOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.operation.ooplace.OoPlaceHadamardProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceInnerProduct;
+import org.la4j.vector.operation.ooplace.OoPlaceOuterProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorByMatrixMultiplication;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorsSubtraction;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorsAddition;
@@ -375,4 +376,7 @@ public final class LinearAlgebra {
 
     public final static VectorMatrixOperation<Vector> OO_PLACE_VECTOR_BY_MATRIX_MULTIPLICATION =
         new OoPlaceVectorByMatrixMultiplication();
+
+    public final static VectorVectorOperation<Matrix> OO_PLACE_OUTER_PRODUCT =
+        new OoPlaceOuterProduct();
 }

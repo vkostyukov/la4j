@@ -232,24 +232,14 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Matrix outerProduct(Vector that) {
-        return outerProduct(that, factory);
+        return apply(LinearAlgebra.OO_PLACE_OUTER_PRODUCT, that);
     }
 
     @Override
     public Matrix outerProduct(Vector that, Factory factory) {
-        // TODO: export as operation (blocked by no-support of matrices)
-        ensureFactoryIsNotNull(factory);
-        ensureArgumentIsNotNull(that, "vector");
+        // TODO: add toFatory conversion
+        return outerProduct(that);
 
-        Matrix result = factory.createMatrix(length, that.length());
-
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < that.length(); j++) {
-                result.set(i, j, get(i) * that.get(j));
-            }
-        }
-
-        return result;
     }
 
     @Override
