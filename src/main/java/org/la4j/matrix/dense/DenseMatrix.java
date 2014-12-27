@@ -24,6 +24,7 @@ package org.la4j.matrix.dense;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.AbstractMatrix;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.operation.MatrixMatrixOperation;
 import org.la4j.matrix.operation.MatrixOperation;
 
 import java.util.Arrays;
@@ -108,11 +109,6 @@ public abstract class DenseMatrix extends AbstractMatrix {
         return Basic2DMatrix.block(a, b, c, d);
     }
 
-    @Override
-    public <T> T apply(MatrixOperation<T> operation) {
-        return operation.apply(this);
-    }
-
     protected DenseMatrix(Factory factory, int rows, int columns) {
         super(factory, rows, columns);
     }
@@ -123,4 +119,14 @@ public abstract class DenseMatrix extends AbstractMatrix {
      * @return an array representation of this matrix
      */
     public abstract double[][] toArray();
+
+    @Override
+    public <T> T apply(MatrixOperation<T> operation) {
+        return operation.apply(this);
+    }
+
+    @Override
+    public <T> T apply(MatrixMatrixOperation<T> operation, Matrix that) {
+        return that.apply(operation.partiallyApply(this));
+    }
 }

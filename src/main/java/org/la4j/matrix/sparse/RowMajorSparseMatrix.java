@@ -22,6 +22,8 @@
 package org.la4j.matrix.sparse;
 
 import org.la4j.factory.Factory;
+import org.la4j.matrix.Matrix;
+import org.la4j.matrix.operation.MatrixMatrixOperation;
 import org.la4j.matrix.operation.MatrixOperation;
 
 public abstract class RowMajorSparseMatrix extends SparseMatrix {
@@ -34,4 +36,10 @@ public abstract class RowMajorSparseMatrix extends SparseMatrix {
     public <T> T apply(MatrixOperation<T> operation) {
         return operation.apply(this);
     }
+
+    @Override
+    public <T> T apply(MatrixMatrixOperation<T> operation, Matrix that) {
+        return that.apply(operation.partiallyApply(this));
+    }
+
 }
