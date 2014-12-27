@@ -31,7 +31,7 @@ public abstract class VectorVectorOperation<R> {
     public abstract R apply(final DenseVector a, final DenseVector b);
     public abstract R apply(final DenseVector a, final SparseVector b);
 
-    public VectorOperation<R> curry(final SparseVector a) {
+    public VectorOperation<R> partiallyApply(final SparseVector a) {
         return new VectorOperation<R>() {
             @Override
             public R apply(final SparseVector b) {
@@ -45,7 +45,7 @@ public abstract class VectorVectorOperation<R> {
         };
     }
 
-    public VectorOperation<R> curry(final DenseVector a) {
+    public VectorOperation<R> partiallyApply(final DenseVector a) {
         return new VectorOperation<R>() {
             @Override
             public R apply(final SparseVector b) {

@@ -34,6 +34,7 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.operation.VectorMatrixOperation;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
@@ -736,6 +737,18 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @return the result of an operation applied to this and {@code that} vector
      */
     <T> T apply(VectorVectorOperation<T> operation, Vector that);
+
+    /**
+     * Pipes this vector to a given {@code operation}.
+     *
+     * @param operation the vector-matrix operation
+     *                  (an operation that takes vector and matrix and returns {@code T})
+     * @param <T> the result type
+     * @param that the right hand matrix for the given operation
+     *
+     * @return the result of an operation applied to this vector and {@code that} matrix
+     */
+    <T> T apply(VectorMatrixOperation<T> operation, Matrix that);
 
     /**
      * @return the factory of this vector

@@ -19,19 +19,14 @@
  *
  */
 
-package org.la4j.matrix.sparse;
+package org.la4j.matrix.operation;
 
-import org.la4j.factory.Factory;
-import org.la4j.matrix.operation.MatrixOperation;
+import org.la4j.matrix.dense.DenseMatrix;
+import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
+import org.la4j.matrix.sparse.RowMajorSparseMatrix;
 
-public abstract class RowMajorSparseMatrix extends SparseMatrix {
-
-    protected RowMajorSparseMatrix(Factory factory, int rows, int columns) {
-        super(factory, rows, columns);
-    }
-
-    @Override
-    public <T> T apply(MatrixOperation<T> operation) {
-        return operation.apply(this);
-    }
+public interface MatrixOperation<R> {
+    R apply(final DenseMatrix a);
+    R apply(final RowMajorSparseMatrix a);
+    R apply(final ColumnMajorSparseMatrix a);
 }

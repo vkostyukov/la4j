@@ -26,6 +26,7 @@ import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
+import org.la4j.vector.operation.VectorMatrixOperation;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 
@@ -95,7 +96,12 @@ public abstract class DenseVector extends AbstractVector {
 
     @Override
     public <T> T apply(VectorVectorOperation<T> operation, Vector that) {
-        return that.apply(operation.curry(this));
+        return that.apply(operation.partiallyApply(this));
+    }
+
+    @Override
+    public <T> T apply(VectorMatrixOperation<T> operation, Matrix that) {
+        return that.apply(operation.partiallyApply(this));
     }
 
     /**

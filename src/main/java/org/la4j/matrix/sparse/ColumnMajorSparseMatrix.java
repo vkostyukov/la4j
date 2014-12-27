@@ -23,6 +23,7 @@ package org.la4j.matrix.sparse;
 
 import org.la4j.factory.Factory;
 import org.la4j.iterator.MatrixIterator;
+import org.la4j.matrix.operation.MatrixOperation;
 
 public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
 
@@ -38,5 +39,10 @@ public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
     @Override
     public MatrixIterator nonZeroIterator() {
         return nonZeroColumnMajorIterator();
+    }
+
+    @Override
+    public <T> T apply(MatrixOperation<T> operation) {
+        return operation.apply(this);
     }
 }

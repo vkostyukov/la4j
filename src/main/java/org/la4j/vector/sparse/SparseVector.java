@@ -35,6 +35,7 @@ import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.operation.VectorMatrixOperation;
 import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
 
@@ -265,7 +266,12 @@ public abstract class SparseVector extends AbstractVector {
 
     @Override
     public <T> T apply(VectorVectorOperation<T> operation, Vector that) {
-        return that.apply(operation.curry(this));
+        return that.apply(operation.partiallyApply(this));
+    }
+
+    @Override
+    public <T> T apply(VectorMatrixOperation<T> operation, Matrix that) {
+        return that.apply(operation.partiallyApply(this));
     }
 
     @Override

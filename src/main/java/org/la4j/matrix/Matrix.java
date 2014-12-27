@@ -35,6 +35,7 @@ import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.*;
+import org.la4j.matrix.operation.MatrixOperation;
 import org.la4j.vector.Vector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
@@ -1420,4 +1421,15 @@ public interface Matrix extends Externalizable, Iterable<Double> {
      * @return converted matrix
      */
     <T extends Matrix> T to(MatrixFactory<T> converter);
+
+    /**
+     * Pipes this matrix to a given {@code operation}.
+     *
+     * @param operation the matrix operation
+     *                  (an operation that takes a matrix and returns {@code T})
+     * @param <T> the result type
+     *
+     * @return the result of an operation applied to this matrix
+     */
+    <T> T apply(MatrixOperation<T> operation);
 }
