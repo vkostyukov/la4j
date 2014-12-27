@@ -607,7 +607,6 @@ public interface Vector extends Externalizable, Iterable<Double> {
      * @param i element's index
      * @param function the vector function
      */
-    @Deprecated
     void updateAt(int i, VectorFunction function);
 
     /**

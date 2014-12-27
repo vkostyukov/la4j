@@ -169,34 +169,13 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector multiply(Matrix matrix) {
-        return multiply(matrix, factory);
+        return apply(LinearAlgebra.OO_PLACE_VECTOR_BY_MATRIX_MULTIPLICATION, matrix);
     }
 
     @Override
     public Vector multiply(Matrix matrix, Factory factory) {
-        // TODO: export as operation (blocked by no-support of matrices)
         ensureFactoryIsNotNull(factory);
-        ensureArgumentIsNotNull(matrix, "matrix");
-
-        if (length != matrix.rows()) {
-            fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
-                    ". Should be: " + length + "x_.");
-        }
-
-        Vector result = factory.createVector(matrix.columns());
-
-        for (int j = 0; j < matrix.columns(); j++) {
-
-            double acc = 0.0;
-
-            for (int i = 0; i < matrix.rows(); i++) {
-                acc += get(i) * matrix.get(i, j);
-            }
-
-            result.set(j, acc);
-        }
-
-        return result;
+        return multiply(matrix).to(Factory.asVectorFactory(factory));
     }
 
     @Override
