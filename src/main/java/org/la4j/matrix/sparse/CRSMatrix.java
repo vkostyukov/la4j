@@ -552,7 +552,7 @@ public class CRSMatrix extends RowMajorSparseMatrix {
     }
 
     @Override
-    public void update(int i, int j, MatrixFunction function) {
+    public void updateAt(int i, int j, MatrixFunction function) {
 
         int k = searchForColumnIndex(j, rowPointers[i], rowPointers[i + 1]);
 

@@ -1083,12 +1083,26 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     /**
      * Updates the specified element of this matrix by applying given {@code function}.
      *
+     * <p/>
+     *
+     * This method is deprecated. Use {@link Matrix#updateAt(int, int, MatrixFunction)}
+     * instead.
+     *
      * @param i the row index
      * @param j the column index
      * @param function the matrix function
      */
     @Deprecated
     void update(int i, int j, MatrixFunction function);
+
+    /**
+     * Updates the specified element of this matrix by applying given {@code function}.
+     *
+     * @param i the row index
+     * @param j the column index
+     * @param function the matrix function
+     */
+    void updateAt(int i, int j, MatrixFunction function);
 
     /**
      * Deprecated. Use {@link #updateRow(int, VectorFunction)} instead.

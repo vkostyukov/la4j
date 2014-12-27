@@ -544,7 +544,7 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     }
 
     @Override
-    public void update(int i, int j, MatrixFunction function) {
+    public void updateAt(int i, int j, MatrixFunction function) {
 
         int k = searchForRowIndex(i, columnPointers[j], columnPointers[j + 1]);
 

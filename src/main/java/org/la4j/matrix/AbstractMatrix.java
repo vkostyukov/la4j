@@ -1127,8 +1127,13 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public void update(int i, int j, MatrixFunction function) {
+    public void updateAt(int i, int j, MatrixFunction function) {
         set(i, j, function.evaluate(i, j, get(i, j)));
+    }
+
+    @Override
+    public void update(int i, int j, MatrixFunction function) {
+        updateAt(i, j, function);
     }
 
     @Override
