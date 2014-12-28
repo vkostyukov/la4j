@@ -44,6 +44,8 @@ import org.la4j.linear.SeidelSolver;
 import org.la4j.linear.SquareRootSolver;
 import org.la4j.linear.SweepSolver;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.operation.MatrixMatrixOperation;
+import org.la4j.matrix.operation.inplace.InPlaceCopyMatrixToMatrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.operation.VectorMatrixOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
@@ -379,4 +381,7 @@ public final class LinearAlgebra {
 
     public final static VectorVectorOperation<Matrix> OO_PLACE_OUTER_PRODUCT =
         new OoPlaceOuterProduct();
+
+    public final static MatrixMatrixOperation<Matrix> IN_PLACE_COPY_MATRIX_TO_MATRIX =
+        new InPlaceCopyMatrixToMatrix();
 }

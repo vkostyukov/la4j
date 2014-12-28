@@ -758,7 +758,7 @@ public interface Vector extends Externalizable, Iterable<Double> {
     /**
      * Converts this vector using the given {@code factory}.
      *
-     * @param factory factory which is used for vector conversion
+     * @param factory the factory that creates an output vector
      * @param <T> type of the result vector
      *
      * @return a converted vector

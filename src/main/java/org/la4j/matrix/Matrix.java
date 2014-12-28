@@ -1415,13 +1415,14 @@ public interface Matrix extends Externalizable, Iterable<Double> {
      VectorIterator iteratorOfColumn(int j);
 
     /**
-     * Converts matrix to matrix of another type
+     * Converts this matrix using the given {@code factory}.
      *
-     * @param converter converter which is used for matrix convertion
-     * @param <T> type of aim matrix
+     * @param factory the factory that creates an output matrix
+     * @param <T> type of the result matrix
+     *
      * @return converted matrix
      */
-    <T extends Matrix> T to(MatrixFactory<T> converter);
+    <T extends Matrix> T to(MatrixFactory<T> factory);
 
     /**
      * Pipes this matrix to a given {@code operation}.

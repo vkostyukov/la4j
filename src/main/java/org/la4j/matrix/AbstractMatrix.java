@@ -1626,7 +1626,9 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public <T extends Matrix> T to(MatrixFactory<T> converter) {
-        return converter.apply(this);
+    public <T extends Matrix> T to(MatrixFactory<T> factory) {
+        T result = factory.apply(rows, columns);
+        apply(LinearAlgebra.IN_PLACE_COPY_MATRIX_TO_MATRIX, result);
+        return result;
     }
 }
