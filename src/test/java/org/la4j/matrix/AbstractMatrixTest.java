@@ -47,7 +47,7 @@ import org.la4j.vector.dense.DenseVector;
 public abstract class AbstractMatrixTest {
 
     public abstract Factory factory();
-    
+
     @Test
     public void testInsert_3x3_into_3x3() {
         Matrix a = factory().createMatrix(new double[][]{
@@ -72,7 +72,7 @@ public abstract class AbstractMatrixTest {
         
         assertEquals(a, b.insert(a).slice(0, 0, 2, 2));
     }
-    
+
     @Test
     public void testInsert_2x2_into_3x3_partial() {
         Matrix a = factory().createMatrix(new double[][]{
