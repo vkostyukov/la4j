@@ -26,7 +26,72 @@ import org.la4j.matrix.Matrix;
 import org.la4j.matrix.operation.MatrixMatrixOperation;
 import org.la4j.matrix.operation.MatrixOperation;
 
+import java.util.Random;
+
 public abstract class RowMajorSparseMatrix extends SparseMatrix {
+
+    /**
+     * Creates a zero {@link RowMajorSparseMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static RowMajorSparseMatrix zero(int rows, int columns) {
+        return CRSMatrix.zero(rows, columns);
+    }
+
+    /**
+     * Creates a diagonal {@link RowMajorSparseMatrix} of the given {@code size} whose
+     * diagonal elements are equal to {@code diagonal}.
+     */
+    public static RowMajorSparseMatrix diagonal(int size, double diagonal) {
+        return CRSMatrix.diagonal(size, diagonal);
+    }
+
+    /**
+     * Creates an identity {@link RowMajorSparseMatrix} of the given {@code size}.
+     */
+    public static RowMajorSparseMatrix identity(int size) {
+        return CRSMatrix.identity(size);
+    }
+
+    /**
+     * Creates a random {@link RowMajorSparseMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static RowMajorSparseMatrix random(int rows, int columns, double density, Random random) {
+        return CRSMatrix.random(rows, columns, density, random);
+    }
+
+    /**
+     * Creates a random symmetric {@link RowMajorSparseMatrix} of the given {@code size}.
+     */
+    public static RowMajorSparseMatrix randomSymmetric(int size, double density, Random random) {
+        return CRSMatrix.randomSymmetric(size, density, random);
+    }
+
+    /**
+     * Creates a new {@link RowMajorSparseMatrix} from the given 1D {@code array} with
+     * compressing (copying) the underlying array.
+     */
+    public static RowMajorSparseMatrix from1DArray(int rows, int columns, double[] array) {
+        return CRSMatrix.from1DArray(rows, columns, array);
+    }
+
+    /**
+     * Creates a new {@link RowMajorSparseMatrix} from the given 2D {@code array} with
+     * compressing (copying) the underlying array.
+     */
+    public static RowMajorSparseMatrix from2DArray(double[][] array) {
+        return CRSMatrix.from2DArray(array);
+    }
+
+    /**
+     * Creates a block {@link RowMajorSparseMatrix} of the given blocks {@code a},
+     * {@code b}, {@code c} and {@code d}.
+     */
+    public static RowMajorSparseMatrix block(Matrix a, Matrix b, Matrix c, Matrix d) {
+        return CRSMatrix.block(a, b, c, d);
+    }
+
 
     protected RowMajorSparseMatrix(Factory factory, int rows, int columns) {
         super(factory, rows, columns);

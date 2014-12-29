@@ -27,7 +27,72 @@ import org.la4j.matrix.Matrix;
 import org.la4j.matrix.operation.MatrixMatrixOperation;
 import org.la4j.matrix.operation.MatrixOperation;
 
+import java.util.Random;
+
 public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
+
+    /**
+     * Creates a zero {@link ColumnMajorSparseMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static ColumnMajorSparseMatrix zero(int rows, int columns) {
+        return CCSMatrix.zero(rows, columns);
+    }
+
+    /**
+     * Creates a diagonal {@link ColumnMajorSparseMatrix} of the given {@code size} whose
+     * diagonal elements are equal to {@code diagonal}.
+     */
+    public static ColumnMajorSparseMatrix diagonal(int size, double diagonal) {
+        return CCSMatrix.diagonal(size, diagonal);
+    }
+
+    /**
+     * Creates an identity {@link ColumnMajorSparseMatrix} of the given {@code size}.
+     */
+    public static ColumnMajorSparseMatrix identity(int size) {
+        return CCSMatrix.identity(size);
+    }
+
+    /**
+     * Creates a random {@link ColumnMajorSparseMatrix} of the given shape:
+     * {@code rows} x {@code columns}.
+     */
+    public static ColumnMajorSparseMatrix random(int rows, int columns, double density, Random random) {
+        return CCSMatrix.random(rows, columns, density, random);
+    }
+
+    /**
+     * Creates a random symmetric {@link ColumnMajorSparseMatrix} of the given {@code size}.
+     */
+    public static ColumnMajorSparseMatrix randomSymmetric(int size, double density, Random random) {
+        return CCSMatrix.randomSymmetric(size, density, random);
+    }
+
+    /**
+     * Creates a new {@link ColumnMajorSparseMatrix} from the given 1D {@code array} with
+     * compressing (copying) the underlying array.
+     */
+    public static ColumnMajorSparseMatrix from1DArray(int rows, int columns, double[] array) {
+        return CCSMatrix.from1DArray(rows, columns, array);
+    }
+
+    /**
+     * Creates a new {@link ColumnMajorSparseMatrix} from the given 2D {@code array} with
+     * compressing (copying) the underlying array.
+     */
+    public static ColumnMajorSparseMatrix from2DArray(double[][] array) {
+        return CCSMatrix.from2DArray(array);
+    }
+
+    /**
+     * Creates a block {@link ColumnMajorSparseMatrix} of the given blocks {@code a},
+     * {@code b}, {@code c} and {@code d}.
+     */
+    public static ColumnMajorSparseMatrix block(Matrix a, Matrix b, Matrix c, Matrix d) {
+        return CCSMatrix.block(a, b, c, d);
+    }
+
 
     protected ColumnMajorSparseMatrix(Factory factory, int rows, int columns) {
         super(factory, rows, columns);
