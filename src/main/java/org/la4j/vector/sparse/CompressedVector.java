@@ -463,8 +463,10 @@ public class CompressedVector extends SparseVector {
         // TODO: https://github.com/vkostyukov/la4j/issues/87
         cardinality--;
 
-        System.arraycopy(values, k + 1, values, k, cardinality - k);
-        System.arraycopy(indices, k + 1, indices, k, cardinality - k);
+        if (cardinality - k > 0) {
+            System.arraycopy(values, k + 1, values, k, cardinality - k);
+            System.arraycopy(indices, k + 1, indices, k, cardinality - k);
+        }
 
 //        for (int kk = k; kk < cardinality; kk++) {
 //            values[kk] = values[kk + 1];

@@ -666,7 +666,6 @@ public class CRSMatrix extends RowMajorSparseMatrix {
     }
 
     private void insert(int k, int i, int j, double value) {
-
         //if (Math.abs(value) < Matrices.EPS && value >= 0.0) {
         if (value == 0.0) {
             return;
@@ -676,10 +675,10 @@ public class CRSMatrix extends RowMajorSparseMatrix {
             growUp();
         }
 
-        // TODO: https://github.com/vkostyukov/la4j/issues/235
-        System.arraycopy(values, k, values, k + 1, cardinality - k);
-        System.arraycopy(columnIndices, k, columnIndices, k + 1, 
-                         cardinality - k);
+        if (cardinality - k > 0) {
+            System.arraycopy(values, k, values, k + 1, cardinality - k);
+            System.arraycopy(columnIndices, k, columnIndices, k + 1, cardinality - k);
+        }
 
 //      for (int k = cardinality; k > position; k--) {
 //          values[k] = values[k - 1];
@@ -697,12 +696,12 @@ public class CRSMatrix extends RowMajorSparseMatrix {
     }
 
     private void remove(int k, int i) {
-
         cardinality--;
 
-        System.arraycopy(values, k + 1, values, k, cardinality - k);
-        System.arraycopy(columnIndices, k + 1, columnIndices, k, 
-                         cardinality - k);
+        if (cardinality - k > 0) {
+            System.arraycopy(values, k + 1, values, k, cardinality - k);
+            System.arraycopy(columnIndices, k + 1, columnIndices, k, cardinality - k);
+        }
 
 //        for (int kk = k; kk < cardinality; kk++) {
 //            values[kk] = values[kk + 1];

@@ -667,9 +667,10 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
             growUp();
         }
 
-        // TODO: https://github.com/vkostyukov/la4j/issues/235
-        System.arraycopy(values, k, values, k + 1, cardinality - k);
-        System.arraycopy(rowIndices, k, rowIndices, k + 1, cardinality - k);
+        if (cardinality - k > 0) {
+            System.arraycopy(values, k, values, k + 1, cardinality - k);
+            System.arraycopy(rowIndices, k, rowIndices, k + 1, cardinality - k);
+        }
 
 //        for (int k = cardinality; k > position; k--) {
 //            values[k] = values[k - 1];
@@ -687,11 +688,12 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     }
 
     private void remove(int k, int j) {
-
         cardinality--;
 
-        System.arraycopy(values, k + 1, values, k, cardinality - k);
-        System.arraycopy(rowIndices, k + 1, rowIndices, k, cardinality - k);
+        if (cardinality - k > 0) {
+            System.arraycopy(values, k + 1, values, k, cardinality - k);
+            System.arraycopy(rowIndices, k + 1, rowIndices, k, cardinality - k);
+        }
         
 //        for (int kk = k; kk < cardinality; kk++) {
 //            values[kk] = values[kk + 1];
