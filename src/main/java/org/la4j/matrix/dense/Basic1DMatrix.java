@@ -232,6 +232,11 @@ public class Basic1DMatrix extends DenseMatrix  {
     }
 
     @Override
+    public void setAll(double value) {
+        Arrays.fill(self, value);
+    }
+
+    @Override
     public void swapRows(int i, int j) {
         if (i != j) {
             for (int k = 0; k < columns; k++) {

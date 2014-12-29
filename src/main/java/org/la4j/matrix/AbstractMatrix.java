@@ -89,7 +89,17 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public void assign(double value) {
-        update(Matrices.asConstFunction(value));
+        setAll(value);
+    }
+
+    @Override
+    public void setAll(double value) {
+        MatrixIterator it = iterator();
+
+        while (it.hasNext()) {
+            it.next();
+            it.set(value);
+        }
     }
 
     @Override

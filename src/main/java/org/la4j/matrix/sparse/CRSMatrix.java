@@ -355,6 +355,32 @@ public class CRSMatrix extends RowMajorSparseMatrix {
     }
 
     @Override
+    public void setAll(double value) {
+        if (value == 0.0) {
+            cardinality = 0;
+        } else {
+            int size = (int) capacity();
+
+            if (values.length < size) {
+                values = new double[size];
+                columnIndices = new int[size];
+                rowPointers = new int[rows + 1];
+            }
+
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+                    values[i * columns + j] = value;
+                    columnIndices[i * columns + j] = j;
+                }
+                rowPointers[i] = columns * i;
+            }
+
+            rowPointers[rows] = size;
+            cardinality = size;
+        }
+    }
+
+    @Override
     public Matrix transpose(Factory factory) {
         ensureFactoryIsNotNull(factory);
 

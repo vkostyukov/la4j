@@ -356,6 +356,32 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     }
 
     @Override
+    public void setAll(double value) {
+        if (value == 0.0) {
+            cardinality = 0;
+        } else {
+            int size = (int) capacity();
+
+            if (values.length < size) {
+                values = new double[size];
+                rowIndices = new int[size];
+                columnPointers = new int[columns + 1];
+            }
+
+            for (int j = 0; j < columns; j++) {
+                for (int i = 0; i < rows; i++) {
+                    values[j * rows + i] = value;
+                    rowIndices[j * rows + i] = i;
+                }
+                columnPointers[j] = rows * j;
+            }
+
+            columnPointers[columns] = size;
+            cardinality = size;
+        }
+    }
+
+    @Override
     public Vector getColumn(int j) {
 
         int columnCardinality = columnPointers[j + 1] - columnPointers[j];

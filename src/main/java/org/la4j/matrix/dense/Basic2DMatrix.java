@@ -232,6 +232,13 @@ public class Basic2DMatrix extends DenseMatrix {
     }
 
     @Override
+    public void setAll(double value) {
+        for (int i = 0; i < rows; i++) {
+            Arrays.fill(self[i], value);
+        }
+    }
+
+    @Override
     public void swapRows(int i, int j) {
         if (i != j) {
             double tmp[] = self[i];

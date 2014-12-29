@@ -75,7 +75,14 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     void set(int i, int j, double value);
 
     /**
-     * This method is deprecated. Use {@link Factory#createConstantMatrix(int, int, double)} instead.
+     * Sets all elements of this matrix to the given {@code value}.
+     *
+     * @param value the element's new value
+     */
+    void setAll(double value);
+
+    /**
+     * This method is deprecated. Use {@link Matrix#setAll(double)} instead.
      *
      * Assigns all elements of this matrix to given {@code value}.
      * 
