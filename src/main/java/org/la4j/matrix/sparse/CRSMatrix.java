@@ -36,6 +36,7 @@ import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.MatrixFactory;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.source.MatrixSource;
@@ -819,4 +820,14 @@ public class CRSMatrix extends RowMajorSparseMatrix {
         return new CRSMatrix(newRows, newCols, newCardinality, newValues,
                              newColumnIndices, newRowPointers);
     }
+
+    @Override
+    public <T extends Matrix> T to(MatrixFactory<T> factory) {
+        if (factory.outputClass == CRSMatrix.class) {
+            return factory.outputClass.cast(this);
+        }
+
+        return super.to(factory);
+    }
+
 }

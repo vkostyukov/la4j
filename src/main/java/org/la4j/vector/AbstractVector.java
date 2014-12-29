@@ -237,9 +237,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Matrix outerProduct(Vector that, Factory factory) {
-        // TODO: add toFatory conversion
-        return outerProduct(that);
-
+        return outerProduct(that).to(Factory.asMatrixFactory(factory));
     }
 
     @Override

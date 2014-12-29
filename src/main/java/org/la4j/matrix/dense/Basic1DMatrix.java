@@ -30,6 +30,7 @@ import java.util.Random;
 import org.la4j.LinearAlgebra;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.MatrixFactory;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.BasicVector;
@@ -333,4 +334,14 @@ public class Basic1DMatrix extends DenseMatrix  {
             self[i] = in.readDouble();
         }
     }
+
+    @Override
+    public <T extends Matrix> T to(MatrixFactory<T> factory) {
+        if (factory.outputClass == Basic1DMatrix.class) {
+            return factory.outputClass.cast(this);
+        }
+
+        return super.to(factory);
+    }
+
 }

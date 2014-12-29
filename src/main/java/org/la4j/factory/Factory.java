@@ -24,7 +24,9 @@ package org.la4j.factory;
 import java.io.Serializable;
 import java.util.Random;
 
+import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.MatrixFactory;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.VectorFactory;
@@ -278,5 +280,21 @@ public abstract class Factory implements Serializable {
         } else {
             throw new IllegalArgumentException("You have the factory I don't know about.");
         }
+    }
+
+    @SuppressWarnings("unchecked cast")
+    public static <T extends Matrix> MatrixFactory<T> asMatrixFactory(Factory factory) {
+        if (factory instanceof CRSFactory) {
+            return (MatrixFactory<T>) Matrices.CRS;
+        } else if (factory instanceof  CCSFactory) {
+            return (MatrixFactory<T>) Matrices.CCS;
+        } else if (factory instanceof Basic1DFactory) {
+            return (MatrixFactory<T>) Matrices.BASIC_1D;
+        } else if (factory instanceof Basic2DFactory) {
+            return (MatrixFactory<T>) Matrices.BASIC_2D;
+        } else {
+            throw new IllegalArgumentException("You have the factory I don't know about.");
+        }
+
     }
 }
