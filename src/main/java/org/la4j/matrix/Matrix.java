@@ -278,15 +278,6 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     Matrix multiplyByItsTranspose();
 
     /**
-     * TOOD: remove it
-     *
-     * Multiplies this matrix by its transpose.
-     *
-     * @return this matrix multiplied by its transpose
-     */
-    Matrix multiplyByItsTranspose(Factory factory);
-
-    /**
      * Subtracts given {@code value} (v) from every element of this matrix (A).
      *
      * @param value the right hand value for subtraction

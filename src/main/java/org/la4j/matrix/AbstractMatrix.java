@@ -124,13 +124,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Vector getRow(int i) {
-        return getRow(i, factory);
-    }
-
-    @Override
-    public Vector getRow(int i, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-    
         Vector result = factory.createVector(columns);
 
         for (int j = 0; j < columns; j++) {
@@ -141,14 +134,13 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Vector getColumn(int j) {
-        return getColumn(j, factory);
+    public Vector getRow(int i, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return getRow(i).to(Factory.asVectorFactory(factory));
     }
 
     @Override
-    public Vector getColumn(int j, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
+    public Vector getColumn(int j) {
         Vector result = factory.createVector(rows);
 
         for (int i = 0; i < rows; i++) {
@@ -156,6 +148,12 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
+    }
+
+    @Override
+    public Vector getColumn(int j, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return getColumn(j).to(Factory.asVectorFactory(factory));
     }
 
     @Override
@@ -266,13 +264,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix transpose() {
-        return transpose(factory);
-    }
-
-    @Override
-    public Matrix transpose(Factory factory) {
-        ensureFactoryIsNotNull(factory);
-        
         // 'transposed proxy' of the original Matrix
         final Matrix that = this;
         return factory.createMatrix(new MatrixSource() {
@@ -291,19 +282,18 @@ public abstract class AbstractMatrix implements Matrix {
             public int rows() {
                 return that.columns();
             }
-            
+
         });
     }
 
     @Override
-    public Matrix rotate() {
-        return rotate(factory);
+    public Matrix transpose(Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return transpose().to(Factory.asMatrixFactory(factory));
     }
 
     @Override
-    public Matrix rotate(Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
+    public Matrix rotate() {
         Matrix result = factory.createMatrix(columns, rows);
 
         for (int i = 0; i < rows; i++) {
@@ -313,6 +303,12 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix rotate(Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return rotate().to(Factory.asMatrixFactory(factory));
     }
 
     @Override
@@ -397,11 +393,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix power(int n) {
-        return power(n, factory);
-    }
-
-    @Override
-    public Matrix power(int n, Factory factory) {
         if (n < 0) {
             fail("The exponent should be positive: " + n + ".");
         }
@@ -422,12 +413,12 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix multiply(double value) {
-        return multiply(value, factory);
+    public Matrix power(int n, Factory factory) {
+        return power(n).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
-    public Matrix multiply(double value, Factory factory) {
+    public Matrix multiply(double value) {
         ensureFactoryIsNotNull(factory);
 
         Matrix result = blank(factory);
@@ -442,13 +433,12 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Vector multiply(Vector vector) {
-        return multiply(vector, factory);
+    public Matrix multiply(double value, Factory factory) {
+        return multiply(value).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
-    public Vector multiply(Vector vector, Factory factory) {
-        ensureFactoryIsNotNull(factory);
+    public Vector multiply(Vector vector) {
         ensureArgumentIsNotNull(vector, "vector");
 
         if (columns != vector.length()) {
@@ -472,18 +462,18 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix multiply(Matrix matrix) {
-        return multiply(matrix, factory);
+    public Vector multiply(Vector vector, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return multiply(vector).to(Factory.asVectorFactory(factory));
     }
 
     @Override
-    public Matrix multiply(Matrix matrix, Factory factory) {
-        ensureFactoryIsNotNull(factory);
+    public Matrix multiply(Matrix matrix) {
         ensureArgumentIsNotNull(matrix, "matrix");
 
         if (columns != matrix.rows()) {
             fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
-                 ". Should be: " + columns + "x_.");
+                    ". Should be: " + columns + "x_.");
         }
 
         Matrix result = factory.createMatrix(rows, matrix.columns());
@@ -508,16 +498,15 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix multiplyByItsTranspose() {
-        return multiplyByItsTranspose(factory);
+    public Matrix multiply(Matrix matrix, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return multiply(matrix).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
-    public Matrix multiplyByItsTranspose(Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
+    public Matrix multiplyByItsTranspose() {
         if (rows != columns) {
-            fail("Unapplyable to non-square matrix");
+            fail("Can not be applied to non-square matrix.");
         }
 
         Matrix result = factory.createMatrix(rows, columns);
@@ -533,27 +522,22 @@ public abstract class AbstractMatrix implements Matrix {
 
             }
         }
+
         return result;
     }
 
     @Override
     public Matrix subtract(double value) {
-        return subtract(value, factory);
+        return add(-value);
     }
 
     @Override
     public Matrix subtract(double value, Factory factory) {
-        return add(-value, factory);
+        return subtract(value).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
     public Matrix subtract(Matrix matrix) {
-        return subtract(matrix, factory);
-    }
-
-    @Override
-    public Matrix subtract(Matrix matrix, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         ensureArgumentIsNotNull(matrix, "matrix");
 
         if (rows != matrix.rows() || columns != matrix.columns()) {
@@ -573,14 +557,13 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix add(double value) {
-        return add(value, factory);
+    public Matrix subtract(Matrix matrix, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return subtract(matrix).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
-    public Matrix add(double value, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
+    public Matrix add(double value) {
         Matrix result = blank(factory);
 
         for (int i = 0; i < rows; i++) {
@@ -593,18 +576,15 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix add(Matrix matrix) {
-        return add(matrix, factory);
+    public Matrix add(double value, Factory factory) {
+        return add(value).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
-    public Matrix add(Matrix matrix, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-        ensureArgumentIsNotNull(matrix, "matrix");
-
+    public Matrix add(Matrix matrix) {
         if (rows != matrix.rows() || columns != matrix.columns()) {
             fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
-                 ". Should be: " + rows + "x" + columns + ".");
+                    ". Should be: " + rows + "x" + columns + ".");
         }
 
         Matrix result = blank(factory);
@@ -616,6 +596,12 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix add(Matrix matrix, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return add(matrix).to(Factory.asMatrixFactory(factory));
     }
     
     @Override
@@ -667,7 +653,7 @@ public abstract class AbstractMatrix implements Matrix {
                     + srcRow + ", " + srcCol + " from a " + matrix.rows() + "x" + matrix.columns() + " matrix.");
         }
         
-        Matrix result = this.copy();
+        Matrix result = copy();
         
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -680,22 +666,16 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public Matrix divide(double value) {
-        return divide(value, factory);
+        return multiply(1.0 / value);
     }
 
     @Override
     public Matrix divide(double value, Factory factory) {
-        return multiply(1.0 / value, factory);
+        return divide(value).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
     public Matrix kroneckerProduct(Matrix matrix) {
-        return kroneckerProduct(matrix, factory);
-    }
-
-    @Override
-    public Matrix kroneckerProduct(Matrix matrix, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         ensureArgumentIsNotNull(matrix, "matrix");
 
         int n = rows * matrix.rows();
@@ -713,6 +693,12 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix kroneckerProduct(Matrix matrix, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return kroneckerProduct(matrix).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
@@ -747,28 +733,28 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix hadamardProduct(Matrix matrix) {
-        return hadamardProduct(matrix, factory);
-    }
-
-    @Override
-    public Matrix hadamardProduct(Matrix matrix, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         ensureArgumentIsNotNull(matrix, "matrix");
 
         if ((columns != matrix.columns()) || (rows != matrix.rows())) {
             fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
-                 ". Should be: " + rows + "x" + columns + ".");
+                    ". Should be: " + rows + "x" + columns + ".");
         }
 
         Matrix result = factory.createMatrix(rows, columns);
-        
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 result.set(i, j, matrix.get(i, j) * get(i, j));
             }
         }
-        
+
         return result;
+    }
+
+    @Override
+    public Matrix hadamardProduct(Matrix matrix, Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return hadamardProduct(matrix).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
@@ -842,22 +828,15 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public Matrix shuffle() {
-        return shuffle(factory);
-    }
-
-    @Override
-    public Matrix shuffle(Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
-        Matrix result = copy(factory);
+        Matrix result = copy();
 
         // Conduct Fisher-Yates shuffle
-        Random rnd = new Random();
+        Random random = new Random();
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                int ii = rnd.nextInt(rows - i) + i;
-                int jj = rnd.nextInt(columns - j) + j;
+                int ii = random.nextInt(rows - i) + i;
+                int jj = random.nextInt(columns - j) + j;
 
                 double a = result.get(ii, jj);
                 result.set(ii, jj, result.get(i, j));
@@ -866,6 +845,12 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix shuffle(Factory factory) {
+        ensureFactoryIsNotNull(factory);
+        return shuffle().to(Factory.asMatrixFactory(factory));
     }
 
     @Override
