@@ -28,6 +28,8 @@ import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.sparse.CCSMatrix;
 import org.la4j.matrix.sparse.CRSMatrix;
+import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
+import org.la4j.matrix.sparse.RowMajorSparseMatrix;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
 import org.la4j.vector.VectorFactory;
@@ -291,7 +293,7 @@ public abstract class SparseVector extends AbstractVector {
     @Override
     public Matrix toColumnMatrix() {
         VectorIterator it = nonZeroIterator();
-        Matrix result = CCSMatrix.zero(length, 1);
+        Matrix result = ColumnMajorSparseMatrix.zero(length, 1);
 
         while (it.hasNext()) {
             double x = it.next();
@@ -305,7 +307,7 @@ public abstract class SparseVector extends AbstractVector {
     @Override
     public Matrix toDiagonalMatrix() {
         VectorIterator it = nonZeroIterator();
-        Matrix result = CRSMatrix.zero(length, length);
+        Matrix result = RowMajorSparseMatrix.zero(length, length);
 
         while (it.hasNext()) {
             double x = it.next();

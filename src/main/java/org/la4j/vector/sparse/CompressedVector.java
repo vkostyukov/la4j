@@ -77,7 +77,6 @@ public class CompressedVector extends SparseVector {
         }
 
         int cardinality = (int) (length * density);
-
         double values[] = new double[cardinality];
         int indices[] = new int[cardinality];
 
@@ -255,7 +254,6 @@ public class CompressedVector extends SparseVector {
             values[jj] = sd;
 
         } else {
-
             double notZero = values[iiNotZero ? ii : jj];
 
             int leftIndex = (ii < jj) ? ii : jj;
@@ -336,11 +334,9 @@ public class CompressedVector extends SparseVector {
 
     @Override
     public void updateAt(int i, VectorFunction function) {
-
         int k = searchForIndex(i);
 
         if (k < cardinality && indices[k] == i) {
-
             double value = function.evaluate(i, values[k]); 
 
             // if (Math.abs(value) > Vectors.EPS || value < 0.0) {
@@ -356,7 +352,6 @@ public class CompressedVector extends SparseVector {
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
-
         out.writeInt(length);
         out.writeInt(cardinality);
 
@@ -367,14 +362,10 @@ public class CompressedVector extends SparseVector {
     }
 
     @Override
-    public void readExternal(ObjectInput in) throws IOException,
-            ClassNotFoundException {
-
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         length = in.readInt();
         cardinality = in.readInt();
-
         int alignedSize = align(length, cardinality);
-
         values = new double[alignedSize];
         indices = new int[alignedSize];
 
