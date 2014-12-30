@@ -388,8 +388,12 @@ public abstract class AbstractMatrix implements Matrix {
             fail("The exponent should be positive: " + n + ".");
         }
 
-        Matrix result = factory.createIdentityMatrix(rows);
+        Matrix result = blankOfShape(rows, rows);
         Matrix that = this;
+
+        for (int i = 0; i < rows; i++) {
+            result.set(i, i, 1.0);
+        }
 
         while (n > 0) {
             if (n % 2 == 1) {
