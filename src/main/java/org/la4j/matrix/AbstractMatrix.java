@@ -143,31 +143,9 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Vector getRow(int i) {
-        Vector result = factory.createVector(columns);
-
-        for (int j = 0; j < columns; j++) {
-            result.set(j, get(i, j));
-        }
-
-        return result;
-    }
-
-    @Override
     public Vector getRow(int i, Factory factory) {
         ensureFactoryIsNotNull(factory);
         return getRow(i).to(Factory.asVectorFactory(factory));
-    }
-
-    @Override
-    public Vector getColumn(int j) {
-        Vector result = factory.createVector(rows);
-
-        for (int i = 0; i < rows; i++) {
-            result.set(i, get(i, j));
-        }
-
-        return result;
     }
 
     @Override

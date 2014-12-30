@@ -26,6 +26,8 @@ import org.la4j.matrix.AbstractMatrix;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.operation.MatrixMatrixOperation;
 import org.la4j.matrix.operation.MatrixOperation;
+import org.la4j.vector.Vector;
+import org.la4j.vector.dense.DenseVector;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -119,6 +121,28 @@ public abstract class DenseMatrix extends AbstractMatrix {
      * @return an array representation of this matrix
      */
     public abstract double[][] toArray();
+
+    @Override
+    public Vector getRow(int i) {
+        Vector result = DenseVector.zero(columns);
+
+        for (int j = 0; j < columns; j++) {
+            result.set(j, get(i, j));
+        }
+
+        return result;
+    }
+
+    @Override
+    public Vector getColumn(int j) {
+        Vector result = DenseVector.zero(rows);
+
+        for (int i = 0; i < rows; i++) {
+            result.set(i, get(i, j));
+        }
+
+        return result;
+    }
 
     @Override
     public <T> T apply(MatrixOperation<T> operation) {

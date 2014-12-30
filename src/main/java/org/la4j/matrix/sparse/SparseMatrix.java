@@ -31,9 +31,11 @@ import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
+import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
+import org.la4j.vector.sparse.SparseVector;
 
 import java.util.Random;
 
@@ -149,6 +151,34 @@ public abstract class SparseMatrix extends AbstractMatrix {
      */
     protected long capacity() {
         return ((long) rows) * columns;
+    }
+
+    @Override
+    public Vector getRow(int i) {
+        Vector result = SparseVector.zero(columns);
+        VectorIterator it = nonZeroIteratorOfRow(i);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int j = it.index();
+            result.set(j, x);
+        }
+
+        return result;
+    }
+
+    @Override
+    public Vector getColumn(int j) {
+        Vector result = SparseVector.zero(rows);
+        VectorIterator it = nonZeroIteratorOfColumn(j);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            result.set(i, x);
+        }
+
+        return result;
     }
 
     /**
