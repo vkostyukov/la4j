@@ -796,7 +796,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix copy() {
-        return copy(factory);
+        return copyOfShape(rows, columns);
     }
 
     @Override
@@ -808,12 +808,12 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix resize(int rows, int columns) {
-        return resize(rows, columns, factory);
+        return copyOfShape(rows, columns);
     }
 
     @Override
     public Matrix resizeRows(int rows) {
-        return resize(rows, columns, factory);
+        return copyOfRows(rows);
     }
 
     @Override
@@ -823,7 +823,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix resizeColumns(int columns) {
-        return resize(rows, columns, factory);
+        return copyOfColumns(columns);
     }
 
     @Override
@@ -833,19 +833,19 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix resize(int rows, int columns, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
-        Matrix result = factory.createMatrix(rows, columns);
-
-        for (int i = 0; i < Math.min(rows, this.rows); i++) {
-            for (int j = 0; j < Math.min(columns, this.columns); j++) {
-                result.set(i, j, get(i, j));
-            }
-        }
-
-        return result;
+        return copyOfShape(rows, columns).to(Factory.asMatrixFactory(factory));
     }
-    
+
+    @Override
+    public Matrix copyOfRows(int rows) {
+        return copyOfShape(rows, columns);
+    }
+
+    @Override
+    public Matrix copyOfColumns(int columns) {
+        return copyOfShape(rows, columns);
+    }
+
     @Override
     public Matrix shuffle() {
         Matrix result = copy();

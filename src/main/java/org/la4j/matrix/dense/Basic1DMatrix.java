@@ -267,19 +267,8 @@ public class Basic1DMatrix extends DenseMatrix  {
     }
 
     @Override
-    public Matrix copy() {
-        double $self[] = new double[rows * columns];
-        System.arraycopy(self, 0, $self, 0, rows * columns);
-        return new Basic1DMatrix(rows, columns, $self);
-    }
-
-    @Override
-    public Matrix resize(int rows, int columns) {
+    public Matrix copyOfShape(int rows, int columns) {
         ensureDimensionsAreCorrect(rows, columns);
-
-        if (this.rows == rows && this.columns == columns) {
-            return copy();
-        } 
 
         if (this.rows < rows && this.columns == columns) {
             double $self[] = new double[rows * columns];

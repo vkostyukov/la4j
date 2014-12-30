@@ -448,57 +448,10 @@ public class CRSMatrix extends RowMajorSparseMatrix {
     }
 
     @Override
-    public Matrix copy() {
-        double $values[] = new double[align(cardinality)];
-        int $columnIndices[] = new int[align(cardinality)];
-        int $rowPointers[] = new int[rows + 1];
-
-        System.arraycopy(values, 0, $values, 0, cardinality);
-        System.arraycopy(columnIndices, 0, $columnIndices, 0, cardinality);
-        System.arraycopy(rowPointers, 0, $rowPointers, 0, rows + 1);
-
-        return new CRSMatrix(rows, columns, cardinality, $values, 
-                             $columnIndices, $rowPointers);
-    }
-
-    @Override
-    public Matrix resize(int rows, int columns) {
+    public Matrix copyOfShape(int rows, int columns) {
         ensureDimensionsAreCorrect(rows, columns);
 
-        if (this.rows == rows && this.columns == columns) {
-            return copy();
-        }
-
-        if (this.rows >= rows && this.columns >= columns) {
-
-            double $values[] = new double[align(cardinality)];
-            int $columnIndices[] = new int[align(cardinality)];
-            int $rowPointers[] = new int[rows + 1];
-
-            int $cardinality = 0;
-
-            int k = 0, i = 0;
-            while (k < cardinality && i < rows) {
-
-                $rowPointers[i] = $cardinality;
-
-                for (int j = rowPointers[i]; j < rowPointers[i + 1] 
-                        && columnIndices[j] < columns; j++, k++) {
-
-                    $values[$cardinality] = values[j];
-                    $columnIndices[$cardinality] = columnIndices[j];
-                    $cardinality++;
-                }
-                i++;
-            }
-
-            $rowPointers[rows] = $cardinality;
-
-            return new CRSMatrix(rows, columns, $cardinality, $values,
-                                 $columnIndices, $rowPointers);
-        }
-
-        if (this.rows < rows) {
+        if (rows >= this.rows && columns >= this.columns) {
             double $values[] = new double[align(cardinality)];
             int $columnIndices[] = new int[align(cardinality)];
             int $rowPointers[] = new int[rows + 1];
@@ -507,26 +460,39 @@ public class CRSMatrix extends RowMajorSparseMatrix {
             System.arraycopy(columnIndices, 0, $columnIndices, 0, cardinality);
             System.arraycopy(rowPointers, 0, $rowPointers, 0, this.rows + 1);
 
-
             for (int i = this.rows; i < rows + 1; i++) {
                 $rowPointers[i] = cardinality;
             }
 
-            return new CRSMatrix(rows, columns, cardinality, $values, 
-                                 $columnIndices, $rowPointers);
+            return new CRSMatrix(rows, columns, cardinality, $values, $columnIndices, $rowPointers);
         }
 
-        // TODO: think about cardinality in align call
         double $values[] = new double[align(cardinality)];
         int $columnIndices[] = new int[align(cardinality)];
         int $rowPointers[] = new int[rows + 1];
 
-        System.arraycopy(values, 0, $values, 0, cardinality);
-        System.arraycopy(columnIndices, 0, $columnIndices, 0, cardinality);
-        System.arraycopy(rowPointers, 0, $rowPointers, 0, this.rows + 1);
+        int $cardinality = 0;
 
-        return new CRSMatrix(rows, columns, cardinality, $values, 
-                $columnIndices, $rowPointers);
+        int k = 0, i = 0;
+        while (k < cardinality && i < rows) {
+
+            $rowPointers[i] = $cardinality;
+
+            for (int j = rowPointers[i]; j < rowPointers[i + 1]
+                    && columnIndices[j] < columns; j++, k++) {
+
+                $values[$cardinality] = values[j];
+                $columnIndices[$cardinality] = columnIndices[j];
+                $cardinality++;
+            }
+            i++;
+        }
+
+        for (; i < rows + 1; i++) {
+            $rowPointers[i] = $cardinality;
+        }
+
+        return new CRSMatrix(rows, columns, $cardinality, $values, $columnIndices, $rowPointers);
     }
 
     @Override

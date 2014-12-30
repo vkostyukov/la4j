@@ -267,23 +267,12 @@ public class Basic2DMatrix extends DenseMatrix {
     }
 
     @Override
-    public Matrix copy() {
-        return new Basic2DMatrix(toArray());
-    }
-
-    @Override
-    public Matrix resize(int rows, int columns) {
+    public Matrix copyOfShape(int rows, int columns) {
         ensureDimensionsAreCorrect(rows, columns);
 
-        if (this.rows == rows && this.columns == columns) {
-            return copy();
-        }
-
         double $self[][] = new double[rows][columns];
-
         for (int i = 0; i < Math.min(this.rows, rows); i++) {
-            System.arraycopy(self[i], 0, $self[i], 0, 
-                             Math.min(this.columns, columns));
+            System.arraycopy(self[i], 0, $self[i], 0, Math.min(this.columns, columns));
         }
 
         return new Basic2DMatrix($self);
@@ -291,7 +280,6 @@ public class Basic2DMatrix extends DenseMatrix {
 
     @Override
     public double[][] toArray() {
-
         double result[][] = new double[rows][columns];
 
         for (int i = 0; i < rows; i++) {
@@ -303,7 +291,6 @@ public class Basic2DMatrix extends DenseMatrix {
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
-
         out.writeInt(rows);
         out.writeInt(columns);
 

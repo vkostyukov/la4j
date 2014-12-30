@@ -661,17 +661,22 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     /**
      * Copies this matrix into the new matrix with specified dimensions: {@code rows} and {@code columns}.
      *
-     * TODO (NC): Rename to copyOfShape
+     * <p />
+     * This method is deprecated. Use {@link Matrix#copyOfShape(int, int)} instead.
      *
      * @param rows the number of rows in new matrix
      * @param columns the number of columns in new matrix
      *
      * @return the copy of this matrix with new size
      */
+    @Deprecated
     Matrix resize(int rows, int columns);
 
     /**
      * Copies this matrix into the new matrix with specified dimensions: {@code rows} and {@code columns}.
+     *
+     * <p />
+     * This method is deprecated. Use {@link Matrix#copyOfShape(int, int)} instead.
      *
      * @param rows the number of rows in new matrix
      * @param columns the number of columns in new matrix
@@ -685,18 +690,21 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     /**
      * Copies this matrix into the new matrix with specified row dimension: {@code rows}.
      *
-     * TODO (NC): Rename to copyOfRows
+     * <p />
+     * This method is deprecated. Use {@link Matrix#copyOfRows(int)} instead.
      *
      * @param rows the number of rows in new matrix
      *
      * @return the copy of this matrix with new size
      */
+    @Deprecated
     Matrix resizeRows(int rows);
 
     /**
      * Copies this matrix into the new matrix with specified row dimension: {@code rows}.
      *
-     * TODO (NC): Rename to copyOfRows
+     * <p />
+     * This method is deprecated. Use {@link Matrix#copyOfRows(int)} instead.
      *
      * @param rows the number of rows in new matrix
      * @param factory the factory of result matrix
@@ -709,18 +717,21 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     /**
      * Copies this matrix into the new matrix with specified column dimension: {@code columns}.
      *
-     * TODO (NC): Rename to copyOfColumns
+     * <p />
+     * This method is deprecated. Use {@link Matrix#copyOfColumns(int)} instead.
      *
      * @param columns the number of columns in new matrix
      *
      * @return the copy of this matrix with new size
      */
+    @Deprecated
     Matrix resizeColumns(int columns);
 
     /**
      * Copies this matrix into the new matrix with specified column dimension: {@code columns}.
      *
-     * TODO (NC): Rename to copyOfColumns
+     * <p />
+     * This method is deprecated. Use {@link Matrix#copyOfColumns(int)} instead.
      *
      * @param columns the number of columns in new matrix
      * @param factory the factory of result matrix
@@ -729,6 +740,34 @@ public interface Matrix extends Externalizable, Iterable<Double> {
      */
     @Deprecated
     Matrix resizeColumns(int columns, Factory factory);
+
+    /**
+     * Copies this matrix into the new matrix with specified dimensions: {@code rows} and {@code columns}.
+     *
+     * @param rows the number of rows in new matrix
+     * @param columns the number of columns in new matrix
+     *
+     * @return the copy of this matrix with new size
+     */
+    Matrix copyOfShape(int rows, int columns);
+
+    /**
+     * Copies this matrix into the new matrix with specified row dimension: {@code rows}.
+     *
+     * @param rows the number of rows in new matrix
+     *
+     * @return the copy of this matrix with new size
+     */
+    Matrix copyOfRows(int rows);
+
+    /**
+     * Copies this matrix into the new matrix with specified column dimension: {@code columns}.
+     *
+     * @param columns the number of columns in new matrix
+     *
+     * @return the copy of this matrix with new size
+     */
+    Matrix copyOfColumns(int columns);
 
     /**
      * Shuffles this matrix.

@@ -434,88 +434,51 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     }
 
     @Override
-    public Matrix copy() {
-        double $values[] = new double[align(cardinality)];
-        int $rowIndices[] = new int[align(cardinality)];
-        int $columnPointers[] = new int[columns + 1];
-
-        System.arraycopy(values, 0, $values, 0, cardinality);
-        System.arraycopy(rowIndices, 0, $rowIndices, 0, cardinality);
-        System.arraycopy(columnPointers, 0, $columnPointers, 0, columns + 1);
-
-        return new CCSMatrix(rows, columns, cardinality, $values, 
-                             $rowIndices, $columnPointers);
-    }
-
-    @Override
-    public Matrix resize(int rows, int columns) {
+    public Matrix copyOfShape(int rows, int columns) {
         ensureDimensionsAreCorrect(rows, columns);
 
-        if (this.rows == rows && this.columns == columns) {
-            return copy();
-        }
-
-        if (this.rows >= rows && this.columns >= columns) {
-
-            // TODO: think about cardinality in align call
-            double $values[] = new double[align(cardinality)];
-            int $rowIndices[] = new int[align(cardinality)];
-            int $columnPointers[] = new int[columns + 1];
-
-            int $cardinality = 0;
-
-            int k = 0, j = 0;
-            while (k < cardinality && j < columns) {
-
-                $columnPointers[j] = $cardinality;
-
-                for (int i = columnPointers[j]; i < columnPointers[j + 1] 
-                        && rowIndices[i] < rows; i++, k++) {
-
-                    $values[$cardinality] = values[i];
-                    $rowIndices[$cardinality] = rowIndices[i];
-                    $cardinality++;
-                }
-                j++;
-            }
-
-            $columnPointers[columns] = $cardinality;
-
-            return new CCSMatrix(rows, columns, $cardinality, $values,
-                    $rowIndices, $columnPointers);
-        }
-
-        if (this.columns < columns) {
-
+        if (rows >= this.rows && columns >= this.columns) {
             double $values[] = new double[align(cardinality)];
             int $rowIndices[] = new int[align(cardinality)];
             int $columnPointers[] = new int[columns + 1];
 
             System.arraycopy(values, 0, $values, 0, cardinality);
             System.arraycopy(rowIndices, 0, $rowIndices, 0, cardinality);
-            System.arraycopy(columnPointers, 0, $columnPointers, 0, 
-                             this.columns + 1);
+            System.arraycopy(columnPointers, 0, $columnPointers, 0, this.columns + 1);
 
             for (int i = this.columns; i < columns + 1; i++) {
                 $columnPointers[i] = cardinality;
             }
 
-            return new CCSMatrix(rows, columns, cardinality, $values, 
-                                 $rowIndices, $columnPointers);
+            return new CCSMatrix(rows, columns, cardinality, $values, $rowIndices, $columnPointers);
         }
 
-        // TODO: think about cardinality in align call
         double $values[] = new double[align(cardinality)];
         int $rowIndices[] = new int[align(cardinality)];
         int $columnPointers[] = new int[columns + 1];
 
-        System.arraycopy(values, 0, $values, 0, cardinality);
-        System.arraycopy(rowIndices, 0, $rowIndices, 0, cardinality);
-        System.arraycopy(columnPointers, 0, $columnPointers, 0, 
-                         this.columns + 1);
+        int $cardinality = 0;
 
-        return new CCSMatrix(rows, columns, cardinality, $values, $rowIndices, 
-                             $columnPointers);
+        int k = 0, j = 0;
+        while (k < cardinality && j < columns) {
+
+            $columnPointers[j] = $cardinality;
+
+            for (int i = columnPointers[j]; i < columnPointers[j + 1]
+                    && rowIndices[i] < rows; i++, k++) {
+
+                $values[$cardinality] = values[i];
+                $rowIndices[$cardinality] = rowIndices[i];
+                $cardinality++;
+            }
+            j++;
+        }
+
+        for (; j < columns + 1; j++) {
+            $columnPointers[j] = $cardinality;
+        }
+
+        return new CCSMatrix(rows, columns, $cardinality, $values, $rowIndices, $columnPointers);
     }
 
     @Override
