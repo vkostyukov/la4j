@@ -29,6 +29,7 @@ import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.AbstractMatrix;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.vector.Vector;
@@ -191,6 +192,21 @@ public abstract class SparseMatrix extends AbstractMatrix {
             int i = it.rowIndex();
             int j = it.columnIndex();
             result.set(i, j, x * value);
+        }
+
+        return result;
+    }
+
+    @Override
+    public Matrix add(double value) {
+        MatrixIterator it = nonZeroIterator();
+        Matrix result = DenseMatrix.constant(rows, columns, value);
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            result.set(i, j, x + value);
         }
 
         return result;
