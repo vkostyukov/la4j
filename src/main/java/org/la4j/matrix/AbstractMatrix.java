@@ -283,12 +283,14 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix rotate() {
-        Matrix result = factory.createMatrix(columns, rows);
+        Matrix result = blankOfShape(columns, rows);
+        MatrixIterator it = result.iterator();
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                result.set(j, rows - 1 - i, get(i, j));
-            }
+        while (it.hasNext()) {
+            it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            it.set(get(rows - 1 - j, i));
         }
 
         return result;

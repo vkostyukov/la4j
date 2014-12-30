@@ -27,6 +27,7 @@ import org.la4j.matrix.Matrix;
 import org.la4j.matrix.operation.MatrixMatrixOperation;
 import org.la4j.matrix.operation.MatrixOperation;
 
+import java.util.Iterator;
 import java.util.Random;
 
 public abstract class RowMajorSparseMatrix extends SparseMatrix {
@@ -106,6 +107,29 @@ public abstract class RowMajorSparseMatrix extends SparseMatrix {
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix rotate() {
+        // TODO: it can be much faster
+        Matrix result = ColumnMajorSparseMatrix.zero(columns, rows);
+        MatrixIterator it = nonZeroRowMajorIterator();
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            result.set(j, rows - 1 - i, x);
+        }
+
+//        for (int i = 0; i < rows; i++) {
+//            for (int j = 0; j < columns; j++) {
+//                result.set(j, rows - 1 - i, get(i, j));
+//            }
+//        }
+
+        return result;
+
     }
 
     protected RowMajorSparseMatrix(Factory factory, int rows, int columns) {
