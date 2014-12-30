@@ -262,26 +262,17 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix transpose() {
-        // 'transposed proxy' of the original Matrix
-        final Matrix that = this;
-        return factory.createMatrix(new MatrixSource() {
+        Matrix result = blankOfShape(columns, rows);
+        MatrixIterator it = result.iterator();
 
-            @Override
-            public double get(int i, int j) {
-                return that.get(j, i);
-            }
+        while (it.hasNext()) {
+            it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            it.set(get(j, i));
+        }
 
-            @Override
-            public int columns() {
-                return that.rows();
-            }
-
-            @Override
-            public int rows() {
-                return that.columns();
-            }
-
-        });
+        return result;
     }
 
     @Override

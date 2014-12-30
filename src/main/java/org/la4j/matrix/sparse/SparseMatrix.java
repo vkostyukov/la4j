@@ -437,7 +437,7 @@ public abstract class SparseMatrix extends AbstractMatrix {
 
             @Override
             public int columnIndex() {
-                return i / columns;
+                return i / rows;
             }
 
             @Override

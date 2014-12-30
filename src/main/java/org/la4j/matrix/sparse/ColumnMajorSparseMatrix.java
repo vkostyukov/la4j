@@ -93,6 +93,20 @@ public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
         return CCSMatrix.block(a, b, c, d);
     }
 
+    @Override
+    public Matrix transpose() {
+        Matrix result = RowMajorSparseMatrix.zero(columns, rows);
+        MatrixIterator it = nonZeroColumnMajorIterator();
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            result.set(j, i, x);
+        }
+
+        return result;
+    }
 
     protected ColumnMajorSparseMatrix(Factory factory, int rows, int columns) {
         super(factory, rows, columns);

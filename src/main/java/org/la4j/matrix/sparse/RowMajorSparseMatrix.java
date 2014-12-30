@@ -22,6 +22,7 @@
 package org.la4j.matrix.sparse;
 
 import org.la4j.factory.Factory;
+import org.la4j.iterator.MatrixIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.operation.MatrixMatrixOperation;
 import org.la4j.matrix.operation.MatrixOperation;
@@ -92,6 +93,20 @@ public abstract class RowMajorSparseMatrix extends SparseMatrix {
         return CRSMatrix.block(a, b, c, d);
     }
 
+    @Override
+    public Matrix transpose() {
+        Matrix result = ColumnMajorSparseMatrix.zero(columns, rows);
+        MatrixIterator it = nonZeroRowMajorIterator();
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            result.set(j, i, x);
+        }
+
+        return result;
+    }
 
     protected RowMajorSparseMatrix(Factory factory, int rows, int columns) {
         super(factory, rows, columns);
