@@ -762,7 +762,17 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix blank() {
-        return blank(factory);
+        return blankOfShape(rows, columns);
+    }
+
+    @Override
+    public Matrix blankOfRows(int rows) {
+        return blankOfShape(rows, columns);
+    }
+
+    @Override
+    public Matrix blankOfColumns(int columns) {
+        return blankOfShape(rows, columns);
     }
 
     @Override

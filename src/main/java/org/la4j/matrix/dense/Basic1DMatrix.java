@@ -338,4 +338,8 @@ public class Basic1DMatrix extends DenseMatrix  {
         return super.to(factory);
     }
 
+    @Override
+    public Matrix blankOfShape(int rows, int columns) {
+        return Basic1DMatrix.zero(rows, columns);
+    }
 }

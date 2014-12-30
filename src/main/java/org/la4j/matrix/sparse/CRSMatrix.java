@@ -821,4 +821,8 @@ public class CRSMatrix extends RowMajorSparseMatrix {
         return super.to(factory);
     }
 
+    @Override
+    public Matrix blankOfShape(int rows, int columns) {
+        return CRSMatrix.zero(rows, columns);
+    }
 }

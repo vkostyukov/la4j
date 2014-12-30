@@ -326,4 +326,8 @@ public class Basic2DMatrix extends DenseMatrix {
         return super.to(factory);
     }
 
+    @Override
+    public Matrix blankOfShape(int rows, int columns) {
+        return Basic2DMatrix.zero(rows, columns);
+    }
 }

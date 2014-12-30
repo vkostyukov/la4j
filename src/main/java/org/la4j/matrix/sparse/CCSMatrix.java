@@ -808,4 +808,9 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
         return super.to(factory);
     }
+
+    @Override
+    public Matrix blankOfShape(int rows, int columns) {
+        return CCSMatrix.zero(rows, columns);
+    }
 }

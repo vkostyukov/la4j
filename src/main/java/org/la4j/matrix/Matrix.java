@@ -625,11 +625,37 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     Matrix removeLastColumn();
 
     /**
-     * Creates the blank (an empty matrix with same size) matrix of this matrix.
+     * Creates the blank matrix (a zero matrix with same size) of this matrix.
      * 
      * @return blank matrix
      */
     Matrix blank();
+
+    /**
+     * Creates the blank matrix (a zero matrix with same size) of this matrix
+     * of the given shape: {@code rows} x {@code columns}.
+     *
+     * @return blank matrix
+     */
+    Matrix blankOfShape(int rows, int columns);
+
+    /**
+     * Creates the blank matrix (a zero matrix with same size) of this matrix
+     * of the given shape: {@code rows}. The {@code columns} number remains the
+     * same.
+     *
+     * @return blank matrix
+     */
+    Matrix blankOfRows(int rows);
+
+    /**
+     * Creates the blank matrix (a zero matrix with same size) of this matrix
+     * of the given shape: {@code columns}. The {@code rows} number remains the
+     * same.
+     *
+     * @return blank matrix
+     */
+    Matrix blankOfColumns(int columns);
 
     /**
      * Creates the blank (an empty matrix with same size) matrix of this matrix.
