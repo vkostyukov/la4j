@@ -414,14 +414,14 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix multiply(double value) {
-        ensureFactoryIsNotNull(factory);
+        Matrix result = blank();
+        MatrixIterator it = iterator();
 
-        Matrix result = blank(factory);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                result.set(i, j, get(i, j) * value);
-            }
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            result.set(i, j, x * value);
         }
 
         return result;

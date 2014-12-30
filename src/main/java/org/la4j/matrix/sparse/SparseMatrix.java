@@ -181,6 +181,21 @@ public abstract class SparseMatrix extends AbstractMatrix {
         return result;
     }
 
+    @Override
+    public Matrix multiply(double value) {
+        MatrixIterator it = nonZeroIterator();
+        Matrix result = blank();
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            result.set(i, j, x * value);
+        }
+
+        return result;
+    }
+
     /**
      * Whether or not the specified element is zero.
      *
