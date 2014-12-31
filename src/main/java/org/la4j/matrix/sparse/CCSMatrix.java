@@ -834,6 +834,11 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
                 j++;
                 return j;
             }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException("Can not remove from this iterator.");
+            }
         };
     }
 }

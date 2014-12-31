@@ -846,6 +846,11 @@ public class CRSMatrix extends RowMajorSparseMatrix {
                 i++;
                 return i;
             }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException("Can not remove from this iterator.");
+            }
         };
     }
 }
