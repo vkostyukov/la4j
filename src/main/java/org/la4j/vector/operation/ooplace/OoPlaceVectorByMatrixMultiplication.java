@@ -32,6 +32,8 @@ import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorMatrixOperation;
 import org.la4j.vector.sparse.SparseVector;
 
+import java.util.Iterator;
+
 public class OoPlaceVectorByMatrixMultiplication extends VectorMatrixOperation<Vector> {
     @Override
     public Vector apply(SparseVector a, DenseMatrix b) {
@@ -75,33 +77,14 @@ public class OoPlaceVectorByMatrixMultiplication extends VectorMatrixOperation<V
 
     @Override
     public Vector apply(SparseVector a, ColumnMajorSparseMatrix b) {
-        // TODO: use nonzero columns iterator here
         Vector result = a.blankOfLength(b.columns());
-        MatrixIterator it = b.columnMajorIterator();
+        Iterator<Integer> columns = b.iteratorOrNonZeroColumns();
 
-        int column = -1;
-        while (it.hasNext()) {
-            it.next();
-
-            // skip everything from the last column
-            while (it.columnIndex() == column && it.hasNext()) {
-                it.next();
-            }
-
-            int j = it.columnIndex();
-            if (j != column) {
-                VectorIterator these = a.nonZeroIterator();
-                VectorIterator those = b.nonZeroIteratorOfColumn(j);
-                VectorIterator both = these.andAlsoMultiply(those);
-
-                double acc = 0.0;
-                while (both.hasNext()) {
-                    acc += both.next();
-                }
-
-                result.set(j, acc);
-                column = j;
-            }
+        while (columns.hasNext()) {
+            int j = columns.next();
+            VectorIterator these = a.nonZeroIterator();
+            VectorIterator those = b.nonZeroIteratorOfColumn(j);
+            result.set(j, these.dotProduct(those));
         }
 
         return result;
@@ -149,28 +132,21 @@ public class OoPlaceVectorByMatrixMultiplication extends VectorMatrixOperation<V
     @Override
     public Vector apply(DenseVector a, ColumnMajorSparseMatrix b) {
         Vector result = SparseVector.zero(b.columns());
-        MatrixIterator it = b.columnMajorIterator();
+        Iterator<Integer> columns = b.iteratorOrNonZeroColumns();
 
-        double acc = 0.0;
-        int column = 0;
-        while (it.hasNext()) {
-            double x = it.next();
-            int i = it.rowIndex();
-            int j = it.columnIndex();
+        while (columns.hasNext()) {
+            int j = columns.next();
+            VectorIterator it = b.nonZeroIteratorOfColumn(j);
+            double acc = 0.0;
 
-            if (column != j) {
-                if (acc != 0.0) {
-                    result.set(column, acc);
-                }
-                column = j;
-                acc = 0.0;
+            while (it.hasNext()) {
+                double x = it.next();
+                int i = it.index();
+                acc += x * a.get(i);
             }
 
-            acc += x * a.get(i);
-        }
+            result.set(j, acc);
 
-        if (acc != 0.0) {
-            result.set(column, acc);
         }
 
         return result;

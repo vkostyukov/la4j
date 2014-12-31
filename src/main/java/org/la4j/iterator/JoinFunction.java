@@ -22,7 +22,7 @@
 package org.la4j.iterator;
 
 // TODO: need a better name
-public abstract class JoinFunction {
+abstract class JoinFunction {
 
     public abstract double apply(double a, double b);
 

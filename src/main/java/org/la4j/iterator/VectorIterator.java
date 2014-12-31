@@ -55,12 +55,14 @@ public abstract class VectorIterator extends CursorIterator {
         return new CursorToVectorIterator(super.andAlso(those, JoinFunction.DIV), length);
     }
 
-    public VectorIterator orElse(final VectorIterator those, final JoinFunction join) {
-        return new CursorToVectorIterator(super.orElse(those, join), length);
-    }
+    public double dotProduct(final VectorIterator those) {
+        VectorIterator both = this.andAlsoMultiply(those);
+        double acc = 0.0;
+        while (both.hasNext()) {
+            acc += both.next();
+        }
 
-    public VectorIterator andAlso(final VectorIterator those, final JoinFunction join) {
-        return new CursorToVectorIterator(super.andAlso(those, join), length);
+        return acc;
     }
 
     @Override
