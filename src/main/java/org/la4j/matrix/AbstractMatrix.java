@@ -501,7 +501,6 @@ public abstract class AbstractMatrix implements Matrix {
                     acc += get(i, k) * get(j, k);
                 }
                 result.set(i, j, acc);
-
             }
         }
 

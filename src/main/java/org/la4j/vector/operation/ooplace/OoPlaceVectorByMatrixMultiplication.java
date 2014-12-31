@@ -84,7 +84,7 @@ public class OoPlaceVectorByMatrixMultiplication extends VectorMatrixOperation<V
             int j = columns.next();
             VectorIterator these = a.nonZeroIterator();
             VectorIterator those = b.nonZeroIteratorOfColumn(j);
-            result.set(j, these.dotProduct(those));
+            result.set(j, these.innerProduct(those));
         }
 
         return result;
