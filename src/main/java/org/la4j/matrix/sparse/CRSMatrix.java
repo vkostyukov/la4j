@@ -834,11 +834,13 @@ public class CRSMatrix extends RowMajorSparseMatrix {
 
             @Override
             public boolean hasNext() {
-                while (i + 1 < rows && rowPointers[i + 1] == rowPointers[i + 2]) {
+                while (i + 1 < rows &&
+                       rowPointers[i + 1] < cardinality &&
+                       rowPointers[i + 1] == rowPointers[i + 2]) {
                     i++;
                 }
 
-                return i + 1 < rows;
+                return i + 1 < rows && rowPointers[i + 1] < cardinality ;
             }
 
             @Override

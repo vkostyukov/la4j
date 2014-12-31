@@ -822,11 +822,13 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
             @Override
             public boolean hasNext() {
-                while (j + 1 < columns && columnPointers[j + 1] == columnPointers[j + 2]) {
+                while (j + 1 < columns &&
+                       columnPointers[j + 1] < cardinality &&
+                       columnPointers[j + 1] == columnPointers[j + 2]) {
                     j++;
                 }
 
-                return j + 1 < columns;
+                return j + 1 < columns && columnPointers[j + 1] < cardinality;
             }
 
             @Override
