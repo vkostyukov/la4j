@@ -27,7 +27,10 @@ import org.la4j.iterator.MatrixIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.operation.MatrixMatrixOperation;
 import org.la4j.matrix.operation.MatrixOperation;
+import org.la4j.matrix.operation.MatrixVectorOperation;
+import org.la4j.vector.Vector;
 
+import java.util.Iterator;
 import java.util.Random;
 
 public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
@@ -139,6 +142,8 @@ public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
         return nonZeroColumnMajorIterator();
     }
 
+    public abstract Iterator<Integer> iteratorOrNonZeroColumns();
+
     @Override
     public <T> T apply(MatrixOperation<T> operation) {
         return operation.apply(this);
@@ -146,6 +151,11 @@ public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
 
     @Override
     public <T> T apply(MatrixMatrixOperation<T> operation, Matrix that) {
+        return that.apply(operation.partiallyApply(this));
+    }
+
+    @Override
+    public <T> T apply(MatrixVectorOperation<T> operation, Vector that) {
         return that.apply(operation.partiallyApply(this));
     }
 }

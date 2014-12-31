@@ -45,8 +45,10 @@ import org.la4j.linear.SquareRootSolver;
 import org.la4j.linear.SweepSolver;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.operation.MatrixMatrixOperation;
+import org.la4j.matrix.operation.MatrixVectorOperation;
 import org.la4j.matrix.operation.inplace.InPlaceCopyMatrixToMatrix;
 import org.la4j.matrix.operation.ooplace.OoPlaceMatricesAddition;
+import org.la4j.matrix.operation.ooplace.OoPlaceMatrixByVectorMultiplication;
 import org.la4j.vector.Vector;
 import org.la4j.vector.operation.VectorMatrixOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
@@ -388,4 +390,7 @@ public final class LinearAlgebra {
 
     public final static MatrixMatrixOperation<Matrix> OO_PLACE_MATRIX_ADDITION =
         new OoPlaceMatricesAddition();
+
+    public final static MatrixVectorOperation<Vector> OO_PLACE_MATRIX_BY_VECTOR_MULTIPLICATION =
+        new OoPlaceMatrixByVectorMultiplication();
 }

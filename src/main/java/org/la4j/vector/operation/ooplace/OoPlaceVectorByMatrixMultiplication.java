@@ -75,6 +75,7 @@ public class OoPlaceVectorByMatrixMultiplication extends VectorMatrixOperation<V
 
     @Override
     public Vector apply(SparseVector a, ColumnMajorSparseMatrix b) {
+        // TODO: use nonzero columns iterator here
         Vector result = a.blankOfLength(b.columns());
         MatrixIterator it = b.columnMajorIterator();
 

@@ -30,6 +30,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Random;
 
 import org.la4j.LinearAlgebra;
@@ -812,5 +813,27 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     @Override
     public Matrix blankOfShape(int rows, int columns) {
         return CCSMatrix.zero(rows, columns);
+    }
+
+    @Override
+    public Iterator<Integer> iteratorOrNonZeroColumns() {
+        return new Iterator<Integer>() {
+            private int j = -1;
+
+            @Override
+            public boolean hasNext() {
+                while (j + 1 < columns && columnPointers[j + 1] == columnPointers[j + 2]) {
+                    j++;
+                }
+
+                return j + 1 < columns;
+            }
+
+            @Override
+            public Integer next() {
+                j++;
+                return j;
+            }
+        };
     }
 }

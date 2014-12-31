@@ -30,6 +30,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Random;
 
 import org.la4j.LinearAlgebra;
@@ -824,5 +825,27 @@ public class CRSMatrix extends RowMajorSparseMatrix {
     @Override
     public Matrix blankOfShape(int rows, int columns) {
         return CRSMatrix.zero(rows, columns);
+    }
+
+    @Override
+    public Iterator<Integer> iteratorOfNonZeroRows() {
+        return new Iterator<Integer>() {
+            private int i = -1;
+
+            @Override
+            public boolean hasNext() {
+                while (i + 1 < rows && rowPointers[i + 1] == rowPointers[i + 2]) {
+                    i++;
+                }
+
+                return i + 1 < rows;
+            }
+
+            @Override
+            public Integer next() {
+                i++;
+                return i;
+            }
+        };
     }
 }

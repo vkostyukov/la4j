@@ -26,6 +26,7 @@ import org.la4j.matrix.AbstractMatrix;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.operation.MatrixMatrixOperation;
 import org.la4j.matrix.operation.MatrixOperation;
+import org.la4j.matrix.operation.MatrixVectorOperation;
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;
 
@@ -151,6 +152,11 @@ public abstract class DenseMatrix extends AbstractMatrix {
 
     @Override
     public <T> T apply(MatrixMatrixOperation<T> operation, Matrix that) {
+        return that.apply(operation.partiallyApply(this));
+    }
+
+    @Override
+    public <T> T apply(MatrixVectorOperation<T> operation, Vector that) {
         return that.apply(operation.partiallyApply(this));
     }
 }

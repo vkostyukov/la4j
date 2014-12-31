@@ -37,6 +37,7 @@ import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.functor.*;
 import org.la4j.matrix.operation.MatrixMatrixOperation;
 import org.la4j.matrix.operation.MatrixOperation;
+import org.la4j.matrix.operation.MatrixVectorOperation;
 import org.la4j.vector.Vector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
@@ -238,24 +239,24 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     Matrix multiply(double value, Factory factory);
 
     /**
-     * Multiplies this matrix (A) by given {@code vector} (x).
+     * Multiplies this matrix (A) by given {@code that} vector (x).
      *
-     * @param vector the vector
+     * @param that the vector
      *
      * @return A * x
      */
-    Vector multiply(Vector vector);
+    Vector multiply(Vector that);
 
     /**
-     * Multiplies this matrix (A) by given {@code vector} (x).
+     * Multiplies this matrix (A) by given {@code that} vector (x).
      *
-     * @param vector the right hand vector for multiplication
+     * @param that the right hand vector for multiplication
      * @param factory the factory of result matrix
      *
      * @return A * x
      */
     @Deprecated
-    Vector multiply(Vector vector, Factory factory);
+    Vector multiply(Vector that, Factory factory);
 
     /**
      * Multiplies this matrix (A) by given {@code matrix} (B).
@@ -1501,7 +1502,7 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     /**
      * Pipes this matrix to a given {@code operation}.
      *
-     * @param operation the matrix operation
+     * @param operation the matrix-matrix operation
      *                  (an operation that takes two matrices and returns {@code T})
      * @param that the right hand matrix of the given operation
      * @param <T> the result type
@@ -1509,4 +1510,16 @@ public interface Matrix extends Externalizable, Iterable<Double> {
      * @return the result of an operation applied to this matrix
      */
     <T> T apply(MatrixMatrixOperation<T> operation, Matrix that);
+
+    /**
+     * Pipes this matrix to a given {@code operation}.
+     *
+     * @param operation the matrix-vector operation
+     *                  (an operation that takes matrix and vector and returns {@code T})
+     * @param that the right hand vector of the given operation
+     * @param <T> the result type
+     *
+     * @return the result of an operation applied to this matrix
+     */
+    <T> T apply(MatrixVectorOperation<T> operation, Vector that);
 }

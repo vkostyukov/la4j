@@ -165,9 +165,9 @@ abstract class CursorIterator implements Iterator<Double> {
                     those.next();
 
                     while (these.cursor() != those.cursor()) {
-                        if (these.hasNext() && these.cursor() < those.cursor()) {
+                        if (these.cursor() < those.cursor() && these.hasNext()) {
                             these.next();
-                        } else if (those.hasNext() && these.cursor() > those.cursor()) {
+                        } else if (these.cursor() > those.cursor() && those.hasNext()) {
                             those.next();
                         } else {
                             return;
