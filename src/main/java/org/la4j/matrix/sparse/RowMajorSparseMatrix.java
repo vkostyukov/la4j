@@ -23,13 +23,17 @@ package org.la4j.matrix.sparse;
 
 import org.la4j.factory.Factory;
 import org.la4j.iterator.MatrixIterator;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.operation.MatrixMatrixOperation;
 import org.la4j.matrix.operation.MatrixOperation;
 import org.la4j.matrix.operation.MatrixVectorOperation;
 import org.la4j.vector.Vector;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public abstract class RowMajorSparseMatrix extends SparseMatrix {
@@ -113,25 +117,24 @@ public abstract class RowMajorSparseMatrix extends SparseMatrix {
 
     @Override
     public Matrix rotate() {
-        // TODO: it can be much faster
         Matrix result = ColumnMajorSparseMatrix.zero(columns, rows);
-        MatrixIterator it = nonZeroRowMajorIterator();
 
-        while (it.hasNext()) {
-            double x = it.next();
-            int i = it.rowIndex();
-            int j = it.columnIndex();
-            result.set(j, rows - 1 - i, x);
+        Iterator<Integer> nzRows = iteratorOfNonZeroRows();
+        List<Integer> reversedNzRows = new LinkedList<Integer>();
+        while (nzRows.hasNext()) {
+            reversedNzRows.add(0, nzRows.next());
         }
 
-//        for (int i = 0; i < rows; i++) {
-//            for (int j = 0; j < columns; j++) {
-//                result.set(j, rows - 1 - i, get(i, j));
-//            }
-//        }
+        for (int i: reversedNzRows) {
+            VectorIterator it = nonZeroIteratorOfRow(i);
+            while (it.hasNext()) {
+                double x = it.next();
+                int j = it.index();
+                result.set(j, rows - 1 - i, x);
+            }
+        }
 
         return result;
-
     }
 
     public abstract Iterator<Integer> iteratorOfNonZeroRows();
