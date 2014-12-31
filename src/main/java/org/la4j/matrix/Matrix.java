@@ -345,24 +345,24 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     Matrix add(double value, Factory factory);
 
     /**
-     * Adds given {@code matrix} (B) to this matrix (A).
+     * Adds given {@code that} matrix (B) to this matrix (A).
      * 
-     * @param matrix the right hand matrix for addition
+     * @param that the right hand matrix for addition
      *
      * @return A + B
      */
-    Matrix add(Matrix matrix);
+    Matrix add(Matrix that);
 
     /**
-     * Adds given {@code matrix} (B) to this matrix (A).
+     * Adds given {@code that} matrix (B) to this matrix (A).
      *
-     * @param matrix the right hand matrix for addition
+     * @param that the right hand matrix for addition
      * @param factory the factory of result matrix
      *
      * @return A + B
      */
     @Deprecated
-    Matrix add(Matrix matrix, Factory factory);
+    Matrix add(Matrix that, Factory factory);
     
     /**
      * Inserts a given {@code matrix} (B) into this matrix (A). The original

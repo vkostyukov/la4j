@@ -24,12 +24,43 @@ package org.la4j.matrix.operation.inplace;
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
-import org.la4j.matrix.operation.MatrixMatrixOperation;
+import org.la4j.matrix.operation.SimpleMatrixMatrixOperation;
 import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
 import org.la4j.matrix.sparse.SparseMatrix;
 
-public class InPlaceCopyMatrixToMatrix extends MatrixMatrixOperation<Matrix> {
+public class InPlaceCopyMatrixToMatrix extends SimpleMatrixMatrixOperation<Matrix> {
+
+    @Override
+    public Matrix applySimple(DenseMatrix a, SparseMatrix b) {
+        MatrixIterator it = b.iterator();
+        while (it.hasNext()) {
+            it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            double x = a.get(i, j);
+            if (x != 0.0) {
+                it.set(x);
+            }
+        }
+
+        return b;
+    }
+
+    @Override
+    public Matrix applySimple(SparseMatrix a, DenseMatrix b) {
+        return fromSparseToMatrix(a, b);
+    }
+
+    @Override
+    public Matrix apply(RowMajorSparseMatrix a, RowMajorSparseMatrix b) {
+        return fromSparseToMatrix(a, b);
+    }
+
+    @Override
+    public Matrix apply(ColumnMajorSparseMatrix a, ColumnMajorSparseMatrix b) {
+        return fromSparseToMatrix(a, b);
+    }
 
     @Override
     public Matrix apply(DenseMatrix a, DenseMatrix b) {
@@ -40,26 +71,6 @@ public class InPlaceCopyMatrixToMatrix extends MatrixMatrixOperation<Matrix> {
         }
 
         return b;
-    }
-
-    @Override
-    public Matrix apply(DenseMatrix a, RowMajorSparseMatrix b) {
-        return fromDenseToSparse(a, b);
-    }
-
-    @Override
-    public Matrix apply(DenseMatrix a, ColumnMajorSparseMatrix b) {
-        return fromDenseToSparse(a, b);
-    }
-
-    @Override
-    public Matrix apply(RowMajorSparseMatrix a, DenseMatrix b) {
-        return fromSparseToMatrix(a, b);
-    }
-
-    @Override
-    public Matrix apply(RowMajorSparseMatrix a, RowMajorSparseMatrix b) {
-        return fromSparseToMatrix(a, b);
     }
 
     @Override
@@ -76,11 +87,6 @@ public class InPlaceCopyMatrixToMatrix extends MatrixMatrixOperation<Matrix> {
     }
 
     @Override
-    public Matrix apply(ColumnMajorSparseMatrix a, DenseMatrix b) {
-        return fromSparseToMatrix(a, b);
-    }
-
-    @Override
     public Matrix apply(ColumnMajorSparseMatrix a, RowMajorSparseMatrix b) {
         MatrixIterator it = a.nonZeroRowMajorIterator();
         while (it.hasNext()) {
@@ -93,11 +99,6 @@ public class InPlaceCopyMatrixToMatrix extends MatrixMatrixOperation<Matrix> {
         return b;
     }
 
-    @Override
-    public Matrix apply(ColumnMajorSparseMatrix a, ColumnMajorSparseMatrix b) {
-        return fromSparseToMatrix(a, b);
-    }
-
     private Matrix fromSparseToMatrix(SparseMatrix a, Matrix b) {
         MatrixIterator it = a.nonZeroIterator();
         while (it.hasNext()) {
@@ -105,21 +106,6 @@ public class InPlaceCopyMatrixToMatrix extends MatrixMatrixOperation<Matrix> {
             int i = it.rowIndex();
             int j = it.columnIndex();
             b.set(i, j, x);
-        }
-
-        return b;
-    }
-
-    private Matrix fromDenseToSparse(DenseMatrix a, SparseMatrix b) {
-        MatrixIterator it = b.iterator();
-        while (it.hasNext()) {
-            it.next();
-            int i = it.rowIndex();
-            int j = it.columnIndex();
-            double x = a.get(i, j);
-            if (x != 0.0) {
-                it.set(x);
-            }
         }
 
         return b;

@@ -22,6 +22,7 @@
 package org.la4j.matrix.sparse;
 
 import org.la4j.factory.Factory;
+import org.la4j.iterator.ColumnMajorMatrixIterator;
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.operation.MatrixMatrixOperation;
@@ -129,7 +130,7 @@ public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
     }
 
     @Override
-    public MatrixIterator iterator() {
+    public ColumnMajorMatrixIterator iterator() {
         return columnMajorIterator();
     }
 

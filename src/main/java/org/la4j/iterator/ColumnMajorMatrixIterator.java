@@ -23,12 +23,20 @@ package org.la4j.iterator;
 
 public abstract class ColumnMajorMatrixIterator extends MatrixIterator {
 
-  public ColumnMajorMatrixIterator(int rows, int columns) {
+    public ColumnMajorMatrixIterator(int rows, int columns) {
     super(rows, columns);
   }
 
-  @Override
-  protected int cursor() {
+    @Override
+    protected int cursor() {
     return columnIndex() * rows + rowIndex();
   }
+
+    public ColumnMajorMatrixIterator orElseAdd(final ColumnMajorMatrixIterator those) {
+        return new CursorToColumnMajorMatrixIterator(super.orElse(those, JoinFunction.ADD), rows, columns);
+    }
+
+    public ColumnMajorMatrixIterator orElseSubtract(final ColumnMajorMatrixIterator those) {
+        return new CursorToColumnMajorMatrixIterator(super.orElse(those, JoinFunction.SUB), rows, columns);
+    }
 }

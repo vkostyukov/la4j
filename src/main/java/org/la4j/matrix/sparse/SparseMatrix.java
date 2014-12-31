@@ -435,17 +435,20 @@ public abstract class SparseMatrix extends AbstractMatrix {
 
             @Override
             public boolean hasNext() {
-                boolean hasNext = false;
-                while (i + 1 < limit && !hasNext) {
+                while (i + 1 < limit) {
                     i++;
-                    hasNext = SparseMatrix.this.nonZeroAt(rowIndex(), columnIndex());
+                    if (SparseMatrix.this.nonZeroAt(rowIndex(), columnIndex())) {
+                        i--;
+                        break;
+                    }
                 }
 
-                return hasNext;
+                return i + 1 < limit;
             }
 
             @Override
             public Double next() {
+                i++;
                 return get();
             }
         };
@@ -483,17 +486,20 @@ public abstract class SparseMatrix extends AbstractMatrix {
 
             @Override
             public boolean hasNext() {
-                boolean hasNext = false;
-                while (i + 1 < limit && !hasNext) {
+                while (i + 1 < limit) {
                     i++;
-                    hasNext = SparseMatrix.this.nonZeroAt(rowIndex(), columnIndex());
+                    if (SparseMatrix.this.nonZeroAt(rowIndex(), columnIndex())) {
+                        i--;
+                        break;
+                    }
                 }
 
-                return hasNext;
+                return i + 1 < limit;
             }
 
             @Override
             public Double next() {
+                i++;
                 return get();
             }
         };
@@ -526,17 +532,16 @@ public abstract class SparseMatrix extends AbstractMatrix {
 
             @Override
             public boolean hasNext() {
-                boolean hasNext = false;
-                while (j + 1 < columns && !hasNext) {
+                while (j + 1 < columns && SparseMatrix.this.isZeroAt(ii, j + 1)) {
                     j++;
-                    hasNext = SparseMatrix.this.nonZeroAt(ii, j);
                 }
 
-                return hasNext;
+                return j + 1 < columns;
             }
 
             @Override
             public Double next() {
+                j++;
                 return get();
             }
         };
@@ -569,18 +574,16 @@ public abstract class SparseMatrix extends AbstractMatrix {
 
             @Override
             public boolean hasNext() {
-                boolean hasNext = false;
-                while (i + 1 < rows && !hasNext) {
+                while (i + 1 < rows && SparseMatrix.this.isZeroAt(i + 1, jj)) {
                     i++;
-                    hasNext = SparseMatrix.this.nonZeroAt(i, jj);
                 }
 
-                return hasNext;
-
+                return i + 1 < rows;
             }
 
             @Override
             public Double next() {
+                i++;
                 return get();
             }
         };
