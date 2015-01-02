@@ -27,7 +27,7 @@ import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
-public class OoPlaceHadamardProduct extends VectorVectorOperation<Vector> {
+public class OoPlaceVectorHadamardProduct extends VectorVectorOperation<Vector> {
 
     @Override
     public Vector apply(SparseVector a, SparseVector b) {

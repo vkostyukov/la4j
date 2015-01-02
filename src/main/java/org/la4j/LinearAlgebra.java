@@ -50,10 +50,11 @@ import org.la4j.matrix.operation.inplace.InPlaceCopyMatrixToMatrix;
 import org.la4j.matrix.operation.ooplace.OoPlaceMatricesAddition;
 import org.la4j.matrix.operation.ooplace.OoPlaceMatricesSubtraction;
 import org.la4j.matrix.operation.ooplace.OoPlaceMatrixByVectorMultiplication;
+import org.la4j.matrix.operation.ooplace.OoPlaceMatrixHadamardProduct;
 import org.la4j.vector.Vector;
 import org.la4j.vector.operation.VectorMatrixOperation;
 import org.la4j.vector.operation.VectorVectorOperation;
-import org.la4j.vector.operation.ooplace.OoPlaceHadamardProduct;
+import org.la4j.vector.operation.ooplace.OoPlaceVectorHadamardProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceInnerProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceOuterProduct;
 import org.la4j.vector.operation.ooplace.OoPlaceVectorByMatrixMultiplication;
@@ -374,8 +375,8 @@ public final class LinearAlgebra {
     public final static VectorVectorOperation<Vector> OO_PLACE_VECTORS_ADDITION =
         new OoPlaceVectorsAddition();
 
-    public final static VectorVectorOperation<Vector> OO_PLACE_HADAMARD_PRODUCT =
-        new OoPlaceHadamardProduct();
+    public final static VectorVectorOperation<Vector> OO_PLACE_VECTOR_HADAMARD_PRODUCT =
+        new OoPlaceVectorHadamardProduct();
 
     public final static VectorVectorOperation<Vector> OO_PLACE_VECTORS_SUBTRACTION =
         new OoPlaceVectorsSubtraction();
@@ -397,4 +398,7 @@ public final class LinearAlgebra {
 
     public final static MatrixMatrixOperation<Matrix> OO_PLACE_MATRICES_SUBTRACTION =
         new OoPlaceMatricesSubtraction();
+
+    public final static MatrixMatrixOperation<Matrix> OO_PLACE_MATRIX_HADAMARD_PRODUCT =
+        new OoPlaceMatrixHadamardProduct();
 }

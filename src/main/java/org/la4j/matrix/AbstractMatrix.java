@@ -678,29 +678,13 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix hadamardProduct(Matrix matrix) {
-        ensureArgumentIsNotNull(matrix, "matrix");
-
-        if ((columns != matrix.columns()) || (rows != matrix.rows())) {
-            fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
-                    ". Should be: " + rows + "x" + columns + ".");
-        }
-
-        Matrix result = factory.createMatrix(rows, columns);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                result.set(i, j, matrix.get(i, j) * get(i, j));
-            }
-        }
-
-        return result;
+    public Matrix hadamardProduct(Matrix that) {
+        return apply(LinearAlgebra.OO_PLACE_MATRIX_HADAMARD_PRODUCT, that);
     }
 
     @Override
-    public Matrix hadamardProduct(Matrix matrix, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-        return hadamardProduct(matrix).to(Factory.asMatrixFactory(factory));
+    public Matrix hadamardProduct(Matrix that, Factory factory) {
+        return hadamardProduct(that).to(Factory.asMatrixFactory(factory));
     }
 
     @Override

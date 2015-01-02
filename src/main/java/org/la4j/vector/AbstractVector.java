@@ -152,7 +152,7 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector hadamardProduct(Vector that) {
-        return apply(LinearAlgebra.OO_PLACE_HADAMARD_PRODUCT, that);
+        return apply(LinearAlgebra.OO_PLACE_VECTOR_HADAMARD_PRODUCT, that);
     }
 
     @Override

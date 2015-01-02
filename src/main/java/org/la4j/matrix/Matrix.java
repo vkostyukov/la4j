@@ -488,24 +488,24 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     double sum();
 
     /**
-     * Calculates the Hadamard (element-wise) product of this and given {@code matrix}.
+     * Calculates the Hadamard (element-wise) product of this and given {@code that} matrix.
      *
-     * @param matrix the right hand matrix for Hadamard product
+     * @param that the right hand matrix for Hadamard product
      *
      * @return the Hadamard product of two matrices
      */
-    Matrix hadamardProduct(Matrix matrix);
+    Matrix hadamardProduct(Matrix that);
 
     /**
-     * Calculates the Hadamard (element-wise) product of this and given {@code matrix}.
+     * Calculates the Hadamard (element-wise) product of this and given {@code that} matrix.
      *
-     * @param matrix the right hand matrix for Hadamard product
+     * @param that the right hand matrix for Hadamard product
      * @param factory the factory of result matrix
      *
      * @return the Hadamard product of two matrices
      */
     @Deprecated
-    Matrix hadamardProduct(Matrix matrix, Factory factory);
+    Matrix hadamardProduct(Matrix that, Factory factory);
 
     /**
      * Calculates the determinant of this matrix.
