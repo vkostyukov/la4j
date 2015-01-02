@@ -116,15 +116,11 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector add(double value, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return add(value).to(Factory.asVectorFactory(factory));
     }
 
     @Override
     public Vector add(Vector that) {
-        ensureArgumentIsNotNull(that, "vector");
-        ensureVectorIsSimilar(that);
-
         return apply(LinearAlgebra.OO_PLACE_VECTORS_ADDITION, that);
     }
 
@@ -156,14 +152,11 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector hadamardProduct(Vector that) {
-        ensureArgumentIsNotNull(that, "vector");
-        ensureVectorIsSimilar(that);
         return apply(LinearAlgebra.OO_PLACE_HADAMARD_PRODUCT, that);
     }
 
     @Override
     public Vector hadamardProduct(Vector that, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return hadamardProduct(that).to(Factory.asVectorFactory(factory));
     }
 
@@ -174,7 +167,6 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector multiply(Matrix matrix, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return multiply(matrix).to(Factory.asVectorFactory(factory));
     }
 
@@ -190,15 +182,11 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector subtract(Vector that) {
-        ensureArgumentIsNotNull(that, "vector");
-        ensureVectorIsSimilar(that);
-
         return apply(LinearAlgebra.OO_PLACE_VECTORS_SUBTRACTION, that);
     }
 
     @Override
     public Vector subtract(Vector that, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return subtract(that).to(Factory.asVectorFactory(factory));
     }
 
@@ -224,9 +212,6 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public double innerProduct(Vector that) {
-        ensureArgumentIsNotNull(that, "vector");
-        ensureVectorIsSimilar(that);
-
         return apply(LinearAlgebra.OO_PLACE_INNER_PRODUCT, that);
     }
 

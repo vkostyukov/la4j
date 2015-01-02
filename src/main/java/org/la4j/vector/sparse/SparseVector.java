@@ -263,6 +263,7 @@ public abstract class SparseVector extends AbstractVector {
 
     @Override
     public <T> T apply(VectorOperation<T> operation) {
+        operation.ensureApplicableTo(this);
         return operation.apply(this);
     }
 

@@ -25,6 +25,8 @@ import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.sparse.CRSMatrix;
+import org.la4j.matrix.sparse.RowMajorSparseMatrix;
+import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
@@ -33,7 +35,7 @@ public class OoPlaceOuterProduct extends VectorVectorOperation<Matrix> {
 
     @Override
     public Matrix apply(SparseVector a, SparseVector b) {
-        Matrix result = CRSMatrix.zero(a.length(), b.length());
+        Matrix result = RowMajorSparseMatrix.zero(a.length(), b.length());
 
         VectorIterator these = a.nonZeroIterator();
         while (these.hasNext()) {
@@ -71,7 +73,7 @@ public class OoPlaceOuterProduct extends VectorVectorOperation<Matrix> {
 
     @Override
     public Matrix apply(DenseVector a, SparseVector b) {
-        Matrix result = CRSMatrix.zero(a.length(), b.length());
+        Matrix result = RowMajorSparseMatrix.zero(a.length(), b.length());
         VectorIterator it = b.nonZeroIterator();
 
         while (it.hasNext()) {

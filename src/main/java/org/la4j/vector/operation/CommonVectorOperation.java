@@ -25,7 +25,7 @@ import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.sparse.SparseVector;
 
-public abstract class CommonVectorOperation<R> implements VectorOperation<R> {
+public abstract class CommonVectorOperation<R> extends VectorOperation<R> {
     @Override
     public R apply(final SparseVector a) {
         return applyCommon(a);

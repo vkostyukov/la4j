@@ -21,6 +21,7 @@
 
 package org.la4j.vector.operation;
 
+import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.sparse.SparseVector;
 
@@ -30,6 +31,8 @@ public abstract class VectorVectorOperation<R> {
     public abstract R apply(final SparseVector a, final DenseVector b);
     public abstract R apply(final DenseVector a, final DenseVector b);
     public abstract R apply(final DenseVector a, final SparseVector b);
+
+    public void ensureApplicableTo(final Vector a, final Vector b) { }
 
     public VectorOperation<R> partiallyApply(final SparseVector a) {
         return new VectorOperation<R>() {
@@ -41,6 +44,11 @@ public abstract class VectorVectorOperation<R> {
             @Override
             public R apply(final DenseVector b) {
                 return VectorVectorOperation.this.apply(a, b);
+            }
+
+            @Override
+            public void ensureApplicableTo(final Vector b) {
+                VectorVectorOperation.this.ensureApplicableTo(a, b);
             }
         };
     }
@@ -55,6 +63,11 @@ public abstract class VectorVectorOperation<R> {
             @Override
             public R apply(final DenseVector b) {
                 return VectorVectorOperation.this.apply(a, b);
+            }
+
+            @Override
+            public void ensureApplicableTo(final Vector b) {
+                VectorVectorOperation.this.ensureApplicableTo(a, b);
             }
         };
     }

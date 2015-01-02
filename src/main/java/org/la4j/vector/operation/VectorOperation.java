@@ -21,10 +21,13 @@
 
 package org.la4j.vector.operation;
 
+import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.sparse.SparseVector;
 
-public interface VectorOperation<R> {
-    R apply(final SparseVector a);
-    R apply(final DenseVector a);
+public abstract class VectorOperation<R> {
+    public abstract R apply(final SparseVector a);
+    public abstract R apply(final DenseVector a);
+
+    public void ensureApplicableTo(final Vector a) { }
 }

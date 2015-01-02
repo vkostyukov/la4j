@@ -23,6 +23,7 @@ package org.la4j.vector.operation.ooplace;
 
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.VectorIterator;
+import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
@@ -92,13 +93,6 @@ public class OoPlaceVectorByMatrixMultiplication extends VectorMatrixOperation<V
 
     @Override
     public Vector apply(DenseVector a, DenseMatrix b) {
-        if (a.length() != b.rows()) {
-            throw new IllegalArgumentException(
-                "Wrong matrix dimensions: " + b.rows() + "x" + b.columns() +
-                ". Should be: " + a.length() + "x_."
-            );
-        }
-
         Vector result = a.blankOfLength(b.columns());
 
         for (int j = 0; j < b.columns(); j++) {
@@ -150,5 +144,15 @@ public class OoPlaceVectorByMatrixMultiplication extends VectorMatrixOperation<V
         }
 
         return result;
+    }
+
+    @Override
+    public void ensureApplicableTo(Vector a, Matrix b) {
+        if (a.length() != b.rows()) {
+            throw new IllegalArgumentException(
+                "Given vector should have the same length as number of rows in the given matrix: " +
+                a.length() + " does not equal to " + b.rows() + "."
+            );
+        }
     }
 }

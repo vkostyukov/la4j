@@ -145,6 +145,7 @@ public abstract class RowMajorSparseMatrix extends SparseMatrix {
 
     @Override
     public <T> T apply(MatrixOperation<T> operation) {
+        operation.ensureApplicableTo(this);
         return operation.apply(this);
     }
 

@@ -91,6 +91,7 @@ public abstract class DenseVector extends AbstractVector {
 
     @Override
     public <T> T apply(VectorOperation<T> operation) {
+        operation.ensureApplicableTo(this);
         return operation.apply(this);
     }
 

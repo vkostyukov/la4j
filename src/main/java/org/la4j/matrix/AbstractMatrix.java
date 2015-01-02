@@ -434,18 +434,11 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Vector multiply(Vector that) {
-        ensureArgumentIsNotNull(that, "vector");
-
-        if (columns != that.length()) {
-            fail("Wrong vector length: " + that.length() + ". Should be: " + columns + ".");
-        }
-
         return apply(LinearAlgebra.OO_PLACE_MATRIX_BY_VECTOR_MULTIPLICATION, that);
     }
 
     @Override
     public Vector multiply(Vector that, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return multiply(that).to(Factory.asVectorFactory(factory));
     }
 
@@ -519,19 +512,11 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix subtract(Matrix that) {
-        ensureArgumentIsNotNull(that, "matrix");
-
-        if (rows != that.rows() || columns != that.columns()) {
-            fail("Wrong matrix dimensions: " + that.rows() + "x" + that.columns() +
-                    ". Should be: " + rows + "x" + columns + ".");
-        }
-
         return apply(LinearAlgebra.OO_PLACE_MATRICES_SUBTRACTION, that);
     }
 
     @Override
     public Matrix subtract(Matrix that, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return subtract(that).to(Factory.asMatrixFactory(factory));
     }
 
@@ -557,17 +542,11 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix add(Matrix that) {
-        if (rows != that.rows() || columns != that.columns()) {
-            fail("Wrong matrix dimensions: " + that.rows() + "x" + that.columns() +
-                    ". Should be: " + rows + "x" + columns + ".");
-        }
-
         return apply(LinearAlgebra.OO_PLACE_MATRIX_ADDITION, that);
     }
 
     @Override
     public Matrix add(Matrix that, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return add(that).to(Factory.asMatrixFactory(factory));
     }
     

@@ -21,10 +21,12 @@
 
 package org.la4j.vector.operation;
 
+import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.operation.MatrixOperation;
 import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
+import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.sparse.SparseVector;
 
@@ -38,21 +40,28 @@ public abstract class VectorMatrixOperation<R> {
     public abstract R apply(final DenseVector a, final RowMajorSparseMatrix b);
     public abstract R apply(final DenseVector a, final ColumnMajorSparseMatrix b);
 
+    public void ensureApplicableTo(final Vector a, final Matrix b) { }
+
     public MatrixOperation<R> partiallyApply(final SparseVector a) {
         return new MatrixOperation<R>() {
             @Override
-            public R apply(DenseMatrix b) {
+            public R apply(final DenseMatrix b) {
                 return VectorMatrixOperation.this.apply(a, b);
             }
 
             @Override
-            public R apply(RowMajorSparseMatrix b) {
+            public R apply(final RowMajorSparseMatrix b) {
                 return VectorMatrixOperation.this.apply(a, b);
             }
 
             @Override
-            public R apply(ColumnMajorSparseMatrix b) {
+            public R apply(final ColumnMajorSparseMatrix b) {
                 return VectorMatrixOperation.this.apply(a, b);
+            }
+
+            @Override
+            public void ensureApplicableTo(final Matrix b) {
+                VectorMatrixOperation.this.ensureApplicableTo(a, b);
             }
         };
     }
@@ -60,18 +69,23 @@ public abstract class VectorMatrixOperation<R> {
     public MatrixOperation<R> partiallyApply(final DenseVector a) {
         return new MatrixOperation<R>() {
             @Override
-            public R apply(DenseMatrix b) {
+            public R apply(final DenseMatrix b) {
                 return VectorMatrixOperation.this.apply(a, b);
             }
 
             @Override
-            public R apply(RowMajorSparseMatrix b) {
+            public R apply(final RowMajorSparseMatrix b) {
                 return VectorMatrixOperation.this.apply(a, b);
             }
 
             @Override
-            public R apply(ColumnMajorSparseMatrix b) {
+            public R apply(final ColumnMajorSparseMatrix b) {
                 return VectorMatrixOperation.this.apply(a, b);
+            }
+
+            @Override
+            public void ensureApplicableTo(final Matrix b) {
+                VectorMatrixOperation.this.ensureApplicableTo(a, b);
             }
         };
     }

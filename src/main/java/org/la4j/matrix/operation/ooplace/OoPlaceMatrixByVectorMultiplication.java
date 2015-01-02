@@ -22,6 +22,7 @@ package org.la4j.matrix.operation.ooplace;
 
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.VectorIterator;
+import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.operation.MatrixVectorOperation;
 import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
@@ -132,5 +133,15 @@ public class OoPlaceMatrixByVectorMultiplication extends MatrixVectorOperation<V
         }
 
         return result;
+    }
+
+    @Override
+    public void ensureApplicableTo(Matrix a, Vector b) {
+        if (a.columns() != b.length()) {
+            throw new IllegalArgumentException(
+                "Given vector should have the same length as number of columns in the given matrix: " +
+                b.length() + " does not equal to " + a.columns() + "."
+            );
+        }
     }
 }

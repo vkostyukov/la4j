@@ -93,4 +93,15 @@ public class OoPlaceMatricesAddition extends SymmetricMatrixOperation<Matrix> {
 
         return result;
     }
+
+    @Override
+    public void ensureApplicableTo(Matrix a, Matrix b) {
+        if (a.rows() != b.rows() || a.columns() != b.columns()) {
+            throw new IllegalArgumentException(
+                "Given matrices should have the same shape: " +
+                a.rows() + "x" + a.columns() + " does not equal to " +
+                b.rows() + "x" + b.columns() + "."
+            );
+        }
+    }
 }

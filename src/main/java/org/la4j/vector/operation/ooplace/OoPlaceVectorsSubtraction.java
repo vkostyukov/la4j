@@ -84,4 +84,14 @@ public class OoPlaceVectorsSubtraction extends VectorVectorOperation<Vector> {
 
         return result;
     }
+
+    @Override
+    public void ensureApplicableTo(Vector a, Vector b) {
+        if (a.length() != b.length()) {
+            throw new IllegalArgumentException(
+                "Given vectors should have the same length: " +
+                a.length() + " does not equal to " + b.length() + "."
+            );
+        }
+    }
 }

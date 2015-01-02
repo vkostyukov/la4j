@@ -21,6 +21,7 @@
 
 package org.la4j.matrix.operation;
 
+import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
@@ -39,21 +40,28 @@ public abstract class MatrixMatrixOperation<R> {
     public abstract R apply(final ColumnMajorSparseMatrix a, final RowMajorSparseMatrix b);
     public abstract R apply(final ColumnMajorSparseMatrix a, final ColumnMajorSparseMatrix b);
 
+    public void ensureApplicableTo(final Matrix a, final Matrix b) { }
+
     public MatrixOperation<R> partiallyApply(final DenseMatrix a) {
         return new MatrixOperation<R>() {
             @Override
-            public R apply(DenseMatrix b) {
+            public R apply(final DenseMatrix b) {
                 return MatrixMatrixOperation.this.apply(a, b);
             }
 
             @Override
-            public R apply(RowMajorSparseMatrix b) {
+            public R apply(final RowMajorSparseMatrix b) {
                 return MatrixMatrixOperation.this.apply(a, b);
             }
 
             @Override
-            public R apply(ColumnMajorSparseMatrix b) {
+            public R apply(final ColumnMajorSparseMatrix b) {
                 return MatrixMatrixOperation.this.apply(a, b);
+            }
+
+            @Override
+            public void ensureApplicableTo(final Matrix b) {
+                MatrixMatrixOperation.this.ensureApplicableTo(a, b);
             }
         };
     }
@@ -74,6 +82,11 @@ public abstract class MatrixMatrixOperation<R> {
             public R apply(ColumnMajorSparseMatrix b) {
                 return MatrixMatrixOperation.this.apply(a, b);
             }
+
+            @Override
+            public void ensureApplicableTo(final Matrix b) {
+                MatrixMatrixOperation.this.ensureApplicableTo(a, b);
+            }
         };
     }
 
@@ -92,6 +105,11 @@ public abstract class MatrixMatrixOperation<R> {
             @Override
             public R apply(ColumnMajorSparseMatrix b) {
                 return MatrixMatrixOperation.this.apply(a, b);
+            }
+
+            @Override
+            public void ensureApplicableTo(final Matrix b) {
+                MatrixMatrixOperation.this.ensureApplicableTo(a, b);
             }
         };
     }

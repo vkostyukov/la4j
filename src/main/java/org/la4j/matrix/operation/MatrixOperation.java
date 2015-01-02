@@ -21,12 +21,15 @@
 
 package org.la4j.matrix.operation;
 
+import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
 
-public interface MatrixOperation<R> {
-    R apply(final DenseMatrix a);
-    R apply(final RowMajorSparseMatrix a);
-    R apply(final ColumnMajorSparseMatrix a);
+public abstract class MatrixOperation<R> {
+    public abstract R apply(final DenseMatrix a);
+    public abstract R apply(final RowMajorSparseMatrix a);
+    public abstract R apply(final ColumnMajorSparseMatrix a);
+
+    public void ensureApplicableTo(final Matrix a) { }
 }
