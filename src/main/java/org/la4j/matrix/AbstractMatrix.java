@@ -518,29 +518,21 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix subtract(Matrix matrix) {
-        ensureArgumentIsNotNull(matrix, "matrix");
+    public Matrix subtract(Matrix that) {
+        ensureArgumentIsNotNull(that, "matrix");
 
-        if (rows != matrix.rows() || columns != matrix.columns()) {
-            fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
+        if (rows != that.rows() || columns != that.columns()) {
+            fail("Wrong matrix dimensions: " + that.rows() + "x" + that.columns() +
                     ". Should be: " + rows + "x" + columns + ".");
         }
 
-        Matrix result = blank(factory);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                result.set(i, j, get(i, j) - matrix.get(i, j));
-            }
-        }
-
-        return result;
+        return apply(LinearAlgebra.OO_PLACE_MATRICES_SUBTRACTION, that);
     }
 
     @Override
-    public Matrix subtract(Matrix matrix, Factory factory) {
+    public Matrix subtract(Matrix that, Factory factory) {
         ensureFactoryIsNotNull(factory);
-        return subtract(matrix).to(Factory.asMatrixFactory(factory));
+        return subtract(that).to(Factory.asMatrixFactory(factory));
     }
 
     @Override

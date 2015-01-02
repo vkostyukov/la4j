@@ -306,24 +306,24 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     Matrix subtract(double value, Factory factory);
 
     /**
-     * Subtracts given {@code matrix} (B) from this matrix (A).
+     * Subtracts given {@code that} matrix (B) from this matrix (A).
      *
-     * @param matrix the right hand matrix for subtraction
+     * @param that the right hand matrix for subtraction
      *
      * @return A - B
      */
-    Matrix subtract(Matrix matrix);
+    Matrix subtract(Matrix that);
 
     /**
-     * Subtracts given {@code matrix} (B) from this matrix (A).
+     * Subtracts given {@code that} matrix (B) from this matrix (A).
      *
-     * @param matrix the right hand matrix for subtraction
+     * @param that the right hand matrix for subtraction
      * @param factory the factory of result matrix
      *
      * @return A - B
      */
     @Deprecated
-    Matrix subtract(Matrix matrix, Factory factory);
+    Matrix subtract(Matrix that, Factory factory);
 
     /**
      * Adds given {@code value} (v) to every element of this matrix (A).

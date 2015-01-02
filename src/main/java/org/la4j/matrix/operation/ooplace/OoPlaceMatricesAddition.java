@@ -21,7 +21,6 @@
 
 package org.la4j.matrix.operation.ooplace;
 
-import org.la4j.iterator.ColumnMajorMatrixIterator;
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.matrix.Matrix;
@@ -79,27 +78,10 @@ public class OoPlaceMatricesAddition extends SymmetricMatrixOperation<Matrix> {
     }
 
     @Override
-    public Matrix apply(RowMajorSparseMatrix a, RowMajorSparseMatrix b) {
+    public Matrix applySymmetric(SparseMatrix a, SparseMatrix b) {
         Matrix result = a.blank();
-        RowMajorMatrixIterator these = a.nonZeroRowMajorIterator();
-        RowMajorMatrixIterator those = b.nonZeroRowMajorIterator();
-        MatrixIterator both = these.orElseAdd(those);
-
-        while (both.hasNext()) {
-            double x = both.next();
-            int i = both.rowIndex();
-            int j = both.columnIndex();
-            result.set(i, j, x);
-        }
-
-        return result;
-    }
-
-    @Override
-    public Matrix apply(ColumnMajorSparseMatrix a, ColumnMajorSparseMatrix b) {
-        Matrix result = a.blank();
-        ColumnMajorMatrixIterator these = a.nonZeroColumnMajorIterator();
-        ColumnMajorMatrixIterator those = b.nonZeroColumnMajorIterator();
+        MatrixIterator these = a.nonZeroIterator();
+        MatrixIterator those = b.nonZeroIterator();
         MatrixIterator both = these.orElseAdd(those);
 
         while (both.hasNext()) {

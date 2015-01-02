@@ -33,10 +33,21 @@ public abstract class SymmetricMatrixOperation<R> extends MatrixMatrixOperation<
     }
 
     @Override
+    public R apply(RowMajorSparseMatrix a, RowMajorSparseMatrix b) {
+        return applySymmetric(a, b);
+    }
+
+    @Override
+    public R apply(ColumnMajorSparseMatrix a, ColumnMajorSparseMatrix b) {
+        return applySymmetric(a, b);
+    }
+
+    @Override
     public R apply(ColumnMajorSparseMatrix a, RowMajorSparseMatrix b) {
         return applySymmetric(b, a);
     }
 
     public abstract R applySymmetric(final DenseMatrix a, final SparseMatrix b);
+    public abstract R applySymmetric(final SparseMatrix a, final SparseMatrix b);
     public abstract R applySymmetric(final RowMajorSparseMatrix a, final ColumnMajorSparseMatrix b);
 }

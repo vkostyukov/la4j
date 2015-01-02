@@ -53,12 +53,7 @@ public class InPlaceCopyMatrixToMatrix extends SimpleMatrixMatrixOperation<Matri
     }
 
     @Override
-    public Matrix apply(RowMajorSparseMatrix a, RowMajorSparseMatrix b) {
-        return fromSparseToMatrix(a, b);
-    }
-
-    @Override
-    public Matrix apply(ColumnMajorSparseMatrix a, ColumnMajorSparseMatrix b) {
+    public Matrix applySimple(SparseMatrix a, SparseMatrix b) {
         return fromSparseToMatrix(a, b);
     }
 

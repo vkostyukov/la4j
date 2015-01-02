@@ -48,6 +48,17 @@ public abstract class SimpleMatrixMatrixOperation<R> extends MatrixMatrixOperati
         return applySimple(a, b);
     }
 
+    @Override
+    public R apply(RowMajorSparseMatrix a, RowMajorSparseMatrix b) {
+        return applySimple(a, b);
+    }
+
+    @Override
+    public R apply(ColumnMajorSparseMatrix a, ColumnMajorSparseMatrix b) {
+        return applySimple(a, b);
+    }
+
     public abstract R applySimple(final DenseMatrix a, final SparseMatrix b);
     public abstract R applySimple(final SparseMatrix a, final DenseMatrix b);
+    public abstract R applySimple(final SparseMatrix a, final SparseMatrix b);
 }
