@@ -21,16 +21,18 @@
 
 package org.la4j.operation.ooplace;
 
+import org.la4j.inversion.MatrixInverter;
+import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
+import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
-import org.la4j.operation.SymmetricVectorVectorOperation;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
-public class OoPlaceOuterProduct extends SymmetricVectorVectorOperation<Matrix> {
+public class OoPlaceOuterProduct extends VectorVectorOperation<Matrix> {
 
     @Override
     public Matrix apply(SparseVector a, SparseVector b) {
@@ -66,18 +68,34 @@ public class OoPlaceOuterProduct extends SymmetricVectorVectorOperation<Matrix> 
     }
 
     @Override
-    public Matrix applySymmetric(DenseVector a, SparseVector b) {
-        Matrix result = RowMajorSparseMatrix.zero(a.length(), b.length());
+    public Matrix apply(DenseVector a, SparseVector b) {
+        Matrix result = ColumnMajorSparseMatrix.zero(a.length(), b.length());
         VectorIterator it = b.nonZeroIterator();
 
         while (it.hasNext()) {
             double x = it.next();
-            int i = it.index();
-            for (int j = 0; j < a.length(); j++) {
-                result.set(i, j, x * a.get(j));
+            int j = it.index();
+            for (int i = 0; i < a.length(); i++) {
+                result.set(i, j, x * a.get(i));
             }
         }
 
-        return null;
+        return result;
+    }
+
+    @Override
+    public Matrix apply(SparseVector a, DenseVector b) {
+        Matrix result = RowMajorSparseMatrix.zero(a.length(), b.length());
+        VectorIterator it = a.nonZeroIterator();
+
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            for (int j = 0; j < b.length(); j++) {
+                result.set(i, j, x * b.get(j));
+            }
+        }
+
+        return result;
     }
 }

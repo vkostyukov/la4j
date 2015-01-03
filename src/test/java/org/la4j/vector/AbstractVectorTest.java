@@ -33,6 +33,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 import org.junit.Test;
+import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
@@ -321,81 +322,84 @@ public abstract class AbstractVectorTest {
 
     @Test
     public void testAdd_3() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Vector a = factory().createVector(new double[]
+                            {0.0, 0.0, 3.0}
+            );
 
-        Vector a = factory().createVector(new double[]
-                        {0.0, 0.0, 3.0}
-        );
+            Vector b = f.createVector(new double[]
+                            {0.0, 5.0, 0.0}
+            );
 
-        Vector b = factory().createVector(new double[]
-                        {0.0, 5.0, 0.0}
-        );
+            Vector c = factory().createVector(new double[]
+                            {7.0, 7.0, 10.0}
+            );
 
-        Vector c = factory().createVector(new double[]
-                        {7.0, 7.0, 10.0}
-        );
+            Vector d = factory().createVector(new double[]
+                            {0.0, 5.0, 3.0}
+            );
 
-        Vector d = factory().createVector(new double[]
-                        {0.0, 5.0, 3.0}
-        );
-
-        assertEquals(c, a.add(7.0));
-        assertEquals(d, a.add(b));
+            assertEquals(c, a.add(7.0));
+            assertEquals(d, a.add(b));
+        }
     }
 
     @Test
     public void testAdd_4() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Vector a = factory().createVector(new double[]{1.0, 0.0, 0.0, 3.0});
+            Vector b = f.createVector(new double[]{0.0, 1.0, 0.0, 6.0});
+            Vector c = factory().createVector(new double[]{1.0, 1.0, 0.0, 9.0});
 
-        Vector a = factory().createVector(new double[]{1.0, 0.0, 0.0, 3.0});
-        Vector b = factory().createVector(new double[]{0.0, 1.0, 0.0, 6.0});
-        Vector c = factory().createVector(new double[]{1.0, 1.0, 0.0, 9.0});
-
-        assertEquals(c, a.add(b));
+            assertEquals(c, a.add(b));
+        }
     }
 
     @Test
     public void testSubtract_3() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Vector b = factory().createVector(new double[]
+                            {4.0, 0.0, 0.0}
+            );
 
-        Vector a = factory().createVector(new double[]
-                        {0.0, 0.0, 3.0}
-        );
+            Vector c = f.createVector(new double[]
+                            {-7.0, -7.0, -4.0}
+            );
 
-        Vector b = factory().createVector(new double[]
-                        {4.0, 0.0, 0.0}
-        );
+            Vector a = factory().createVector(new double[]
+                            {0.0, 0.0, 3.0}
+            );
+            Vector d = factory().createVector(new double[]
+                            {-4.0, 0.0, 3.0}
+            );
 
-        Vector c = factory().createVector(new double[]
-                        {-7.0, -7.0, -4.0}
-        );
-
-        Vector d = factory().createVector(new double[]
-                        {-4.0, 0.0, 3.0}
-        );
-
-        assertEquals(c, a.subtract(7.0));
-        assertEquals(d, a.subtract(b));
+            assertEquals(c, a.subtract(7.0));
+            assertEquals(d, a.subtract(b));
+        }
     }
 
     @Test
     public void testMultiply_3() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Vector a = factory().createVector(new double[]
+                            {0.0, 0.0, 1.0}
+            );
 
-        Vector a = factory().createVector(new double[]
-                        {0.0, 0.0, 1.0}
-        );
+            Vector b = f.createVector(new double[]
+                            {0.0, 5.0, 0.0}
+            );
 
-        Vector b = factory().createVector(new double[]
-                        {0.0, 5.0, 0.0}
-        );
+            Vector c = factory().createVector(new double[]
+                            {0.0, 0.0, 10.0}
+            );
 
-        Vector c = factory().createVector(new double[]
-                        {0.0, 0.0, 10.0}
-        );
+            Vector d = factory().createVector(new double[]
+                            {0.0, 0.0, 0.0}
+            );
 
-        Vector d = factory().createVector(new double[]
-                        {0.0, 0.0, 0.0}
-        );
-
-        assertEquals(c, a.multiply(10.0));
-        assertEquals(d, a.hadamardProduct(b));
+            assertEquals(c, a.multiply(10.0));
+            assertEquals(d, a.hadamardProduct(b));
+        }
     }
 
     @Test
@@ -418,41 +422,43 @@ public abstract class AbstractVectorTest {
 
     @Test
     public void testMultiply_2_2x4() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Vector a = factory().createVector(new double[]
+                            {1.0, 2.0}
+            );
 
-        Vector a = factory().createVector(new double[]
-                        {1.0, 2.0}
-        );
+            Matrix b = f.createMatrix(new double[][]{
+                    {0.0, 5.0, 0.0, 6.0},
+                    {1.0, 0.0, 8.0, 0.0}
+            });
 
-        Matrix b = factory().createMatrix(new double[][]{
-                {0.0, 5.0, 0.0, 6.0},
-                {1.0, 0.0, 8.0, 0.0}
-        });
+            Vector c = factory().createVector(new double[]
+                            {2.0, 5.0, 16.0, 6.0}
+            );
 
-        Vector c = factory().createVector(new double[]
-                        {2.0, 5.0, 16.0, 6.0}
-        );
-
-        assertEquals(c, a.multiply(b));
+            assertEquals(c, a.multiply(b));
+        }
     }
 
     @Test
     public void testMultiply_3_3x1() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Vector a = factory().createVector(new double[]
+                            {0.0, 2.0, 0.0}
+            );
 
-        Vector a = factory().createVector(new double[]
-                        {0.0, 2.0, 0.0}
-        );
+            Matrix b = f.createMatrix(new double[][]{
+                    {0.0},
+                    {3.0},
+                    {0.0},
+            });
 
-        Matrix b = factory().createMatrix(new double[][]{
-                {0.0},
-                {3.0},
-                {0.0},
-        });
+            Vector c = factory().createVector(new double[]
+                            {6.0}
+            );
 
-        Vector c = factory().createVector(new double[]
-                        {6.0}
-        );
-
-        assertEquals(c, a.multiply(b));
+            assertEquals(c, a.multiply(b));
+        }
     }
 
     @Test
@@ -535,74 +541,80 @@ public abstract class AbstractVectorTest {
 
     @Test
     public void testInnerProduct_1() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Vector a = factory().createVector(new double[]{18.0});
+            Vector b = f.createVector(new double[]{10.0});
 
-        Vector a = factory().createVector(new double[]{18.0});
-        Vector b = factory().createVector(new double[]{10.0});
-
-        assertEquals(180.0, a.innerProduct(b), Vectors.EPS);
+            assertEquals(180.0, a.innerProduct(b), Vectors.EPS);
+        }
     }
 
     @Test
     public void testInnerProduct_3() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Vector a = factory().createVector(new double[]{1.0, 2.0, 3.0});
+            Vector b = f.createVector(new double[]{10.0, 0.0, 10.0});
 
-        Vector a = factory().createVector(new double[]{1.0, 2.0, 3.0});
-        Vector b = factory().createVector(new double[]{10.0, 0.0, 10.0});
-
-        assertEquals(40.0, a.innerProduct(b), Vectors.EPS);
+            assertEquals(40.0, a.innerProduct(b), Vectors.EPS);
+        }
     }
 
     @Test
     public void testInnerProduct_4() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Vector a = factory().createVector(new double[]{2, 3, 5, 7});
+            Vector b = f.createVector(new double[]{11, 13, 17, 19});
 
-        Vector a = factory().createVector(new double[]{2, 3, 5, 7});
-        Vector b = factory().createVector(new double[]{11, 13, 17, 19});
-
-        // 2 * 11 + 3 * 13 + 5 * 17 + 7 * 19 = 279
-        assertEquals(279.0, a.innerProduct(b), Vectors.EPS);
+            // 2 * 11 + 3 * 13 + 5 * 17 + 7 * 19 = 279
+            assertEquals(279.0, a.innerProduct(b), Vectors.EPS);
+        }
     }
 
     @Test
     public void testOuterProduct_3_4() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Vector a = factory().createVector(new double[]{2, 3, 5});
+            Vector b = f.createVector(new double[]{7, 11, 13, 17});
 
-        Vector a = factory().createVector(new double[]{2, 3, 5});
-        Vector b = factory().createVector(new double[]{7, 11, 13, 17});
+            Matrix c = factory().createMatrix(new double[][]{
+                    {14, 22, 26, 34},
+                    {21, 33, 39, 51},
+                    {35, 55, 65, 85}
+            });
 
-        Matrix c = factory().createMatrix(new double[][]{
-                {14, 22, 26, 34},
-                {21, 33, 39, 51},
-                {35, 55, 65, 85}
-        });
-
-        assertEquals(c, a.outerProduct(b));
+            assertEquals(c, a.outerProduct(b));
+        }
     }
 
     @Test
     public void testOuterProduct_1_2() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Vector a = factory().createVector(new double[]{2.0});
+            Vector b = f.createVector(new double[]{24.0, 1.0});
 
-        Vector a = factory().createVector(new double[]{2.0});
-        Vector b = factory().createVector(new double[]{24.0, 1.0});
+            Matrix c = factory().createMatrix(new double[][]{
+                    {48.0, 2.0}
+            });
 
-        Matrix c = factory().createMatrix(new double[][]{
-                {48.0, 2.0}
-        });
-
-        assertEquals(c, a.outerProduct(b));
+            assertEquals(c, a.outerProduct(b));
+        }
     }
 
     @Test
     public void testOuterProduct_4_2() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Vector a = factory().createVector(new double[]{2.0, 0.0, -1.0, 41.0});
+            Vector b = f.createVector(new double[]{4.0, -10.0});
 
-        Vector a = factory().createVector(new double[]{2.0, 0.0, -1.0, 41.0});
-        Vector b = factory().createVector(new double[]{4.0, -10.0});
+            Matrix c = factory().createMatrix(new double[][]{
+                    {8.0, -20.0},
+                    {0.0, 0.0},
+                    {-4.0, 10.0},
+                    {164.0, -410.0}
+            });
 
-        Matrix c = factory().createMatrix(new double[][]{
-                {8.0, -20.0},
-                {0.0, 0.0},
-                {-4.0, 10.0},
-                {164.0, -410.0}
-        });
-
-        assertEquals(c, a.outerProduct(b));
+            assertEquals(c, a.outerProduct(b));
+        }
     }
 
     /**
