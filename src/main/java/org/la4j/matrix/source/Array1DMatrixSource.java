@@ -21,6 +21,7 @@
 
 package org.la4j.matrix.source;
 
+@Deprecated
 public class Array1DMatrixSource implements MatrixSource {
 
     private final int rows, columns;

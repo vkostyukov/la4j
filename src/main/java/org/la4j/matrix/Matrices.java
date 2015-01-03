@@ -45,8 +45,6 @@ import org.la4j.matrix.source.RandomSymmetricMatrixSource;
 import org.la4j.matrix.source.StreamMatrixSource;
 import org.la4j.matrix.sparse.CCSMatrix;
 import org.la4j.matrix.sparse.CRSMatrix;
-import org.la4j.matrix.sparse.RowMajorSparseMatrix;
-import org.la4j.matrix.sparse.SparseMatrix;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -706,6 +704,7 @@ public final class Matrices {
      *
      * @return a matrix source
      */
+    @Deprecated
     public static MatrixSource asMatrixSource(Matrix matrix) {
         return new LoopbackMatrixSource(matrix);
     }
@@ -719,6 +718,7 @@ public final class Matrices {
      *
      * @return a 1D-array matrix source
      */
+    @Deprecated
     public static MatrixSource asArray1DSource(int rows, int columns, double[] array) {
         return new Array1DMatrixSource(rows, columns, array);
     }
@@ -730,6 +730,7 @@ public final class Matrices {
      *
      * @return a 2D-array matrix source
      */
+    @Deprecated
     public static MatrixSource asArray2DSource(double[][] array) {
         return new Array2DMatrixSource(array);
     }
@@ -755,6 +756,7 @@ public final class Matrices {
      *
      * @return a random matrix source
      */
+    @Deprecated
     public static MatrixSource asRandomSource(int rows, int columns, Random random) {
         return new RandomMatrixSource(rows, columns, random);
     }
@@ -827,6 +829,7 @@ public final class Matrices {
      *
      * @return a default 2x2 matrix
      */
+    @Deprecated
     public static Matrix asMatrix2x2(double... values) {
         return LinearAlgebra.DEFAULT_FACTORY.createMatrix(unflatten(values, 2));
     }
@@ -838,6 +841,7 @@ public final class Matrices {
      *
      * @return a default 3x3 matrix
      */
+    @Deprecated
     public static Matrix asMatrix3x3(double... values) {
         return LinearAlgebra.DEFAULT_FACTORY.createMatrix(unflatten(values, 3));
     }
@@ -849,6 +853,7 @@ public final class Matrices {
      *
      * @return a default 4x4 matrix
      */
+    @Deprecated
     public static Matrix asMatrix4x4(double... values) {
         return LinearAlgebra.DEFAULT_FACTORY.createMatrix(unflatten(values, 4));
     }

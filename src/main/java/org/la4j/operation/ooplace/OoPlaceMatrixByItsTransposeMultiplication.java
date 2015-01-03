@@ -1,6 +1,5 @@
 package org.la4j.operation.ooplace;
 
-import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;

@@ -23,6 +23,7 @@ package org.la4j.matrix.source;
 
 import org.la4j.matrix.Matrix;
 
+@Deprecated
 public class LoopbackMatrixSource implements MatrixSource {
 
     private final Matrix matrix;

@@ -23,6 +23,7 @@ package org.la4j.matrix.source;
 
 import java.util.Random;
 
+@Deprecated
 public class RandomMatrixSource implements MatrixSource {
 
     private final int rows, columns;

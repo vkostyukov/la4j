@@ -21,6 +21,7 @@
 
 package org.la4j.matrix.source;
 
+@Deprecated
 public class Array2DMatrixSource implements MatrixSource {
 
     private final double array[][];
