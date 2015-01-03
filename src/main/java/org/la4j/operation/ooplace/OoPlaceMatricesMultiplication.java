@@ -36,7 +36,6 @@ public class OoPlaceMatricesMultiplication extends MatrixMatrixOperation<Matrix>
 
     @Override
     public Matrix apply(DenseMatrix a, RowMajorSparseMatrix b) {
-        // TODO: Might be improved a bit.
         Matrix result = ColumnMajorSparseMatrix.zero(a.rows(), b.columns());
         MatrixIterator it = b.nonZeroRowMajorIterator();
 
@@ -55,7 +54,7 @@ public class OoPlaceMatricesMultiplication extends MatrixMatrixOperation<Matrix>
 
     @Override
     public Matrix apply(DenseMatrix a, ColumnMajorSparseMatrix b) {
-        Matrix result = ColumnMajorSparseMatrix.zero(a.rows(), b.columns());
+        Matrix result = b.blankOfShape(a.rows(), b.columns());
         Iterator<Integer> nzColumns = b.iteratorOrNonZeroColumns();
 
         while (nzColumns.hasNext()) {
@@ -78,7 +77,7 @@ public class OoPlaceMatricesMultiplication extends MatrixMatrixOperation<Matrix>
 
     @Override
     public Matrix apply(RowMajorSparseMatrix a, DenseMatrix b) {
-        Matrix result = RowMajorSparseMatrix.zero(a.rows(), b.columns());
+        Matrix result = a.blankOfShape(a.rows(), b.columns());
         Iterator<Integer> nzRows = a.iteratorOfNonZeroRows();
 
         while (nzRows.hasNext()) {
@@ -102,7 +101,7 @@ public class OoPlaceMatricesMultiplication extends MatrixMatrixOperation<Matrix>
     @Override
     public Matrix apply(RowMajorSparseMatrix a, RowMajorSparseMatrix b) {
         // TODO: Can we do it w/o updateAt?
-        Matrix result = RowMajorSparseMatrix.zero(a.rows(), b.columns());
+        Matrix result = a.blankOfShape(a.rows(), b.columns());
         MatrixIterator these = a.nonZeroRowMajorIterator();
 
         while (these.hasNext()) {
@@ -123,7 +122,7 @@ public class OoPlaceMatricesMultiplication extends MatrixMatrixOperation<Matrix>
 
     @Override
     public Matrix apply(RowMajorSparseMatrix a, ColumnMajorSparseMatrix b) {
-        Matrix result = RowMajorSparseMatrix.zero(a.rows(), b.columns());
+        Matrix result = a.blankOfShape(a.rows(), b.columns());
         Iterator<Integer> nzRows = a.iteratorOfNonZeroRows();
         Iterator<Integer> nzColumnsIt = b.iteratorOrNonZeroColumns();
         List<Integer> nzColumns = new ArrayList<Integer>();
@@ -144,8 +143,7 @@ public class OoPlaceMatricesMultiplication extends MatrixMatrixOperation<Matrix>
 
     @Override
     public Matrix apply(ColumnMajorSparseMatrix a, DenseMatrix b) {
-        // TODO: Might be improved a bit.
-        Matrix result = ColumnMajorSparseMatrix.zero(a.rows(), b.columns());
+        Matrix result = a.blankOfShape(a.rows(), b.columns());
         MatrixIterator it = a.nonZeroColumnMajorIterator();
 
         while (it.hasNext()) {
@@ -164,7 +162,7 @@ public class OoPlaceMatricesMultiplication extends MatrixMatrixOperation<Matrix>
     @Override
     public Matrix apply(ColumnMajorSparseMatrix a, RowMajorSparseMatrix b) {
         // TODO: Might be improved a bit.
-        Matrix result = RowMajorSparseMatrix.zero(a.rows(), b.columns());
+        Matrix result = b.blankOfShape(a.rows(), b.columns());
         MatrixIterator these = a.nonZeroColumnMajorIterator();
 
         while (these.hasNext()) {
@@ -186,7 +184,7 @@ public class OoPlaceMatricesMultiplication extends MatrixMatrixOperation<Matrix>
     @Override
     public Matrix apply(ColumnMajorSparseMatrix a, ColumnMajorSparseMatrix b) {
         // TODO: Might be improved a bit.
-        Matrix result = ColumnMajorSparseMatrix.zero(a.rows(), b.columns());
+        Matrix result = a.blankOfShape(a.rows(), b.columns());
         MatrixIterator these = b.nonZeroColumnMajorIterator();
 
         while (these.hasNext()) {
