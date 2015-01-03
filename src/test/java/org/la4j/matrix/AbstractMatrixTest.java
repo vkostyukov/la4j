@@ -41,6 +41,7 @@ import static org.junit.Assert.fail;
 
 import junit.framework.Assert;
 import org.junit.Test;
+import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
@@ -622,177 +623,184 @@ public abstract class AbstractMatrixTest {
 
     @Test
     public void testMultiply_1x1_1x1() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Matrix a = factory().createMatrix(new double[][]{
+                    {3.37}
+            });
 
-        Matrix a = factory().createMatrix(new double[][]{
-                {3.37}
-        });
+            Matrix b = f.createMatrix(new double[][]{
+                    {8.48}
+            });
 
-        Matrix b = factory().createMatrix(new double[][]{
-                {8.48}
-        });
+            Matrix c = factory().createMatrix(new double[][]{
+                    {28.5776}
+            });
 
-        Matrix c = factory().createMatrix(new double[][]{
-                {28.5776}
-        });
-
-        assertEquals(c, a.multiply(b));
+            assertEquals(c, a.multiply(b));
+        }
     }
 
     @Test
     public void testMultiply_2x2_2x2() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
 
-        Matrix a = factory().createMatrix(new double[][]{
-                {2.46, 1.68},
-                {7.57, 2.47}
-        });
+            Matrix a = factory().createMatrix(new double[][]{
+                    {2.46, 1.68},
+                    {7.57, 2.47}
+            });
 
 
-        Matrix b = factory().createMatrix(new double[][]{
-                {3.85, 8.28},
-                {8.02, 8.39}
-        });
+            Matrix b = f.createMatrix(new double[][]{
+                    {3.85, 8.28},
+                    {8.02, 8.39}
+            });
 
-        Matrix c = factory().createMatrix(new double[][]{
-                {22.9446, 34.464},
-                {48.9539, 83.4029}
-        });
+            Matrix c = factory().createMatrix(new double[][]{
+                    {22.9446, 34.464},
+                    {48.9539, 83.4029}
+            });
 
-        assertEquals(c, a.multiply(b));
+            assertEquals(c, a.multiply(b));
+        }
     }
 
     @Test
     public void testMultiply_4x4_4x4() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Matrix a = factory().createMatrix(new double[][]{
+                    {8.0, 3.0, 1.0, 9.0},
+                    {4.0, 9.0, 6.0, 6.0},
+                    {9.0, 1.0, 1.0, 4.0},
+                    {5.0, 7.0, 3.0, 0.0}
+            });
 
-        Matrix a = factory().createMatrix(new double[][]{
-                {8.0, 3.0, 1.0, 9.0},
-                {4.0, 9.0, 6.0, 6.0},
-                {9.0, 1.0, 1.0, 4.0},
-                {5.0, 7.0, 3.0, 0.0}
-        });
+            Matrix b = f.createMatrix(new double[][]{
+                    {4.0, 9.0, 0.0, 3.0},
+                    {6.0, 7.0, 7.0, 6.0},
+                    {9.0, 4.0, 3.0, 3.0},
+                    {4.0, 4.0, 1.0, 6.0}
+            });
 
-        Matrix b = factory().createMatrix(new double[][]{
-                {4.0, 9.0, 0.0, 3.0},
-                {6.0, 7.0, 7.0, 6.0},
-                {9.0, 4.0, 3.0, 3.0},
-                {4.0, 4.0, 1.0, 6.0}
-        });
+            Matrix c = factory().createMatrix(new double[][]{
+                    {95.0, 133.0, 33.0, 99.0},
+                    {148.0, 147.0, 87.0, 120.0},
+                    {67.0, 108.0, 14.0, 60.0},
+                    {89.0, 106.0, 58.0, 66.0}
+            });
 
-        Matrix c = factory().createMatrix(new double[][]{
-                {95.0, 133.0, 33.0, 99.0},
-                {148.0, 147.0, 87.0, 120.0},
-                {67.0, 108.0, 14.0, 60.0},
-                {89.0, 106.0, 58.0, 66.0}
-        });
-
-        assertEquals(c, a.multiply(b));
+            assertEquals(c, a.multiply(b));
+        }
     }
 
     @Test
     public void testMultiply_4x1_1x4() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Matrix a = factory().createMatrix(new double[][]{
+                    {6.31},
+                    {6.06},
+                    {4.94},
+                    {9.62}
+            });
 
-        Matrix a = factory().createMatrix(new double[][]{
-                {6.31},
-                {6.06},
-                {4.94},
-                {9.62}
-        });
+            Matrix b = f.createMatrix(new double[][]{
+                    {5.19, 6.06, 6.12, 5.92}
+            });
 
-        Matrix b = factory().createMatrix(new double[][]{
-                {5.19, 6.06, 6.12, 5.92}
-        });
+            Matrix c = factory().createMatrix(new double[][]{
+                    {32.7489, 38.2386, 38.6172, 37.3552},
+                    {31.4514, 36.7236, 37.0872, 35.8752},
+                    {25.6386, 29.9364, 30.2328, 29.2448},
+                    {49.9278, 58.2972, 58.8744, 56.9504}
+            });
 
-        Matrix c = factory().createMatrix(new double[][]{
-                {32.7489, 38.2386, 38.6172, 37.3552},
-                {31.4514, 36.7236, 37.0872, 35.8752},
-                {25.6386, 29.9364, 30.2328, 29.2448},
-                {49.9278, 58.2972, 58.8744, 56.9504}
-        });
-
-        assertEquals(c, a.multiply(b));
+            assertEquals(c, a.multiply(b));
+        }
     }
 
     @Test
     public void testMultiply_1x10_10x1() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Matrix a = factory().createMatrix(new double[][]{
+                    {0.28, 1.61, 5.11, 1.71, 2.21, 5.97, 2.61, 2.58, 0.07, 3.78}
+            });
 
-        Matrix a = factory().createMatrix(new double[][]{
-                {0.28, 1.61, 5.11, 1.71, 2.21, 5.97, 2.61, 2.58, 0.07, 3.78}
-        });
+            Matrix b = f.createMatrix(new double[][]{
+                    {9.81},
+                    {0.14},
+                    {8.91},
+                    {8.54},
+                    {0.97},
+                    {2.55},
+                    {1.11},
+                    {2.52},
+                    {7.71},
+                    {1.69}
+            });
 
-        Matrix b = factory().createMatrix(new double[][]{
-                {9.81},
-                {0.14},
-                {8.91},
-                {8.54},
-                {0.97},
-                {2.55},
-                {1.11},
-                {2.52},
-                {7.71},
-                {1.69}
-        });
+            Matrix c = factory().createMatrix(new double[][]{
+                    {96.7995}
+            });
 
-        Matrix c = factory().createMatrix(new double[][]{
-                {96.7995}
-        });
-
-        assertEquals(c, a.multiply(b));
+            assertEquals(c, a.multiply(b));
+        }
     }
 
     @Test
     public void testMultiply_3x2_2x3() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Matrix a = factory().createMatrix(new double[][]{
+                    {1.0, 9.0},
+                    {9.0, 1.0},
+                    {8.0, 9.0}
+            });
 
-        Matrix a = factory().createMatrix(new double[][]{
-                {1.0, 9.0},
-                {9.0, 1.0},
-                {8.0, 9.0}
-        });
+            Matrix b = f.createMatrix(new double[][]{
+                    {0.0, 3.0, 0.0},
+                    {2.0, 0.0, 4.0}
+            });
 
-        Matrix b = factory().createMatrix(new double[][]{
-                {0.0, 3.0, 0.0},
-                {2.0, 0.0, 4.0}
-        });
+            Matrix c = factory().createMatrix(new double[][]{
+                    {18.0, 3.0, 36.0},
+                    {2.0, 27.0, 4.0},
+                    {18.0, 24.0, 36.0}
+            });
 
-        Matrix c = factory().createMatrix(new double[][]{
-                {18.0, 3.0, 36.0},
-                {2.0, 27.0, 4.0},
-                {18.0, 24.0, 36.0}
-        });
-
-        assertEquals(c, a.multiply(b));
+            assertEquals(c, a.multiply(b));
+        }
     }
 
     @Test
     public void testMultiply_4x9_9x4() {
+        for (Factory f: LinearAlgebra.FACTORIES) {
+            Matrix a = factory().createMatrix(new double[][]{
+                    {5.98, 3.76, 9.01, 9.68, 2.12, 6.34, 0.64, 6.22, 1.16},
+                    {8.4, 9.65, 7.06, 2.56, 7.66, 4.69, 3.29, 8.6, 8.55},
+                    {4.99, 7.06, 6.07, 7.53, 0.08, 1.08, 9.69, 8.51, 6.61},
+                    {4.72, 7.06, 4.0, 0.75, 2.45, 4.4, 8.33, 5.81, 0.57}
+            });
 
-        Matrix a = factory().createMatrix(new double[][]{
-                {5.98, 3.76, 9.01, 9.68, 2.12, 6.34, 0.64, 6.22, 1.16},
-                {8.4, 9.65, 7.06, 2.56, 7.66, 4.69, 3.29, 8.6, 8.55},
-                {4.99, 7.06, 6.07, 7.53, 0.08, 1.08, 9.69, 8.51, 6.61},
-                {4.72, 7.06, 4.0, 0.75, 2.45, 4.4, 8.33, 5.81, 0.57}
-        });
+            Matrix b = f.createMatrix(new double[][]{
+                    {9.28, 7.63, 4.1, 4.71},
+                    {4.68, 2.82, 9.18, 5.39},
+                    {4.54, 6.86, 1.29, 5.4},
+                    {8.72, 2.06, 4.28, 7.37},
+                    {2.43, 3.7, 7.52, 5.87},
+                    {8.21, 9.36, 4.85, 0.3},
+                    {9.87, 8.19, 5.03, 6.14},
+                    {9.47, 4.28, 3.86, 3.12},
+                    {5.29, 4.41, 5.23, 4.85}
+            });
 
-        Matrix b = factory().createMatrix(new double[][]{
-                {9.28, 7.63, 4.1, 4.71},
-                {4.68, 2.82, 9.18, 5.39},
-                {4.54, 6.86, 1.29, 5.4},
-                {8.72, 2.06, 4.28, 7.37},
-                {2.43, 3.7, 7.52, 5.87},
-                {8.21, 9.36, 4.85, 0.3},
-                {9.87, 8.19, 5.03, 6.14},
-                {9.47, 4.28, 3.86, 3.12},
-                {5.29, 4.41, 5.23, 4.85}
-        });
+            Matrix c = factory().createMatrix(new double[][]{
+                    {326.9658, 242.1452, 192.0747, 211.7362},
+                    {393.7521, 318.7092, 317.9021, 283.44},
+                    {392.8255, 270.4737, 247.3277, 268.7303},
+                    {283.873, 230.76, 199.6044, 175.1515}
+            });
 
-        Matrix c = factory().createMatrix(new double[][]{
-                {326.9658, 242.1452, 192.0747, 211.7362},
-                {393.7521, 318.7092, 317.9021, 283.44},
-                {392.8255, 270.4737, 247.3277, 268.7303},
-                {283.873, 230.76, 199.6044, 175.1515}
-        });
-
-        assertEquals(c, a.multiply(b));
+            assertEquals(c, a.multiply(b));
+        }
     }
-
 
     @Test
     public void testMultiplyByItsTranspose_2x2() {
