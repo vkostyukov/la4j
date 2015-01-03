@@ -446,39 +446,13 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix multiply(Matrix matrix) {
-        ensureArgumentIsNotNull(matrix, "matrix");
-
-        if (columns != matrix.rows()) {
-            fail("Wrong matrix dimensions: " + matrix.rows() + "x" + matrix.columns() +
-                    ". Should be: " + columns + "x_.");
-        }
-
-        Matrix result = factory.createMatrix(rows, matrix.columns());
-
-        for (int j = 0; j < matrix.columns(); j++) {
-
-            Vector column = matrix.getColumn(j);
-
-            for (int i = 0; i < rows; i++) {
-
-                double acc = 0.0;
-
-                for (int k = 0; k < columns; k++) {
-                    acc += get(i, k) * column.get(k);
-                }
-
-                result.set(i, j, acc);
-            }
-        }
-
-        return result;
+    public Matrix multiply(Matrix that) {
+        return apply(LinearAlgebra.OO_PLACE_MATRICES_MULTIPLICATION, that);
     }
 
     @Override
-    public Matrix multiply(Matrix matrix, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-        return multiply(matrix).to(Factory.asMatrixFactory(factory));
+    public Matrix multiply(Matrix that, Factory factory) {
+        return multiply(that).to(Factory.asMatrixFactory(factory));
     }
 
     @Override

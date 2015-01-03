@@ -263,24 +263,24 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     Vector multiply(Vector that, Factory factory);
 
     /**
-     * Multiplies this matrix (A) by given {@code matrix} (B).
+     * Multiplies this matrix (A) by given {@code that} matrix (B).
      * 
-     * @param matrix the right hand matrix for multiplication
+     * @param that the right hand matrix for multiplication
      *
      * @return A * B
      */
-    Matrix multiply(Matrix matrix);
+    Matrix multiply(Matrix that);
 
     /**
-     * Multiplies this matrix (A) by given {@code matrix} (B).
+     * Multiplies this matrix (A) by given {@code that} matrix (B).
      *
-     * @param matrix the right hand matrix for multiplication
+     * @param that the right hand matrix for multiplication
      * @param factory the factory of result matrix
      *
      * @return A * B
      */
     @Deprecated
-    Matrix multiply(Matrix matrix, Factory factory);
+    Matrix multiply(Matrix that, Factory factory);
 
     /**
      * Multiplies this matrix by its transpose.
