@@ -404,6 +404,6 @@ public final class LinearAlgebra {
     public final static MatrixMatrixOperation<Matrix> OO_PLACE_MATRIX_HADAMARD_PRODUCT =
         new OoPlaceMatrixHadamardProduct();
 
-    public final static MatrixOperation<Matrix> OO_PLACE_MATRIX_BY_ITS_TRANSPONSE_MULTIPLICATION =
+    public final static MatrixOperation<Matrix> OO_PLACE_MATRIX_BY_ITS_TRANSPOSE_MULTIPLICATION =
         new OoPlaceMatrixByItsTransposeMultiplication();
 }

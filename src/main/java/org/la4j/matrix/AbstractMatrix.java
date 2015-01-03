@@ -49,7 +49,6 @@ import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
-import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
 import org.la4j.matrix.sparse.SparseMatrix;
@@ -484,7 +483,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix multiplyByItsTranspose() {
-        return apply(LinearAlgebra.OO_PLACE_MATRIX_BY_ITS_TRANSPONSE_MULTIPLICATION);
+        return apply(LinearAlgebra.OO_PLACE_MATRIX_BY_ITS_TRANSPOSE_MULTIPLICATION);
     }
 
     @Override
@@ -947,13 +946,8 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix transform(MatrixFunction function) {
-        return transform(function, factory);
-    }
-
-    @Override
-    public Matrix transform(MatrixFunction function, Factory factory) {
+        Matrix result = blank();
         MatrixIterator it = iterator();
-        Matrix result = blank(factory);
 
         while (it.hasNext()) {
             double x  = it.next();
@@ -963,6 +957,11 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix transform(MatrixFunction function, Factory factory) {
+        return transform(function).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
@@ -1198,23 +1197,23 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Vector toRowVector() {
-        return toRowVector(factory);
-    }
-
-    @Override
     public Vector toRowVector(Factory factory) {
-        return getRow(0, factory);
-    }
-
-    @Override
-    public Vector toColumnVector() {
-        return toColumnVector(factory);
+        return toRowVector().to(Factory.asVectorFactory(factory));
     }
 
     @Override
     public Vector toColumnVector(Factory factory) {
-        return getColumn(0, factory);
+        return toColumnVector().to(Factory.asVectorFactory(factory));
+    }
+
+    @Override
+    public Vector toRowVector() {
+        return getRow(0);
+    }
+
+    @Override
+    public Vector toColumnVector() {
+        return getColumn(0);
     }
 
     @Override
