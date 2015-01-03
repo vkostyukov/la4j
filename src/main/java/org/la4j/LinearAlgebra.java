@@ -45,10 +45,12 @@ import org.la4j.linear.SquareRootSolver;
 import org.la4j.linear.SweepSolver;
 import org.la4j.matrix.Matrix;
 import org.la4j.operation.MatrixMatrixOperation;
+import org.la4j.operation.MatrixOperation;
 import org.la4j.operation.MatrixVectorOperation;
 import org.la4j.operation.inplace.InPlaceCopyMatrixToMatrix;
 import org.la4j.operation.ooplace.OoPlaceMatricesAddition;
 import org.la4j.operation.ooplace.OoPlaceMatricesSubtraction;
+import org.la4j.operation.ooplace.OoPlaceMatrixByItsTransposeMultiplication;
 import org.la4j.operation.ooplace.OoPlaceMatrixByVectorMultiplication;
 import org.la4j.operation.ooplace.OoPlaceMatrixHadamardProduct;
 import org.la4j.vector.Vector;
@@ -401,4 +403,7 @@ public final class LinearAlgebra {
 
     public final static MatrixMatrixOperation<Matrix> OO_PLACE_MATRIX_HADAMARD_PRODUCT =
         new OoPlaceMatrixHadamardProduct();
+
+    public final static MatrixOperation<Matrix> OO_PLACE_MATRIX_BY_ITS_TRANSPONSE_MULTIPLICATION =
+        new OoPlaceMatrixByItsTransposeMultiplication();
 }

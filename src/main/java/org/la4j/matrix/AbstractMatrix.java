@@ -43,12 +43,16 @@ import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.linear.LinearSystemSolver;
+import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.source.MatrixSource;
+import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
+import org.la4j.matrix.sparse.RowMajorSparseMatrix;
+import org.la4j.matrix.sparse.SparseMatrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
@@ -480,24 +484,7 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix multiplyByItsTranspose() {
-        if (rows != columns) {
-            fail("Can not be applied to non-square matrix.");
-        }
-
-        Matrix result = factory.createMatrix(rows, columns);
-
-        for (int j = 0; j < columns; j++) {
-            for (int i = 0; i < rows; i++) {
-
-                double acc = 0.0;
-                for (int k = 0; k < columns; k++) {
-                    acc += get(i, k) * get(j, k);
-                }
-                result.set(i, j, acc);
-            }
-        }
-
-        return result;
+        return apply(LinearAlgebra.OO_PLACE_MATRIX_BY_ITS_TRANSPONSE_MULTIPLICATION);
     }
 
     @Override
@@ -1554,5 +1541,25 @@ public abstract class AbstractMatrix implements Matrix {
         T result = factory.apply(rows, columns);
         apply(LinearAlgebra.IN_PLACE_COPY_MATRIX_TO_MATRIX, result);
         return result;
+    }
+
+    @Override
+    public SparseMatrix toSparseMatrix() {
+        return to(Matrices.SPARSE);
+    }
+
+    @Override
+    public DenseMatrix toDenseMatrix() {
+        return to(Matrices.DENSE);
+    }
+
+    @Override
+    public RowMajorSparseMatrix toRowMajorSparseMatrix() {
+        return to(Matrices.SPARSE_ROW_MAJOR);
+    }
+
+    @Override
+    public ColumnMajorSparseMatrix toColumnMajorSparseMatrix() {
+        return to(Matrices.SPARSE_COLUMN_MAJOR);
     }
 }

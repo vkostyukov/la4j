@@ -38,6 +38,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import junit.framework.Assert;
 import org.junit.Test;
 import org.la4j.factory.Factory;
 import org.la4j.vector.Vector;
@@ -824,17 +826,26 @@ public abstract class AbstractMatrixTest {
 
 
     @Test
-    public void testMultiplyByItsTranspose_nonsquare() {
+    public void testMultiplyByItsTranspose_2x3() {
         Matrix a = factory().createMatrix(new double[][]{
                 {1, 2, 3},
                 {0, 1, 2}
         });
-        try {
-            a.multiplyByItsTranspose();
-            fail();
-        } catch (IllegalArgumentException ex) {
-            // do nothing
-        }
+
+        assertEquals(a.multiplyByItsTranspose(), a.multiply(a.transpose()));
+    }
+
+    @Test
+    public void testMultiplyByItsTranspose_5x3() {
+        Matrix a = factory().createMatrix(new double[][]{
+                {0.0, 2.0, 0.0},
+                {0.0, 1.0, 2.0},
+                {4.0, 0.0, 0.0},
+                {0.0, 5.0, 7.0},
+                {1.0, 1.0, 0.0}
+        });
+
+        assertEquals(a.multiplyByItsTranspose(), a.multiply(a.transpose()));
     }
 
     @Test

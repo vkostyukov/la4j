@@ -45,6 +45,8 @@ import org.la4j.matrix.source.RandomSymmetricMatrixSource;
 import org.la4j.matrix.source.StreamMatrixSource;
 import org.la4j.matrix.sparse.CCSMatrix;
 import org.la4j.matrix.sparse.CRSMatrix;
+import org.la4j.matrix.sparse.RowMajorSparseMatrix;
+import org.la4j.matrix.sparse.SparseMatrix;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -326,8 +328,7 @@ public final class Matrices {
             new PositiveDefiniteMatrixPredicate();
 
     /**
-     * Converter to {@link org.la4j.matrix.dense.Basic2DMatrix}.
-     * See {@link org.la4j.matrix.Matrix} method <code>to(MatrixConverter)</code>
+     * A matrix factory that produces zero {@link Basic2DMatrix}.
      */
     public static final MatrixFactory<Basic2DMatrix> BASIC_2D =
         new MatrixFactory<Basic2DMatrix>() {
@@ -338,8 +339,7 @@ public final class Matrices {
         };
 
     /**
-     * Converter to {@link org.la4j.matrix.dense.Basic1DMatrix}.
-     * See {@link org.la4j.matrix.Matrix} method <code>to(MatrixConverter)</code>
+     * A matrix factory that produces zero {@link Basic1DMatrix}.
      */
     public static final MatrixFactory<Basic1DMatrix> BASIC_1D =
         new MatrixFactory<Basic1DMatrix>() {
@@ -350,13 +350,12 @@ public final class Matrices {
         };
 
     /**
-     * Default converter to dense matrices
+     * A default matrix factory for dense matrices.
      */
-    public static final MatrixFactory DENSE = BASIC_2D;
+    public static final MatrixFactory<Basic2DMatrix> DENSE = BASIC_2D;
 
     /**
-     * Converter to {@link org.la4j.matrix.sparse.CCSMatrix}.
-     * See {@link org.la4j.matrix.Matrix} method <code>to(MatrixConverter)</code>
+     * A matrix factory that produces zero {@link CCSMatrix}.
      */
     public static final MatrixFactory<CCSMatrix> CCS =
         new MatrixFactory<CCSMatrix>() {
@@ -367,8 +366,7 @@ public final class Matrices {
         };
 
     /**
-     * Converter to {@link org.la4j.matrix.sparse.CRSMatrix}.
-     * See {@link org.la4j.matrix.Matrix} method <code>to(MatrixConverter)</code>
+     * A matrix factory that produces zero {@link CRSMatrix}.
      */
     public static final MatrixFactory<CRSMatrix> CRS =
         new MatrixFactory<CRSMatrix>() {
@@ -379,9 +377,19 @@ public final class Matrices {
         };
 
     /**
-     * Default converter to sparse matrices
+     * A default factory for sparse matrices.
      */
-    public static final MatrixFactory SPARSE = CRS;
+    public static final MatrixFactory<CRSMatrix> SPARSE = CRS;
+
+    /**
+     * A default factory for sparse row-major matrices.
+     */
+    public static final MatrixFactory<CRSMatrix> SPARSE_ROW_MAJOR = CRS;
+
+    /**
+     * A default factory for sparse column-major matrices.
+     */
+    public static final MatrixFactory<CCSMatrix> SPARSE_COLUMN_MAJOR = CCS;
 
     public static final MatrixFactory[] CONVERTERS = {
             BASIC_2D, BASIC_1D, CRS, CCS

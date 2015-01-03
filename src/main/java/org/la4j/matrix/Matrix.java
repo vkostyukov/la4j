@@ -34,7 +34,11 @@ import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.linear.LinearSystemSolver;
+import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.functor.*;
+import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
+import org.la4j.matrix.sparse.RowMajorSparseMatrix;
+import org.la4j.matrix.sparse.SparseMatrix;
 import org.la4j.operation.MatrixMatrixOperation;
 import org.la4j.operation.MatrixOperation;
 import org.la4j.operation.MatrixVectorOperation;
@@ -1487,6 +1491,34 @@ public interface Matrix extends Externalizable, Iterable<Double> {
      * @return converted matrix
      */
     <T extends Matrix> T to(MatrixFactory<T> factory);
+
+    /**
+     * Converts this matrix into a sparse matrix.
+     *
+     * @return a sparse matrix
+     */
+    SparseMatrix toSparseMatrix();
+
+    /**
+     * Converts this matrix into a dense matrix.
+     *
+     * @return a dense matrix
+     */
+    DenseMatrix toDenseMatrix();
+
+    /**
+     * Converts this matrix into a row-major sparse matrix.
+     *
+     * @return a row-major sparse matrix
+     */
+    RowMajorSparseMatrix toRowMajorSparseMatrix();
+
+    /**
+     * Converts this matrix into a column-major sparse matrix.
+     *
+     * @return a row-major sparse matrix
+     */
+    ColumnMajorSparseMatrix toColumnMajorSparseMatrix();
 
     /**
      * Pipes this matrix to a given {@code operation}.
