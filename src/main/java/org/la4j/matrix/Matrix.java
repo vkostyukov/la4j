@@ -439,24 +439,24 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     Matrix divide(double value, Factory factory);
 
     /**
-     * Calculates the Kronecker product of this matrix (A) and given {@code matrix} (B).
+     * Calculates the Kronecker product of this matrix (A) and given {@code that} matrix (B).
      * 
-     * @param matrix the right hand matrix for Kronecker product
+     * @param that the right hand matrix for Kronecker product
      *
      * @return A (+) B
      */
-    Matrix kroneckerProduct(Matrix matrix);
+    Matrix kroneckerProduct(Matrix that);
 
     /**
-     * Calculates the Kronecker product of this matrix (A) and given {@code matrix} (B).
+     * Calculates the Kronecker product of this matrix (A) and given {@code that} matrix (B).
      *
-     * @param matrix the right hand matrix for Kronecker product
+     * @param that the right hand matrix for Kronecker product
      * @param factory the factory of result matrix
      *
      * @return A (+) B
      */
     @Deprecated
-    Matrix kroneckerProduct(Matrix matrix, Factory factory);
+    Matrix kroneckerProduct(Matrix that, Factory factory);
 
     /**
      * Calculates the trace of this matrix.

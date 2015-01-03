@@ -48,6 +48,7 @@ import org.la4j.operation.MatrixMatrixOperation;
 import org.la4j.operation.MatrixOperation;
 import org.la4j.operation.MatrixVectorOperation;
 import org.la4j.operation.inplace.InPlaceCopyMatrixToMatrix;
+import org.la4j.operation.ooplace.OoPlaceKroneckerProduct;
 import org.la4j.operation.ooplace.OoPlaceMatricesAddition;
 import org.la4j.operation.ooplace.OoPlaceMatricesSubtraction;
 import org.la4j.operation.ooplace.OoPlaceMatrixByItsTransposeMultiplication;
@@ -406,4 +407,7 @@ public final class LinearAlgebra {
 
     public final static MatrixOperation<Matrix> OO_PLACE_MATRIX_BY_ITS_TRANSPOSE_MULTIPLICATION =
         new OoPlaceMatrixByItsTransposeMultiplication();
+
+    public final static MatrixMatrixOperation<Matrix> OO_PLACE_KRONECKER_PRODUCT =
+        new OoPlaceKroneckerProduct();
 }

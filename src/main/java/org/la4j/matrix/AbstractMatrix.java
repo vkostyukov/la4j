@@ -607,29 +607,12 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix kroneckerProduct(Matrix matrix) {
-        ensureArgumentIsNotNull(matrix, "matrix");
-
-        int n = rows * matrix.rows();
-        int m = columns * matrix.columns();
-
-        Matrix result = factory.createMatrix(n, m);
-
-        int p = matrix.rows();
-        int q = matrix.columns();
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                result.set(i, j, get(i / p, j / q) * matrix.get(i % p, j % q));
-            }
-        }
-
-        return result;
+    public Matrix kroneckerProduct(Matrix that) {
+        return apply(LinearAlgebra.OO_PLACE_KRONECKER_PRODUCT, that);
     }
 
     @Override
     public Matrix kroneckerProduct(Matrix matrix, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return kroneckerProduct(matrix).to(Factory.asMatrixFactory(factory));
     }
 
