@@ -5,7 +5,7 @@ import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
 import org.la4j.matrix.sparse.SparseMatrix;
 
-public abstract class SymmetricMatrixOperation<R> extends MatrixMatrixOperation<R> {
+public abstract class SymmetricMatrixMatrixOperation<R> extends MatrixMatrixOperation<R> {
 
     @Override
     public R apply(DenseMatrix a, RowMajorSparseMatrix b) {

@@ -25,12 +25,12 @@ import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
-import org.la4j.operation.SymmetricMatrixOperation;
+import org.la4j.operation.SymmetricMatrixMatrixOperation;
 import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
 import org.la4j.matrix.sparse.SparseMatrix;
 
-public class OoPlaceMatrixHadamardProduct extends SymmetricMatrixOperation<Matrix> {
+public class OoPlaceMatrixHadamardProduct extends SymmetricMatrixMatrixOperation<Matrix> {
 
     @Override
     public Matrix applySymmetric(DenseMatrix a, SparseMatrix b) {

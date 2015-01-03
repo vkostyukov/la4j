@@ -21,15 +21,15 @@
 
 package org.la4j.operation.ooplace;
 
+import org.la4j.operation.SymmetricVectorVectorOperation;
 import org.la4j.vector.Vector;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorFunction;
-import org.la4j.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
-public class OoPlaceInnerProduct extends VectorVectorOperation<Double> {
+public class OoPlaceInnerProduct extends SymmetricVectorVectorOperation<Double> {
 
     @Override
     public Double apply(final SparseVector a, final SparseVector b) {
@@ -40,8 +40,8 @@ public class OoPlaceInnerProduct extends VectorVectorOperation<Double> {
     }
 
     @Override
-    public Double apply(final SparseVector a, final DenseVector b) {
-        return a.foldNonZero(Vectors.asSumFunctionAccumulator(0.0, dot(b)));
+    public Double applySymmetric(DenseVector a, SparseVector b) {
+        return b.foldNonZero(Vectors.asSumFunctionAccumulator(0.0, dot(a)));
     }
 
     @Override
@@ -53,11 +53,6 @@ public class OoPlaceInnerProduct extends VectorVectorOperation<Double> {
         }
 
         return result;
-    }
-
-    @Override
-    public Double apply(final DenseVector a, final SparseVector b) {
-        return b.foldNonZero(Vectors.asSumFunctionAccumulator(0.0, dot(a)));
     }
 
     private VectorFunction dot(final Vector b) {

@@ -21,13 +21,13 @@
 
 package org.la4j.operation.ooplace;
 
+import org.la4j.operation.SymmetricVectorVectorOperation;
 import org.la4j.vector.Vector;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.dense.DenseVector;
-import org.la4j.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
-public class OoPlaceVectorsAddition extends VectorVectorOperation<Vector> {
+public class OoPlaceVectorsAddition extends SymmetricVectorVectorOperation<Vector> {
 
     @Override
     public Vector apply(SparseVector a, SparseVector b) {
@@ -46,11 +46,6 @@ public class OoPlaceVectorsAddition extends VectorVectorOperation<Vector> {
     }
 
     @Override
-    public Vector apply(SparseVector a, DenseVector b) {
-        return apply(b, a);
-    }
-
-    @Override
     public Vector apply(DenseVector a, DenseVector b) {
         Vector result = a.blank();
 
@@ -62,7 +57,7 @@ public class OoPlaceVectorsAddition extends VectorVectorOperation<Vector> {
     }
 
     @Override
-    public Vector apply(DenseVector a, SparseVector b) {
+    public Vector applySymmetric(DenseVector a, SparseVector b) {
         Vector result = a.copy();
         VectorIterator it = b.nonZeroIterator();
 
