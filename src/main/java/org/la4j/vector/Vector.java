@@ -34,9 +34,9 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.operation.VectorMatrixOperation;
-import org.la4j.vector.operation.VectorOperation;
-import org.la4j.vector.operation.VectorVectorOperation;
+import org.la4j.operation.VectorMatrixOperation;
+import org.la4j.operation.VectorOperation;
+import org.la4j.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
 /**

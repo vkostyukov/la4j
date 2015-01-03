@@ -26,9 +26,9 @@ import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.vector.AbstractVector;
 import org.la4j.vector.Vector;
-import org.la4j.vector.operation.VectorMatrixOperation;
-import org.la4j.vector.operation.VectorOperation;
-import org.la4j.vector.operation.VectorVectorOperation;
+import org.la4j.operation.VectorMatrixOperation;
+import org.la4j.operation.VectorOperation;
+import org.la4j.operation.VectorVectorOperation;
 
 import java.util.Random;
 

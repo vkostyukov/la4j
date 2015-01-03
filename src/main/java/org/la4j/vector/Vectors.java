@@ -34,7 +34,6 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.operation.VectorVectorOperation;
 import org.la4j.vector.source.ArrayVectorSource;
 import org.la4j.vector.source.LoopbackVectorSource;
 import org.la4j.vector.source.RandomVectorSource;

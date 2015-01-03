@@ -44,22 +44,22 @@ import org.la4j.linear.SeidelSolver;
 import org.la4j.linear.SquareRootSolver;
 import org.la4j.linear.SweepSolver;
 import org.la4j.matrix.Matrix;
-import org.la4j.matrix.operation.MatrixMatrixOperation;
-import org.la4j.matrix.operation.MatrixVectorOperation;
-import org.la4j.matrix.operation.inplace.InPlaceCopyMatrixToMatrix;
-import org.la4j.matrix.operation.ooplace.OoPlaceMatricesAddition;
-import org.la4j.matrix.operation.ooplace.OoPlaceMatricesSubtraction;
-import org.la4j.matrix.operation.ooplace.OoPlaceMatrixByVectorMultiplication;
-import org.la4j.matrix.operation.ooplace.OoPlaceMatrixHadamardProduct;
+import org.la4j.operation.MatrixMatrixOperation;
+import org.la4j.operation.MatrixVectorOperation;
+import org.la4j.operation.inplace.InPlaceCopyMatrixToMatrix;
+import org.la4j.operation.ooplace.OoPlaceMatricesAddition;
+import org.la4j.operation.ooplace.OoPlaceMatricesSubtraction;
+import org.la4j.operation.ooplace.OoPlaceMatrixByVectorMultiplication;
+import org.la4j.operation.ooplace.OoPlaceMatrixHadamardProduct;
 import org.la4j.vector.Vector;
-import org.la4j.vector.operation.VectorMatrixOperation;
-import org.la4j.vector.operation.VectorVectorOperation;
-import org.la4j.vector.operation.ooplace.OoPlaceVectorHadamardProduct;
-import org.la4j.vector.operation.ooplace.OoPlaceInnerProduct;
-import org.la4j.vector.operation.ooplace.OoPlaceOuterProduct;
-import org.la4j.vector.operation.ooplace.OoPlaceVectorByMatrixMultiplication;
-import org.la4j.vector.operation.ooplace.OoPlaceVectorsSubtraction;
-import org.la4j.vector.operation.ooplace.OoPlaceVectorsAddition;
+import org.la4j.operation.VectorMatrixOperation;
+import org.la4j.operation.VectorVectorOperation;
+import org.la4j.operation.ooplace.OoPlaceVectorHadamardProduct;
+import org.la4j.operation.ooplace.OoPlaceInnerProduct;
+import org.la4j.operation.ooplace.OoPlaceOuterProduct;
+import org.la4j.operation.ooplace.OoPlaceVectorByMatrixMultiplication;
+import org.la4j.operation.ooplace.OoPlaceVectorsSubtraction;
+import org.la4j.operation.ooplace.OoPlaceVectorsAddition;
 
 /**
  * Tiny class for common things.

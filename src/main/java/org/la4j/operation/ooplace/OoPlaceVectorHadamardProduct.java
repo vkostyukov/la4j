@@ -19,22 +19,21 @@
  *
  */
 
-package org.la4j.vector.operation.ooplace;
+package org.la4j.operation.ooplace;
 
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vector;
-import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
-import org.la4j.vector.operation.VectorVectorOperation;
+import org.la4j.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
-public class OoPlaceVectorsSubtraction extends VectorVectorOperation<Vector> {
+public class OoPlaceVectorHadamardProduct extends VectorVectorOperation<Vector> {
 
     @Override
     public Vector apply(SparseVector a, SparseVector b) {
         VectorIterator these = a.nonZeroIterator();
         VectorIterator those = b.nonZeroIterator();
-        VectorIterator both = these.orElseSubtract(those);
+        VectorIterator both = these.andAlsoMultiply(those);
         Vector result = a.blank();
 
         while (both.hasNext()) {
@@ -48,24 +47,15 @@ public class OoPlaceVectorsSubtraction extends VectorVectorOperation<Vector> {
 
     @Override
     public Vector apply(SparseVector a, DenseVector b) {
-        Vector result = b.multiply(-1.0);
-        VectorIterator it = a.nonZeroIterator();
-
-        while (it.hasNext()) {
-            double x = it.next();
-            int i = it.index();
-            result.set(i, result.get(i) + x);
-        }
-
-        return result;
+        return apply(b, a);
     }
 
     @Override
     public Vector apply(DenseVector a, DenseVector b) {
         Vector result = a.blank();
 
-        for (int i = 0; i < b.length(); i++) {
-            result.set(i, a.get(i) - b.get(i));
+        for (int i = 0; i < a.length(); i++) {
+            result.set(i, a.get(i) * b.get(i));
         }
 
         return result;
@@ -73,13 +63,13 @@ public class OoPlaceVectorsSubtraction extends VectorVectorOperation<Vector> {
 
     @Override
     public Vector apply(DenseVector a, SparseVector b) {
-        Vector result = a.copy();
+        Vector result = b.blank();
         VectorIterator it = b.nonZeroIterator();
 
         while (it.hasNext()) {
             double x = it.next();
             int i = it.index();
-            result.set(i, result.get(i) - x);
+            result.set(i, x * a.get(i));
         }
 
         return result;

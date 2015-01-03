@@ -19,16 +19,14 @@
  *
  */
 
-package org.la4j.vector.operation.ooplace;
+package org.la4j.operation.ooplace;
 
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
-import org.la4j.matrix.sparse.CRSMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
-import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;
-import org.la4j.vector.operation.VectorVectorOperation;
+import org.la4j.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
 public class OoPlaceOuterProduct extends VectorVectorOperation<Matrix> {

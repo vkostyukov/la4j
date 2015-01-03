@@ -25,9 +25,9 @@ import org.la4j.factory.Factory;
 import org.la4j.iterator.ColumnMajorMatrixIterator;
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.matrix.Matrix;
-import org.la4j.matrix.operation.MatrixMatrixOperation;
-import org.la4j.matrix.operation.MatrixOperation;
-import org.la4j.matrix.operation.MatrixVectorOperation;
+import org.la4j.operation.MatrixMatrixOperation;
+import org.la4j.operation.MatrixOperation;
+import org.la4j.operation.MatrixVectorOperation;
 import org.la4j.vector.Vector;
 
 import java.util.Iterator;

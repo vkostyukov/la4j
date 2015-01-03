@@ -19,60 +19,54 @@
  *
  */
 
-package org.la4j.vector.operation.ooplace;
+package org.la4j.operation.ooplace;
 
-import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vector;
+import org.la4j.iterator.VectorIterator;
+import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
-import org.la4j.vector.operation.VectorVectorOperation;
+import org.la4j.vector.functor.VectorFunction;
+import org.la4j.operation.VectorVectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
-public class OoPlaceVectorHadamardProduct extends VectorVectorOperation<Vector> {
+public class OoPlaceInnerProduct extends VectorVectorOperation<Double> {
 
     @Override
-    public Vector apply(SparseVector a, SparseVector b) {
+    public Double apply(final SparseVector a, final SparseVector b) {
         VectorIterator these = a.nonZeroIterator();
         VectorIterator those = b.nonZeroIterator();
-        VectorIterator both = these.andAlsoMultiply(those);
-        Vector result = a.blank();
 
-        while (both.hasNext()) {
-            double x = both.next();
-            int i = both.index();
-            result.set(i, x);
-        }
-
-        return result;
+        return these.innerProduct(those);
     }
 
     @Override
-    public Vector apply(SparseVector a, DenseVector b) {
-        return apply(b, a);
+    public Double apply(final SparseVector a, final DenseVector b) {
+        return a.foldNonZero(Vectors.asSumFunctionAccumulator(0.0, dot(b)));
     }
 
     @Override
-    public Vector apply(DenseVector a, DenseVector b) {
-        Vector result = a.blank();
+    public Double apply(final DenseVector a, final DenseVector b) {
+        double result = 0.0;
 
         for (int i = 0; i < a.length(); i++) {
-            result.set(i, a.get(i) * b.get(i));
+            result += a.get(i) * b.get(i);
         }
 
         return result;
     }
 
     @Override
-    public Vector apply(DenseVector a, SparseVector b) {
-        Vector result = b.blank();
-        VectorIterator it = b.nonZeroIterator();
+    public Double apply(final DenseVector a, final SparseVector b) {
+        return b.foldNonZero(Vectors.asSumFunctionAccumulator(0.0, dot(a)));
+    }
 
-        while (it.hasNext()) {
-            double x = it.next();
-            int i = it.index();
-            result.set(i, x * a.get(i));
-        }
-
-        return result;
+    private VectorFunction dot(final Vector b) {
+        return new VectorFunction() {
+            @Override
+            public double evaluate(int i, double value) {
+                return b.get(i) * value;
+            }
+        };
     }
 
     @Override
@@ -84,4 +78,6 @@ public class OoPlaceVectorHadamardProduct extends VectorVectorOperation<Vector> 
             );
         }
     }
+
+
 }

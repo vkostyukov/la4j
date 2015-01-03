@@ -19,11 +19,10 @@
  *
  */
 
-package org.la4j.vector.operation;
+package org.la4j.operation;
 
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
-import org.la4j.matrix.operation.MatrixOperation;
 import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
 import org.la4j.vector.Vector;

@@ -26,7 +26,6 @@ import java.util.Random;
 import org.la4j.LinearAlgebra;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrix;
-import org.la4j.matrix.sparse.CCSMatrix;
 import org.la4j.matrix.sparse.CRSMatrix;
 import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
@@ -37,9 +36,9 @@ import org.la4j.vector.Vectors;
 import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.operation.VectorMatrixOperation;
-import org.la4j.vector.operation.VectorOperation;
-import org.la4j.vector.operation.VectorVectorOperation;
+import org.la4j.operation.VectorMatrixOperation;
+import org.la4j.operation.VectorOperation;
+import org.la4j.operation.VectorVectorOperation;
 
 /**
  * A sparse vector.

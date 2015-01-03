@@ -19,13 +19,13 @@
  *
  */
 
-package org.la4j.matrix.operation.ooplace;
+package org.la4j.operation.ooplace;
 
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
-import org.la4j.matrix.operation.SymmetricMatrixOperation;
+import org.la4j.operation.SymmetricMatrixOperation;
 import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
 import org.la4j.matrix.sparse.SparseMatrix;

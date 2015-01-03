@@ -19,7 +19,7 @@
  *
  */
 
-package org.la4j.matrix.operation;
+package org.la4j.operation;
 
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.DenseMatrix;
@@ -27,7 +27,6 @@ import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
 import org.la4j.matrix.sparse.RowMajorSparseMatrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;
-import org.la4j.vector.operation.VectorOperation;
 import org.la4j.vector.sparse.SparseVector;
 
 public abstract class MatrixVectorOperation<R> {

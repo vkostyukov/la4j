@@ -19,7 +19,7 @@
  *
  */
 
-package org.la4j.vector.operation;
+package org.la4j.operation;
 
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.DenseVector;

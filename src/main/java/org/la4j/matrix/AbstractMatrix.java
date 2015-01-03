@@ -649,7 +649,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public double trace() {
-
         double result = 0.0;
 
         for (int i = 0; i < rows; i++) {
