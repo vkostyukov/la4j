@@ -847,6 +847,63 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     }
 
     @Override
+    public ColumnMajorMatrixIterator columnMajorIterator() {
+        return new ColumnMajorMatrixIterator(rows, columns) {
+            private long limit = (long) rows * columns;
+            private boolean currentNonZero = false;
+            private int i = -1;
+            private int k = 0;
+
+            @Override
+            public int rowIndex() {
+                return i - columnIndex() * rows;
+            }
+
+            @Override
+            public int columnIndex() {
+                return i / rows;
+            }
+
+            @Override
+            public double get() {
+                return currentNonZero ? values[k] : 0.0;
+            }
+
+            @Override
+            public void set(double value) {
+                if (currentNonZero) {
+                    if (value == 0.0) {
+                        CCSMatrix.this.remove(k, columnIndex());
+                        currentNonZero = false;
+                    } else {
+                        values[k] = value;
+                    }
+                } else {
+                    CCSMatrix.this.insert(k, rowIndex(), columnIndex(), value);
+                    currentNonZero = true;
+                }
+            }
+
+            @Override
+            public boolean hasNext() {
+                return i + 1 < limit;
+            }
+
+            @Override
+            public Double next() {
+                if (currentNonZero) {
+                    k++;
+                }
+
+                i++;
+                currentNonZero = k < columnPointers[columnIndex() + 1] && rowIndices[k] == rowIndex();
+
+                return get();
+            }
+        };
+    }
+
+    @Override
     public ColumnMajorMatrixIterator nonZeroColumnMajorIterator() {
         return new ColumnMajorMatrixIterator(rows, columns) {
             private int j = 0;
