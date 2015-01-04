@@ -943,4 +943,54 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
             }
         };
     }
+
+    @Override
+    public VectorIterator iteratorOfColumn(int j) {
+        final int jj = j;
+        return new VectorIterator(rows) {
+            private int i = -1;
+            private int k = columnPointers[jj];
+
+            @Override
+            public int index() {
+                return i;
+            }
+
+            @Override
+            public double get() {
+                if (k < columnPointers[jj + 1] && rowIndices[k] == i) {
+                    return values[k];
+                }
+                return 0.0;
+            }
+
+            @Override
+            public void set(double value) {
+                if (k < columnPointers[jj + 1] && rowIndices[k] == i) {
+                    if (value == 0.0) {
+                        CCSMatrix.this.remove(k, jj);
+                    } else {
+                        values[k] = value;
+                    }
+                } else {
+                    CCSMatrix.this.insert(k, i, jj, value);
+                }
+            }
+
+            @Override
+            public boolean hasNext() {
+                return i + 1 < rows;
+            }
+
+            @Override
+            public Double next() {
+                i++;
+                if (k < columnPointers[jj + 1] && rowIndices[k] == i - 1) {
+                    k++;
+                }
+
+                return get();
+            }
+        };
+    }
 }
