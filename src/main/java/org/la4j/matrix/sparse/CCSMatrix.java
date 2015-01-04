@@ -35,6 +35,7 @@ import java.util.Random;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
+import org.la4j.iterator.ColumnMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
@@ -841,6 +842,59 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
             @Override
             public void remove() {
                 throw new UnsupportedOperationException("Can not remove from this iterator.");
+            }
+        };
+    }
+
+    @Override
+    public ColumnMajorMatrixIterator nonZeroColumnMajorIterator() {
+        return new ColumnMajorMatrixIterator(rows, columns) {
+            private int j = 0;
+            private int k = -1;
+            private boolean currentIsRemoved = false;
+            private int removedIndex = -1;
+
+            @Override
+            public int rowIndex() {
+                return currentIsRemoved ? removedIndex : rowIndices[k];
+            }
+
+            @Override
+            public int columnIndex() {
+                return j;
+            }
+
+            @Override
+            public double get() {
+                return currentIsRemoved ? 0.0 : values[k];
+            }
+
+            @Override
+            public void set(double value) {
+                if (value == 0.0 && !currentIsRemoved) {
+                    currentIsRemoved = true;
+                    removedIndex = rowIndices[k];
+                    CCSMatrix.this.remove(k--, j);
+                } else if (value != 0.0 && !currentIsRemoved) {
+                    values[k] = value;
+                } else {
+                    currentIsRemoved = false;
+                    CCSMatrix.this.insert(++k, removedIndex, j, value);
+                }
+            }
+
+            @Override
+            public boolean hasNext() {
+                return k + 1 < cardinality;
+            }
+
+            @Override
+            public Double next() {
+                currentIsRemoved = false;
+                if (columnPointers[j + 1] == ++k) {
+                    j++;
+                }
+                return get();
             }
         };
     }
