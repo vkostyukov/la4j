@@ -35,6 +35,7 @@ import java.util.Random;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
+import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.MatrixFactory;
@@ -840,6 +841,51 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
             @Override
             public void remove() {
                 throw new UnsupportedOperationException("Can not remove from this iterator.");
+            }
+        };
+    }
+
+    @Override
+    public VectorIterator nonZeroIteratorOfColumn(int j) {
+        final int jj = j;
+        return new VectorIterator(rows) {
+            private int k = columnPointers[jj] - 1;
+            private boolean currentIsRemoved = false;
+            private int removedIndex = -1;
+
+            @Override
+            public int index() {
+                return currentIsRemoved ? removedIndex : rowIndices[k];
+            }
+
+            @Override
+            public double get() {
+                return currentIsRemoved ? 0.0 : values[k];
+            }
+
+            @Override
+            public void set(double value) {
+                if (value == 0.0 && !currentIsRemoved) {
+                    currentIsRemoved = true;
+                    removedIndex = rowIndices[k];
+                    CCSMatrix.this.remove(k--, jj);
+                } else if (value != 0.0 && !currentIsRemoved) {
+                    values[k] = value;
+                } else {
+                    currentIsRemoved = false;
+                    CCSMatrix.this.insert(++k, removedIndex, jj, value);
+                }
+            }
+
+            @Override
+            public boolean hasNext() {
+                return k + 1 < columnPointers[jj + 1];
+            }
+
+            @Override
+            public Double next() {
+                currentIsRemoved = false;
+                return values[++k];
             }
         };
     }
