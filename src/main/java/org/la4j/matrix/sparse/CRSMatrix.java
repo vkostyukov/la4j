@@ -955,4 +955,54 @@ public class CRSMatrix extends RowMajorSparseMatrix {
             }
         };
     }
+
+    @Override
+    public VectorIterator iteratorOfRow(int i) {
+        final int ii = i;
+        return new VectorIterator(columns) {
+            private int j = -1;
+            private int k = rowPointers[ii];
+
+            @Override
+            public int index() {
+                return j;
+            }
+
+            @Override
+            public double get() {
+                if (k < rowPointers[ii + 1] && columnIndices[k] == j) {
+                    return values[k];
+                }
+                return 0.0;
+            }
+
+            @Override
+            public void set(double value) {
+                if (k < rowPointers[ii + 1] && columnIndices[k] == j) {
+                    if (value == 0.0) {
+                        CRSMatrix.this.remove(k, ii);
+                    } else {
+                        values[k] = value;
+                    }
+                } else {
+                    CRSMatrix.this.insert(k, ii, j, value);
+                }
+            }
+
+            @Override
+            public boolean hasNext() {
+                return j + 1 < columns;
+            }
+
+            @Override
+            public Double next() {
+                j++;
+                if (k < rowPointers[ii + 1] && columnIndices[k] == j - 1) {
+                    k++;
+                }
+
+                return get();
+            }
+        };
+    }
 }
