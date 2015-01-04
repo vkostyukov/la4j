@@ -542,6 +542,7 @@ public class CompressedVector extends SparseVector {
         return new VectorIterator(length) {
             private int k = 0;
             private int i = -1;
+            private boolean currentNonZero = false;
 
             @Override
             public int index() {
@@ -550,22 +551,21 @@ public class CompressedVector extends SparseVector {
 
             @Override
             public double get() {
-                if (k < cardinality && indices[k] == i) {
-                    return values[k];
-                }
-                return 0.0;
+                return currentNonZero ? values[k] : 0.0;
             }
 
             @Override
             public void set(double value) {
-                if (k < cardinality && indices[k] == i) {
+                if (currentNonZero) {
                     if (value == 0.0) {
                         CompressedVector.this.remove(k);
+                        currentNonZero = false;
                     } else {
                         values[k] = value;
                     }
                 } else {
                     CompressedVector.this.insert(k, i, value);
+                    currentNonZero = true;
                 }
             }
 
@@ -576,10 +576,13 @@ public class CompressedVector extends SparseVector {
 
             @Override
             public Double next() {
-                i++;
-                if (k < cardinality && indices[k] == i - 1) {
+                if (currentNonZero) {
                     k++;
                 }
+
+                i++;
+                currentNonZero = k < cardinality && indices[k] == i;
+
                 return get();
             }
         };
