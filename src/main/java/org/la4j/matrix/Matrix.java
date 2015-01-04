@@ -379,44 +379,43 @@ public interface Matrix extends Externalizable, Iterable<Double> {
     Matrix insert(Matrix matrix);
     
     /**
-     * Inserts a given {@code matrix} (B) into this matrix (A). The original
+     * Inserts a given {@code that} matrix (B) into this matrix (A). The original
      * values are overwritten by the new ones.
      * 
-     * @param matrix the matrix to insert
+     * @param that the matrix to insert
      * @param numRows number of rows to insert
      * @param numColumns number of columns to insert
      * @return a matrix with the parameter inserted into it
      */
-    Matrix insert(Matrix matrix, int numRows, int numColumns);
-    
+    Matrix insert(Matrix that, int numRows, int numColumns);
+
     /**
-     * Inserts a given {@code matrix} (B) into this matrix (A). The original
+     * Inserts a given {@code that} matrix (B) into this matrix (A). The original
      * values are overwritten by the new ones.
      * 
-     * @param matrix the matrix to insert
+     * @param that the matrix to insert
      * @param destRow the row to insert at in the destination matrix
-     * @param destCol the column to insert at in the destination matrix
+     * @param destColumn the column to insert at in the destination matrix
      * @param numRows number of rows to insert
      * @param numColumns number of columns to insert
      * @return a matrix with the parameter inserted into it
      */
-    Matrix insert(Matrix matrix, int destRow, int destCol, int numRows, int numColumns);
-    
+    Matrix insert(Matrix that, int destRow, int destColumn, int numRows, int numColumns);
+
     /**
-     * Inserts a given {@code matrix} (B) into this matrix (A). The original
+     * Inserts a given {@code that} matrix (B) into this matrix (A). The original
      * values are overwritten by the new ones.
      * 
-     * @param matrix the matrix to insert
+     * @param that the matrix to insert
      * @param srcRow the row to start at in the source matrix
-     * @param srcCol the column to start at in the source matrix
+     * @param srcColumn the column to start at in the source matrix
      * @param destRow the row to insert at in the destination matrix
-     * @param destCol the column to insert at in the destination matrix
+     * @param destColumn the column to insert at in the destination matrix
      * @param numRows number of rows to insert
      * @param numCols number of columns to insert
      * @return a matrix with the parameter inserted into it
      */
-    Matrix insert(Matrix matrix, int srcRow, int srcCol, int destRow, int destCol,
-                  int numRows, int numCols);
+    Matrix insert(Matrix that, int srcRow, int srcColumn, int destRow, int destColumn, int numRows, int numCols);
 
     /**
      * Divides every element of this matrix (A) by given {@code value} (v).

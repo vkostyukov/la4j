@@ -147,20 +147,16 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Vector getRow(int i, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return getRow(i).to(Factory.asVectorFactory(factory));
     }
 
     @Override
     public Vector getColumn(int j, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return getColumn(j).to(Factory.asVectorFactory(factory));
     }
 
     @Override
     public void setRow(int i, Vector row) {
-        ensureArgumentIsNotNull(row, "vector");
-
         if (columns != row.length()) {
             fail("Wrong vector length: " + row.length() + ". Should be: " + columns + ".");
         }
@@ -172,8 +168,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public void setColumn(int j, Vector column) {
-        ensureArgumentIsNotNull(column, "vector");
-
         if (rows != column.length()) {
             fail("Wrong vector length: " + column.length() + ". Should be: " + rows + ".");
         }
@@ -189,7 +183,7 @@ public abstract class AbstractMatrix implements Matrix {
             throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (rows - 1));
         }
 
-        Matrix result = factory.createMatrix(rows - 1, columns);
+        Matrix result = blankOfShape(rows - 1, columns);
 
         for (int ii = 0; ii < i; ii++) {
             result.setRow(ii, getRow(ii));
@@ -208,7 +202,7 @@ public abstract class AbstractMatrix implements Matrix {
             throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (columns - 1));
         }
 
-        Matrix result = factory.createMatrix(rows, columns - 1);
+        Matrix result = blankOfShape(rows, columns - 1);
 
         for (int jj = 0; jj < j; jj++) {
             result.setColumn(jj, getColumn(jj));
@@ -280,7 +274,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix transpose(Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return transpose().to(Factory.asMatrixFactory(factory));
     }
 
@@ -301,7 +294,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix rotate(Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return rotate().to(Factory.asMatrixFactory(factory));
     }
 
@@ -511,59 +503,57 @@ public abstract class AbstractMatrix implements Matrix {
     }
     
     @Override
-    public Matrix insert(Matrix matrix) {
-        return insert(matrix, 0, 0, 0, 0, matrix.rows(), matrix.columns());
+    public Matrix insert(Matrix that) {
+        return insert(that, 0, 0, 0, 0, that.rows(), that.columns());
     }
     
     @Override
-    public Matrix insert(Matrix matrix, int rows, int columns) {
-        return insert(matrix, 0, 0, 0, 0, rows, columns);
+    public Matrix insert(Matrix that, int rows, int columns) {
+        return insert(that, 0, 0, 0, 0, rows, columns);
     }
     
     @Override
-    public Matrix insert(Matrix matrix, int destRow, int destCol, int rows, int columns) {
-        return insert(matrix, 0, 0, destRow, destCol, rows, columns);
+    public Matrix insert(Matrix that, int destRow, int destColumn, int rows, int columns) {
+        return insert(that, 0, 0, destRow, destColumn, rows, columns);
     }
     
     @Override
-    public Matrix insert(Matrix matrix, int srcRow, int srcCol, int destRow, int destCol, int rows, int columns) {
-        ensureArgumentIsNotNull(matrix, "matrix");
-        
+    public Matrix insert(Matrix that, int srcRow, int srcColumn, int destRow, int destColumn, int rows, int columns) {
         if (rows < 0 || columns < 0) {
             fail("Cannot have negative rows or columns: " + rows + "x" + columns);
         }
         
-        if (destRow < 0 || destCol < 0) {
-            fail("Cannot have negative destination position: " + destRow + ", " + destCol);
+        if (destRow < 0 || destColumn < 0) {
+            fail("Cannot have negative destination position: " + destRow + ", " + destColumn);
         }
         
-        if (destRow > matrix.rows() || destCol > matrix.columns()) {
-            fail("Destination position out of bounds: " + destRow + ", " + destCol);
+        if (destRow > that.rows() || destColumn> that.columns()) {
+            fail("Destination position out of bounds: " + destRow + ", " + destColumn);
         }
         
-        if (srcRow < 0 || srcCol < 0) {
-            fail("Cannot have negative source position: " + destRow + ", " + destCol);
+        if (srcRow < 0 || srcColumn < 0) {
+            fail("Cannot have negative source position: " + destRow + ", " + destColumn);
         }
         
-        if (srcRow > this.rows || srcCol > this.columns) {
-            fail("Destination position out of bounds: " + srcRow + ", " + srcCol);
+        if (srcRow > this.rows || srcColumn > this.columns) {
+            fail("Destination position out of bounds: " + srcRow + ", " + srcColumn);
         }
         
-        if (destRow + rows > this.columns || destCol + columns > this.rows) {
+        if (destRow + rows > this.columns || destColumn + columns > this.rows) {
             fail("Out of bounds: Cannot add " + rows + " rows and " + columns + " cols at " 
-                    + destRow + ", " + destCol + " in a " + this.rows + "x" + this.columns + " matrix.");
+                    + destRow + ", " + destColumn + " in a " + this.rows + "x" + this.columns + " matrix.");
         }
         
-        if (srcRow + rows > matrix.rows() || srcCol + columns > matrix.columns()) {
+        if (srcRow + rows > that.rows() || srcColumn + columns > that.columns()) {
             fail("Out of bounds: Cannot get " + rows + " rows and " + columns + " cols at " 
-                    + srcRow + ", " + srcCol + " from a " + matrix.rows() + "x" + matrix.columns() + " matrix.");
+                    + srcRow + ", " + srcColumn + " from a " + that.rows() + "x" + that.columns() + " matrix.");
         }
         
         Matrix result = copy();
         
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                result.set(i+destRow, j+destCol, matrix.get(i+srcRow, j+srcCol));
+                result.set(i + destRow, j + destColumn, that.get(i + srcRow, j + srcColumn));
             }
         }
         
@@ -603,7 +593,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public double diagonalProduct() {
-
         BigDecimal result = BigDecimal.ONE;
 
         for (int i = 0; i < rows; i++) {
@@ -651,8 +640,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix blank(Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
         return factory.createMatrix(rows, columns);
     }
 
@@ -663,8 +650,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix copy(Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
         return factory.createMatrix(this);
     }
 
@@ -731,28 +716,16 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public Matrix shuffle(Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return shuffle().to(Factory.asMatrixFactory(factory));
     }
 
     @Override
-    public Matrix slice(int fromRow, int fromColumn, int untilRow,
-            int untilColumn) {
-
-        return slice(fromRow, fromColumn, untilRow, untilColumn, factory);
-    }
-
-    @Override
-    public Matrix slice(int fromRow, int fromColumn, int untilRow,
-            int untilColumn, Factory factory) {
-
-        ensureFactoryIsNotNull(factory);
-
+    public Matrix slice(int fromRow, int fromColumn, int untilRow, int untilColumn) {
         if (untilRow - fromRow < 0 || untilColumn - fromColumn < 0) {
             fail("Wrong slice range: [" + fromRow + ".." + untilRow + "][" + fromColumn + ".." + untilColumn + "].");
         }
 
-        Matrix result = factory.createMatrix(untilRow - fromRow, untilColumn - fromColumn);
+        Matrix result = blankOfShape(untilRow - fromRow, untilColumn - fromColumn);
 
         for (int i = fromRow; i < untilRow; i++) {
             for (int j = fromColumn; j < untilColumn; j++) {
@@ -761,6 +734,13 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix slice(int fromRow, int fromColumn, int untilRow,
+                        int untilColumn, Factory factory) {
+
+        return slice(fromRow, fromColumn, untilRow, untilColumn).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
@@ -785,27 +765,27 @@ public abstract class AbstractMatrix implements Matrix {
     
     @Override
     public Matrix select(int[] rowIndices, int[] columnIndices) {
-        return select(rowIndices, columnIndices, factory);
-    }
+        int m = rowIndices.length;
+        int n = columnIndices.length;
 
-    @Override
-    public Matrix select(int[] rowIndices, int[] columnIndices, Factory factory) {
-        int newRows = rowIndices.length;
-        int newCols = columnIndices.length;
-
-        if (newRows == 0 || newCols == 0) {
+        if (m == 0 || n == 0) {
             fail("No rows or columns selected.");
         }
 
-        Matrix result = factory.createMatrix(newRows, newCols);
+        Matrix result = blankOfShape(m, n);
 
-        for (int i = 0; i < newRows; i++) {
-            for (int j = 0; j < newCols; j++) {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 result.set(i, j, get(rowIndices[i], columnIndices[j]));
             }
         }
 
         return result;
+    }
+
+    @Override
+    public Matrix select(int[] rowIndices, int[] columnIndices, Factory factory) {
+        return select(rowIndices, columnIndices).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
@@ -1353,7 +1333,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public boolean equals(Matrix matrix, double precision) {
-
         if (rows != matrix.rows() || columns != matrix.columns()) {
             return false;
         }
@@ -1375,7 +1354,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) {
             return true;
         }
@@ -1415,7 +1393,6 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public String mkString(NumberFormat formatter, String rowsDelimiter, String columnsDelimiter) {
-
         int formats[] = new int[columns];
 
         for (int i = 0; i < rows; i++) {
@@ -1452,16 +1429,6 @@ public abstract class AbstractMatrix implements Matrix {
         return sb.toString();
     }
 
-    protected  void ensureFactoryIsNotNull(Factory factory) {
-        ensureArgumentIsNotNull(factory, "factory");
-    }
-
-    protected void ensureArgumentIsNotNull(Object argument, String name) {
-        if (argument == null) {
-            fail("Bad argument: \"" + name + "\" is 'null'.");
-        }
-    }
-
     protected void ensureDimensionsAreCorrect(int rows, int columns) {
         if (rows < 0 || columns < 0) {
             fail("Wrong matrix dimensions: " + rows + "x" + columns);
@@ -1472,11 +1439,11 @@ public abstract class AbstractMatrix implements Matrix {
     }
     
     protected void ensureIndexesAreInBounds(int i, int j) {
-        if (i < 0 || i >= this.rows) {
+        if (i < 0 || i >= rows) {
             throw new IndexOutOfBoundsException("Row '" + i + "' is invalid.");
         }
 
-        if (j < 0 || j >= this.columns) {
+        if (j < 0 || j >= columns) {
             throw new IndexOutOfBoundsException("Column '" + j + "' is invalid.");
         }
     }

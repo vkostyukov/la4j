@@ -34,7 +34,6 @@ import java.util.Iterator;
 import java.util.Random;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.factory.Factory;
 import org.la4j.iterator.ColumnMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrices;
@@ -44,7 +43,6 @@ import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
-import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.sparse.CompressedVector;
 

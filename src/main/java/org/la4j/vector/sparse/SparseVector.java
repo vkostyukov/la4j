@@ -324,7 +324,7 @@ public abstract class SparseVector extends AbstractVector {
      * @param i The index to check.
      */
     protected void ensureIndexIsInBounds(int i) {
-        if (i < 0 || i >= this.length) {
+        if (i < 0 || i >= length) {
             throw new IndexOutOfBoundsException("Index '" + i + "' is invalid.");
         }
     }

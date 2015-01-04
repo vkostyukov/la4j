@@ -589,17 +589,6 @@ public abstract class SparseMatrix extends AbstractMatrix {
         };
     }
 
-    @Override
-    public Vector toRowVector() {
-        Vector result = SparseVector.zero(0);
-        return null;
-    }
-
-    @Override
-    public Vector toColumnVector() {
-        return null;
-    }
-
     protected void ensureCardinalityIsCorrect(long rows, long columns, long cardinality) {
         if (cardinality < 0) {
             fail("Cardinality should be positive: " + cardinality + ".");

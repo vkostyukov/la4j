@@ -126,7 +126,6 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector add(Vector that, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return add(that).to(Factory.asVectorFactory(factory));
     }
 
@@ -146,7 +145,6 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector multiply(double value, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return multiply(value).to(Factory.asVectorFactory(factory));
     }
 
@@ -232,8 +230,6 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector blank(Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
         return factory.createVector(length);
     }
 
@@ -244,8 +240,6 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector copy(Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
         if (factory == this.factory) {
             return copy();
         }
@@ -292,7 +286,6 @@ public abstract class AbstractVector implements Vector {
      */
     @Override
     public Vector shuffle(Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return shuffle().to(Factory.asVectorFactory(factory));
     }
 
@@ -333,7 +326,6 @@ public abstract class AbstractVector implements Vector {
 
     @Override
     public Vector slice(int from, int until, Factory factory) {
-        ensureFactoryIsNotNull(factory);
         return slice(from, until).to(Factory.asVectorFactory(factory));
     }
 
@@ -609,28 +601,12 @@ public abstract class AbstractVector implements Vector {
         return to(Vectors.SPARSE);
     }
 
-    protected void ensureFactoryIsNotNull(Factory factory) {
-        ensureArgumentIsNotNull(factory, "factory");
-    }
-
     protected void ensureLengthIsCorrect(int length) {
         if (length < 0) {
             fail("Wrong vector length: " + length);
         }
         if (length == Integer.MAX_VALUE) {
             fail("Wrong vector length: use 'Integer.MAX_VALUE - 1' instead.");
-        }
-    }
-
-    protected void ensureVectorIsSimilar(Vector that) {
-        if (length != that.length()) {
-            fail("Wrong vector length: " + that.length() + ". Should be: " + length + ".");
-        }
-    }
-
-    protected void ensureArgumentIsNotNull(Object argument, String name) {
-        if (argument == null) {
-            fail("Bad argument: \"" + name + "\" is 'null'.");
         }
     }
 
