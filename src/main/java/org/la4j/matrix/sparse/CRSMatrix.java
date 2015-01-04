@@ -35,6 +35,7 @@ import java.util.Random;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
+import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
@@ -853,6 +854,58 @@ public class CRSMatrix extends RowMajorSparseMatrix {
             @Override
             public void remove() {
                 throw new UnsupportedOperationException("Can not remove from this iterator.");
+            }
+        };
+    }
+
+    @Override
+    public RowMajorMatrixIterator nonZeroRowMajorIterator() {
+        return new RowMajorMatrixIterator(rows, columns) {
+            private int i = 0;
+            private int k = -1;
+            private boolean currentIsRemoved = false;
+            private int removedIndex = -1;
+
+            @Override
+            public int rowIndex() {
+                return i;
+            }
+
+            @Override
+            public int columnIndex() {
+                return currentIsRemoved ? removedIndex : columnIndices[k];
+            }
+
+            @Override
+            public double get() {
+                return currentIsRemoved ? 0.0 : values[k];
+            }
+
+            @Override
+            public void set(double value) {
+                if (value == 0.0 && !currentIsRemoved) {
+                    currentIsRemoved = true;
+                    removedIndex = columnIndices[k];
+                    CRSMatrix.this.remove(k--, i);
+                } else if (value != 0.0 && !currentIsRemoved) {
+                    values[k] = value;
+                } else {
+                    currentIsRemoved = false;
+                    CRSMatrix.this.insert(++k, i, removedIndex, value);
+                }
+            }
+
+            @Override
+            public boolean hasNext() {
+                return k + 1 < cardinality;
+            }
+
+            @Override
+            public Double next() {
+                if (rowPointers[i + 1] == ++k) {
+                    i++;
+                }
+                return get();
             }
         };
     }
