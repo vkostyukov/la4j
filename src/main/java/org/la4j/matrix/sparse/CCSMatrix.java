@@ -44,6 +44,8 @@ import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
+import org.la4j.vector.functor.VectorPredicate;
+import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.sparse.CompressedVector;
 
 /**
@@ -386,9 +388,7 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
     @Override
     public Vector getColumn(int j) {
-
         int columnCardinality = columnPointers[j + 1] - columnPointers[j];
-
         double columnValues[] = new double[columnCardinality];
         int columnIndices[] = new int[columnCardinality];
 
@@ -402,30 +402,12 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     }
 
     @Override
-    public Vector getColumn(int j, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
-        Vector result = factory.createVector(rows);
-
-        for (int jj = columnPointers[j]; jj < columnPointers[j + 1]; jj++) {
-            result.set(rowIndices[jj], values[jj]);
-        }
-
-        return result;
-    }
-
-    @Override
-    public Vector getRow(int i, Factory factory) {
-        ensureFactoryIsNotNull(factory);
-
-        Vector result = factory.createVector(columns);
-
+    public Vector getRow(int i) {
+        Vector result = CompressedVector.zero(columns);
         int j = 0;
+
         while (columnPointers[j] < cardinality) {
-
-            int k = searchForRowIndex(i, columnPointers[j], 
-                                      columnPointers[j + 1]);
-
+            int k = searchForRowIndex(i, columnPointers[j], columnPointers[j + 1]);
             if (k < columnPointers[j + 1] && rowIndices[k] == i) {
                 result.set(j, values[k]);
             }
@@ -488,11 +470,10 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     public void eachNonZero(MatrixProcedure procedure) {
         int k = 0, j = 0;
         while (k < cardinality) {
-            for (int i = columnPointers[j]; i < columnPointers[j + 1];
-                 i++, k++) {
-
+            for (int i = columnPointers[j]; i < columnPointers[j + 1]; i++, k++) {
                 procedure.apply(rowIndices[i], j, values[i]);
             }
+
             j++;
         }
     }
@@ -514,32 +495,29 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     }
 
     @Override
-    public void eachInColumn(int j, MatrixProcedure procedure) {
+    public void eachInColumn(int j, VectorProcedure procedure) {
         int k = columnPointers[j];
         int valuesSoFar = columnPointers[j + 1];
-        for (int i = 0; i < columns; i++) {
+        for (int i = 0; i < rows; i++) {
             if (k < valuesSoFar && i == rowIndices[k]) {
-                procedure.apply(i, j, values[k++]);
+                procedure.apply(i, values[k++]);
             } else {
-                procedure.apply(i, j, 0.0);
+                procedure.apply(i, 0.0);
             }
         }
     }
 
     @Override
-    public void eachNonZeroInColumn(int j, MatrixProcedure procedure) {
+    public void eachNonZeroInColumn(int j, VectorProcedure procedure) {
         for (int i = columnPointers[j]; i < columnPointers[j + 1]; i++) {
-            procedure.apply(rowIndices[i], j, values[i]);
+            procedure.apply(rowIndices[i], values[i]);
         }
     }
 
     @Override
     public void updateAt(int i, int j, MatrixFunction function) {
-
         int k = searchForRowIndex(i, columnPointers[j], columnPointers[j + 1]);
-
         if (k < columnPointers[j + 1] && rowIndices[k] == i) {
-
             double value = function.evaluate(i, j, values[k]);
             // if (Math.abs(value) < Matrices.EPS && value >= 0.0) {
             if (value == 0.0) {
@@ -553,9 +531,7 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     }
 
     @Override
-    public void readExternal(ObjectInput in) throws IOException,
-                ClassNotFoundException {
-
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         rows = in.readInt();
         columns = in.readInt();
         cardinality = in.readInt();
@@ -580,7 +556,6 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
-
         out.writeInt(rows);
         out.writeInt(columns);
         out.writeInt(cardinality);
@@ -701,7 +676,6 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
     @Override
     public double max() {
-
         double max = Double.NEGATIVE_INFINITY;
 
         for (int i = 0; i < cardinality; i++) {
@@ -715,7 +689,6 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
     @Override
     public double min() {
-
         double min = Double.POSITIVE_INFINITY;
 
         for (int i = 0; i < cardinality; i++) {
@@ -729,7 +702,6 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
     @Override
     public double maxInColumn(int j) {
-
         double max = Double.NEGATIVE_INFINITY;
 
         for (int k = columnPointers[j]; k < columnPointers[j + 1]; k++) {
@@ -743,7 +715,6 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
     @Override
     public double minInColumn(int j) {
-
         double min = Double.POSITIVE_INFINITY;
 
         for (int k = columnPointers[j]; k < columnPointers[j + 1]; k++) {

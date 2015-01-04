@@ -51,6 +51,7 @@ public class OoPlaceMatrixByItsTransposeMultiplication extends MatrixOperation<M
 
     @Override
     public Matrix apply(ColumnMajorSparseMatrix a) {
+        // TODO: Implement its own algorithm
         return apply(a.toRowMajorSparseMatrix());
     }
 }
