@@ -19,69 +19,19 @@ The key features of the **la4j** are listed bellow:
 * MatrixMarket/CSV IO formats support
 
 
-Samples
--------
-**Matrix inversion**
-```java
-// We want a simple dense matrix that uses 2D array as internal representation
-Matrix a = new Basic2DMatrix(new double[][] {
-   { 1.0, 2.0, 3.0 },
-   { 4.0, 5.0, 6.0 },
-   { 7.0, 8.0, 9.0 }
-});
-
-// We will use Gauss-Jordan method for inverting
-MatrixInverter inverter = a.withInverter(LinearAlgebra.GAUSS_JORDAN);
-// The 'b' matrix will be dense
-Matrix b = inverter.inverse(LinearAlgebra.DENSE_FACTORY);
-```
-**System of linear equations**
-```java
-// The coefficient matrix 'a' is a CRS (Compressed Row Storage) matrix
-Matrix a = new CRSMatrix(new double[][] {
-   { 1.0, 2.0, 3.0 },
-   { 4.0, 5.0, 6.0 },
-   { 7.0, 8.0, 9.0 }
-});
-
-// A right hand side vector, which is simple dense vector
-Vector b = new BasicVector(new double[] {
-   1.0, 2.0, 3.0
-});
-
-// We will use standard Forward-Back Substitution method,
-// which is based on LU decomposition and can be used with square systems
-LinearSystemSolver solver = a.withSolver(LinearAlgebra.FORWARD_BACK_SUBSTITUTION);
-// The 'x' vector will be sparse
-Vector x = solver.solve(b, LinearAlgebra.SPARSE_FACTORY);
-```
-**Matrix decomposition**
-```java
-// We want simple dense matrix, which is based on 1D double array
-Matrix a = new Basic1DMatrix(new double[][] {
-   { 1.0, 2.0, 3.0 },
-   { 4.0, 5.0, 6.0 },
-   { 7.0, 8.0, 9.0 }
-});
-
-// We will use LU decompositor
-MatrixDecompositor decompositor = a.withDecompositor(LinearAlgebra.LU);
-// The result should be treated as: L = lup[0], U = lup[1], P = lup[2]
-Matrix[] lup = decompositor.decompose(LinearAlgebra.DENSE_FACTORY);
+Instalation
+-----------
+```xml
+<dependency>
+  <groupId>org.la4j</groupId>
+  <artifactId>la4j</artifactId>
+  <version>0.5.0</version>
+</dependency>
 ```
 
 Changelog
 ------------
-
 See [CHANGELOG.md](https://github.com/vkostyukov/la4j/blob/master/CHANGELOG.md)
-
-
-Download
---------
- 
-Details of the last version of the [**la4j**](http://la4j.org) can be found on the
-project web site <http://la4j.org> or its GitHub page <https://github.com/vkostyukov/la4j>.
-
 
 Licensing
 ---------
