@@ -42,11 +42,11 @@ public class GaussianSolver extends AbstractSolver implements LinearSystemSolver
     public GaussianSolver(Matrix a) {
         super(a);
 
-        this.aa = a.resizeColumns(unknowns() + 1);
+        this.aa = a.copyOfColumns(unknowns() + 1);
     }
 
     @Override
-    public Vector solve(Vector b, Factory factory) {
+    public Vector solve(Vector b) {
         ensureRHSIsCorrect(b);
 
         // extend augmented matrix
@@ -60,7 +60,7 @@ public class GaussianSolver extends AbstractSolver implements LinearSystemSolver
         }
 
         // the 2nd phase
-        Vector x = factory.createVector(aa.columns() - 1);
+        Vector x = b.blankOfLength(aa.columns() - 1);
         backSubstitution(aa, x);
 
         return x;
@@ -95,7 +95,7 @@ public class GaussianSolver extends AbstractSolver implements LinearSystemSolver
                 matrix.set(j, i, 0.0);
 
                 for (int k = i + 1; k < matrix.columns(); k++) {
-                    matrix.update(j, k, Matrices.asMinusFunction(matrix.get(i, k) * c));
+                    matrix.updateAt(j, k, Matrices.asMinusFunction(matrix.get(i, k) * c));
                 }
             }
         }

@@ -22,23 +22,14 @@
 
 package org.la4j.vector;
 
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Random;
 import org.la4j.LinearAlgebra;
-import org.la4j.io.MatrixMarketStream;
-import org.la4j.io.SymbolSeparatedStream;
 import org.la4j.vector.dense.BasicVector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.source.ArrayVectorSource;
-import org.la4j.vector.source.LoopbackVectorSource;
-import org.la4j.vector.source.RandomVectorSource;
-import org.la4j.vector.source.StreamVectorSource;
-import org.la4j.vector.source.VectorSource;
 import org.la4j.vector.sparse.CompressedVector;
 
 public final class Vectors {
@@ -463,108 +454,5 @@ public final class Vectors {
                 accumulator.update(i, value);
             }
         };
-    }
-
-    /**
-     * Creates a vector source of given {@code vector}.
-     * 
-     * @param vector the source vector
-     *
-     * @return a vector source
-     */
-    @Deprecated
-    public static VectorSource asVectorSource(Vector vector) {
-        return new LoopbackVectorSource(vector);
-    }
-
-    /**
-     * Creates an array vector source of given array {@code reference}.
-     * 
-     * @param array the source array
-     *
-     * @return an array vector source
-     */
-    @Deprecated
-    public static VectorSource asArraySource(double[] array) {
-        return new ArrayVectorSource(array);
-    }
-
-    /**
-     * Creates a random vector source of given {@code length}.
-     *
-     * This method is deprecated. Use {@link org.la4j.vector.dense.DenseVector#random(int, java.util.Random)} instead.
-     * 
-     * @param length the length of the source
-     *
-     * @return a random vector source
-     */
-    @Deprecated
-    public static VectorSource asRandomSource(int length, Random random) {
-        return new RandomVectorSource(length, random);
-    }
-
-    /**
-     * Creates a MatrixMarket stream source of given input stream {@code in}.
-     * 
-     * @param in the input stream
-     *
-     * @return a MatrixMarket stream source
-     */
-    @Deprecated
-    public static VectorSource asMatrixMarketSource(InputStream in) {
-        return new StreamVectorSource(new MatrixMarketStream(in));
-    }
-
-    /**
-     * Creates a symbol separated stream source (like CSV) of given input stream {@code in}.
-     *
-     * @param in the input stream
-     *
-     * @return a symbol separated stream source
-     */
-    @Deprecated
-    public static VectorSource asSymbolSeparatedSource(InputStream in) {
-        return new StreamVectorSource(new SymbolSeparatedStream(in));
-    }
-
-    /**
-     * Creates a symbol separated stream source (like CSV) of given input stream {@code in}.
-     *
-     * @param in the input stream
-     * @param separator the values' separator
-     *
-     * @return a symbol separated stream source
-     */
-    @Deprecated
-    public static VectorSource asSymbolSeparatedSource(InputStream in, String separator) {
-        return new StreamVectorSource(new SymbolSeparatedStream(in, separator));
-    }
-
-    /**
-     * Creates a singleton 1-length vector of given {@code value}.
-     *
-     * This method is deprecated. Use {@link org.la4j.vector.dense.DenseVector#of(double...)} instead.
-     *
-     * @param value the vector's singleton value
-     *
-     * @return a singleton vector
-     */
-    @Deprecated
-    public static Vector asSingletonVector(double value) {
-        return LinearAlgebra.DEFAULT_FACTORY.createVector(new double[]{value});
-    }
-
-    /**
-     * Creates a default vector from given vararg {@code values}.
-     *
-     * This method is deprecated. Use {@link org.la4j.vector.dense.DenseVector#of(double...)} instead.
-     *
-     * @param values of the vector
-     *
-     * @return a default vector
-     */
-    @Deprecated
-    public static Vector asVector(double... values) {
-        return LinearAlgebra.DEFAULT_FACTORY.createVector(values);
     }
 }

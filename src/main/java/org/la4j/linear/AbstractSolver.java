@@ -42,11 +42,6 @@ public abstract class AbstractSolver implements LinearSystemSolver {
     }
 
     @Override
-    public Vector solve(Vector b) {
-        return solve(b, b.factory());
-    }
-
-    @Override
     public Matrix self() {
         return a;
     }

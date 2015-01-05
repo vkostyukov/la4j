@@ -28,10 +28,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.MatrixFactory;
-import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.BasicVector;
 
@@ -180,33 +178,6 @@ public class Basic1DMatrix extends DenseMatrix  {
 
     public Basic1DMatrix() {
         this(0, 0);
-    }
-
-    @Deprecated
-    public Basic1DMatrix(Matrix matrix) {
-        this(Matrices.asMatrixSource(matrix));
-    }
-
-    @Deprecated
-    public Basic1DMatrix(MatrixSource source) {
-        this(source.rows(), source.columns());
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                self[i * columns + j] = source.get(i, j);
-            }
-        }
-    }
-
-    @Deprecated
-    public Basic1DMatrix(double array[][]) {
-        this(array.length, array[0].length);
-
-        int offset = 0;
-        for (int i = 0; i < rows; i++) {
-            System.arraycopy(array[i], 0, self, offset, columns);
-            offset += columns;
-        }
     }
 
     public Basic1DMatrix(int rows, int columns) {

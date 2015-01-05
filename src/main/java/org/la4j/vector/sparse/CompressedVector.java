@@ -32,10 +32,8 @@ import java.util.Random;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.Vector;
 import org.la4j.vector.VectorFactory;
-import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.source.VectorSource;
 
 /**
  * A basic sparse vector implementation using underlying value and index arrays.
@@ -116,62 +114,6 @@ public class CompressedVector extends SparseVector {
 
     public CompressedVector(int length) {
         this(length, 0);
-    }
-
-    /**
-     * This constructor is deprecated. Use {@link Vector#to(VectorFactory)}
-     * instead.
-     *
-     * <p />
-     *
-     * Creates a new {@link CompressedVector} as a copy of the given {@code vector}.
-     *
-     *
-     * @param vector the vector to copy
-     */
-    @Deprecated
-    public CompressedVector(Vector vector) {
-        this(Vectors.asVectorSource(vector));
-    }
-
-    @Deprecated
-    public CompressedVector(double array[]) {
-        this(array.length, 0);
-
-        for (int i = 0; i < length; i++) {
-            double value = array[i];
-            //if (Math.abs(value) > Vectors.EPS || value < 0.0) {
-            if (value != 0.0) {
-
-                if (values.length < cardinality + 1) {
-                    growUp();
-                }
-
-                values[cardinality] = value;
-                indices[cardinality] = i;
-                cardinality++;
-            }
-        }
-    }
-
-    @Deprecated
-    public CompressedVector(VectorSource source) {
-        this(source.length(), 0);
-
-        for (int i = 0; i < length; i++) {
-            double value = source.get(i);
-            //if (Math.abs(value) > Vectors.EPS || value < 0.0) {
-            if (value != 0.0) {
-
-                if (values.length < cardinality + 1) {
-                    growUp();
-                }
-
-                values[cardinality] = value;
-                indices[cardinality] = i;
-                cardinality++;
-            }
-        }
     }
 
     public CompressedVector(int length, int capacity) {

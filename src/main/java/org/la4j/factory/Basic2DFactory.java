@@ -25,7 +25,6 @@ import java.util.Random;
 
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.Basic2DMatrix;
-import org.la4j.matrix.source.MatrixSource;
 
 @Deprecated
 public class Basic2DFactory extends BasicFactory {
@@ -50,16 +49,6 @@ public class Basic2DFactory extends BasicFactory {
     @Override
     public Matrix createMatrix(double array[][]) {
         return Basic2DMatrix.from2DArray(array);
-    }
-
-    @Override
-    public Matrix createMatrix(Matrix matrix) {
-        return new Basic2DMatrix(matrix);
-    }
-
-    @Override
-    public Matrix createMatrix(MatrixSource source) {
-        return new Basic2DMatrix(source);
     }
 
     @Override

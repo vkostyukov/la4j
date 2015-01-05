@@ -21,11 +21,11 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
+import org.la4j.vector.dense.DenseVector;
 
 /**
  * This class represents singular value decomposition of matrices. More details
@@ -46,12 +46,11 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
      * http://mathworld.wolfram.com/SingularValueDecomposition.html</a> for more
      * details.
      * </p>
-     * 
-     * @param factory
+     *
      * @return { U, D, V }
      */
     @Override
-    public Matrix[] decompose(Factory factory) {
+    public Matrix[] decompose() {
 
         // AHTIUNG: this code derived from Jama
 
@@ -59,12 +58,12 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
 
         int n = Math.min(a.rows(), a.columns());
 
-        Matrix u = factory.createMatrix(a.rows(), n);
-        Matrix s = factory.createMatrix(a.columns(), a.columns());
-        Matrix v = factory.createMatrix(a.columns(), a.columns());
+        Matrix u = matrix.blankOfShape(a.rows(), n);
+        Matrix s = matrix.blankOfShape(a.columns(), a.columns());
+        Matrix v = matrix.blankOfShape(a.columns(), a.columns());
 
-        Vector e = factory.createVector(a.columns());
-        Vector work = factory.createVector(a.rows());
+        Vector e = DenseVector.zero(a.columns());
+        Vector work = DenseVector.zero(a.rows());
 
         int nct = Math.min(a.rows() - 1, a.columns());
         int nrt = Math.max(0, Math.min(a.columns() - 2, a.rows()));
@@ -82,18 +81,18 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
                 if (Math.abs(s.get(k, k)) > Matrices.EPS) {
 
                     if (a.get(k, k) < 0.0) {
-                        s.update(k, k, Matrices.INV_FUNCTION);
+                        s.updateAt(k, k, Matrices.INV_FUNCTION);
                     }
 
                     double skk = s.get(k, k);
                     for (int i = k; i < a.rows(); i++) {
-                        a.update(i, k, Matrices.asDivFunction(skk));
+                        a.updateAt(i, k, Matrices.asDivFunction(skk));
                     }
 
-                    a.update(k, k, Matrices.INC_FUNCTION);
+                    a.updateAt(k, k, Matrices.INC_FUNCTION);
                 }
 
-                s.update(k, k, Matrices.INV_FUNCTION);
+                s.updateAt(k, k, Matrices.INV_FUNCTION);
             }
 
             for (int j = k + 1; j < a.columns(); j++) {
@@ -109,7 +108,7 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
                     t = -t / a.get(k, k);
 
                     for (int i = k; i < a.rows(); i++) {
-                        a.update(i, j, Matrices.asPlusFunction(t * a.get(i, k)));
+                        a.updateAt(i, j, Matrices.asPlusFunction(t * a.get(i, k)));
                     }
                 }
 
@@ -136,18 +135,18 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
 
                     if (e.get(k + 1) < 0.0) {
 
-                        e.update(k, Vectors.INV_FUNCTION);
+                        e.updateAt(k, Vectors.INV_FUNCTION);
                     }
 
                     double ek = e.get(k);
                     for (int i = k + 1; i < a.columns(); i++) {
-                        e.update(i, Vectors.asDivFunction(ek));
+                        e.updateAt(i, Vectors.asDivFunction(ek));
                     }
 
-                    e.update(k + 1, Vectors.INC_FUNCTION);
+                    e.updateAt(k + 1, Vectors.INC_FUNCTION);
                 }
 
-                e.update(k, Vectors.INV_FUNCTION);
+                e.updateAt(k, Vectors.INV_FUNCTION);
 
                 if ((k + 1 < a.rows()) && (Math.abs(e.get(k)) > Matrices.EPS)) {
 
@@ -157,8 +156,8 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
 
                     for (int j = k + 1; j < a.columns(); j++) {
                         for (int i = k + 1; i < a.rows(); i++) {
-                            work.update(i, Vectors.asPlusFunction(e.get(j) * 
-                                        a.get(i, j)));
+                            work.updateAt(i, Vectors.asPlusFunction(e.get(j) *
+                                a.get(i, j)));
                         }
                     }
 
@@ -167,7 +166,7 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
                         double t = -e.get(j) / e.get(k + 1);
 
                         for (int i = k + 1; i < a.rows(); i++) {
-                            a.update(i, j, Matrices.asPlusFunction(t * 
+                            a.updateAt(i, j, Matrices.asPlusFunction(t *
                                      work.get(i)));
                         }
                     }
@@ -218,15 +217,15 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
                     t = -t / u.get(k, k);
 
                     for (int i = k; i < a.rows(); i++) {
-                        u.update(i, j, Matrices.asPlusFunction(t * u.get(i, k)));
+                        u.updateAt(i, j, Matrices.asPlusFunction(t * u.get(i, k)));
                     }
                 }
 
                 for (int i = k; i < a.rows(); i++) {
-                    u.update(i, k, Matrices.INV_FUNCTION);
+                    u.updateAt(i, k, Matrices.INV_FUNCTION);
                 }
 
-                u.update(k, k, Matrices.INC_FUNCTION);
+                u.updateAt(k, k, Matrices.INC_FUNCTION);
 
                 for (int i = 0; i < k - 1; i++) {
                     u.set(i, k, 0.0);
@@ -257,7 +256,7 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
                     t = -t / v.get(k + 1, k);
 
                     for (int i = k + 1; i < a.columns(); i++) {
-                        v.update(i, j, Matrices.asPlusFunction(t * v.get(i, k)));
+                        v.updateAt(i, j, Matrices.asPlusFunction(t * v.get(i, k)));
                     }
                 }
             }
@@ -446,7 +445,7 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
                             -sn * e.get(j) 
                             + cs * s.get(j + 1, j + 1));
                     g = sn * e.get(j + 1);
-                    e.update(j + 1, Vectors.asMulFunction(cs));
+                    e.updateAt(j + 1, Vectors.asMulFunction(cs));
 
                     if (j < a.rows() - 1) {
                         for (int i = 0; i < a.rows(); i++) {
@@ -470,7 +469,7 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
                 if (s.get(k, k) <= 0.0) {
                     s.set(k, k, s.get(k, k) < 0.0 ? -s.get(k, k) : 0.0);
                     for (int i = 0; i <= pp; i++) {
-                        v.update(i,  k, Matrices.INV_FUNCTION);
+                        v.updateAt(i,  k, Matrices.INV_FUNCTION);
                     }
                 }
 
@@ -514,7 +513,7 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
         // We need to change the logic of this code in order do not use resize
         // It is also not a good idea to use SVN for [m < n] matrices
         // We need to change it in further releases
-        return new Matrix[] { u, s.resize(n, a.columns(), factory), v };
+        return new Matrix[] { u, s.copyOfShape(n, a.columns()), v };
     }
 
     private double hypot(double a, double b) {

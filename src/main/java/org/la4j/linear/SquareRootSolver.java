@@ -21,7 +21,6 @@
 
 package org.la4j.linear;
 
-import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
@@ -40,15 +39,15 @@ public class SquareRootSolver extends AbstractSolver implements LinearSystemSolv
     }
 
     @Override
-    public Vector solve(Vector b, Factory factory) {
+    public Vector solve(Vector b) {
         ensureRHSIsCorrect(b);
 
         Matrix s = a.blank();
         Matrix d = a.blank();
 
-        Vector x = factory.createVector(unknowns());
-        Vector y = factory.createVector(unknowns());
-        Vector z = factory.createVector(unknowns());
+        Vector x = b.blankOfLength(unknowns());
+        Vector y = b.blankOfLength(unknowns());
+        Vector z = b.blankOfLength(unknowns());
 
         for (int i = 0; i < a.rows(); i++) {
 

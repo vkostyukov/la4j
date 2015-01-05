@@ -22,10 +22,10 @@
 package org.la4j.inversion;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.factory.Factory;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
+import org.la4j.vector.dense.DenseVector;
 
 public class GaussJordanInverter implements MatrixInverter {
 
@@ -36,23 +36,23 @@ public class GaussJordanInverter implements MatrixInverter {
     }
 
     @Override
-    public Matrix inverse(Factory factory) {
+    public Matrix inverse() {
 
         if (matrix.rows() != matrix.columns()) {
             throw new IllegalArgumentException("Wrong matrix size: "
                     + "rows != columns");
         }
 
-        Matrix result = factory.createMatrix(matrix.rows(), matrix.columns());
+        Matrix result = matrix.blankOfShape(matrix.rows(), matrix.columns());
 
         for (int i = 0; i < matrix.rows(); i++) {
 
-            Vector b = factory.createVector(matrix.rows());
+            Vector b = DenseVector.zero(matrix.rows());
             b.set(i, 1.0);
 
             try {
                 LinearSystemSolver solver = matrix.withSolver(LinearAlgebra.GAUSSIAN);
-                Vector x = solver.solve(b, factory);
+                Vector x = solver.solve(b);
                 result.setColumn(i, x);
             } catch (IllegalArgumentException ex) {
                 throw new IllegalArgumentException("This matrix is not invertible.");
@@ -60,11 +60,6 @@ public class GaussJordanInverter implements MatrixInverter {
         }
 
         return result;
-    }
-
-    @Override
-    public Matrix inverse() {
-        return inverse(matrix.factory());
     }
 
     @Override

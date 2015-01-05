@@ -25,7 +25,6 @@ import java.util.Random;
 
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.BasicVector;
-import org.la4j.vector.source.VectorSource;
 
 @Deprecated
 public abstract class BasicFactory extends Factory {
@@ -45,16 +44,6 @@ public abstract class BasicFactory extends Factory {
     @Override
     public Vector createVector(double[] array) {
         return BasicVector.fromArray(array);
-    }
-
-    @Override
-    public Vector createVector(Vector vector) {
-        return new BasicVector(vector);
-    }
-
-    @Override
-    public Vector createVector(VectorSource source) {
-        return new BasicVector(source);
     }
 
     @Override

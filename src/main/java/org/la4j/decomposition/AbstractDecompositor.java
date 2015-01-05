@@ -36,11 +36,6 @@ public abstract class AbstractDecompositor implements MatrixDecompositor {
     }
 
     @Override
-    public Matrix[] decompose() {
-        return decompose(matrix.factory());
-    }
-
-    @Override
     public Matrix self() {
         return matrix;
     }

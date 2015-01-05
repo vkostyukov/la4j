@@ -21,11 +21,12 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.sparse.SparseMatrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
+import org.la4j.vector.dense.DenseVector;
 import org.la4j.vector.functor.VectorAccumulator;
 
 /**
@@ -47,17 +48,16 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
      * http://mathworld.wolfram.com/EigenDecomposition.html</a> for more
      * details.
      * </p>
-     * 
-     * @param factory
+     *
      * @return { V, D }
      */
     @Override
-    public Matrix[] decompose(Factory factory) {
+    public Matrix[] decompose() {
 
         if (matrix.is(Matrices.SYMMETRIC_MATRIX)) {
-            return decomposeSymmetricMatrix(matrix, factory);
+            return decomposeSymmetricMatrix(matrix);
         } else if (matrix.rows() == matrix.columns()) {
-            return decomposeNonSymmetricMatrix(matrix, factory);
+            return decomposeNonSymmetricMatrix(matrix);
         } else {
             throw new IllegalArgumentException("Can't decompose rectangle matrix");
         }
@@ -79,16 +79,15 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
      * </p>
      * 
      * @param matrix
-     * @param factory
      * @return { V, D }
      */
-    private Matrix[] decomposeSymmetricMatrix(Matrix matrix, Factory factory) {
+    private Matrix[] decomposeSymmetricMatrix(Matrix matrix) {
 
         Matrix d = matrix.copy();
-        Matrix v = factory.createIdentityMatrix(matrix.rows());
+        Matrix v = SparseMatrix.identity(matrix.rows());
 
-        Vector r = generateR(d, factory);
-        Matrix u = factory.createIdentityMatrix(matrix.rows());
+        Vector r = generateR(d);
+        Matrix u = SparseMatrix.identity(matrix.rows());
 
         VectorAccumulator normAccumulator = Vectors.mkEuclideanNormAccumulator();
 
@@ -154,9 +153,9 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
         return result;
     }
 
-    private Vector generateR(Matrix matrix, Factory factory) {
+    private Vector generateR(Matrix matrix) {
 
-        Vector result = factory.createVector(matrix.rows());
+        Vector result = DenseVector.zero(matrix.rows());
 
         for (int i = 0; i < matrix.rows(); i++) {
             result.set(i, generateRi(matrix, i));
@@ -212,20 +211,19 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
      * </p>
      * 
      * @param matrix
-     * @param factory
      * @return { P, D }
      */
-    private Matrix[] decomposeNonSymmetricMatrix(Matrix matrix, Factory factory) {
+    private Matrix[] decomposeNonSymmetricMatrix(Matrix matrix) {
 
         Matrix A = matrix.copy();
         int n = matrix.columns();
 
-        Matrix v = factory.createIdentityMatrix(n);
-        Vector d = factory.createVector(n);
-        Vector e = factory.createVector(n);
+        Matrix v = SparseMatrix.identity(n);
+        Vector d = DenseVector.zero(n);
+        Vector e = DenseVector.zero(n);
 
         Matrix h = A.copy();
-        Vector ort = factory.createVector(n);
+        Vector ort = DenseVector.zero(n);
 
         // Reduce to Hessenberg form.
         orthes(h, v, ort);
@@ -233,7 +231,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
         // Reduce Hessenberg to real Schur form.
         hqr2(h, v, d, e);
 
-        Matrix dd = factory.createMatrix(n, n);
+        Matrix dd = matrix.blankOfShape(n, n);
         for (int i = 0; i < n; i++) {
             dd.set(i, i, d.get(i));
 
@@ -285,7 +283,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                 }
 
                 hh = hh - ort.get(m) * g;
-                ort.update(m, Vectors.asMinusFunction(g));
+                ort.updateAt(m, Vectors.asMinusFunction(g));
 
                 // Apply Householder similarity transformation
                 // H = (I-u*u'/h)*H*(I-u*u')/h)
@@ -297,7 +295,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                     }
                     f = f / hh;
                     for (int i = m; i <= high; i++) {
-                        h.update(i, j, Matrices.asMinusFunction(f * ort.get(i)));
+                        h.updateAt(i, j, Matrices.asMinusFunction(f * ort.get(i)));
                     }
                 }
 
@@ -308,7 +306,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                     }
                     f = f / hh;
                     for (int j = m; j <= high; j++) {
-                        h.update(i, j, Matrices.asMinusFunction(f * ort.get(j)));
+                        h.updateAt(i, j, Matrices.asMinusFunction(f * ort.get(j)));
                     }
                 }
                 ort.set(m, scale * ort.get(m));
@@ -331,7 +329,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                     // Double division avoids possible underflow
                     g = (g / ort.get(m)) / h.get(m, m - 1);
                     for (int i = m; i <= high; i++) {
-                        v.update(i, j, Matrices.asPlusFunction(g * ort.get(i)));
+                        v.updateAt(i, j, Matrices.asPlusFunction(g * ort.get(i)));
                     }
                 }
             }
@@ -395,7 +393,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
             // One root found
 
             if (l == n) {
-                H.update(n, n, Matrices.asPlusFunction(exshift));
+                H.updateAt(n, n, Matrices.asPlusFunction(exshift));
                 d.set(n, H.get(n, n));
                 e.set(n, 0.0);
                 n--;
@@ -408,8 +406,8 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                 p = (H.get(n - 1, n - 1) - H.get(n, n)) / 2.0;
                 q = p * p + w;
                 z = Math.sqrt(Math.abs(q));
-                H.update(n, n, Matrices.asPlusFunction(exshift));
-                H.update(n - 1, n - 1, Matrices.asPlusFunction(exshift));
+                H.updateAt(n, n, Matrices.asPlusFunction(exshift));
+                H.updateAt(n - 1, n - 1, Matrices.asPlusFunction(exshift));
                 x = H.get(n, n);
 
                 // Real pair
@@ -489,7 +487,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                 if (iter == 10) {
                     exshift += x;
                     for (int i = low; i <= n; i++) {
-                        H.update(i, i, Matrices.asMinusFunction(x));
+                        H.updateAt(i, i, Matrices.asMinusFunction(x));
                     }
                     s = Math.abs(H.get(n, n - 1)) 
                         + Math.abs(H.get(n - 1, n - 2));
@@ -509,7 +507,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                         }
                         s = x - w / ((y - x) / 2.0 + s);
                         for (int i = low; i <= n; i++) {
-                            H.update(i, i, Matrices.asMinusFunction(s));
+                            H.updateAt(i, i, Matrices.asMinusFunction(s));
                         }
                         exshift += s;
                         x = y = w = 0.964;
@@ -576,7 +574,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                         if (k != m) {
                             H.set(k, k - 1, -s * x);
                         } else if (l != m) {
-                            H.update(k, k - 1, Matrices.INV_FUNCTION);
+                            H.updateAt(k, k - 1, Matrices.INV_FUNCTION);
                         }
                         p = p + s;
                         x = p / s;
@@ -591,11 +589,11 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                             p = H.get(k, j) + q * H.get(k + 1, j);
                             if (notlast) {
                                 p = p + r * H.get(k + 2, j);
-                                H.update(k + 2, j, 
+                                H.updateAt(k + 2, j,
                                          Matrices.asMinusFunction(p * z));
                             }
-                            H.update(k, j, Matrices.asMinusFunction(p * x));
-                            H.update(k + 1, j, Matrices.asMinusFunction(p * y));
+                            H.updateAt(k, j, Matrices.asMinusFunction(p * x));
+                            H.updateAt(k + 1, j, Matrices.asMinusFunction(p * y));
                         }
 
                         // Column modification
@@ -605,11 +603,11 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                                 * H.get(i, k + 1);
                             if (notlast) {
                                 p = p + z * H.get(i, k + 2);
-                                H.update(i, k + 2, 
+                                H.updateAt(i, k + 2,
                                          Matrices.asMinusFunction(p * r));
                             }
-                            H.update(i, k, Matrices.asMinusFunction(p));
-                            H.update(i, k + 1, Matrices.asMinusFunction(p * q));
+                            H.updateAt(i, k, Matrices.asMinusFunction(p));
+                            H.updateAt(i, k + 1, Matrices.asMinusFunction(p * q));
                         }
 
                         // Accumulate transformations
@@ -619,11 +617,11 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                                 * V.get(i, k + 1);
                             if (notlast) {
                                 p = p + z * V.get(i, k + 2);
-                                V.update(i, k + 2, 
+                                V.updateAt(i, k + 2,
                                          Matrices.asMinusFunction(p * r));
                             }
-                            V.update(i, k, Matrices.asMinusFunction(p));
-                            V.update(i, k + 1, Matrices.asMinusFunction(p * q));
+                            V.updateAt(i, k, Matrices.asMinusFunction(p));
+                            V.updateAt(i, k + 1, Matrices.asMinusFunction(p * q));
                         }
                     } // (s != 0)
                 } // k loop
@@ -684,7 +682,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                         t = Math.abs(H.get(i, n));
                         if ((eps * t) * t > 1) {
                             for (int j = i; j <= n; j++) {
-                                H.update(j, n, Matrices.asDivFunction(t));
+                                H.updateAt(j, n, Matrices.asDivFunction(t));
                             }
                         }
                     }
@@ -772,8 +770,8 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                                      Math.abs(H.get(i, n)));
                         if ((eps * t) * t > 1) {
                             for (int j = i; j <= n; j++) {
-                                H.update(j, n - 1, Matrices.asDivFunction(t));
-                                H.update(j, n, Matrices.asDivFunction(t));
+                                H.updateAt(j, n - 1, Matrices.asDivFunction(t));
+                                H.updateAt(j, n, Matrices.asDivFunction(t));
                             }
                         }
                     }

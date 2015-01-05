@@ -21,9 +21,9 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
+import org.la4j.matrix.sparse.SparseMatrix;
 
 public class RawLUDecompositor extends AbstractDecompositor implements MatrixDecompositor {
 
@@ -32,10 +32,10 @@ public class RawLUDecompositor extends AbstractDecompositor implements MatrixDec
     }
 
     @Override
-    public Matrix[] decompose(Factory factory) {
+    public Matrix[] decompose() {
 
         Matrix lu = matrix.copy();
-        Matrix p = factory.createIdentityMatrix(lu.rows());
+        Matrix p = SparseMatrix.identity(lu.rows());
 
         for (int j = 0; j < lu.columns(); j++) {
             for (int i = 0; i < lu.rows(); i++) {
@@ -47,7 +47,7 @@ public class RawLUDecompositor extends AbstractDecompositor implements MatrixDec
                     s += lu.get(i, k) * lu.get(k, j);
                 }
 
-                lu.update(i, j, Matrices.asMinusFunction(s));
+                lu.updateAt(i, j, Matrices.asMinusFunction(s));
             }
 
             int pivot = j;
@@ -65,7 +65,7 @@ public class RawLUDecompositor extends AbstractDecompositor implements MatrixDec
 
             if (j < lu.rows() && Math.abs(lu.get(j, j)) > Matrices.EPS) {
                 for (int i = j + 1; i < lu.rows(); i++) {
-                    lu.update(i, j, Matrices.asDivFunction(lu.get(j, j)));
+                    lu.updateAt(i, j, Matrices.asDivFunction(lu.get(j, j)));
                 }
             }
         }

@@ -38,7 +38,7 @@ public abstract class AbstractInverterTest {
 
             Matrix a = factory.createMatrix(input);
             MatrixInverter inverter = a.withInverter(inverterFactory);
-            Matrix b = inverter.inverse(factory);
+            Matrix b = inverter.inverse();
 
             // a * a^-1 = e
             Matrix c = a.multiply(b);

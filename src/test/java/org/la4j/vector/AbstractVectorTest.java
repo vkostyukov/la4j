@@ -730,15 +730,15 @@ public abstract class AbstractVectorTest {
         assertEquals(0, a.length());
         assertEquals(31, b.length());
 
-        b.assign(3.14);
+        b.setAll(3.14);
         assertTrue(b.is(pi));
 
         Vector c = b.copyOfLength(42);
-        c.assign(3.14);
+        c.setAll(3.14);
         assertTrue(c.is(pi));
 
         Vector d = c.copyOfLength(54);
-        d.assign(3.14);
+        d.setAll(3.14);
         assertTrue(d.is(pi));
     }
 
@@ -757,19 +757,19 @@ public abstract class AbstractVectorTest {
 
         assertEquals(32, b.length());
 
-        b.assign(42.0);
+        b.setAll(42.0);
         assertTrue(b.is(fortyTwo));
 
         Vector c = b.copyOfLength(110);
-        c.assign(42.0);
+        c.setAll(42.0);
         assertTrue(c.is(fortyTwo));
 
         Vector d = c.copyOfLength(1076);
-        d.assign(42.0);
+        d.setAll(42.0);
         assertTrue(d.is(fortyTwo));
 
         Vector e = d.copyOfLength(31);
-        e.assign(42.0);
+        e.setAll(42.0);
         assertTrue(e.is(fortyTwo));
     }
 

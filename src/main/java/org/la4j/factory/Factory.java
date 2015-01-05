@@ -27,11 +27,9 @@ import java.util.Random;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.MatrixFactory;
-import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.VectorFactory;
 import org.la4j.vector.Vectors;
-import org.la4j.vector.source.VectorSource;
 
 @Deprecated
 public abstract class Factory implements Serializable {
@@ -72,24 +70,6 @@ public abstract class Factory implements Serializable {
      * @return a new matrix of given array
      */
     public abstract Matrix createMatrix(double array[][]);
-
-    /**
-     * Creates a matrix from another {@code matrix}.
-     * 
-     * @param matrix the source matrix
-     *
-     * @return a new matrix
-     */
-    public abstract Matrix createMatrix(Matrix matrix);
-
-    /**
-     * Creates a matrix from given matrix {@code source}.
-     * 
-     * @param source the matrix source
-     *
-     * @return a new matrix
-     */
-    public abstract Matrix createMatrix(MatrixSource source);
 
     /**
      * Creates a constant matrix of given shape with {@code value} stored in
@@ -216,24 +196,6 @@ public abstract class Factory implements Serializable {
      * @return a new vector
      */
     public abstract Vector createVector(double array[]);
-
-    /**
-     * Creates a vector from another {@code vector}.
-     * 
-     * @param vector the source vector
-     *
-     * @return a new vector
-     */
-    public abstract Vector createVector(Vector vector);
-
-    /**
-     * Creates a vector of given {@code source}.
-     * 
-     * @param source the vector source
-     *
-     * @return a new vector
-     */
-    public abstract Vector createVector(VectorSource source);
 
     /**
      * Creates a constant vector of given {@code length} and constant

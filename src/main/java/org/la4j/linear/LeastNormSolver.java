@@ -23,7 +23,6 @@ package org.la4j.linear;
 
 
 import org.la4j.LinearAlgebra;
-import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
@@ -42,12 +41,11 @@ public class LeastNormSolver extends AbstractSolver implements LinearSystemSolve
     }
 
     @Override
-    public Vector solve(Vector b, Factory factory) {
+    public Vector solve(Vector b) {
         ensureRHSIsCorrect(b);
 
-        Matrix temp = self().multiply(self().rotate(factory), factory);
-        Matrix pseudoInverse = self().rotate(factory).
-                multiply(temp.withInverter(LinearAlgebra.InverterFactory.GAUSS_JORDAN).inverse(factory));
+        Matrix temp = self().multiply(self().rotate());
+        Matrix pseudoInverse = self().rotate().multiply(temp.withInverter(LinearAlgebra.InverterFactory.GAUSS_JORDAN).inverse());
 
         return pseudoInverse.multiply(b);
     }

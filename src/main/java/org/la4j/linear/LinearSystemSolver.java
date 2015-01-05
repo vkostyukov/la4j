@@ -23,7 +23,6 @@ package org.la4j.linear;
 
 import java.io.Serializable;
 
-import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 
@@ -40,15 +39,6 @@ public interface LinearSystemSolver extends Serializable {
      * @return
      */
     Vector solve(Vector b);
-
-    /**
-     * Solves the system A*x = b.
-     *
-     * @param b
-     * @param factory
-     * @return
-     */
-    Vector solve(Vector b, Factory factory);
 
     /**
      * Returns the self matrix of the solver.

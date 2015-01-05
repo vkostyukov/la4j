@@ -28,10 +28,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.MatrixFactory;
-import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.dense.BasicVector;
 
@@ -183,37 +181,8 @@ public class Basic2DMatrix extends DenseMatrix {
         this(0, 0);
     }
 
-    @Deprecated
-    public Basic2DMatrix(Matrix matrix) {
-        this(Matrices.asMatrixSource(matrix));
-    }
-
-    @Deprecated
-    public Basic2DMatrix(MatrixSource source) {
-        this(source.rows(), source.columns());
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-               self[i][j] = source.get(i, j);
-            }
-        }
-    }
-
     public Basic2DMatrix(int rows, int columns) {
         this(new double[rows][columns]);
-    }
-
-    @Deprecated
-    public Basic2DMatrix(int rows, int columns, double array[]) {
-        this(rows, columns);
-
-        // TODO:
-        // We suppose that 'array.length = rows * columns' for now.
-        // Probably, we should check this explicitly.
-
-        for (int i = 0; i < rows; i++) {
-            System.arraycopy(array, i * columns, self[i], 0, columns);
-        }
     }
 
     public Basic2DMatrix(double array[][]) {

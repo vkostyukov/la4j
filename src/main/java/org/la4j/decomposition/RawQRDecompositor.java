@@ -21,7 +21,6 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 
@@ -32,10 +31,10 @@ public class RawQRDecompositor extends AbstractDecompositor implements MatrixDec
     }
 
     @Override
-    public Matrix[] decompose(Factory factory) {
+    public Matrix[] decompose() {
 
         Matrix qr = matrix.copy();
-        Matrix r = factory.createSquareMatrix(qr.columns());
+        Matrix r = matrix.blankOfShape(qr.columns(), qr.columns());
 
         for (int k = 0; k < qr.columns(); k++) {
 
@@ -52,10 +51,10 @@ public class RawQRDecompositor extends AbstractDecompositor implements MatrixDec
                 }
 
                 for (int i = k; i < qr.rows(); i++) {
-                    qr.update(i, k, Matrices.asDivFunction(norm));
+                    qr.updateAt(i, k, Matrices.asDivFunction(norm));
                 }
 
-                qr.update(k, k, Matrices.INC_FUNCTION);
+                qr.updateAt(k, k, Matrices.INC_FUNCTION);
 
                 for (int j = k + 1; j < qr.columns(); j++) {
 
@@ -68,7 +67,7 @@ public class RawQRDecompositor extends AbstractDecompositor implements MatrixDec
                     acc = -acc / qr.get(k, k);
 
                     for (int i = k; i < qr.rows(); i++) {
-                        qr.update(i, j, Matrices.asPlusFunction(acc * qr.get(i, k)));
+                        qr.updateAt(i, j, Matrices.asPlusFunction(acc * qr.get(i, k)));
                     }
                 }
             }

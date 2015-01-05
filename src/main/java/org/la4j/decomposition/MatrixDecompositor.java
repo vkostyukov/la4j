@@ -21,7 +21,6 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 
 import java.io.Serializable;
@@ -40,13 +39,6 @@ public interface MatrixDecompositor extends Serializable {
      * @return
      */
     Matrix[] decompose();
-
-    /**
-     *
-     * @param factory
-     * @return
-     */
-    Matrix[] decompose(Factory factory);
 
     /**
      * Returns the self matrix of this decompositor.

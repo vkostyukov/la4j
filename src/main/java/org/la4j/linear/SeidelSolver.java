@@ -48,17 +48,17 @@ public class SeidelSolver extends AbstractSolver implements LinearSystemSolver {
             MatrixFunction divider = Matrices.asDivFunction(aa.get(i, i));
             for (int j = 0; j < aa.columns(); j++) {
                 if (i != j) {
-                    aa.update(i, j, divider);
+                    aa.updateAt(i, j, divider);
                 }
             }
         }
     }
 
     @Override
-    public Vector solve(Vector b, Factory factory) {
+    public Vector solve(Vector b) {
         ensureRHSIsCorrect(b);
 
-        Vector current = factory.createVector(unknowns());
+        Vector current = b.blankOfLength(unknowns());
 
         while (!a.multiply(current).equals(b)) {
 

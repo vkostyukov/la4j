@@ -251,26 +251,6 @@ public abstract class SparseMatrix extends AbstractMatrix {
     }
 
     /**
-     * Deprecated. Use {@link SparseMatrix#eachNonZeroInRow(int, VectorProcedure)} instead.
-     * <p/>
-     * Applies given {@code procedure} to each non-zero element of specified row of this matrix.
-     *
-     * @param i the row index
-     * @param procedure the matrix procedure
-     */
-    @Deprecated
-    public void eachNonZeroInRow(int i, MatrixProcedure procedure) {
-        final MatrixProcedure p = procedure;
-        final int ii = i;
-        eachNonZeroInRow(i, new VectorProcedure() {
-            @Override
-            public void apply(int j, double value) {
-                p.apply(ii, j, value);
-            }
-        });
-    }
-    
-    /**
      * Applies the given {@code procedure} to each non-zero element of the specified row of this matrix.
      * 
      * @param i the row index. 
@@ -286,26 +266,6 @@ public abstract class SparseMatrix extends AbstractMatrix {
         }
     }
 
-    /**
-     * Deprecated. Use {@link SparseMatrix#eachNonZeroInColumn(int, VectorProcedure)} instead.
-     * <p/>
-     * Applies given {@code procedure} to each non-zero element of specified column of this matrix.
-     *
-     * @param j the column index
-     * @param procedure the matrix procedure
-     */
-    @Deprecated
-    public void eachNonZeroInColumn(int j, MatrixProcedure procedure) {
-        final MatrixProcedure p = procedure;
-        final int jj = j;
-        eachNonZeroInColumn(j, new VectorProcedure() {
-            @Override
-            public void apply(int i, double value) {
-                p.apply(i, jj, value);
-            }
-        });
-    }
-    
     /**
      * Applies the given {@code procedure} to each non-zero element of the specified column of this matrix.
      * 

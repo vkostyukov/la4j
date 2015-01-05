@@ -38,7 +38,7 @@ public abstract class AbstractDecompositorTest {
 
             Matrix a = factory.createMatrix(input);
             MatrixDecompositor decompositor = a.withDecompositor(decompositorFactory());
-            Matrix[] decomposition = decompositor.decompose(factory);
+            Matrix[] decomposition = decompositor.decompose();
 
             assertEquals(output.length, decomposition.length);
 

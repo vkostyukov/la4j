@@ -21,15 +21,10 @@
 
 package org.la4j.factory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
-import org.la4j.matrix.source.MatrixSource;
 import org.la4j.matrix.sparse.CCSMatrix;
-import org.la4j.matrix.sparse.CRSMatrix;
 
 @Deprecated
 public class CCSFactory extends CompressedFactory {
@@ -54,16 +49,6 @@ public class CCSFactory extends CompressedFactory {
     @Override
     public Matrix createMatrix(double[][] array) {
         return CCSMatrix.from2DArray(array);
-    }
-
-    @Override
-    public Matrix createMatrix(Matrix matrix) {
-        return new CCSMatrix(matrix);
-    }
-
-    @Override
-    public Matrix createMatrix(MatrixSource source) {
-        return new CCSMatrix(source);
     }
 
     @Override

@@ -39,7 +39,7 @@ public abstract class AbstractSolverTest {
             Vector b = factory.createVector(rightHandVector);
 
             LinearSystemSolver solver = a.withSolver(solverFactory());
-            Vector x = solver.solve(b, factory);
+            Vector x = solver.solve(b);
 
             Vector ax = a.multiply(x);
 

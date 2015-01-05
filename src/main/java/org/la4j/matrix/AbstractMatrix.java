@@ -91,11 +91,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public void assign(double value) {
-        setAll(value);
-    }
-
-    @Override
     public void setAll(double value) {
         MatrixIterator it = iterator();
 
@@ -103,16 +98,6 @@ public abstract class AbstractMatrix implements Matrix {
             it.next();
             it.set(value);
         }
-    }
-
-    @Override
-    public void assignRow(int i, double value) {
-       setRow(i, value);
-    }
-
-    @Override
-    public void assignColumn(int j, double value) {
-        setColumn(j, value);
     }
 
     @Override
@@ -143,16 +128,6 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public int columns() {
         return columns;
-    }
-
-    @Override
-    public Vector getRow(int i, Factory factory) {
-        return getRow(i).to(Factory.asVectorFactory(factory));
-    }
-
-    @Override
-    public Vector getColumn(int j, Factory factory) {
-        return getColumn(j).to(Factory.asVectorFactory(factory));
     }
 
     @Override
@@ -273,11 +248,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix transpose(Factory factory) {
-        return transpose().to(Factory.asMatrixFactory(factory));
-    }
-
-    @Override
     public Matrix rotate() {
         Matrix result = blankOfShape(columns, rows);
         MatrixIterator it = result.iterator();
@@ -290,11 +260,6 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         return result;
-    }
-
-    @Override
-    public Matrix rotate(Factory factory) {
-        return rotate().to(Factory.asMatrixFactory(factory));
     }
 
     @Override
@@ -320,7 +285,7 @@ public abstract class AbstractMatrix implements Matrix {
         }
 
         MatrixDecompositor decompositor = withDecompositor(LinearAlgebra.LU);
-        Matrix lup[] = decompositor.decompose(factory);
+        Matrix lup[] = decompositor.decompose();
         // TODO: Why Java doesn't support pattern matching?
         Matrix u = lup[1];
         Matrix p = lup[2];
@@ -362,7 +327,7 @@ public abstract class AbstractMatrix implements Matrix {
         // matrices without SVD
 
         MatrixDecompositor decompositor = withDecompositor(LinearAlgebra.SVD);
-        Matrix usv[] = decompositor.decompose(factory);
+        Matrix usv[] = decompositor.decompose();
         // TODO: Where is my pattern matching?
         Matrix s = usv[1];
         double tolerance = Math.max(rows, columns) * s.get(0, 0) * Matrices.EPS;
@@ -403,11 +368,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix power(int n, Factory factory) {
-        return power(n).to(Factory.asMatrixFactory(factory));
-    }
-
-    @Override
     public Matrix multiply(double value) {
         Matrix result = blank();
         MatrixIterator it = iterator();
@@ -423,28 +383,13 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix multiply(double value, Factory factory) {
-        return multiply(value).to(Factory.asMatrixFactory(factory));
-    }
-
-    @Override
     public Vector multiply(Vector that) {
         return apply(LinearAlgebra.OO_PLACE_MATRIX_BY_VECTOR_MULTIPLICATION, that);
     }
 
     @Override
-    public Vector multiply(Vector that, Factory factory) {
-        return multiply(that).to(Factory.asVectorFactory(factory));
-    }
-
-    @Override
     public Matrix multiply(Matrix that) {
         return apply(LinearAlgebra.OO_PLACE_MATRICES_MULTIPLICATION, that);
-    }
-
-    @Override
-    public Matrix multiply(Matrix that, Factory factory) {
-        return multiply(that).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
@@ -458,18 +403,8 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix subtract(double value, Factory factory) {
-        return subtract(value).to(Factory.asMatrixFactory(factory));
-    }
-
-    @Override
     public Matrix subtract(Matrix that) {
         return apply(LinearAlgebra.OO_PLACE_MATRICES_SUBTRACTION, that);
-    }
-
-    @Override
-    public Matrix subtract(Matrix that, Factory factory) {
-        return subtract(that).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
@@ -488,20 +423,10 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix add(double value, Factory factory) {
-        return add(value).to(Factory.asMatrixFactory(factory));
-    }
-
-    @Override
     public Matrix add(Matrix that) {
         return apply(LinearAlgebra.OO_PLACE_MATRIX_ADDITION, that);
     }
 
-    @Override
-    public Matrix add(Matrix that, Factory factory) {
-        return add(that).to(Factory.asMatrixFactory(factory));
-    }
-    
     @Override
     public Matrix insert(Matrix that) {
         return insert(that, 0, 0, 0, 0, that.rows(), that.columns());
@@ -566,18 +491,8 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix divide(double value, Factory factory) {
-        return divide(value).to(Factory.asMatrixFactory(factory));
-    }
-
-    @Override
     public Matrix kroneckerProduct(Matrix that) {
         return apply(LinearAlgebra.OO_PLACE_KRONECKER_PRODUCT, that);
-    }
-
-    @Override
-    public Matrix kroneckerProduct(Matrix matrix, Factory factory) {
-        return kroneckerProduct(matrix).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
@@ -614,11 +529,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix hadamardProduct(Matrix that, Factory factory) {
-        return hadamardProduct(that).to(Factory.asMatrixFactory(factory));
-    }
-
-    @Override
     public double sum() {
         return fold(Matrices.asSumAccumulator(0.0));
     }
@@ -639,48 +549,8 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix blank(Factory factory) {
-        return factory.createMatrix(rows, columns);
-    }
-
-    @Override
     public Matrix copy() {
         return copyOfShape(rows, columns);
-    }
-
-    @Override
-    public Matrix copy(Factory factory) {
-        return factory.createMatrix(this);
-    }
-
-    @Override
-    public Matrix resize(int rows, int columns) {
-        return copyOfShape(rows, columns);
-    }
-
-    @Override
-    public Matrix resizeRows(int rows) {
-        return copyOfRows(rows);
-    }
-
-    @Override
-    public Matrix resizeRows(int rows, Factory factory) {
-        return resize(rows, columns, factory);
-    }
-
-    @Override
-    public Matrix resizeColumns(int columns) {
-        return copyOfColumns(columns);
-    }
-
-    @Override
-    public Matrix resizeColumns(int columns, Factory factory) {
-        return resize(rows, columns, factory);
-    }
-
-    @Override
-    public Matrix resize(int rows, int columns, Factory factory) {
-        return copyOfShape(rows, columns).to(Factory.asMatrixFactory(factory));
     }
 
     @Override
@@ -715,11 +585,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix shuffle(Factory factory) {
-        return shuffle().to(Factory.asMatrixFactory(factory));
-    }
-
-    @Override
     public Matrix slice(int fromRow, int fromColumn, int untilRow, int untilColumn) {
         if (untilRow - fromRow < 0 || untilColumn - fromColumn < 0) {
             fail("Wrong slice range: [" + fromRow + ".." + untilRow + "][" + fromColumn + ".." + untilColumn + "].");
@@ -737,32 +602,15 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix slice(int fromRow, int fromColumn, int untilRow,
-                        int untilColumn, Factory factory) {
-
-        return slice(fromRow, fromColumn, untilRow, untilColumn).to(Factory.asMatrixFactory(factory));
-    }
-
-    @Override
     public Matrix sliceTopLeft(int untilRow, int untilColumn) {
-        return slice(0, 0, untilRow, untilColumn, factory);
-    }
-
-    @Override
-    public Matrix sliceTopLeft(int untilRow, int untilColumn, Factory factory) {
-        return slice(0, 0, untilRow, untilColumn, factory);
+        return slice(0, 0, untilRow, untilColumn);
     }
 
     @Override
     public Matrix sliceBottomRight(int fromRow, int fromColumn) {
-        return slice(fromRow, fromColumn, rows, columns, factory);
+        return slice(fromRow, fromColumn, rows, columns);
     }
 
-    @Override
-    public Matrix sliceBottomRight(int fromRow, int fromColumn, Factory factory) {
-        return slice(fromRow, fromColumn, rows, columns, factory);
-    }
-    
     @Override
     public Matrix select(int[] rowIndices, int[] columnIndices) {
         int m = rowIndices.length;
@@ -784,16 +632,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix select(int[] rowIndices, int[] columnIndices, Factory factory) {
-        return select(rowIndices, columnIndices).to(Factory.asMatrixFactory(factory));
-    }
-
-    @Override
-    public Factory factory() {
-        return factory;
-    }
-
-    @Override
     public void each(MatrixProcedure procedure) {
         MatrixIterator it = iterator();
 
@@ -806,18 +644,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public void eachInRow(int i, MatrixProcedure procedure) {
-        final MatrixProcedure p = procedure;
-        final int ii = i;
-        eachInRow(i, new VectorProcedure() {
-            @Override
-            public void apply(int j, double value) {
-                p.apply(ii, j, value);
-            }
-        });
-    }
-    
-    @Override
     public void eachInRow(int i, VectorProcedure procedure) {
         VectorIterator it = iteratorOfRow(i);
 
@@ -828,18 +654,6 @@ public abstract class AbstractMatrix implements Matrix {
         }
     }
 
-    @Override
-    public void eachInColumn(int j, MatrixProcedure procedure) {
-        final MatrixProcedure p = procedure;
-        final int jj = j;
-        eachInColumn(j, new VectorProcedure() {
-            @Override
-            public void apply(int i, double value) {
-                p.apply(i, jj, value);
-            }
-        });
-    }
-    
     @Override
     public void eachInColumn(int j, VectorProcedure procedure) {
         VectorIterator it = iteratorOfColumn(j);
@@ -863,22 +677,22 @@ public abstract class AbstractMatrix implements Matrix {
 
     @Override
     public double maxInRow(int i) {
-        return foldRow(i, Matrices.mkMaxAccumulator());
+        return foldRow(i, Vectors.mkMaxAccumulator());
     }
 
     @Override
     public double minInRow(int i) {
-        return foldRow(i, Matrices.mkMinAccumulator());
+        return foldRow(i, Vectors.mkMinAccumulator());
     }
 
     @Override
     public double maxInColumn(int j) {
-        return foldColumn(j, Matrices.mkMaxAccumulator());
+        return foldColumn(j, Vectors.mkMaxAccumulator());
     }
 
     @Override
     public double minInColumn(int j) {
-        return foldColumn(j, Matrices.mkMinAccumulator());
+        return foldColumn(j, Vectors.mkMinAccumulator());
     }
 
     @Override
@@ -897,16 +711,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix transform(MatrixFunction function, Factory factory) {
-        return transform(function).to(Factory.asMatrixFactory(factory));
-    }
-
-    @Override
-    public Matrix transformRow(int i, MatrixFunction function) {
-        return transformRow(i, function, factory);
-    }
-    
-    @Override
     public Matrix transformRow(int i, VectorFunction function) {
         Matrix result = copy();
         VectorIterator it = result.iteratorOfRow(i);
@@ -921,22 +725,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public Matrix transformRow(int i, MatrixFunction function, Factory factory) {
-        Matrix result = copy(factory);
-
-        for (int j = 0; j < columns; j++) {
-            result.set(i, j, function.evaluate(i, j, result.get(i, j)));
-        }
-
-        return result;
-    }
-
-    @Override
-    public Matrix transformColumn(int j, MatrixFunction function) {
-        return transformColumn(j, function, factory);
-    }
-    
-    @Override
     public Matrix transformColumn(int j, VectorFunction function) {
         Matrix result = copy();
         VectorIterator it = result.iteratorOfColumn(j);
@@ -945,17 +733,6 @@ public abstract class AbstractMatrix implements Matrix {
             double x = it.next();
             int i = it.index();
             it.set(function.evaluate(i, x));
-        }
-
-        return result;
-    }
-
-    @Override
-    public Matrix transformColumn(int j, MatrixFunction function, Factory factory) {
-        Matrix result = copy(factory);
-
-        for (int i = 0; i < rows; i++) {
-            result.set(i, j, function.evaluate(i, j, result.get(i, j)));
         }
 
         return result;
@@ -979,23 +756,6 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public void update(int i, int j, MatrixFunction function) {
-        updateAt(i, j, function);
-    }
-
-    @Override
-    public void updateRow(int i, MatrixFunction function) {
-        final int ii = i;
-        final MatrixFunction f = function;
-        updateRow(i, new VectorFunction() {
-            @Override
-            public double evaluate(int j, double value) {
-                return f.evaluate(ii, j, value);
-            }
-        });
-    }
-
-    @Override
     public void updateRow(int i, VectorFunction function) {
         VectorIterator it = iteratorOfRow(i);
 
@@ -1004,18 +764,6 @@ public abstract class AbstractMatrix implements Matrix {
             int j = it.index();
             it.set(function.evaluate(j, x));
         }
-    }
-    
-    @Override
-    public void updateColumn(int j, MatrixFunction function) {
-        final int jj = j;
-        final MatrixFunction f = function;
-        updateColumn(j, new VectorFunction() {
-            @Override
-            public double evaluate(int i, double value) {
-                return f.evaluate(i, jj, value);
-            }
-        });
     }
     
     @Override
@@ -1036,28 +784,11 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public double foldRow(int i, MatrixAccumulator accumulator) {
-        eachInRow(i, Matrices.asAccumulatorProcedure(accumulator));
-        return accumulator.accumulate();
-    }
-    
-    @Override
     public double foldRow(int i, VectorAccumulator accumulator) {
         eachInRow(i, Vectors.asAccumulatorProcedure(accumulator));
         return accumulator.accumulate();
     }
 
-    @Override
-    public Vector foldRows(MatrixAccumulator accumulator) {
-        Vector result = factory.createVector(rows);
-
-        for (int i = 0; i < rows; i++) {
-          result.set(i, foldRow(i, accumulator));
-        }
-
-        return result;
-    }
-    
     @Override
     public double[] foldRows(VectorAccumulator accumulator) {
         double[] result = new double[rows];
@@ -1070,28 +801,11 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     @Override
-    public double foldColumn(int j, MatrixAccumulator accumulator) {
-        eachInColumn(j, Matrices.asAccumulatorProcedure(accumulator));
-        return accumulator.accumulate();
-    }
-
-    @Override
     public double foldColumn(int j, VectorAccumulator accumulator) {
         eachInColumn(j, Vectors.asAccumulatorProcedure(accumulator));
         return accumulator.accumulate();
     }
 
-    @Override
-    public Vector foldColumns(MatrixAccumulator accumulator) {
-        Vector result = factory.createVector(columns);
-
-        for (int i = 0; i < columns; i++) {
-          result.set(i, foldColumn(i, accumulator));
-        }
-
-        return result;
-    }
-    
     @Override
     public double[] foldColumns(VectorAccumulator accumulator) {
         double[] result = new double[columns];
@@ -1131,16 +845,6 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public boolean non(AdvancedMatrixPredicate predicate) {
         return !is(predicate);
-    }
-
-    @Override
-    public Vector toRowVector(Factory factory) {
-        return toRowVector().to(Factory.asVectorFactory(factory));
-    }
-
-    @Override
-    public Vector toColumnVector(Factory factory) {
-        return toColumnVector().to(Factory.asVectorFactory(factory));
     }
 
     @Override

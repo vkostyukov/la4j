@@ -21,12 +21,10 @@
 
 package org.la4j.factory;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.dense.Basic1DMatrix;
-import org.la4j.matrix.source.MatrixSource;
 
 @Deprecated
 public class Basic1DFactory extends BasicFactory {
@@ -51,16 +49,6 @@ public class Basic1DFactory extends BasicFactory {
     @Override
     public Matrix createMatrix(double[][] array) {
         return Basic1DMatrix.from2DArray(array);
-    }
-
-    @Override
-    public Matrix createMatrix(Matrix matrix) {
-        return new Basic1DMatrix(matrix);
-    }
-
-    @Override
-    public Matrix createMatrix(MatrixSource source) {
-        return new Basic1DMatrix(source);
     }
 
     @Override

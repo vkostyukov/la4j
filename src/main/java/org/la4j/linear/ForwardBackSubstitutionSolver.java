@@ -23,8 +23,6 @@ package org.la4j.linear;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
-import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
 import org.la4j.vector.Vector;
 import org.la4j.vector.Vectors;
@@ -50,7 +48,7 @@ public class ForwardBackSubstitutionSolver extends AbstractSolver implements Lin
     }
 
     @Override
-    public Vector solve(Vector b, Factory factory) {
+    public Vector solve(Vector b) {
         ensureRHSIsCorrect(b);
 
         int n = unknowns();
@@ -62,7 +60,7 @@ public class ForwardBackSubstitutionSolver extends AbstractSolver implements Lin
             }
         }
 
-        Vector x = factory.createVector(n);
+        Vector x = b.blankOfLength(n);
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -75,15 +73,15 @@ public class ForwardBackSubstitutionSolver extends AbstractSolver implements Lin
 
         for (int j = 0; j < n; j++) {
             for (int i = j + 1; i < n; i++) {
-                x.update(i, Vectors.asMinusFunction(x.get(j) * lu.get(i, j)));
+                x.updateAt(i, Vectors.asMinusFunction(x.get(j) * lu.get(i, j)));
             }
         }
 
         for (int j = n - 1; j >= 0; j--) {
-            x.update(j, Vectors.asDivFunction(lu.get(j, j)));
+            x.updateAt(j, Vectors.asDivFunction(lu.get(j, j)));
 
             for (int i = 0; i < j; i++) {
-                x.update(i, Vectors.asMinusFunction(x.get(j) * lu.get(i, j)));
+                x.updateAt(i, Vectors.asMinusFunction(x.get(j) * lu.get(i, j)));
             }
         }
 

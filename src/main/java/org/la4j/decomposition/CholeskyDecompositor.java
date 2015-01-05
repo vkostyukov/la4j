@@ -21,10 +21,8 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrices;
 import org.la4j.matrix.Matrix;
-import org.la4j.vector.Vector;
 
 /**
  * This class represents Cholesky decomposition of matrices. More details
@@ -45,14 +43,13 @@ public class CholeskyDecompositor extends AbstractDecompositor implements Matrix
      * http://mathworld.wolfram.com/CholeskyDecomposition.html</a> for more
      * details.
      * </p>
-     * 
-     * @param factory
+     *
      * @return { L }
      */
     @Override
-    public Matrix[] decompose(Factory factory) {
+    public Matrix[] decompose() {
 
-        Matrix l = factory.createMatrix(matrix.rows(), matrix.rows());
+        Matrix l = matrix.blankOfShape(matrix.rows(), matrix.rows());
 
         for (int j = 0; j < l.rows(); j++) {
 

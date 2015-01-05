@@ -21,20 +21,11 @@
 
 package org.la4j.inversion;
 
-import org.la4j.factory.Factory;
 import org.la4j.matrix.Matrix;
 
 import java.io.Serializable;
 
 public interface MatrixInverter extends Serializable {
-
-    /**
-     * Inverse matrix with factory.
-     *
-     * @param factory
-     * @return
-     */
-    Matrix inverse(Factory factory);
 
     /**
      * Inverse matrix.

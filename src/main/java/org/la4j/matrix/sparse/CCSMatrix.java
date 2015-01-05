@@ -41,7 +41,6 @@ import org.la4j.matrix.Matrix;
 import org.la4j.matrix.MatrixFactory;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixProcedure;
-import org.la4j.matrix.source.MatrixSource;
 import org.la4j.vector.Vector;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.sparse.CompressedVector;
@@ -264,47 +263,6 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     public CCSMatrix(int rows, int columns) {
         this (rows, columns, 0);
     }
-
-    @Deprecated
-    public CCSMatrix(int rows, int columns, double array[]) {
-        this (Matrices.asArray1DSource(rows, columns, array));
-    }
-
-    @Deprecated
-    public CCSMatrix(Matrix matrix) {
-        this(Matrices.asMatrixSource(matrix));
-    }
-
-    @Deprecated
-    public CCSMatrix(double array[][]) {
-        this(Matrices.asArray2DSource(array));
-    }
-
-    @Deprecated
-    public CCSMatrix(MatrixSource source) {
-        this(source.rows(), source.columns(), 0);
-
-        for (int j = 0; j < columns; j++) {
-            columnPointers[j] = cardinality;
-            for (int i = 0; i < rows; i++) {
-                double value = source.get(i, j);
-                //if (Math.abs(value) > Matrices.EPS || value < 0.0) {
-                if (value != 0.0) {
-
-                    if (values.length < cardinality + 1) {
-                        growUp();
-                    }
-
-                    values[cardinality] = value;
-                    rowIndices[cardinality] = i;
-                    cardinality++;
-                }
-            }
-        }
-
-        columnPointers[columns] = cardinality;
-    }
-
 
     public CCSMatrix(int rows, int columns, int cardinality) {
         super(LinearAlgebra.CCS_FACTORY, rows, columns);
