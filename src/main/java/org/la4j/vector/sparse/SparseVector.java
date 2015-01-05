@@ -184,7 +184,7 @@ public abstract class SparseVector extends AbstractVector {
 
     @Override
     public Vector multiply(double value) {
-        Vector result = copy();
+        Vector result = blank();
         VectorIterator it = nonZeroIterator();
 
         while (it.hasNext()) {
