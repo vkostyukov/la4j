@@ -23,9 +23,9 @@
  *
  */
 
-package org.la4j.matrix;
+package org.la4j;
 
-import org.la4j.LinearAlgebra;
+import org.la4j.matrix.MatrixFactory;
 import org.la4j.matrix.dense.Basic1DMatrix;
 import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;

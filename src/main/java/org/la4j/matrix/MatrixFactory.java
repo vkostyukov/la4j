@@ -20,6 +20,8 @@
 
 package org.la4j.matrix;
 
+import org.la4j.Matrix;
+
 import java.lang.reflect.ParameterizedType;
 
 /**

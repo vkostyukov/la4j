@@ -22,10 +22,10 @@
 package org.la4j.operation.ooplace;
 
 import org.la4j.operation.SymmetricVectorVectorOperation;
-import org.la4j.vector.Vector;
+import org.la4j.Vector;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.vector.dense.DenseVector;
-import org.la4j.vector.sparse.SparseVector;
+import org.la4j.vector.DenseVector;
+import org.la4j.vector.SparseVector;
 
 public class OoPlaceVectorsAddition extends SymmetricVectorVectorOperation<Vector> {
 

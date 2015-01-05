@@ -34,7 +34,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
 
-import org.la4j.LinearAlgebra;
+import org.la4j.*;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.factory.Factory;
 import org.la4j.inversion.MatrixInverter;
@@ -43,17 +43,11 @@ import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.linear.LinearSystemSolver;
-import org.la4j.matrix.dense.DenseMatrix;
 import org.la4j.matrix.functor.AdvancedMatrixPredicate;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
-import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
-import org.la4j.matrix.sparse.RowMajorSparseMatrix;
-import org.la4j.matrix.sparse.SparseMatrix;
-import org.la4j.vector.Vector;
-import org.la4j.vector.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
@@ -1077,8 +1071,8 @@ public abstract class AbstractMatrix implements Matrix {
     @Override
     public String toString() {
         return mkString(DEFAULT_FORMATTER,
-                        DEFAULT_ROWS_DELIMITER,
-                        DEFAULT_COLUMNS_DELIMITER);
+            DEFAULT_ROWS_DELIMITER,
+            DEFAULT_COLUMNS_DELIMITER);
     }
 
     @Override

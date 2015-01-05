@@ -25,6 +25,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 import org.la4j.vector.AbstractVectorTest;
+import org.la4j.vector.DenseVector;
 
 import static org.junit.Assert.assertTrue;
 

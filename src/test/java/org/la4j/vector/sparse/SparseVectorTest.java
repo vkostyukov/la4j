@@ -23,7 +23,8 @@ package org.la4j.vector.sparse;
 
 import org.junit.Test;
 import org.la4j.vector.AbstractVectorTest;
-import org.la4j.vector.Vectors;
+import org.la4j.Vectors;
+import org.la4j.vector.SparseVector;
 import org.la4j.vector.functor.VectorAccumulator;
 
 import static org.junit.Assert.assertEquals;

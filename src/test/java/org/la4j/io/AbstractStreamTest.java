@@ -30,8 +30,8 @@ import java.io.OutputStream;
 import org.junit.Test;
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrix;
-import org.la4j.vector.Vector;
+import org.la4j.Matrix;
+import org.la4j.Vector;
 
 import static org.junit.Assert.assertEquals;
 

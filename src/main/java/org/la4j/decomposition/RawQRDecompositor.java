@@ -21,8 +21,8 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.matrix.Matrices;
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrices;
+import org.la4j.Matrix;
 
 public class RawQRDecompositor extends AbstractDecompositor implements MatrixDecompositor {
 

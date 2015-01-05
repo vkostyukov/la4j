@@ -39,13 +39,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import junit.framework.Assert;
 import org.junit.Test;
-import org.la4j.LinearAlgebra;
+import org.la4j.*;
 import org.la4j.factory.Factory;
-import org.la4j.vector.Vector;
-import org.la4j.vector.Vectors;
-import org.la4j.vector.dense.DenseVector;
+import org.la4j.vector.DenseVector;
 
 public abstract class AbstractMatrixTest {
 
@@ -1552,9 +1549,9 @@ public abstract class AbstractMatrixTest {
         assertTrue(testWhetherMatricesContainSameElements(m1, m2));
 
         Matrix m3 = factory().createMatrix(new double[][]{
-                {1.0, 1.0, 3.0},
-                {4.0, 52.0, 6.0},
-                {7.0, 8.0, 9.0}
+            {1.0, 1.0, 3.0},
+            {4.0, 52.0, 6.0},
+            {7.0, 8.0, 9.0}
         });
 
         assertFalse(testWhetherMatricesContainSameElements(m1, m3));

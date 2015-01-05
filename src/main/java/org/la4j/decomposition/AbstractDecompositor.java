@@ -21,7 +21,7 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrix;
 
 public abstract class AbstractDecompositor implements MatrixDecompositor {
 

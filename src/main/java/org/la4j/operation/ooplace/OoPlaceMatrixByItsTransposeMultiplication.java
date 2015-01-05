@@ -1,9 +1,9 @@
 package org.la4j.operation.ooplace;
 
-import org.la4j.matrix.Matrix;
-import org.la4j.matrix.dense.DenseMatrix;
-import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
-import org.la4j.matrix.sparse.RowMajorSparseMatrix;
+import org.la4j.Matrix;
+import org.la4j.matrix.DenseMatrix;
+import org.la4j.matrix.ColumnMajorSparseMatrix;
+import org.la4j.matrix.RowMajorSparseMatrix;
 import org.la4j.operation.MatrixOperation;
 
 import java.util.ArrayList;

@@ -21,9 +21,6 @@
 
 package org.la4j.iterator;
 
-import org.la4j.factory.Factory;
-import org.la4j.vector.Vector;
-
 public abstract class VectorIterator extends CursorIterator {
 
     protected final int length;

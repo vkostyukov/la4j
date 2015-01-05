@@ -28,12 +28,13 @@ import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.LinearAlgebra;
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrix;
+import org.la4j.matrix.DenseMatrix;
 import org.la4j.matrix.MatrixFactory;
-import org.la4j.vector.Vector;
+import org.la4j.Vector;
 import org.la4j.vector.dense.BasicVector;
 
-public class Basic1DMatrix extends DenseMatrix  {
+public class Basic1DMatrix extends DenseMatrix {
 
     /**
      * Creates a zero {@link Basic1DMatrix} of the given shape:

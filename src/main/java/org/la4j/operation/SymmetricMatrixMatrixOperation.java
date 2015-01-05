@@ -1,9 +1,9 @@
 package org.la4j.operation;
 
-import org.la4j.matrix.dense.DenseMatrix;
-import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
-import org.la4j.matrix.sparse.RowMajorSparseMatrix;
-import org.la4j.matrix.sparse.SparseMatrix;
+import org.la4j.matrix.DenseMatrix;
+import org.la4j.matrix.ColumnMajorSparseMatrix;
+import org.la4j.matrix.RowMajorSparseMatrix;
+import org.la4j.matrix.SparseMatrix;
 
 public abstract class SymmetricMatrixMatrixOperation<R> extends MatrixMatrixOperation<R> {
 

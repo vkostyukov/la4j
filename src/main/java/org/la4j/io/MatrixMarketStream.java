@@ -31,14 +31,14 @@ import java.util.StringTokenizer;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrix;
-import org.la4j.matrix.dense.DenseMatrix;
+import org.la4j.Matrix;
+import org.la4j.matrix.DenseMatrix;
 import org.la4j.matrix.functor.MatrixProcedure;
-import org.la4j.matrix.sparse.SparseMatrix;
-import org.la4j.vector.Vector;
-import org.la4j.vector.dense.DenseVector;
+import org.la4j.matrix.SparseMatrix;
+import org.la4j.Vector;
+import org.la4j.vector.DenseVector;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.sparse.SparseVector;
+import org.la4j.vector.SparseVector;
 
 public class MatrixMarketStream extends AbstractStream 
     implements MatrixStream, VectorStream {

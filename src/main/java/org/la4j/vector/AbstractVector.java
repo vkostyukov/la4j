@@ -30,15 +30,15 @@ import java.text.NumberFormat;
 import java.util.Random;
 
 import org.la4j.LinearAlgebra;
+import org.la4j.Vector;
+import org.la4j.Vectors;
 import org.la4j.factory.Factory;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.matrix.Matrix;
-import org.la4j.vector.dense.DenseVector;
+import org.la4j.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.sparse.SparseVector;
 
 /**
  * An abstract wrapper around {@code Vector} to make it easier to implement.
@@ -417,13 +417,13 @@ public abstract class AbstractVector implements Vector {
     @Override
     public String toString() {
         return mkString(DEFAULT_FORMATTER,
-                DEFAULT_DELIMITER);
+            DEFAULT_DELIMITER);
     }
 
     @Override
     public String mkString(NumberFormat formatter) {
         return mkString(formatter,
-                DEFAULT_DELIMITER);
+            DEFAULT_DELIMITER);
     }
 
     @Override

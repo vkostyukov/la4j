@@ -23,7 +23,7 @@ package org.la4j.factory;
 
 import java.util.Random;
 
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrix;
 import org.la4j.matrix.dense.Basic1DMatrix;
 
 @Deprecated

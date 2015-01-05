@@ -23,9 +23,8 @@
  *                 Todd Brunhoff
  */
 
-package org.la4j.matrix;
+package org.la4j;
 
-import org.la4j.LinearAlgebra;
 import org.la4j.decomposition.MatrixDecompositor;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.iterator.ColumnMajorMatrixIterator;
@@ -33,15 +32,15 @@ import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.linear.LinearSystemSolver;
-import org.la4j.matrix.dense.DenseMatrix;
+import org.la4j.matrix.MatrixFactory;
+import org.la4j.matrix.DenseMatrix;
 import org.la4j.matrix.functor.*;
-import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
-import org.la4j.matrix.sparse.RowMajorSparseMatrix;
-import org.la4j.matrix.sparse.SparseMatrix;
+import org.la4j.matrix.ColumnMajorSparseMatrix;
+import org.la4j.matrix.RowMajorSparseMatrix;
+import org.la4j.matrix.SparseMatrix;
 import org.la4j.operation.MatrixMatrixOperation;
 import org.la4j.operation.MatrixOperation;
 import org.la4j.operation.MatrixVectorOperation;
-import org.la4j.vector.Vector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;

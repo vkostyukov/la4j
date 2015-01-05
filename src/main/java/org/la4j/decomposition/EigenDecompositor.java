@@ -21,12 +21,12 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.matrix.Matrices;
-import org.la4j.matrix.Matrix;
-import org.la4j.matrix.sparse.SparseMatrix;
-import org.la4j.vector.Vector;
-import org.la4j.vector.Vectors;
-import org.la4j.vector.dense.DenseVector;
+import org.la4j.Matrices;
+import org.la4j.Matrix;
+import org.la4j.matrix.SparseMatrix;
+import org.la4j.Vector;
+import org.la4j.Vectors;
+import org.la4j.vector.DenseVector;
 import org.la4j.vector.functor.VectorAccumulator;
 
 /**
@@ -590,7 +590,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                             if (notlast) {
                                 p = p + r * H.get(k + 2, j);
                                 H.updateAt(k + 2, j,
-                                         Matrices.asMinusFunction(p * z));
+                                    Matrices.asMinusFunction(p * z));
                             }
                             H.updateAt(k, j, Matrices.asMinusFunction(p * x));
                             H.updateAt(k + 1, j, Matrices.asMinusFunction(p * y));
@@ -604,7 +604,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                             if (notlast) {
                                 p = p + z * H.get(i, k + 2);
                                 H.updateAt(i, k + 2,
-                                         Matrices.asMinusFunction(p * r));
+                                    Matrices.asMinusFunction(p * r));
                             }
                             H.updateAt(i, k, Matrices.asMinusFunction(p));
                             H.updateAt(i, k + 1, Matrices.asMinusFunction(p * q));
@@ -618,7 +618,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                             if (notlast) {
                                 p = p + z * V.get(i, k + 2);
                                 V.updateAt(i, k + 2,
-                                         Matrices.asMinusFunction(p * r));
+                                    Matrices.asMinusFunction(p * r));
                             }
                             V.updateAt(i, k, Matrices.asMinusFunction(p));
                             V.updateAt(i, k + 1, Matrices.asMinusFunction(p * q));

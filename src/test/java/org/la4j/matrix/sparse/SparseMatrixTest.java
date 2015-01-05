@@ -23,11 +23,10 @@ package org.la4j.matrix.sparse;
 
 import org.junit.Test;
 import org.la4j.matrix.AbstractMatrixTest;
-import org.la4j.matrix.Matrices;
+import org.la4j.Matrices;
+import org.la4j.matrix.SparseMatrix;
 import org.la4j.matrix.functor.MatrixAccumulator;
-import org.la4j.vector.Vector;
-import org.la4j.vector.Vectors;
-import org.la4j.vector.functor.VectorAccumulator;
+import org.la4j.Vectors;
 
 import static org.junit.Assert.*;
 
@@ -139,10 +138,10 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
         assertEquals(10.0, a.foldNonZeroInColumn(2, Vectors.asProductAccumulator(1.0)), Matrices.EPS);
 
         double[] nonZeroInColumns = a.foldNonZeroInColumns(Vectors.asProductAccumulator(1.0));
-        assertArrayEquals(new double[] {4.0, 1.0, 10.0}, nonZeroInColumns, 1e-5);
+        assertArrayEquals(new double[]{4.0, 1.0, 10.0}, nonZeroInColumns, 1e-5);
 
         double[] nonZeroInRows = a.foldNonZeroInRows(Vectors.asProductAccumulator(1.0));
-        assertArrayEquals(new double[] { 2.0, 20.0, 1.0}, nonZeroInRows, 1e-5);
+        assertArrayEquals(new double[]{2.0, 20.0, 1.0}, nonZeroInRows, 1e-5);
     }
 
     @Test

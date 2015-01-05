@@ -19,26 +19,24 @@
  * 
  */
 
-package org.la4j.vector.sparse;
+package org.la4j.vector;
 
 import java.util.Random;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrix;
 import org.la4j.matrix.sparse.CRSMatrix;
-import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
-import org.la4j.matrix.sparse.RowMajorSparseMatrix;
-import org.la4j.vector.AbstractVector;
-import org.la4j.vector.Vector;
-import org.la4j.vector.VectorFactory;
-import org.la4j.vector.Vectors;
-import org.la4j.vector.dense.DenseVector;
+import org.la4j.matrix.ColumnMajorSparseMatrix;
+import org.la4j.matrix.RowMajorSparseMatrix;
+import org.la4j.Vector;
+import org.la4j.Vectors;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.operation.VectorMatrixOperation;
 import org.la4j.operation.VectorOperation;
 import org.la4j.operation.VectorVectorOperation;
+import org.la4j.vector.sparse.CompressedVector;
 
 /**
  * A sparse vector.

@@ -24,12 +24,12 @@ package org.la4j.factory;
 import java.io.Serializable;
 import java.util.Random;
 
-import org.la4j.matrix.Matrices;
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrices;
+import org.la4j.Matrix;
 import org.la4j.matrix.MatrixFactory;
-import org.la4j.vector.Vector;
+import org.la4j.Vector;
 import org.la4j.vector.VectorFactory;
-import org.la4j.vector.Vectors;
+import org.la4j.Vectors;
 
 @Deprecated
 public abstract class Factory implements Serializable {

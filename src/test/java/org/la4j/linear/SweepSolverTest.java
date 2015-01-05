@@ -23,7 +23,6 @@ package org.la4j.linear;
 
 import org.junit.Test;
 import org.la4j.LinearAlgebra;
-import org.la4j.matrix.Matrices;
 
 public class SweepSolverTest extends AbstractSolverTest {
 

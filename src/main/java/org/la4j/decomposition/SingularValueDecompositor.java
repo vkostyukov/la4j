@@ -21,11 +21,11 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.matrix.Matrices;
-import org.la4j.matrix.Matrix;
-import org.la4j.vector.Vector;
-import org.la4j.vector.Vectors;
-import org.la4j.vector.dense.DenseVector;
+import org.la4j.Matrices;
+import org.la4j.Matrix;
+import org.la4j.Vector;
+import org.la4j.Vectors;
+import org.la4j.vector.DenseVector;
 
 /**
  * This class represents singular value decomposition of matrices. More details
@@ -167,7 +167,7 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
 
                         for (int i = k + 1; i < a.rows(); i++) {
                             a.updateAt(i, j, Matrices.asPlusFunction(t *
-                                     work.get(i)));
+                                work.get(i)));
                         }
                     }
                 }
@@ -469,7 +469,7 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
                 if (s.get(k, k) <= 0.0) {
                     s.set(k, k, s.get(k, k) < 0.0 ? -s.get(k, k) : 0.0);
                     for (int i = 0; i <= pp; i++) {
-                        v.updateAt(i,  k, Matrices.INV_FUNCTION);
+                        v.updateAt(i, k, Matrices.INV_FUNCTION);
                     }
                 }
 

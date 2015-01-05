@@ -19,24 +19,23 @@
  * 
  */
 
-package org.la4j.matrix.sparse;
+package org.la4j.matrix;
 
 import org.la4j.factory.Factory;
 import org.la4j.iterator.ColumnMajorMatrixIterator;
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.matrix.AbstractMatrix;
-import org.la4j.matrix.Matrices;
-import org.la4j.matrix.Matrix;
-import org.la4j.matrix.dense.DenseMatrix;
+import org.la4j.Matrices;
+import org.la4j.Matrix;
 import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
-import org.la4j.vector.Vector;
-import org.la4j.vector.Vectors;
+import org.la4j.Vector;
+import org.la4j.Vectors;
+import org.la4j.matrix.sparse.CRSMatrix;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
-import org.la4j.vector.sparse.SparseVector;
+import org.la4j.vector.SparseVector;
 
 import java.util.Random;
 

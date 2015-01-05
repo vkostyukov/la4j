@@ -34,8 +34,10 @@ import java.io.ObjectOutputStream;
 
 import org.junit.Test;
 import org.la4j.LinearAlgebra;
+import org.la4j.Vector;
+import org.la4j.Vectors;
 import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorPredicate;
 

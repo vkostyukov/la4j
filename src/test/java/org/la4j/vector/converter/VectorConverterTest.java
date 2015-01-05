@@ -2,9 +2,9 @@ package org.la4j.vector.converter;
 
 import org.junit.Test;
 import org.la4j.LinearAlgebra;
-import org.la4j.vector.Vector;
+import org.la4j.Vector;
 import org.la4j.vector.VectorFactory;
-import org.la4j.vector.Vectors;
+import org.la4j.Vectors;
 
 import static org.junit.Assert.assertTrue;
 

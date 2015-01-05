@@ -2,8 +2,8 @@ package org.la4j.matrix.converter;
 
 import org.junit.Test;
 import org.la4j.LinearAlgebra;
-import org.la4j.matrix.Matrices;
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrices;
+import org.la4j.Matrix;
 import org.la4j.matrix.MatrixFactory;
 
 import static org.junit.Assert.assertTrue;

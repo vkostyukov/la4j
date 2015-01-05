@@ -19,16 +19,17 @@
  * 
  */
 
-package org.la4j.matrix.dense;
+package org.la4j.matrix;
 
 import org.la4j.factory.Factory;
-import org.la4j.matrix.AbstractMatrix;
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrix;
+import org.la4j.matrix.dense.Basic1DMatrix;
+import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.operation.MatrixMatrixOperation;
 import org.la4j.operation.MatrixOperation;
 import org.la4j.operation.MatrixVectorOperation;
-import org.la4j.vector.Vector;
-import org.la4j.vector.dense.DenseVector;
+import org.la4j.Vector;
+import org.la4j.vector.DenseVector;
 
 import java.util.Random;
 

@@ -1,6 +1,6 @@
 package org.la4j.operation.ooplace;
 
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrix;
 import org.la4j.operation.CommonMatrixMatrixOperation;
 
 public class OoPlaceKroneckerProduct extends CommonMatrixMatrixOperation<Matrix> {

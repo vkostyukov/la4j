@@ -29,8 +29,8 @@ import java.util.StringTokenizer;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrix;
-import org.la4j.vector.Vector;
+import org.la4j.Matrix;
+import org.la4j.Vector;
 
 public class SymbolSeparatedStream extends AbstractStream 
     implements MatrixStream, VectorStream {
@@ -120,7 +120,7 @@ public class SymbolSeparatedStream extends AbstractStream
                 line = reader.readLine(), rows++) {
 
             if (rows == matrix.rows()) {
-                matrix = matrix.copyOfRows((matrix.rows() * 3) / 2  + 1);
+                matrix = matrix.copyOfRows((matrix.rows() * 3) / 2 + 1);
             }
 
             StringTokenizer tokenizer = new StringTokenizer(line, separator);

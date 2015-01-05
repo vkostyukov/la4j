@@ -21,7 +21,7 @@
 
 package org.la4j.matrix.functor;
 
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrix;
 
 /**
  * An advanced matrix predicate that test the whole matrix rather than its

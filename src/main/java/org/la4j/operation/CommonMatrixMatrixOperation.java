@@ -21,10 +21,10 @@
 
 package org.la4j.operation;
 
-import org.la4j.matrix.Matrix;
-import org.la4j.matrix.dense.DenseMatrix;
-import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
-import org.la4j.matrix.sparse.RowMajorSparseMatrix;
+import org.la4j.Matrix;
+import org.la4j.matrix.DenseMatrix;
+import org.la4j.matrix.ColumnMajorSparseMatrix;
+import org.la4j.matrix.RowMajorSparseMatrix;
 
 public abstract class CommonMatrixMatrixOperation<R> extends MatrixMatrixOperation<R> {
     @Override

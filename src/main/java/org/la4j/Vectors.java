@@ -20,11 +20,12 @@
  * 
  */
 
-package org.la4j.vector;
+package org.la4j;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import org.la4j.LinearAlgebra;
+
+import org.la4j.vector.VectorFactory;
 import org.la4j.vector.dense.BasicVector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
@@ -315,7 +316,7 @@ public final class Vectors {
 
     /**
      * Makes an Euclidean norm accumulator that allows to use
-     * {@link Vector#fold(org.la4j.vector.functor.VectorAccumulator)} method for norm calculation.
+     * {@link org.la4j.Vector#fold(org.la4j.vector.functor.VectorAccumulator)} method for norm calculation.
      *
      * @return an Euclidean norm accumulator
      */
@@ -339,7 +340,7 @@ public final class Vectors {
 
     /**
      * Makes a Manhattan norm accumulator that allows to use
-     * {@link Vector#fold(org.la4j.vector.functor.VectorAccumulator)} method for norm calculation.
+     * {@link org.la4j.Vector#fold(org.la4j.vector.functor.VectorAccumulator)} method for norm calculation.
      *
      * @return a Manhattan norm accumulator
      */
@@ -363,7 +364,7 @@ public final class Vectors {
 
     /**
      * Makes an Infinity norm accumulator that allows to use
-     * {@link Vector#fold(org.la4j.vector.functor.VectorAccumulator)} method for norm calculation.
+     * {@link org.la4j.Vector#fold(org.la4j.vector.functor.VectorAccumulator)} method for norm calculation.
      *
      * @return an Infinity norm accumulator
      */

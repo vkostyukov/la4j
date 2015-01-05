@@ -23,15 +23,15 @@ package org.la4j.operation.ooplace;
 
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.matrix.Matrix;
-import org.la4j.matrix.dense.DenseMatrix;
-import org.la4j.matrix.sparse.ColumnMajorSparseMatrix;
-import org.la4j.matrix.sparse.RowMajorSparseMatrix;
-import org.la4j.vector.Vector;
-import org.la4j.vector.Vectors;
-import org.la4j.vector.dense.DenseVector;
+import org.la4j.Matrix;
+import org.la4j.matrix.DenseMatrix;
+import org.la4j.matrix.ColumnMajorSparseMatrix;
+import org.la4j.matrix.RowMajorSparseMatrix;
+import org.la4j.Vector;
+import org.la4j.Vectors;
+import org.la4j.vector.DenseVector;
 import org.la4j.operation.VectorMatrixOperation;
-import org.la4j.vector.sparse.SparseVector;
+import org.la4j.vector.SparseVector;
 
 import java.util.Iterator;
 

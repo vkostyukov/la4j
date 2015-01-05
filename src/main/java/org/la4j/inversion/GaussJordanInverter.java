@@ -23,9 +23,9 @@ package org.la4j.inversion;
 
 import org.la4j.LinearAlgebra;
 import org.la4j.linear.LinearSystemSolver;
-import org.la4j.matrix.Matrix;
-import org.la4j.vector.Vector;
-import org.la4j.vector.dense.DenseVector;
+import org.la4j.Matrix;
+import org.la4j.Vector;
+import org.la4j.vector.DenseVector;
 
 public class GaussJordanInverter implements MatrixInverter {
 

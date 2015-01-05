@@ -21,9 +21,9 @@
 
 package org.la4j.linear;
 
-import org.la4j.matrix.Matrices;
-import org.la4j.matrix.Matrix;
-import org.la4j.vector.Vector;
+import org.la4j.Matrices;
+import org.la4j.Matrix;
+import org.la4j.Vector;
 
 /**
  * This class represents <a

@@ -20,6 +20,8 @@
 
 package org.la4j.vector;
 
+import org.la4j.Vector;
+
 import java.lang.reflect.ParameterizedType;
 
 /**

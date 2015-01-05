@@ -21,8 +21,8 @@
 
 package org.la4j.decomposition;
 
-import org.la4j.matrix.Matrices;
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrices;
+import org.la4j.Matrix;
 
 /**
  * This class represents QR decomposition of matrices. More details
@@ -71,7 +71,7 @@ public class QRDecompositor extends RawQRDecompositor implements MatrixDecomposi
                     acc = -acc / qr.get(k, k);
 
                     for (int i = k; i < q.rows(); i++) {
-                        q.updateAt(i, j, Matrices.asPlusFunction(acc *qr.get(i, k)));
+                        q.updateAt(i, j, Matrices.asPlusFunction(acc * qr.get(i, k)));
                     }
                 }
             }

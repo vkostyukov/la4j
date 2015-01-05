@@ -36,12 +36,13 @@ import java.util.Random;
 import org.la4j.LinearAlgebra;
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.matrix.Matrices;
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrices;
+import org.la4j.Matrix;
 import org.la4j.matrix.MatrixFactory;
+import org.la4j.matrix.RowMajorSparseMatrix;
 import org.la4j.matrix.functor.MatrixFunction;
 import org.la4j.matrix.functor.MatrixProcedure;
-import org.la4j.vector.Vector;
+import org.la4j.Vector;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.sparse.CompressedVector;
 

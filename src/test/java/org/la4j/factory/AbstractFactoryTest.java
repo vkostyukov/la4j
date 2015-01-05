@@ -22,10 +22,10 @@
 package org.la4j.factory;
 
 import org.junit.Test;
-import org.la4j.matrix.Matrices;
-import org.la4j.matrix.Matrix;
-import org.la4j.vector.Vector;
-import org.la4j.vector.Vectors;
+import org.la4j.Matrices;
+import org.la4j.Matrix;
+import org.la4j.Vector;
+import org.la4j.Vectors;
 
 import static org.junit.Assert.assertEquals;
 

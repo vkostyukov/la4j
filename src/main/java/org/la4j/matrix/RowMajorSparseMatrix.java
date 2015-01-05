@@ -19,16 +19,17 @@
  *
  */
 
-package org.la4j.matrix.sparse;
+package org.la4j.matrix;
 
 import org.la4j.factory.Factory;
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrix;
+import org.la4j.matrix.sparse.CRSMatrix;
 import org.la4j.operation.MatrixMatrixOperation;
 import org.la4j.operation.MatrixOperation;
 import org.la4j.operation.MatrixVectorOperation;
-import org.la4j.vector.Vector;
+import org.la4j.Vector;
 
 import java.util.Iterator;
 import java.util.LinkedList;

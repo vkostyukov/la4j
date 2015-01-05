@@ -22,13 +22,13 @@
  * 
  */
 
-package org.la4j.vector;
+package org.la4j;
 
 import java.io.Externalizable;
 import java.text.NumberFormat;
 import org.la4j.iterator.VectorIterator;
-import org.la4j.matrix.Matrix;
-import org.la4j.vector.dense.DenseVector;
+import org.la4j.vector.VectorFactory;
+import org.la4j.vector.DenseVector;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorPredicate;
@@ -36,7 +36,7 @@ import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.operation.VectorMatrixOperation;
 import org.la4j.operation.VectorOperation;
 import org.la4j.operation.VectorVectorOperation;
-import org.la4j.vector.sparse.SparseVector;
+import org.la4j.vector.SparseVector;
 
 /**
  * The real vector interface.
@@ -478,14 +478,14 @@ public interface Vector extends Externalizable, Iterable<Double> {
     <T extends Vector> T to(VectorFactory<T> factory);
 
     /**
-     * Converts this vector into a {@link org.la4j.vector.dense.DenseVector}.
+     * Converts this vector into a {@link org.la4j.vector.DenseVector}.
      *
      * @return a dense vector
      */
     DenseVector toDenseVector();
 
     /**
-     * Converts this vector into a {@link org.la4j.vector.sparse.SparseVector}.
+     * Converts this vector into a {@link org.la4j.vector.SparseVector}.
      *
      * @return a sparse vector
      */

@@ -27,9 +27,9 @@ import java.io.ObjectOutput;
 import java.util.Arrays;
 import java.util.Random;
 
-import org.la4j.vector.Vector;
+import org.la4j.Vector;
+import org.la4j.vector.DenseVector;
 import org.la4j.vector.VectorFactory;
-import org.la4j.vector.Vectors;
 
 /**
  * A basic dense vector implementation using an array.

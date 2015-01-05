@@ -25,6 +25,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 import org.la4j.matrix.AbstractMatrixTest;
+import org.la4j.matrix.DenseMatrix;
 
 import static org.junit.Assert.assertTrue;
 

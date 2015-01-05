@@ -24,7 +24,7 @@ package org.la4j.io;
 import java.io.IOException;
 
 import org.la4j.factory.Factory;
-import org.la4j.matrix.Matrix;
+import org.la4j.Matrix;
 
 public interface MatrixStream {
 
