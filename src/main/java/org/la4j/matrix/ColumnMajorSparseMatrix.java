@@ -21,7 +21,7 @@
 
 package org.la4j.matrix;
 
-import org.la4j.factory.Factory;
+import org.la4j.Matrices;
 import org.la4j.iterator.ColumnMajorMatrixIterator;
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.Matrix;
@@ -42,6 +42,14 @@ public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
      */
     public static ColumnMajorSparseMatrix zero(int rows, int columns) {
         return CCSMatrix.zero(rows, columns);
+    }
+
+    /**
+     * Creates a zero {@link ColumnMajorSparseMatrix} of the given shape:
+     * {@code rows} x {@code columns} with the given {@code capacity}.
+     */
+    public static ColumnMajorSparseMatrix zero(int rows, int columns, int capacity) {
+        return CCSMatrix.zero(rows, columns, capacity);
     }
 
     /**
@@ -98,6 +106,41 @@ public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
         return CCSMatrix.block(a, b, c, d);
     }
 
+    /**
+     * Parses {@link ColumnMajorSparseMatrix} from the given CSV string.
+     *
+     * @param csv the CSV string representing a matrix
+     *
+     * @return a parsed matrix
+     */
+    public static ColumnMajorSparseMatrix fromCSV(String csv) {
+        return Matrix.fromCSV(csv).to(Matrices.SPARSE_COLUMN_MAJOR);
+    }
+
+    /**
+     * Parses {@link ColumnMajorSparseMatrix} from the given Matrix Market string.
+     *
+     * @param mm the string in Matrix Market format
+     *
+     * @return a parsed matrix
+     */
+    public static ColumnMajorSparseMatrix fromMatrixMarket(String mm) {
+        return Matrix.fromMatrixMarket(mm).to(Matrices.SPARSE_COLUMN_MAJOR);
+    }
+
+    public ColumnMajorSparseMatrix(int rows, int columns) {
+        super(rows, columns);
+    }
+
+    public ColumnMajorSparseMatrix(int rows, int columns, int cardinality) {
+        super(rows, columns, cardinality);
+    }
+
+    @Override
+    public boolean isRowMajor() {
+        return false;
+    }
+
     @Override
     public Matrix transpose() {
         Matrix result = RowMajorSparseMatrix.zero(columns, rows);
@@ -127,10 +170,6 @@ public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
         }
 
         return result;
-    }
-
-    protected ColumnMajorSparseMatrix(Factory factory, int rows, int columns) {
-        super(factory, rows, columns);
     }
 
     @Override

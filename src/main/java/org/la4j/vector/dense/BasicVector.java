@@ -21,13 +21,12 @@
 
 package org.la4j.vector.dense;
 
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Random;
 
 import org.la4j.Vector;
+import org.la4j.Vectors;
 import org.la4j.vector.DenseVector;
 import org.la4j.vector.VectorFactory;
 
@@ -45,7 +44,7 @@ import org.la4j.vector.VectorFactory;
  */
 public class BasicVector extends DenseVector {
 
-    private static final long serialVersionUID = 4071505L;
+    private static final byte VECTOR_TAG = (byte) 0x00;
 
     /**
      * Creates a zero {@link BasicVector} of the given {@code length}.
@@ -91,6 +90,50 @@ public class BasicVector extends DenseVector {
      */
     public static BasicVector fromArray(double[] array) {
         return new BasicVector(array);
+    }
+
+    /**
+     * Decodes {@link BasicVector} from the given byte {@code array}.
+     *
+     * @param array the byte array representing a vector
+     *
+     * @return a decoded vector
+     */
+    public static BasicVector fromBinary(byte[] array) {
+        ByteBuffer buffer = ByteBuffer.wrap(array);
+
+        if (buffer.get() != VECTOR_TAG) {
+            throw new IllegalArgumentException("Can not decode BasicVector from the given byte array.");
+        }
+
+        double[] values = new double[buffer.getInt()];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = buffer.getDouble();
+        }
+
+        return new BasicVector(values);
+    }
+
+    /**
+     * Parses {@link BasicVector} from the given CSV string.
+     *
+     * @param csv the CSV string representing a vector
+     *
+     * @return a parsed vector
+     */
+    public static BasicVector fromCSV(String csv) {
+        return Vector.fromCSV(csv).to(Vectors.BASIC);
+    }
+
+    /**
+     * Parses {@link BasicVector} from the given Matrix Market string.
+     *
+     * @param mm the string in Matrix Market format
+     *
+     * @return a parsed vector
+     */
+    public static BasicVector fromMatrixMarket(String mm) {
+        return Vector.fromMatrixMarket(mm).to(Vectors.BASIC);
     }
 
     private double self[];
@@ -159,24 +202,19 @@ public class BasicVector extends DenseVector {
     }
 
     @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeInt(length);
+    public byte[] toBinary() {
+        int size = 1 +          // 1 byte: class tag
+                   4 +          // 4 bytes: length
+                  (8 * length); // 8 * length bytes: values
 
-        for (int i = 0; i < length; i++) {
-            out.writeDouble(self[i]);
+        ByteBuffer buffer = ByteBuffer.allocate(size);
+
+        buffer.put(VECTOR_TAG);
+        buffer.putInt(length);
+        for (double value: self) {
+            buffer.putDouble(value);
         }
-    }
 
-    @Override
-    public void readExternal(ObjectInput in) throws IOException,
-            ClassNotFoundException {
-
-        length = in.readInt();
-
-        self = new double[length];
-
-        for (int i = 0; i < length; i++) {
-            self[i] = in.readDouble();
-        }
+        return buffer.array();
     }
 }

@@ -25,15 +25,12 @@
 
 package org.la4j.matrix.sparse;
 
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 
-import org.la4j.LinearAlgebra;
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.Matrices;
@@ -51,12 +48,22 @@ import org.la4j.vector.sparse.CompressedVector;
  */
 public class CRSMatrix extends RowMajorSparseMatrix {
 
+    private static final byte MATRIX_TAG = (byte) 0x20;
+
     /**
      * Creates a zero {@link CRSMatrix} of the given shape:
      * {@code rows} x {@code columns}.
      */
     public static CRSMatrix zero(int rows, int columns) {
         return new CRSMatrix(rows, columns);
+    }
+
+    /**
+     * Creates a zero {@link CRSMatrix} of the given shape:
+     * {@code rows} x {@code columns} with the given {@code capacity}.
+     */
+    public static CRSMatrix zero(int rows, int columns, int capacity) {
+        return new CRSMatrix(rows, columns, capacity);
     }
 
     /**
@@ -249,7 +256,61 @@ public class CRSMatrix extends RowMajorSparseMatrix {
         return new CRSMatrix(rows, columns, k, valuesArray, colIndArray, rowPointers);
     }
 
-    private static final long serialVersionUID = 4071505L;
+    /**
+     * Decodes {@link CRSMatrix} from the given byte {@code array}.
+     *
+     * @param array the byte array representing a matrix
+     *
+     * @return a decoded matrix
+     */
+    public static CRSMatrix fromBinary(byte[] array) {
+        ByteBuffer buffer = ByteBuffer.wrap(array);
+
+        if (buffer.get() != MATRIX_TAG) {
+            throw new IllegalArgumentException("Can not decode CRSMatrix from the given byte array.");
+        }
+
+        int rows = buffer.getInt();
+        int columns = buffer.getInt();
+        int cardinality = buffer.getInt();
+
+        int[] columnIndices = new int[cardinality];
+        double[] values = new double[cardinality];
+        int[] rowPointers = new int[rows + 1];
+
+        for (int i = 0; i < cardinality; i++) {
+            columnIndices[i] = buffer.getInt();
+            values[i] = buffer.getDouble();
+        }
+
+        for (int i = 0; i < rows + 1; i++) {
+            rowPointers[i] = buffer.getInt();
+        }
+
+        return new CRSMatrix(rows, columns, cardinality, values, columnIndices, rowPointers);
+    }
+
+    /**
+     * Parses {@link CRSMatrix} from the given CSV string.
+     *
+     * @param csv the CSV string representing a matrix
+     *
+     * @return a parsed matrix
+     */
+    public static CRSMatrix fromCSV(String csv) {
+        return Matrix.fromCSV(csv).to(Matrices.CRS);
+    }
+
+    /**
+     * Parses {@link CRSMatrix} from the given Matrix Market string.
+     *
+     * @param mm the string in Matrix Market format
+     *
+     * @return a parsed matrix
+     */
+    public static CRSMatrix fromMatrixMarket(String mm) {
+        return Matrix.fromMatrixMarket(mm).to(Matrices.CRS);
+    }
 
     private static final int MINIMUM_SIZE = 32;
 
@@ -265,23 +326,19 @@ public class CRSMatrix extends RowMajorSparseMatrix {
         this(rows, columns, 0);
     }
 
-    public CRSMatrix(int rows, int columns, int cardinality) {
-        super(LinearAlgebra.CRS_FACTORY, rows, columns);
-        ensureCardinalityIsCorrect(rows, columns, cardinality);
+    public CRSMatrix(int rows, int columns, int capacity) {
+        super(rows, columns);
+        ensureCardinalityIsCorrect(rows, columns, capacity);
 
-        int alignedSize = align(cardinality);
-
-        this.cardinality = 0;
+        int alignedSize = align(capacity);
         this.values = new double[alignedSize];
         this.columnIndices = new int[alignedSize];
         this.rowPointers = new int[rows + 1];
     }
 
     public CRSMatrix(int rows, int columns, int cardinality, double values[], int columnIndices[], int rowPointers[]) {
-        super(LinearAlgebra.CRS_FACTORY, rows, columns);
+        super(rows, columns, cardinality);
         ensureCardinalityIsCorrect(rows, columns, cardinality);
-
-        this.cardinality = cardinality;
 
         this.values = values;
         this.columnIndices = columnIndices;
@@ -483,48 +540,6 @@ public class CRSMatrix extends RowMajorSparseMatrix {
             }
         } else {
             insert(k, i, j, function.evaluate(i, j, 0));
-        }
-    }
-
-    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeInt(rows);
-        out.writeInt(columns);
-        out.writeInt(cardinality);
-
-        // write pairs (value, column index)
-        for (int i = 0; i < cardinality; i++) {
-            out.writeDouble(values[i]);
-            out.writeInt(columnIndices[i]);
-        }
-
-        // write row pointers
-        for (int i = 0; i < rows + 1; i++) {
-            out.writeInt(rowPointers[i]);
-        }
-    }
-
-    @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        rows = in.readInt();
-        columns = in.readInt();
-        cardinality = in.readInt();
-
-        int alignedSize = align(cardinality);
-
-        values = new double[alignedSize];
-        columnIndices = new int[alignedSize];
-        rowPointers = new int[rows + 1];
-
-        // read pairs (value, column index)
-        for (int i = 0; i < cardinality; i++) {
-            values[i] = in.readDouble();
-            columnIndices[i] = in.readInt();
-        }
-
-        // read row pointers
-        for (int i = 0; i < rows + 1; i++) {
-            rowPointers[i] = in.readInt();
         }
     }
 
@@ -976,5 +991,34 @@ public class CRSMatrix extends RowMajorSparseMatrix {
                 return get();
             }
         };
+    }
+
+    @Override
+    public byte[] toBinary() {
+        int size = 1 +                 // 1 byte: class tag
+                   4 +                 // 4 bytes: rows
+                   4 +                 // 4 bytes: columns
+                   4 +                 // 4 bytes: cardinality
+                  (8 * cardinality) +  // 8 * cardinality bytes: values
+                  (4 * cardinality) +  // 4 * cardinality bytes: columnPointers
+                  (4 * (rows + 1));    // 4 * (rows + 1) bytes: rowIndices
+
+        ByteBuffer buffer = ByteBuffer.allocate(size);
+
+        buffer.put(MATRIX_TAG);
+        buffer.putInt(rows);
+        buffer.putInt(columns);
+        buffer.putInt(cardinality);
+
+        for (int i = 0; i < cardinality; i++) {
+            buffer.putInt(columnIndices[i]);
+            buffer.putDouble(values[i]);
+        }
+
+        for (int i = 0; i < rows + 1; i++) {
+            buffer.putInt(rowPointers[i]);
+        }
+
+        return buffer.array();
     }
 }

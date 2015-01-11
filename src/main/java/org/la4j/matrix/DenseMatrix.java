@@ -21,7 +21,7 @@
 
 package org.la4j.matrix;
 
-import org.la4j.factory.Factory;
+import org.la4j.Matrices;
 import org.la4j.Matrix;
 import org.la4j.matrix.dense.Basic1DMatrix;
 import org.la4j.matrix.dense.Basic2DMatrix;
@@ -31,9 +31,10 @@ import org.la4j.operation.MatrixVectorOperation;
 import org.la4j.Vector;
 import org.la4j.vector.DenseVector;
 
+import java.text.NumberFormat;
 import java.util.Random;
 
-public abstract class DenseMatrix extends AbstractMatrix {
+public abstract class DenseMatrix extends Matrix {
 
     /**
      * Creates a zero {@link DenseMatrix} of the given shape:
@@ -112,8 +113,30 @@ public abstract class DenseMatrix extends AbstractMatrix {
         return Basic2DMatrix.block(a, b, c, d);
     }
 
-    protected DenseMatrix(Factory factory, int rows, int columns) {
-        super(factory, rows, columns);
+    /**
+     * Parses {@link DenseMatrix} from the given CSV string.
+     *
+     * @param csv the CSV string representing a matrix
+     *
+     * @return a parsed matrix
+     */
+    public static DenseMatrix fromCSV(String csv) {
+        return Matrix.fromCSV(csv).to(Matrices.DENSE);
+    }
+
+    /**
+     * Parses {@link DenseMatrix} from the given Matrix Market string.
+     *
+     * @param mm the string in Matrix Market format
+     *
+     * @return a parsed matrix
+     */
+    public static DenseMatrix fromMatrixMarket(String mm) {
+        return Matrix.fromMatrixMarket(mm).to(Matrices.DENSE);
+    }
+
+    public DenseMatrix(int rows, int columns) {
+        super(rows, columns);
     }
 
     /**
@@ -159,5 +182,20 @@ public abstract class DenseMatrix extends AbstractMatrix {
     @Override
     public <T> T apply(MatrixVectorOperation<T> operation, Vector that) {
         return that.apply(operation.partiallyApply(this));
+    }
+
+    @Override
+    public String toMatrixMarket(NumberFormat formatter) {
+        StringBuilder out = new StringBuilder();
+
+        out.append("%%MatrixMarket matrix array real general\n");
+        out.append(rows).append(' ').append(columns).append('\n');
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                out.append(formatter.format(get(i, j))).append('\n');
+            }
+        }
+
+        return out.toString();
     }
 }

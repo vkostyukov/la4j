@@ -24,6 +24,7 @@ package org.la4j;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.StringTokenizer;
 
 import org.la4j.vector.VectorFactory;
 import org.la4j.vector.dense.BasicVector;
@@ -38,14 +39,14 @@ public final class Vectors {
     public static final double EPS = LinearAlgebra.EPS;
     public static final int ROUND_FACTOR = LinearAlgebra.ROUND_FACTOR;
 
-    public static final VectorFactory<BasicVector> DENSE = new VectorFactory<BasicVector>() {
+    public static final VectorFactory<BasicVector> BASIC = new VectorFactory<BasicVector>() {
         @Override
         public BasicVector apply(int length) {
             return BasicVector.zero(length);
         }
     };
 
-    public static final VectorFactory<CompressedVector> SPARSE = new VectorFactory<CompressedVector>() {
+    public static final VectorFactory<CompressedVector> COMPRESSED = new VectorFactory<CompressedVector>() {
         @Override
         public CompressedVector apply(int length) {
             return CompressedVector.zero(length);
@@ -53,8 +54,12 @@ public final class Vectors {
     };
 
     public static final VectorFactory[] FACTORIES = {
-            DENSE, SPARSE
+            BASIC, COMPRESSED
     };
+
+    public static final VectorFactory<BasicVector> DENSE = BASIC;
+
+    public static final VectorFactory<CompressedVector> SPARSE = COMPRESSED;
 
     /**
      * Checks whether the vector is a
@@ -456,4 +461,20 @@ public final class Vectors {
             }
         };
     }
+
+    // Vectors.binary()
+    // Vectors.decodeCSV()
+    // Vectors.decodeMatrixMarket()
+
+    /**
+     * Parses the given Matrix Market string into a vector, which type depends on
+     * the input.
+     *
+     * @param mm the string in Matrix Market format
+     *
+     * @return a parsed vector
+     */
+//    public static Vector parseVectorFromMatrixMarket(String mm) {
+//
+//    }
 }

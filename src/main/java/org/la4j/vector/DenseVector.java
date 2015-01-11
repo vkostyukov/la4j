@@ -21,8 +21,8 @@
 
 package org.la4j.vector;
 
-import org.la4j.LinearAlgebra;
 import org.la4j.Matrix;
+import org.la4j.Vectors;
 import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.Vector;
 import org.la4j.operation.VectorMatrixOperation;
@@ -30,6 +30,7 @@ import org.la4j.operation.VectorOperation;
 import org.la4j.operation.VectorVectorOperation;
 import org.la4j.vector.dense.BasicVector;
 
+import java.text.NumberFormat;
 import java.util.Random;
 
 /**
@@ -45,7 +46,7 @@ import java.util.Random;
  * instead of the O(log n) time on sparse structures.
  * 
  */
-public abstract class DenseVector extends AbstractVector {
+public abstract class DenseVector extends Vector {
 
     /**
      * Creates a zero {@link DenseVector} of the given {@code length}.
@@ -85,8 +86,26 @@ public abstract class DenseVector extends AbstractVector {
         return BasicVector.fromArray(array);
     }
 
-    public DenseVector(int length) {
-        super(LinearAlgebra.DENSE_FACTORY, length);
+    /**
+     * Parses {@link DenseVector} from the given CSV string.
+     *
+     * @param csv the CSV string representing a vector
+     *
+     * @return a parsed vector
+     */
+    public static DenseVector fromCSV(String csv) {
+        return Vector.fromCSV(csv).to(Vectors.DENSE);
+    }
+
+    /**
+     * Parses {@link DenseVector} from the given Matrix Market string.
+     *
+     * @param mm the string in Matrix Market format
+     *
+     * @return a parsed vector
+     */
+    public static DenseVector fromMatrixMarket(String mm) {
+        return Vector.fromMatrixMarket(mm).to(Vectors.DENSE);
     }
 
     @Override
@@ -111,6 +130,10 @@ public abstract class DenseVector extends AbstractVector {
      * @return an array representation of this vector
      */
     public abstract double[] toArray();
+
+    public DenseVector(int length) {
+        super(length);
+    }
 
     @Override
     public Matrix toRowMatrix() {
@@ -143,5 +166,18 @@ public abstract class DenseVector extends AbstractVector {
         }
 
         return result;
+    }
+
+    @Override
+    public String toMatrixMarket(NumberFormat formatter) {
+        StringBuilder out = new StringBuilder();
+
+        out.append("%%MatrixMarket vector array real\n");
+        out.append(length).append('\n');
+        for (int i = 0; i < length; i++) {
+            out.append(formatter.format(get(i))).append('\n');
+        }
+
+        return out.toString();
     }
 }

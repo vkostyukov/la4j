@@ -21,13 +21,11 @@
 
 package org.la4j.matrix.dense;
 
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Random;
 
-import org.la4j.LinearAlgebra;
+import org.la4j.Matrices;
 import org.la4j.Matrix;
 import org.la4j.matrix.DenseMatrix;
 import org.la4j.matrix.MatrixFactory;
@@ -35,6 +33,8 @@ import org.la4j.Vector;
 import org.la4j.vector.dense.BasicVector;
 
 public class Basic1DMatrix extends DenseMatrix {
+
+    private static final byte MATRIX_TAG = (byte) 0x00;
 
     /**
      * Creates a zero {@link Basic1DMatrix} of the given shape:
@@ -173,7 +173,53 @@ public class Basic1DMatrix extends DenseMatrix {
         return new Basic1DMatrix(rows, columns, array);
     }
 
-    private static final long serialVersionUID = 4071505L;
+    /**
+     * Decodes {@link Basic1DMatrix} from the given byte {@code array}.
+     *
+     * @param array the byte array representing a matrix
+     *
+     * @return a decoded matrix
+     */
+    public static Basic1DMatrix fromBinary(byte[] array) {
+        ByteBuffer buffer = ByteBuffer.wrap(array);
+
+        if (buffer.get() != MATRIX_TAG) {
+            throw new IllegalArgumentException("Can not decode Basic1DMatrix from the given byte array.");
+        }
+
+        int rows = buffer.getInt();
+        int columns = buffer.getInt();
+        int capacity = rows * columns;
+        double[] values = new double[capacity];
+
+        for (int i = 0; i < capacity; i++) {
+            values[i] = buffer.getDouble();
+        }
+
+        return new Basic1DMatrix(rows, columns, values);
+    }
+
+    /**
+     * Parses {@link Basic1DMatrix} from the given CSV string.
+     *
+     * @param csv the CSV string representing a matrix
+     *
+     * @return a parsed matrix
+     */
+    public static Basic1DMatrix fromCSV(String csv) {
+        return Matrix.fromCSV(csv).to(Matrices.BASIC_1D);
+    }
+
+    /**
+     * Parses {@link Basic1DMatrix} from the given Matrix Market string.
+     *
+     * @param mm the string in Matrix Market format
+     *
+     * @return a parsed matrix
+     */
+    public static Basic1DMatrix fromMatrixMarket(String mm) {
+        return Matrix.fromMatrixMarket(mm).to(Matrices.BASIC_1D);
+    }
 
     private double self[];
 
@@ -186,8 +232,7 @@ public class Basic1DMatrix extends DenseMatrix {
     }
 
     public Basic1DMatrix(int rows, int columns, double array[]) {
-        super(LinearAlgebra.BASIC1D_FACTORY, rows, columns);
-
+        super(rows, columns);
         this.self = array;
     }
 
@@ -277,31 +322,6 @@ public class Basic1DMatrix extends DenseMatrix {
     }
 
     @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-
-        out.writeInt(rows);
-        out.writeInt(columns);
-
-        for (int i = 0; i < rows * columns; i++) {
-            out.writeDouble(self[i]);
-        }
-    }
-
-    @Override
-    public void readExternal(ObjectInput in) throws IOException,
-            ClassNotFoundException {
-
-        rows = in.readInt();
-        columns = in.readInt();
-
-        self = new double[rows * columns];
-
-        for (int i = 0; i < rows * columns; i++) {
-            self[i] = in.readDouble();
-        }
-    }
-
-    @Override
     public <T extends Matrix> T to(MatrixFactory<T> factory) {
         if (factory.outputClass == Basic1DMatrix.class) {
             return factory.outputClass.cast(this);
@@ -313,5 +333,24 @@ public class Basic1DMatrix extends DenseMatrix {
     @Override
     public Matrix blankOfShape(int rows, int columns) {
         return Basic1DMatrix.zero(rows, columns);
+    }
+
+    @Override
+    public byte[] toBinary() {
+        int size = 1 +                  // 1 byte: class tag
+                   4 +                  // 4 bytes: rows
+                   4 +                  // 4 bytes: columns
+                  (8 * rows * columns); // 8 * rows * columns bytes: values
+
+        ByteBuffer buffer = ByteBuffer.allocate(size);
+
+        buffer.put(MATRIX_TAG);
+        buffer.putInt(rows);
+        buffer.putInt(columns);
+        for (double value: self) {
+            buffer.putDouble(value);
+        }
+
+        return buffer.array();
     }
 }

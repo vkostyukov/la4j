@@ -21,9 +21,9 @@
 
 package org.la4j.vector;
 
+import java.text.NumberFormat;
 import java.util.Random;
 
-import org.la4j.LinearAlgebra;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.Matrix;
 import org.la4j.matrix.sparse.CRSMatrix;
@@ -51,12 +51,20 @@ import org.la4j.vector.sparse.CompressedVector;
  * time instead of the O(1) time of a dense data structure.
  * 
  */
-public abstract class SparseVector extends AbstractVector {
+public abstract class SparseVector extends Vector {
 
     /**
      * Creates a zero {@link SparseVector} of the given {@code length}.
      */
     public static SparseVector zero(int length) {
+        return CompressedVector.zero(length);
+    }
+
+    /**
+     * Creates a zero {@link SparseVector} of the given {@code length} with
+     * the given {@code capacity}.
+     */
+    public static SparseVector zero(int length, int capacity) {
         return CompressedVector.zero(length);
     }
 
@@ -76,10 +84,36 @@ public abstract class SparseVector extends AbstractVector {
         return CompressedVector.fromArray(array);
     }
 
+    /**
+     * Parses {@link SparseVector} from the given CSV string.
+     *
+     * @param csv the CSV string representing a vector
+     *
+     * @return a parsed vector
+     */
+    public static SparseVector fromCSV(String csv) {
+        return Vector.fromCSV(csv).to(Vectors.SPARSE);
+    }
+
+    /**
+     * Parses {@link SparseVector} from the given Matrix Market string.
+     *
+     * @param mm the string in Matrix Market format
+     *
+     * @return a parsed vector
+     */
+    public static SparseVector fromMatrixMarket(String mm) {
+        return Vector.fromMatrixMarket(mm).to(Vectors.SPARSE);
+    }
+
     protected int cardinality;
 
+    public SparseVector(int length) {
+        this(length, 0);
+    }
+
     public SparseVector(int length, int cardinality) {
-        super(LinearAlgebra.SPARSE_FACTORY, length);
+        super(length);
         this.cardinality = cardinality;
     }
 
@@ -314,6 +348,22 @@ public abstract class SparseVector extends AbstractVector {
         }
 
         return result;
+    }
+
+    @Override
+    public String toMatrixMarket(NumberFormat formatter) {
+        StringBuilder out = new StringBuilder();
+        VectorIterator it = nonZeroIterator();
+
+        out.append("%%MatrixMarket vector coordinate real\n");
+        out.append(length).append(' ').append(cardinality).append('\n');
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.index();
+            out.append(i + 1).append(' ').append(formatter.format(x)).append('\n');
+        }
+
+        return out.toString();
     }
 
     /**

@@ -21,7 +21,7 @@
 
 package org.la4j.matrix;
 
-import org.la4j.factory.Factory;
+import org.la4j.Matrices;
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.Matrix;
@@ -44,6 +44,14 @@ public abstract class RowMajorSparseMatrix extends SparseMatrix {
      */
     public static RowMajorSparseMatrix zero(int rows, int columns) {
         return CRSMatrix.zero(rows, columns);
+    }
+
+    /**
+     * Creates a zero {@link RowMajorSparseMatrix} of the given shape:
+     * {@code rows} x {@code columns} with the given {@code capacity}.
+     */
+    public static RowMajorSparseMatrix zero(int rows, int columns, int capacity) {
+        return CRSMatrix.zero(rows, columns, capacity);
     }
 
     /**
@@ -100,6 +108,41 @@ public abstract class RowMajorSparseMatrix extends SparseMatrix {
         return CRSMatrix.block(a, b, c, d);
     }
 
+    /**
+     * Parses {@link RowMajorSparseMatrix} from the given CSV string.
+     *
+     * @param csv the CSV string representing a matrix
+     *
+     * @return a parsed matrix
+     */
+    public static RowMajorSparseMatrix fromCSV(String csv) {
+        return Matrix.fromCSV(csv).to(Matrices.SPARSE_ROW_MAJOR);
+    }
+
+    /**
+     * Parses {@link RowMajorSparseMatrix} from the given Matrix Market string.
+     *
+     * @param mm the string in Matrix Market format
+     *
+     * @return a parsed matrix
+     */
+    public static RowMajorSparseMatrix fromMatrixMarket(String mm) {
+        return Matrix.fromMatrixMarket(mm).to(Matrices.SPARSE_ROW_MAJOR);
+    }
+
+    public RowMajorSparseMatrix(int rows, int columns) {
+        super(rows, columns);
+    }
+
+    public RowMajorSparseMatrix(int rows, int columns, int cardinality) {
+        super(rows, columns, cardinality);
+    }
+
+    @Override
+    public boolean isRowMajor() {
+        return true;
+    }
+
     @Override
     public Matrix transpose() {
         Matrix result = ColumnMajorSparseMatrix.zero(columns, rows);
@@ -138,10 +181,6 @@ public abstract class RowMajorSparseMatrix extends SparseMatrix {
     }
 
     public abstract Iterator<Integer> iteratorOfNonZeroRows();
-
-    protected RowMajorSparseMatrix(Factory factory, int rows, int columns) {
-        super(factory, rows, columns);
-    }
 
     @Override
     public <T> T apply(MatrixOperation<T> operation) {

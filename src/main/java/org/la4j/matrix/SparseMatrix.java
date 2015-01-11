@@ -21,7 +21,6 @@
 
 package org.la4j.matrix;
 
-import org.la4j.factory.Factory;
 import org.la4j.iterator.ColumnMajorMatrixIterator;
 import org.la4j.iterator.MatrixIterator;
 import org.la4j.iterator.RowMajorMatrixIterator;
@@ -37,9 +36,10 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.SparseVector;
 
+import java.text.NumberFormat;
 import java.util.Random;
 
-public abstract class SparseMatrix extends AbstractMatrix {
+public abstract class SparseMatrix extends Matrix {
 
     /**
      * Creates a zero {@link SparseMatrix} of the given shape:
@@ -47,6 +47,14 @@ public abstract class SparseMatrix extends AbstractMatrix {
      */
     public static SparseMatrix zero(int rows, int columns) {
         return CRSMatrix.zero(rows, columns);
+    }
+
+    /**
+     * Creates a zero {@link SparseMatrix} of the given shape:
+     * {@code rows} x {@code columns} with the given {@code capacity}.
+     */
+    public static SparseMatrix zero(int rows, int columns, int capacity) {
+        return CRSMatrix.zero(rows, columns, capacity);
     }
 
     /**
@@ -103,10 +111,37 @@ public abstract class SparseMatrix extends AbstractMatrix {
         return CRSMatrix.block(a, b, c, d);
     }
 
+    /**
+     * Parses {@link SparseMatrix} from the given CSV string.
+     *
+     * @param csv the CSV string representing a matrix
+     *
+     * @return a parsed matrix
+     */
+    public static SparseMatrix fromCSV(String csv) {
+        return Matrix.fromCSV(csv).to(Matrices.SPARSE);
+    }
+
+    /**
+     * Parses {@link SparseMatrix} from the given Matrix Market string.
+     *
+     * @param mm the string in Matrix Market format
+     *
+     * @return a parsed matrix
+     */
+    public static SparseMatrix fromMatrixMarket(String mm) {
+        return Matrix.fromMatrixMarket(mm).to(Matrices.SPARSE);
+    }
+
     protected int cardinality;
 
-    protected SparseMatrix(Factory factory, int rows, int columns) {
-        super(factory, rows, columns);
+    public SparseMatrix(int rows, int columns) {
+        this(rows, columns, 0);
+    }
+
+    public SparseMatrix(int rows, int columns, int cardinality) {
+        super(rows, columns);
+        this.cardinality = cardinality;
     }
 
     @Override
@@ -125,6 +160,15 @@ public abstract class SparseMatrix extends AbstractMatrix {
      * @return the element of this vector or a default value
      */
     public abstract double getOrElse(int i, int j, double defaultValue);
+
+    /**
+     * Checks whether or not this sparse matrix row-major.
+     */
+    public abstract boolean isRowMajor();
+
+    public boolean isColumnMajor() {
+        return !isRowMajor();
+    }
 
     /**
      * Returns the cardinality (the number of non-zero elements)
@@ -546,6 +590,27 @@ public abstract class SparseMatrix extends AbstractMatrix {
                 return get();
             }
         };
+    }
+
+    @Override
+    public String toMatrixMarket(NumberFormat formatter) {
+        String majority = isRowMajor() ? "row-major" : "column-major";
+        StringBuilder out = new StringBuilder();
+        MatrixIterator it = nonZeroIterator();
+
+        out.append("%%MatrixMarket matrix coordinate real general ")
+           .append(majority).append('\n');
+        out.append(rows).append(' ').append(columns).append(' ')
+           .append(cardinality).append('\n');
+        while (it.hasNext()) {
+            double x = it.next();
+            int i = it.rowIndex();
+            int j = it.columnIndex();
+            out.append(i + 1).append(' ').append(j + 1).append(' ')
+               .append(formatter.format(x)).append('\n');
+        }
+
+        return out.toString();
     }
 
     protected void ensureCardinalityIsCorrect(long rows, long columns, long cardinality) {

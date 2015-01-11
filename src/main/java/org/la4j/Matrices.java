@@ -35,7 +35,6 @@ import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.sparse.CCSMatrix;
 import org.la4j.matrix.sparse.CRSMatrix;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
