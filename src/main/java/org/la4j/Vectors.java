@@ -24,7 +24,6 @@ package org.la4j;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.StringTokenizer;
 
 import org.la4j.vector.VectorFactory;
 import org.la4j.vector.dense.BasicVector;
@@ -461,20 +460,4 @@ public final class Vectors {
             }
         };
     }
-
-    // Vectors.binary()
-    // Vectors.decodeCSV()
-    // Vectors.decodeMatrixMarket()
-
-    /**
-     * Parses the given Matrix Market string into a vector, which type depends on
-     * the input.
-     *
-     * @param mm the string in Matrix Market format
-     *
-     * @return a parsed vector
-     */
-//    public static Vector parseVectorFromMatrixMarket(String mm) {
-//
-//    }
 }
