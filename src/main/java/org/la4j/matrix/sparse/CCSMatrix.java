@@ -890,7 +890,8 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
             @Override
             public Double next() {
                 currentIsRemoved = false;
-                if (columnPointers[j + 1] == ++k) {
+                k++;
+                while (columnPointers[j + 1] == k) {
                     j++;
                 }
                 return get();

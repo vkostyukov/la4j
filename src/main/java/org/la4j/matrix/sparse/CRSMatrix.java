@@ -890,7 +890,8 @@ public class CRSMatrix extends RowMajorSparseMatrix {
             @Override
             public Double next() {
                 currentIsRemoved = false;
-                if (rowPointers[i + 1] == ++k) {
+                k++;
+                while (rowPointers[i + 1] == k) {
                     i++;
                 }
                 return get();

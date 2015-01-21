@@ -22,6 +22,7 @@
 package org.la4j.matrix.sparse;
 
 import org.junit.Test;
+import org.la4j.iterator.MatrixIterator;
 import org.la4j.matrix.AbstractMatrixTest;
 import org.la4j.Matrices;
 import org.la4j.matrix.SparseMatrix;
@@ -234,4 +235,24 @@ public abstract class SparseMatrixTest extends AbstractMatrixTest {
     	 
     	 assertEquals(0.0, a.getOrElse(1, 1, 0.0), 0.0);
     }
+
+  @Test
+  public void testNonZeroIterator_issue253() {
+    SparseMatrix a = (SparseMatrix) factory().createMatrix(new double[][] {
+        { 0.0, 0.0, 0.0, 1.0, 1.0 },
+        { 0.0, 0.0, 0.0, 0.0, 0.0 },
+        { 0.0, 0.0, 0.0, 0.0, 0.0 },
+        { 1.0, 0.0, 0.0, 0.0, 1.0 },
+        { 1.0, 0.0, 0.0, 1.0, 0.0 }
+    });
+
+    MatrixIterator it = a.nonZeroIterator();
+    while (it.hasNext()) {
+      double x = it.next();
+      int i = it.rowIndex();
+      int j = it.columnIndex();
+      assertEquals(x, a.get(i, j), 1e-4);
+    }
+  }
+
 }
