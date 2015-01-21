@@ -23,21 +23,22 @@ package org.la4j.vector.dense;
 
 import java.util.Arrays;
 
+import org.junit.Assert;
 import org.junit.Test;
-import org.la4j.vector.AbstractVectorTest;
+import org.la4j.vector.VectorFactory;
+import org.la4j.vector.VectorTest;
 import org.la4j.vector.DenseVector;
 
-import static org.junit.Assert.assertTrue;
+public abstract class DenseVectorTest<T extends DenseVector> extends VectorTest<T> {
 
-public abstract class DenseVectorTest extends AbstractVectorTest {
+    public DenseVectorTest(VectorFactory<T> factory) {
+        super(factory);
+    }
 
     @Test
     public void testToArray() {
-
         double array[] = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0 };
-
-        DenseVector a = (DenseVector) factory().createVector(array);
-
-        assertTrue(Arrays.equals(array, a.toArray()));
+        DenseVector a = v(array);
+        Assert.assertTrue(Arrays.equals(array, a.toArray()));
     }
 }

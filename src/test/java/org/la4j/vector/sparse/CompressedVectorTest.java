@@ -21,13 +21,11 @@
 
 package org.la4j.vector.sparse;
 
-import org.la4j.factory.CRSFactory;
-import org.la4j.factory.Factory;
+import org.la4j.Vectors;
 
-public class CompressedVectorTest extends SparseVectorTest {
+public class CompressedVectorTest extends SparseVectorTest<CompressedVector> {
 
-    @Override
-    public Factory factory() {
-        return new CRSFactory();
+    public CompressedVectorTest() {
+        super(Vectors.COMPRESSED);
     }
 }
