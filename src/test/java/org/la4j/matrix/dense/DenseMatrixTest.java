@@ -43,7 +43,7 @@ public abstract class DenseMatrixTest<T extends DenseMatrix> extends MatrixTest<
                 { 0.0, 0.0, 9.0 } 
         };
 
-        DenseMatrix a = m(a(array[0]), a(array[1]), a(array[2]));
+        DenseMatrix a = m(array);
 
         double[][] toArray = a.toArray();
 

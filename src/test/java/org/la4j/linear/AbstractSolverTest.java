@@ -21,29 +21,26 @@
 
 package org.la4j.linear;
 
+import org.junit.Assert;
 import org.la4j.LinearAlgebra;
-import org.la4j.factory.Factory;
 import org.la4j.Matrix;
 import org.la4j.Vector;
-import static org.junit.Assert.assertTrue;
+import static org.la4j.M.*;
+import static org.la4j.V.*;
 
 public abstract class AbstractSolverTest {
 
     public abstract LinearAlgebra.SolverFactory solverFactory();
 
-    public void performTest(double coefficientMatrix[][],
-                            double rightHandVector[]) {
+    public void performTest(double coefficientMatrix[][], double rightHandVector[]) {
+        for (Matrix a: ms(coefficientMatrix)) {
+            for (Vector b: vs(rightHandVector)) {
+                LinearSystemSolver solver = a.withSolver(solverFactory());
+                Vector x = solver.solve(b);
+                Vector ax = a.multiply(x);
 
-        for (Factory factory: LinearAlgebra.FACTORIES) {
-            Matrix a = factory.createMatrix(coefficientMatrix);
-            Vector b = factory.createVector(rightHandVector);
-
-            LinearSystemSolver solver = a.withSolver(solverFactory());
-            Vector x = solver.solve(b);
-
-            Vector ax = a.multiply(x);
-
-            assertTrue(b.equals(ax, 1e-9));
+                Assert.assertTrue(b.equals(ax, 1e-9));
+            }
         }
     }
 }
