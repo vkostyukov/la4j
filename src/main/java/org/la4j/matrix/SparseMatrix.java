@@ -31,6 +31,7 @@ import org.la4j.matrix.functor.MatrixAccumulator;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.Vector;
 import org.la4j.Vectors;
+import org.la4j.matrix.sparse.CCSMatrix;
 import org.la4j.matrix.sparse.CRSMatrix;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
@@ -46,7 +47,7 @@ public abstract class SparseMatrix extends Matrix {
      * {@code rows} x {@code columns}.
      */
     public static SparseMatrix zero(int rows, int columns) {
-        return CRSMatrix.zero(rows, columns);
+        return CCSMatrix.zero(rows, columns);
     }
 
     /**
@@ -414,16 +415,16 @@ public abstract class SparseMatrix extends Matrix {
     public RowMajorMatrixIterator nonZeroRowMajorIterator() {
         return new RowMajorMatrixIterator(rows, columns) {
             private long limit = (long) rows * columns;
-            private int i = -1;
+            private long i = -1;
 
             @Override
             public int rowIndex() {
-                return i / columns;
+                return (int) (i / columns);
             }
 
             @Override
             public int columnIndex() {
-                return i - rowIndex() * columns;
+                return (int) (i - ((i / columns) * columns));
             }
 
             @Override
@@ -465,16 +466,16 @@ public abstract class SparseMatrix extends Matrix {
     public ColumnMajorMatrixIterator nonZeroColumnMajorIterator() {
         return new ColumnMajorMatrixIterator(rows, columns) {
             private long limit = (long) rows * columns;
-            private int i = -1;
+            private long i = -1;
 
             @Override
             public int rowIndex() {
-                return i - columnIndex() * rows;
+                return (int) (i - ((i / rows) * rows));
             }
 
             @Override
             public int columnIndex() {
-                return i / rows;
+                return (int) (i / rows);
             }
 
             @Override

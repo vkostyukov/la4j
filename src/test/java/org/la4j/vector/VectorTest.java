@@ -26,14 +26,15 @@ package org.la4j.vector;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.la4j.V;
 import org.la4j.Vector;
 import org.la4j.Vectors;
-import org.la4j.VnM;
 import org.la4j.Matrix;
 import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorPredicate;
 
-import static org.la4j.VnM.*;
+import static org.la4j.V.*;
+import static org.la4j.M.*;
 
 public abstract class VectorTest<T extends Vector> {
 
@@ -44,7 +45,11 @@ public abstract class VectorTest<T extends Vector> {
     }
 
     public T v(double... values) {
-        return VnM.v(values).to(factory);
+        return V.v(values).to(factory);
+    }
+
+    public T vz(int length) {
+        return V.vz(length).to(factory);
     }
 
     @Test
@@ -298,8 +303,8 @@ public abstract class VectorTest<T extends Vector> {
 
     @Test
     public void testMultiply_2_2x4() {
-        for (Matrix b: ms2x4(0.0, 5.0, 0.0, 6.0,
-                             1.0, 0.0, 8.0, 0.0)) {
+        for (Matrix b: ms(a(0.0, 5.0, 0.0, 6.0),
+                          a(1.0, 0.0, 8.0, 0.0))) {
 
             Vector a = v(1.0, 2.0);
             Vector c = v(2.0, 5.0, 16.0, 6.0);
@@ -310,7 +315,10 @@ public abstract class VectorTest<T extends Vector> {
 
     @Test
     public void testMultiply_3_3x1() {
-        for (Matrix b: ms3x1(0.0, 3.0, 0.0)) {
+        for (Matrix b: ms(a(0.0),
+                          a(3.0),
+                          a(0.0))) {
+
             Vector a = v(0.0, 2.0, 0.0);
             Vector c = v(6.0);
 
@@ -380,11 +388,10 @@ public abstract class VectorTest<T extends Vector> {
     public void testOuterProduct_3_4() {
         for (Vector b: vs(7.0, 11.0, 13.0, 17.0)) {
             Vector a = v(2.0, 3.0, 5.0);
-            Matrix c = m3x4(
-                14.0, 22.0, 26.0, 34.0,
-                21.0, 33.0, 39.0, 51.0,
-                35.0, 55.0, 65.0, 85.0
-            );
+
+            Matrix c = m(a(14.0, 22.0, 26.0, 34.0),
+                         a(21.0, 33.0, 39.0, 51.0),
+                         a(35.0, 55.0, 65.0, 85.0));
 
             Assert.assertEquals(c, a.outerProduct(b));
         }
@@ -394,7 +401,7 @@ public abstract class VectorTest<T extends Vector> {
     public void testOuterProduct_1_2() {
         for (Vector b: vs(24.0, 1.0)) {
             Vector a = v(2.0);
-            Matrix c = m1x2(48.0, 2.0);
+            Matrix c = m(a(48.0, 2.0));
 
             Assert.assertEquals(c, a.outerProduct(b));
         }
@@ -404,12 +411,11 @@ public abstract class VectorTest<T extends Vector> {
     public void testOuterProduct_4_2() {
         for (Vector b: vs(4.0, -10.0)) {
             Vector a = v(2.0, 0.0, -1.0, 41.0);
-            Matrix c = m4x2(
-                8.0, -20.0,
-                0.0, 0.0,
-                -4.0, 10.0,
-                164.0, -410.0
-            );
+
+            Matrix c = m(a(8.0, -20.0),
+                         a(0.0, 0.0),
+                         a(-4.0, 10.0),
+                         a(164.0, -410.0));
 
             Assert.assertEquals(c, a.outerProduct(b));
         }
@@ -634,7 +640,7 @@ public abstract class VectorTest<T extends Vector> {
         Assert.assertTrue(e.equals(e, Vectors.EPS));
 
         Vector f = v(Double.MIN_VALUE, Double.MIN_VALUE);
-        Vector g = v(0.0, 0.0);
+        Vector g = vz(2);
         Assert.assertTrue(f.equals(g, Vectors.EPS));
         Assert.assertTrue(g.equals(f, Vectors.EPS));
 

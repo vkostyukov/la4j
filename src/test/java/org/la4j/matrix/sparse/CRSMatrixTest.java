@@ -20,14 +20,11 @@
  */
 
 package org.la4j.matrix.sparse;
-import org.la4j.factory.CRSFactory;
-import org.la4j.factory.Factory;
+import org.la4j.Matrices;
 
-public class CRSMatrixTest extends SparseMatrixTest {
+public class CRSMatrixTest extends SparseMatrixTest<CRSMatrix> {
 
-    @Override
-    public Factory factory() {
-        return new CRSFactory();
+    public CRSMatrixTest() {
+        super(Matrices.CRS);
     }
-
 }

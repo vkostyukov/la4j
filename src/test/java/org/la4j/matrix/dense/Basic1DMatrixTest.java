@@ -21,14 +21,11 @@
 
 package org.la4j.matrix.dense;
 
-import org.la4j.factory.Basic1DFactory;
-import org.la4j.factory.Factory;
+import org.la4j.Matrices;
 
-public class Basic1DMatrixTest extends DenseMatrixTest {
+public class Basic1DMatrixTest extends DenseMatrixTest<Basic1DMatrix> {
 
-    @Override
-    public Factory factory() {
-        return new Basic1DFactory();
+    public Basic1DMatrixTest() {
+        super(Matrices.BASIC_1D);
     }
-
 }

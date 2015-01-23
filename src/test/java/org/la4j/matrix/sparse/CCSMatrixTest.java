@@ -21,14 +21,11 @@
 
 package org.la4j.matrix.sparse;
 
-import org.la4j.factory.CCSFactory;
-import org.la4j.factory.Factory;
+import org.la4j.Matrices;
 
-public class CCSMatrixTest extends SparseMatrixTest {
+public class CCSMatrixTest extends SparseMatrixTest<CCSMatrix> {
 
-    @Override
-    public Factory factory() {
-        return new CCSFactory();
+    public CCSMatrixTest() {
+        super(Matrices.CCS);
     }
-
 }

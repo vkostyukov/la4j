@@ -70,28 +70,12 @@ public class InPlaceCopyMatrixToMatrix extends SimpleMatrixMatrixOperation<Matri
 
     @Override
     public Matrix apply(RowMajorSparseMatrix a, ColumnMajorSparseMatrix b) {
-        MatrixIterator it = a.nonZeroColumnMajorIterator();
-        while (it.hasNext()) {
-            double x = it.next();
-            int i = it.rowIndex();
-            int j = it.columnIndex();
-            b.set(i, j, x);
-        }
-
-        return b;
+        return fromSparseToMatrix(a, b);
     }
 
     @Override
     public Matrix apply(ColumnMajorSparseMatrix a, RowMajorSparseMatrix b) {
-        MatrixIterator it = a.nonZeroRowMajorIterator();
-        while (it.hasNext()) {
-            double x = it.next();
-            int i = it.rowIndex();
-            int j = it.columnIndex();
-            b.set(i, j, x);
-        }
-
-        return b;
+        return fromSparseToMatrix(a, b);
     }
 
     private Matrix fromSparseToMatrix(SparseMatrix a, Matrix b) {
