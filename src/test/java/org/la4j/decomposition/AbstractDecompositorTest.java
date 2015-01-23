@@ -21,30 +21,25 @@
 
 package org.la4j.decomposition;
 
+import org.junit.Assert;
 import org.la4j.LinearAlgebra;
-import org.la4j.factory.Factory;
 import org.la4j.Matrix;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.la4j.M.*;
 
 public abstract class AbstractDecompositorTest {
 
     public abstract LinearAlgebra.DecompositorFactory decompositorFactory();
 
     public void performTest(double[][] input, double[][][] output) {
-
-        for (Factory factory: LinearAlgebra.FACTORIES) {
-
-            Matrix a = factory.createMatrix(input);
+        for (Matrix a: ms(input)) {
             MatrixDecompositor decompositor = a.withDecompositor(decompositorFactory());
             Matrix[] decomposition = decompositor.decompose();
 
-            assertEquals(output.length, decomposition.length);
+            Assert.assertEquals(output.length, decomposition.length);
 
             for (int i = 0; i < decomposition.length; i++) {
-                assertTrue(factory.createMatrix(output[i]).equals(
-                             decomposition[i], 1e-3));
+                Assert.assertTrue(m(output[i]).equals(decomposition[i], 1e-3));
             }
         }
     }
