@@ -28,11 +28,6 @@ import org.la4j.decomposition.QRDecompositor;
 import org.la4j.decomposition.RawLUDecompositor;
 import org.la4j.decomposition.RawQRDecompositor;
 import org.la4j.decomposition.SingularValueDecompositor;
-import org.la4j.factory.Basic1DFactory;
-import org.la4j.factory.Basic2DFactory;
-import org.la4j.factory.CCSFactory;
-import org.la4j.factory.CRSFactory;
-import org.la4j.factory.Factory;
 import org.la4j.inversion.GaussJordanInverter;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.ForwardBackSubstitutionSolver;
@@ -319,57 +314,6 @@ public final class LinearAlgebra {
      * Reference to SVD decompositor factory.
      */
     public static final DecompositorFactory SVD = DecompositorFactory.SVD;
-
-    /**
-     * The {@link org.la4j.factory.Basic1DFactory} singleton instance.
-     */
-    @Deprecated
-    public static final Factory BASIC1D_FACTORY = new Basic1DFactory();
-
-    /**
-     * The {@link org.la4j.factory.Basic2DFactory} singleton instance.
-     */
-    @Deprecated
-    public static final Factory BASIC2D_FACTORY = new Basic2DFactory();
-
-    /**
-     * The {@link org.la4j.factory.CRSFactory} singleton instance.
-     */
-    @Deprecated
-    public static final Factory CRS_FACTORY = new CRSFactory();
-
-    /**
-     * The {@link org.la4j.factory.CCSFactory} singleton instance.
-     */
-    @Deprecated
-    public static final Factory CCS_FACTORY = new CCSFactory();
-
-    /**
-     * The default dense factory singleton instance. References the {@link LinearAlgebra#BASIC2D_FACTORY}.
-     */
-    @Deprecated
-    public static final Factory DENSE_FACTORY = BASIC2D_FACTORY;
-
-    /**
-     * The default sparse factory singleton instance. References the {@link LinearAlgebra#CRS_FACTORY}.
-     */
-    @Deprecated
-    public static final Factory SPARSE_FACTORY = CRS_FACTORY;
-
-    /**
-     * The default matrix factory singleton instance.
-     * References the {@link LinearAlgebra#BASIC2D_FACTORY}.
-     */
-    @Deprecated
-    public static final Factory DEFAULT_FACTORY = BASIC2D_FACTORY;
-
-    /**
-     * The array with all factories available. This is useful for testing.
-     */
-    @Deprecated
-    public static final Factory FACTORIES[] = {
-            BASIC1D_FACTORY, BASIC2D_FACTORY, CRS_FACTORY, CCS_FACTORY
-    };
 
     public final static VectorVectorOperation<Double> OO_PLACE_INNER_PRODUCT =
         new OoPlaceInnerProduct();
