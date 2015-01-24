@@ -1,14 +1,19 @@
 Changelog
 ---------
 la4j-0.5.5 `Jan 2015`
-
+ * Removed deprecated package `org.la4j.factory`
+ * Bug fix in sparse matrix iterators
+ * Improved performance of vector by value multiplication
+ * Removed deprecated package `org.la4j.io`
+ * New static factory methods `Vector.*` and `Matrix.*`
 
 la4j-0.5.0 `Jan 2015`
+ * Matrix and vector iterators in package `org.la4j.iterator`
+ * Matrix and vector operations in package `org.la4j.operations`
+ * Replaced factories with static factory methods
  * Bug fix in serialization algorithm of sparse matrices (contributed by Catherine da Graca)`
  * New sparse matrix methods: `foldNonZero()`, `foldNonZeroInRow()`, `foldNonZeroInColumn()`, `foldNonZeroInColumns()`, `foldNonZeroInRows()`
  * New sparse vector method: `foldNonZero()`
- * New entity: `MatrixBuilder`
- * New entity: `VectorBuilder`
  * New matrix/vector method `mkString()` for customized to-string conversion
  * Bug fix in random generation of sparse matrices
  * New sparse methods: `isZeroAt()` and `nonZeroAt()`
@@ -19,13 +24,10 @@ la4j-0.5.0 `Jan 2015`
  * Tests migrated to latest junit version, removed `MockVector` and `MockMatrix` classes (contributed by Maxim Samoylov)
  * New vector method `equals(vector, precision)`
  * New matrix method `equals(matrix, precision)`
- * New vector method `normalize(vectorAccumulator)`
- * New vector method `normalize()`
+ * New vector methods `norm`, `euclideanNorm`, `manhattanNorm` and `infinityNorm`
  * Added index range checks for `SparseVector`
  * Added index range checks for `Basic1DMatrix`, `CRSMatrix`, and `CCSMatrix`
- * Removed method `Vector.transform(int, VectorFunction)`
- * Removed methods `Matrix.transform(int, int, MatrixFunction)`
-
+ 
 la4j-0.4.9 `Jan 2014`
  * Bug fix in `align()` method for big sparse matrices (reported by Michael Kapper)
  * Bug fix in `growup()` method for big sparse matrices (contributed by Phil Messenger)
