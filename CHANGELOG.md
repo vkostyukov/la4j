@@ -1,5 +1,8 @@
 Changelog
 ---------
+la4j-0.5.5 `Jan 2015`
+
+
 la4j-0.5.0 `Jan 2015`
  * Bug fix in serialization algorithm of sparse matrices (contributed by Catherine da Graca)`
  * New sparse matrix methods: `foldNonZero()`, `foldNonZeroInRow()`, `foldNonZeroInColumn()`, `foldNonZeroInColumns()`, `foldNonZeroInRows()`

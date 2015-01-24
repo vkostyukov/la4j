@@ -1,23 +1,13 @@
-[la4j (Linear Algebra for Java)](http://la4j.org)  [![Build Status](https://travis-ci.org/vkostyukov/la4j.png?branch=master)](https://travis-ci.org/vkostyukov/la4j)
-=============================
-<img src="https://raw.github.com/vkostyukov/la4j/master/la4j-logo.png" width="220px" />
+<p align="center">
+  <img src="https://raw.github.com/vkostyukov/la4j/master/la4j-logo.png" width="220px" />
+<p>
 
-The [**la4j**](http://la4j.org) is an open source and **100% Java** library
-that provides **Linear Algebra** primitives (matrices and vectors) and algorithms. The **la4j** library was initially
-designed to be a lightweight and simple tool for passionate Java developers. It has been started as student project
-and turned into one of the most popular Java packages for matrices and vectors.
+[![Build Status](https://travis-ci.org/vkostyukov/la4j.svg?branch=master)](https://travis-ci.org/vkostyukov/la4j)
 
-The key features of the **la4j** are listed bellow:
-
-* Great performance allied with beautiful design
-* No dependencies and tiny size (~150kb jar)
-* Fluent and object-oriented/functional API
-* Sparse (CRS, CCS) and dense (1D/2D arrays) matrices and vectors
-* Linear systems solving (Gaussian, Jacobi, Seidel, Square Root, Sweep and other)
-* Matrices decomposition (Eigenvalues/Eigenvectors, SVD, QR, LU, Cholesky and other)
-* Functors support: predicates, functions, procedures and accumulators
-* MatrixMarket/CSV IO formats support
-
+[la4j](http://la4j.org) (Linear Algebra for Java) is an open source and **100% Java** library that provides _Linear 
+Algebra_ primitives (matrices  and vectors) and algorithms. The la4j library was initially designed to be a lightweight 
+and simple tool for passionate Java developers. It has been started as student project and turned into one of the most 
+popular Java packages for matrices and vectors.
 
 Instalation
 -----------
@@ -25,38 +15,31 @@ Instalation
 <dependency>
   <groupId>org.la4j</groupId>
   <artifactId>la4j</artifactId>
-  <version>0.5.0</version>
+  <version>0.5.5</version>
 </dependency>
 ```
 
 Changelog
 ------------
 See [CHANGELOG.md](https://github.com/vkostyukov/la4j/blob/master/CHANGELOG.md)
-
-Licensing
----------
- 
-This software is licensed under the terms you may find in the file 
-named "LICENSE" in this directory.
-
-How To Contribute
------------------
-
-- Fork it
-- Create your feature branch (`git checkout -b my-new-feature`)
-- Commit your changes (`git commit -am 'Add some feature'`)
-- Push to the branch (`git push origin my-new-feature`)
-- Create new Pull Request
- 
  
 Contributors
 ------------
 
 See [CONTRIBUTORS.md](https://github.com/vkostyukov/la4j/blob/master/CONTRIBUTORS.md)
 
+License
+-------
+
+Licensed under the **[Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)** (the "License");
+you may not use this software except in compliance with the License.
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
 ----
-by [Vladimir Kostyukov](http://vkostyukov.ru), 2011-2014
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/vkostyukov/la4j/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+by [Vladimir Kostyukov](https://twitter.com/vkostyukov), 2011-2015
 
