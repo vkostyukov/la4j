@@ -984,6 +984,56 @@ public abstract class Matrix implements Iterable<Double> {
     }
 
     /**
+     * Adds one row to matrix.
+     * @param i the row index
+     * @return matrix with row.
+     */
+    public Matrix addRow(int i, Vector row) {
+        if (i >= rows || i < 0) {
+            throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (rows - 1));
+        }
+
+        Matrix result = blankOfShape(rows + 1, columns);
+
+        for (int ii = 0; ii < i; ii++) {
+            result.setRow(ii, getRow(ii));
+        }
+
+        result.setRow(i, row);
+
+        for (int ii = i; ii < rows; ii++) {
+            result.setRow(ii + 1, getRow(ii));
+        }
+
+        return result;
+    }
+
+    /**
+     * Adds one column to matrix.
+     * @param j the column index
+     * @return matrix with column.
+     */
+    public Matrix addColumn(int j, Vector column) {
+        if (j >= columns || j < 0) {
+            throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (columns - 1));
+        }
+
+        Matrix result = blankOfShape(rows, columns + 1);
+
+        for (int jj = 0; jj < j; jj++) {
+            result.setColumn(jj, getColumn(jj));
+        }
+
+        result.setColumn(j, column);
+
+        for (int jj = j; jj < columns; jj++) {
+            result.setColumn(jj + 1, getColumn(jj));
+        }
+
+        return result;
+    }
+
+    /**
      * Removes one row from matrix.
      * @param i the row index
      * @return matrix without row.
