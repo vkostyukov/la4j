@@ -732,7 +732,7 @@ public abstract class Matrix implements Iterable<Double> {
             fail("Cannot have negative destination position: " + destRow + ", " + destColumn);
         }
 
-        if (destRow > that.rows() || destColumn> that.columns()) {
+        if (destRow > this.rows || destColumn > this.columns) {
             fail("Destination position out of bounds: " + destRow + ", " + destColumn);
         }
 
@@ -740,18 +740,18 @@ public abstract class Matrix implements Iterable<Double> {
             fail("Cannot have negative source position: " + destRow + ", " + destColumn);
         }
 
-        if (srcRow > this.rows || srcColumn > this.columns) {
+        if (srcRow > that.rows || srcColumn > that.columns) {
             fail("Destination position out of bounds: " + srcRow + ", " + srcColumn);
         }
 
-        if (destRow + rows > this.columns || destColumn + columns > this.rows) {
+        if (destRow + rows > this.rows || destColumn + columns > this.columns) {
             fail("Out of bounds: Cannot add " + rows + " rows and " + columns + " cols at "
                     + destRow + ", " + destColumn + " in a " + this.rows + "x" + this.columns + " matrix.");
         }
 
-        if (srcRow + rows > that.rows() || srcColumn + columns > that.columns()) {
+        if (srcRow + rows > that.rows || srcColumn + columns > that.columns) {
             fail("Out of bounds: Cannot get " + rows + " rows and " + columns + " cols at "
-                    + srcRow + ", " + srcColumn + " from a " + that.rows() + "x" + that.columns() + " matrix.");
+                    + srcRow + ", " + srcColumn + " from a " + that.rows + "x" + that.columns + " matrix.");
         }
 
         Matrix result = copy();

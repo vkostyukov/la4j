@@ -103,6 +103,26 @@ public abstract class MatrixTest<T extends Matrix> {
         
         Assert.assertEquals(a, b.insert(a, 1, 1, a.rows(), a.columns()).slice(1, 1, 3, 3));
     }
+
+    @Test
+    public void testInsert_3x1_into_3x3_offset() {
+        Matrix a = m(a(1.0),
+                     a(2.0),
+                     a(3.0));
+
+        Matrix b = mz(3, 3);
+
+        Assert.assertEquals(a, b.insert(a, 0, 2, a.rows(), a.columns()).slice(0, 2, 3, 3));
+    }
+
+    @Test
+    public void testInsert_1x3_into_3x3_offset() {
+        Matrix a = m(a(1.0, 2.0, 3.0));
+
+        Matrix b = mz(3, 3);
+
+        Assert.assertEquals(a, b.insert(a, 2, 0, a.rows(), a.columns()).slice(2, 0, 3, 3));
+    }
     
     @Test
     public void testAccess_3x3() {
