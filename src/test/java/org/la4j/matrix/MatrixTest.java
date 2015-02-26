@@ -1087,7 +1087,7 @@ public abstract class MatrixTest<T extends Matrix> {
     }
 
     @Test
-    public void testAddRow_2x3() {
+    public void testInsertRow_2x3() {
         Matrix a = m(a(1.0, 0.0, 4.0),
                      a(9.0, 0.0, 0.0));
 
@@ -1097,11 +1097,11 @@ public abstract class MatrixTest<T extends Matrix> {
                      a(0.0, 5.0, 3.0),
                      a(9.0, 0.0, 0.0));
 
-        Assert.assertEquals(b, a.addRow(1, row));
+        Assert.assertEquals(b, a.insertRow(1, row));
     }
 
     @Test
-    public void testAddColumn_3x2() {
+    public void testInsertColumn_3x2() {
         Matrix a = m(a(1.0, 4.0),
                      a(0.0, 3.0),
                      a(9.0, 0.0));
@@ -1112,7 +1112,7 @@ public abstract class MatrixTest<T extends Matrix> {
                      a(0.0, 5.0, 3.0),
                      a(9.0, 0.0, 0.0));
 
-        Assert.assertEquals(b, a.addColumn(1, column));
+        Assert.assertEquals(b, a.insertColumn(1, column));
     }
 
     @Test

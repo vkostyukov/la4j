@@ -988,7 +988,7 @@ public abstract class Matrix implements Iterable<Double> {
      * @param i the row index
      * @return matrix with row.
      */
-    public Matrix addRow(int i, Vector row) {
+    public Matrix insertRow(int i, Vector row) {
         if (i >= rows || i < 0) {
             throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (rows - 1));
         }
@@ -1013,7 +1013,7 @@ public abstract class Matrix implements Iterable<Double> {
      * @param j the column index
      * @return matrix with column.
      */
-    public Matrix addColumn(int j, Vector column) {
+    public Matrix insertColumn(int j, Vector column) {
         if (j >= columns || j < 0) {
             throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (columns - 1));
         }
