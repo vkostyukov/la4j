@@ -1857,4 +1857,75 @@ public abstract class MatrixTest<T extends Matrix> {
         Assert.assertTrue(b.equals(f));
         Assert.assertTrue(e.equals(f));
     }
+
+    @Test
+    public void testFromMatrixMarket() throws Exception {
+        String mm = "%%MatrixMarket matrix coordinate real general\n" +
+                "% This ASCII file represents a sparse 5x5 matrix with 8 \n" +
+                "% nonzeros in the Matrix Market format.\n" +
+                "%\n" +
+                "  5  5  8\n" +
+                "    1     1   1.000e+00\n" +
+                "    2     2   1.050e+01\n" +
+                "    3     3   1.500e-02\n" +
+                "    1     4   6.000e+00\n" +
+                "    4     2   2.505e+02\n" +
+                "    4     4  -2.800e+02\n" +
+                "    4     5   3.332e+01\n" +
+                "    5     5   1.200e+01";
+
+        RowMajorSparseMatrix matrix = RowMajorSparseMatrix.zero(5, 5, 8);
+        matrix.set(0, 0, 1.000e+00);
+        matrix.set(1, 1, 1.050e+01);
+        matrix.set(2, 2, 1.500e-02);
+        matrix.set(0, 3, 6.000e+00);
+        matrix.set(3, 1, 2.505e+02);
+        matrix.set(3, 3, -2.800e+02);
+        matrix.set(3, 4, 3.332e+01);
+        matrix.set(4, 4, 1.200e+01);
+
+        Matrix from_mm_matrix = Matrix.fromMatrixMarket(mm);
+        Assert.assertNotNull(from_mm_matrix);
+        Assert.assertTrue(matrix.equals(from_mm_matrix));
+
+        String bcsstm02_mm = "%%MatrixMarket matrix coordinate real general\n" +
+                "16 16 15\n" +
+                "1 1  9.2138580510000e-02\n" +
+                "2 2  9.2138580510000e-02\n" +
+                "3 3  9.2138580510000e-02\n" +
+                "4 4  1.3799573798300e-01\n" +
+                "5 5  1.3799573798300e-01\n" +
+                "6 6  1.3799573798300e-01\n" +
+                "7 7  1.3799573798300e-01\n" +
+                "8 8  1.3799573798300e-01\n" +
+                "9 9  1.3799573798300e-01\n" +
+                "10 10  9.2138580510000e-02\n" +
+                "11 11  9.2138580510000e-02\n" +
+                "12 12  9.2138580510000e-02\n" +
+                "13 13  1.7282857345500e-01\n" +
+                "14 14  1.7282857345500e-01\n" +
+                "15 15  1.7282857345500e-01\n";
+
+        RowMajorSparseMatrix bcs_matrix = RowMajorSparseMatrix.zero(16, 16, 15);
+        bcs_matrix.set(0, 0, 9.2138580510000e-02);
+        bcs_matrix.set(1, 1, 9.2138580510000e-02);
+        bcs_matrix.set(2, 2, 9.2138580510000e-02);
+        bcs_matrix.set(3, 3, 1.3799573798300e-01);
+        bcs_matrix.set(4, 4, 1.3799573798300e-01);
+        bcs_matrix.set(5, 5, 1.3799573798300e-01);
+        bcs_matrix.set(6, 6, 1.3799573798300e-01);
+        bcs_matrix.set(7, 7, 1.3799573798300e-01);
+        bcs_matrix.set(8, 8, 1.3799573798300e-01);
+        bcs_matrix.set(9, 9, 9.2138580510000e-02);
+        bcs_matrix.set(10, 10, 9.2138580510000e-02);
+        bcs_matrix.set(11, 11, 9.2138580510000e-02);
+        bcs_matrix.set(12, 12, 1.7282857345500e-01);
+        bcs_matrix.set(13, 13, 1.7282857345500e-01);
+        bcs_matrix.set(14, 14, 1.7282857345500e-01);
+
+        Matrix bcs_mm_matrix = Matrix.fromMatrixMarket(bcsstm02_mm);
+
+        Assert.assertNotNull(bcs_mm_matrix);
+        Assert.assertTrue(bcs_matrix.equals(bcs_mm_matrix));
+    }
 }
