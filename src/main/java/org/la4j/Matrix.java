@@ -203,57 +203,68 @@ public abstract class Matrix implements Iterable<Double> {
      * @return a parsed matrix
      */
     public static Matrix fromMatrixMarket(String mm) {
-        StringTokenizer body = new StringTokenizer(mm);
+        StringTokenizer body = new StringTokenizer(mm, "\n");
 
-        if (!"%%MatrixMarket".equals(body.nextToken())) {
+        String headerString = body.nextToken();
+        StringTokenizer header = new StringTokenizer(headerString);
+
+        if (!"%%MatrixMarket".equals(header.nextToken())) {
             throw new IllegalArgumentException("Wrong input file format: can not read header '%%MatrixMarket'.");
         }
 
-        String object = body.nextToken();
+        String object = header.nextToken();
         if (!"matrix".equals(object)) {
             throw new IllegalArgumentException("Unexpected object: " + object + ".");
         }
 
-        String format = body.nextToken();
+        String format = header.nextToken();
         if (!"coordinate".equals(format) && !"array".equals(format)) {
             throw new IllegalArgumentException("Unknown format: " + format + ".");
         }
 
-        String field = body.nextToken();
+        String field = header.nextToken();
         if (!"real".equals(field)) {
             throw new IllegalArgumentException("Unknown field type: " + field + ".");
         }
 
-        String symmetry = body.nextToken();
+        String symmetry = header.nextToken();
         if (!symmetry.equals("general")) {
             throw new IllegalArgumentException("Unknown symmetry type: " + symmetry + ".");
         }
 
-        if ("coordinate".equals(format)) {
-            String majority = body.nextToken();
-            if (!"row-major".equals(majority) && !"column-major".equals(majority)) {
-                throw new IllegalArgumentException("Unknown majority: " + majority + ".");
-            }
+        String majority = (header.hasMoreTokens()) ? header.nextToken() : "row-major";
 
-            int rows = Integer.valueOf(body.nextToken());
-            int columns = Integer.valueOf(body.nextToken());
-            int cardinality = Integer.valueOf(body.nextToken());
+        String nextToken = body.nextToken();
+        while (nextToken.startsWith("%")) {
+            nextToken = body.nextToken();
+        }
+
+        if ("coordinate".equals(format)) {
+            StringTokenizer lines = new StringTokenizer(nextToken);
+
+            int rows = Integer.valueOf(lines.nextToken());
+            int columns = Integer.valueOf(lines.nextToken());
+            int cardinality = Integer.valueOf(lines.nextToken());
 
             Matrix result = "row-major".equals(majority) ?
-                            RowMajorSparseMatrix.zero(rows, columns, cardinality) :
-                            ColumnMajorSparseMatrix.zero(rows, columns, cardinality);
+                    RowMajorSparseMatrix.zero(rows, columns, cardinality) :
+                    ColumnMajorSparseMatrix.zero(rows, columns, cardinality);
 
             for (int k = 0; k < cardinality; k++) {
-                int i = Integer.valueOf(body.nextToken());
-                int j = Integer.valueOf(body.nextToken());
-                double x = Double.valueOf(body.nextToken());
+                lines = new StringTokenizer(body.nextToken());
+
+                int i = Integer.valueOf(lines.nextToken());
+                int j = Integer.valueOf(lines.nextToken());
+                double x = Double.valueOf(lines.nextToken());
                 result.set(i - 1, j - 1, x);
             }
 
             return result;
         } else {
-            int rows = Integer.valueOf(body.nextToken());
-            int columns = Integer.valueOf(body.nextToken());
+            StringTokenizer lines = new StringTokenizer(nextToken);
+
+            int rows = Integer.valueOf(lines.nextToken());
+            int columns = Integer.valueOf(lines.nextToken());
             Matrix result = DenseMatrix.zero(rows, columns);
 
             for (int i = 0; i < rows; i++) {
