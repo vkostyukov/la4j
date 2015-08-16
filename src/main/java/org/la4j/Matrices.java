@@ -25,6 +25,9 @@
 
 package org.la4j;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.la4j.matrix.MatrixFactory;
 import org.la4j.matrix.dense.Basic1DMatrix;
 import org.la4j.matrix.dense.Basic2DMatrix;
@@ -35,10 +38,6 @@ import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.sparse.CCSMatrix;
 import org.la4j.matrix.sparse.CRSMatrix;
-import org.la4j.vector.functor.VectorAccumulator;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public final class Matrices {
 
