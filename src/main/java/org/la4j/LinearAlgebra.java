@@ -28,6 +28,7 @@ import org.la4j.decomposition.QRDecompositor;
 import org.la4j.decomposition.RawLUDecompositor;
 import org.la4j.decomposition.RawQRDecompositor;
 import org.la4j.decomposition.SingularValueDecompositor;
+import org.la4j.inversion.NoPivotGaussInverter;
 import org.la4j.inversion.GaussJordanInverter;
 import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.ForwardBackSubstitutionSolver;
@@ -213,6 +214,12 @@ public final class LinearAlgebra {
                 return new GaussJordanInverter(matrix);
             }
         },
+        NO_PIVOT_GAUSS {
+            @Override
+            public MatrixInverter create(Matrix matrix) {
+                return new NoPivotGaussInverter(matrix);
+            }
+        },
         SMART {
             @Override
             public MatrixInverter create(Matrix matrix) {
@@ -224,10 +231,19 @@ public final class LinearAlgebra {
     }
 
     /**
-     * Reference to the Gaussian inverter factory.
+     * Reference to an inverter factory solving n linear systems.
      */
     public static final InverterFactory GAUSS_JORDAN = InverterFactory.GAUSS_JORDAN;
 
+    /**
+     * Reference to the Gauss elimination method-based inverter factory.
+     * 
+     * Note: this version of the Gauss elimination method does not use a
+     * pivot and does not swap either columns or rows. As a result, it will fail
+     * if there is a zero on the diagonal.
+     */
+    public static final InverterFactory NO_PIVOT_GAUSS = InverterFactory.NO_PIVOT_GAUSS;
+    
     /**
      * Reference to the Smart inverter factory.
      */

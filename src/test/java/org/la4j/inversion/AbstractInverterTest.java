@@ -26,8 +26,9 @@ import org.junit.Test;
 import org.la4j.LinearAlgebra;
 import org.la4j.Matrix;
 
-import static org.junit.Assert.assertTrue;
 import static org.la4j.M.*;
+
+import java.util.Random;
 
 public abstract class AbstractInverterTest {
 
@@ -104,6 +105,19 @@ public abstract class AbstractInverterTest {
             { 29.0, -4.0, -27.0, -46.0, 29.0, 4.0 },
             {-58.0, 939.0, 2.0, 59.0, 96.0, -5.0 }
         };
+
+        performTest(input, inverterFactory());
+    }
+
+    @Test
+    public void testInverseRandom_100x100() {
+        Random r = new Random();
+        double input[][] = new double[100][100];
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 100; j++) {
+                input[i][j] = r.nextDouble();
+            }
+        }
 
         performTest(input, inverterFactory());
     }
