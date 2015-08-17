@@ -1403,6 +1403,13 @@ public abstract class MatrixTest<T extends Matrix> {
 
         Assert.assertEquals(b, a.blank());
     }
+    
+    @Test
+    public void testNormalize_EuclideanNormAccumulator() {
+        Matrix a = m(a(0.0, 3.0), a(4.0, 0.0));
+
+        Assert.assertEquals(5.0, a.euclideanNorm(), Matrices.EPS);
+    }
 
     @Test
     public void testPower_2x2() {

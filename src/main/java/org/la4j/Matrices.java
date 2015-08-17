@@ -25,6 +25,9 @@
 
 package org.la4j;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.la4j.matrix.MatrixFactory;
 import org.la4j.matrix.dense.Basic1DMatrix;
 import org.la4j.matrix.dense.Basic2DMatrix;
@@ -35,8 +38,6 @@ import org.la4j.matrix.functor.MatrixPredicate;
 import org.la4j.matrix.functor.MatrixProcedure;
 import org.la4j.matrix.sparse.CCSMatrix;
 import org.la4j.matrix.sparse.CRSMatrix;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public final class Matrices {
 
@@ -548,6 +549,31 @@ public final class Matrices {
                 double value = result;
                 result = Double.NEGATIVE_INFINITY;
                 return value;
+            }
+        };
+    }
+    
+    /**
+     * Makes an Euclidean norm accumulator that allows to use
+     * {@link org.la4j.Matrix#fold(org.la4j.vector.functor.MatrixAccumulator)}
+     * method for norm calculation.
+     *
+     * @return an Euclidean norm accumulator
+     */
+    public static MatrixAccumulator mkEuclideanNormAccumulator() {
+        return new MatrixAccumulator() {
+            private BigDecimal result = new BigDecimal(0.0);
+
+            @Override
+            public void update(int i, int j, double value) {
+                result = result.add(new BigDecimal(value * value));
+            }
+
+            @Override
+            public double accumulate() {
+                double value = result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
+                result = new BigDecimal(0.0);
+                return Math.sqrt(value);
             }
         };
     }

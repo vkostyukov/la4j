@@ -836,6 +836,24 @@ public abstract class Matrix implements Iterable<Double> {
     }
 
     /**
+     * Calculates an Euclidean norm of this matrix, a.k.a. frobenius norm
+     *
+     * @return an Euclidean norm
+     */
+    public double norm() {
+        return euclideanNorm();
+    }
+
+    /**
+     * Calculates an Euclidean norm of this matrix, a.k.a. frobenius norm
+     *
+     * @return an Euclidean norm
+     */
+    public double euclideanNorm() {
+        return fold(Matrices.mkEuclideanNormAccumulator());
+    }
+    
+    /**
      * Multiplies up all elements of this matrix.
      * 
      * @return the product of all elements of this matrix
