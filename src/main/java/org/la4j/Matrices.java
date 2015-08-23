@@ -377,7 +377,7 @@ public final class Matrices {
      */
     public static final MatrixFactory<CCSMatrix> SPARSE_COLUMN_MAJOR = CCS;
 
-    public static final MatrixFactory[] CONVERTERS = {
+    public static final MatrixFactory<?>[] CONVERTERS = {
             BASIC_2D, BASIC_1D, CRS, CCS
     };
 
@@ -575,6 +575,31 @@ public final class Matrices {
                 result = new BigDecimal(0.0);
                 return Math.sqrt(value);
             }
+        };
+    }
+    
+    /**
+     * Makes an Infinity norm accumulator that allows to use
+     * {@link org.la4j.Matrix#fold(org.la4j.vector.functor.MatrixAccumulator)}
+     * method for norm calculation.
+     *
+     * @return an Infinity norm accumulator
+     */
+    public static MatrixAccumulator mkInfinityNormAccumulator() {
+        return new MatrixAccumulator() {
+          private double result = Double.NEGATIVE_INFINITY;
+          
+          @Override
+          public void update(int i, int j, double value) {
+            result = Math.max(result, Math.abs(value));
+          }
+          
+          @Override
+          public double accumulate() {
+            double value = result;
+            result = Double.NEGATIVE_INFINITY;
+            return value;
+          }
         };
     }
 

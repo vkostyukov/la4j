@@ -854,6 +854,15 @@ public abstract class Matrix implements Iterable<Double> {
     }
     
     /**
+     * Calculates an Infinity norm of this matrix.
+     *
+     * @return an Infinity norm
+     */
+    public double infinityNorm() {
+        return fold(Matrices.mkInfinityNormAccumulator());
+    }
+    
+    /**
      * Multiplies up all elements of this matrix.
      * 
      * @return the product of all elements of this matrix
