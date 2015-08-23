@@ -579,6 +579,31 @@ public final class Matrices {
     }
     
     /**
+     * Makes an Manhattan norm accumulator that allows to use
+     * {@link org.la4j.Matrix#fold(org.la4j.vector.functor.MatrixAccumulator)}
+     * method for norm calculation.
+     *
+     * @return a Manhattan norm accumulator
+     */
+    public static MatrixAccumulator mkManhattanNormAccumulator() {
+        return new MatrixAccumulator() {
+            private double result = 0.0;
+
+            @Override
+            public void update(int i, int j, double value) {
+                result += Math.abs(value);
+            }
+
+            @Override
+            public double accumulate() {
+                double value = result;
+                result = 0.0;
+                return value;
+            }
+        };
+    }
+    
+    /**
      * Makes an Infinity norm accumulator that allows to use
      * {@link org.la4j.Matrix#fold(org.la4j.vector.functor.MatrixAccumulator)}
      * method for norm calculation.
