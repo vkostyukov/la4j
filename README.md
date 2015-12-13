@@ -15,7 +15,7 @@ Instalation
 <dependency>
   <groupId>org.la4j</groupId>
   <artifactId>la4j</artifactId>
-  <version>0.5.5</version>
+  <version>0.6.0</version>
 </dependency>
 ```
 

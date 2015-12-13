@@ -1,5 +1,13 @@
 Changelog
 ---------
+la4j-0.6.0 `Dec 2015`
+ * Fix validation errors in `Matrix.insert`
+ * New matrix methods `insertRow` and `insertColumn`
+ * Support comments in Matrix Market format
+ * New `NO_PIVOT_GAUSS` matrix inverter
+ * New matrix norms: Euclidean, Infinity and Manhattan
+ * New factory methods for `Vector`: `fromMap` and `fromCollection`
+
 la4j-0.5.5 `Jan 2015`
  * Removed deprecated package `org.la4j.factory`
  * Bug fix in sparse matrix iterators
