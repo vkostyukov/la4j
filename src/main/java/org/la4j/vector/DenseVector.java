@@ -31,6 +31,8 @@ import org.la4j.operation.VectorVectorOperation;
 import org.la4j.vector.dense.BasicVector;
 
 import java.text.NumberFormat;
+import java.util.Collection;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -106,6 +108,30 @@ public abstract class DenseVector extends Vector {
      */
     public static DenseVector fromMatrixMarket(String mm) {
         return Vector.fromMatrixMarket(mm).to(Vectors.DENSE);
+    }
+
+    /**
+     * Creates new {@link org.la4j.vector.DenseVector} from
+     *
+     * @param list list containing doubles
+     *
+     * @return new vector from given double list
+     */
+    public static DenseVector fromCollection(Collection<? extends Number> list) {
+        return BasicVector.fromCollection(list);
+    }
+
+    /**
+     * Creates new {@link DenseVector} from index-value map
+     *
+     * @param map index-value map
+     *
+     * @param length vector length
+     *
+     * @return created vector
+     */
+    public static DenseVector fromMap(Map<Integer, ? extends Number> map, int length) {
+        return Vector.fromMap(map, length).to(Vectors.DENSE);
     }
 
     @Override

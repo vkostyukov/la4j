@@ -36,6 +36,12 @@ import org.la4j.vector.functor.VectorPredicate;
 import static org.la4j.V.*;
 import static org.la4j.M.*;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 public abstract class VectorTest<T extends Vector> {
 
     protected VectorFactory<T> factory;
@@ -675,5 +681,66 @@ public abstract class VectorTest<T extends Vector> {
         Assert.assertTrue(i.equals(f));
         Assert.assertTrue(g.equals(i));
         Assert.assertTrue(f.equals(i));
+    }
+
+    @Test
+    public void testFromCollection_empty() {
+        List<Number> values = new LinkedList<>();
+        Assert.assertEquals(Vector.fromCollection(values), Vector.zero(0));
+    }
+
+    @Test
+    public void testFromCollection_normal_x3() {
+        List<Double> values = Arrays.asList(1.0, 2.0, 3.0);
+        Vector v = Vector.fromCollection(values);
+        Assert.assertEquals(v, Vector.fromArray(new double[] {1.0, 2.0, 3.0}));
+    }
+
+    @Test
+    public void testFromCollection_byte() {
+        List<Byte> values = Arrays.asList((byte) 1, (byte) 3, (byte) 5, (byte) 6);
+        Vector v = Vector.fromCollection(values);
+        Assert.assertEquals(v, Vector.fromArray(new double[] {1.0, 3.0, 5.0, 6.0}));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testFromCollection_NPE() {
+        Vector v = Vector.fromCollection(null);
+    }
+
+    @Test
+    public void testFromMap_empty() {
+        Map<Integer, Double> map = new HashMap<>();
+        Assert.assertEquals(Vector.fromMap(map, 0), Vector.zero(0));
+    }
+
+    @Test
+    public void testFromMap_normal() {
+        Map<Integer, Double> map = new HashMap<>();
+        map.put(0, 1.0);
+        map.put(3, 2.0);
+        map.put(5, 1.0);
+        Vector v = Vector.fromArray(new double[]{1, 0, 0, 2, 0, 1, 0});
+        Assert.assertEquals(v, Vector.fromMap(map, 7));
+    }
+
+    @Test
+    public void testFromMap_emptyMap() {
+        Map<Integer, Double> map = new HashMap<>();
+        Assert.assertEquals(Vector.fromMap(map, 5), Vector.zero(5));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFromMap_invalidMap() {
+        Map<Integer, Double> map = new HashMap<>();
+        map.put(0, 1.0);
+        map.put(3, 2.0);
+        map.put(-2, 1.0);
+        Vector v = Vector.fromMap(map, 5);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testFromMap_NPE() {
+        Vector v = Vector.fromMap(null, 4);
     }
 }
