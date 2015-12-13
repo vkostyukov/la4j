@@ -1410,6 +1410,20 @@ public abstract class MatrixTest<T extends Matrix> {
 
         Assert.assertEquals(5.0, a.euclideanNorm(), Matrices.EPS);
     }
+    
+    @Test
+    public void testNormalize_ManhattanNormAccumulator() {
+        Matrix a = m(a(0.0, 3.0), a(4.0, 0.0));
+
+        Assert.assertEquals(7.0, a.manhattanNorm(), Matrices.EPS);
+    }
+    
+    @Test
+    public void testNormalize_InfinityNormAccumulator() {
+        Matrix a = m(a(0.0, 3.0), a(4.0, 0.0));
+
+        Assert.assertEquals(4.0, a.infinityNorm(), Matrices.EPS);
+    }
 
     @Test
     public void testPower_2x2() {

@@ -854,6 +854,24 @@ public abstract class Matrix implements Iterable<Double> {
     }
     
     /**
+     * Calculates a Manhattan norm of this matrix, a.k.a. taxicab norm
+     *
+     * @return a Manhattan norm
+     */
+    public double manhattanNorm() {
+        return fold(Matrices.mkManhattanNormAccumulator());
+    }
+    
+    /**
+     * Calculates an Infinity norm of this matrix.
+     *
+     * @return an Infinity norm
+     */
+    public double infinityNorm() {
+        return fold(Matrices.mkInfinityNormAccumulator());
+    }
+    
+    /**
      * Multiplies up all elements of this matrix.
      * 
      * @return the product of all elements of this matrix
