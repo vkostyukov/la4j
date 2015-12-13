@@ -22,6 +22,8 @@
 package org.la4j.vector;
 
 import java.text.NumberFormat;
+import java.util.Collection;
+import java.util.Map;
 import java.util.Random;
 
 import org.la4j.iterator.VectorIterator;
@@ -104,6 +106,28 @@ public abstract class SparseVector extends Vector {
      */
     public static SparseVector fromMatrixMarket(String mm) {
         return Vector.fromMatrixMarket(mm).to(Vectors.SPARSE);
+    }
+
+    /**
+     * Creates new {@link SparseVector} from collection
+     *
+     * @param list value list
+     *
+     * @return created vector
+     */
+    public static SparseVector fromCollection(Collection<? extends Number> list) {
+        return Vector.fromCollection(list).to(Vectors.SPARSE);
+    }
+
+    /**
+     * Creates new {@link SparseVector} from given index-value map
+     *
+     * @param map
+     *
+     * @return
+     */
+    public static SparseVector fromMap(Map<Integer, ? extends Number> map, int length) {
+        return CompressedVector.fromMap(map, length);
     }
 
     protected int cardinality;

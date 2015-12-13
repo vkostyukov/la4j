@@ -25,6 +25,8 @@ package org.la4j.vector.sparse;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
 import java.util.Random;
 
 import org.la4j.Vectors;
@@ -160,6 +162,44 @@ public class CompressedVector extends SparseVector {
      */
     public static CompressedVector fromMatrixMarket(String mm) {
         return Vector.fromMatrixMarket(mm).to(Vectors.COMPRESSED);
+    }
+
+    /**
+     * Creates new {@link CompressedVector} from collection
+     *
+     * @param list value list
+     *
+     * @return created vector
+     */
+    public static CompressedVector fromCollection(Collection<? extends Number> list) {
+        return Vector.fromCollection(list).to(Vectors.COMPRESSED);
+    }
+
+    /**
+     * Creates new {@link CompressedVector} from index-value map
+     *
+     * @param map index-value map
+     *
+     * @param length vector length
+     *
+     * @return created vector
+     */
+    public static CompressedVector fromMap(Map<Integer, ? extends Number> map, int length) {
+        //TODO goto lambdas
+        int cardinality = map.size();
+        int[] indices = new int[cardinality];
+        double[] values = new double[cardinality];
+        int i = 0;
+        for (Map.Entry<Integer, ? extends Number> entry : map.entrySet()) {
+            int index = entry.getKey();
+            if (index < 0 || index >= length) {
+                throw new IllegalArgumentException("Check your map: Index must be 0..n-1");
+            }
+            indices[i] = index;
+            values[i] = entry.getValue().doubleValue();
+            i++;
+        }
+        return new CompressedVector(length, cardinality, values, indices);
     }
 
     private double values[];

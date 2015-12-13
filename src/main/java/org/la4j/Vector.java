@@ -27,6 +27,8 @@ package org.la4j;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Collection;
+import java.util.Map;
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -165,6 +167,20 @@ public abstract class Vector implements Iterable<Double> {
 
             return result;
         }
+    }
+
+    /**
+     * Creates new {@link org.la4j.vector.dense.BasicVector} from {@code list}
+     */
+    public static Vector fromCollection(Collection<? extends Number> list) {
+        return DenseVector.fromCollection(list);
+    }
+
+    /**
+     * Creates new {@link org.la4j.vector.SparseVector} from {@code list}
+     */
+    public static Vector fromMap(Map<Integer, ? extends Number> map, int length) {
+        return SparseVector.fromMap(map, length);
     }
 
     /**

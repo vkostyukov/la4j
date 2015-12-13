@@ -22,7 +22,12 @@
 package org.la4j.vector.dense;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.la4j.Vector;
@@ -134,6 +139,37 @@ public class BasicVector extends DenseVector {
      */
     public static BasicVector fromMatrixMarket(String mm) {
         return Vector.fromMatrixMarket(mm).to(Vectors.BASIC);
+    }
+
+    /**
+     * Creates new {@link BasicVector} from
+     *
+     * @param list list containing doubles
+     *
+     * @return new vector from given double list
+     */
+    public static BasicVector fromCollection(Collection<? extends Number> list) {
+        //TODO goto lambdas
+        double[] self = new double[list.size()];
+        int i = 0;
+        for (Number x : list) {
+            self[i] = x.doubleValue();
+            i++;
+        }
+        return fromArray(self);
+    }
+
+    /**
+     * Creates new {@link BasicVector} from index-value map
+     *
+     * @param map index-value map
+     *
+     * @param length vector length
+     *
+     * @return created vector
+     */
+    public static BasicVector fromMap(Map<Integer, ? extends Number> map, int length) {
+        return Vector.fromMap(map, length).to(Vectors.BASIC);
     }
 
     private double self[];
