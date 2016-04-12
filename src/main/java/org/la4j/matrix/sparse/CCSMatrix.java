@@ -70,9 +70,9 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
      * diagonal elements are equal to {@code diagonal}.
      */
     public static CCSMatrix diagonal(int size, double diagonal) {
-        double values[] = new double[size];
-        int rowIndices[] = new int[size];
-        int columnPointers[] = new int[size + 1];
+        double[] values = new double[size];
+        int[] rowIndices = new int[size];
+        int[] columnPointers = new int[size + 1];
 
         for (int i = 0; i < size; i++) {
             rowIndices[i] = i;
@@ -103,12 +103,12 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
         int cardinality = Math.max((int)((rows * columns) * density), columns);
 
-        double values[] = new double[cardinality];
-        int rowIndices[] = new int[cardinality];
-        int columnPointers[] = new int[columns + 1];
+        double[] values = new double[cardinality];
+        int[] rowIndices = new int[cardinality];
+        int[] columnPointers = new int[columns + 1];
 
         int kk = cardinality / columns;
-        int indices[] = new int[kk];
+        int[] indices = new int[kk];
 
         int k = 0;
         for (int j = 0; j < columns; j++) {
@@ -218,7 +218,7 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
         int rows = a.rows() + c.rows(), columns = a.columns() + b.columns();
         ArrayList<Double> values = new ArrayList<Double>();
         ArrayList<Integer> rowIndices = new ArrayList<Integer>();
-        int columnPointers[] = new int[rows + 1];
+        int[] columnPointers = new int[rows + 1];
 
         int k = 0;
         columnPointers[0] = 0;
@@ -245,8 +245,8 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
             }
             columnPointers[i + 1] = k;
         }
-        double valuesArray[] = new double[values.size()];
-        int rowIndArray[] = new int[rowIndices.size()];
+        double[] valuesArray = new double[values.size()];
+        int[] rowIndArray = new int[rowIndices.size()];
         for (int i = 0; i < values.size(); i++) {
             valuesArray[i] = values.get(i);
             rowIndArray[i] = rowIndices.get(i);
@@ -313,9 +313,9 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
     private static final int MINIMUM_SIZE = 32;
 
-    private double values[];
-    private int rowIndices[];
-    private int columnPointers[];
+    private double[] values;
+    private int[] rowIndices;
+    private int[] columnPointers;
 
     public CCSMatrix() {
         this(0, 0);
@@ -335,7 +335,7 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
         this.columnPointers = new int[columns + 1];
     }
 
-    public CCSMatrix(int rows, int columns, int cardinality, double values[], int rowIndices[], int columnPointers[]) {
+    public CCSMatrix(int rows, int columns, int cardinality, double[] values, int[] rowIndices, int[] columnPointers) {
         super(rows, columns, cardinality);
         ensureCardinalityIsCorrect(rows, columns, cardinality);
 
@@ -402,8 +402,8 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     @Override
     public Vector getColumn(int j) {
         int columnCardinality = columnPointers[j + 1] - columnPointers[j];
-        double columnValues[] = new double[columnCardinality];
-        int columnIndices[] = new int[columnCardinality];
+        double[] columnValues = new double[columnCardinality];
+        int[] columnIndices = new int[columnCardinality];
 
         System.arraycopy(values, columnPointers[j], columnValues, 0, 
                          columnCardinality);
@@ -436,9 +436,9 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
         ensureDimensionsAreCorrect(rows, columns);
 
         if (rows >= this.rows && columns >= this.columns) {
-            double $values[] = new double[align(cardinality)];
-            int $rowIndices[] = new int[align(cardinality)];
-            int $columnPointers[] = new int[columns + 1];
+            double[] $values = new double[align(cardinality)];
+            int[] $rowIndices = new int[align(cardinality)];
+            int[] $columnPointers = new int[columns + 1];
 
             System.arraycopy(values, 0, $values, 0, cardinality);
             System.arraycopy(rowIndices, 0, $rowIndices, 0, cardinality);
@@ -451,9 +451,9 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
             return new CCSMatrix(rows, columns, cardinality, $values, $rowIndices, $columnPointers);
         }
 
-        double $values[] = new double[align(cardinality)];
-        int $rowIndices[] = new int[align(cardinality)];
-        int $columnPointers[] = new int[columns + 1];
+        double[] $values = new double[align(cardinality)];
+        int[] $rowIndices = new int[align(cardinality)];
+        int[] $columnPointers = new int[columns + 1];
 
         int $cardinality = 0;
 
@@ -631,8 +631,8 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
             );
         int capacity = Math.min(min, (cardinality * 3) / 2 + 1);
 
-        double $values[] = new double[capacity];
-        int $rowIndices[] = new int[capacity];
+        double[] $values = new double[capacity];
+        int[] $rowIndices = new int[capacity];
 
         System.arraycopy(values, 0, $values, 0, cardinality);
         System.arraycopy(rowIndices, 0, $rowIndices, 0, cardinality);

@@ -48,7 +48,7 @@ public class Basic2DMatrix extends DenseMatrix {
      * Creates a constant {@link Basic2DMatrix} of the given shape and {@code value}.
      */
     public static Basic2DMatrix constant(int rows, int columns, double constant) {
-        double array[][] = new double[rows][columns];
+        double[][] array = new double[rows][columns];
 
         for (int i = 0; i < rows; i++) {
             Arrays.fill(array[i], constant);
@@ -62,7 +62,7 @@ public class Basic2DMatrix extends DenseMatrix {
      * diagonal elements are equal to {@code diagonal}.
      */
     public static Basic2DMatrix diagonal(int size, double diagonal) {
-        double array[][] = new double[size][size];
+        double[][] array = new double[size][size];
 
         for (int i = 0; i < size; i++) {
             array[i][i] = diagonal;
@@ -91,7 +91,7 @@ public class Basic2DMatrix extends DenseMatrix {
      * {@code rows} x {@code columns}.
      */
     public static Basic2DMatrix random(int rows, int columns, Random random) {
-        double array[][] = new double[rows][columns];
+        double[][] array = new double[rows][columns];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -106,7 +106,7 @@ public class Basic2DMatrix extends DenseMatrix {
      * Creates a random symmetric {@link Basic2DMatrix} of the given {@code size}.
      */
     public static Basic2DMatrix randomSymmetric(int size, Random random) {
-        double array[][] = new double[size][size];
+        double[][] array = new double[size][size];
 
         for (int i = 0; i < size; i++) {
             for (int j = i; j < size; j++) {
@@ -152,7 +152,7 @@ public class Basic2DMatrix extends DenseMatrix {
         }
 
         int rows = a.rows() + c.rows(), columns = a.columns() + b.columns();
-        double array[][] = new double[rows][columns];
+        double[][] array = new double[rows][columns];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -223,7 +223,7 @@ public class Basic2DMatrix extends DenseMatrix {
         return Matrix.fromMatrixMarket(mm).to(Matrices.BASIC_2D);
     }
 
-    private double self[][];
+    private double[][] self;
 
     public Basic2DMatrix() {
         this(0, 0);
@@ -233,7 +233,7 @@ public class Basic2DMatrix extends DenseMatrix {
         this(new double[rows][columns]);
     }
 
-    public Basic2DMatrix(double array[][]) {
+    public Basic2DMatrix(double[][] array) {
         super(array.length, array.length == 0 ? 0: array[0].length);
         this.self = array;
     }
@@ -258,7 +258,7 @@ public class Basic2DMatrix extends DenseMatrix {
     @Override
     public void swapRows(int i, int j) {
         if (i != j) {
-            double tmp[] = self[i];
+            double[] tmp = self[i];
             self[i] = self[j];
             self[j] = tmp;
         }
@@ -277,7 +277,7 @@ public class Basic2DMatrix extends DenseMatrix {
 
     @Override
     public Vector getRow(int i) {
-        double result[] = new double[columns];
+        double[] result = new double[columns];
         System.arraycopy(self[i], 0, result, 0, columns);
 
         return new BasicVector(result);
@@ -287,7 +287,7 @@ public class Basic2DMatrix extends DenseMatrix {
     public Matrix copyOfShape(int rows, int columns) {
         ensureDimensionsAreCorrect(rows, columns);
 
-        double $self[][] = new double[rows][columns];
+        double[][] $self = new double[rows][columns];
         for (int i = 0; i < Math.min(this.rows, rows); i++) {
             System.arraycopy(self[i], 0, $self[i], 0, Math.min(this.columns, columns));
         }
@@ -297,7 +297,7 @@ public class Basic2DMatrix extends DenseMatrix {
 
     @Override
     public double[][] toArray() {
-        double result[][] = new double[rows][columns];
+        double[][] result = new double[rows][columns];
 
         for (int i = 0; i < rows; i++) {
             System.arraycopy(self[i], 0, result[i], 0, columns);

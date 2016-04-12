@@ -701,7 +701,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                     H.set(n - 1, n, -(H.get(n, n) - p) 
                                             / H.get(n, n - 1));
                 } else {
-                    double cdiv[] = cdiv(0.0, -H.get(n - 1, n), 
+                    double[] cdiv = cdiv(0.0, -H.get(n - 1, n),
                          H.get(n - 1, n - 1) - p, q);
                     H.set(n - 1, n - 1, cdiv[0]);
                     H.set(n - 1, n, cdiv[1]);
@@ -725,7 +725,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                     } else {
                         l = i;
                         if (e.get(i) == 0) {
-                            double cdiv[] = cdiv(-ra, -sa, w, q);
+                            double[] cdiv = cdiv(-ra, -sa, w, q);
                             H.set(i, n - 1, cdiv[0]);
                             H.set(i, n, cdiv[1]);
                         } else {
@@ -744,7 +744,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                                                 + Math.abs(x) + Math.abs(y) + Math
                                                     .abs(z));
                             }
-                            double cdiv[] = cdiv(x * r - z * ra + q * sa, 
+                            double[] cdiv = cdiv(x * r - z * ra + q * sa,
                                                  x * s - z * sa - q * ra, vr, vi);
                             H.set(i, n - 1, cdiv[0]);
                             H.set(i, n, cdiv[1]);

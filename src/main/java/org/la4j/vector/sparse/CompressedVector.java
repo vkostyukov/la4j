@@ -85,8 +85,8 @@ public class CompressedVector extends SparseVector {
         }
 
         int cardinality = (int) (length * density);
-        double values[] = new double[cardinality];
-        int indices[] = new int[cardinality];
+        double[] values = new double[cardinality];
+        int[] indices = new int[cardinality];
 
         for (int i = 0; i < cardinality; i++) {
             values[i] = random.nextDouble();
@@ -202,8 +202,8 @@ public class CompressedVector extends SparseVector {
         return new CompressedVector(length, cardinality, values, indices);
     }
 
-    private double values[];
-    private int indices[];
+    private double[] values;
+    private int[] indices;
 
     public CompressedVector() {
         this(0);
@@ -220,7 +220,7 @@ public class CompressedVector extends SparseVector {
         this.indices = new int[alignedSize];
     }
 
-    public CompressedVector(int length, int cardinality, double values[], int indices[]) {
+    public CompressedVector(int length, int cardinality, double[] values, int[] indices) {
         super(length, cardinality);
         this.values = values;
         this.indices = indices;
@@ -343,8 +343,8 @@ public class CompressedVector extends SparseVector {
             cardinality : searchForIndex(length);
         int capacity = align(length, $cardinality);
 
-        double $values[] = new double[capacity];
-        int $indices[] = new int[capacity];
+        double[] $values = new double[capacity];
+        int[] $indices = new int[capacity];
 
         System.arraycopy(values, 0, $values, 0, $cardinality);
         System.arraycopy(indices, 0, $indices, 0, $cardinality);
@@ -509,8 +509,8 @@ public class CompressedVector extends SparseVector {
 
         int capacity = Math.min(length, (cardinality * 3) / 2 + 1);
 
-        double $values[] = new double[capacity];
-        int $indices[] = new int[capacity];
+        double[] $values = new double[capacity];
+        int[] $indices = new int[capacity];
 
         System.arraycopy(values, 0, $values, 0, cardinality);
         System.arraycopy(indices, 0, $indices, 0, cardinality);

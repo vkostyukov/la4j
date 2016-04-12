@@ -932,7 +932,7 @@ public abstract class Matrix implements Iterable<Double> {
         }
 
         MatrixDecompositor decompositor = withDecompositor(LinearAlgebra.LU);
-        Matrix lup[] = decompositor.decompose();
+        Matrix[] lup = decompositor.decompose();
         // TODO: Why Java doesn't support pattern matching?
         Matrix u = lup[1];
         Matrix p = lup[2];
@@ -941,7 +941,7 @@ public abstract class Matrix implements Iterable<Double> {
 
         // TODO: we can do that in O(n log n)
         //       just google: "counting inversions divide and conqueror"
-        int permutations[] = new int[p.rows()];
+        int[] permutations = new int[p.rows()];
         for (int i = 0; i < p.rows(); i++) {
             for (int j = 0; j < p.columns(); j++) {
                 if (p.get(i, j) > 0.0) {
@@ -983,7 +983,7 @@ public abstract class Matrix implements Iterable<Double> {
         // matrices without SVD
 
         MatrixDecompositor decompositor = withDecompositor(LinearAlgebra.SVD);
-        Matrix usv[] = decompositor.decompose();
+        Matrix[] usv = decompositor.decompose();
         // TODO: Where is my pattern matching?
         Matrix s = usv[1];
         double tolerance = Math.max(rows, columns) * s.get(0, 0) * Matrices.EPS;
@@ -1812,7 +1812,7 @@ public abstract class Matrix implements Iterable<Double> {
      */
     public String mkString(NumberFormat formatter, String rowsDelimiter, String columnsDelimiter) {
         // TODO: rewrite using iterators
-        int formats[] = new int[columns];
+        int[] formats = new int[columns];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {

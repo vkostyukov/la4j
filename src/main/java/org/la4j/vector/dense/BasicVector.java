@@ -63,7 +63,7 @@ public class BasicVector extends DenseVector {
      * the given {@code value}.
      */
     public static BasicVector constant(int length, double value) {
-        double array[] = new double[length];
+        double[] array = new double[length];
         Arrays.fill(array, value);
 
         return new BasicVector(array);
@@ -81,7 +81,7 @@ public class BasicVector extends DenseVector {
      * the given {@code Random}.
      */
     public static BasicVector random(int length, Random random) {
-        double array[] = new double[length];
+        double[] array = new double[length];
         for (int i = 0; i < length; i++) {
             array[i] = random.nextDouble();
         }
@@ -172,7 +172,7 @@ public class BasicVector extends DenseVector {
         return Vector.fromMap(map, length).to(Vectors.BASIC);
     }
 
-    private double self[];
+    private double[] self;
 
     public BasicVector() {
         this(0);
@@ -182,7 +182,7 @@ public class BasicVector extends DenseVector {
         this(new double[length]);
     }
 
-    public BasicVector(double array[]) {
+    public BasicVector(double[] array) {
         super(array.length);
         this.self = array;
     }
@@ -210,7 +210,7 @@ public class BasicVector extends DenseVector {
     public Vector copyOfLength(int length) {
       ensureLengthIsCorrect(length);
 
-      double $self[] = new double[length];
+      double[] $self = new double[length];
       System.arraycopy(self, 0, $self, 0, Math.min($self.length, self.length));
 
       return new BasicVector($self);
@@ -218,7 +218,7 @@ public class BasicVector extends DenseVector {
 
     @Override
     public double[] toArray() {
-        double result[] = new double[length];
+        double[] result = new double[length];
         System.arraycopy(self, 0, result, 0, length);
         return result;
     }
