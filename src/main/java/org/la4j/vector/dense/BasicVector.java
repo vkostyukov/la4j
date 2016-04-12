@@ -51,6 +51,21 @@ public class BasicVector extends DenseVector {
 
     private static final byte VECTOR_TAG = (byte) 0x00;
 
+    private double self[];
+
+    public BasicVector() {
+        this(0);
+    }
+
+    public BasicVector(int length) {
+        this(new double[length]);
+    }
+
+    public BasicVector(double array[]) {
+        super(array.length);
+        this.self = array;
+    }
+
     /**
      * Creates a zero {@link BasicVector} of the given {@code length}.
      */
@@ -170,21 +185,6 @@ public class BasicVector extends DenseVector {
      */
     public static BasicVector fromMap(Map<Integer, ? extends Number> map, int length) {
         return Vector.fromMap(map, length).to(Vectors.BASIC);
-    }
-
-    private double[] self;
-
-    public BasicVector() {
-        this(0);
-    }
-
-    public BasicVector(int length) {
-        this(new double[length]);
-    }
-
-    public BasicVector(double[] array) {
-        super(array.length);
-        this.self = array;
     }
 
     @Override

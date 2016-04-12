@@ -50,6 +50,10 @@ import java.util.Random;
  */
 public abstract class DenseVector extends Vector {
 
+    public DenseVector(int length) {
+        super(length);
+    }
+
     /**
      * Creates a zero {@link DenseVector} of the given {@code length}.
      */
@@ -156,10 +160,6 @@ public abstract class DenseVector extends Vector {
      * @return an array representation of this vector
      */
     public abstract double[] toArray();
-
-    public DenseVector(int length) {
-        super(length);
-    }
 
     @Override
     public Matrix toRowMatrix() {

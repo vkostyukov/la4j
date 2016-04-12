@@ -36,6 +36,21 @@ public class Basic2DMatrix extends DenseMatrix {
 
     private static final byte MATRIX_TAG = (byte) 0x10;
 
+    private double self[][];
+
+    public Basic2DMatrix() {
+        this(0, 0);
+    }
+
+    public Basic2DMatrix(int rows, int columns) {
+        this(new double[rows][columns]);
+    }
+
+    public Basic2DMatrix(double array[][]) {
+        super(array.length, array.length == 0 ? 0: array[0].length);
+        this.self = array;
+    }
+
     /**
      * Creates a zero {@link Basic2DMatrix} of the given shape:
      * {@code rows} x {@code columns}.
@@ -221,21 +236,6 @@ public class Basic2DMatrix extends DenseMatrix {
      */
     public static Basic2DMatrix fromMatrixMarket(String mm) {
         return Matrix.fromMatrixMarket(mm).to(Matrices.BASIC_2D);
-    }
-
-    private double[][] self;
-
-    public Basic2DMatrix() {
-        this(0, 0);
-    }
-
-    public Basic2DMatrix(int rows, int columns) {
-        this(new double[rows][columns]);
-    }
-
-    public Basic2DMatrix(double[][] array) {
-        super(array.length, array.length == 0 ? 0: array[0].length);
-        this.self = array;
     }
 
     @Override

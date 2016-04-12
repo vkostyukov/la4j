@@ -53,6 +53,28 @@ public abstract class Vector implements Iterable<Double> {
     private static final NumberFormat DEFAULT_FORMATTER = new DecimalFormat("0.000");
 
     /**
+     * Length of this vector.
+     */
+    protected int length;
+
+    /**
+     * Creates a vector of zero length.
+     */
+    public Vector() {
+        this(0);
+    }
+
+    /**
+     * Creates a vector of given {@code length}.
+     *
+     * @param length the length of the vector
+     */
+    public Vector(int length) {
+        ensureLengthIsCorrect(length);
+        this.length = length;
+    }
+
+    /**
      * Creates a zero {@link Vector} of the given {@code length}.
      */
     public static Vector zero(int length) {
@@ -181,28 +203,6 @@ public abstract class Vector implements Iterable<Double> {
      */
     public static Vector fromMap(Map<Integer, ? extends Number> map, int length) {
         return SparseVector.fromMap(map, length);
-    }
-
-    /**
-     * Length of this vector.
-     */
-    protected int length;
-
-    /**
-     * Creates a vector of zero length.
-     */
-    public Vector() {
-        this(0);
-    }
-
-    /**
-     * Creates a vector of given {@code length}.
-     *
-     * @param length the length of the vector
-     */
-    public Vector(int length) {
-        ensureLengthIsCorrect(length);
-        this.length = length;
     }
 
     //

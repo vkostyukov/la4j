@@ -42,6 +42,17 @@ import java.util.Random;
 
 public abstract class SparseMatrix extends Matrix {
 
+    protected int cardinality;
+
+    public SparseMatrix(int rows, int columns) {
+        this(rows, columns, 0);
+    }
+
+    public SparseMatrix(int rows, int columns, int cardinality) {
+        super(rows, columns);
+        this.cardinality = cardinality;
+    }
+
     /**
      * Creates a zero {@link SparseMatrix} of the given shape:
      * {@code rows} x {@code columns}.
@@ -132,17 +143,6 @@ public abstract class SparseMatrix extends Matrix {
      */
     public static SparseMatrix fromMatrixMarket(String mm) {
         return Matrix.fromMatrixMarket(mm).to(Matrices.SPARSE);
-    }
-
-    protected int cardinality;
-
-    public SparseMatrix(int rows, int columns) {
-        this(rows, columns, 0);
-    }
-
-    public SparseMatrix(int rows, int columns, int cardinality) {
-        super(rows, columns);
-        this.cardinality = cardinality;
     }
 
     @Override

@@ -36,6 +36,14 @@ import java.util.Random;
 
 public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
 
+    public ColumnMajorSparseMatrix(int rows, int columns) {
+        super(rows, columns);
+    }
+
+    public ColumnMajorSparseMatrix(int rows, int columns, int cardinality) {
+        super(rows, columns, cardinality);
+    }
+
     /**
      * Creates a zero {@link ColumnMajorSparseMatrix} of the given shape:
      * {@code rows} x {@code columns}.
@@ -126,14 +134,6 @@ public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
      */
     public static ColumnMajorSparseMatrix fromMatrixMarket(String mm) {
         return Matrix.fromMatrixMarket(mm).to(Matrices.SPARSE_COLUMN_MAJOR);
-    }
-
-    public ColumnMajorSparseMatrix(int rows, int columns) {
-        super(rows, columns);
-    }
-
-    public ColumnMajorSparseMatrix(int rows, int columns, int cardinality) {
-        super(rows, columns, cardinality);
     }
 
     @Override

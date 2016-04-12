@@ -60,6 +60,30 @@ public class CompressedVector extends SparseVector {
 
     private static final int MINIMUM_SIZE = 32;
 
+    private double values[];
+    private int indices[];
+
+    public CompressedVector() {
+        this(0);
+    }
+
+    public CompressedVector(int length) {
+        this(length, 0);
+    }
+
+    public CompressedVector(int length, int capacity) {
+        super(length);
+        int alignedSize = align(length, capacity);
+        this.values = new double[alignedSize];
+        this.indices = new int[alignedSize];
+    }
+
+    public CompressedVector(int length, int cardinality, double values[], int indices[]) {
+        super(length, cardinality);
+        this.values = values;
+        this.indices = indices;
+    }
+
     /**
      * Creates a zero {@link CompressedVector} of the given {@code length}.
      */
@@ -200,30 +224,6 @@ public class CompressedVector extends SparseVector {
             i++;
         }
         return new CompressedVector(length, cardinality, values, indices);
-    }
-
-    private double[] values;
-    private int[] indices;
-
-    public CompressedVector() {
-        this(0);
-    }
-
-    public CompressedVector(int length) {
-        this(length, 0);
-    }
-
-    public CompressedVector(int length, int capacity) {
-        super(length);
-        int alignedSize = align(length, capacity);
-        this.values = new double[alignedSize];
-        this.indices = new int[alignedSize];
-    }
-
-    public CompressedVector(int length, int cardinality, double[] values, int[] indices) {
-        super(length, cardinality);
-        this.values = values;
-        this.indices = indices;
     }
 
     @Override
