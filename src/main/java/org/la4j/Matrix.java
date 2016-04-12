@@ -82,6 +82,25 @@ public abstract class Matrix implements Iterable<Double> {
             "          "
     };
 
+    protected int rows;
+    protected int columns;
+
+    /**
+     * Creates a zero-shape matrix.
+     */
+    public Matrix() {
+        this(0, 0);
+    }
+
+    /**
+     * Creates a matrix of given shape {@code rows} x {@code columns};
+     */
+    public Matrix(int rows, int columns) {
+        ensureDimensionsAreCorrect(rows, columns);
+        this.rows = rows;
+        this.columns = columns;
+    }
+
     /**
      * Creates a zero {@link Matrix} of the given shape:
      * {@code rows} x {@code columns}.
@@ -275,25 +294,6 @@ public abstract class Matrix implements Iterable<Double> {
 
             return result;
         }
-    }
-
-    protected int rows;
-    protected int columns;
-
-    /**
-     * Creates a zero-shape matrix.
-     */
-    public Matrix() {
-        this(0, 0);
-    }
-
-    /**
-     * Creates a matrix of given shape {@code rows} x {@code columns};
-     */
-    public Matrix(int rows, int columns) {
-        ensureDimensionsAreCorrect(rows, columns);
-        this.rows = rows;
-        this.columns = columns;
     }
 
     //

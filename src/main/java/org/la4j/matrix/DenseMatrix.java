@@ -36,6 +36,10 @@ import java.util.Random;
 
 public abstract class DenseMatrix extends Matrix {
 
+    public DenseMatrix(int rows, int columns) {
+        super(rows, columns);
+    }
+
     /**
      * Creates a zero {@link DenseMatrix} of the given shape:
      * {@code rows} x {@code columns}.
@@ -133,10 +137,6 @@ public abstract class DenseMatrix extends Matrix {
      */
     public static DenseMatrix fromMatrixMarket(String mm) {
         return Matrix.fromMatrixMarket(mm).to(Matrices.DENSE);
-    }
-
-    public DenseMatrix(int rows, int columns) {
-        super(rows, columns);
     }
 
     /**

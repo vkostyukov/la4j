@@ -36,6 +36,21 @@ public class Basic1DMatrix extends DenseMatrix {
 
     private static final byte MATRIX_TAG = (byte) 0x00;
 
+    private double self[];
+
+    public Basic1DMatrix() {
+        this(0, 0);
+    }
+
+    public Basic1DMatrix(int rows, int columns) {
+        this(rows, columns, new double[rows * columns]);
+    }
+
+    public Basic1DMatrix(int rows, int columns, double array[]) {
+        super(rows, columns);
+        this.self = array;
+    }
+
     /**
      * Creates a zero {@link Basic1DMatrix} of the given shape:
      * {@code rows} x {@code columns}.
@@ -219,21 +234,6 @@ public class Basic1DMatrix extends DenseMatrix {
      */
     public static Basic1DMatrix fromMatrixMarket(String mm) {
         return Matrix.fromMatrixMarket(mm).to(Matrices.BASIC_1D);
-    }
-
-    private double[] self;
-
-    public Basic1DMatrix() {
-        this(0, 0);
-    }
-
-    public Basic1DMatrix(int rows, int columns) {
-        this(rows, columns, new double[rows * columns]);
-    }
-
-    public Basic1DMatrix(int rows, int columns, double[] array) {
-        super(rows, columns);
-        this.self = array;
     }
 
     @Override

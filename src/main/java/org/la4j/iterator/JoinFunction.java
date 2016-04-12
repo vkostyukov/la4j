@@ -24,8 +24,6 @@ package org.la4j.iterator;
 // TODO: need a better name
 abstract class JoinFunction {
 
-    public abstract double apply(double a, double b);
-
     public static final JoinFunction ADD = new JoinFunction() {
         @Override
         public double apply(double a, double b) {
@@ -60,4 +58,6 @@ abstract class JoinFunction {
             return a % b;
         }
     };
+
+    public abstract double apply(double a, double b);
 }

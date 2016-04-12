@@ -49,6 +49,38 @@ import org.la4j.vector.sparse.CompressedVector;
 public class CRSMatrix extends RowMajorSparseMatrix {
 
     private static final byte MATRIX_TAG = (byte) 0x20;
+    private static final int MINIMUM_SIZE = 32;
+
+    private double values[];
+    private int columnIndices[];
+    private int rowPointers[];
+
+    public CRSMatrix() {
+        this(0, 0);
+    }
+
+    public CRSMatrix(int rows, int columns) {
+        this(rows, columns, 0);
+    }
+
+    public CRSMatrix(int rows, int columns, int capacity) {
+        super(rows, columns);
+        ensureCardinalityIsCorrect(rows, columns, capacity);
+
+        int alignedSize = align(capacity);
+        this.values = new double[alignedSize];
+        this.columnIndices = new int[alignedSize];
+        this.rowPointers = new int[rows + 1];
+    }
+
+    public CRSMatrix(int rows, int columns, int cardinality, double values[], int columnIndices[], int rowPointers[]) {
+        super(rows, columns, cardinality);
+        ensureCardinalityIsCorrect(rows, columns, cardinality);
+
+        this.values = values;
+        this.columnIndices = columnIndices;
+        this.rowPointers = rowPointers;
+    }
 
     /**
      * Creates a zero {@link CRSMatrix} of the given shape:
@@ -310,39 +342,6 @@ public class CRSMatrix extends RowMajorSparseMatrix {
      */
     public static CRSMatrix fromMatrixMarket(String mm) {
         return Matrix.fromMatrixMarket(mm).to(Matrices.CRS);
-    }
-
-    private static final int MINIMUM_SIZE = 32;
-
-    private double[] values;
-    private int[] columnIndices;
-    private int[] rowPointers;
-
-    public CRSMatrix() {
-        this(0, 0);
-    }
-
-    public CRSMatrix(int rows, int columns) {
-        this(rows, columns, 0);
-    }
-
-    public CRSMatrix(int rows, int columns, int capacity) {
-        super(rows, columns);
-        ensureCardinalityIsCorrect(rows, columns, capacity);
-
-        int alignedSize = align(capacity);
-        this.values = new double[alignedSize];
-        this.columnIndices = new int[alignedSize];
-        this.rowPointers = new int[rows + 1];
-    }
-
-    public CRSMatrix(int rows, int columns, int cardinality, double[] values, int[] columnIndices, int[] rowPointers) {
-        super(rows, columns, cardinality);
-        ensureCardinalityIsCorrect(rows, columns, cardinality);
-
-        this.values = values;
-        this.columnIndices = columnIndices;
-        this.rowPointers = rowPointers;
     }
 
     @Override

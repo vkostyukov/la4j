@@ -55,6 +55,17 @@ import org.la4j.vector.sparse.CompressedVector;
  */
 public abstract class SparseVector extends Vector {
 
+    protected int cardinality;
+
+    public SparseVector(int length) {
+        this(length, 0);
+    }
+
+    public SparseVector(int length, int cardinality) {
+        super(length);
+        this.cardinality = cardinality;
+    }
+
     /**
      * Creates a zero {@link SparseVector} of the given {@code length}.
      */
@@ -128,17 +139,6 @@ public abstract class SparseVector extends Vector {
      */
     public static SparseVector fromMap(Map<Integer, ? extends Number> map, int length) {
         return CompressedVector.fromMap(map, length);
-    }
-
-    protected int cardinality;
-
-    public SparseVector(int length) {
-        this(length, 0);
-    }
-
-    public SparseVector(int length, int cardinality) {
-        super(length);
-        this.cardinality = cardinality;
     }
 
     /**

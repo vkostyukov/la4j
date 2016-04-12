@@ -48,6 +48,38 @@ import org.la4j.vector.sparse.CompressedVector;
 public class CCSMatrix extends ColumnMajorSparseMatrix {
 
     private static final byte MATRIX_TAG = (byte) 0x30;
+    private static final int MINIMUM_SIZE = 32;
+
+    private double values[];
+    private int rowIndices[];
+    private int columnPointers[];
+
+    public CCSMatrix() {
+        this(0, 0);
+    }
+
+    public CCSMatrix(int rows, int columns) {
+        this (rows, columns, 0);
+    }
+
+    public CCSMatrix(int rows, int columns, int capacity) {
+        super(rows, columns);
+        ensureCardinalityIsCorrect(rows, columns, capacity);
+
+        int alignedSize = align(capacity);
+        this.values = new double[alignedSize];
+        this.rowIndices = new int[alignedSize];
+        this.columnPointers = new int[columns + 1];
+    }
+
+    public CCSMatrix(int rows, int columns, int cardinality, double values[], int rowIndices[], int columnPointers[]) {
+        super(rows, columns, cardinality);
+        ensureCardinalityIsCorrect(rows, columns, cardinality);
+
+        this.values = values;
+        this.rowIndices = rowIndices;
+        this.columnPointers = columnPointers;
+    }
 
     /**
      * Creates a zero {@link CCSMatrix} of the given shape:
@@ -309,39 +341,6 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
      */
     public static CCSMatrix fromMatrixMarket(String mm) {
         return Matrix.fromMatrixMarket(mm).to(Matrices.CCS);
-    }
-
-    private static final int MINIMUM_SIZE = 32;
-
-    private double[] values;
-    private int[] rowIndices;
-    private int[] columnPointers;
-
-    public CCSMatrix() {
-        this(0, 0);
-    }
-
-    public CCSMatrix(int rows, int columns) {
-        this (rows, columns, 0);
-    }
-
-    public CCSMatrix(int rows, int columns, int capacity) {
-        super(rows, columns);
-        ensureCardinalityIsCorrect(rows, columns, capacity);
-
-        int alignedSize = align(capacity);
-        this.values = new double[alignedSize];
-        this.rowIndices = new int[alignedSize];
-        this.columnPointers = new int[columns + 1];
-    }
-
-    public CCSMatrix(int rows, int columns, int cardinality, double[] values, int[] rowIndices, int[] columnPointers) {
-        super(rows, columns, cardinality);
-        ensureCardinalityIsCorrect(rows, columns, cardinality);
-
-        this.values = values;
-        this.rowIndices = rowIndices;
-        this.columnPointers = columnPointers;
     }
 
     @Override
