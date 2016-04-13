@@ -51,6 +51,8 @@ public final class Matrices {
      */
     public static final int ROUND_FACTOR = LinearAlgebra.ROUND_FACTOR;
 
+    private Matrices() {}
+
     /**
      * Checks whether the matrix is a
      * <a href="http://mathworld.wolfram.com/DiagonalMatrix.html">diagonal

@@ -126,6 +126,8 @@ public final class Vectors {
         }
     };
 
+    private Vectors() {}
+
     /**
      * Creates a const function that evaluates it's argument to given {@code value}.
      *
