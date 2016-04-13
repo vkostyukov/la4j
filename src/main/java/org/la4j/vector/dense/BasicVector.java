@@ -51,7 +51,7 @@ public class BasicVector extends DenseVector {
 
     private static final byte VECTOR_TAG = (byte) 0x00;
 
-    private double self[];
+    private double[] self;
 
     public BasicVector() {
         this(0);
@@ -61,7 +61,7 @@ public class BasicVector extends DenseVector {
         this(new double[length]);
     }
 
-    public BasicVector(double array[]) {
+    public BasicVector(double[] array) {
         super(array.length);
         this.self = array;
     }

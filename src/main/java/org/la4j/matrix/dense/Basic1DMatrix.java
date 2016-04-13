@@ -36,7 +36,7 @@ public class Basic1DMatrix extends DenseMatrix {
 
     private static final byte MATRIX_TAG = (byte) 0x00;
 
-    private double self[];
+    private double[] self;
 
     public Basic1DMatrix() {
         this(0, 0);
@@ -46,7 +46,7 @@ public class Basic1DMatrix extends DenseMatrix {
         this(rows, columns, new double[rows * columns]);
     }
 
-    public Basic1DMatrix(int rows, int columns, double array[]) {
+    public Basic1DMatrix(int rows, int columns, double[] array) {
         super(rows, columns);
         this.self = array;
     }

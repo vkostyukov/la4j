@@ -36,7 +36,7 @@ public class Basic2DMatrix extends DenseMatrix {
 
     private static final byte MATRIX_TAG = (byte) 0x10;
 
-    private double self[][];
+    private double[][] self;
 
     public Basic2DMatrix() {
         this(0, 0);
@@ -46,7 +46,7 @@ public class Basic2DMatrix extends DenseMatrix {
         this(new double[rows][columns]);
     }
 
-    public Basic2DMatrix(double array[][]) {
+    public Basic2DMatrix(double[][] array) {
         super(array.length, array.length == 0 ? 0: array[0].length);
         this.self = array;
     }
