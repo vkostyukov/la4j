@@ -54,6 +54,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -1900,6 +1901,10 @@ public abstract class Matrix implements Iterable<Double> {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+
                 i++;
                 return get();
             }
@@ -1943,6 +1948,9 @@ public abstract class Matrix implements Iterable<Double> {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 i++;
                 return get();
             }
@@ -1981,6 +1989,9 @@ public abstract class Matrix implements Iterable<Double> {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 j++;
                 return get();
             }
@@ -2018,6 +2029,9 @@ public abstract class Matrix implements Iterable<Double> {
 
              @Override
              public Double next() {
+                 if(!hasNext()) {
+                     throw new NoSuchElementException();
+                 }
                  i++;
                  return get();
              }

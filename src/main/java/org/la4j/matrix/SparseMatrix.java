@@ -38,6 +38,7 @@ import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.SparseVector;
 
 import java.text.NumberFormat;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 public abstract class SparseMatrix extends Matrix {
@@ -452,6 +453,9 @@ public abstract class SparseMatrix extends Matrix {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 i++;
                 return get();
             }
@@ -503,6 +507,9 @@ public abstract class SparseMatrix extends Matrix {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 i++;
                 return get();
             }
@@ -545,6 +552,9 @@ public abstract class SparseMatrix extends Matrix {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 j++;
                 return get();
             }
@@ -587,6 +597,9 @@ public abstract class SparseMatrix extends Matrix {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 i++;
                 return get();
             }

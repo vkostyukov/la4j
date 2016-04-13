@@ -26,10 +26,7 @@
 package org.la4j.matrix.sparse;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 
 import org.la4j.iterator.RowMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
@@ -776,6 +773,9 @@ public class CRSMatrix extends RowMajorSparseMatrix {
 
             @Override
             public Integer next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 i++;
                 return i;
             }
@@ -832,6 +832,9 @@ public class CRSMatrix extends RowMajorSparseMatrix {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 if (currentNonZero) {
                     k++;
                 }
@@ -888,6 +891,9 @@ public class CRSMatrix extends RowMajorSparseMatrix {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 currentIsRemoved = false;
                 k++;
                 while (rowPointers[i + 1] == k) {
@@ -937,6 +943,9 @@ public class CRSMatrix extends RowMajorSparseMatrix {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 currentIsRemoved = false;
                 return values[++k];
             }
@@ -983,6 +992,9 @@ public class CRSMatrix extends RowMajorSparseMatrix {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 j++;
                 if (k < rowPointers[ii + 1] && columnIndices[k] == j - 1) {
                     k++;

@@ -24,10 +24,7 @@
 package org.la4j.vector.sparse;
 
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import org.la4j.Vectors;
 import org.la4j.iterator.VectorIterator;
@@ -567,6 +564,9 @@ public class CompressedVector extends SparseVector {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 currentIsRemoved = false;
                 return values[++k];
             }
@@ -612,6 +612,9 @@ public class CompressedVector extends SparseVector {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 if (currentNonZero) {
                     k++;
                 }

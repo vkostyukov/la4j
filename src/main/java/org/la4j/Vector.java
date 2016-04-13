@@ -27,10 +27,7 @@ package org.la4j;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Random;
-import java.util.StringTokenizer;
+import java.util.*;
 
 import org.la4j.iterator.VectorIterator;
 import org.la4j.vector.VectorFactory;
@@ -905,6 +902,9 @@ public abstract class Vector implements Iterable<Double> {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 i++;
                 return get();
             }
