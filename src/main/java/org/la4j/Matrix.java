@@ -189,7 +189,8 @@ public abstract class Matrix implements Iterable<Double> {
     public static Matrix fromCSV(String csv) {
         StringTokenizer lines = new StringTokenizer(csv, "\n");
         Matrix result = DenseMatrix.zero(10, 10);
-        int rows = 0, columns = 0;
+        int rows = 0;
+        int columns = 0;
 
         while (lines.hasMoreTokens()) {
             if (result.rows() == rows) {

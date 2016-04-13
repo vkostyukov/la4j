@@ -142,8 +142,10 @@ abstract class CursorIterator implements Iterator<Double> {
         final CursorIterator these = this;
         return new CursorIterator() {
             private boolean hasNext;
-            private double prevValue, currValue;
-            private int prevCursor, currCursor;
+            private double prevValue;
+            private double currValue;
+            private int prevCursor;
+            private int currCursor;
 
             {
                 doNext();

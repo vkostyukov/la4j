@@ -94,7 +94,8 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
         double n = Matrices.EPS;
         double nn = r.fold(normAccumulator);
 
-        int kk = 0, ll = 0;
+        int kk = 0;
+        int ll = 0;
 
         while (Math.abs(n - nn) > Matrices.EPS) {
 
@@ -183,7 +184,8 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
         u.set(kk, ll, 0.0);
         u.set(ll, kk, 0.0);
 
-        double alpha = 0.0, beta = 0.0;
+        double alpha = 0.0;
+        double beta = 0.0;
 
         if (Math.abs(matrix.get(k, k) - matrix.get(l, l)) < Matrices.EPS) {
             alpha = beta = Math.sqrt(0.5);
@@ -353,7 +355,15 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
         int high = nn - 1;
         double eps = Math.pow(2.0, -52.0);
         double exshift = 0.0;
-        double p = 0, q = 0, r = 0, s = 0, z = 0, t, w, x, y;
+        double p = 0;
+        double q = 0;
+        double r = 0;
+        double s = 0;
+        double z = 0;
+        double t;
+        double w;
+        double x;
+        double y;
 
         // Store roots isolated by balanc and compute matrix norm
 
@@ -709,7 +719,10 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                 H.set(n, n - 1, 0.0);
                 H.set(n, n, 1.0);
                 for (int i = n - 2; i >= 0; i--) {
-                    double ra, sa, vr, vi;
+                    double ra;
+                    double sa;
+                    double vr;
+                    double vi;
                     ra = 0.0;
                     sa = 0.0;
                     for (int j = l; j <= n; j++) {
@@ -804,8 +817,10 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
 
 
    private double[] cdiv(double xr, double xi, double yr, double yi) {
-        double cdivr, cdivi;
-        double r, d;
+        double cdivr;
+        double cdivi;
+        double r;
+        double d;
         if (Math.abs(yr) > Math.abs(yi)) {
             r = yi / yr;
             d = yr + r * yi;

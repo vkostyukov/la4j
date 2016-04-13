@@ -247,7 +247,8 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
             throw new IllegalArgumentException("Sides of blocks are incompatible!");
         }
 
-        int rows = a.rows() + c.rows(), columns = a.columns() + b.columns();
+        int rows = a.rows() + c.rows();
+        int columns = a.columns() + b.columns();
         ArrayList<Double> values = new ArrayList<Double>();
         ArrayList<Integer> rowIndices = new ArrayList<Integer>();
         int[] columnPointers = new int[rows + 1];
@@ -456,7 +457,8 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
         int $cardinality = 0;
 
-        int k = 0, j = 0;
+        int k = 0;
+        int j = 0;
         while (k < cardinality && j < columns) {
 
             $columnPointers[j] = $cardinality;
@@ -480,7 +482,8 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
     @Override
     public void eachNonZero(MatrixProcedure procedure) {
-        int k = 0, j = 0;
+        int k = 0;
+        int j = 0;
         while (k < cardinality) {
             for (int i = columnPointers[j]; i < columnPointers[j + 1]; i++, k++) {
                 procedure.apply(rowIndices[i], j, values[i]);

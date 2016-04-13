@@ -275,7 +275,8 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
 
         while (p > 0) {
 
-            int k, kase;
+            int k;
+            int kase;
 
             for (k = p - 2; k >= -1; k--) {
                 if (k == -1)

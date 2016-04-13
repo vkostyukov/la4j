@@ -165,7 +165,8 @@ public class Basic1DMatrix extends DenseMatrix {
             throw new IllegalArgumentException("Sides of blocks are incompatible!");
         }
 
-        int rows = a.rows() + c.rows(), columns = a.columns() + b.columns();
+        int rows = a.rows() + c.rows();
+        int columns = a.columns() + b.columns();
         double[] array = new double[rows * columns];
 
         for (int i = 0; i < rows; i++) {
