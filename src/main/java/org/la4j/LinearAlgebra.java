@@ -94,6 +94,8 @@ public final class LinearAlgebra {
      */
     public static final int ROUND_FACTOR;
 
+    private LinearAlgebra() {}
+
     // Determine the machine epsilon
     // Tolerance is 10e1
     static {
