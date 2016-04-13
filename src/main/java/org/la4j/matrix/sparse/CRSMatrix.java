@@ -51,9 +51,9 @@ public class CRSMatrix extends RowMajorSparseMatrix {
     private static final byte MATRIX_TAG = (byte) 0x20;
     private static final int MINIMUM_SIZE = 32;
 
-    private double values[];
-    private int columnIndices[];
-    private int rowPointers[];
+    private double[] values;
+    private int[] columnIndices;
+    private int[] rowPointers;
 
     public CRSMatrix() {
         this(0, 0);
@@ -73,7 +73,7 @@ public class CRSMatrix extends RowMajorSparseMatrix {
         this.rowPointers = new int[rows + 1];
     }
 
-    public CRSMatrix(int rows, int columns, int cardinality, double values[], int columnIndices[], int rowPointers[]) {
+    public CRSMatrix(int rows, int columns, int cardinality, double[] values, int[] columnIndices, int[] rowPointers) {
         super(rows, columns, cardinality);
         ensureCardinalityIsCorrect(rows, columns, cardinality);
 

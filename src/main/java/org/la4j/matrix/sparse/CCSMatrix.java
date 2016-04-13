@@ -50,9 +50,9 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     private static final byte MATRIX_TAG = (byte) 0x30;
     private static final int MINIMUM_SIZE = 32;
 
-    private double values[];
-    private int rowIndices[];
-    private int columnPointers[];
+    private double[] values;
+    private int[] rowIndices;
+    private int[] columnPointers;
 
     public CCSMatrix() {
         this(0, 0);
@@ -72,7 +72,7 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
         this.columnPointers = new int[columns + 1];
     }
 
-    public CCSMatrix(int rows, int columns, int cardinality, double values[], int rowIndices[], int columnPointers[]) {
+    public CCSMatrix(int rows, int columns, int cardinality, double[] values, int[] rowIndices, int[] columnPointers) {
         super(rows, columns, cardinality);
         ensureCardinalityIsCorrect(rows, columns, cardinality);
 
