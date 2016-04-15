@@ -21,10 +21,7 @@
 
 package org.la4j.iterator;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Iterator;
+import java.util.*;
 
 abstract class CursorIterator implements Iterator<Double> {
 
@@ -200,6 +197,9 @@ abstract class CursorIterator implements Iterator<Double> {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 doNext();
                 return get();
             }

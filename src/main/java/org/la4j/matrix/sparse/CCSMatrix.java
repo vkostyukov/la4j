@@ -26,10 +26,8 @@
 package org.la4j.matrix.sparse;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
+
 import org.la4j.iterator.ColumnMajorMatrixIterator;
 import org.la4j.iterator.VectorIterator;
 import org.la4j.Matrices;
@@ -779,6 +777,9 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
             @Override
             public Integer next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 j++;
                 return j;
             }
@@ -835,6 +836,10 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+
                 if (currentNonZero) {
                     k++;
                 }
@@ -891,6 +896,9 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 currentIsRemoved = false;
                 k++;
                 while (columnPointers[j + 1] == k) {
@@ -940,6 +948,9 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 currentIsRemoved = false;
                 return values[++k];
             }
@@ -986,6 +997,9 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
 
             @Override
             public Double next() {
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 i++;
                 if (k < columnPointers[jj + 1] && rowIndices[k] == i - 1) {
                     k++;
