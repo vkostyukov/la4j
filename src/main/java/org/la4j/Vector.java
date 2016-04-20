@@ -128,7 +128,7 @@ public abstract class Vector implements Iterable<Double> {
                 result = result.copyOfLength((i * 3) / 2 + 1);
             }
 
-            double x = Double.valueOf(tokenizer.nextToken());
+            double x = Double.parseDouble(tokenizer.nextToken());
             result.set(i++, x);
         }
 
@@ -165,14 +165,14 @@ public abstract class Vector implements Iterable<Double> {
             throw new IllegalArgumentException("Unknown field type: " + field + ".");
         }
 
-        int length = Integer.valueOf(body.nextToken());
+        int length = Integer.parseInt(body.nextToken());
         if ("coordinate".equals(format)) {
-            int cardinality = Integer.valueOf(body.nextToken());
+            int cardinality = Integer.parseInt(body.nextToken());
             Vector result = SparseVector.zero(length, cardinality);
 
             for (int k = 0; k < cardinality; k++) {
-                int i = Integer.valueOf(body.nextToken());
-                double x = Double.valueOf(body.nextToken());
+                int i = Integer.parseInt(body.nextToken());
+                double x = Double.parseDouble(body.nextToken());
                 result.set(i - 1, x);
             }
 

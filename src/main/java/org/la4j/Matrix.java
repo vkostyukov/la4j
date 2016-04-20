@@ -205,7 +205,7 @@ public abstract class Matrix implements Iterable<Double> {
                     result = result.copyOfColumns((j * 3) / 2 + 1);
                 }
 
-                double x = Double.valueOf(elements.nextToken());
+                double x = Double.parseDouble(elements.nextToken());
                 result.set(rows, j++, x);
             }
 
@@ -263,9 +263,9 @@ public abstract class Matrix implements Iterable<Double> {
         if ("coordinate".equals(format)) {
             StringTokenizer lines = new StringTokenizer(nextToken);
 
-            int rows = Integer.valueOf(lines.nextToken());
-            int columns = Integer.valueOf(lines.nextToken());
-            int cardinality = Integer.valueOf(lines.nextToken());
+            int rows = Integer.parseInt(lines.nextToken());
+            int columns = Integer.parseInt(lines.nextToken());
+            int cardinality = Integer.parseInt(lines.nextToken());
 
             Matrix result = "row-major".equals(majority) ?
                     RowMajorSparseMatrix.zero(rows, columns, cardinality) :
