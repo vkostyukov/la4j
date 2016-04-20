@@ -233,17 +233,17 @@ public final class Vectors {
      */
     public static VectorAccumulator asSumAccumulator(final double neutral) {
         return new VectorAccumulator() {
-            private BigDecimal result = new BigDecimal(neutral);
+            private BigDecimal result = BigDecimal.valueOf(neutral);
 
             @Override
             public void update(int i, double value) {
-                result = result.add(new BigDecimal(value));
+                result = result.add(BigDecimal.valueOf(value));
             }
 
             @Override
             public double accumulate() {
                 double value = result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
-                result = new BigDecimal(neutral);
+                result = BigDecimal.valueOf(neutral);
                 return value;
             }
         };
@@ -258,17 +258,17 @@ public final class Vectors {
      */
     public static VectorAccumulator asProductAccumulator(final double neutral) {
         return new VectorAccumulator() {
-            private BigDecimal result = new BigDecimal(neutral);
+            private BigDecimal result = BigDecimal.valueOf(neutral);
 
             @Override
             public void update(int i, double value) {
-                result = result.multiply(new BigDecimal(value));
+                result = result.multiply(BigDecimal.valueOf(value));
             }
 
             @Override
             public double accumulate() {
                 double value = result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
-                result = new BigDecimal(neutral);
+                result = BigDecimal.valueOf(neutral);
                 return value;
             }
         };
@@ -328,17 +328,17 @@ public final class Vectors {
      */
     public static VectorAccumulator mkEuclideanNormAccumulator() {
         return new VectorAccumulator() {
-            private BigDecimal result = new BigDecimal(0.0);
+            private BigDecimal result = BigDecimal.valueOf(0.0);
 
             @Override
             public void update(int i, double value) {
-                result = result.add(new BigDecimal(value * value));
+                result = result.add(BigDecimal.valueOf(value * value));
             }
 
             @Override
             public double accumulate() {
                 double value = result.setScale(Vectors.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
-                result = new BigDecimal(0.0);
+                result = BigDecimal.valueOf(0.0);
                 return Math.sqrt(value);
             }
         };
