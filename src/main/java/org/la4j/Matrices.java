@@ -564,17 +564,17 @@ public final class Matrices {
      */
     public static MatrixAccumulator mkEuclideanNormAccumulator() {
         return new MatrixAccumulator() {
-            private BigDecimal result = new BigDecimal(0.0);
+            private BigDecimal result = BigDecimal.valueOf(0.0);
 
             @Override
             public void update(int i, int j, double value) {
-                result = result.add(new BigDecimal(value * value));
+                result = result.add(BigDecimal.valueOf(value * value));
             }
 
             @Override
             public double accumulate() {
                 double value = result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
-                result = new BigDecimal(0.0);
+                result = BigDecimal.valueOf(0.0);
                 return Math.sqrt(value);
             }
         };
@@ -639,17 +639,17 @@ public final class Matrices {
      */
     public static MatrixAccumulator asSumAccumulator(final double neutral) {
         return new MatrixAccumulator() {
-            private BigDecimal result = new BigDecimal(neutral);
+            private BigDecimal result = BigDecimal.valueOf(neutral);
 
             @Override
             public void update(int i, int j, double value) {
-                result = result.add(new BigDecimal(value));
+                result = result.add(BigDecimal.valueOf(value));
             }
 
             @Override
             public double accumulate() {
                 double value = result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
-                result = new BigDecimal(neutral);
+                result = BigDecimal.valueOf(neutral);
                 return value;
             }
         };
@@ -664,17 +664,17 @@ public final class Matrices {
      */
     public static MatrixAccumulator asProductAccumulator(final double neutral) {
         return new MatrixAccumulator() {
-            private BigDecimal result = new BigDecimal(neutral);
+            private BigDecimal result = BigDecimal.valueOf(neutral);
 
             @Override
             public void update(int i, int j, double value) {
-                result = result.multiply(new BigDecimal(value));
+                result = result.multiply(BigDecimal.valueOf(value));
             }
 
             @Override
             public double accumulate() {
                 double value = result.setScale(Matrices.ROUND_FACTOR, RoundingMode.CEILING).doubleValue();
-                result = new BigDecimal(neutral);
+                result = BigDecimal.valueOf(neutral);
                 return value;
             }
         };
