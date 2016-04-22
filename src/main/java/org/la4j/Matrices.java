@@ -51,8 +51,6 @@ public final class Matrices {
      */
     public static final int ROUND_FACTOR = LinearAlgebra.ROUND_FACTOR;
 
-    private Matrices() {}
-
     /**
      * Checks whether the matrix is a
      * <a href="http://mathworld.wolfram.com/DiagonalMatrix.html">diagonal
@@ -220,6 +218,127 @@ public final class Matrices {
         }
     };
 
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://mathworld.wolfram.com/SymmetricMatrix.html">symmetric
+     * matrix</a>.
+     */
+    public static final AdvancedMatrixPredicate SYMMETRIC_MATRIX =
+            new SymmetricMatrixPredicate();
+
+    /**
+     * Checks whether the matrix is a
+     * <a href="http://en.wikipedia.org/wiki/Diagonally_dominant_matrix">diagonally dominant matrix</a>.
+     */
+    public static final AdvancedMatrixPredicate DIAGONALLY_DOMINANT_MATRIX =
+            new DiagonallyDominantPredicate();
+
+    /**
+     * Checks whether the matrix is positive definite.
+     */
+    public static final AdvancedMatrixPredicate POSITIVE_DEFINITE_MATRIX =
+            new PositiveDefiniteMatrixPredicate();
+
+    /**
+     * A matrix factory that produces zero {@link Basic2DMatrix}.
+     */
+    public static final MatrixFactory<Basic2DMatrix> BASIC_2D =
+            new MatrixFactory<Basic2DMatrix>() {
+                @Override
+                public Basic2DMatrix apply(int rows, int columns) {
+                    return Basic2DMatrix.zero(rows, columns);
+                }
+            };
+
+    /**
+     * A matrix factory that produces zero {@link Basic1DMatrix}.
+     */
+    public static final MatrixFactory<Basic1DMatrix> BASIC_1D =
+            new MatrixFactory<Basic1DMatrix>() {
+                @Override
+                public Basic1DMatrix apply(int rows, int columns) {
+                    return Basic1DMatrix.zero(rows, columns);
+                }
+            };
+
+    /**
+     * A default matrix factory for dense matrices.
+     */
+    public static final MatrixFactory<Basic2DMatrix> DENSE = BASIC_2D;
+
+    /**
+     * A matrix factory that produces zero {@link CCSMatrix}.
+     */
+    public static final MatrixFactory<CCSMatrix> CCS =
+            new MatrixFactory<CCSMatrix>() {
+                @Override
+                public CCSMatrix apply(int rows, int columns) {
+                    return CCSMatrix.zero(rows, columns);
+                }
+            };
+
+    /**
+     * A matrix factory that produces zero {@link CRSMatrix}.
+     */
+    public static final MatrixFactory<CRSMatrix> CRS =
+            new MatrixFactory<CRSMatrix>() {
+                @Override
+                public CRSMatrix apply(int rows, int columns) {
+                    return CRSMatrix.zero(rows, columns);
+                }
+            };
+
+    /**
+     * A default factory for sparse matrices.
+     */
+    public static final MatrixFactory<CRSMatrix> SPARSE = CRS;
+
+    /**
+     * A default factory for sparse row-major matrices.
+     */
+    public static final MatrixFactory<CRSMatrix> SPARSE_ROW_MAJOR = CRS;
+
+    /**
+     * A default factory for sparse column-major matrices.
+     */
+    public static final MatrixFactory<CCSMatrix> SPARSE_COLUMN_MAJOR = CCS;
+
+    public static final MatrixFactory<?>[] CONVERTERS = {
+            BASIC_2D, BASIC_1D, CRS, CCS
+    };
+
+    /**
+     * Increases each element of matrix by <code>1</code>.
+     */
+    public static final MatrixFunction INC_FUNCTION = new MatrixFunction() {
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return value + 1.0;
+        }
+    };
+
+    /**
+     * Decreases each element of matrix by <code>1</code>.
+     */
+    public static final MatrixFunction DEC_FUNCTION = new MatrixFunction() {
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return value - 1.0;
+        }
+    };
+
+    /**
+     * Inverts each element of matrix.
+     */
+    public static final MatrixFunction INV_FUNCTION = new MatrixFunction() {
+        @Override
+        public double evaluate(int i, int j, double value) {
+            return -value;
+        }
+    };
+
+    private Matrices() {}
+
     private static class SymmetricMatrixPredicate
             implements AdvancedMatrixPredicate {
 
@@ -293,125 +412,6 @@ public final class Matrices {
             return true;
         }
     }
-
-    /**
-     * Checks whether the matrix is a
-     * <a href="http://mathworld.wolfram.com/SymmetricMatrix.html">symmetric
-     * matrix</a>.
-     */
-    public static final AdvancedMatrixPredicate SYMMETRIC_MATRIX =
-            new SymmetricMatrixPredicate();
-
-    /**
-     * Checks whether the matrix is a
-     * <a href="http://en.wikipedia.org/wiki/Diagonally_dominant_matrix">diagonally dominant matrix</a>.
-     */
-    public static final AdvancedMatrixPredicate DIAGONALLY_DOMINANT_MATRIX =
-            new DiagonallyDominantPredicate();
-
-    /**
-     * Checks whether the matrix is positive definite.
-     */
-    public static final AdvancedMatrixPredicate POSITIVE_DEFINITE_MATRIX =
-            new PositiveDefiniteMatrixPredicate();
-
-    /**
-     * A matrix factory that produces zero {@link Basic2DMatrix}.
-     */
-    public static final MatrixFactory<Basic2DMatrix> BASIC_2D =
-        new MatrixFactory<Basic2DMatrix>() {
-            @Override
-            public Basic2DMatrix apply(int rows, int columns) {
-                return Basic2DMatrix.zero(rows, columns);
-            }
-        };
-
-    /**
-     * A matrix factory that produces zero {@link Basic1DMatrix}.
-     */
-    public static final MatrixFactory<Basic1DMatrix> BASIC_1D =
-        new MatrixFactory<Basic1DMatrix>() {
-            @Override
-            public Basic1DMatrix apply(int rows, int columns) {
-                return Basic1DMatrix.zero(rows, columns);
-            }
-        };
-
-    /**
-     * A default matrix factory for dense matrices.
-     */
-    public static final MatrixFactory<Basic2DMatrix> DENSE = BASIC_2D;
-
-    /**
-     * A matrix factory that produces zero {@link CCSMatrix}.
-     */
-    public static final MatrixFactory<CCSMatrix> CCS =
-        new MatrixFactory<CCSMatrix>() {
-            @Override
-            public CCSMatrix apply(int rows, int columns) {
-                return CCSMatrix.zero(rows, columns);
-            }
-        };
-
-    /**
-     * A matrix factory that produces zero {@link CRSMatrix}.
-     */
-    public static final MatrixFactory<CRSMatrix> CRS =
-        new MatrixFactory<CRSMatrix>() {
-            @Override
-            public CRSMatrix apply(int rows, int columns) {
-                return CRSMatrix.zero(rows, columns);
-            }
-        };
-
-    /**
-     * A default factory for sparse matrices.
-     */
-    public static final MatrixFactory<CRSMatrix> SPARSE = CRS;
-
-    /**
-     * A default factory for sparse row-major matrices.
-     */
-    public static final MatrixFactory<CRSMatrix> SPARSE_ROW_MAJOR = CRS;
-
-    /**
-     * A default factory for sparse column-major matrices.
-     */
-    public static final MatrixFactory<CCSMatrix> SPARSE_COLUMN_MAJOR = CCS;
-
-    public static final MatrixFactory<?>[] CONVERTERS = {
-            BASIC_2D, BASIC_1D, CRS, CCS
-    };
-
-    /**
-     * Increases each element of matrix by <code>1</code>.
-     */
-    public static final MatrixFunction INC_FUNCTION = new MatrixFunction() {
-        @Override
-        public double evaluate(int i, int j, double value) {
-            return value + 1.0;
-        }
-    };
-
-    /**
-     * Decreases each element of matrix by <code>1</code>.
-     */
-    public static final MatrixFunction DEC_FUNCTION = new MatrixFunction() {
-        @Override
-        public double evaluate(int i, int j, double value) {
-            return value - 1.0;
-        }
-    };
-
-    /**
-     * Inverts each element of matrix.
-     */
-    public static final MatrixFunction INV_FUNCTION = new MatrixFunction() {
-        @Override
-        public double evaluate(int i, int j, double value) {
-            return -value;
-        }
-    };
 
     /**
      * Creates a const function that evaluates it's argument to given {@code value}.
