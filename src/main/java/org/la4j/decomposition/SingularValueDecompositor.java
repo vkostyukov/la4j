@@ -97,7 +97,7 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
 
             for (int j = k + 1; j < a.columns(); j++) {
 
-                if ((k < nct) & (Math.abs(s.get(k, k)) > Matrices.EPS)) {
+                if ((k < nct) && (Math.abs(s.get(k, k)) > Matrices.EPS)) {
 
                     double t = 0;
 
@@ -243,7 +243,7 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
 
         for (int k = n - 1; k >= 0; k--) {
 
-            if ((k < nrt) & (Math.abs(e.get(k)) > Matrices.EPS)) {
+            if ((k < nrt) && (Math.abs(e.get(k)) > Matrices.EPS)) {
 
                 for (int j = k + 1; j < n; j++) {
 
@@ -401,7 +401,7 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
                 double c = (sp * epm1) * (sp * epm1);
                 double shift = 0.0;
 
-                if ((b != 0.0) | (c != 0.0)) {
+                if ((b != 0.0) || (c != 0.0)) {
                     shift = Math.sqrt(b * b + c);
                     if (b < 0.0) {
                         shift = -shift;

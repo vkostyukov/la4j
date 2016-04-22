@@ -52,7 +52,7 @@ public final class Vectors {
         }
     };
 
-    public static final VectorFactory<?>[] FACTORIES = {
+    protected static final VectorFactory<?>[] FACTORIES = {
             BASIC, COMPRESSED
     };
 

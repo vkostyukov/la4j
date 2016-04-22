@@ -369,7 +369,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
 
         double norm = 0.0;
         for (int i = 0; i < nn; i++) {
-            if (i < low | i > high) {
+            if (i < low || i > high) {
                 d.set(i, H.get(i, i));
                 e.set(i, 0.0);
             }
@@ -750,7 +750,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
                             vr = (d.get(i) - p) * (d.get(i) - p) 
                                  + e.get(i) * e.get(i) - q * q;
                             vi = (d.get(i) - p) * 2.0 * q;
-                            if (vr == 0.0 & vi == 0.0) {
+                            if (vr == 0.0 && vi == 0.0) {
                                 vr = eps
                                         * norm
                                         * (Math.abs(w) + Math.abs(q)
@@ -795,7 +795,7 @@ public class EigenDecompositor extends AbstractDecompositor implements MatrixDec
         // Vectors of isolated roots
 
         for (int i = 0; i < nn; i++) {
-            if (i < low | i > high) {
+            if (i < low || i > high) {
                 for (int j = i; j < nn; j++) {
                     V.set(i, j, H.get(i, j));
                 }
