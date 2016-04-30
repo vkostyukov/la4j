@@ -1,4 +1,4 @@
-## Examples
+# Examples
 
 ### Create a matrix and print it
 ```java
