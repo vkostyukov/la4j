@@ -4,7 +4,7 @@ In this section of the report, we describe our system from its logical view. As 
 
 ## Matrix
 
-![image](uml/class_diagrams/matrix.png)
+![image1](uml/class_diagrams/matrix.png)
 
 This class diagram shows all the constants, methods and functions that are used by the *Matrix* class to create, define and manipulate matrices as we understand them in an algebraic perspective.
 
@@ -40,7 +40,7 @@ These are the methods we considered most important for matrix creation. We will 
 
 ## Vector
 
-![image](uml/class_diagrams/vector.png)
+![image2](uml/class_diagrams/vector.png)
 
 This diagram shows every function which the *Vector* class uses to work with vectors, allowing for vector creation and manipulation.
 
@@ -61,7 +61,7 @@ There are many more methods implemented in this class, almost all of which serve
 
 ## Solvers
 
-![image](uml/class_diagrams/solvers.png)
+![image3](uml/class_diagrams/solvers.png)
 
 This class diagram shows the classes which implement various methods for solving a system of linear equations. These classes can be instantiated through the *AbstractSolver* class. 
 
@@ -71,7 +71,7 @@ The solver classes inherit functions and fields from the *AbstractSolver* class.
 
 ## Inverter
 
-![image](uml/class_diagrams/inversion.png)
+![image4](uml/class_diagrams/inversion.png)
 
 The GaussJordanInverter class holds the matrix we want to solve as a variable, and stores it in a constructor. It also implements the function inverse which verifies if the number of rows and columns is the same, and if so, checks if the matrix is invertible applying the Gaussian resolution. The class also possesses a function self which returns the matrix stored in it.
 
