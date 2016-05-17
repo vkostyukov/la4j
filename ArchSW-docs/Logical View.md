@@ -2,6 +2,10 @@
 
 In this section of the report, we describe our system from its logical view. As the end-user of this project is a developer - since it is a library - we opted to choose the most important classes, generate their diagrams in UML using *ObjectAid UML Explorer*, and then describe them in enough level of detail to make the classes understandable without having to look at code directly.
 
+The four components we chose - Matrix, Vector, Solvers and Inverter - can have their relationships described by a class diagram like this:
+
+![image0](uml/class_diagrams/LogicalViewIntro.png)
+
 ## Matrix
 
 ![image1](uml/class_diagrams/matrix.png)
