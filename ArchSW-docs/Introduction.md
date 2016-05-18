@@ -118,3 +118,7 @@ public static void main (String[] args) {
 	System.out.print(a_inverted.toString());
 }
 ```
+
+This diagram represents potential use cases for this library, considering that the end-user will be a developer.
+
+![usecase](uml/UseCaseDiagram.png)
