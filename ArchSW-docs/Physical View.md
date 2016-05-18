@@ -11,4 +11,5 @@ library, one needs to import the dependency throught Maven:
   <groupId>org.la4j</groupId>
   <artifactId>la4j</artifactId>
   <version>0.6.0</version>
-</dependency>```
+</dependency>
+```
