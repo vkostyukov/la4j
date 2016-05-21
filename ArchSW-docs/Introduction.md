@@ -1,12 +1,13 @@
 # Description
 
 Linear Algebra for Java (la4j) is an open-source Java library that allows its users to do operations using matrices and vectors. Initially, it was just a student project and then it became popular. 
-This isn't a project with a wide range of scenarios and applications, as it is only a library, and a very specific one, thus, the stakeholders are all and every programmer who wish to implement this library in their programs in the most convenient way. 
+This isn't a project with a wide range of scenarios and applications, as it is only a library, and a very specific one, thus, the stakeholders are all and every programmer who wish to implement this library in their programs in the most convenient way, along with the developer of this library. 
 Within the curricular unit of Software Architecture, it is our job to evaluate la4j in terms of software architecture.
+After initial analysis, we concluded that *la4j* follows an object-oriented architecture, which is standard with Java projects. All objects, like matrices and vectors, are self-contained, since can describe themselves from information that they contain, and have methods for their manipulation, and they are able to interact with other objects.
 
 # Examples
 
-We chose the most relevant features that are related with the most important parts of Linear Algebra, in order to present a comprehensive list of examples of what this library can do. These examples can also be considered the functional requirements of this project.
+We chose the most relevant features that are related with the most important parts of Linear Algebra, in order to present a comprehensive list of examples of what this library can do. 
 
 ### Create a matrix and print it
 ```java
@@ -119,6 +120,6 @@ public static void main (String[] args) {
 }
 ```
 
-This diagram represents potential use cases for this library, considering that the end-user will be a developer.
+This diagram represents potential use cases for this library, considering that the end-user will be a developer. These are the functional requirements of our system. 
 
 ![usecase](uml/UseCaseDiagram.png)
