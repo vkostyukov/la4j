@@ -120,6 +120,6 @@ public static void main (String[] args) {
 }
 ```
 
-This diagram represents potential use cases for this library, considering that the end-user will be a developer. These are the functional requirements of our system. 
+This diagram represents potential use cases for this library.
 
 ![usecase](uml/UseCaseDiagram.png)
