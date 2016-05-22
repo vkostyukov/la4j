@@ -6,6 +6,8 @@ The four components we chose - Matrix, Vector, Solvers and Inverter - can have t
 
 ![image0](uml/class_diagrams/LogicalViewIntro.png)
 
+The Solver classes have an association relationship with the Matrix class since they store a Matrix object in their representations, as will be shown further ahead. The association relationship between the Inverter classes and the Matrix class is due to the same reason. The other relationships will be described in the sections corresponding to their components. As for the Vector class, it does not have any relationship with the others, from what we could conclude upon analyzing the code - however, this does not mean it is not an important class, as will be explained in other sections.
+
 ## Matrix
 
 ![image1](uml/class_diagrams/matrix.png)
