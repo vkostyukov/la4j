@@ -1,5 +1,7 @@
 # Physical View
 
+In this section, we consider the system as a whole and how it can be used and interfaced with other components.
+
 ![diagram](uml/physical_view/PhysicalView.png)
 
 It is possible to use this library in any operating system, due to the fact that it is implemented in java.
