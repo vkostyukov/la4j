@@ -9,7 +9,7 @@ Algebra_ primitives (matrices  and vectors) and algorithms. The la4j library was
 and simple tool for passionate Java developers. It has been started as student project and turned into one of the most 
 popular Java packages for matrices and vectors.
 
-Instalation
+Installation
 -----------
 ```xml
 <dependency>
