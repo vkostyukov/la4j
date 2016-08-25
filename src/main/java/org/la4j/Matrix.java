@@ -1265,7 +1265,7 @@ public abstract class Matrix implements Iterable<Double> {
      */
     public Matrix slice(int fromRow, int fromColumn, int untilRow, int untilColumn) {
         ensureIndexArgumentsAreInBounds(fromRow, fromColumn);
-        ensureIndexArgumentsAreInBounds(untilRow, untilColumn);
+        ensureIndexArgumentsAreInBounds(untilRow - 1, untilColumn - 1);
 
         if (untilRow - fromRow < 0 || untilColumn - fromColumn < 0) {
             fail("Wrong slice range: [" + fromRow + ".." + untilRow + "][" + fromColumn + ".." + untilColumn + "].");
