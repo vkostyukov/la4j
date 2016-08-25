@@ -1264,6 +1264,9 @@ public abstract class Matrix implements Iterable<Double> {
      * @return the sub-matrix of this matrix
      */
     public Matrix slice(int fromRow, int fromColumn, int untilRow, int untilColumn) {
+        ensureIndexArgumentsAreInBounds(fromRow, fromColumn);
+        ensureIndexArgumentsAreInBounds(untilRow, untilColumn);
+
         if (untilRow - fromRow < 0 || untilColumn - fromColumn < 0) {
             fail("Wrong slice range: [" + fromRow + ".." + untilRow + "][" + fromColumn + ".." + untilColumn + "].");
         }
@@ -2156,6 +2159,16 @@ public abstract class Matrix implements Iterable<Double> {
         }
         if (rows == Integer.MAX_VALUE || columns == Integer.MAX_VALUE) {
             fail("Wrong matrix dimensions: use 'Integer.MAX_VALUE - 1' instead.");
+        }
+    }
+
+    protected void ensureIndexArgumentsAreInBounds(int i, int j) {
+        if (i < 0 || i >= rows) {
+            fail(String.format("Bad row argument %d; out of bounds", i));
+        }
+
+        if (j < 0 || j >= columns) {
+            fail(String.format("Bad column argument %d; out of bounds", j));
         }
     }
 
