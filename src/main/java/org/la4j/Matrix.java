@@ -1064,7 +1064,7 @@ public abstract class Matrix implements Iterable<Double> {
      */
     public Matrix insertColumn(int j, Vector column) {
         if (j >= columns || j < 0) {
-            throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (columns - 1));
+            throw new IndexOutOfBoundsException("Illegal column number, must be 0.." + (columns - 1));
         }
 
         Matrix result = blankOfShape(rows, columns + 1);
@@ -1112,7 +1112,7 @@ public abstract class Matrix implements Iterable<Double> {
      */
     public Matrix removeColumn(int j) {
         if (j >= columns || j < 0) {
-            throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (columns - 1));
+            throw new IndexOutOfBoundsException("Illegal column number, must be 0.." + (columns - 1));
         }
 
         Matrix result = blankOfShape(rows, columns - 1);
