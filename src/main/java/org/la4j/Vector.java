@@ -488,6 +488,17 @@ public abstract class Vector implements Iterable<Double> {
     }
 
     /**
+     * Calculates the cosine similarity between this vector and given {@code that}.
+     *
+     * @param that the vector to calculated cosine similarity with
+     *
+     * @return the cosine similarity of the two vectors
+     */
+    public double cosineSimilarity(Vector that) {
+        return this.innerProduct(that) / (this.euclideanNorm() * that.euclideanNorm());
+    }
+
+    /**
      * Calculates an Euclidean norm of this vector.
      *
      * @return an Euclidean norm
