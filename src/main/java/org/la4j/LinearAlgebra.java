@@ -34,6 +34,7 @@ import org.la4j.inversion.MatrixInverter;
 import org.la4j.linear.ForwardBackSubstitutionSolver;
 import org.la4j.linear.GaussianSolver;
 import org.la4j.linear.JacobiSolver;
+import org.la4j.linear.LUSolver;
 import org.la4j.linear.LeastSquaresSolver;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.linear.SeidelSolver;
@@ -98,6 +99,11 @@ public final class LinearAlgebra {
      * References to the Gaussian solver factory.
      */
     public static final SolverFactory GAUSSIAN = SolverFactory.GAUSSIAN;
+    
+    /**
+     * References to the LU solver factory.
+     */
+    public static final SolverFactory LUSOLVER = SolverFactory.LUSOLVER;
 
     /**
      * References to the Jacobi solver factory.
@@ -250,6 +256,12 @@ public final class LinearAlgebra {
             @Override
             public LinearSystemSolver create(Matrix matrix) {
                 return new GaussianSolver(matrix);
+            }
+        },
+        LUSOLVER{
+            @Override
+            public LinearSystemSolver create(Matrix matrix) {
+                return new LUSolver(matrix);
             }
         },
         JACOBI {

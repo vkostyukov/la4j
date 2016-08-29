@@ -21,16 +21,18 @@ import org.la4j.decomposition.LUDecompositor;
 
 /**
  *
- * Provides a more efficient solver using LU Decomposition. Matrix dimension must be NxN.
- * For Sparse LU Solver see @SparseLUSolver
- * 
+ * Provides a more efficient solver using LU Decomposition. Matrix dimension
+ * must be NxN. (For Sparse LU Solver see @SparseLUSolver)
+ *
  * @author Emmanuel U John
  */
-public class LUSolver extends AbstractSolver implements LinearSystemSolver{
+public class LUSolver extends AbstractSolver implements LinearSystemSolver {
+
     private final Matrix mat;
+
     public LUSolver(Matrix a) {
         super(a);
-        this.mat=a;
+        this.mat = a;
     }
 
     @Override
@@ -38,32 +40,32 @@ public class LUSolver extends AbstractSolver implements LinearSystemSolver{
         ensureRHSIsCorrect(b);
         final int N = mat.columns();
         Matrix[] lup = new LUDecompositor(mat).decompose(); //returns {l,u,p}
-        
+
         //First solve Ly = b for y
         Vector y = b.blankOfLength(N);
-        
-        for(int i=0;i<N;i++){
+        Vector Pb = lup[2].multiply(b);
+        for (int i = 0; i < N; i++) {
             double rhs = 0;
-            
-            for(int j=0;j<i;j++){
-                rhs+=(lup[0].get(i, j) * y.get(j));
+
+            for (int j = 0; j < i; j++) {
+                rhs += (lup[0].get(i, j) * y.get(j));
             }
-            
-            y.set(i, 1/lup[0].get(i, i) * (b.get(i) - rhs));
+
+            //y.set(i, 1 / lup[0].get(i, i) * (b.get(i) - rhs));
+            y.set(i,Pb.get(i) - rhs);
         }
-        
         //Using backward substitution solve Ux = y for x
         Vector x = b.blankOfLength(N);
-        
-        for(int i=N-1;i>=0;i--){
+
+        for (int i = N - 1; i >= 0; i--) {
             double rhs = 0;
-            for(int j=i+1;j<N;j++){
-                rhs+=(lup[1].get(i, j) * x.get(j));
+            for (int j = i + 1; j < N; j++) {
+                rhs += (lup[1].get(i, j) * x.get(j));
             }
-            
-            x.set(i, 1/lup[1].get(i, i) * (y.get(i) - rhs));
+
+            x.set(i, 1 / lup[1].get(i, i) * (y.get(i) - rhs));
         }
-        
+
         return x;
     }
 
@@ -71,5 +73,5 @@ public class LUSolver extends AbstractSolver implements LinearSystemSolver{
     public boolean applicableTo(Matrix matrix) {
         return matrix.rows() == matrix.columns();
     }
-    
+
 }
