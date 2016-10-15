@@ -27,7 +27,7 @@
 	- [Daniel Garrido]
 	- [Yuvak Patel]
 
-[Sara Santos]:https://github.com/sarasantos96
+[Sara Santos]:(https://github.com/sarasantos96)
 [Nuno Castro]:https://github.com/nunomiguel1995
 [Daniel Garrido]:https://github.com/dalugoga
 [Yuvak Patel]:https://github.com/scorpio9847
