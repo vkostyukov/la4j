@@ -4,8 +4,8 @@
 1. [Introduction](#introduction)
 2. [Project Description](#description)
 3. [Development Process](#dp)
-3.1[Description](#d)
-3.2[Opinions, Critics and Alternatives](#opinions)
+1.[Description](#d)
+2.[Opinions, Critics and Alternatives](#opinions)
 	
 
 ##Introduction <a name="introduction"></a>
