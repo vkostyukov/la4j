@@ -22,10 +22,10 @@
 	An alternative for this software process would be Waterfall. This model is a sequential design process with several phases: requirements definition, system and software design, implementing and unit testing, integration and system testing and operation and maintenance. This process would fit nicely on this project, since it has its requirement well defined and there aren't great changes on its features. Nonetheless, it wouldn't be as efficient as using the current software process (continuous deployment) because there isn't a well defined initial plan, but different features such as algebric operations that are being added while the project develops.
 
 ##Contributors
-[Sara Santos]
-[Nuno Castro]
-[Daniel Garrido]
-[Yuvak Patel]
+	-[Sara Santos]
+	-[Nuno Castro]
+	-[Daniel Garrido]
+	-[Yuvak Patel]
 
 [Sara Santos]: https://github.com/sarasantos96
 [Nuno Castro]: https://github.com/nunomiguel1995
