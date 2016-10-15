@@ -21,3 +21,8 @@
 	Using a build server to perform all the tests can be beneficial, but also has its down sides. Automated testing the code allows the development process to continue while making sure that the code being added to the main branch is robust. On the other side, delegate testing the code can also lead to some “red flags”, like some tests that weren't created by the build server, not being noticed.
 	An alternative for this software process would be Waterfall. This model is a sequential design process with several phases: requirements definition, system and software design, implementing and unit testing, integration and system testing and operation and maintenance. This process would fit nicely on this project, since it has its requirement well defined and there aren't great changes on its features. Nonetheless, it wouldn't be as efficient as using the current software process (continuous deployment) because there isn't a well defined initial plan, but different features such as algebric operations that are being added while the project develops.
 
+##Contributors
+[Sara Santos]:https://github.com/sarasantos96
+[Nuno Castro]:https://github.com/nunomiguel1995
+[Daniel Garrido]:https://github.com/dalugoga
+[Yuvak Patel]:https://github.com/scorpio9847
