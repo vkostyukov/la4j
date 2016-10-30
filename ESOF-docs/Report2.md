@@ -18,6 +18,13 @@
  
 ### Purpose/Scope <a name="PurposeScope"></a>
 
+The purpose of requirement elicitation is to gather as much data as possible about the requirements of project. This is usually accomplished by connecting directly with the stakeholders. Communication with stakeholders is crucial, and is usually done via interviews, questionnaires, meetings, etc. The team then needs to assert with the highest detail possible, their needs and scope.
+
+It's very important to analyse the data collected during requirement engineering thoughtfully. Many errors can be traced back to this phase. If not prevented, these errors require high amounts of resources to be fixed, as there may be the need to backtrack a lot of work already done.
+
+Many problems can arrive from requirement elicitation. Problems of scope occur when the limitations of the system are not defined well. It can also occur when the costumer specifies unnecessary technical and design details, resulting in confusion of the overall scope. Additionally, costumers/users may not be sure of what they actually need or they may not have the necessary knowledge of things such as the system abilities and/or the problem domain. Furthermore, there may be communication obstacles, information deemed as obvious not transmitted, or simply internal user conflicts. These problems fall in the understanding problems category. With time requirements change, creating problems of volatility.
+
+
 ### Description <a name="Description"></a>
 
 ## Specific Requirements and Features  <a name="RequirementsFeatures"></a>
