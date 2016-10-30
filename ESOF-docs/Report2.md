@@ -103,5 +103,30 @@ Due to this project structural complexity, we chose to define the 4 main use cas
   
  > > **Diagram:** ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixIterator.png)
 
+**Use Case number 3:**
 
+ > > **Name:** Matrix Inversor
+  
+ > > **Actors:** la4j User
+  
+ > > **Goal Description:** The user should be able to invert the matrix using the following inverters:
+ 
+ > > > * Gauss Jordan Inverter
+ 
+ > > > * No Pivot Gauss Jordan Inverter
+ 
+ > > **Reference to requirements:**
+  
+ > > **Pre-conditions:** The user should provide the program with a valid matrix.
+  
+ > > **Description:** The user provides the program with a matrix. He then has to choose between the two available inverters. The program then inverts the matrix. The program returns the inverted matrix. 
+  
+ > > **Post-conditions:** The user will have an inversed matrix.
+  
+ > > **Variations:** It does not have any variations.
+  
+ > > **Exceptions:** It does not have any exceptions
+  
+ > > **Diagram:** ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixInverter.png)
+ 
 ## Domain Model <a name="DomainModel"></a>
