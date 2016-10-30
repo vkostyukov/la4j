@@ -23,6 +23,16 @@
 ## Specific Requirements and Features  <a name="RequirementsFeatures"></a>
 
 ## Use Cases <a name="UseCases"></a>
+Due to this project structural complexity, we chose to define the 4 main use cases, these being:
+
+ > 1. Matrix Solver
+ 
+ > 2. Matrix Iterator
+ 
+ > 3. Matrix Inversor
+ 
+ > 4. Matrix Decompositor
+ 
 **Use Case number 1:**
 
  > > **Name:** Matrix Solver
@@ -55,11 +65,43 @@
   
  > > **Post-conditions:** The user will have a solved matrix.
   
- > > **Variations:**
+ > > **Variations:** It does not have any variations.
   
  > > **Exceptions:** The program will return the same matrix if it does not have any applicable solver.
   
  > > **Diagram:** ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixSolver.png)
+ 
+ **Use Case number 2:**
+
+ > > **Name:** Matrix Iterator
+  
+ > > **Actors:** la4j User
+  
+ > > **Goal Description:** The user should be able to iterate matrixes and vectors using different types of iterators:
+ 
+ > > > * Column Major Matrix Iterator
+ 
+ > > > * Row Major Matrix Iterator
+ 
+ > > > * Cursor to Column Major Matrix Iterator
+ 
+ > > > * Cursor to Row Major Matrix Iterator
+ 
+ > > > * Cursor to Vector Iterator
+ 
+ > > **Reference to requirements:**
+  
+ > > **Pre-conditions:** The user should provide the program with a valid matrix or vector.
+  
+ > > **Description:** The user provides the program with a matrix or vector. He then has to choose the type of iterator he wants to use in his matrix or vector. The program will iterate the matrix or vector using the chosen iterator.
+ 
+ > > **Post-conditions:** It does not have any post-conditions.
+  
+ > > **Variations:** It does not have any variations.
+  
+ > > **Exceptions:** It does not have any exceptions.
+  
+ > > **Diagram:** ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixIterator.png)
 
 
 ## Domain Model <a name="DomainModel"></a>
