@@ -70,6 +70,7 @@ Due to this project structural complexity, we chose to define the 4 main use cas
  > > **Exceptions:** The program will return the same matrix if it does not have any applicable solver.
   
  > > **Diagram:** 
+ 
  ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixSolver.png)
  
  **Use Case number 2:**
@@ -103,6 +104,7 @@ Due to this project structural complexity, we chose to define the 4 main use cas
  > > **Exceptions:** It does not have any exceptions.
   
  > > **Diagram:** 
+ 
  ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixIterator.png)
 
 **Use Case number 3:**
@@ -130,6 +132,7 @@ Due to this project structural complexity, we chose to define the 4 main use cas
  > > **Exceptions:** It does not have any exceptions
   
  > > **Diagram:** 
+ 
  ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixInverter.png)
  
 ## Domain Model <a name="DomainModel"></a>
