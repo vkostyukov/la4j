@@ -31,6 +31,18 @@ Many problems can arrive from requirement elicitation. Problems of scope occur w
 
 ### Description <a name="Description"></a>
 
+There are different levels of requirements such as business, user, system and software. Distinct levels are useful because they communicate information about the system and, if well distinguish, they may prevent some problems during the requirements engineering process.
+
+Business Requirements are the requests of the customer or organization who requires the system. This are high-level objectives. On the other hand, User Requirements represent the services that the system provides to the user and its operational constraints.
+Furthermore, System Requirements are descriptions of the software meaning that gathers all the requirements from software and hardware components. Finally, Software Requirements are considered a derivation of the previous level of requirements, since they detail its requirements and allocate them to the software components.
+
+Software requirements can also be divided in to two different types: functional and non-functional requirements. Functional requirements are the services/functions that the software must provide and how it should behave in certain situations and its response to inputs.  On the contrary, non-functional requirements can be view as quality requirements since these are the constraints of the functions and services of the system. They can include timing constraints, per example, a system should execute a certain function under a limited time, constraints on the development process (per example, the software should be developed in a required language). This type of requirements is usually implemented to the system not to individual system features.
+
+Although understanding the different levels and types of requirements is easy, is not so clear as it may seem. Sometimes it’s hard to differentiate the levels because requirements are not independent from one another.
+
+In the case of la4j, there aren’t any special requirements, except it should be a lightweight library, fully developed in Java language, non-parallel and have a good API. The owner of the project repository decides which features should be implemented. Anyone can open a pull request on Github and discuss it with the owner or other contributors by opening a new issue. This Github feature can also be used for users to expose bugs, errors they encounter, discuss new features and improve the code. If the owner approves your request (the code passed all the tests and the feature is useful for this library), the new feature is merged with the main branch.
+
+
 ## Specific Requirements and Features  <a name="RequirementsFeatures"></a>
 
 
