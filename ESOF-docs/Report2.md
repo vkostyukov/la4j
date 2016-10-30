@@ -23,5 +23,43 @@
 ## Specific Requirements and Features  <a name="RequirementsFeatures"></a>
 
 ## Use Cases <a name="UseCases"></a>
+**Use Case number 1:**
+
+ > > **Name:** Matrix Solver
+  
+ > > **Actors:** la4j User
+  
+ > > **Goal Description:** The user should be able to solve matrixes using different types of solvers:
+ 
+ > > > * Sweep Solver
+ 
+ > > > * Jacobi Solver
+ 
+ > > > * Least Square Solver
+ 
+ > > > * Gaussian Solver
+ 
+ > > > * Least Norm Solver
+ 
+ > > > * Forward Back Substitution Solver
+ 
+ > > > * Seidel Solver
+ 
+ > > > * Square Root Solver
+ 
+ > > **Reference to requirements:**
+  
+ > > **Pre-conditions:** The user should provide the program with a valid matrix.
+  
+ > > **Description:** The user provides the program with a matrix. He then has to choose the type of solver he wants to use in his matrix. The program will then check if that solver is valid for the given matrix. The program will solve the matrix using the solver. The program returns the solved matrix for the user.
+  
+ > > **Post-conditions:** The user will have a solved matrix.
+  
+ > > **Variations:**
+  
+ > > **Exceptions:** The program will return the same matrix if it does not have any applicable solver.
+  
+ > > **Diagram:** ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixSolver.png)
+
 
 ## Domain Model <a name="DomainModel"></a>
