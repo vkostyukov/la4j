@@ -105,7 +105,7 @@ Due to this project structural complexity, we chose to define the 4 main use cas
   
  > > **Diagram:** 
  
- ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixIterator.png)
+ ![Matrix Iterator Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixIterator.png)
 
 **Use Case number 3:**
 
@@ -133,7 +133,7 @@ Due to this project structural complexity, we chose to define the 4 main use cas
   
  > > **Diagram:** 
  
- ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixInverter.png)
+ ![Matrix Inverter Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixInverter.png)
  
  **Use Case number 4:**
 
@@ -171,6 +171,18 @@ Due to this project structural complexity, we chose to define the 4 main use cas
   
  > > **Diagram:** 
  
- ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixDecompositor.png)
+ ![Matrix Decompositor Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixDecompositor.png)
  
 ## Domain Model <a name="DomainModel"></a>
+For the sames reasons stated before, we chose to define only the domain model with the 4 main functions of the library.
+
+ ![Matrix Solver Domain Model Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/linear.png)
+ 
+ ![Matrix Inverter Domain Model Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/inversor.png)
+ 
+ ![Matrix Decompositor Domain Model Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/decompositor.png)
+ 
+ ![Matrix Iterator Domain Model Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/iterator.png)
+
+
+
