@@ -135,4 +135,42 @@ Due to this project structural complexity, we chose to define the 4 main use cas
  
  ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixInverter.png)
  
+ **Use Case number 4:**
+
+ > > **Name:** Matrix Decompositor
+  
+ > > **Actors:** la4j User
+  
+ > > **Goal Description:** The user should be able to invert the matrix using the following decompositors:
+ 
+ > > > * Singular Value Decompositor
+ 
+ > > > * Eigen Decompositor
+ 
+ > > > * Cholesky Decompositor
+ 
+ > > > * Raw LU Decompositor
+ 
+ > > > * LU Decompositor
+ 
+ > > > * Raw QR Decompositor
+ 
+ > > > * QR Decompositor
+ 
+ > > **Reference to requirements:**
+  
+ > > **Pre-conditions:** The user should provide the program with a valid matrix.
+  
+ > > **Description:** The user provides the program with a matrix. He then has to choose between the available decompositors. The program then decomposes the matrix. The program returns the decomposed matrix. 
+  
+ > > **Post-conditions:** The user will have a decomposed matrix.
+  
+ > > **Variations:** It does not have any variations.
+  
+ > > **Exceptions:** It does not have any exceptions
+  
+ > > **Diagram:** 
+ 
+ ![Matrix Solver Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/MatrixDecompositor.png)
+ 
 ## Domain Model <a name="DomainModel"></a>
