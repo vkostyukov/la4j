@@ -22,6 +22,28 @@
 
 ## Specific Requirements and Features  <a name="RequirementsFeatures"></a>
 
+
+
+| FEATURE             | DESCRIPTION                                                            
+| ------------------- |:-----------------------------------------------------------------------
+| Matrix Solver       | The user can solve matrixes using different solvers                    
+| Matrix Iterator     | The user can iterate matrixes or vectors using different iterators     
+| Matrix Decompositor | The user can decompose matrixes using different decomposers            
+| Matrix Inversor     | The user can invert matrixes using different inverters                 
+
+
+
+| REQUIREMENTS        | DESCRIPTION                                                   | TYPE             
+| ------------------- |:--------------------------------------------------------------|-------:
+| Coded in Java       | The software must be all written using Java language          |     NF    
+| Lightweight         | The software has to be lightweight                            |     NF        
+| API                 | The software needs to have a good API                         |     NF        
+| Non-Parallel        | The software needs to be non-parallel                         |     NF 
+
+F - Functional Requirement
+
+NF - Non-functional Requirement
+
 ## Use Cases <a name="UseCases"></a>
 Due to this project structural complexity, we chose to define the 4 main use cases, these being:
 
