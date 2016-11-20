@@ -65,6 +65,9 @@ Activity diagram is another important diagram in UML to describe dynamic aspects
 
 ![alt](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/process_view.png)
 
+Since the flow of path in the activity diagram is from beginning to end and if the user wants to use the pre-defined algebraic function it is possible to for him to use them. Also if it doesnot calls a pre-defined algebraic function there is another part of code which will execute the requirements. Hence in all parallel processing is not required, so it would not benefit much to this project.
+
+
 
 ##Contributors
 * [Sara Santos](https://github.com/sarasantos96)
