@@ -36,6 +36,8 @@ processes and how they communicate, and focuses on the runtime behavior of the s
 The process view addresses concurrency, distribution, integrators, performance,and 
 scalability, etc. UML diagrams to represent process view include the activity diagram.
 
+Activity diagram is another important diagram in UML to describe dynamic aspects of the system. Activity diagram is basically a flow chart to represent the flow form one activity to another activity. The activity can be described as an operation of the system. So the control flow is drawn from one operation to another. This flow can be sequential, branched or concurrent. Activity diagrams deals with all type of flow control by using different elements like fork, join etc.
+
 
 
 ##Contributors
