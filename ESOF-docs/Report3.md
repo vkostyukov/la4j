@@ -47,6 +47,9 @@ Activity diagram is another important diagram in UML to describe dynamic aspects
 
 
 
+![alt](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/process_view.png)
+
+
 ##Contributors
 * [Sara Santos](https://github.com/sarasantos96)
 * [Nuno Castro](https://github.com/nunomiguel1995)
