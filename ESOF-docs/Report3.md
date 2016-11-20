@@ -21,6 +21,7 @@ The follow diagram represents the 4 + 1 view model of software architecture.
 
 ![alt](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/4plus1model.png)
 
+On the other hand, architectural patterns represent the idea of sharing and reusing knowledge and solutions. They are stylized, abstract descriptions that present good architectural design pratices.
 
 ##Logic View <a name="LV"></a>
 
