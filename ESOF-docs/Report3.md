@@ -45,6 +45,11 @@ Since this project is based on an algebra library, the key component for this di
 As for the components Matrix Operations and Result, the first one's objective is to allow the user to choose one of the many available operations and the latter is responsible for the representation of the result matrix.
 
 ##Deployment  View <a name="DpV"></a>
+The Deployment View details the hardware that the system needs to run as intended. This view includes processing nodes (such as PCs and servers), network connections and storage facilities. For each process node is included the software components and the dependencies between them present.
+
+![Deployment View Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/deployment_view_diagram.png)
+
+In the case of la4j, as it is a library that enables linear algebra in java, it doesn't need multiple processing nodes besides the machine where the program that is using the library is running. In the user's computer is present all the source code files with the linear algebra solvers, manifested in the Matrix Operation component.
 
 ##Process View <a name="PV"></a>
 To provide a basis for understanding the process organization of the system, an architectural view called the process view is used in the Analysis & Design discipline. There is only one process view of the system, which illustrates the process decomposition of the system, including the mapping of classes and subsystems on to processes and threads.
