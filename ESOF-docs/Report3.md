@@ -1,13 +1,23 @@
 #Report 3: Software Design
 
 ##Index
-1. [Introduction to Software Design](#Intro)
+1. [Software Design, 4+1 Architectual View Model and Architectual Patterns](#Intro)
 2. [Logic View](#LV)
 3. [Development View](#DvV)
 4. [Deployment View](#DpV)
 5. [Process View](#PV)
 
-##Introduction to Software Design <a name="Intro"></a>
+##Software Design, 4+1 Architectual View Model and Architectual Patterns <a name="Intro"></a>
+In this report, we will approach the software architecture of La4j and its view model and patterns. 
+
+Software Architecture is the organization of a system and the designing of the general structure. It is the critical link between design and requirements engineering, since it involves all the major decisions about how the software will be organized and the relationship between all the different components.
+There are diverse levels of design, such as, High-level, which is the partition of the system into components, Detailed design, which divides the components into classes and the design of algorithms and data structures.
+
+> Software Architecture is important because it affects the performance, robustness, distributability and maintainability of a system.
+> (Bosch, 2000)
+
+Since all the complexity of the current software, it’s impossible to represent all the information in a single model. For that reason, the view models use a 4 + 1 Architectural View Model, designed by Philippe Kruchten, that decomposes the system into modules that show, among others, how the run-time processes interact, how a system is decomposed into models, etc.
+The follow diagram represents the 4 + 1 view model of software architecture. 
 
 ##Logic View <a name="LV"></a>
 
