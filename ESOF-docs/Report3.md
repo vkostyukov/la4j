@@ -27,7 +27,7 @@ In this report we will adress the following view models:
 * **Deployment view** - Show the system hardware and how the components are distributed in the system
 * **Process View** - Demonstrates the run-time and how the system is composed of interacting processes
 
-On the other hand, architectural patterns represent the idea of sharing and reusing knowledge and solutions. They are stylized, abstract descriptions that present good architectural design practices.
+On the other hand, architectural patterns represent the idea of sharing and reusing knowledge and solutions. They are stylized, abstract descriptions that present good architectural design practices. We believe this project doesn't follow any known pattern but that it would benefit to follow Abstract Factory. With the Abstract Factory pattern, all the main classes like Vector and Matrix would be the concrete classes and all the operations would be represented by abstract classes.
 
 ##Logic View <a name="LV"></a>
 
@@ -36,7 +36,7 @@ Also known as Implementation View, the Development View shows how the software i
 
 ![Development View Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/development_diagram.png)
 
-Since this project is based on a Algebra Library, the key component for this diagram is the Operation. It's in this component where all the matrix operations will be applied to the input given by the user.
+Since this project is based on an algebra library, the key component for this diagram is the Operation. It's in this component where all the matrix operations will be applied to the input given by the user.
 As for the components Matrix Operations and Result, the first one's objective is to allow the user to choose one of the many available operations and the latter is responsible for the representation of the result matrix.
 
 ##Deployment  View <a name="DpV"></a>
