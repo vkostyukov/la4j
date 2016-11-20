@@ -30,6 +30,11 @@ In this report we will adress the following view models:
 On the other hand, architectural patterns represent the idea of sharing and reusing knowledge and solutions. They are stylized, abstract descriptions that present good architectural design practices. We believe this project doesn't follow any known pattern but that it would benefit to follow Abstract Factory. With the Abstract Factory pattern, all the main classes like Vector and Matrix would be the concrete classes and all the operations would be represented by abstract classes.
 
 ##Logic View <a name="LV"></a>
+The first view model being developed is the logic view. This model shows the key abstractions in the system and should enable the relation between the system requirements to entities in this view. The logic view can also be thought of a UML package diagram.
+
+La4j has two main packages contained in the source file of project: main and test. The main package contains all the source code of the project, on the other hand, the test package all the tests implemented. The next diagram represents the logic view model of the project, related to the main package (source code).
+
+![Logic View Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/logicview.png)
 
 ##Development View <a name="DvV"></a>
 Also known as Implementation View, the Development View shows how the software is decomposed for development on a programmer's perspective. The component diagram is used to describe this decomposition by using system components.
