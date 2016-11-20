@@ -21,7 +21,13 @@ The follow diagram represents the 4 + 1 view model of software architecture.
 
 ![alt](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/4plus1model.png)
 
-On the other hand, architectural patterns represent the idea of sharing and reusing knowledge and solutions. They are stylized, abstract descriptions that present good architectural design pratices.
+In this report we will adress the following view models:
+* **Logic View** - Demonstrates the main abstractions in the system as objects or object classes 
+* **Implementation View** - Represents the decomposition of the software for development
+* **Deployment view** - Show the system hardware and how the components are distributed in the system
+* **Process View** - Demonstrates the run-time and how the system is composed of interacting processes
+
+On the other hand, architectural patterns represent the idea of sharing and reusing knowledge and solutions. They are stylized, abstract descriptions that present good architectural design practices.
 
 ##Logic View <a name="LV"></a>
 
@@ -39,7 +45,7 @@ scalability, etc. UML diagrams to represent process view include the activity di
 
 Activity diagram is another important diagram in UML to describe dynamic aspects of the system. Activity diagram is basically a flow chart to represent the flow form one activity to another activity. The activity can be described as an operation of the system. So the control flow is drawn from one operation to another. This flow can be sequential, branched or concurrent. Activity diagrams deals with all type of flow control by using different elements like fork, join etc.
 
-![alt](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/process_view.png)
+
 
 ##Contributors
 * [Sara Santos](https://github.com/sarasantos96)
