@@ -19,6 +19,9 @@ There are diverse levels of design, such as, High-level, which is the partition 
 Since all the complexity of the current software, it’s impossible to represent all the information in a single model. For that reason, the view models use a 4 + 1 Architectural View Model, designed by Philippe Kruchten, that decomposes the system into modules that show, among others, how the run-time processes interact, how a system is decomposed into models, etc.
 The follow diagram represents the 4 + 1 view model of software architecture. 
 
+![alt](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/4plus1model.png)
+
+
 ##Logic View <a name="LV"></a>
 
 ##Development View <a name="DvV"></a>
