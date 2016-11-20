@@ -32,6 +32,12 @@ On the other hand, architectural patterns represent the idea of sharing and reus
 ##Logic View <a name="LV"></a>
 
 ##Development View <a name="DvV"></a>
+Also known as Implementation View, the Development View shows how the software is decomposed for development on a programmer's perspective. The component diagram is used to describe this decomposition by using system components.
+
+![Development View Diagram](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/development_diagram.png)
+
+Since this project is based on a Algebra Library, the key component for this diagram is the Operation. It's in this component where all the matrix operations will be applied to the input given by the user.
+As for the components Matrix Operations and Result, the first one's objective is to allow the user to choose one of the many available operations and the latter is responsible for the representation of the result matrix.
 
 ##Deployment  View <a name="DpV"></a>
 
