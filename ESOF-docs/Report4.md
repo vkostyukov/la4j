@@ -40,3 +40,6 @@ Finally, we used Codacy for test statistics and analytics. From it we concluded 
 ![alt](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/test_codacy.PNG)
 
 ##Project Bug <a name="Bug"></a>
+To accomplish this part of the report, we first searched the issues page of the project on Github, where we found two identified bugs. One of the bugs was already under work by the la4j team. The other, as said by the la4j team in the comments, was going to need a rework from scratch to fix. Finding new unregistered bugs would be very hard and time consuming as we would have to run every function of the library and compare results. In the end, we turned to Codacy to find some error prone code that could generate bugs in the future and we found seven. After modifying the code were those errors appeared, we ran the Junits tests and all was as before. After checking Codacy again, we noticed a 5% increase in the error prone meter to 52%, as seen below.
+
+![alt](https://github.com/nunomiguel1995/ESOF-la4j/blob/master/ESOF-docs/res/afterfix_codacy_new.PNG)
