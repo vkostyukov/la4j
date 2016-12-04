@@ -7,11 +7,14 @@
 4. [Project Bugs](#Bug)
 
 ##Introduction <a name="Intro"></a>
-In this report, we wil analyse the La4j state of verification and validation. These are the processes related to checking if the software meet it's specification and delivers the intended functionalities. Basically we will look at La4j with concern to software testing.
+In this report, we will analyse the La4j state of verification and validation. These are the processes related to checking if the software meet it's specification and delivers the intended functionalities. Basically we will look at La4j with concern to software testing.
 
 In the first section of the report we will discuss the  factors like controllability, observability, isolateability, separation of concern, understandability and heterogeneity that can affect the software testability and also their dominating degree on the software system. Nextly we have mentioned some test statistics of this project by some number of tests, and other aspects. And at the end we have talked about the project bug.
 
 Verification and validation are not hte same thing. Validation aims that the software meets its specified functional and non-functional requirements. On the other hand, the verification purpose is to guarantee that the software meets the customer’s expectations. 
+
+Validation: Are we building the right product?
+Verification: Are we building the product right?
 
 
 ##Software Testability and Reviews <a name="Test"></a>
