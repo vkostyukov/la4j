@@ -13,7 +13,7 @@ In the first section of the report we will discuss the  factors like controllabi
 
 Verification and validation are not hte same thing. Validation aims that the software meets its specified functional and non-functional requirements. On the other hand, the verification purpose is to guarantee that the software meets the customer’s expectations. 
 
-Validation: Are we building the right product?
+Validation: Are we building the right product? 
 Verification: Are we building the product right?
 
 
