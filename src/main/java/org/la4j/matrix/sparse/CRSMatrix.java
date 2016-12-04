@@ -552,19 +552,20 @@ public class CRSMatrix extends RowMajorSparseMatrix {
         if (right - left == 0 || j > columnIndices[right - 1]) {
             return right;
         }
-
-        while (left < right) {
-            int p = (left + right) / 2;
+        
+        int l = left, r = right;
+        while (l < r) {
+            int p = (l + r) / 2;
             if (columnIndices[p] > j) {
-                right = p;
+                r = p;
             } else if (columnIndices[p] < j) {
-                left = p + 1;
+                l = p + 1;
             } else {
                 return p;
             }
         }
 
-        return left;
+        return l;
     }
 
     private void insert(int k, int i, int j, double value) {
