@@ -743,19 +743,4 @@ public abstract class VectorTest<T extends Vector> {
     public void testFromMap_NPE() {
         Vector v = Vector.fromMap(null, 4);
     }
-
-    @Test
-    public void testCosineSimilarity() {
-        Vector a = v(5, 1, 0, 0, 0, 1, 10, 15);
-        Vector b = v(1, 8, 0, 9, 6, 4, 2, 5);
-        Vector c = v(9, 0, 2, 1, 1, 0, 8, 12);
-        Vector d = v(900, 0, 200, 100, 100, 0, 800, 1200);
-
-        // a & c are more similar to each other than b
-        Assert.assertTrue(a.cosineSimilarity(b) < a.cosineSimilarity(c));
-        Assert.assertTrue(c.cosineSimilarity(b) < c.cosineSimilarity(a));
-
-        Assert.assertEquals(1.0, c.cosineSimilarity(d), 0.00005);
-        Assert.assertEquals(1.0, d.cosineSimilarity(c), 0.00005);
-    }
 }

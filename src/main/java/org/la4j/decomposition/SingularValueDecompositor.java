@@ -506,6 +506,7 @@ public class SingularValueDecompositor extends AbstractDecompositor implements M
                 iter = 0;
                 p--;
             }
+            default:
                 break;
             }
         }
