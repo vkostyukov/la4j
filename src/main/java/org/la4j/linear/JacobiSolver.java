@@ -61,7 +61,7 @@ public class JacobiSolver extends AbstractSolver implements LinearSystemSolver {
         Vector current =b.blankOfLength(unknowns());
 
         // while it is not a solution
-        while (!a.multiply(current).equals(b)) {
+        while (!matrix.multiply(current).equals(b)) {
 
             Vector next = current.blank();
 

@@ -26,24 +26,23 @@ import org.la4j.Vector;
 
 public abstract class AbstractSolver implements LinearSystemSolver {
 
-    // TODO: rename a to matrix
-    protected Matrix a;
+    protected Matrix matrix;
     protected int unknowns;
     protected int equations;
 
-    protected AbstractSolver(Matrix a) {
-        if (!applicableTo(a)) {
+    protected AbstractSolver(Matrix matrix) {
+        if (!applicableTo(matrix)) {
             fail("Given coefficient matrix can not be used with this solver.");
         }
 
-        this.a = a;
-        this.unknowns = a.columns();
-        this.equations = a.rows();
+        this.matrix = matrix;
+        this.unknowns = matrix.columns();
+        this.equations = matrix.rows();
     }
 
     @Override
     public Matrix self() {
-        return a;
+        return matrix;
     }
 
     @Override
