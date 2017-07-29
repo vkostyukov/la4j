@@ -53,6 +53,82 @@ public abstract class MatrixTest<T extends Matrix> {
     }
 
     @Test
+    public void testInsertRowInEmptyMatrix() {
+
+        Matrix a = m(a(1.0, 0.0, 0.0),
+                     a(0.0, 1.0, 0.0),
+                     a(0.0, 0.0, 1.0));
+
+        Vector v1 = v(1.0, 0.0, 0.0);
+        Vector v2 = v(0.0, 1.0, 0.0);
+        Vector v3 = v(0.0, 0.0, 1.0);
+
+        Matrix b = mz(0, 0);
+        b = b.insertRow(0, v3);
+        b = b.insertRow(0, v2);
+        b = b.insertRow(0, v1);
+
+        Assert.assertEquals(a, b);
+    }
+
+    @Test
+    public void testInsertColumnInEmptyMatrix() {
+
+        Matrix a = m(a(1.0, 0.0, 0.0),
+                     a(0.0, 1.0, 0.0),
+                     a(0.0, 0.0, 1.0));
+
+        Vector v1 = v(1.0, 0.0, 0.0);
+        Vector v2 = v(0.0, 1.0, 0.0);
+        Vector v3 = v(0.0, 0.0, 1.0);
+
+        Matrix b = mz(0, 0);
+        b = b.insertColumn(0, v3);
+        b = b.insertColumn(0, v2);
+        b = b.insertColumn(0, v1);
+
+        Assert.assertEquals(a, b);
+    }
+
+    @Test
+    public void testInsertRowAtTheEnd() {
+
+        Matrix a = m(a(1.0, 0.0, 0.0),
+                     a(0.0, 1.0, 0.0),
+                     a(0.0, 0.0, 1.0));
+
+        Vector v1 = v(1.0, 0.0, 0.0);
+        Vector v2 = v(0.0, 1.0, 0.0);
+        Vector v3 = v(0.0, 0.0, 1.0);
+
+        Matrix b = mz(0, 0);
+        b = b.insertRow(0, v1);
+        b = b.insertRow(1, v2);
+        b = b.insertRow(2, v3);
+
+        Assert.assertEquals(a, b);
+    }
+
+    @Test
+    public void testInsertColumnAtTheEnd() {
+
+        Matrix a = m(a(1.0, 0.0, 0.0),
+                     a(0.0, 1.0, 0.0),
+                     a(0.0, 0.0, 1.0));
+
+        Vector v1 = v(1.0, 0.0, 0.0);
+        Vector v2 = v(0.0, 1.0, 0.0);
+        Vector v3 = v(0.0, 0.0, 1.0);
+
+        Matrix b = mz(0, 0);
+        b = b.insertColumn(0, v1);
+        b = b.insertColumn(1, v2);
+        b = b.insertColumn(2, v3);
+
+        Assert.assertEquals(a, b);
+    }
+
+    @Test
     public void testInsert_3x3_into_3x3() {
         Matrix a = m(a(1.0, 2.0, 3.0),
                      a(4.0, 5.0, 6.0),
