@@ -314,7 +314,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Sets the specified element of this matrix to given {@code value}.
-     *
+     * 
      * @param i element's row index
      * @param j element's column index
      * @param value element's new value
@@ -461,7 +461,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Swaps the specified rows of this matrix.
-     *
+     * 
      * @param i the row index
      * @param j the row index
      */
@@ -477,7 +477,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Swaps the specified columns of this matrix.
-     *
+     * 
      * @param i the column index
      * @param j the column index
      */
@@ -493,7 +493,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Returns the number of rows of this matrix.
-     *
+     * 
      * @return the number of rows
      */
     public int rows() {
@@ -502,7 +502,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Returns the number of columns of this matrix.
-     *
+     * 
      * @return the number of columns
      */
     public int columns() {
@@ -511,7 +511,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Transposes this matrix.
-     *
+     * 
      * @return the transposed matrix
      */
     public Matrix transpose() {
@@ -530,7 +530,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Rotates this matrix by 90 degrees to the right.
-     *
+     * 
      * @return the rotated matrix
      */
     public Matrix rotate() {
@@ -580,7 +580,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Scales this matrix by given {@code value} (v).
-     *
+     * 
      * @param value the scale factor
      *
      * @return A * v
@@ -612,7 +612,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Multiplies this matrix (A) by given {@code that} matrix (B).
-     *
+     * 
      * @param that the right hand matrix for multiplication
      *
      * @return A * B
@@ -654,7 +654,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Adds given {@code value} (v) to every element of this matrix (A).
-     *
+     * 
      * @param value the right hand value for addition
      *
      * @return A + v
@@ -675,7 +675,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Adds given {@code that} matrix (B) to this matrix (A).
-     *
+     * 
      * @param that the right hand matrix for addition
      *
      * @return A + B
@@ -687,18 +687,18 @@ public abstract class Matrix implements Iterable<Double> {
     /**
      * Inserts a given {@code that} (B) into this matrix (A). The original
      * values are overwritten by the new ones.
-     *
+     * 
      * @param that the matrix to insert, from the first row and column
      * @return a matrix with the parameter inserted into it
      */
     public Matrix insert(Matrix that) {
         return insert(that, 0, 0, 0, 0, that.rows(), that.columns());
     }
-
+    
     /**
      * Inserts a given {@code that} matrix (B) into this matrix (A). The original
      * values are overwritten by the new ones.
-     *
+     * 
      * @param that the matrix to insert
      * @param rows number of rows to insert
      * @param columns number of columns to insert
@@ -711,7 +711,7 @@ public abstract class Matrix implements Iterable<Double> {
     /**
      * Inserts a given {@code that} matrix (B) into this matrix (A). The original
      * values are overwritten by the new ones.
-     *
+     * 
      * @param that the matrix to insert
      * @param destRow the row to insert at in the destination matrix
      * @param destColumn the column to insert at in the destination matrix
@@ -726,7 +726,7 @@ public abstract class Matrix implements Iterable<Double> {
     /**
      * Inserts a given {@code that} matrix (B) into this matrix (A). The original
      * values are overwritten by the new ones.
-     *
+     * 
      * @param that the matrix to insert
      * @param srcRow the row to start at in the source matrix
      * @param srcColumn the column to start at in the source matrix
@@ -780,7 +780,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Divides every element of this matrix (A) by given {@code value} (v).
-     *
+     * 
      * @param value the right hand value for division
      *
      * @return A / v
@@ -791,7 +791,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Calculates the Kronecker product of this matrix (A) and given {@code that} matrix (B).
-     *
+     * 
      * @param that the right hand matrix for Kronecker product
      *
      * @return A (+) B
@@ -807,7 +807,7 @@ public abstract class Matrix implements Iterable<Double> {
      * See <a href="http://mathworld.wolfram.com/MatrixTrace.html">
      * http://mathworld.wolfram.com/MatrixTrace.html</a> for more details.
      * </p>
-     *
+     * 
      * @return the trace of this matrix
      */
     public double trace() {
@@ -822,7 +822,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Calculates the product of diagonal elements of this matrix.
-     *
+     * 
      * @return the product of diagonal elements of this matrix
      */
     public double diagonalProduct() {
@@ -854,7 +854,7 @@ public abstract class Matrix implements Iterable<Double> {
     public double euclideanNorm() {
         return fold(Matrices.mkEuclideanNormAccumulator());
     }
-
+    
     /**
      * Calculates a Manhattan norm of this matrix, a.k.a. taxicab norm
      *
@@ -863,7 +863,7 @@ public abstract class Matrix implements Iterable<Double> {
     public double manhattanNorm() {
         return fold(Matrices.mkManhattanNormAccumulator());
     }
-
+    
     /**
      * Calculates an Infinity norm of this matrix.
      *
@@ -872,10 +872,10 @@ public abstract class Matrix implements Iterable<Double> {
     public double infinityNorm() {
         return fold(Matrices.mkInfinityNormAccumulator());
     }
-
+    
     /**
      * Multiplies up all elements of this matrix.
-     *
+     * 
      * @return the product of all elements of this matrix
      */
     public double product() {
@@ -909,7 +909,7 @@ public abstract class Matrix implements Iterable<Double> {
      * See <a href="http://mathworld.wolfram.com/Determinant.html">
      * http://mathworld.wolfram.com/Determinant.html</a> for more details.
      * </p>
-     *
+     * 
      * @return the determinant of this matrix
      */
     public double determinant() {
@@ -1038,16 +1038,11 @@ public abstract class Matrix implements Iterable<Double> {
      * @return matrix with row.
      */
     public Matrix insertRow(int i, Vector row) {
-        if (i > rows || i < 0) {
-            throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + rows);
+        if (i >= rows || i < 0) {
+            throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (rows - 1));
         }
 
-        Matrix result;
-        if (columns == 0) {
-            result = blankOfShape(rows + 1, row.length());
-        } else {
-            result = blankOfShape(rows + 1, columns);
-        }
+        Matrix result = blankOfShape(rows + 1, columns);
 
         for (int ii = 0; ii < i; ii++) {
             result.setRow(ii, getRow(ii));
@@ -1068,16 +1063,11 @@ public abstract class Matrix implements Iterable<Double> {
      * @return matrix with column.
      */
     public Matrix insertColumn(int j, Vector column) {
-        if (j > columns || j < 0) {
-            throw new IndexOutOfBoundsException("Illegal column number, must be 0.." + columns);
+        if (j >= columns || j < 0) {
+            throw new IndexOutOfBoundsException("Illegal column number, must be 0.." + (columns - 1));
         }
 
-        Matrix result;
-        if (rows == 0) {
-            result = blankOfShape(column.length(), columns + 1);
-        } else {
-            result = blankOfShape(rows, columns + 1);
-        }
+        Matrix result = blankOfShape(rows, columns + 1);
 
         for (int jj = 0; jj < j; jj++) {
             result.setColumn(jj, getColumn(jj));
@@ -1172,7 +1162,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Creates the blank matrix (a zero matrix with same size) of this matrix.
-     *
+     * 
      * @return blank matrix
      */
     public Matrix blank() {
@@ -1327,7 +1317,7 @@ public abstract class Matrix implements Iterable<Double> {
      * allowed to contain duplicates indices. This is more general than slice()
      * which selects only contiguous blocks. However, where applicable slice()
      * is probably more efficient.
-     *
+     * 
      * @param rowIndices the array of row indices
      * @param columnIndices the array of column indices
      *
@@ -1590,7 +1580,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Folds all elements of this matrix with given {@code accumulator}.
-     *
+     * 
      * @param accumulator the matrix accumulator
      *
      * @return the accumulated value
@@ -1662,7 +1652,7 @@ public abstract class Matrix implements Iterable<Double> {
 
     /**
      * Checks whether this matrix compiles with given {@code predicate} or not.
-     *
+     * 
      * @param predicate the matrix predicate
      *
      * @return whether this matrix compiles with predicate
