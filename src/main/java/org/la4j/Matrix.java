@@ -1038,11 +1038,16 @@ public abstract class Matrix implements Iterable<Double> {
      * @return matrix with row.
      */
     public Matrix insertRow(int i, Vector row) {
-        if (i >= rows || i < 0) {
-            throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + (rows - 1));
+        if (i > rows || i < 0) {
+            throw new IndexOutOfBoundsException("Illegal row number, must be 0.." + rows);
         }
 
-        Matrix result = blankOfShape(rows + 1, columns);
+        Matrix result;
+        if (columns == 0) {
+            result = blankOfShape(rows + 1, row.length());
+        } else {
+            result = blankOfShape(rows + 1, columns);
+        }
 
         for (int ii = 0; ii < i; ii++) {
             result.setRow(ii, getRow(ii));
@@ -1063,11 +1068,16 @@ public abstract class Matrix implements Iterable<Double> {
      * @return matrix with column.
      */
     public Matrix insertColumn(int j, Vector column) {
-        if (j >= columns || j < 0) {
-            throw new IndexOutOfBoundsException("Illegal column number, must be 0.." + (columns - 1));
+        if (j > columns || j < 0) {
+            throw new IndexOutOfBoundsException("Illegal column number, must be 0.." + columns);
         }
 
-        Matrix result = blankOfShape(rows, columns + 1);
+        Matrix result;
+        if (rows == 0) {
+            result = blankOfShape(column.length(), columns + 1);
+        } else {
+            result = blankOfShape(rows, columns + 1);
+        }
 
         for (int jj = 0; jj < j; jj++) {
             result.setColumn(jj, getColumn(jj));
