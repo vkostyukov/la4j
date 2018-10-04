@@ -25,6 +25,8 @@
 
 package org.la4j.matrix.sparse;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.*;
 
@@ -332,14 +334,15 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     }
 
     /**
-     * Parses {@link CCSMatrix} from the given Matrix Market string.
+     * Parses {@link CCSMatrix} from the given Matrix Market.
      *
-     * @param mm the string in Matrix Market format
+     * @param is the input stream in Matrix Market format
      *
      * @return a parsed matrix
+     * @exception  IOException  if an I/O error occurs.
      */
-    public static CCSMatrix fromMatrixMarket(String mm) {
-        return Matrix.fromMatrixMarket(mm).to(Matrices.CCS);
+    public static CCSMatrix fromMatrixMarket(InputStream is) throws IOException {
+        return Matrix.fromMatrixMarket(is).to(Matrices.CCS);
     }
 
     @Override

@@ -21,6 +21,8 @@
 
 package org.la4j.vector;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Map;
@@ -109,14 +111,15 @@ public abstract class SparseVector extends Vector {
     }
 
     /**
-     * Parses {@link SparseVector} from the given Matrix Market string.
+     * Parses {@link SparseVector} from the given Matrix Market.
      *
-     * @param mm the string in Matrix Market format
+     * @param is the input stream in Matrix Market format
      *
      * @return a parsed vector
+     * @exception  IOException  if an I/O error occurs.
      */
-    public static SparseVector fromMatrixMarket(String mm) {
-        return Vector.fromMatrixMarket(mm).to(Vectors.SPARSE);
+    public static SparseVector fromMatrixMarket(InputStream is) throws IOException {
+        return Vector.fromMatrixMarket(is).to(Vectors.SPARSE);
     }
 
     /**

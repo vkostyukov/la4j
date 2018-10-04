@@ -31,6 +31,8 @@ import org.la4j.operation.MatrixVectorOperation;
 import org.la4j.Vector;
 import org.la4j.vector.DenseVector;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.NumberFormat;
 import java.util.Random;
 
@@ -129,14 +131,15 @@ public abstract class DenseMatrix extends Matrix {
     }
 
     /**
-     * Parses {@link DenseMatrix} from the given Matrix Market string.
+     * Parses {@link DenseMatrix} from the given Matrix Market.
      *
-     * @param mm the string in Matrix Market format
+     * @param is the input stream in Matrix Market format
      *
      * @return a parsed matrix
+     * @exception  IOException  if an I/O error occurs.
      */
-    public static DenseMatrix fromMatrixMarket(String mm) {
-        return Matrix.fromMatrixMarket(mm).to(Matrices.DENSE);
+    public static DenseMatrix fromMatrixMarket(InputStream is) throws IOException {
+        return Matrix.fromMatrixMarket(is).to(Matrices.DENSE);
     }
 
     /**
