@@ -36,5 +36,5 @@ public abstract class CommonVectorOperation<R> extends VectorOperation<R> {
         return applyCommon(a);
     }
 
-    abstract R applyCommon(final Vector a);
+    protected abstract R applyCommon(final Vector a);
 }

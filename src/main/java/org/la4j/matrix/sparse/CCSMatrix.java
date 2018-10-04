@@ -554,18 +554,19 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
             return right;
         }
 
-        while (left < right) {
-            int p = (left + right) / 2;
+        int l = left, r = right;
+        while (l < r) {
+            int p = (l + r) / 2;
             if (rowIndices[p] > i) {
-                right = p;
+                r = p;
             } else if (rowIndices[p] < i) {
-                left = p + 1;
+                l = p + 1;
             } else {
                 return p;
             }
         }
 
-        return left;
+        return l;
     }
 
     private void insert(int k, int i, int j, double value) {
@@ -698,6 +699,47 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
     }
 
     /**
+     * Calculates the cardinality
+     */
+    public int getCardinality(int[] sizes, int[] rowIndices, int[] columnIndices, int newCardinality){
+    	int newRows = sizes[0];
+    	int newCols = sizes[1];
+    	
+		 for (int i = 0; i < newRows; i++) {
+	         for (int j = 0; j < newCols; j++) {
+	             if (get(rowIndices[i], columnIndices[j]) != 0.0) {
+	                 newCardinality++;
+	             }
+	         }
+	     }
+		 
+    	return newCardinality;
+    }
+    
+    /*
+     * Constructs the raw structure of a Sparse Matrix
+     */
+    public void constructSparseMatrix(int[] sizes, int[] newColumnPointers,int[] rowIndices, int[] columnIndices, double[] newValues, int[] newRowIndices){
+    	int newRows = sizes[0];
+    	int newCols = sizes[1];
+
+    	newColumnPointers[0] = 0;
+        int endPtr = 0;
+        for (int j = 0; j < newCols; j++) {
+            newColumnPointers[j + 1] = newColumnPointers[j];
+            for (int i = 0; i < newRows; i++) {
+                double val = get(rowIndices[i], columnIndices[j]);
+                if (val != 0.0) {
+                    newValues[endPtr] = val;
+                    newRowIndices[endPtr] = i;
+                    endPtr++;
+                    newColumnPointers[j + 1]++;
+                }
+            }
+        }
+    }
+    
+    /**
      * Returns a CCSMatrix with the selected rows and columns.
      */
     @Override
@@ -713,36 +755,18 @@ public class CCSMatrix extends ColumnMajorSparseMatrix {
         // before allocating space, this is perhaps more efficient
         // than single pass and calling grow() when required.
         int newCardinality = 0;
-        for (int i = 0; i < newRows; i++) {
-            for (int j = 0; j < newCols; j++) {
-                if (get(rowIndices[i], columnIndices[j]) != 0.0) {
-                    newCardinality++;
-                }
-            }
-        }
+        int[] sizes = {newRows, newCols};
 
+        newCardinality = getCardinality(sizes, rowIndices, columnIndices, newCardinality);
+        
         // Construct the raw structure for the sparse matrix
         double[] newValues = new double[newCardinality];
         int[] newRowIndices = new int[newCardinality];
         int[] newColumnPointers = new int[newCols + 1];
-
-        newColumnPointers[0] = 0;
-        int endPtr = 0;
-        for (int j = 0; j < newCols; j++) {
-            newColumnPointers[j + 1] = newColumnPointers[j];
-            for (int i = 0; i < newRows; i++) {
-                double val = get(rowIndices[i], columnIndices[j]);
-                if (val != 0.0) {
-                    newValues[endPtr] = val;
-                    newRowIndices[endPtr] = i;
-                    endPtr++;
-                    newColumnPointers[j + 1]++;
-                }
-            }
-        }
-
-        return new CCSMatrix(newRows, newCols, newCardinality, newValues,
-                             newRowIndices, newColumnPointers);
+        
+        constructSparseMatrix(sizes, newColumnPointers,rowIndices, columnIndices, newValues, newRowIndices);
+        
+        return new CCSMatrix(newRows, newCols, newCardinality, newValues, newRowIndices, newColumnPointers);
     }
 
     @Override

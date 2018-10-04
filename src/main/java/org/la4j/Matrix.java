@@ -249,7 +249,7 @@ public abstract class Matrix implements Iterable<Double> {
         }
 
         String symmetry = header.nextToken();
-        if (!symmetry.equals("general")) {
+        if (!"general".equals(symmetry)) {
             throw new IllegalArgumentException("Unknown symmetry type: " + symmetry + ".");
         }
 
@@ -565,13 +565,14 @@ public abstract class Matrix implements Iterable<Double> {
         for (int i = 0; i < rows; i++) {
             result.set(i, i, 1.0);
         }
-
-        while (n > 0) {
-            if (n % 2 == 1) {
+        
+        int m = n;
+        while (m > 0) {
+            if (m % 2 == 1) {
                 result = result.multiply(that);
             }
 
-            n /= 2;
+            m /= 2;
             that = that.multiply(that);
         }
 
@@ -2197,9 +2198,10 @@ public abstract class Matrix implements Iterable<Double> {
     }
 
     private void indent(StringBuilder sb, int howMany) {
-        while (howMany > 0) {
+    	int n = howMany;
+        while (n > 0) {
             sb.append(" ");
-            howMany--;
+            n--;
         }
     }
 }
