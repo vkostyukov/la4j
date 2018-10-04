@@ -38,6 +38,7 @@ import static org.la4j.M.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -720,6 +721,16 @@ public abstract class VectorTest<T extends Vector> {
         map.put(0, 1.0);
         map.put(3, 2.0);
         map.put(5, 1.0);
+        Vector v = Vector.fromArray(new double[]{1, 0, 0, 2, 0, 1, 0});
+        Assert.assertEquals(v, Vector.fromMap(map, 7));
+    }
+
+    @Test
+    public void testFromMap_unordered() {
+        Map<Integer, Double> map = new LinkedHashMap<>();
+        map.put(5, 1.0);
+        map.put(0, 1.0);
+        map.put(3, 2.0);
         Vector v = Vector.fromArray(new double[]{1, 0, 0, 2, 0, 1, 0});
         Assert.assertEquals(v, Vector.fromMap(map, 7));
     }
