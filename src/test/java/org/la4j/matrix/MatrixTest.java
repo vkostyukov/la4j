@@ -1958,6 +1958,17 @@ public abstract class MatrixTest<T extends Matrix> {
     }
 
     @Test
+    public void testFromCSV() {
+        Matrix a = Matrix.fromCSV("");
+        Assert.assertTrue(a.equals(mz(0, 0)));
+
+        a = Matrix.fromCSV("1,2\n3,4");
+        Matrix b = m(a(1.0, 2.0),
+                     a(3.0, 4.0));
+        Assert.assertTrue(a.equals(b, Matrices.EPS));
+    }
+
+    @Test
     public void testFromMatrixMarket() throws Exception {
         String mm = "%%MatrixMarket matrix coordinate real general\n" +
                 "% This ASCII file represents a sparse 5x5 matrix with 8 \n" +

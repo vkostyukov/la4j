@@ -43,6 +43,7 @@ import java.io.StringBufferInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -730,6 +731,16 @@ public abstract class VectorTest<T extends Vector> {
     }
 
     @Test
+    public void testFromMap_unordered() {
+        Map<Integer, Double> map = new LinkedHashMap<>();
+        map.put(5, 1.0);
+        map.put(0, 1.0);
+        map.put(3, 2.0);
+        Vector v = Vector.fromArray(new double[]{1, 0, 0, 2, 0, 1, 0});
+        Assert.assertEquals(v, Vector.fromMap(map, 7));
+    }
+
+    @Test
     public void testFromMap_emptyMap() {
         Map<Integer, Double> map = new HashMap<>();
         Assert.assertEquals(Vector.fromMap(map, 5), Vector.zero(5));
@@ -777,6 +788,18 @@ public abstract class VectorTest<T extends Vector> {
     public void testFromMatrixMarket_IAE() throws IOException {
         InputStream is = new ByteArrayInputStream("%%".getBytes(StandardCharsets.UTF_8));
         Vector.fromMatrixMarket(is);
+    }
+
+    @Test
+    public void testFromCSV() {
+        Assert.assertEquals(Vector.fromCSV(""), Vector.zero(0));
+
+        Assert.assertEquals(Vector.fromCSV("1,2,3"), Vector.fromArray(new double[]{1, 2, 3}));
+
+        try {
+            Vector.fromCSV("a");
+            Assert.fail();
+        } catch (NumberFormatException e) {
     }
 
     @Test
