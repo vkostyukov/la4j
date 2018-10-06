@@ -756,6 +756,19 @@ public abstract class VectorTest<T extends Vector> {
     }
 
     @Test
+    public void testFromCSV() {
+        Assert.assertEquals(Vector.fromCSV(""), Vector.zero(0));
+
+        Assert.assertEquals(Vector.fromCSV("1,2,3"), Vector.fromArray(new double[]{1, 2, 3}));
+
+        try {
+            Vector.fromCSV("a");
+            Assert.fail();
+        } catch (NumberFormatException e) {
+        }
+    }
+
+    @Test
     public void testCosineSimilarity() {
         Vector a = v(5, 1, 0, 0, 0, 1, 10, 15);
         Vector b = v(1, 8, 0, 9, 6, 4, 2, 5);
