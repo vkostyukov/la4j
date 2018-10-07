@@ -800,6 +800,7 @@ public abstract class VectorTest<T extends Vector> {
             Vector.fromCSV("a");
             Assert.fail();
         } catch (NumberFormatException e) {
+        }
     }
 
     @Test
