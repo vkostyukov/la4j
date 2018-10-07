@@ -36,6 +36,11 @@ import org.la4j.vector.functor.VectorPredicate;
 import static org.la4j.V.*;
 import static org.la4j.M.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringBufferInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -753,6 +758,36 @@ public abstract class VectorTest<T extends Vector> {
     @Test(expected = NullPointerException.class)
     public void testFromMap_NPE() {
         Vector v = Vector.fromMap(null, 4);
+    }
+
+    @Test
+    public void testFromMatrixMarketArray_empty() throws IOException {
+        InputStream is = new ByteArrayInputStream("%%MatrixMarket vector array real\n0".getBytes(StandardCharsets.UTF_8));
+        Assert.assertEquals(Vector.fromMatrixMarket(is), Vector.zero(0));
+    }
+
+    @Test
+    public void testFromMatrixMarketCoordinate_empty() throws IOException {
+        InputStream is = new ByteArrayInputStream("%%MatrixMarket vector coordinate real\n0 0".getBytes(StandardCharsets.UTF_8));
+        Assert.assertEquals(Vector.fromMatrixMarket(is), Vector.zero(0));
+    }
+
+    @Test
+    public void testFromMatrixMarketArray_normal() throws IOException {
+        InputStream is = new ByteArrayInputStream("%%MatrixMarket vector array real\n3 1 2 3".getBytes(StandardCharsets.UTF_8));
+        Assert.assertEquals(Vector.fromMatrixMarket(is), Vector.fromArray(new double[] {1, 2, 3}));
+    }
+
+    @Test
+    public void testFromMatrixMarketCoordinate_normal() throws IOException {
+        InputStream is = new ByteArrayInputStream("%%MatrixMarket vector coordinate real\n3 3\n1 1\n2 2\n3 3".getBytes(StandardCharsets.UTF_8));
+        Assert.assertEquals(Vector.fromMatrixMarket(is), Vector.fromArray(new double[] {1, 2, 3}));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFromMatrixMarket_IAE() throws IOException {
+        InputStream is = new ByteArrayInputStream("%%".getBytes(StandardCharsets.UTF_8));
+        Vector.fromMatrixMarket(is);
     }
 
     @Test

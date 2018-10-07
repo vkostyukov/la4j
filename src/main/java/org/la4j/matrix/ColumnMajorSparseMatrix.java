@@ -31,6 +31,8 @@ import org.la4j.operation.MatrixOperation;
 import org.la4j.operation.MatrixVectorOperation;
 import org.la4j.Vector;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -126,14 +128,15 @@ public abstract class ColumnMajorSparseMatrix extends SparseMatrix {
     }
 
     /**
-     * Parses {@link ColumnMajorSparseMatrix} from the given Matrix Market string.
+     * Parses {@link ColumnMajorSparseMatrix} from the given Matrix Market.
      *
-     * @param mm the string in Matrix Market format
+     * @param is the input stream in Matrix Market format
      *
      * @return a parsed matrix
+     * @exception  IOException  if an I/O error occurs.
      */
-    public static ColumnMajorSparseMatrix fromMatrixMarket(String mm) {
-        return Matrix.fromMatrixMarket(mm).to(Matrices.SPARSE_COLUMN_MAJOR);
+    public static ColumnMajorSparseMatrix fromMatrixMarket(InputStream is) throws IOException {
+        return Matrix.fromMatrixMarket(is).to(Matrices.SPARSE_COLUMN_MAJOR);
     }
 
     @Override

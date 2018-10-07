@@ -26,6 +26,8 @@
 
 package org.la4j.matrix;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import org.junit.Assert;
@@ -1992,7 +1994,7 @@ public abstract class MatrixTest<T extends Matrix> {
         matrix.set(3, 4, 3.332e+01);
         matrix.set(4, 4, 1.200e+01);
 
-        Matrix from_mm_matrix = Matrix.fromMatrixMarket(mm);
+        Matrix from_mm_matrix = Matrix.fromMatrixMarket(new ByteArrayInputStream(mm.getBytes(StandardCharsets.UTF_8)));
         Assert.assertNotNull(from_mm_matrix);
         Assert.assertTrue(matrix.equals(from_mm_matrix));
 
@@ -2031,7 +2033,7 @@ public abstract class MatrixTest<T extends Matrix> {
         bcs_matrix.set(13, 13, 1.7282857345500e-01);
         bcs_matrix.set(14, 14, 1.7282857345500e-01);
 
-        Matrix bcs_mm_matrix = Matrix.fromMatrixMarket(bcsstm02_mm);
+        Matrix bcs_mm_matrix = Matrix.fromMatrixMarket(new ByteArrayInputStream(bcsstm02_mm.getBytes(StandardCharsets.UTF_8)));
 
         Assert.assertNotNull(bcs_mm_matrix);
         Assert.assertTrue(bcs_matrix.equals(bcs_mm_matrix));

@@ -21,6 +21,8 @@
 
 package org.la4j.vector.dense;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -146,14 +148,15 @@ public class BasicVector extends DenseVector {
     }
 
     /**
-     * Parses {@link BasicVector} from the given Matrix Market string.
+     * Parses {@link BasicVector} from the given Matrix Market.
      *
-     * @param mm the string in Matrix Market format
+     * @param is the input stream in Matrix Market format
      *
      * @return a parsed vector
+     * @exception  IOException  if an I/O error occurs.
      */
-    public static BasicVector fromMatrixMarket(String mm) {
-        return Vector.fromMatrixMarket(mm).to(Vectors.BASIC);
+    public static BasicVector fromMatrixMarket(InputStream is) throws IOException {
+        return Vector.fromMatrixMarket(is).to(Vectors.BASIC);
     }
 
     /**

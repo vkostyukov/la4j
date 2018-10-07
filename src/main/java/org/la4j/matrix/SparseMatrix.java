@@ -37,6 +37,8 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorProcedure;
 import org.la4j.vector.SparseVector;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.NumberFormat;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -136,14 +138,15 @@ public abstract class SparseMatrix extends Matrix {
     }
 
     /**
-     * Parses {@link SparseMatrix} from the given Matrix Market string.
+     * Parses {@link SparseMatrix} from the given Matrix Market.
      *
-     * @param mm the string in Matrix Market format
+     * @param is the input stream in Matrix Market format
      *
      * @return a parsed matrix
+     * @exception  IOException  if an I/O error occurs.
      */
-    public static SparseMatrix fromMatrixMarket(String mm) {
-        return Matrix.fromMatrixMarket(mm).to(Matrices.SPARSE);
+    public static SparseMatrix fromMatrixMarket(InputStream is) throws IOException {
+        return Matrix.fromMatrixMarket(is).to(Matrices.SPARSE);
     }
 
     @Override

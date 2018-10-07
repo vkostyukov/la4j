@@ -50,6 +50,10 @@ import org.la4j.vector.functor.VectorAccumulator;
 import org.la4j.vector.functor.VectorFunction;
 import org.la4j.vector.functor.VectorProcedure;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -219,14 +223,15 @@ public abstract class Matrix implements Iterable<Double> {
     /**
      * Parses {@link Matrix} from the given Matrix Market string.
      *
-     * @param mm the string in Matrix Market format
+     * @param is the input stream in Matrix Market format
      *
      * @return a parsed matrix
+     * @exception  IOException  if an I/O error occurs.
      */
-    public static Matrix fromMatrixMarket(String mm) {
-        StringTokenizer body = new StringTokenizer(mm, "\n");
+    public static Matrix fromMatrixMarket(InputStream is) throws IOException {
+        BufferedReader body = new BufferedReader(new InputStreamReader(is));
 
-        String headerString = body.nextToken();
+        String headerString = body.readLine();
         StringTokenizer header = new StringTokenizer(headerString);
 
         if (!"%%MatrixMarket".equals(header.nextToken())) {
@@ -255,9 +260,9 @@ public abstract class Matrix implements Iterable<Double> {
 
         String majority = (header.hasMoreTokens()) ? header.nextToken() : "row-major";
 
-        String nextToken = body.nextToken();
+        String nextToken = body.readLine();
         while (nextToken.startsWith("%")) {
-            nextToken = body.nextToken();
+            nextToken = body.readLine();
         }
 
         if ("coordinate".equals(format)) {
@@ -272,7 +277,7 @@ public abstract class Matrix implements Iterable<Double> {
                     ColumnMajorSparseMatrix.zero(rows, columns, cardinality);
 
             for (int k = 0; k < cardinality; k++) {
-                lines = new StringTokenizer(body.nextToken());
+                lines = new StringTokenizer(body.readLine());
 
                 int i = Integer.valueOf(lines.nextToken());
                 int j = Integer.valueOf(lines.nextToken());
@@ -290,7 +295,7 @@ public abstract class Matrix implements Iterable<Double> {
 
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
-                    result.set(i, j, Double.valueOf(body.nextToken()));
+                    result.set(i, j, Double.valueOf(body.readLine()));
                 }
             }
 

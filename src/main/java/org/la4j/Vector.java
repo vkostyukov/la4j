@@ -25,6 +25,7 @@
 
 package org.la4j;
 
+import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
@@ -137,42 +138,53 @@ public abstract class Vector implements Iterable<Double> {
 
 
     /**
-     * Parses {@link Vector} from the given Matrix Market string.
+     * Parses {@link Vector} from the given Matrix Market.
      *
-     * @param mm the string in Matrix Market format
+     * @param is the input stream in Matrix Market format
      *
      * @return a parsed vector
+     * @exception  IOException  if an I/O error occurs.
      */
-    public static Vector fromMatrixMarket(String mm) {
-        StringTokenizer body = new StringTokenizer(mm);
+    public static Vector fromMatrixMarket(InputStream is) throws IOException {
 
-        if (!"%%MatrixMarket".equals(body.nextToken())) {
+        StreamTokenizer tokenizer = new StreamTokenizer(new BufferedReader(new InputStreamReader(is)));
+        tokenizer.wordChars('%', '%');
+
+        tokenizer.nextToken();
+        if (!"%%MatrixMarket".equals(tokenizer.sval)) {
             throw new IllegalArgumentException("Wrong input file format: can not read header '%%MatrixMarket'.");
         }
 
-        String object = body.nextToken();
+        tokenizer.nextToken();
+        String object = tokenizer.sval;
         if (!"vector".equals(object)) {
             throw new IllegalArgumentException("Unexpected object: " + object + ".");
         }
 
-        String format = body.nextToken();
+        tokenizer.nextToken();
+        String format = tokenizer.sval;
         if (!"coordinate".equals(format) && !"array".equals(format)) {
             throw new IllegalArgumentException("Unknown format: " + format + ".");
         }
 
-        String field = body.nextToken();
+        tokenizer.nextToken();
+        String field = tokenizer.sval;
         if (!"real".equals(field)) {
             throw new IllegalArgumentException("Unknown field type: " + field + ".");
         }
 
-        int length = Integer.parseInt(body.nextToken());
+        tokenizer.nextToken();
+        int length = (int) Math.round(tokenizer.nval);
         if ("coordinate".equals(format)) {
-            int cardinality = Integer.parseInt(body.nextToken());
+            tokenizer.nextToken();
+            int cardinality = (int) Math.round(tokenizer.nval);
             Vector result = SparseVector.zero(length, cardinality);
 
             for (int k = 0; k < cardinality; k++) {
-                int i = Integer.parseInt(body.nextToken());
-                double x = Double.parseDouble(body.nextToken());
+                tokenizer.nextToken();
+                int i = (int) Math.round(tokenizer.nval);
+                tokenizer.nextToken();
+                double x = tokenizer.nval;
                 result.set(i - 1, x);
             }
 
@@ -181,7 +193,8 @@ public abstract class Vector implements Iterable<Double> {
             Vector result = DenseVector.zero(length);
 
             for (int i = 0; i < length; i++) {
-                result.set(i, Double.valueOf(body.nextToken()));
+                tokenizer.nextToken();
+                result.set(i, tokenizer.nval);
             }
 
             return result;

@@ -30,6 +30,8 @@ import org.la4j.operation.VectorOperation;
 import org.la4j.operation.VectorVectorOperation;
 import org.la4j.vector.dense.BasicVector;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Map;
@@ -104,14 +106,15 @@ public abstract class DenseVector extends Vector {
     }
 
     /**
-     * Parses {@link DenseVector} from the given Matrix Market string.
+     * Parses {@link DenseVector} from the given Matrix Market.
      *
-     * @param mm the string in Matrix Market format
+     * @param is the input stream in Matrix Market format
      *
      * @return a parsed vector
+     * @exception  IOException  if an I/O error occurs.
      */
-    public static DenseVector fromMatrixMarket(String mm) {
-        return Vector.fromMatrixMarket(mm).to(Vectors.DENSE);
+    public static DenseVector fromMatrixMarket(InputStream is) throws IOException {
+        return Vector.fromMatrixMarket(is).to(Vectors.DENSE);
     }
 
     /**

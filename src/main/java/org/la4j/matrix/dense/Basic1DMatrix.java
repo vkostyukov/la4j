@@ -21,6 +21,8 @@
 
 package org.la4j.matrix.dense;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Random;
@@ -227,14 +229,15 @@ public class Basic1DMatrix extends DenseMatrix {
     }
 
     /**
-     * Parses {@link Basic1DMatrix} from the given Matrix Market string.
+     * Parses {@link Basic1DMatrix} from the given Matrix Market.
      *
-     * @param mm the string in Matrix Market format
+     * @param is the input stream in Matrix Market format
      *
      * @return a parsed matrix
+     * @exception  IOException  if an I/O error occurs.
      */
-    public static Basic1DMatrix fromMatrixMarket(String mm) {
-        return Matrix.fromMatrixMarket(mm).to(Matrices.BASIC_1D);
+    public static Basic1DMatrix fromMatrixMarket(InputStream is) throws IOException {
+        return Matrix.fromMatrixMarket(is).to(Matrices.BASIC_1D);
     }
 
     @Override
