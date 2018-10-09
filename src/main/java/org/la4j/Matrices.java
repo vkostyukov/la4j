@@ -557,7 +557,7 @@ public final class Matrices {
     
     /**
      * Makes an Euclidean norm accumulator that allows to use
-     * {@link org.la4j.Matrix#fold(org.la4j.vector.functor.MatrixAccumulator)}
+     * {@link org.la4j.Matrix#fold(org.la4j.matrix.functor.MatrixAccumulator)}
      * method for norm calculation.
      *
      * @return an Euclidean norm accumulator
@@ -582,7 +582,7 @@ public final class Matrices {
     
     /**
      * Makes an Manhattan norm accumulator that allows to use
-     * {@link org.la4j.Matrix#fold(org.la4j.vector.functor.MatrixAccumulator)}
+     * {@link org.la4j.Matrix#fold(org.la4j.matrix.functor.MatrixAccumulator)}
      * method for norm calculation.
      *
      * @return a Manhattan norm accumulator
@@ -607,7 +607,7 @@ public final class Matrices {
     
     /**
      * Makes an Infinity norm accumulator that allows to use
-     * {@link org.la4j.Matrix#fold(org.la4j.vector.functor.MatrixAccumulator)}
+     * {@link org.la4j.Matrix#fold(org.la4j.matrix.functor.MatrixAccumulator)}
      * method for norm calculation.
      *
      * @return an Infinity norm accumulator
