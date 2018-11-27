@@ -28,7 +28,7 @@ import org.la4j.Vector;
 import static org.la4j.M.*;
 import static org.la4j.V.*;
 
-public abstract class AbstractSolverTest {
+public abstract class AbstractSolverTest{
 
     public abstract LinearAlgebra.SolverFactory solverFactory();
 
