@@ -316,7 +316,7 @@ public class CompressedVector extends SparseVector {
 
                 indices[rightIndex -1] = jjNotZero ? i : j;
 
-            } else if((iiNotZero && (rightIndex == ii)) 
+            } else if((iiNotZero && (rightIndex == ii))
                       || (jjNotZero && (rightIndex == jj))) {
 
                 System.arraycopy(values, rightIndex + 1, values, rightIndex, 

@@ -303,7 +303,7 @@ public final class Matrices {
      */
     public static final MatrixFactory<CCSMatrix> SPARSE_COLUMN_MAJOR = CCS;
 
-    public static final MatrixFactory<?>[] CONVERTERS = {
+    protected static final MatrixFactory<?>[] CONVERTERS = {
             BASIC_2D, BASIC_1D, CRS, CCS
     };
 
