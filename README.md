@@ -3,6 +3,8 @@
 <p>
 
 [![Build Status](https://travis-ci.org/vkostyukov/la4j.svg?branch=master)](https://travis-ci.org/vkostyukov/la4j)
+[![Code Quality: Java](https://img.shields.io/lgtm/grade/java/g/vkostyukov/la4j.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/vkostyukov/la4j/context:java)
+[![Total Alerts](https://img.shields.io/lgtm/alerts/g/vkostyukov/la4j.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/vkostyukov/la4j/alerts)
 
 [la4j](http://la4j.org) (Linear Algebra for Java) is an open source and **100% Java** library that provides _Linear 
 Algebra_ primitives (matrices  and vectors) and algorithms. The la4j library was initially designed to be a lightweight 
