@@ -1502,7 +1502,51 @@ public abstract class MatrixTest<T extends Matrix> {
 
         Assert.assertEquals(4.0, a.infinityNorm(), Matrices.EPS);
     }
-
+    
+    @Test
+	public void hadmardPower_1() {
+		Matrix a = m(a(2.0, 3.0),
+					 a(4.0, 5.0));
+		
+		Matrix expected = m(a(  2.0,  3.0),
+				            a(  4.0,  5.0));
+		
+		Matrix result = a.hadamardPower(1);
+		
+		Assert.assertEquals(expected, result);
+				              
+	}
+    
+	@Test
+	public void hadmardPower_2() {
+		Matrix a = m(a(2.0, 3.0),
+					 a(4.0, 5.0));
+		
+		Matrix expected = m(a(  4.0,  9.0),
+				            a( 16.0, 25.0));
+		
+		Matrix result = a.hadamardPower(2);
+		
+		Assert.assertEquals(expected, result);
+		Assert.assertNotEquals(a, result);
+				              
+	}
+	
+	@Test
+	public void hadmardPower_3() {
+		Matrix a = m(a(2.0, 3.0),
+					 a(4.0, 5.0));
+		
+		Matrix expected = m(a(  8.0,  27.0),
+				            a( 64.0, 125.0));
+		
+		Matrix result = a.hadamardPower(3);
+		
+		Assert.assertEquals(expected, result);
+		Assert.assertNotEquals(a, result);
+				              
+	}
+    
     @Test
     public void testPower_2x2() {
         Matrix a = m(a(1.0, 2.0),

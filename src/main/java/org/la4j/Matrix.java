@@ -564,7 +564,7 @@ public abstract class Matrix implements Iterable<Double> {
             fail("The exponent should be positive: " + n + ".");
         }
 
-        Matrix result = blankOfShape(rows, rows);
+        Matrix result = blankOfShape(rows, columns);
         Matrix that = this;
 
         for (int i = 0; i < rows; i++) {
@@ -615,6 +615,24 @@ public abstract class Matrix implements Iterable<Double> {
         return apply(LinearAlgebra.OO_PLACE_MATRIX_BY_VECTOR_MULTIPLICATION, that);
     }
 
+    /**
+     * Uses the Hadmard product in order to produce Matrices with powers of n for each element.
+     * This function does not modify the origin matrix.
+     * 
+     * @param n as the exponent
+     * @return Matrix with element to the power of n
+     */
+    public Matrix hadamardPower(int n) {
+    	if (n > 1) {
+    		Matrix result = this.hadamardProduct(this);
+    		if (n > 2) {
+    			result = result.hadamardProduct(this);
+    		}
+    		return result;
+    	}
+    	return this.copy();
+    }
+    
     /**
      * Multiplies this matrix (A) by given {@code that} matrix (B).
      * 
