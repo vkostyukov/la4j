@@ -207,8 +207,8 @@ public class OoPlaceMatricesMultiplication extends MatrixMatrixOperation<Matrix>
     public void ensureApplicableTo(Matrix a, Matrix b) {
         if (a.columns() != b.rows()) {
             throw new IllegalArgumentException(
-                "The number of rows in the left-hand matrix should be equal to the number of " +
-                "columns in the right-hand matrix: " + a.rows() + " does not equal to " + b.columns() + "."
+                "The number of columns in the left-hand matrix should be equal to the number of " +
+                "rows in the right-hand matrix: " + a.columns() + " does not equal to " + b.rows() + "."
             );
         }
     }
