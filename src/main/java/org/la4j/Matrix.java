@@ -897,7 +897,17 @@ public abstract class Matrix implements Iterable<Double> {
     }
 
     /**
-     * Calculates the Hadamard (element-wise) product of this and given {@code that} matrix.
+     * Calculates the Hadamard (element-wise) product of this and given {@code that} matrix.<br>
+     * In the following, &#x229A; is used to symbolize the Hadamard product operator.
+     * <p>
+     * (A&#x229A;B)<sub>ij</sub> = (A)<sub>ij</sub>&#x229A;(B)<sub>ij</sub>
+     * <p>
+     * The Hadamard product is undefined for matrices of different dimensions,<br>
+     * The following applies:
+     * <ul>
+     * 	<li>p&times;q and m&times;n</li>
+     * 	<li>p &ne; m and q &ne; n</li>
+     * </ul>
      *
      * @param that the right hand matrix for Hadamard product
      *
@@ -906,6 +916,29 @@ public abstract class Matrix implements Iterable<Double> {
     public Matrix hadamardProduct(Matrix that) {
         return apply(LinearAlgebra.OO_PLACE_MATRIX_HADAMARD_PRODUCT, that);
     }
+    
+    /**
+     * Uses the Hadmard product in order to produce Matrices with powers of n for each element.
+     * This function does not modify the origin matrix. Here &#x229A; is used to symbolize the Hadamard product operator.
+     * <p>
+     * (A&#x229A;B)<sub>ij</sub> = (A)<sub>ij</sub>&#x229A;(B)<sub>ij</sub>
+     * 
+     * @param n as the exponent
+     * @return Matrix with element to the power of n
+     */
+    public Matrix hadamardPower(int n) {
+    	if (n > 1) {
+    		Matrix result = this.hadamardProduct(this);
+    		if (n > 2) {
+				for (int i = 2; i < n; i++) {
+					result = result.hadamardProduct(this);	
+				}
+    		}
+    		return result;
+    	}
+    	return this.copy();
+    }
+    
 
     /**
      * Calculates the determinant of this matrix.
