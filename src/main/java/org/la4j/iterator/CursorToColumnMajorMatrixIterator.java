@@ -32,12 +32,12 @@ public class CursorToColumnMajorMatrixIterator extends ColumnMajorMatrixIterator
 
     @Override
     public int rowIndex() {
-        return underlying.cursor() - columnIndex() * rows;
+        return (int) (underlying.longCursor() - (long) columnIndex() * rows);
     }
 
     @Override
     public int columnIndex() {
-        return underlying.cursor() / rows;
+        return (int) (underlying.longCursor() / rows);
     }
 
     @Override

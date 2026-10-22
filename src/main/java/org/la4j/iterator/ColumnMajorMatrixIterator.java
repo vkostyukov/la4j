@@ -33,6 +33,11 @@ public abstract class ColumnMajorMatrixIterator extends MatrixIterator {
   }
 
     @Override
+    protected long longCursor() {
+        return (long) columnIndex() * rows + rowIndex();
+    }
+
+    @Override
     public MatrixIterator orElseAdd(final MatrixIterator those) {
         return new CursorToColumnMajorMatrixIterator(super.orElse(those, JoinFunction.ADD), rows, columns);
     }

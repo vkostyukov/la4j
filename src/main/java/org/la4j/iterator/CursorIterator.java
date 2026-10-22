@@ -42,6 +42,11 @@ abstract class CursorIterator implements Iterator<Double> {
 
     protected abstract int cursor();
 
+    // Matrix positions can exceed Integer.MAX_VALUE even when both dimensions fit in int.
+    protected long longCursor() {
+        return cursor();
+    }
+
     protected CursorIterator orElse(final CursorIterator those, final JoinFunction function) {
         final CursorIterator these = this;
         return new CursorIterator() {
@@ -49,10 +54,15 @@ abstract class CursorIterator implements Iterator<Double> {
 
             @Override
             public int cursor() {
+                return (int) longCursor();
+            }
+
+            @Override
+            protected long longCursor() {
                 if (state.contains(IteratorState.TAKEN_FROM_THESE)) {
-                    return these.cursor();
+                    return these.longCursor();
                 } else {
-                    return those.cursor();
+                    return those.longCursor();
                 }
             }
 
@@ -116,9 +126,9 @@ abstract class CursorIterator implements Iterator<Double> {
                 if (!state.contains(IteratorState.THESE_ARE_EMPTY) &&
                         !state.contains(IteratorState.THOSE_ARE_EMPTY)) {
 
-                    if (these.cursor() < those.cursor()) {
+                    if (these.longCursor() < those.longCursor()) {
                         state.add(IteratorState.TAKEN_FROM_THESE);
-                    } else if (these.cursor() > those.cursor()) {
+                    } else if (these.longCursor() > those.longCursor()) {
                         state.add(IteratorState.TAKEN_FROM_THOSE);
                     } else {
                         state.add(IteratorState.TAKEN_FROM_THESE);
@@ -141,8 +151,8 @@ abstract class CursorIterator implements Iterator<Double> {
             private boolean hasNext;
             private double prevValue;
             private double currValue;
-            private int prevCursor;
-            private int currCursor;
+            private long prevCursor;
+            private long currCursor;
 
             {
                 doNext();
@@ -150,6 +160,11 @@ abstract class CursorIterator implements Iterator<Double> {
 
             @Override
             public int cursor() {
+                return (int) prevCursor;
+            }
+
+            @Override
+            protected long longCursor() {
                 return prevCursor;
             }
 
@@ -163,10 +178,10 @@ abstract class CursorIterator implements Iterator<Double> {
                     these.next();
                     those.next();
 
-                    while (these.cursor() != those.cursor()) {
-                        if (these.cursor() < those.cursor() && these.hasNext()) {
+                    while (these.longCursor() != those.longCursor()) {
+                        if (these.longCursor() < those.longCursor() && these.hasNext()) {
                             these.next();
-                        } else if (these.cursor() > those.cursor() && those.hasNext()) {
+                        } else if (these.longCursor() > those.longCursor() && those.hasNext()) {
                             those.next();
                         } else {
                             return;
@@ -176,7 +191,7 @@ abstract class CursorIterator implements Iterator<Double> {
                     hasNext = true;
 
                     currValue = function.apply(these.get(), those.get());
-                    currCursor = these.cursor();
+                    currCursor = these.longCursor();
                 }
             }
 
